@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-member-info-view',
   templateUrl: './member-info-view.component.html',
   styleUrls: ['./member-info-view.component.sass']
 })
-export class MemberInfoViewComponent implements OnInit {
+export class MemberInfoViewComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
