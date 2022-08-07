@@ -15,7 +15,7 @@ import { Member } from '../models/member';
 })
 export class MemberService {
 
-  private memberUrl = environment.apiUrl + "/members";
+  private memberUrl = environment.apiUrl + "/member";
 
   datasource: RouteDatasource<Member>;
 
