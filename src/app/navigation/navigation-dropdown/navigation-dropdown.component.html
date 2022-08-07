@@ -1,0 +1,11 @@
+<li class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle" id="menuDropdown" data-bs-toggle="dropdown" role="button"
+        aria-haspopup="true" aria-expanded="false">Links</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+        <ng-template ngFor let-link [ngForOf]="links">
+            <li>
+                <a routerLink="{{link.path}}" class="dropdown-item" title="{{link.name}}">{{link.name}}</a>
+            </li>
+        </ng-template>
+    </ul>
+</li>
