@@ -11,21 +11,13 @@ import { AdminMemberService } from '../../services/admin-member.service';
 export class AdminMemberListViewComponent {
 
   public members: Member[] = [];
-  
+
   public addIcon = faCirclePlus;
 
   constructor(
     private service: AdminMemberService
   ) {
-    this.service.getMembers().subscribe(d => this.load(d));
-  }
-
-  public addMember() {
-    
-  }
-
-  private load(d: Member[]){
-    this.members = d;
+    this.service.getMembers().subscribe(d => this.members = d);
   }
 
 }
