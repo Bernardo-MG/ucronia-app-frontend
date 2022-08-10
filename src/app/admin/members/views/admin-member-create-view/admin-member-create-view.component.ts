@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
 import { faArrowLeftLong, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
@@ -12,7 +12,7 @@ import { AdminMemberService } from '../../services/admin-member.service';
 })
 export class AdminMemberCreateViewComponent {
 
-  member = this.fb.group({
+  public member = this.fb.group({
     name: ['', Validators.required]
   });
 
@@ -31,7 +31,7 @@ export class AdminMemberCreateViewComponent {
 
   save(): void {
     const data = new Member();
-    if(this.member.value.name){
+    if (this.member.value.name) {
       data.name = this.member.value.name;
     }
 

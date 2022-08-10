@@ -53,4 +53,12 @@ export class AdminMemberService {
     
   }
 
+  public update(member: Member) {
+    
+  }
+
+  public delete(id: number) {
+    
+  }
+
 }
