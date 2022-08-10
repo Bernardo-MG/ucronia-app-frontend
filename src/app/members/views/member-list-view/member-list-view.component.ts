@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Member } from '@app/members/models/member';
 import { MemberService } from '@app/members/services/member.service';
+import { Member } from '@app/models/member';
 
 @Component({
   selector: 'app-member-list-view',

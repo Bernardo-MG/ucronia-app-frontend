@@ -8,6 +8,8 @@ import { MenuLink } from '../model/menu-link';
 })
 export class NavigationDropdownComponent {
 
+  @Input() title: string = '';
+
   @Input() links: MenuLink[] = [];
   
   constructor() { }

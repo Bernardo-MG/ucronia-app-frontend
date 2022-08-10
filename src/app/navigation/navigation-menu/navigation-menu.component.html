@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="navbar-brand">{{title}}</div>
     <ul class="nav navbar-nav ms-auto">
-      <navigation-dropdown [links]="links"></navigation-dropdown>
+      <navigation-dropdown title="admin" [links]="adminLinks"></navigation-dropdown>
+      <navigation-dropdown title="info" [links]="links"></navigation-dropdown>
     </ul>
   </div>
 </nav>

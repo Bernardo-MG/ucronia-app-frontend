@@ -8,6 +8,8 @@ import { MenuLink } from '../model/menu-link';
 })
 export class NavigationMenuComponent {
 
+  @Input() adminLinks: MenuLink[] = [];
+
   @Input() links: MenuLink[] = [];
 
   @Input() title: String = '';

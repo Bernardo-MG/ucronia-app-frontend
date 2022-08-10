@@ -6,9 +6,9 @@ import { ApiResponse } from '@app/api/models/api-response';
 import { Sort } from '@app/api/models/sort';
 import { GetOperations } from '@app/api/request/get-operations';
 import { RequestClient } from '@app/api/request/request-client';
+import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { Member } from '../models/member';
 
 @Injectable({
   providedIn: 'root'
