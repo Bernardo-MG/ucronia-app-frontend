@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
-import { faArrowLeftLong, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
@@ -17,7 +17,6 @@ export class AdminMemberCreateViewComponent {
   });
 
   public backIcon = faArrowLeftLong;
-  public saveIcon = faFloppyDisk;
 
   constructor(
     private fb: FormBuilder,

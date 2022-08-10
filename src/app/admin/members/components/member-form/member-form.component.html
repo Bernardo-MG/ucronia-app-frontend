@@ -1,0 +1,13 @@
+<form [formGroup]="member" (ngSubmit)="saveData()">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">name</label>
+        <div class="col-sm-10">
+            <input type="text" id="name" formControlName="name" class="form-control">
+        </div>
+    </div>
+</form>
+<div *ngIf="member.invalid && (member.dirty || member.touched)" class="alert alert-danger">
+    <div *ngIf="member.get('name')?.hasError('required')">
+        Name is required.
+    </div>
+</div>

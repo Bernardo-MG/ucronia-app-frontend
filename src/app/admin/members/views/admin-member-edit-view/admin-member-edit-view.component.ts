@@ -3,7 +3,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/models/member';
-import { faArrowLeftLong, faFloppyDisk, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
@@ -21,8 +21,6 @@ export class AdminMemberInfoViewComponent {
   });
 
   public backIcon = faArrowLeftLong;
-  public saveIcon = faFloppyDisk;
-  public deleteIcon = faTrashCan;
 
   constructor(
     private fb: FormBuilder,
