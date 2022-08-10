@@ -6,7 +6,7 @@ import { faArrowLeftLong, faFloppyDisk } from '@fortawesome/free-solid-svg-icons
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
-  selector: 'app-admin-member-create-view',
+  selector: 'admin-member-create-view',
   templateUrl: './admin-member-create-view.component.html',
   styleUrls: ['./admin-member-create-view.component.sass']
 })

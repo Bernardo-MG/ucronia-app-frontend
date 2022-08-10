@@ -4,7 +4,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
-  selector: 'app-member-list-view',
+  selector: 'admin-member-list-view',
   templateUrl: './admin-member-list-view.component.html',
   styleUrls: ['./admin-member-list-view.component.sass']
 })

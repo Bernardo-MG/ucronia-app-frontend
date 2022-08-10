@@ -6,9 +6,9 @@ import { faArrowLeftLong, faFloppyDisk, faTrashCan } from '@fortawesome/free-sol
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
-  selector: 'app-member-info-view',
-  templateUrl: './admin-member-info-view.component.html',
-  styleUrls: ['./admin-member-info-view.component.sass']
+  selector: 'admin-member-edit-view',
+  templateUrl: './admin-member-edit-view.component.html',
+  styleUrls: ['./admin-member-edit-view.component.sass']
 })
 export class AdminMemberInfoViewComponent {
 

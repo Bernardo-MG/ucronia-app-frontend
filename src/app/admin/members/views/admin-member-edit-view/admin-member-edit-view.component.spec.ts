@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminMemberInfoViewComponent } from './admin-member-info-view.component';
+import { AdminMemberInfoViewComponent } from './admin-member-edit-view.component';
 
 describe('AdminMemberInfoViewComponent', () => {
   let component: AdminMemberInfoViewComponent;

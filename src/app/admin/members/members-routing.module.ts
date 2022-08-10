@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminMemberCreateViewComponent } from './views/admin-member-create-view/admin-member-create-view.component';
-import { AdminMemberInfoViewComponent } from './views/admin-member-info-view/admin-member-info-view.component';
+import { AdminMemberInfoViewComponent } from './views/admin-member-edit-view/admin-member-edit-view.component';
 import { AdminMemberListViewComponent } from './views/admin-member-list-view/admin-member-list-view.component';
 
 
