@@ -1,9 +1,5 @@
 <div class="col-1">
-  <div class="btn-group" role="group">
-    <button (click)="goBack()" type="button" class="btn btn-default">
-      <fa-icon [icon]="backIcon"></fa-icon>
-    </button>
-  </div>
+  <navigation-return-button></navigation-return-button>
 </div>
 <h1>create member</h1>
 <form-create-controls (save)="save()" [disabled]="!member.valid"></form-create-controls>

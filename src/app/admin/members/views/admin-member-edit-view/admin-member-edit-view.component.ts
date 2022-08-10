@@ -1,9 +1,7 @@
-import { Location } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/models/member';
-import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
@@ -20,11 +18,8 @@ export class AdminMemberInfoViewComponent {
     name: ['', Validators.required]
   });
 
-  public backIcon = faArrowLeftLong;
-
   constructor(
     private fb: FormBuilder,
-    private location: Location,
     private route: ActivatedRoute,
     private service: AdminMemberService
   ) { }
@@ -33,10 +28,6 @@ export class AdminMemberInfoViewComponent {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   save(): void {

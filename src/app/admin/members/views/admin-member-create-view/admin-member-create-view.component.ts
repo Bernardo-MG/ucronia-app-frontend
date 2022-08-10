@@ -1,8 +1,6 @@
-import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
-import { faArrowLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
@@ -16,17 +14,10 @@ export class AdminMemberCreateViewComponent {
     name: ['', Validators.required]
   });
 
-  public backIcon = faArrowLeftLong;
-
   constructor(
     private fb: FormBuilder,
-    private location: Location,
     private service: AdminMemberService
   ) { }
-
-  goBack(): void {
-    this.location.back();
-  }
 
   save(): void {
     const data = new Member();
