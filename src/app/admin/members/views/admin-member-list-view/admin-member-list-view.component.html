@@ -1,7 +1,14 @@
+<div class="col-1">
+    <navigation-return-button></navigation-return-button>
+</div>
 <h1>members</h1>
 <ul class="list-group">
     <ng-template ngFor let-member [ngForOf]="members">
-        <a routerLink="/admin/member/{{member.id}}" class="list-group-item list-group-item-action">{{member.name}}</a>
+        <li class="list-group-item">{{member.name}}
+            <a routerLink="/admin/member/{{member.id}}" class="btn btn-default">
+                <fa-icon [icon]="editIcon"></fa-icon>
+            </a>
+        </li>
     </ng-template>
 </ul>
 <a routerLink="/admin/member/create" class="btn btn-default">

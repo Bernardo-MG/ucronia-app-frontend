@@ -10,7 +10,7 @@ export class AppComponent {
   
   title = 'association-app-frontend';
 
-  adminLinks: MenuLink[] = [{ name: 'members', path: '/admin/member' }];
+  adminLinks: MenuLink[] = [{ name: 'admin', path: '/admin' }, { name: 'members', path: '/admin/member' }];
 
   links: MenuLink[] = [{ name: 'members', path: '/members' }];
 

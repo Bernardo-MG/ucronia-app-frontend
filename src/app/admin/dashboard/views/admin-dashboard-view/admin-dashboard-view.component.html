@@ -1,0 +1,31 @@
+<h1>admin dashboard</h1>
+<div class="row">
+    <div class="col-8">
+        <div class="row">
+            <div class="col-6">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">balance</h5>
+                        <p class="card-text">123€</p>
+                        <a routerLink="/admin/balance" class="card-link">inspect</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">fees</h5>
+                        <p class="card-text">payments: 7 out of 10</p>
+                        <p class="card-text">missing payment: 3</p>
+                        <a routerLink="/admin/fee" class="card-link">inspect</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <h2>operations</h2>
+        <a routerLink="/admin/member" class="btn btn-primary" role="button">members</a>
+        <a routerLink="/admin/payment/create" class="btn btn-primary" role="button">add_payments</a>
+    </div>
+</div>
