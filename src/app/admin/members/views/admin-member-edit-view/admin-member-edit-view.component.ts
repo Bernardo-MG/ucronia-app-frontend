@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/models/member';
@@ -9,7 +9,7 @@ import { AdminMemberService } from '../../services/admin-member.service';
   templateUrl: './admin-member-edit-view.component.html',
   styleUrls: ['./admin-member-edit-view.component.sass']
 })
-export class AdminMemberInfoViewComponent {
+export class AdminMemberInfoViewComponent implements OnInit {
 
   @Output() back = new EventEmitter<void>();
 
