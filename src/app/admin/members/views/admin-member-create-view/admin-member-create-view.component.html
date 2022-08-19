@@ -2,5 +2,4 @@
   <navigation-return-button></navigation-return-button>
 </div>
 <h1>create member</h1>
-<form-create-controls (save)="save()" [disabled]="!member.valid"></form-create-controls>
-<admin-member-form (save)="save()" [member]="member"></admin-member-form>
+<admin-member-form (save)="updateAndSave($event)" [member]="member"></admin-member-form>

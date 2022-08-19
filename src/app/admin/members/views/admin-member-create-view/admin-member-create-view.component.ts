@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/member';
 import { AdminMemberService } from '../../services/admin-member.service';
 
@@ -10,22 +9,19 @@ import { AdminMemberService } from '../../services/admin-member.service';
 })
 export class AdminMemberCreateViewComponent {
 
-  public member = this.fb.group({
-    name: ['', Validators.required]
-  });
+  @Input() member: Member = new Member();
 
   constructor(
-    private fb: FormBuilder,
     private service: AdminMemberService
   ) { }
 
   save(): void {
-    const data = new Member();
-    if (this.member.value.name) {
-      data.name = this.member.value.name;
-    }
+    this.service.create(this.member);
+  }
 
-    this.service.create(data);
+  updateAndSave(data: Member): void {
+    this.member = data;
+    this.service.create(this.member);
   }
 
 }

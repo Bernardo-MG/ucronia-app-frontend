@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AdminMemberInfoViewComponent } from './admin-member-edit-view.component';
+import { AdminMemberEditViewComponent } from './admin-member-edit-view.component';
 
-describe('AdminMemberInfoViewComponent', () => {
-  let component: AdminMemberInfoViewComponent;
-  let fixture: ComponentFixture<AdminMemberInfoViewComponent>;
+describe('AdminMemberEditViewComponent', () => {
+  let component: AdminMemberEditViewComponent;
+  let fixture: ComponentFixture<AdminMemberEditViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +13,12 @@ describe('AdminMemberInfoViewComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AdminMemberInfoViewComponent
+        AdminMemberEditViewComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AdminMemberInfoViewComponent);
+    fixture = TestBed.createComponent(AdminMemberEditViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,13 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faFloppyDisk, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'form-update-controls',
-  templateUrl: './form-update-controls.component.html',
-  styleUrls: ['./form-update-controls.component.sass']
+  selector: 'form-controls',
+  templateUrl: './form-controls.component.html',
+  styleUrls: ['./form-controls.component.sass']
 })
-export class FormUpdateControlsComponent {
+export class FormControlsComponent {
 
-  @Input() disabled: boolean = false;
+  @Input() disabledSave: boolean = false;
+
+  @Input() disabledDelete: boolean = false;
   
   @Output() save = new EventEmitter<void>();
   

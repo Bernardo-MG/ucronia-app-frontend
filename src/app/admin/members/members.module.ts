@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { AdminMemberCreateViewComponent } from './views/admin-member-create-view/admin-member-create-view.component';
-import { AdminMemberInfoViewComponent } from './views/admin-member-edit-view/admin-member-edit-view.component';
+import { AdminMemberEditViewComponent } from './views/admin-member-edit-view/admin-member-edit-view.component';
 import { AdminMemberListViewComponent } from './views/admin-member-list-view/admin-member-list-view.component';
 
 
@@ -14,7 +14,7 @@ import { AdminMemberListViewComponent } from './views/admin-member-list-view/adm
 @NgModule({
   declarations: [
     AdminMemberListViewComponent,
-    AdminMemberInfoViewComponent,
+    AdminMemberEditViewComponent,
     AdminMemberCreateViewComponent,
     MemberFormComponent
   ],
