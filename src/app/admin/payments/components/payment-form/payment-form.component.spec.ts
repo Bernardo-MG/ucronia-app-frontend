@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { PaymentFormComponent } from './payment-form.component';
 
@@ -8,9 +9,14 @@ describe('PaymentFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaymentFormComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+        PaymentFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PaymentFormComponent);
     component = fixture.componentInstance;

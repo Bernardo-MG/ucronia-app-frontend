@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AdminMemberListViewComponent } from './admin-member-list-view.component';
 
@@ -8,9 +9,14 @@ describe('AdminMemberListViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminMemberListViewComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        AdminMemberListViewComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AdminMemberListViewComponent);
     component = fixture.componentInstance;

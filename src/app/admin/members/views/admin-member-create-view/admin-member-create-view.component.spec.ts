@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AdminMemberCreateViewComponent } from './admin-member-create-view.component';
 
@@ -8,9 +9,14 @@ describe('AdminMemberCreateViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminMemberCreateViewComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        AdminMemberCreateViewComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AdminMemberCreateViewComponent);
     component = fixture.componentInstance;
