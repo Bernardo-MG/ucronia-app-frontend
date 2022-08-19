@@ -2,4 +2,4 @@
   <navigation-return-button></navigation-return-button>
 </div>
 <h1>create member</h1>
-<admin-member-form (save)="updateAndSave($event)" [member]="member"></admin-member-form>
+<admin-member-form (save)="updateAndSave($event)" [disabledDelete]=true [member]="member"></admin-member-form>

@@ -2,5 +2,4 @@
   <navigation-return-button></navigation-return-button>
 </div>
 <h1>edit member</h1>
-<form-update-controls (save)="save()" (delete)="delete()" [disabled]="!member.valid"></form-update-controls>
-<admin-member-form (save)="save()" [member]="member"></admin-member-form>
+<admin-member-form (save)="save($event)" (delete)="delete($event)" [member]="member"></admin-member-form>

@@ -17,7 +17,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   @Output() save = new EventEmitter<Member>();
 
-  @Output() delete = new EventEmitter<Member>();
+  @Output() delete = new EventEmitter<number>();
 
   form: FormGroup = this.fb.group({
     id: [-1],
