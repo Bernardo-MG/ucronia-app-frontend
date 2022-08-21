@@ -26,7 +26,7 @@ export class FormControlsComponent {
   }
 
   public deleteData() {
-    this.save.emit();
+    this.delete.emit();
   }
 
 }

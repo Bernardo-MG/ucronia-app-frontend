@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Member } from '@app/models/member';
 import { AdminMemberService } from '../../services/admin-member.service';
 
@@ -9,17 +9,13 @@ import { AdminMemberService } from '../../services/admin-member.service';
 })
 export class AdminMemberCreateViewComponent {
 
-  @Input() member: Member = new Member();
+  member: Member = new Member();
 
   constructor(
     private service: AdminMemberService
   ) { }
 
-  save(): void {
-    this.service.create(this.member);
-  }
-
-  updateAndSave(data: Member): void {
+  save(data: Member): void {
     this.member = data;
     this.service.create(this.member);
   }

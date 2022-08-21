@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
 
-export class GetOperations<T> {
+export class ReadOperations<T> {
 
   protected params: { params?: HttpParams } = {};
 
@@ -39,7 +39,7 @@ export class GetOperations<T> {
     return this.fetchOne().pipe(map(r => r.content));
   }
 
-  public sort(sort: Sort<T>): GetOperations<T> {
+  public sort(sort: Sort<T>): ReadOperations<T> {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
@@ -51,7 +51,7 @@ export class GetOperations<T> {
     return this;
   }
 
-  public page(pagination: Pagination| undefined): GetOperations<T> {
+  public page(pagination: Pagination| undefined): ReadOperations<T> {
     let prms: HttpParams;
 
     if(pagination){
@@ -66,7 +66,7 @@ export class GetOperations<T> {
     return this;
   }
 
-  public parameter(name: string, value: any): GetOperations<T> {
+  public parameter(name: string, value: any): ReadOperations<T> {
     let prms: HttpParams;
 
     prms = this.getHttpParams();

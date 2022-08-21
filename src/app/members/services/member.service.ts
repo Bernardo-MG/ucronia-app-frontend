@@ -4,7 +4,7 @@ import { RouteDatasource } from '@app/api/datasource/route-datasource';
 import { ApiRequest } from '@app/api/models/api-request';
 import { ApiResponse } from '@app/api/models/api-response';
 import { Sort } from '@app/api/models/sort';
-import { GetOperations } from '@app/api/request/get-operations';
+import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
@@ -32,7 +32,7 @@ export class MemberService {
 
   private requestMembers(request: ApiRequest<Member>): Observable<ApiResponse<Member[]>> {
     const selectors = [];
-    const clt: GetOperations<Member> = this.client.get(this.memberUrl);
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
 
     if (request.search) {
       if (request.search.name) {

@@ -48,7 +48,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
     const id = this.form.get('id');
 
     if (id) {
-      this.save.emit(id.value);
+      this.delete.emit(id.value);
     }
   }
 

@@ -1,64 +1,47 @@
 import { Injectable } from '@angular/core';
+import { CreateOperations } from '@app/api/request/create-operations';
+import { DeleteOperations } from '@app/api/request/delete-operations';
+import { ReadOperations } from '@app/api/request/read-operations';
+import { RequestClient } from '@app/api/request/request-client';
+import { UpdateOperations } from '@app/api/request/update-operations';
 import { Member } from '@app/models/member';
-import { Observable, of } from 'rxjs';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminMemberService {
 
-  constructor() { }
+  private memberUrl = environment.apiUrl + "/member";
+
+  constructor(
+    private client: RequestClient
+  ) { }
 
   public getMembers(): Observable<Member[]> {
-    const members = [];
-    let member: Member;
-
-    member = new Member();
-    member.id = 1;
-    member.name = 'Member 1';
-    members.push(member);
-
-    member = new Member();
-    member.id = 2;
-    member.name = 'Member 2';
-    members.push(member);
-
-    member = new Member();
-    member.id = 3;
-    member.name = 'Member 3';
-    members.push(member);
-
-    member = new Member();
-    member.id = 4;
-    member.name = 'Member 4';
-    members.push(member);
-
-    member = new Member();
-    member.id = 5;
-    member.name = 'Member 5';
-    members.push(member);
-
-    return of(members);
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    return clt.fetchUnwrapped();
   }
 
   public getMember(id: number): Observable<Member> {
-    const member = new Member();
-    member.id = 1;
-    member.name = 'Member 1';
-
-    return of(member);
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
+    return clt.fetchOneUnwrapped();
   }
 
   public create(member: Member) {
-    
+    const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
+    clt.body(member).push().subscribe();
   }
 
   public update(member: Member) {
-    
+    const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
+    clt.body(member).push().subscribe();
   }
 
   public delete(id: number) {
-    
+    const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
+    clt.id(id).push().subscribe();
   }
 
 }

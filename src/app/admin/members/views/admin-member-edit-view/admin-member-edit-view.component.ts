@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/models/member';
 import { AdminMemberService } from '../../services/admin-member.service';
@@ -10,9 +10,7 @@ import { AdminMemberService } from '../../services/admin-member.service';
 })
 export class AdminMemberEditViewComponent implements OnInit {
 
-  @Output() back = new EventEmitter<void>();
-  
-  @Input() member: Member = new Member();
+  member: Member = new Member();
 
   constructor(
     private route: ActivatedRoute,
