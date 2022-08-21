@@ -5,6 +5,9 @@
             <a routerLink="/admin/member/{{member.id}}" class="btn btn-default">
                 <fa-icon [icon]="editIcon"></fa-icon>
             </a>
+            <button (click)="delete(member.id)" type="button" class="btn btn-default">
+                <fa-icon [icon]="deleteIcon"></fa-icon>
+            </button>
         </li>
     </ng-template>
 </ul>

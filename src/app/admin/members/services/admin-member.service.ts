@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '@app/api/models/api-response';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -29,19 +30,19 @@ export class AdminMemberService {
     return clt.fetchOneUnwrapped();
   }
 
-  public create(member: Member) {
+  public create(member: Member): Observable<ApiResponse<Member>> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    clt.body(member).push().subscribe();
+    return clt.body(member).push();
   }
 
-  public update(member: Member) {
+  public update(id: number, member: Member): Observable<ApiResponse<Member>> {
     const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    clt.body(member).push().subscribe();
+    return clt.id(id).body(member).push();
   }
 
-  public delete(id: number) {
+  public delete(id: number): Observable<ApiResponse<Member>> {
     const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
-    clt.id(id).push().subscribe();
+    return clt.id(id).push();
   }
 
 }

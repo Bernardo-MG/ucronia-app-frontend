@@ -11,6 +11,8 @@ export class UpdateOperations<T> {
     })
   }
 
+  private identifier: number = -1;
+
   private content: T | undefined = undefined;
 
   constructor(
@@ -19,11 +21,18 @@ export class UpdateOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
-    return this.http.put<ApiResponse<T>>(this.queryUrl, this.content, this.options).pipe(
+    const url = `${this.queryUrl}/${this.identifier}`;
+    return this.http.put<ApiResponse<T>>(url, this.content, this.options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );
+  }
+
+  public id(id: number): UpdateOperations<T> {
+    this.identifier = id;
+
+    return this;
   }
 
   public body(content: T): UpdateOperations<T> {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Member } from '@app/models/member';
 import { AdminMemberService } from '../../services/admin-member.service';
 
@@ -12,12 +13,14 @@ export class AdminMemberCreateViewComponent {
   member: Member = new Member();
 
   constructor(
-    private service: AdminMemberService
+    private service: AdminMemberService,
+    private router: Router
   ) { }
 
   save(data: Member): void {
-    this.member = data;
-    this.service.create(this.member);
+    this.service.create(data).subscribe(d => {
+      this.router.navigate(['/admin/member']);
+    });
   }
 
 }

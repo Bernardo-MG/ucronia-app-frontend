@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/models/member';
 import { AdminMemberService } from '../../services/admin-member.service';
 
@@ -14,7 +14,8 @@ export class AdminMemberEditViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: AdminMemberService
+    private service: AdminMemberService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -24,11 +25,15 @@ export class AdminMemberEditViewComponent implements OnInit {
   }
 
   save(data: Member): void {
-    this.service.update(data);
+    this.service.update(data.id, data).subscribe(d => {
+      this.router.navigate(['/admin/member']);
+    });
   }
 
   delete(id: number): void {
-    this.service.delete(id);
+    this.service.delete(id).subscribe(d => {
+      this.router.navigate(['/admin/member']);
+    });
   }
 
   private load(id: string | null): void {
