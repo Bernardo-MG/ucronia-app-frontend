@@ -39,7 +39,7 @@ export class AdminMemberEditViewComponent implements OnInit {
   private load(id: string | null): void {
     if (id) {
       const identifier: number = Number(id);
-      this.service.getMember(identifier)
+      this.service.getOne(identifier)
         .subscribe(d => {
           this.member = d;
         });

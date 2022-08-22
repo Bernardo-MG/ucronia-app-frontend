@@ -19,12 +19,12 @@ export class AdminMemberListViewComponent {
   constructor(
     private service: AdminMemberService
   ) {
-    this.service.getMembers().subscribe(d => this.members = d);
+    this.service.getAll().subscribe(d => this.members = d);
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.service.getMembers().subscribe(d => this.members = d);
+      this.service.getAll().subscribe(d => this.members = d);
     });
   }
 

@@ -1,25 +1,31 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/models/fee';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
-  selector: 'app-admin-fee-list-view',
-  templateUrl: './admin-fee-list-view.component.html',
-  styleUrls: ['./admin-fee-list-view.component.sass']
+  selector: 'app-admin-fee-edit-view',
+  templateUrl: './admin-fee-edit-view.component.html',
+  styleUrls: ['./admin-fee-edit-view.component.sass']
 })
-export class AdminFeeListViewComponent {
+export class AdminFeeEditViewComponent {
 
   fees: Fee[] = [];
   
-  public editIcon = faPenToSquare;
+  public saveIcon = faFloppyDisk;
+
+  public disabledSave: boolean = false;
 
   constructor(
     private service: AdminFeeService,
     private router: Router
   ) {
     this.service.getAll().subscribe(d => this.fees = d);
+  }
+
+  public saveData() {
+    this.router.navigate(['/admin/fee']);
   }
 
   save(data: Fee): void {

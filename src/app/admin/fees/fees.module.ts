@@ -1,19 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee-list-view.component';
+import { NgModule } from '@angular/core';
+import { ControlsModule } from '@app/controls/controls.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FeeTableFormComponent } from './components/fee-table-form/fee-table-form.component';
+import { FeeTableComponent } from './components/fee-table/fee-table.component';
 import { FeesRoutingModule } from './fees-routing.module';
-import { FeeFormComponent } from './components/fee-form/fee-form.component';
+import { AdminFeeEditViewComponent } from './views/admin-fee-edit-view/admin-fee-edit-view.component';
+import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee-list-view.component';
 
 
 
 @NgModule({
   declarations: [
     AdminFeeListViewComponent,
-    FeeFormComponent
+    FeeTableComponent,
+    AdminFeeEditViewComponent,
+    FeeTableFormComponent
   ],
   imports: [
     CommonModule,
-    FeesRoutingModule
+    FeesRoutingModule,
+    FontAwesomeModule,
+    ControlsModule
   ]
 })
 export class FeesModule { }

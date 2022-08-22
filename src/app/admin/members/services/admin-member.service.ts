@@ -20,29 +20,29 @@ export class AdminMemberService {
     private client: RequestClient
   ) { }
 
-  public getMembers(): Observable<Member[]> {
+  public getAll(): Observable<Member[]> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     return clt.fetchUnwrapped();
   }
 
-  public getMember(id: number): Observable<Member> {
+  public getOne(id: number): Observable<Member> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
     return clt.fetchOneUnwrapped();
   }
 
-  public create(member: Member): Observable<ApiResponse<Member>> {
+  public create(member: Member): Observable<Member> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    return clt.body(member).push();
+    return clt.body(member).pushUnwrapped();
   }
 
-  public update(id: number, member: Member): Observable<ApiResponse<Member>> {
+  public update(id: number, member: Member): Observable<Member> {
     const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    return clt.id(id).body(member).push();
+    return clt.id(id).body(member).pushUnwrapped();
   }
 
-  public delete(id: number): Observable<ApiResponse<Member>> {
+  public delete(id: number): Observable<Member> {
     const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
-    return clt.id(id).push();
+    return clt.id(id).pushUnwrapped();
   }
 
 }

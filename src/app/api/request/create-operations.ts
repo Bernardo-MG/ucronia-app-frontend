@@ -26,6 +26,11 @@ export class CreateOperations<T> {
     );
   }
 
+  public pushUnwrapped(): Observable<T> {
+    // TODO: add unwrap operation to be used after fetch
+    return this.push().pipe(map(r => r.content));
+  }
+
   public body(content: T): CreateOperations<T> {
     this.content = content;
 
