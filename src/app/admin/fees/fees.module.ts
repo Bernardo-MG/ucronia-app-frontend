@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule } from '@app/controls/controls.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeTableFormComponent } from './components/fee-table-form/fee-table-form.component';
@@ -20,6 +21,7 @@ import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee
   imports: [
     CommonModule,
     FeesRoutingModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule
   ]

@@ -1,3 +1,4 @@
+<h1>{{year}}</h1>
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -18,19 +19,12 @@
     </thead>
     <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
+            <ng-template ngFor let-feeYear [ngForOf]="feeYears">
+                <td>{{feeYear.member}}</td>
+                <ng-template ngFor let-month [ngForOf]="feeYear.months">
+                    <td><input type="checkbox" [(ngModel)]="month.paid" [disabled]="true" id="active" formControlName="active" class="form-check-input"></td>
+                </ng-template>
+            </ng-template>
         </tr>
     </tbody>
 </table>

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Fee } from '@app/models/fee';
+import { Component, Input } from '@angular/core';
+import { FeeYear } from '@app/models/fee-year';
 
 @Component({
   selector: 'admin-fee-table',
@@ -8,7 +8,9 @@ import { Fee } from '@app/models/fee';
 })
 export class FeeTableComponent {
 
-  @Input() data: Fee[] = [];
+  @Input() public year: number=  -1;
+
+  @Input() public feeYears: FeeYear[] = [];
 
   constructor() { }
 
