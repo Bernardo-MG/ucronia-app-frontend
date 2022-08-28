@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { FeeTableComponent } from './components/fee-table/fee-table.component';
 import { FeesRoutingModule } from './fees-routing.module';
-import { AdminFeeEditViewComponent } from './views/admin-fee-edit-view/admin-fee-edit-view.component';
+import { AdminFeeCreateViewComponent } from './views/admin-fee-create-view/admin-fee-create-view.component';
 import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee-list-view.component';
 
 
@@ -15,7 +15,7 @@ import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee
   declarations: [
     AdminFeeListViewComponent,
     FeeTableComponent,
-    AdminFeeEditViewComponent,
+    AdminFeeCreateViewComponent,
     FeeFormComponent
   ],
   imports: [
