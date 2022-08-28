@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ControlsModule } from '@app/controls/controls.module';
 import { BalanceRoutingModule } from './balance-routing.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { AdminBalanceTransactionCreateViewComponent } from './views/admin-balance-transaction-create-view/admin-balance-transaction-create-view.component';
@@ -17,7 +17,7 @@ import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-bala
   imports: [
     CommonModule,
     BalanceRoutingModule,
-    FontAwesomeModule
+    ControlsModule
   ]
 })
 export class BalanceModule { }

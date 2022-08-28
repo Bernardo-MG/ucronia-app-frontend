@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
-import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
@@ -13,8 +12,6 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 export class AdminFeeCreateViewComponent {
 
   public members: Member[] = [];
-  
-  public saveIcon = faFloppyDisk;
 
   public disabledSave: boolean = false;
 

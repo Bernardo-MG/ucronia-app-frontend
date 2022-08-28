@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/models/fee';
 import { FeeYear } from '@app/models/fee-year';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
@@ -15,8 +14,6 @@ export class AdminFeeListViewComponent {
   public feeYears: FeeYear[] = [];
 
   public year: number = -1;
-
-  public editIcon = faPenToSquare;
 
   constructor(
     private service: AdminFeeService,

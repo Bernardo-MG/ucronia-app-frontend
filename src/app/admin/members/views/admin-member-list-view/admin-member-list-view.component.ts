@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Member } from '@app/models/member';
-import { faCirclePlus, faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { AdminMemberService } from '../../services/admin-member.service';
 
 @Component({
@@ -11,10 +10,6 @@ import { AdminMemberService } from '../../services/admin-member.service';
 export class AdminMemberListViewComponent {
 
   public members: Member[] = [];
-
-  public addIcon = faCirclePlus;
-  public editIcon = faPenToSquare;
-  public deleteIcon = faTrashCan;
 
   constructor(
     private service: AdminMemberService
