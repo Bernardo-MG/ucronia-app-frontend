@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin-balance-view',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-balance-view.component.sass']
 })
 export class AdminBalanceViewComponent {
+
+  public editIcon = faPenToSquare;
 
   constructor() { }
 
