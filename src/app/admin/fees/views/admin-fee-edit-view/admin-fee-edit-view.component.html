@@ -1,4 +1,1 @@
-<button (click)="saveData()" [disabled]="disabledSave" type="button" class="btn btn-default">
-    <fa-icon [icon]="saveIcon"></fa-icon>
-</button>
-<admin-fee-table-form (save)="save($event)"></admin-fee-table-form>
+<admin-fee-form [members]="members" (save)="save($event)"></admin-fee-form>

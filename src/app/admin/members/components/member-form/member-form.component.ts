@@ -9,17 +9,17 @@ import { Member } from '@app/models/member';
 })
 export class MemberFormComponent implements OnInit, OnChanges {
 
-  @Input() member: Member = new Member();
+  @Input() public member: Member = new Member();
 
-  @Input() disabledSave: boolean = false;
+  @Input() public disabledSave: boolean = false;
 
-  @Input() disabledDelete: boolean = false;
+  @Input() public disabledDelete: boolean = false;
 
-  @Output() save = new EventEmitter<Member>();
+  @Output() public save = new EventEmitter<Member>();
 
-  @Output() delete = new EventEmitter<number>();
+  @Output() public delete = new EventEmitter<number>();
 
-  form: FormGroup = this.fb.group({
+  public form: FormGroup = this.fb.group({
     id: [-1],
     name: ['', Validators.required],
     surname: [''],

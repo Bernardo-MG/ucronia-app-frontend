@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FeeTableFormComponent } from './fee-table-form.component';
+import { FeeFormComponent } from './fee-form.component';
 
-describe('FeeTableFormComponent', () => {
-  let component: FeeTableFormComponent;
-  let fixture: ComponentFixture<FeeTableFormComponent>;
+describe('FeeFormComponent', () => {
+  let component: FeeFormComponent;
+  let fixture: ComponentFixture<FeeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FeeTableFormComponent ]
+      declarations: [ FeeFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FeeTableFormComponent);
+    fixture = TestBed.createComponent(FeeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

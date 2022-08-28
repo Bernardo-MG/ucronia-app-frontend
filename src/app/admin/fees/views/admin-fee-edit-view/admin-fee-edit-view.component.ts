@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/models/fee';
 import { FeeYear } from '@app/models/fee-year';
+import { Member } from '@app/models/member';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
@@ -12,9 +13,7 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 })
 export class AdminFeeEditViewComponent {
 
-  public feeYears: FeeYear[] = [];
-
-  public year: number = -1;
+  public members: Member[] = [];
   
   public saveIcon = faFloppyDisk;
 
@@ -24,12 +23,7 @@ export class AdminFeeEditViewComponent {
     private service: AdminFeeService,
     private router: Router
   ) {
-    this.year = new Date().getFullYear();
-    this.service.getAllForYear(this.year).subscribe(d => this.feeYears = d);
-  }
-
-  public saveData() {
-    this.router.navigate(['/admin/fee']);
+    this.service.getAllMembers().subscribe(d => this.members = d);
   }
 
   save(data: Fee): void {
