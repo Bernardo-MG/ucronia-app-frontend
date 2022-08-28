@@ -13,8 +13,6 @@ export class AdminFeeCreateViewComponent {
 
   public members: Member[] = [];
 
-  public disabledSave: boolean = false;
-
   constructor(
     private service: AdminFeeService,
     private router: Router
@@ -24,7 +22,7 @@ export class AdminFeeCreateViewComponent {
 
   save(data: Fee): void {
     this.service.create(data).subscribe(d => {
-      this.router.navigate(['/admin/fee']);
+      this.router.navigate(['/admin/balance']);
     });
   }
 

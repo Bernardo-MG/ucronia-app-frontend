@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule } from '@app/controls/controls.module';
 import { BalanceRoutingModule } from './balance-routing.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
@@ -17,6 +18,7 @@ import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-bala
   imports: [
     CommonModule,
     BalanceRoutingModule,
+    ReactiveFormsModule,
     ControlsModule
   ]
 })
