@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MemberInfoViewComponent } from './views/member-info-view/member-info-view.component';
-import { MemberListViewComponent } from './views/member-list-view/member-list-view.component';
+import { AdminMemberCreateViewComponent } from './views/admin-member-create-view/admin-member-create-view.component';
+import { AdminMemberEditViewComponent } from './views/admin-member-edit-view/admin-member-edit-view.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: MemberListViewComponent },
-            { path: ':id', component: MemberInfoViewComponent }
+            { path: 'create', component: AdminMemberCreateViewComponent },
+            { path: ':id', component: AdminMemberEditViewComponent }
         ]
     }
 ];
@@ -18,4 +18,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class MemberRoutingModule { }
+export class MembersRoutingModule { }

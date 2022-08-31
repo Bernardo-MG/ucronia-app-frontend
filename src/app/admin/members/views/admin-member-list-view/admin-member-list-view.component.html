@@ -2,9 +2,9 @@
 <ul class="list-group">
     <ng-template ngFor let-member [ngForOf]="members">
         <li class="list-group-item">{{member.name}}
-            <button-link-edit link="/admin/member/{{member.id}}"></button-link-edit>
+            <button-link-edit link="/members/{{member.id}}"></button-link-edit>
             <button-delete (click)="delete(member.id)"></button-delete>
         </li>
     </ng-template>
 </ul>
-<button-link-create link="/admin/member/create"></button-link-create>
+<button-link-create link="/members/create"></button-link-create>

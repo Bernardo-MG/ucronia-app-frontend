@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Fee } from '@app/models/fee';
 import { FeeYear } from '@app/models/fee-year';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
@@ -21,12 +20,6 @@ export class AdminFeeListViewComponent {
   ) {
     this.year = new Date().getFullYear();
     this.service.getAllForYear(this.year).subscribe(d => this.feeYears = d);
-  }
-
-  save(data: Fee): void {
-    this.service.create(data).subscribe(d => {
-      this.router.navigate(['/admin/fee']);
-    });
   }
 
 }

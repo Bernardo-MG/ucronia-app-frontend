@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-balance-view.component';
+import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: AdminBalanceViewComponent }
+            { path: 'create', component: FeeCreateViewComponent }
         ]
     }
 ];
@@ -16,4 +16,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class BalanceRoutingModule { }
+export class FeesRoutingModule { }
