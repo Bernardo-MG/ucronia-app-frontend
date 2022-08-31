@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/models/transaction';
-import { TransactionService } from '@app/transactions/service/transaction.service';
+import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 
 @Component({
   selector: 'transaction-create-view',

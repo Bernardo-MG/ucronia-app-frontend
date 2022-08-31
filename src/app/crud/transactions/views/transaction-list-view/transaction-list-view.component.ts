@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Transaction } from '@app/models/transaction';
-import { TransactionService } from '@app/transactions/service/transaction.service';
+import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 
 @Component({
   selector: 'app-transaction-list-view',

@@ -1,42 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeService } from '@app/fees/services/fee.service';
-import { Fee } from '@app/models/fee';
+import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'app-fee-edit-view',
-  templateUrl: './fee-edit-view.component.html',
-  styleUrls: ['./fee-edit-view.component.sass']
+  selector: 'member-edit-view',
+  templateUrl: './member-edit-view.component.html',
+  styleUrls: ['./member-edit-view.component.sass']
 })
-export class FeeEditViewComponent implements OnInit {
+export class MemberEditViewComponent implements OnInit {
 
-  public members: Member[] = [];
-
-  public fee: Fee = new Fee();
+  member: Member = new Member();
 
   constructor(
     private route: ActivatedRoute,
-    private service: FeeService,
+    private service: MemberService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.service.getAllMembers().subscribe(d => this.members = d);
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
   }
 
-  save(data: Fee): void {
+  save(data: Member): void {
     this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/fees']);
+      this.router.navigate(['/members']);
     });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/fees']);
+      this.router.navigate(['/members']);
     });
   }
 
@@ -45,7 +41,7 @@ export class FeeEditViewComponent implements OnInit {
       const identifier: number = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.fee = d;
+          this.member = d;
         });
     }
   }

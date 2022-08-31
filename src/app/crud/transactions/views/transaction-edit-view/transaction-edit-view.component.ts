@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MemberService } from '@app/members/services/member.service';
-import { Member } from '@app/models/member';
+import { Transaction } from '@app/models/transaction';
+import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 
 @Component({
-  selector: 'member-edit-view',
-  templateUrl: './member-edit-view.component.html',
-  styleUrls: ['./member-edit-view.component.sass']
+  selector: 'app-transaction-edit-view',
+  templateUrl: './transaction-edit-view.component.html',
+  styleUrls: ['./transaction-edit-view.component.sass']
 })
-export class MemberEditViewComponent implements OnInit {
+export class TransactionEditViewComponent implements OnInit {
 
-  member: Member = new Member();
+  transaction: Transaction = new Transaction();
 
   constructor(
     private route: ActivatedRoute,
-    private service: MemberService,
+    private service: TransactionService,
     private router: Router
   ) { }
 
@@ -24,15 +24,15 @@ export class MemberEditViewComponent implements OnInit {
     });
   }
 
-  save(data: Member): void {
+  save(data: Transaction): void {
     this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/members']);
+      this.router.navigate(['/transactions']);
     });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/members']);
+      this.router.navigate(['/transactions']);
     });
   }
 
@@ -41,7 +41,7 @@ export class MemberEditViewComponent implements OnInit {
       const identifier: number = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.member = d;
+          this.transaction = d;
         });
     }
   }

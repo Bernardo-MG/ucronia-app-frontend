@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeeService } from '@app/fees/services/fee.service';
+import { FeeService } from '@app/crud/fees/services/fee.service';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
 
