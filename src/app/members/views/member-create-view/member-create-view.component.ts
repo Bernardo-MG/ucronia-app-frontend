@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { MemberService } from '@app/members/services/member.service';
 import { Member } from '@app/models/member';
 @Component({
-  selector: 'admin-member-create-view',
-  templateUrl: './admin-member-create-view.component.html',
-  styleUrls: ['./admin-member-create-view.component.sass']
+  selector: 'member-create-view',
+  templateUrl: './member-create-view.component.html',
+  styleUrls: ['./member-create-view.component.sass']
 })
-export class AdminMemberCreateViewComponent {
+export class MemberCreateViewComponent {
 
   member: Member = new Member();
 
@@ -18,7 +18,7 @@ export class AdminMemberCreateViewComponent {
 
   save(data: Member): void {
     this.service.create(data).subscribe(d => {
-      this.router.navigate(['/admin/member']);
+      this.router.navigate(['/members']);
     });
   }
 

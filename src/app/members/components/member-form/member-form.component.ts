@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
 
@@ -7,9 +7,9 @@ import { Member } from '@app/models/member';
   templateUrl: './member-form.component.html',
   styleUrls: ['./member-form.component.sass']
 })
-export class MemberFormComponent implements OnInit, OnChanges {
+export class MemberFormComponent implements OnChanges {
 
-  @Input() public member: Member = new Member();
+  @Input() public data: Member = new Member();
 
   @Input() public disabledSave: boolean = false;
 
@@ -32,12 +32,8 @@ export class MemberFormComponent implements OnInit, OnChanges {
     private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {
-    this.form.patchValue(this.member);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    this.form.patchValue(this.member);
+    this.form.patchValue(this.data);
   }
 
   public saveData() {

@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AdminMemberListViewComponent } from './admin-member-list-view.component';
+import { MemberCreateViewComponent } from './member-create-view.component';
 
-describe('AdminMemberListViewComponent', () => {
-  let component: AdminMemberListViewComponent;
-  let fixture: ComponentFixture<AdminMemberListViewComponent>;
+describe('MemberCreateViewComponent', () => {
+  let component: MemberCreateViewComponent;
+  let fixture: ComponentFixture<MemberCreateViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,12 +15,12 @@ describe('AdminMemberListViewComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        AdminMemberListViewComponent
+        MemberCreateViewComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AdminMemberListViewComponent);
+    fixture = TestBed.createComponent(MemberCreateViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

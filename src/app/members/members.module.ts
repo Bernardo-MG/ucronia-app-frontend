@@ -4,16 +4,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ControlsModule } from '@app/controls/controls.module';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MembersRoutingModule } from './members-routing.module';
-import { AdminMemberCreateViewComponent } from './views/admin-member-create-view/admin-member-create-view.component';
-import { AdminMemberEditViewComponent } from './views/admin-member-edit-view/admin-member-edit-view.component';
+import { MemberCreateViewComponent } from './views/member-create-view/member-create-view.component';
+import { MemberEditViewComponent } from './views/member-edit-view/member-edit-view.component';
+import { MemberListViewComponent } from './views/member-list-view/member-list-view.component';
 
 
 
 @NgModule({
   declarations: [
     MemberFormComponent,
-    AdminMemberEditViewComponent,
-    AdminMemberCreateViewComponent
+    MemberListViewComponent,
+    MemberEditViewComponent,
+    MemberCreateViewComponent
   ],
   imports: [
     CommonModule,

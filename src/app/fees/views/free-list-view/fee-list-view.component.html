@@ -1,0 +1,10 @@
+<h1>fees</h1>
+<ul class="list-group">
+    <ng-template ngFor let-fee [ngForOf]="fees">
+        <li class="list-group-item">{{fee.member}} - {{fee.month}}/{{fee.year}}
+            <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
+            <button-delete (click)="delete(fee.id)"></button-delete>
+        </li>
+    </ng-template>
+</ul>
+<button-link-create link="/fees/create"></button-link-create>

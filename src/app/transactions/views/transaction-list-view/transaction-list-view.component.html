@@ -1,0 +1,10 @@
+<h1>transactions</h1>
+<ul class="list-group">
+    <ng-template ngFor let-transaction [ngForOf]="transactions">
+        <li class="list-group-item">{{transaction.description}}
+            <button-link-edit link="/transactions/{{transaction.id}}"></button-link-edit>
+            <button-delete (click)="delete(transaction.id)"></button-delete>
+        </li>
+    </ng-template>
+</ul>
+<button-link-create link="/transactions/create"></button-link-create>

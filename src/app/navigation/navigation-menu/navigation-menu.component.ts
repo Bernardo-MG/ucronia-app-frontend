@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MenuLink } from '../model/menu-link';
+import { Menu } from '../model/menu';
 
 @Component({
   selector: 'navigation-menu',
@@ -8,9 +8,7 @@ import { MenuLink } from '../model/menu-link';
 })
 export class NavigationMenuComponent {
 
-  @Input() adminLinks: MenuLink[] = [];
-
-  @Input() links: MenuLink[] = [];
+  @Input() menus: Menu[] = [];
 
   @Input() title: String = '';
 

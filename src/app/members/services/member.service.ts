@@ -20,6 +20,11 @@ export class MemberService {
     private client: RequestClient
   ) { }
 
+  public getAll(): Observable<Member[]> {
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    return clt.fetchUnwrapped();
+  }
+
   public create(member: Member): Observable<Member> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
     return clt.body(member).pushUnwrapped();
