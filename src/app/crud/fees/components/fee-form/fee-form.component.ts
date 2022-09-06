@@ -4,7 +4,7 @@ import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'fee-form',
+  selector: 'crud-form-fee',
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })
@@ -49,11 +49,11 @@ export class FeeFormComponent implements OnChanges {
     }
   }
 
-  public canSave(): boolean{
+  public canSave(): boolean {
     return ((!this.disabledSave) && (this.form.valid));
   }
 
-  public canDelete(): boolean{
+  public canDelete(): boolean {
     return ((!this.disabledDelete) && (this.form.valid));
   }
 

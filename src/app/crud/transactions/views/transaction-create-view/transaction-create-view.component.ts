@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Transaction } from '@app/models/transaction';
 import { TransactionService } from '@app/crud/transactions/service/transaction.service';
+import { Transaction } from '@app/models/transaction';
 
 @Component({
-  selector: 'transaction-create-view',
+  selector: 'crud-transaction-create-view',
   templateUrl: './transaction-create-view.component.html',
   styleUrls: ['./transaction-create-view.component.sass']
 })

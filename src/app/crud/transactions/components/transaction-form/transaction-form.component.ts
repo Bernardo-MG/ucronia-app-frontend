@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction } from '@app/models/transaction';
 
 @Component({
-  selector: 'transaction-form',
+  selector: 'crud-form-transaction',
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.sass']
 })
@@ -48,11 +48,11 @@ export class TransactionFormComponent implements OnChanges {
     }
   }
 
-  public canSave(): boolean{
+  public canSave(): boolean {
     return ((!this.disabledSave) && (this.form.valid));
   }
 
-  public canDelete(): boolean{
+  public canDelete(): boolean {
     return ((!this.disabledDelete) && (this.form.valid));
   }
 

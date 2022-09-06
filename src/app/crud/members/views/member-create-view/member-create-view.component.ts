@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 @Component({
-  selector: 'member-create-view',
+  selector: 'crud-member-create-view',
   templateUrl: './member-create-view.component.html',
   styleUrls: ['./member-create-view.component.sass']
 })
