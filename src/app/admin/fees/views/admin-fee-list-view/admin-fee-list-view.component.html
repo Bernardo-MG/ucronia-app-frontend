@@ -1,4 +1,2 @@
-<a routerLink="/admin/fee/update" class="btn btn-default">
-    <fa-icon [icon]="editIcon"></fa-icon>
-</a>
-<admin-fee-table></admin-fee-table>
+<button-link-edit link="/fees/create"></button-link-edit>
+<admin-fee-table [year]="year" [feeYears]="feeYears"></admin-fee-table>

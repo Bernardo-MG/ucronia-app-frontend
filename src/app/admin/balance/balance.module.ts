@@ -1,7 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-balance-view.component';
+import { NgModule } from '@angular/core';
+import { ControlsModule } from '@app/controls/controls.module';
 import { BalanceRoutingModule } from './balance-routing.module';
+import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-balance-view.component';
 
 
 
@@ -11,7 +12,8 @@ import { BalanceRoutingModule } from './balance-routing.module';
   ],
   imports: [
     CommonModule,
-    BalanceRoutingModule
+    BalanceRoutingModule,
+    ControlsModule
   ]
 })
 export class BalanceModule { }

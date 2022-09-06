@@ -1,3 +1,4 @@
+<h1>{{year}}</h1>
 <table class="table">
     <thead class="thead-light">
         <tr>
@@ -18,19 +19,16 @@
     </thead>
     <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
-            <td><input type="checkbox" disabled id="active" formControlName="active" class="form-check-input"></td>
+            <ng-template ngFor let-row [ngForOf]="feesTable">
+                <td>{{row.member}}</td>
+                <ng-template ngFor let-column [ngForOf]="row.months">
+                    <td>
+                        <ng-template [ngIf]="column"><input type="checkbox" [checked]="column" [attr.disabled]="true"
+                                id="active" class="form-check-input">
+                        </ng-template>
+                    </td>
+                </ng-template>
+            </ng-template>
         </tr>
     </tbody>
 </table>

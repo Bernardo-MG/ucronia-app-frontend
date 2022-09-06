@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Fee } from '@app/models/fee';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { FeeYear } from '@app/models/fee-year';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
@@ -11,21 +10,16 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 })
 export class AdminFeeListViewComponent {
 
-  fees: Fee[] = [];
-  
-  public editIcon = faPenToSquare;
+  public feeYears: FeeYear[] = [];
+
+  public year: number = -1;
 
   constructor(
     private service: AdminFeeService,
     private router: Router
   ) {
-    this.service.getAll().subscribe(d => this.fees = d);
-  }
-
-  save(data: Fee): void {
-    this.service.create(data).subscribe(d => {
-      this.router.navigate(['/admin/fee']);
-    });
+    this.year = new Date().getFullYear();
+    this.service.getAllForYear(this.year).subscribe(d => this.feeYears = d);
   }
 
 }
