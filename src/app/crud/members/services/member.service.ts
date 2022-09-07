@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { Pagination } from '@app/api/models/pagination';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -21,8 +21,9 @@ export class MemberService {
     private client: RequestClient
   ) { }
 
-  public getAll(): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: Pagination): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    clt.page(pagination);
     return clt.fetchPaged();
   }
 

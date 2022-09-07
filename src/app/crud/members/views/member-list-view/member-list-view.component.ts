@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Pagination } from '@app/api/models/pagination';
+import { RoutePaginationObserver } from '@app/api/observer/route-pagination-observer';
+import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
-import { RoutePaginationActuator } from '@app/api/pagination/route-pagination-actuator';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 
@@ -12,26 +15,37 @@ import { Member } from '@app/models/member';
 export class MemberListViewComponent implements OnInit {
 
   public members: Member[] = [];
-  
-  public paginationStatus: PaginationStatus = new PaginationStatus();
+
+  public paginationStatus = new PaginationStatus();
+
+  private routePaginationObserver: RoutePaginationObserver;
+
+  private currentPagination: Pagination = new Pagination();
 
   constructor(
+    public paginationActuator: RoutePaginationActuator,
     private service: MemberService,
-    public paginationActuator: RoutePaginationActuator
-  ) { }
+    route: ActivatedRoute
+  ) {
+    this.routePaginationObserver = new RoutePaginationObserver(route)
+  }
 
   ngOnInit(): void {
-    this.load();
+    this.load(this.currentPagination);
+
+    this.routePaginationObserver.pagination.subscribe(pagination => {
+      this.load(pagination);
+    });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.load();
+      this.load(this.currentPagination);
     });
   }
 
-  private load() {
-    this.service.getAll().subscribe(page => {
+  private load(pagination: Pagination) {
+    this.service.getAll(pagination).subscribe(page => {
       this.members = page.content;
       this.paginationActuator.load(page);
       this.paginationStatus.load(page);

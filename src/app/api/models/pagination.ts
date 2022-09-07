@@ -1,5 +1,5 @@
 
-export interface Pagination {
-    page: number;
-    size: number;
+export class Pagination {
+    page: number = 0;
+    size: number = 0;
 }

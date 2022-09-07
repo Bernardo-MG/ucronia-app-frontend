@@ -1,5 +1,5 @@
+import { PageInfo } from "@app/api/models/page-info";
 import { ReplaySubject } from "rxjs";
-import { PageInfo } from "../models/page-info";
 import { PaginationActuator } from "./pagination-actuator";
 
 export class ReplaySubjectPaginationActuator implements PaginationActuator {
