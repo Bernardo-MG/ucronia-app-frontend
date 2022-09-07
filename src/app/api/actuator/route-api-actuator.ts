@@ -15,6 +15,14 @@ export class RouteApiActuator {
         this.path = this.router.url.split('?')[0];
     }
 
+    public setPage(page: number): void {
+        this.setParameter({ page });
+    }
+
+    public setPageSize(size: number): void {
+        this.setParameter({ size });
+    }
+
     public setOrder(sort: Sort<any>): void {
         this.setParameter({ property: sort.property, order: sort.order });
     }
