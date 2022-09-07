@@ -17,8 +17,8 @@ export class RoutePaginationActuator implements PaginationActuator {
         this.paginationActuator.page.subscribe(p => apiActuator.setParameter({page: p}));
     }
 
-    setPagination(page: PageInfo): void {
-        this.paginationActuator.setPagination(page);
+    load(page: PageInfo): void {
+        this.paginationActuator.load(page);
     }
 
     toFirstPage(): void {

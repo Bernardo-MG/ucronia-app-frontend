@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PaginationActuator } from '@app/api/pagination/pagination-actuator';
+import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { ReplaySubjectPaginationActuator } from '@app/api/pagination/replay-subject-pagination-actuator';
 
 @Component({
@@ -10,6 +11,8 @@ import { ReplaySubjectPaginationActuator } from '@app/api/pagination/replay-subj
 export class PaginationActuatorNavigationComponent {
 
   @Input() public actuator: PaginationActuator = new ReplaySubjectPaginationActuator();
+
+  @Input() public status: PaginationStatus = new PaginationStatus();
 
   constructor() { }
 

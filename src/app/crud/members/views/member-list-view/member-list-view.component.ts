@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { RoutePaginationActuator } from '@app/api/pagination/route-pagination-actuator';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
@@ -11,6 +12,8 @@ import { Member } from '@app/models/member';
 export class MemberListViewComponent implements OnInit {
 
   public members: Member[] = [];
+  
+  public paginationStatus: PaginationStatus = new PaginationStatus();
 
   constructor(
     private service: MemberService,
@@ -28,9 +31,10 @@ export class MemberListViewComponent implements OnInit {
   }
 
   private load() {
-    this.service.getAll().subscribe(p => {
-      this.members = p.content;
-      this.paginationActuator.setPagination(p);
+    this.service.getAll().subscribe(page => {
+      this.members = page.content;
+      this.paginationActuator.load(page);
+      this.paginationStatus.load(page);
     });
   }
 
