@@ -14,7 +14,7 @@ export class MemberListViewComponent implements OnInit {
 
   constructor(
     private service: MemberService,
-    public paginationController: RoutePaginationActuator
+    public paginationActuator: RoutePaginationActuator
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class MemberListViewComponent implements OnInit {
   private load() {
     this.service.getAll().subscribe(p => {
       this.members = p.content;
-      this.paginationController.setPagination(p);
+      this.paginationActuator.setPagination(p);
     });
   }
 

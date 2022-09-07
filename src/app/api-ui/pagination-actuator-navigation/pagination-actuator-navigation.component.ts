@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-subject-pagination-actuator';
+import { Component, Input } from '@angular/core';
+import { PaginationActuator } from '@app/api/pagination/pagination-actuator';
+import { ReplaySubjectPaginationActuator } from '@app/api/pagination/replay-subject-pagination-actuator';
 
 @Component({
   selector: 'pagination-actuator-navigation',
@@ -8,7 +9,7 @@ import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-sub
 })
 export class PaginationActuatorNavigationComponent {
 
-  public actuator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
+  @Input() public actuator: PaginationActuator = new ReplaySubjectPaginationActuator();
 
   constructor() { }
 
