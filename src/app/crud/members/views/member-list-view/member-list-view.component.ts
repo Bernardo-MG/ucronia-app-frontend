@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RoutePaginationController } from '@app/api/pagination/route-pagination-controller';
+import { RoutePaginationActuator } from '@app/api/pagination/route-pagination-actuator';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 
@@ -14,7 +14,7 @@ export class MemberListViewComponent implements OnInit {
 
   constructor(
     private service: MemberService,
-    public paginationController: RoutePaginationController
+    public paginationController: RoutePaginationActuator
   ) { }
 
   ngOnInit(): void {

@@ -1,7 +1,8 @@
 import { ReplaySubject } from "rxjs";
 import { PageInfo } from "../models/page-info";
+import { PaginationActuator } from "./pagination-actuator";
 
-export class PaginationController {
+export class ReplaySubjectPaginationActuator implements PaginationActuator {
 
     public currentPage: number = 0;
 

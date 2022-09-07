@@ -15,15 +15,11 @@ export class RouteApiActuator {
         this.path = this.router.url.split('?')[0];
     }
 
-    public setPage(page: number): void {
-        this.setParameter({ page });
-    }
-
     public setOrder(sort: Sort<any>): void {
         this.setParameter({ property: sort.property, order: sort.order });
     }
 
-    private setParameter(params: any): void {
+    public setParameter(params: any): void {
         this.router.navigate([this.path], { queryParams: params });
     }
 

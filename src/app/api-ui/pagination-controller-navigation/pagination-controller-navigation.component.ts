@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PaginationController } from '../../api/pagination/pagination-controller';
+import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-subject-pagination-actuator';
 
 @Component({
   selector: 'pagination-controller-navigation',
@@ -8,7 +8,7 @@ import { PaginationController } from '../../api/pagination/pagination-controller
 })
 export class PaginationPaginatorNavigationComponent {
 
-  @Input() paginator: PaginationController = new PaginationController();
+  @Input() paginator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 
   constructor() { }
 
