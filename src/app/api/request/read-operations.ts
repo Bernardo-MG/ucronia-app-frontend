@@ -4,6 +4,7 @@ import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { PaginatedResponse } from '../models/paginated-response';
 
 export class ReadOperations<T> {
 
@@ -17,6 +18,14 @@ export class ReadOperations<T> {
   public fetch(): Observable<ApiResponse<T[]>> {
     return this.http.get<ApiResponse<T[]>>(this.queryUrl, this.params).pipe(
       map((response: ApiResponse<T[]>) => { return response })
+    ).pipe(
+      catchError(this.handleError())
+    );
+  }
+
+  public fetchPaged(): Observable<PaginatedResponse<T[]>> {
+    return this.http.get<PaginatedResponse<T[]>>(this.queryUrl, this.params).pipe(
+      map((response: PaginatedResponse<T[]>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MembersRoutingModule } from './members-routing.module';
@@ -21,7 +22,8 @@ import { MemberListViewComponent } from './views/member-list-view/member-list-vi
     CommonModule,
     MembersRoutingModule,
     ReactiveFormsModule,
-    ControlsModule
+    ControlsModule,
+    ApiUiModule
   ],
   exports: [
     MemberFormComponent

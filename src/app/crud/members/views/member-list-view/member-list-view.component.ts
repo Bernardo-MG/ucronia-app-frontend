@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RoutePaginationController } from '@app/api/pagination/route-pagination-controller';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 
@@ -12,16 +13,24 @@ export class MemberListViewComponent implements OnInit {
   public members: Member[] = [];
 
   constructor(
-    private service: MemberService
+    private service: MemberService,
+    public paginationController: RoutePaginationController
   ) { }
 
   ngOnInit(): void {
-    this.service.getAll().subscribe(d => this.members = d);
+    this.load();
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.service.getAll().subscribe(d => this.members = d);
+      this.load();
+    });
+  }
+
+  private load() {
+    this.service.getAll().subscribe(p => {
+      this.members = p.content;
+      this.paginationController.setPagination(p);
     });
   }
 

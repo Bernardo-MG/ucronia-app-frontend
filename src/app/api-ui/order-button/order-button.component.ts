@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
