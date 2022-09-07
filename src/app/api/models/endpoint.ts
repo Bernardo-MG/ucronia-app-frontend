@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { ApiResponse } from '@app/api/models/api-response';
 import { ApiRequest } from "./api-request";
+import { PaginatedResponse } from "./paginated-response";
 
-export type Endpoint<T> = (request: ApiRequest<T>) => Observable<ApiResponse<T[]>>;
+export type Endpoint<T> = (request: ApiRequest<T>) => Observable<PaginatedResponse<T[]>>;

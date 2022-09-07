@@ -1,0 +1,4 @@
+<pagination-navigation [currentPage]="paginator.currentPage" [totalPages]="paginator.totalPages"
+    [previousEnabled]="paginator.previousEnabled" [nextEnabled]="paginator.nextEnabled"
+    (previousPage)="movePrevious($event)" (nextPage)="moveNext($event)" (toPage)="moveToPage($event)">
+</pagination-navigation>
