@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-subject-pagination-actuator';
 
 @Component({
-  selector: 'pagination-controller-navigation',
-  templateUrl: './pagination-controller-navigation.component.html',
-  styleUrls: ['./pagination-controller-navigation.component.sass']
+  selector: 'pagination-actuator-navigation',
+  templateUrl: './pagination-actuator-navigation.component.html',
+  styleUrls: ['./pagination-actuator-navigation.component.sass']
 })
-export class PaginationPaginatorNavigationComponent {
+export class PaginationActuatorNavigationComponent {
 
   @Input() paginator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 

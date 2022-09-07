@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderButtonComponent } from './order-button/order-button.component';
 import { OrderControllerButtonComponent } from './order-controller-button/order-controller-button.component';
-import { PaginationPaginatorNavigationComponent } from './pagination-controller-navigation/pagination-controller-navigation.component';
+import { PaginationActuatorNavigationComponent } from './pagination-actuator-navigation/pagination-actuator-navigation.component';
 import { PaginationNavigationComponent } from './pagination-navigation/pagination-navigation.component';
 
 
@@ -11,7 +11,7 @@ import { PaginationNavigationComponent } from './pagination-navigation/paginatio
 @NgModule({
   declarations: [
     PaginationNavigationComponent,
-    PaginationPaginatorNavigationComponent,
+    PaginationActuatorNavigationComponent,
     OrderButtonComponent,
     OrderControllerButtonComponent
   ],
@@ -20,7 +20,7 @@ import { PaginationNavigationComponent } from './pagination-navigation/paginatio
     FontAwesomeModule
   ],
   exports: [
-    PaginationPaginatorNavigationComponent,
+    PaginationActuatorNavigationComponent,
     OrderControllerButtonComponent
   ]
 })
