@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-subject-pagination-actuator';
 
 @Component({
@@ -8,20 +8,20 @@ import { ReplaySubjectPaginationActuator } from '../../api/pagination/replay-sub
 })
 export class PaginationActuatorNavigationComponent {
 
-  @Input() paginator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
+  public actuator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 
   constructor() { }
 
   public moveToPage(page: number) {
-    this.paginator.toPage(page);
+    this.actuator.toPage(page);
   }
 
   public movePrevious(page: number) {
-    this.paginator.toPreviousPage();
+    this.actuator.toPreviousPage();
   }
 
   public moveNext(page: number) {
-    this.paginator.toNextPage();
+    this.actuator.toNextPage();
   }
 
 }
