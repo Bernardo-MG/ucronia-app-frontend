@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { Pagination } from '@app/api/models/pagination';
+import { PaginationCalculator } from '@app/api/pagination/pagination-calculator';
 
 @Component({
   selector: 'pagination-navigation',
@@ -22,47 +22,22 @@ export class PaginationNavigationComponent implements OnChanges {
 
   @Output() toPage = new EventEmitter<number>();
 
-  rangeSize = 2;
+  public pages: number[] = [];
 
-  pages: number[] = [];
+  public skipBefore: boolean = false;
 
-  skipBefore: boolean = false;
+  public skipAfter: boolean = false;
 
-  skipAfter: boolean = false;
+  private paginationCalculator = new PaginationCalculator();
 
   constructor() { }
 
   ngOnChanges(): void {
-    var start: number;
-    var end: number;
-    const totalp = this.totalPages - 1;
+    const info = this.paginationCalculator.load({ currentPage: this.currentPage, totalPages: this.totalPages });
 
-    if ((this.currentPage + 1) <= this.rangeSize) {
-      // Current page in the lower page window
-      start = 0;
-      end = this.rangeSize * 2;
-      if (end > totalp) {
-        end = totalp;
-      }
-    } else if (this.currentPage + this.rangeSize > totalp) {
-      // Current page in the upper page window
-      start = totalp - (this.rangeSize * 2);
-      if (start < 0) {
-        start = 0;
-      }
-      end = totalp;
-    } else {
-      start = this.currentPage - this.rangeSize;
-      end = this.currentPage + this.rangeSize;
-    }
-
-    this.skipBefore = start > 0;
-    this.skipAfter = end < totalp;
-
-    this.pages = [];
-    for (var i = start; i <= end; i++) {
-      this.pages.push(i);
-    }
+    this.pages = info.pages;
+    this.skipBefore = info.skipBefore;
+    this.skipAfter = info.skipAfter;
   }
 
   public moveToPage(page: number) {
@@ -72,7 +47,7 @@ export class PaginationNavigationComponent implements OnChanges {
   public movePrevious() {
     this.previousPage.emit(this.currentPage);
   }
-  
+
   public moveNext() {
     this.nextPage.emit(this.currentPage);
   }
