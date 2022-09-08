@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Pagination } from '@app/api/models/pagination';
 import { PaginationActuator } from '@app/api/pagination/actuator/pagination-actuator';
 import { ReplaySubjectPaginationActuator } from '@app/api/pagination/actuator/replay-subject-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';

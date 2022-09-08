@@ -1,3 +1,4 @@
+import { Pagination } from "@app/api/models/pagination";
 import { PageInfo } from "../../models/page-info";
 
 export interface PaginationActuator {

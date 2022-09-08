@@ -3,7 +3,7 @@ import { ApiResponse } from "./api-response";
 export class PaginatedResponse<T> extends ApiResponse<T> {
     first: boolean = false;
     last: boolean = false;
-    pageNumber: number = 0;
+    page: number = 0;
     elementsInPage: number = 0;
     size: number = 0;
     totalElements: number = 0;

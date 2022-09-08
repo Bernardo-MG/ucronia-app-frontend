@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
+import { Pagination } from "../models/pagination";
 import { Sort } from "../models/sort";
 
 @Injectable({
@@ -15,8 +16,8 @@ export class RouteApiActuator {
         this.path = this.router.url.split('?')[0];
     }
 
-    public setPage(page: number): void {
-        this.setParameter({ page });
+    public setPage(page: Pagination): void {
+        this.setParameter({ page: page.page, size: page.size });
     }
 
     public setPageSize(size: number): void {

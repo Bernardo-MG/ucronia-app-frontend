@@ -18,9 +18,11 @@ export class MemberListViewComponent implements OnInit {
 
   public paginationStatus = new PaginationStatus();
 
-  private routePaginationObserver: RoutePaginationObserver;
+  public currentPagination: Pagination = new Pagination();
 
-  private currentPagination: Pagination = new Pagination();
+  public size: number = 0;
+
+  private routePaginationObserver: RoutePaginationObserver;
 
   constructor(
     public paginationActuator: RoutePaginationActuator,
@@ -31,16 +33,25 @@ export class MemberListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.load(this.currentPagination);
+    this.loadDefault();
 
     this.routePaginationObserver.pagination.subscribe(pagination => {
+      this.size = pagination.size;
       this.load(pagination);
     });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.load(this.currentPagination);
+      this.loadDefault();
+    });
+  }
+
+  private loadDefault() {
+    this.service.getAllDefault().subscribe(page => {
+      this.members = page.content;
+      this.paginationActuator.load(page);
+      this.paginationStatus.load(page);
     });
   }
 

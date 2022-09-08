@@ -12,20 +12,20 @@ export class PaginationStatus {
 
     constructor() { }
 
-    public load(page: PageInfo): void {
-        if (page.pageNumber) {
-            this.currentPage = page.pageNumber;
+    public load(info: PageInfo): void {
+        if (info.page) {
+            this.currentPage = info.page;
         } else {
             this.currentPage = 0;
         }
-        if (page.totalPages) {
-            this.totalPages = page.totalPages;
+        if (info.totalPages) {
+            this.totalPages = info.totalPages;
         } else {
             this.totalPages = 0;
         }
 
-        this.previousEnabled = !page.first;
-        this.nextEnabled = !page.last;
+        this.previousEnabled = !info.first;
+        this.nextEnabled = !info.last;
     }
 
 }

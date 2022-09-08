@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { RouteApiActuator } from "@app/api/actuator/route-api-actuator";
 import { PageInfo } from "@app/api/models/page-info";
+import { Pagination } from "@app/api/models/pagination";
 import { PaginationActuator } from "./pagination-actuator";
 import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-actuator";
 

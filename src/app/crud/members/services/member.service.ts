@@ -21,6 +21,11 @@ export class MemberService {
     private client: RequestClient
   ) { }
 
+  public getAllDefault(): Observable<PaginatedResponse<Member[]>> {
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    return clt.fetchPaged();
+  }
+
   public getAll(pagination: Pagination): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     clt.page(pagination);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouteApiActuator } from '@app/api/actuator/route-api-actuator';
 
 @Component({
@@ -7,6 +7,8 @@ import { RouteApiActuator } from '@app/api/actuator/route-api-actuator';
   styleUrls: ['./pagination-size-actuator-selector.component.sass']
 })
 export class PaginationSizeActuatorSelectorComponent {
+
+  @Input() public selected: number = 5;
 
   constructor(
     private apiActuator: RouteApiActuator
