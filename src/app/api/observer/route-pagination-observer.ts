@@ -12,9 +12,11 @@ export class RoutePaginationObserver {
 
     // Listens to route changes
     route.queryParamMap.subscribe(params => {
+      let found = false;
       let pageNumber;
       if (params.has('page')) {
         pageNumber = Number(params.get('page'));
+        found = true;
       } else {
         pageNumber = 0;
       }
@@ -22,6 +24,7 @@ export class RoutePaginationObserver {
       let pageSize;
       if (params.has('size')) {
         pageSize = Number(params.get('size'));
+        found = true;
       } else {
         pageSize = 0;
       }
@@ -30,7 +33,9 @@ export class RoutePaginationObserver {
       pagination.page = pageNumber;
       pagination.size = pageSize;
 
-      this.pagination.next(pagination);
+      if (found) {
+        this.pagination.next(pagination);
+      }
     });
   }
 

@@ -33,26 +33,21 @@ export class MemberListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadDefault();
-
-    this.routePaginationObserver.pagination.subscribe(pagination => {
-      this.size = pagination.size;
-      this.load(pagination);
-    });
-  }
-
-  private loadDefault() {
     this.service.getAllDefault().subscribe(page => {
       this.members = page.content;
       this.paginationActuator.load(page);
       this.paginationStatus.load(page);
+
+      this.routePaginationObserver.pagination.subscribe(pagination => {
+        this.load(pagination);
+      });
     });
   }
 
   private load(pagination: Pagination) {
+    this.size = pagination.size;
     this.service.getAll(pagination).subscribe(page => {
       this.members = page.content;
-      this.paginationActuator.load(page);
       this.paginationStatus.load(page);
     });
   }

@@ -10,6 +10,8 @@ export class PaginationSizeActuatorSelectorComponent {
 
   @Input() public selected: number = 5;
 
+  @Input() public sizes: number[] = [5, 10, 15, 20];
+
   constructor(
     private apiActuator: RouteApiActuator
   ) { }
