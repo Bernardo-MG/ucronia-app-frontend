@@ -9,32 +9,32 @@ import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-act
 })
 export class RoutePaginationActuator implements PaginationActuator {
 
-    private paginationActuator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
+    private wrapped: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 
     constructor(
         apiActuator: RouteApiActuator
     ) {
-        this.paginationActuator.page.subscribe(pagination => apiActuator.setPage(pagination));
+        this.wrapped.page.subscribe(pagination => apiActuator.setPage(pagination));
     }
 
     load(page: PageInfo): void {
-        this.paginationActuator.load(page);
+        this.wrapped.load(page);
     }
 
     toFirstPage(): void {
-        this.paginationActuator.toFirstPage();
+        this.wrapped.toFirstPage();
     }
 
     toPreviousPage(): void {
-        this.paginationActuator.toPreviousPage();
+        this.wrapped.toPreviousPage();
     }
 
     toNextPage(): void {
-        this.paginationActuator.toNextPage();
+        this.wrapped.toNextPage();
     }
 
     toPage(page: number): void {
-        this.paginationActuator.toPage(page);
+        this.wrapped.toPage(page);
     }
 
 }

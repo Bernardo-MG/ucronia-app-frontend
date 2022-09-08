@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { RouteOrderController } from '@app/api/order/route-order-controller';
+import { RouteOrderController } from '@app/api/order/route-order-actuator';
 
 @Component({
   selector: 'order-controller-button',
