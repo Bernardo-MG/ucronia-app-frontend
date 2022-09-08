@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Pagination } from '@app/api/models/pagination';
-import { RoutePaginationObserver } from '@app/api/observer/route-pagination-observer';
+import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { MemberService } from '@app/crud/members/services/member.service';

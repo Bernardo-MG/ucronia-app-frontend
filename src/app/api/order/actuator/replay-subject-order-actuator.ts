@@ -1,6 +1,6 @@
 import { ReplaySubject } from "rxjs";
 import { Sort } from "../../models/sort";
-import { OrderActuator } from "./order-actuator copy";
+import { OrderActuator } from "./order-actuator";
 
 export class ReplaySubjectOrderActuator implements OrderActuator {
 

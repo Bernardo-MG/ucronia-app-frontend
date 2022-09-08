@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
-import { OrderActuator } from "./order-actuator copy";
+import { OrderActuator } from "./order-actuator";
 import { ReplaySubjectOrderActuator } from "./replay-subject-order-actuator";
 
 @Injectable({
