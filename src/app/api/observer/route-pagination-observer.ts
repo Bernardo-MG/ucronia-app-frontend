@@ -29,11 +29,11 @@ export class RoutePaginationObserver {
         pageSize = 0;
       }
 
-      const pagination = new Pagination();
-      pagination.page = pageNumber;
-      pagination.size = pageSize;
-
       if (found) {
+        const pagination = new Pagination();
+        pagination.page = pageNumber;
+        pagination.size = pageSize;
+
         this.pagination.next(pagination);
       }
     });
