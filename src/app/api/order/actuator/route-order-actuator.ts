@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { RouteApiActuator } from "@app/api/actuator/route-api-actuator";
+import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { OrderActuator } from "./order-actuator copy";
 import { ReplaySubjectOrderActuator } from "./replay-subject-order-actuator";
 
 @Injectable({
     providedIn: 'root'
 })
-export class RouteOrderController implements OrderActuator {
+export class RouteOrderActuator implements OrderActuator {
 
     private wrapped = new ReplaySubjectOrderActuator();
 

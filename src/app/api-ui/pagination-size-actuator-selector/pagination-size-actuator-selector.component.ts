@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { RouteApiActuator } from '@app/api/actuator/route-api-actuator';
+import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'pagination-size-actuator-selector',

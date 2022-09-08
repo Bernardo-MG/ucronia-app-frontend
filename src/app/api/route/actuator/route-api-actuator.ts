@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Pagination } from "../models/pagination";
-import { Sort } from "../models/sort";
+import { Pagination } from "../../models/pagination";
+import { Sort } from "../../models/sort";
 
 @Injectable({
     providedIn: 'root'
