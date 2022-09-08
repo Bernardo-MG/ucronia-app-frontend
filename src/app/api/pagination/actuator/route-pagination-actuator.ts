@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { RouteApiActuator } from "@app/api/actuator/route-api-actuator";
 import { PageInfo } from "@app/api/models/page-info";
-import { Pagination } from "@app/api/models/pagination";
 import { PaginationActuator } from "./pagination-actuator";
 import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-actuator";
 
@@ -10,12 +9,12 @@ import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-act
 })
 export class RoutePaginationActuator implements PaginationActuator {
 
-    private paginationActuator : ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
+    private paginationActuator: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 
     constructor(
         apiActuator: RouteApiActuator
     ) {
-        this.paginationActuator.page.subscribe(page => apiActuator.setPage(page));
+        this.paginationActuator.page.subscribe(pagination => apiActuator.setPage(pagination));
     }
 
     load(page: PageInfo): void {
@@ -33,7 +32,7 @@ export class RoutePaginationActuator implements PaginationActuator {
     toNextPage(): void {
         this.paginationActuator.toNextPage();
     }
-    
+
     toPage(page: number): void {
         this.paginationActuator.toPage(page);
     }

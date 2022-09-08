@@ -5,18 +5,15 @@ import { PaginationActuator } from "./pagination-actuator";
 
 export class ReplaySubjectPaginationActuator implements PaginationActuator {
 
-    public page = new ReplaySubject<Pagination>();
+    public page = new ReplaySubject<number>();
 
     private currentPage: number = 0;
-
-    private currentSize: number = 0;
 
     constructor() { }
 
     public load(info: PageInfo): void {
         this.currentPage = info.page;
-        this.currentSize = info.size;
-        this.page.next(info);
+        this.page.next(this.currentPage);
     }
 
     public toFirstPage(): void {
@@ -31,8 +28,9 @@ export class ReplaySubjectPaginationActuator implements PaginationActuator {
         this.toPage(this.currentPage + 1);
     }
 
-    public toPage(page: number): void {
-        this.page.next({ page, size: this.currentSize });
+    public toPage(index: number): void {
+        this.currentPage = index;
+        this.page.next(this.currentPage);
     }
 
 }

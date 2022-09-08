@@ -10,14 +10,20 @@ export class RouteApiActuator {
 
     private path: string;
 
+    private parameters: any = {};
+
     constructor(
         private router: Router
     ) {
         this.path = this.router.url.split('?')[0];
     }
 
-    public setPage(page: Pagination): void {
-        this.setParameter({ page: page.page, size: page.size });
+    public setPagination(pagination: Pagination): void {
+        this.setParameter(pagination);
+    }
+
+    public setPage(page: number): void {
+        this.setParameter({ page });
     }
 
     public setPageSize(size: number): void {
@@ -29,7 +35,12 @@ export class RouteApiActuator {
     }
 
     public setParameter(params: any): void {
-        this.router.navigate([this.path], { queryParams: params });
+        this.parameters = { ...this.parameters, ...params };
+        this.navigate();
+    }
+
+    private navigate(): void {
+        this.router.navigate([this.path], { queryParams: this.parameters });
     }
 
 }

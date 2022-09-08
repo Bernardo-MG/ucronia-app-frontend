@@ -18,7 +18,7 @@ export class RoutePaginationObserver {
         pageNumber = Number(params.get('page'));
         found = true;
       } else {
-        pageNumber = 0;
+        pageNumber = undefined;
       }
 
       let pageSize;
@@ -26,16 +26,14 @@ export class RoutePaginationObserver {
         pageSize = Number(params.get('size'));
         found = true;
       } else {
-        pageSize = 0;
+        pageSize = undefined;
       }
 
-      if (found) {
-        const pagination = new Pagination();
-        pagination.page = pageNumber;
-        pagination.size = pageSize;
+      const pagination = new Pagination();
+      pagination.page = pageNumber;
+      pagination.size = pageSize;
 
-        this.pagination.next(pagination);
-      }
+      this.pagination.next(pagination);
     });
   }
 

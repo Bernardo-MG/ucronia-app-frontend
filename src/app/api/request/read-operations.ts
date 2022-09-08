@@ -60,15 +60,19 @@ export class ReadOperations<T> {
     return this;
   }
 
-  public page(pagination: Pagination| undefined): ReadOperations<T> {
+  public page(pagination: Pagination | undefined): ReadOperations<T> {
     let prms: HttpParams;
 
-    if(pagination){
+    if (pagination) {
       prms = this.getHttpParams();
-  
-      prms = prms.set('page', pagination.page);
-      prms = prms.set('size', pagination.size);
-  
+
+      if (pagination.page) {
+        prms = prms.set('page', pagination.page);
+      }
+      if (pagination.size) {
+        prms = prms.set('size', pagination.size);
+      }
+
       this.params = { params: prms };
     }
 
