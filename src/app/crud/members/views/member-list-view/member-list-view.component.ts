@@ -41,12 +41,6 @@ export class MemberListViewComponent implements OnInit {
     });
   }
 
-  delete(id: number): void {
-    this.service.delete(id).subscribe(d => {
-      this.loadDefault();
-    });
-  }
-
   private loadDefault() {
     this.service.getAllDefault().subscribe(page => {
       this.members = page.content;

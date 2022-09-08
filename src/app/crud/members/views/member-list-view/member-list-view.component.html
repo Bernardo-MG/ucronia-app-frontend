@@ -3,7 +3,6 @@
     <ng-template ngFor let-member [ngForOf]="members">
         <li class="list-group-item">{{member.name}}
             <button-link-edit link="/members/{{member.id}}"></button-link-edit>
-            <button-delete (click)="delete(member.id)"></button-delete>
         </li>
     </ng-template>
 </ul>
