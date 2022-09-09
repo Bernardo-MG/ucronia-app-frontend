@@ -1,8 +1,5 @@
-import { PageInfo } from "../../models/page-info";
 
 export interface PaginationActuator {
-
-    load(page: PageInfo): void;
 
     toFirstPage(): void ;
 

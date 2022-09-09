@@ -1,5 +1,4 @@
 import { Router } from "@angular/router";
-import { PageInfo } from "@app/api/models/page-info";
 import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { PaginationActuator } from "./pagination-actuator";
 
@@ -13,11 +12,6 @@ export class RoutePaginationActuator implements PaginationActuator {
         router: Router
     ) {
         this.apiActuator = new RouteApiActuator(router);
-    }
-
-    public load(info: PageInfo): void {
-        this.currentPage = info.page;
-        this.apiActuator.setPage(this.currentPage)
     }
 
     public toFirstPage(): void {
