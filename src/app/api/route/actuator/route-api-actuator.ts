@@ -1,4 +1,3 @@
-import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Pagination } from "../../models/pagination";
 import { Sort } from "../../models/sort";

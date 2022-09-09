@@ -2,37 +2,39 @@ import { Router } from "@angular/router";
 import { PageInfo } from "@app/api/models/page-info";
 import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { PaginationActuator } from "./pagination-actuator";
-import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-actuator";
 
 export class RoutePaginationActuator implements PaginationActuator {
 
-    private wrapped: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
+    private currentPage: number = 0;
+
+    private apiActuator: RouteApiActuator;
 
     constructor(
         router: Router
     ) {
-        const apiActuator = new RouteApiActuator(router);
-        this.wrapped.page.subscribe(pagination => apiActuator.setPage(pagination));
+        this.apiActuator = new RouteApiActuator(router);
     }
 
-    load(page: PageInfo): void {
-        this.wrapped.load(page);
+    public load(info: PageInfo): void {
+        this.currentPage = info.page;
+        this.apiActuator.setPage(this.currentPage)
     }
 
-    toFirstPage(): void {
-        this.wrapped.toFirstPage();
+    public toFirstPage(): void {
+        this.toPage(0);
     }
 
-    toPreviousPage(): void {
-        this.wrapped.toPreviousPage();
+    public toPreviousPage(): void {
+        this.toPage(this.currentPage - 1);
     }
 
-    toNextPage(): void {
-        this.wrapped.toNextPage();
+    public toNextPage(): void {
+        this.toPage(this.currentPage + 1);
     }
 
-    toPage(page: number): void {
-        this.wrapped.toPage(page);
+    public toPage(page: number): void {
+        this.currentPage = page;
+        this.apiActuator.setPage(this.currentPage)
     }
 
 }
