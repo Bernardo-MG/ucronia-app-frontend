@@ -1,5 +1,4 @@
 import { PageInfo } from "@app/api/models/page-info";
-import { Pagination } from "@app/api/models/pagination";
 import { ReplaySubject } from "rxjs";
 import { PaginationActuator } from "./pagination-actuator";
 

@@ -1,12 +1,8 @@
-import { Injectable } from "@angular/core";
-import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { PageInfo } from "@app/api/models/page-info";
+import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { PaginationActuator } from "./pagination-actuator";
 import { ReplaySubjectPaginationActuator } from "./replay-subject-pagination-actuator";
 
-@Injectable({
-    providedIn: 'root'
-})
 export class RoutePaginationActuator implements PaginationActuator {
 
     private wrapped: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();

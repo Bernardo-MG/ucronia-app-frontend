@@ -6,6 +6,7 @@ import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagi
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
+import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'crud-member-list-view',
@@ -21,12 +22,15 @@ export class MemberListViewComponent implements OnInit {
   public currentPagination: Pagination = new Pagination();
 
   private routePaginationObserver: RoutePaginationObserver;
+  
+  public paginationActuator: RoutePaginationActuator;
 
   constructor(
-    public paginationActuator: RoutePaginationActuator,
     private service: MemberService,
+    apiActuator: RouteApiActuator,
     route: ActivatedRoute
   ) {
+    this.paginationActuator = new RoutePaginationActuator(apiActuator);
     this.routePaginationObserver = new RoutePaginationObserver(route)
   }
 
