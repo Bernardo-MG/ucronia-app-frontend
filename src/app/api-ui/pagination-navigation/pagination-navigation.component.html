@@ -1,29 +1,4 @@
-<nav aria-label="Page navigation">
-    <ul class="pagination pagination-sm">
-        <li class="page-item" [ngClass]="{'disabled': !previousEnabled}">
-            <button type="button" (click)="movePrevious()" class="page-link" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </button>
-        </li>
-        <ng-template [ngIf]="skipBefore">
-            <li class="page-item">
-                <button type="button" class="page-link" disabled>...</button>
-            </li>
-        </ng-template>
-        <ng-template ngFor let-page [ngForOf]="pages">
-            <li class="page-item" [ngClass]="{'active': page === currentPage}">
-                <button type="button" (click)="moveToPage(page)" class="page-link">{{page}}</button>
-            </li>
-        </ng-template>
-        <ng-template [ngIf]="skipAfter">
-            <li class="page-item">
-                <button type="button" class="page-link" disabled>...</button>
-            </li>
-        </ng-template>
-        <li class="page-item" [ngClass]="{'disabled': !nextEnabled}">
-            <button type="button" (click)="moveNext()" class="page-link">
-                <span aria-hidden="true">&raquo;</span>
-            </button>
-        </li>
-    </ul>
-</nav>
+<pagination-navigation-template [currentPage]="status.currentPage" [totalPages]="status.totalPages"
+    [previousEnabled]="status.previousEnabled" [nextEnabled]="status.nextEnabled"
+    (previousPage)="movePrevious($event)" (nextPage)="moveNext($event)" (toPage)="moveToPage($event)">
+</pagination-navigation-template>

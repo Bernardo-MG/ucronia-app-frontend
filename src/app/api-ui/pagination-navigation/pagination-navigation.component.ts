@@ -1,55 +1,31 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { PaginationCalculator } from '@app/api/pagination/pagination-calculator';
+import { Component, Input } from '@angular/core';
+import { PaginationActuator } from '@app/api/pagination/actuator/pagination-actuator';
+import { ReplaySubjectPaginationActuator } from '@app/api/pagination/actuator/replay-subject-pagination-actuator';
+import { PaginationStatus } from '@app/api/pagination/pagination-status';
 
 @Component({
   selector: 'pagination-navigation',
   templateUrl: './pagination-navigation.component.html',
   styleUrls: ['./pagination-navigation.component.sass']
 })
-export class PaginationNavigationComponent implements OnChanges {
+export class PaginationNavigationComponent {
 
-  @Input() previousEnabled: boolean = false;
+  @Input() public actuator: PaginationActuator = new ReplaySubjectPaginationActuator();
 
-  @Input() nextEnabled: boolean = false;
-
-  @Input() totalPages: number = 0;
-
-  @Input() currentPage: number = 0;
-
-  @Output() previousPage = new EventEmitter<number>();
-
-  @Output() nextPage = new EventEmitter<number>();
-
-  @Output() toPage = new EventEmitter<number>();
-
-  public pages: number[] = [];
-
-  public skipBefore: boolean = false;
-
-  public skipAfter: boolean = false;
-
-  private paginationCalculator = new PaginationCalculator();
+  @Input() public status: PaginationStatus = new PaginationStatus();
 
   constructor() { }
 
-  ngOnChanges(): void {
-    const info = this.paginationCalculator.load({ currentPage: this.currentPage, totalPages: this.totalPages });
-
-    this.pages = info.pages;
-    this.skipBefore = info.skipBefore;
-    this.skipAfter = info.skipAfter;
-  }
-
   public moveToPage(page: number) {
-    this.toPage.emit(page);
+    this.actuator.toPage(page);
   }
 
-  public movePrevious() {
-    this.previousPage.emit(this.currentPage);
+  public movePrevious(page: number) {
+    this.actuator.toPreviousPage();
   }
 
-  public moveNext() {
-    this.nextPage.emit(this.currentPage);
+  public moveNext(page: number) {
+    this.actuator.toNextPage();
   }
 
 }

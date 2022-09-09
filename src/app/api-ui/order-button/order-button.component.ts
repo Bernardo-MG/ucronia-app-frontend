@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Component, Input } from '@angular/core';
+import { RouteOrderActuator } from '@app/api/order/actuator/route-order-actuator';
 
 @Component({
   selector: 'order-button',
@@ -8,39 +8,16 @@ import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 })
 export class OrderButtonComponent {
 
-  @Output() ascending = new EventEmitter<void>();
+  @Input() property: any;
 
-  @Output() descending = new EventEmitter<void>();
+  constructor(private orderController: RouteOrderActuator) { }
 
-  public currentDirectionIcon;
-  public alternativeDirectionIcon;
-
-  private currentEvent;
-  private alternativeEvent;
-
-  private ascendingIcon = faSortUp;
-  private descendingIcon = faSortDown;
-
-  constructor() {
-    this.currentDirectionIcon = this.ascendingIcon;
-    this.alternativeDirectionIcon = this.descendingIcon;
-
-    this.currentEvent = this.ascending;
-    this.alternativeEvent = this.descending;
+  public sortAscending() {
+    this.orderController.sortAscending(this.property);
   }
 
-  public switchDirection() {
-    // Switch icons
-    const tempIcon = this.currentDirectionIcon;
-    this.currentDirectionIcon = this.alternativeDirectionIcon;
-    this.alternativeDirectionIcon = tempIcon;
-
-    // Switch events
-    const tempEvent = this.currentEvent;
-    this.currentEvent = this.alternativeEvent;
-    this.alternativeEvent = tempEvent;
-
-    this.currentEvent.emit();
+  public sortDescending() {
+    this.orderController.sortDescending(this.property);
   }
 
 }

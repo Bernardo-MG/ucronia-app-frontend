@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { OrderButtonComponent } from './order-button.component';
 
@@ -8,9 +9,14 @@ describe('OrderButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OrderButtonComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        OrderButtonComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
