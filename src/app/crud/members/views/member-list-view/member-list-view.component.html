@@ -1,6 +1,6 @@
 <h1>members</h1>
 <button-link-create link="/members/create"></button-link-create>
-<pagination-navigation [actuator]="paginationActuator" [status]="paginationStatus"></pagination-navigation>
+<pagination-navigation [status]="paginationStatus"></pagination-navigation>
 <pagination-size-selector></pagination-size-selector>
 <ul class="list-group">
     <ng-template ngFor let-member [ngForOf]="members">

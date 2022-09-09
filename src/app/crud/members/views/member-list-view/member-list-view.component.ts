@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Pagination } from '@app/api/models/pagination';
-import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
@@ -21,15 +20,11 @@ export class MemberListViewComponent implements OnInit {
   public currentPagination: Pagination = new Pagination();
 
   private routePaginationObserver: RoutePaginationObserver;
-  
-  public paginationActuator: RoutePaginationActuator;
 
   constructor(
     private service: MemberService,
-    router: Router,
     route: ActivatedRoute
   ) {
-    this.paginationActuator = new RoutePaginationActuator(router);
     this.routePaginationObserver = new RoutePaginationObserver(route)
   }
 

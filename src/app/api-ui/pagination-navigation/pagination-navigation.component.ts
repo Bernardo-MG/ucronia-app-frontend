@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginationActuator } from '@app/api/pagination/actuator/pagination-actuator';
-import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
+import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'pagination-navigation',
@@ -11,26 +10,26 @@ import { PaginationStatus } from '@app/api/pagination/pagination-status';
 })
 export class PaginationNavigationComponent {
 
-  @Input() public actuator: PaginationActuator;
-
   @Input() public status: PaginationStatus = new PaginationStatus();
+
+  private apiActuator: RouteApiActuator;
 
   constructor(
     router: Router
   ) {
-    this.actuator = new RoutePaginationActuator(router);
+    this.apiActuator = new RouteApiActuator(router);
   }
 
   public moveToPage(page: number) {
-    this.actuator.toPage(page);
+    this.apiActuator.setPage(page);
   }
 
   public movePrevious(page: number) {
-    this.actuator.toPreviousPage();
+    this.apiActuator.setPage(page - 1);
   }
 
   public moveNext(page: number) {
-    this.actuator.toNextPage();
+    this.apiActuator.setPage(page + 1);
   }
 
 }

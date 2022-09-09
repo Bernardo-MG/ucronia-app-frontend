@@ -6,8 +6,6 @@ export class RouteApiActuator {
 
     private path: string;
 
-    private parameters: any = {};
-
     constructor(
         private router: Router
     ) {
@@ -31,12 +29,32 @@ export class RouteApiActuator {
     }
 
     public setParameter(params: any): void {
-        this.parameters = { ...this.parameters, ...params };
-        this.navigate();
+        const urlParams = this.getUrlParams();
+
+        const parameters = { ...urlParams, ...params };
+        this.navigate(parameters);
     }
 
-    private navigate(): void {
-        this.router.navigate([this.path], { queryParams: this.parameters });
+    private getUrlParams(): any {
+        const urlParams: any = {};
+
+        const sections = this.router.url.split('?');
+        if (sections.length > 1) {
+            const paramSection = sections[1];
+            const pairs = paramSection.split('&');
+            pairs.forEach(p => {
+                const pair = p.split('=');
+                if (pair.length >= 2) {
+                    urlParams[pair[0]] = pair[1];
+                }
+            });
+        }
+
+        return urlParams;
+    }
+
+    private navigate(parameters: any = {}): void {
+        this.router.navigate([this.path], { queryParams: parameters });
     }
 
 }
