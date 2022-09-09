@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { PageInfo } from "@app/api/models/page-info";
 import { RouteApiActuator } from "@app/api/route/actuator/route-api-actuator";
 import { PaginationActuator } from "./pagination-actuator";
@@ -8,8 +9,9 @@ export class RoutePaginationActuator implements PaginationActuator {
     private wrapped: ReplaySubjectPaginationActuator = new ReplaySubjectPaginationActuator();
 
     constructor(
-        apiActuator: RouteApiActuator
+        router: Router
     ) {
+        const apiActuator = new RouteApiActuator(router);
         this.wrapped.page.subscribe(pagination => apiActuator.setPage(pagination));
     }
 

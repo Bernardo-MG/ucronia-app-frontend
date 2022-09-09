@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pagination } from '@app/api/models/pagination';
-import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { RoutePaginationActuator } from '@app/api/pagination/actuator/route-pagination-actuator';
 import { PaginationStatus } from '@app/api/pagination/pagination-status';
+import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
-import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'crud-member-list-view',
@@ -27,10 +26,10 @@ export class MemberListViewComponent implements OnInit {
 
   constructor(
     private service: MemberService,
-    apiActuator: RouteApiActuator,
+    router: Router,
     route: ActivatedRoute
   ) {
-    this.paginationActuator = new RoutePaginationActuator(apiActuator);
+    this.paginationActuator = new RoutePaginationActuator(router);
     this.routePaginationObserver = new RoutePaginationObserver(route)
   }
 

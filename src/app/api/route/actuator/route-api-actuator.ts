@@ -3,9 +3,6 @@ import { Router } from "@angular/router";
 import { Pagination } from "../../models/pagination";
 import { Sort } from "../../models/sort";
 
-@Injectable({
-    providedIn: 'root'
-})
 export class RouteApiActuator {
 
     private path: string;
