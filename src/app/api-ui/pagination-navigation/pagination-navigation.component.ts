@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { PaginationStatus } from '@app/api/pagination/pagination-status';
+import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
@@ -10,7 +10,7 @@ import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 })
 export class PaginationNavigationComponent {
 
-  @Input() public status: PaginationStatus = new PaginationStatus();
+  @Input() public pageInfo: PageInfo = new PageInfo();
 
   private apiActuator: RouteApiActuator;
 

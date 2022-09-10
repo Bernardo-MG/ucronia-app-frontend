@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PageInfo } from '@app/api/models/page-info';
 import { Pagination } from '@app/api/models/pagination';
-import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
@@ -15,7 +15,7 @@ export class MemberListViewComponent implements OnInit {
 
   public members: Member[] = [];
 
-  public paginationStatus = new PaginationStatus();
+  public pageInfo = new PageInfo();
 
   private routePaginationObserver: RoutePaginationObserver;
 
@@ -29,7 +29,7 @@ export class MemberListViewComponent implements OnInit {
   ngOnInit(): void {
     this.service.getAll({}).subscribe(page => {
       this.members = page.content;
-      this.paginationStatus.load(page);
+      this.pageInfo = page;
       // Listens for changes on pagination params
       this.routePaginationObserver.pagination.subscribe(pagination => {
         this.load(pagination);
@@ -40,7 +40,7 @@ export class MemberListViewComponent implements OnInit {
   private load(pagination: Pagination) {
     this.service.getAll(pagination).subscribe(page => {
       this.members = page.content;
-      this.paginationStatus.load(page);
+      this.pageInfo = page;
     });
   }
 

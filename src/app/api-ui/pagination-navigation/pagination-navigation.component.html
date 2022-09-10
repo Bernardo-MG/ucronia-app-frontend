@@ -1,4 +1,4 @@
-<pagination-navigation-template [currentPage]="status.currentPage" [totalPages]="status.totalPages"
-    [previousEnabled]="status.previousEnabled" [nextEnabled]="status.nextEnabled"
+<pagination-navigation-template [currentPage]="pageInfo.page" [totalPages]="pageInfo.totalPages"
+    [previousEnabled]="!pageInfo.first" [nextEnabled]="!pageInfo.last"
     (previousPage)="movePrevious($event)" (nextPage)="moveNext($event)" (toPage)="moveToPage($event)">
 </pagination-navigation-template>
