@@ -3,7 +3,7 @@ export class PaginationCalculator {
 
   private rangeSize = 2;
 
-  public load(info: PaginationCalculatorInfo): PaginationCalculatorStatus {
+  public calculate(info: PaginationCalculatorInfo): PaginationCalculatorStatus {
     var start: number;
     var end: number;
     const totalp = info.totalPages - 1;

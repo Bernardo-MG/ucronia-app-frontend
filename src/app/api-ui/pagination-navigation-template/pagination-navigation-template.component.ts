@@ -33,7 +33,7 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    const info = this.paginationCalculator.load({ currentPage: this.currentPage, totalPages: this.totalPages });
+    const info = this.paginationCalculator.calculate({ currentPage: this.currentPage, totalPages: this.totalPages });
 
     this.pages = info.pages;
     this.skipBefore = info.skipBefore;
