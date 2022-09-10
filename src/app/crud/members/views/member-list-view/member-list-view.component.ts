@@ -17,8 +17,6 @@ export class MemberListViewComponent implements OnInit {
 
   public paginationStatus = new PaginationStatus();
 
-  public currentPagination: Pagination = new Pagination();
-
   private routePaginationObserver: RoutePaginationObserver;
 
   constructor(
