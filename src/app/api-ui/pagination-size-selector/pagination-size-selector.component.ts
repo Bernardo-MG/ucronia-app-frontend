@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { PaginationStatus } from '@app/api/pagination/pagination-status';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
@@ -7,9 +8,11 @@ import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
   templateUrl: './pagination-size-selector.component.html',
   styleUrls: ['./pagination-size-selector.component.sass']
 })
-export class PaginationSizeSelectorComponent implements OnChanges {
+export class PaginationSizeSelectorComponent {
 
   @Input() public sizes: number[] = [5, 10, 15, 20];
+
+  @Input() public size: number = 5;
 
   private apiActuator: RouteApiActuator;
 
@@ -17,12 +20,6 @@ export class PaginationSizeSelectorComponent implements OnChanges {
     router: Router
   ) {
     this.apiActuator = new RouteApiActuator(router);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.sizes.length > 0) {
-      this.apiActuator.setPageSize(this.sizes[0]);
-    }
   }
 
   public selectSize(size: number) {

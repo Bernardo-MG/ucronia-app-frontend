@@ -10,6 +10,8 @@ export class PaginationStatus {
 
     public nextEnabled: boolean = false;
 
+    public size: number = 0;
+
     constructor() { }
 
     public load(info: PageInfo): void {
@@ -22,6 +24,11 @@ export class PaginationStatus {
             this.totalPages = info.totalPages;
         } else {
             this.totalPages = 0;
+        }
+        if (info.size) {
+            this.size = info.size;
+        } else {
+            this.size = 0;
         }
 
         this.previousEnabled = !info.first;
