@@ -30,10 +30,10 @@ export class MemberListViewComponent implements OnInit {
     this.service.getAll({}).subscribe(page => {
       this.members = page.content;
       this.pageInfo = page;
-      // Listens for changes on pagination params
-      this.routePaginationObserver.pagination.subscribe(pagination => {
-        this.load(pagination);
-      });
+    });
+    // Listens for changes on pagination params
+    this.routePaginationObserver.pagination.subscribe(pagination => {
+      this.load(pagination);
     });
   }
 
