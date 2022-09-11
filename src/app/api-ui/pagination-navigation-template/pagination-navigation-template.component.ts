@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PageInfo } from '@app/api/models/page-info';
-import { PaginationCalculator } from '@app/api/pagination/pagination-calculator';
 
 @Component({
   selector: 'pagination-navigation-template',
@@ -13,22 +12,18 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   @Output() goTo = new EventEmitter<number>();
 
-  public pages: number[] = [];
-
-  public skipBefore: boolean = false;
-
-  public skipAfter: boolean = false;
-
-  private paginationCalculator = new PaginationCalculator();
+  public currentPage: number = 0;
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const info = this.paginationCalculator.calculate({ currentPage: this.pageInfo.page, totalPages: this.pageInfo.totalPages });
+    this.currentPage = this.pageInfo.page + 1;
+  }
 
-    this.pages = info.pages;
-    this.skipBefore = info.skipBefore;
-    this.skipAfter = info.skipAfter;
+  public onChoosePage(event: any) {
+    if (event.target.value) {
+      this.goTo.emit(event.target.value - 1);
+    }
   }
 
   public onGoTo(page: number) {

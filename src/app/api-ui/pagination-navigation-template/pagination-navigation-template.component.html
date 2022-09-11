@@ -6,22 +6,11 @@
                 <span aria-hidden="true">&laquo;</span>
             </button>
         </li>
-        <ng-template [ngIf]="skipBefore">
-            <li class="page-item">
-                <button type="button" class="page-link" disabled [attr.aria-disabled]="true">...</button>
-            </li>
-        </ng-template>
-        <ng-template ngFor let-page [ngForOf]="pages">
-            <li class="page-item" [ngClass]="{'active': page === pageInfo.page}">
-                <button type="button" (click)="onGoTo(page)" class="page-link" [attr.aria-label]="'Go to Page ' + page"
-                    [attr.aria-current]="page === pageInfo.page ? 'page' : null">{{page}}</button>
-            </li>
-        </ng-template>
-        <ng-template [ngIf]="skipAfter">
-            <li class="page-item">
-                <button type="button" class="page-link" disabled [attr.aria-disabled]="true">...</button>
-            </li>
-        </ng-template>
+        <li>
+            <div class="input-group input-group-sm mb-3">
+                <input class="form-control" aria-label="Current page" (input)="onChoosePage($event)" [value]="currentPage">{{" / " + pageInfo.totalPages}}
+            </div>
+        </li>
         <li class="page-item" [ngClass]="{'disabled': pageInfo.last}">
             <button type="button" (click)="onNext()" [disabled]="pageInfo.last" [attr.aria-disabled]="pageInfo.last"
                 class="page-link" aria-label="Next page">
