@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { Pagination } from '@app/api/models/pagination';
+import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -20,9 +23,13 @@ export class TransactionService {
     private client: RequestClient
   ) { }
 
-  public getAll(): Observable<Transaction[]> {
+  public getAll(pagination: Pagination): Observable<PaginatedResponse<Transaction[]>> {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
-    return clt.fetchUnwrapped();
+    clt.page(pagination);
+    if(pagination.sort){
+      clt.sort(<Sort<Transaction>>pagination.sort);
+    }
+    return clt.fetchPaged();
   }
 
   public create(member: Transaction): Observable<Transaction> {
