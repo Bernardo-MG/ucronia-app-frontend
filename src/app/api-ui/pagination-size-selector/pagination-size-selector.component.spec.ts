@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { PaginationSizeSelectorComponent } from './pagination-size-selector.component';
 
@@ -8,9 +9,14 @@ describe('PaginationSizeSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaginationSizeSelectorComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        PaginationSizeSelectorComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PaginationSizeSelectorComponent);
     component = fixture.componentInstance;
