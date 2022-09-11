@@ -1,8 +1,8 @@
 export class Transaction {
-    id: number = -1;
+    id: number = 0;
     description: string = "";
-    day: number = -1;
-    month: number = -1;
-    year: number = -1;
-    quantity: number = -1;
+    day: number = 0;
+    month: number = 0;
+    year: number = 0;
+    quantity: number = 0;
 }

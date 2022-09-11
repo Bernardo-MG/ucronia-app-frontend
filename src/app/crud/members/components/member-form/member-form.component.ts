@@ -7,7 +7,7 @@ import { Member } from '@app/models/member';
   templateUrl: './member-form.component.html',
   styleUrls: ['./member-form.component.sass']
 })
-export class MemberFormComponent implements OnInit, OnChanges {
+export class MemberFormComponent implements OnChanges {
 
   @Input() public data: Member = new Member();
 
@@ -31,10 +31,6 @@ export class MemberFormComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder
   ) { }
-
-  ngOnInit(): void {
-    this.form.setValue(this.data);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {

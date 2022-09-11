@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction } from '@app/models/transaction';
 
@@ -7,7 +7,7 @@ import { Transaction } from '@app/models/transaction';
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.sass']
 })
-export class TransactionFormComponent implements OnInit, OnChanges {
+export class TransactionFormComponent implements OnChanges {
 
   @Input() public data: Transaction = new Transaction();
 
@@ -31,10 +31,6 @@ export class TransactionFormComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder
   ) { }
-
-  ngOnInit(): void {
-    this.form.setValue(this.data);
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
