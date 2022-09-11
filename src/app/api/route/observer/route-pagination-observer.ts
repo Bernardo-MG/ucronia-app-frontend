@@ -1,6 +1,7 @@
 import { ActivatedRoute } from "@angular/router";
 import { Pagination } from "@app/api/models/pagination";
 import { ReplaySubject } from "rxjs";
+import { Sort } from "@app/api/models/sort";
 
 export class RoutePaginationObserver {
 
@@ -29,10 +30,33 @@ export class RoutePaginationObserver {
         pageSize = undefined;
       }
 
-      if (((pageNumber != undefined) && (pageNumber >= 0)) || ((pageSize != undefined) && ((pageSize) > 0))) {
+      let pageSort;
+      let pageSortValue;
+      if (params.has('sort')) {
+        pageSortValue = params.get('sort');
+        if(pageSortValue){
+          pageSortValue = pageSortValue.split(',');
+          pageSort = new Sort<any>(pageSortValue[0]);
+          if(pageSortValue.length>1){
+            if(pageSortValue[1] === 'desc'){
+              pageSort.order = 'desc';
+            } else {
+              pageSort.order = 'asc';
+            }
+          }
+        } else {
+          pageSort = undefined;
+        }
+        found = true;
+      } else {
+        pageSort = undefined;
+      }
+
+      if (found) {
         const pagination = new Pagination();
         pagination.page = pageNumber;
         pagination.size = pageSize;
+        pagination.sort = pageSort;
 
         this.pagination.next(pagination);
       }
