@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
-import { Pagination } from '@app/api/models/pagination';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
@@ -35,7 +35,7 @@ export class MemberListViewComponent implements OnInit {
     });
   }
 
-  private load(pagination: Pagination) {
+  private load(pagination: PaginationRequest) {
     this.service.getAll(pagination).subscribe(page => {
       this.members = page.content;
       this.pageInfo = page;

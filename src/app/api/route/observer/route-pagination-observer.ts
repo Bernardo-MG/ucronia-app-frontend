@@ -1,11 +1,11 @@
 import { ActivatedRoute } from "@angular/router";
-import { Pagination } from "@app/api/models/pagination";
-import { ReplaySubject } from "rxjs";
+import { PaginationRequest } from "@app/api/models/pagination-request";
 import { Sort } from "@app/api/models/sort";
+import { ReplaySubject } from "rxjs";
 
 export class RoutePaginationObserver {
 
-  public pagination = new ReplaySubject<Pagination>();
+  public pagination = new ReplaySubject<PaginationRequest>();
 
   constructor(
     route: ActivatedRoute
@@ -53,7 +53,7 @@ export class RoutePaginationObserver {
       }
 
       if (found) {
-        const pagination = new Pagination();
+        const pagination = new PaginationRequest();
         pagination.page = pageNumber;
         pagination.size = pageSize;
         pagination.sort = pageSort;

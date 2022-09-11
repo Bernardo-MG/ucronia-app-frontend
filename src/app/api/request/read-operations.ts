@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Pagination } from '@app/api/models/pagination';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -60,7 +60,7 @@ export class ReadOperations<T> {
     return this;
   }
 
-  public page(pagination: Pagination | undefined): ReadOperations<T> {
+  public page(pagination: PaginationRequest | undefined): ReadOperations<T> {
     let prms: HttpParams;
 
     if (pagination) {

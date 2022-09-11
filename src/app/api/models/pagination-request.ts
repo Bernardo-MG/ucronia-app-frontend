@@ -1,6 +1,6 @@
 import { Sort } from "./sort";
 
-export class Pagination {
+export class PaginationRequest {
     page?: number;
     size?: number;
     sort?: Sort<any>;

@@ -1,5 +1,5 @@
 import { Router } from "@angular/router";
-import { Pagination } from "../../models/pagination";
+import { PaginationRequest } from "../../models/pagination-request";
 import { Sort } from "../../models/sort";
 
 export class RouteApiActuator {
@@ -12,7 +12,7 @@ export class RouteApiActuator {
         this.path = this.router.url.split('?')[0];
     }
 
-    public setPagination(pagination: Pagination): void {
+    public setPagination(pagination: PaginationRequest): void {
         this.setParameter(pagination);
     }
 

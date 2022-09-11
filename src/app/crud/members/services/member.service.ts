@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
-import { Pagination } from '@app/api/models/pagination';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
@@ -22,7 +22,7 @@ export class MemberService {
     private client: RequestClient
   ) { }
 
-  public getAll(pagination: Pagination): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     clt.page(pagination);
     if(pagination.sort){
