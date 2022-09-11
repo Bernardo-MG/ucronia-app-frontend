@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
@@ -8,7 +8,7 @@ import { Member } from '@app/models/member';
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })
-export class FeeFormComponent implements OnChanges {
+export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public data: Fee = new Fee();
 
@@ -33,8 +33,14 @@ export class FeeFormComponent implements OnChanges {
     private fb: FormBuilder
   ) { }
 
+  ngOnInit(): void {
+    this.form.setValue(this.data);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    this.form.patchValue(this.data);
+    if (!changes['data'].firstChange) {
+      this.form.patchValue(this.data);
+    }
   }
 
   public saveData() {
