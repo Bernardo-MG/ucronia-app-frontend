@@ -20,16 +20,8 @@ export class PaginationNavigationComponent {
     this.apiActuator = new RouteApiActuator(router);
   }
 
-  public moveToPage(page: number) {
+  public onGoTo(page: number) {
     this.apiActuator.setPage(page);
-  }
-
-  public movePrevious(page: number) {
-    this.apiActuator.setPage(page - 1);
-  }
-
-  public moveNext(page: number) {
-    this.apiActuator.setPage(page + 1);
   }
 
 }

@@ -22,7 +22,7 @@ export class PaginationSizeSelectorComponent {
     this.apiActuator = new RouteApiActuator(router);
   }
 
-  public selectSize(size: number) {
+  public onSelect(size: number) {
     this.apiActuator.setPageSize(size);
   }
 

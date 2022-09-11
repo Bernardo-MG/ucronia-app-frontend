@@ -1,4 +1,4 @@
-<select class="form-select" id="pageSize" (change)="selectSize($event.target)">
+<select class="form-select" id="pageSize" (change)="onSelect($event.target)">
     <ng-template ngFor let-s [ngForOf]="sizes">
         <option value="{{s}}" [selected]="s === size">{{s}}</option>
     </ng-template>

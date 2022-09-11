@@ -15,7 +15,7 @@ export class PaginationSizeSelectorTemplateComponent {
 
   constructor() { }
 
-  public selectSize(event: any) {
+  public onSelect(event: any) {
     if (event.value) {
       this.select.emit(event.value);
     }
