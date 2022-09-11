@@ -11,13 +11,13 @@ export class PaginationSizeSelectorTemplateComponent {
 
   @Input() public size: number = 5;
 
-  @Output() private select = new EventEmitter<number>();
+  @Output() private selectSize = new EventEmitter<number>();
 
   constructor() { }
 
   public onSelect(event: any) {
     if (event.value) {
-      this.select.emit(event.value);
+      this.selectSize.emit(event.value);
     }
   }
 
