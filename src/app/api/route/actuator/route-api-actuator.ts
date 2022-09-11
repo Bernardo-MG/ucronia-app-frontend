@@ -25,7 +25,8 @@ export class RouteApiActuator {
     }
 
     public setOrder(sort: Sort<any>): void {
-        this.setParameter({ property: sort.property, order: sort.order });
+        const value = `${sort.property.toString()},${sort.order}`
+        this.setParameter({ sort: value });
     }
 
     public setParameter(params: any): void {

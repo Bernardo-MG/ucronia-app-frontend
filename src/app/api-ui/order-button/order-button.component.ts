@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { RouteOrderActuator } from '@app/api/order/actuator/route-order-actuator';
+import { Router } from '@angular/router';
+import { Sort } from '@app/api/models/sort';
+import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'order-button',
@@ -8,16 +10,32 @@ import { RouteOrderActuator } from '@app/api/order/actuator/route-order-actuator
 })
 export class OrderButtonComponent {
 
-  @Input() property: any;
+  @Input() property: string = '';
 
-  constructor(private orderController: RouteOrderActuator) { }
+  private apiActuator: RouteApiActuator;
 
-  public sortAscending() {
-    this.orderController.sortAscending(this.property);
+  constructor(
+    router: Router
+  ) {
+    this.apiActuator = new RouteApiActuator(router);
   }
 
-  public sortDescending() {
-    this.orderController.sortDescending(this.property);
+  public onSortAscending() {
+    const sort: Sort<any> = {
+      property: this.property,
+      order: "asc"
+    };
+
+    this.apiActuator.setOrder(sort);
+  }
+
+  public onSortDescending() {
+    const sort: Sort<any> = {
+      property: this.property,
+      order: "desc"
+    };
+
+    this.apiActuator.setOrder(sort);
   }
 
 }

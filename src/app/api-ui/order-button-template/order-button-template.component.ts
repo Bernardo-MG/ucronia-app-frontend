@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'order-button',
+  selector: 'order-button-template',
   templateUrl: './order-button-template.component.html',
   styleUrls: ['./order-button-template.component.sass']
 })
@@ -29,7 +29,7 @@ export class OrderButtonTemplateComponent {
     this.alternativeEvent = this.descending;
   }
 
-  public switchDirection() {
+  public onChangeOrder() {
     // Switch icons
     const tempIcon = this.currentDirectionIcon;
     this.currentDirectionIcon = this.alternativeDirectionIcon;

@@ -16,7 +16,7 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.currentPage = this.pageInfo.page + 1;
   }
 
