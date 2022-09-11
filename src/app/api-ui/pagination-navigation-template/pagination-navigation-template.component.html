@@ -8,7 +8,8 @@
         </li>
         <li>
             <div class="input-group input-group-sm mb-3">
-                <input class="form-control" aria-label="Current page" (input)="onChoosePage($event)" [value]="currentPage">{{" / " + pageInfo.totalPages}}
+                <input class="form-control" aria-label="Current page" (input)="onChoosePage($event)"
+                    [value]="currentPage">{{" / " + pageInfo.totalPages}}
             </div>
         </li>
         <li class="page-item" [ngClass]="{'disabled': pageInfo.last}">

@@ -1,5 +1,8 @@
-<select class="form-select" id="pageSize" (change)="onSelect($event.target)">
-    <ng-template ngFor let-s [ngForOf]="sizes">
-        <option value="{{s}}" [selected]="s === size">{{s}}</option>
-    </ng-template>
-</select>
+<div class="input-group">
+    <span class="input-group-text" id="basic-addon1">page_size</span>
+    <select class="form-select" id="pageSize" (change)="onSelect($event.target)">
+        <ng-template ngFor let-s [ngForOf]="sizes">
+            <option value="{{s}}" [selected]="s === size">{{s}}</option>
+        </ng-template>
+    </select>
+</div>
