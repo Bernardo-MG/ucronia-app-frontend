@@ -29,7 +29,7 @@ export class RoutePaginationObserver {
         pageSize = undefined;
       }
 
-      if ((pageNumber) || (pageSize)) {
+      if (((pageNumber != undefined) && (pageNumber >= 0)) || ((pageSize != undefined) && ((pageSize) > 0))) {
         const pagination = new Pagination();
         pagination.page = pageNumber;
         pagination.size = pageSize;
