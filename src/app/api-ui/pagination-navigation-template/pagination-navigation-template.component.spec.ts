@@ -92,16 +92,15 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should send an event to go to the chosen page when writing in the page input', () => {
-    component.pageInfo.page = 2;
-    fixture.detectChanges();
-
     let page: number | undefined;
     component.goTo.pipe(first()).subscribe((p: number) => page = p);
 
-    const input = fixture.debugElement.query(By.css('#go_to_page'));
-    input.triggerEventHandler('keyup');
+    const input = fixture.nativeElement.querySelector('#go_to_page');
+    input.value = '1';
+    input.dispatchEvent(new Event('input'));
 
-    expect(page).toEqual(3);
+    // The index starts on 0, so it should be one value less than the input
+    expect(page).toEqual(0);
   });
 
 });
