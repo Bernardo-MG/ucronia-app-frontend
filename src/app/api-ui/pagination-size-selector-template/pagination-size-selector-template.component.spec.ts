@@ -10,9 +10,9 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaginationSizeSelectorTemplateComponent ]
+      declarations: [PaginationSizeSelectorTemplateComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PaginationSizeSelectorTemplateComponent);
     component = fixture.componentInstance;
@@ -50,10 +50,11 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     let size: number | undefined;
     component.selectSize.pipe(first()).subscribe((p: number) => size = p);
 
-    const option = fixture.debugElement.queryAll(By.css('option'))[0];
-    option.triggerEventHandler('click');
+    const select = fixture.nativeElement.querySelector('select');
+    select.value = select.options[1].value;
+    select.dispatchEvent(new Event('change'));
 
-    expect(size).toEqual(1);
+    expect(size).toEqual(2);
   });
 
 });
