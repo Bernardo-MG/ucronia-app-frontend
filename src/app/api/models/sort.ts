@@ -1,4 +1,9 @@
-export interface Sort<T> {
+export class Sort<T> {
+
+    constructor(prop: keyof T) {
+        this.property = prop;
+    }
+
     property: keyof T;
-    order: 'asc' | 'desc';
+    order: 'asc' | 'desc' = 'asc';
 }

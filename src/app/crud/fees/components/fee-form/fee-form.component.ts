@@ -34,7 +34,9 @@ export class FeeFormComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.form.patchValue(this.data);
+    if (!changes['data'].firstChange) {
+      this.form.patchValue(this.data);
+    }
   }
 
   public saveData() {

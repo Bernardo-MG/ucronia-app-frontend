@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { PaginationRequest } from '@app/api/models/pagination-request';
+import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -20,9 +22,13 @@ export class MemberService {
     private client: RequestClient
   ) { }
 
-  public getAll(): Observable<Member[]> {
+  public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
-    return clt.fetchUnwrapped();
+    clt.page(pagination);
+    if(pagination.sort){
+      clt.sort(<Sort<Member>>pagination.sort);
+    }
+    return clt.fetchPaged();
   }
 
   public create(member: Member): Observable<Member> {

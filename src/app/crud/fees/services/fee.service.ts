@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { PaginatedResponse } from '@app/api/models/paginated-response';
+import { PaginationRequest } from '@app/api/models/pagination-request';
+import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -22,9 +25,13 @@ export class FeeService {
     private client: RequestClient
   ) { }
 
-  public getAll(): Observable<Fee[]> {
+  public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
-    return clt.fetchUnwrapped();
+    clt.page(pagination);
+    if(pagination.sort){
+      clt.sort(<Sort<Fee>>pagination.sort);
+    }
+    return clt.fetchPaged();
   }
 
   public create(fee: Fee): Observable<Fee> {

@@ -1,8 +1,8 @@
-import { Pagination } from "./pagination"
+import { PaginationRequest } from "./pagination-request"
 import { Sort } from "./sort"
 
 export interface ApiRequest<T> {
-    pagination?: Pagination,
+    pagination?: PaginationRequest,
     sort?: Sort<T>,
     search?: any
 }

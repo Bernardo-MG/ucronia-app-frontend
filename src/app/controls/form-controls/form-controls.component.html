@@ -1,8 +1,8 @@
 <div class="btn-group" role="group" aria-label="Data edition">
-    <button (click)="saveData()" [disabled]="disabledSave" type="button" class="btn btn-default">
+    <button (click)="saveData()" [disabled]="disabledSave" [attr.aria-disabled]="disabledSave" type="button" class="btn btn-default">
         <fa-icon [icon]="saveIcon"></fa-icon>
     </button>
-    <button (click)="deleteData()" [disabled]="disabledDelete" type="button" class="btn btn-default">
+    <button (click)="deleteData()" [disabled]="disabledDelete" [attr.aria-disabled]="disabledDelete" type="button" class="btn btn-default">
         <fa-icon [icon]="deleteIcon"></fa-icon>
     </button>
 </div>

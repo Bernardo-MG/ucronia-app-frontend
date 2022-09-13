@@ -1,10 +1,26 @@
 <h1>fees</h1>
-<ul class="list-group">
-    <ng-template ngFor let-fee [ngForOf]="fees">
-        <li class="list-group-item">{{fee.member}} - {{fee.month}}/{{fee.year}}
-            <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
-            <button-delete (click)="delete(fee.id)"></button-delete>
-        </li>
-    </ng-template>
-</ul>
 <button-link-create link="/fees/create"></button-link-create>
+<pagination-navigation [pageInfo]="pageInfo"></pagination-navigation>
+<pagination-size-selector [pageInfo]="pageInfo"></pagination-size-selector>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"><order-button property="member"></order-button>member</th>
+            <th scope="col"><order-button property="year"></order-button>year</th>
+            <th scope="col"><order-button property="month"></order-button>month</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-fee [ngForOf]="fees">
+            <tr>
+                <td>
+                    <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
+                </td>
+                <td>{{fee.member}}</td>
+                <td>{{fee.year}}</td>
+                <td>{{fee.month}}</td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

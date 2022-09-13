@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Pagination } from '@app/api/models/pagination';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { PaginatedResponse } from '../models/paginated-response';
 
 export class ReadOperations<T> {
 
@@ -17,6 +18,14 @@ export class ReadOperations<T> {
   public fetch(): Observable<ApiResponse<T[]>> {
     return this.http.get<ApiResponse<T[]>>(this.queryUrl, this.params).pipe(
       map((response: ApiResponse<T[]>) => { return response })
+    ).pipe(
+      catchError(this.handleError())
+    );
+  }
+
+  public fetchPaged(): Observable<PaginatedResponse<T[]>> {
+    return this.http.get<PaginatedResponse<T[]>>(this.queryUrl, this.params).pipe(
+      map((response: PaginatedResponse<T[]>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );
@@ -51,15 +60,19 @@ export class ReadOperations<T> {
     return this;
   }
 
-  public page(pagination: Pagination| undefined): ReadOperations<T> {
+  public page(pagination: PaginationRequest | undefined): ReadOperations<T> {
     let prms: HttpParams;
 
-    if(pagination){
+    if (pagination) {
       prms = this.getHttpParams();
-  
-      prms = prms.set('page', pagination.page);
-      prms = prms.set('size', pagination.size);
-  
+
+      if (pagination.page) {
+        prms = prms.set('page', pagination.page);
+      }
+      if (pagination.size) {
+        prms = prms.set('size', pagination.size);
+      }
+
       this.params = { params: prms };
     }
 

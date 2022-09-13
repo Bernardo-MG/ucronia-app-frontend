@@ -1,4 +1,5 @@
+import { Failure } from "./failure";
 
 export class ErrorResponse {
-    message: string = "";
+    errors: Failure[] = [];
 }
