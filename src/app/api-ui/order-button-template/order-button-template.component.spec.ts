@@ -26,22 +26,26 @@ describe('OrderButtonTemplateComponent', () => {
   });
 
   it('should send an event to change to descending direction when clicking for the first time', () => {
-    spyOn(component, 'descending');
+    spyOn(component.descending, 'emit');
+    spyOn(component.ascending, 'emit');
 
     const option = fixture.debugElement.query(By.css('button'));
     option.triggerEventHandler('click');
 
-    expect(component.descending).toHaveBeenCalled(); 
+    expect(component.descending.emit).toHaveBeenCalled(); 
+    expect(component.ascending.emit).not.toHaveBeenCalled(); 
   });
 
   it('should send an event to change to descending direction when clicking for the second time', () => {
-    spyOn(component, 'ascending');
+    spyOn(component.descending, 'emit');
+    spyOn(component.ascending, 'emit');
 
     const option = fixture.debugElement.query(By.css('button'));
     option.triggerEventHandler('click');
     option.triggerEventHandler('click');
 
-    expect(component.ascending).toHaveBeenCalled(); 
+    expect(component.descending.emit).toHaveBeenCalled(); 
+    expect(component.ascending.emit).toHaveBeenCalled(); 
   });
 
 });
