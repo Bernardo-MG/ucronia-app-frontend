@@ -20,4 +20,24 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should create one option for each size received', () => {
+    component.sizes = [1, 2, 3];
+    fixture.detectChanges();
+
+    const options = fixture.nativeElement.querySelectorAll('option');
+    expect(options.length).toEqual(3);
+  });
+
+  it('should select the selected value', () => {
+    component.sizes = [1, 2, 3];
+    component.selected = 2;
+    fixture.detectChanges();
+
+    const options = fixture.nativeElement.querySelectorAll('option');
+    expect(options[0].selected).toEqual(false);
+    expect(options[1].selected).toEqual(true);
+    expect(options[2].selected).toEqual(false);
+  });
+
 });

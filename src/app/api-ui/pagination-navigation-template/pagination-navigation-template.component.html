@@ -7,9 +7,11 @@
             </button>
         </li>
         <li>
-            <div class="input-group input-group-sm mb-3">
+            <div class="input-group input-group-sm">
                 <input class="form-control" aria-label="Current page" (input)="onChoosePage($event)"
-                    [value]="currentPage">{{" / " + pageInfo.totalPages}}
+                    [value]="currentPage">
+                <div> {{" / "}}</div>
+                <div id="total_pages">{{pageInfo.totalPages}}</div>
             </div>
         </li>
         <li class="page-item" [ngClass]="{'disabled': pageInfo.last}">
