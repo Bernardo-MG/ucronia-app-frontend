@@ -11,7 +11,7 @@ export class PaginationSizeSelectorTemplateComponent {
 
   @Input() public selected: number = 5;
 
-  @Output() private selectSize = new EventEmitter<number>();
+  @Output() public selectSize = new EventEmitter<number>();
 
   constructor() { }
 

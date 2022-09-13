@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { first } from 'rxjs';
 
 import { PaginationSizeSelectorTemplateComponent } from './pagination-size-selector-template.component';
 
@@ -38,6 +40,20 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     expect(options[0].selected).toEqual(false);
     expect(options[1].selected).toEqual(true);
     expect(options[2].selected).toEqual(false);
+  });
+
+  it('should send an event to change size when selecting a value', () => {
+    component.sizes = [1, 2, 3];
+    component.selected = 2;
+    fixture.detectChanges();
+
+    let size: number | undefined;
+    component.selectSize.pipe(first()).subscribe((p: number) => size = p);
+
+    const option = fixture.debugElement.queryAll(By.css('option'))[0];
+    option.triggerEventHandler('click');
+
+    expect(size).toEqual(1);
   });
 
 });
