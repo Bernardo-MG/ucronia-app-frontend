@@ -1,0 +1,36 @@
+<form-controls (save)="saveData()" [disabledSave]="!canSave()"></form-controls>
+<form [formGroup]="form" (ngSubmit)="saveData()">
+    <div class="form-group row">
+        <label for="memberId" class="col-sm-2 col-form-label">member</label>
+        <div class="col-sm-10">
+            <select class="form-select" id="memberId" formControlName="memberId">
+                <ng-template ngFor let-member [ngForOf]="members">
+                    <option value="{{member.id}}">{{member.name}}</option>
+                </ng-template>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="month" class="col-sm-2 col-form-label">month</label>
+        <div class="col-sm-10">
+            <input type="text" id="month" formControlName="month" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="year" class="col-sm-2 col-form-label">year</label>
+        <div class="col-sm-10">
+            <input type="text" id="year" formControlName="year" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="paid" class="col-sm-2 col-form-label">paid</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="paid" formControlName="paid" class="form-check-input">
+        </div>
+    </div>
+</form>
+<div *ngIf="form.invalid && (form.dirty || form.touched)" class="alert alert-danger">
+    <div *ngIf="form.get('memberId')?.hasError('required')">
+        Member is required.
+    </div>
+</div>
