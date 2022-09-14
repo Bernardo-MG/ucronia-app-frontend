@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { first } from 'rxjs';
 
 import { PaginationSizeSelectorTemplateComponent } from './pagination-size-selector-template.component';
