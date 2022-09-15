@@ -9,8 +9,6 @@ import { FeeYearRow } from '../../models/fee-year-row';
 })
 export class FeeTableComponent implements OnChanges {
 
-  @Input() public year: number = -1;
-
   @Input() public feeYears: FeeYear[] = [];
 
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
