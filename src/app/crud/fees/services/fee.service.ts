@@ -28,7 +28,7 @@ export class FeeService {
   public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
     clt.page(pagination);
-    if(pagination.sort){
+    if (pagination.sort) {
       clt.sort(<Sort<Fee>>pagination.sort);
     }
     return clt.fetchPaged();
@@ -56,6 +56,8 @@ export class FeeService {
 
   public getAllMembers(): Observable<Member[]> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    const sort: Sort<Member> = new Sort<Member>('name');
+    clt.sort(sort);
     return clt.fetchUnwrapped();
   }
 

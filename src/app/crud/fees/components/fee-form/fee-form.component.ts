@@ -23,9 +23,9 @@ export class FeeFormComponent implements OnChanges {
   @Output() public delete = new EventEmitter<number>();
 
   form: FormGroup = this.fb.group({
+    id: [-1],
     memberId: [0, Validators.required],
-    month: [new Date().getMonth(), Validators.required],
-    year: [new Date().getFullYear(), Validators.required],
+    date: [new Date(), Validators.required],
     paid: [true, Validators.required]
   });
 
@@ -35,12 +35,34 @@ export class FeeFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
-      this.form.patchValue(this.data);
+      // Create the date from the year and month
+      let date;
+
+      if (this.data.month >= 10) {
+        date = `${this.data.year}-${this.data.month}`;
+      } else {
+        date = `${this.data.year}-0${this.data.month}`;
+      }
+      const update: any = {
+        ...this.data,
+        date
+      }
+      this.form.patchValue(update);
     }
   }
 
   public saveData() {
-    this.save.emit(this.form.value);
+    const fee = new Fee();
+    fee.id = this.form.value.id;
+    fee.memberId = this.form.value.memberId;
+    fee.paid = this.form.value.paid;
+
+    const date = new Date(this.form.value.date);
+    // Correct the month index, which starts at 0
+    fee.month = date.getMonth() + 1;
+    fee.year = date.getFullYear();
+
+    this.save.emit(fee);
   }
 
   public deleteData() {
