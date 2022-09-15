@@ -17,8 +17,8 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <ng-template ngFor let-row [ngForOf]="feesTable">
+        <ng-template ngFor let-row [ngForOf]="feesTable">
+            <tr>
                 <td>{{row.member}}</td>
                 <ng-template ngFor let-column [ngForOf]="row.months">
                     <td>
@@ -27,7 +27,7 @@
                         </ng-template>
                     </td>
                 </ng-template>
-            </ng-template>
-        </tr>
+            </tr>
+        </ng-template>
     </tbody>
 </table>
