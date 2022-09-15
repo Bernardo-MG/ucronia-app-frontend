@@ -6,7 +6,15 @@
     <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col"><order-button property="name"></order-button>name</th>
+            <th scope="col">
+                <order-button property="active"></order-button>active
+            </th>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+            <th scope="col">
+                <order-button property="surname"></order-button>surname
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -15,7 +23,10 @@
                 <td>
                     <button-link-edit link="/members/{{member.id}}"></button-link-edit>
                 </td>
+                <td><input type="checkbox" [checked]="member.active" [attr.disabled]="true" class="form-check-input">
+                </td>
                 <td>{{member.name}}</td>
+                <td>{{member.surname}}</td>
             </tr>
         </ng-template>
     </tbody>
