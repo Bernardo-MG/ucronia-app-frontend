@@ -58,8 +58,8 @@ export class FeeFormComponent implements OnChanges {
 
   public saveData() {
     const fee = new Fee();
-    fee.id = this.member.id;
-    fee.memberId = this.form.value.memberId;
+    fee.id = this.form.value.id;
+    fee.memberId = this.member.id;
     fee.paid = this.form.value.paid;
 
     const date = new Date(this.form.value.date);
