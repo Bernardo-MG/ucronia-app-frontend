@@ -57,10 +57,7 @@ export class FeeFormComponent implements OnChanges {
   }
 
   public saveData() {
-    const fee = new Fee();
-    fee.id = this.form.value.id;
-    fee.memberId = this.member.id;
-    fee.paid = this.form.value.paid;
+    const fee: Fee = { ...this.form.value };
 
     const date = new Date(this.form.value.date);
     // Correct the month index, which starts at 0

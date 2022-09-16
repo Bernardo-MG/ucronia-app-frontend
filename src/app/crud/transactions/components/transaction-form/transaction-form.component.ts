@@ -22,9 +22,7 @@ export class TransactionFormComponent implements OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     description: ['', Validators.required],
-    day: [new Date().getDay(), Validators.required],
-    month: [new Date().getMonth(), Validators.required],
-    year: [new Date().getFullYear(), Validators.required],
+    date: [new Date(), Validators.required],
     quantity: [0, Validators.required]
   });
 
@@ -39,7 +37,14 @@ export class TransactionFormComponent implements OnChanges {
   }
 
   public saveData() {
-    this.save.emit(this.form.value);
+    const transaction: Transaction = { ...this.form.value };
+
+    const date = new Date(this.form.value.date);
+    transaction.day = date.getDay();
+    transaction.month = date.getMonth();
+    transaction.year = date.getFullYear();
+
+    this.save.emit(transaction);
   }
 
   public deleteData() {
