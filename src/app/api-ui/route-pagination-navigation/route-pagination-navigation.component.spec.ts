@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { RoutePaginationNavigationComponent } from './route-pagination-navigation.component';
 
-import { PaginationSizeSelectorComponent } from './pagination-size-selector.component';
-
-describe('PaginationSizeSelectorComponent', () => {
-  let component: PaginationSizeSelectorComponent;
-  let fixture: ComponentFixture<PaginationSizeSelectorComponent>;
+describe('RoutePaginationNavigationComponent', () => {
+  let component: RoutePaginationNavigationComponent;
+  let fixture: ComponentFixture<RoutePaginationNavigationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +12,14 @@ describe('PaginationSizeSelectorComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        PaginationSizeSelectorComponent
+        RoutePaginationNavigationComponent
       ]
     })
       .compileComponents();
+  });
 
-    fixture = TestBed.createComponent(PaginationSizeSelectorComponent);
+  beforeEach(() => {
+    fixture = TestBed.createComponent(RoutePaginationNavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

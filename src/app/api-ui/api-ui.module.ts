@@ -3,30 +3,30 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderButtonTemplateComponent } from './order-button-template/order-button-template.component';
 import { OrderButtonComponent } from './order-button/order-button.component';
-import { PaginationNavigationComponent } from './pagination-navigation/pagination-navigation.component';
+import { RoutePaginationNavigationComponent } from './route-pagination-navigation/route-pagination-navigation.component';
 import { PaginationNavigationTemplateComponent } from './pagination-navigation-template/pagination-navigation-template.component';
 import { PaginationSizeSelectorTemplateComponent } from './pagination-size-selector-template/pagination-size-selector-template.component';
-import { PaginationSizeSelectorComponent } from './pagination-size-selector/pagination-size-selector.component';
+import { RoutePaginationSizeSelectorComponent } from './route-pagination-size-selector/route-pagination-size-selector.component';
 
 
 
 @NgModule({
   declarations: [
     PaginationNavigationTemplateComponent,
-    PaginationNavigationComponent,
+    RoutePaginationNavigationComponent,
     OrderButtonTemplateComponent,
     OrderButtonComponent,
     PaginationSizeSelectorTemplateComponent,
-    PaginationSizeSelectorComponent
+    RoutePaginationSizeSelectorComponent
   ],
   imports: [
     CommonModule,
     FontAwesomeModule
   ],
   exports: [
-    PaginationNavigationComponent,
+    RoutePaginationNavigationComponent,
     OrderButtonComponent,
-    PaginationSizeSelectorComponent
+    RoutePaginationSizeSelectorComponent
   ]
 })
 export class ApiUiModule { }
