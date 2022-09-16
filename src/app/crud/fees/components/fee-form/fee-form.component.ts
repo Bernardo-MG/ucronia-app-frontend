@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'crud-form-fee',
@@ -10,7 +11,7 @@ import { Member } from '@app/models/member';
 })
 export class FeeFormComponent implements OnChanges {
 
-  @Input() public data: Fee = new Fee();
+  @Input() public data = new Fee();
 
   @Input() public members: Member[] = [];
 
@@ -21,6 +22,10 @@ export class FeeFormComponent implements OnChanges {
   @Output() public save = new EventEmitter<Fee>();
 
   @Output() public delete = new EventEmitter<number>();
+
+  public member = new Member();
+
+  public searchIcon = faMagnifyingGlass;
 
   form: FormGroup = this.fb.group({
     id: [-1],
@@ -53,7 +58,7 @@ export class FeeFormComponent implements OnChanges {
 
   public saveData() {
     const fee = new Fee();
-    fee.id = this.form.value.id;
+    fee.id = this.member.id;
     fee.memberId = this.form.value.memberId;
     fee.paid = this.form.value.paid;
 
@@ -79,6 +84,10 @@ export class FeeFormComponent implements OnChanges {
 
   public canDelete(): boolean {
     return ((!this.disabledDelete) && (this.form.valid));
+  }
+
+  public chooseMember(member: Member) {
+    this.member = member;
   }
 
 }

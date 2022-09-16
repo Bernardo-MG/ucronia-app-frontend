@@ -8,6 +8,8 @@ import { FeesRoutingModule } from './fees-routing.module';
 import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
 import { FeeEditViewComponent } from './views/free-edit-view/fee-edit-view.component';
 import { FeeListViewComponent } from './views/free-list-view/fee-list-view.component';
+import { MemberSelectionModalComponent } from './components/member-selection-modal/member-selection-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -16,12 +18,14 @@ import { FeeListViewComponent } from './views/free-list-view/fee-list-view.compo
     FeeFormComponent,
     FeeCreateViewComponent,
     FeeListViewComponent,
-    FeeEditViewComponent
+    FeeEditViewComponent,
+    MemberSelectionModalComponent
   ],
   imports: [
     CommonModule,
     FeesRoutingModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     ControlsModule,
     ApiUiModule
   ],

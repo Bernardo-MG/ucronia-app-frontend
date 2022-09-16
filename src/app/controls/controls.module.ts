@@ -23,7 +23,7 @@ import { ButtonSearchSecondaryComponent } from './button-search-secondary/button
   imports: [
     CommonModule,
     RouterModule,
-    FontAwesomeModule,
+    FontAwesomeModule
   ],
   exports: [
     FormControlsComponent,

@@ -2,9 +2,12 @@
 <form [formGroup]="form" (ngSubmit)="saveData()">
     <div class="form-group row">
         <div class="input-group">
-            <label for="memberId" class="col-sm-2 col-form-label">member</label>
-            <input type="text" id="memberId" formControlName="memberId" class="form-control">
-            <button-search-secondary></button-search-secondary>
+            <label for="member" class="col-sm-2 col-form-label">member</label>
+            <input type="text" id="member" class="form-control" [value]="member.name">
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop" aria-label="Search">
+                <fa-icon [icon]="searchIcon"></fa-icon>
+            </button>
         </div>
     </div>
     <div class="form-group row">
@@ -25,3 +28,4 @@
         Member is required.
     </div>
 </div>
+<crud-member-selection-modal [members]="members" (select)="chooseMember($event)"></crud-member-selection-modal>
