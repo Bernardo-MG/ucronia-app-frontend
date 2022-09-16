@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PageInfo } from '@app/api/models/page-info';
 import { Member } from '@app/models/member';
 
 @Component({
@@ -9,6 +10,8 @@ import { Member } from '@app/models/member';
 export class MemberSelectionComponent {
 
   @Input() public members: Member[] = [];
+
+  @Input() public pageInfo = new PageInfo();
 
   @Output() public select = new EventEmitter<Member>();
 
