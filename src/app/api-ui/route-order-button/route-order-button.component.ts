@@ -4,11 +4,11 @@ import { Sort } from '@app/api/models/sort';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
-  selector: 'order-button',
-  templateUrl: './order-button.component.html',
-  styleUrls: ['./order-button.component.sass']
+  selector: 'route-order-button',
+  templateUrl: './route-order-button.component.html',
+  styleUrls: ['./route-order-button.component.sass']
 })
-export class OrderButtonComponent {
+export class RouteOrderButtonComponent {
 
   @Input() property: string = '';
 

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { OrderButtonComponent } from './order-button.component';
+import { RouteOrderButtonComponent } from './route-order-button.component';
 
-describe('OrderButtonComponent', () => {
-  let component: OrderButtonComponent;
-  let fixture: ComponentFixture<OrderButtonComponent>;
+describe('RouteOrderButtonComponent', () => {
+  let component: RouteOrderButtonComponent;
+  let fixture: ComponentFixture<RouteOrderButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,14 +13,14 @@ describe('OrderButtonComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        OrderButtonComponent
+        RouteOrderButtonComponent
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderButtonComponent);
+    fixture = TestBed.createComponent(RouteOrderButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
