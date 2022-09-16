@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'crud-member-selection-modal',
-  templateUrl: './member-selection-modal.component.html',
-  styleUrls: ['./member-selection-modal.component.sass']
+  selector: 'crud-member-selection',
+  templateUrl: './member-selection.component.html',
+  styleUrls: ['./member-selection.component.sass']
 })
-export class MemberSelectionModalComponent {
+export class MemberSelectionComponent {
 
   @Input() public members: Member[] = [];
 

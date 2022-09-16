@@ -13,7 +13,11 @@ export class FeeEditViewComponent implements OnInit {
 
   public members: Member[] = [];
 
+  public member = new Member();
+
   public fee: Fee = new Fee();
+
+  public selectingMember = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,23 +25,32 @@ export class FeeEditViewComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.service.getAllMembers().subscribe(d => this.members = d);
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
   }
 
-  save(data: Fee): void {
+  public onSave(data: Fee): void {
     this.service.update(data.id, data).subscribe(d => {
       this.router.navigate(['/fees']);
     });
   }
 
-  delete(id: number): void {
+  public onDelete(id: number): void {
     this.service.delete(id).subscribe(d => {
       this.router.navigate(['/fees']);
     });
+  }
+
+  public onRequestMember(){
+    this.selectingMember = true;
+  }
+
+  public onSelectMember(member: Member) {
+    this.member = member;
+    this.selectingMember = false;
   }
 
   private load(id: string | null): void {

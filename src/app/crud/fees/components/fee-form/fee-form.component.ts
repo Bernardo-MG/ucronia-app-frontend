@@ -13,7 +13,7 @@ export class FeeFormComponent implements OnChanges {
 
   @Input() public data = new Fee();
 
-  @Input() public members: Member[] = [];
+  @Input() public member = new Member();
 
   @Input() public disabledSave: boolean = false;
 
@@ -23,7 +23,7 @@ export class FeeFormComponent implements OnChanges {
 
   @Output() public delete = new EventEmitter<number>();
 
-  public member = new Member();
+  @Output() public selectMember = new EventEmitter<void>();
 
   public searchIcon = faMagnifyingGlass;
 
@@ -86,8 +86,8 @@ export class FeeFormComponent implements OnChanges {
     return ((!this.disabledDelete) && (this.form.valid));
   }
 
-  public chooseMember(member: Member) {
-    this.member = member;
+  public onSelectMember() {
+    this.selectMember.emit();
   }
 
 }
