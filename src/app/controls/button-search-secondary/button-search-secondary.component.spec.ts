@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ButtonSearchComponent } from './button-search.component';
+import { ButtonSearchSecondaryComponent } from './button-search-secondary.component';
 
 describe('ButtonSearchComponent', () => {
-  let component: ButtonSearchComponent;
-  let fixture: ComponentFixture<ButtonSearchComponent>;
+  let component: ButtonSearchSecondaryComponent;
+  let fixture: ComponentFixture<ButtonSearchSecondaryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonSearchComponent ]
+      declarations: [ ButtonSearchSecondaryComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ButtonSearchComponent);
+    fixture = TestBed.createComponent(ButtonSearchSecondaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
