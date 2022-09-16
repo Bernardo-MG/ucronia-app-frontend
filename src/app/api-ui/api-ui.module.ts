@@ -13,10 +13,10 @@ import { RoutePaginationSizeSelectorComponent } from './route-pagination-size-se
 @NgModule({
   declarations: [
     PaginationNavigationTemplateComponent,
-    RoutePaginationNavigationComponent,
-    OrderButtonTemplateComponent,
-    RouteOrderButtonComponent,
     PaginationSizeSelectorTemplateComponent,
+    OrderButtonTemplateComponent,
+    RoutePaginationNavigationComponent,
+    RouteOrderButtonComponent,
     RoutePaginationSizeSelectorComponent
   ],
   imports: [
@@ -24,6 +24,9 @@ import { RoutePaginationSizeSelectorComponent } from './route-pagination-size-se
     FontAwesomeModule
   ],
   exports: [
+    PaginationNavigationTemplateComponent,
+    PaginationSizeSelectorTemplateComponent,
+    OrderButtonTemplateComponent,
     RoutePaginationNavigationComponent,
     RouteOrderButtonComponent,
     RoutePaginationSizeSelectorComponent

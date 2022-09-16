@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PageInfo } from '@app/api/models/page-info';
 import { FeeService } from '@app/crud/fees/services/fee.service';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
@@ -15,6 +16,8 @@ export class FeeCreateViewComponent implements OnInit {
 
   public member = new Member();
 
+  public membersPageInfo = new PageInfo();
+
   public fee: Fee = new Fee();
 
   public selectingMember = false;
@@ -25,7 +28,7 @@ export class FeeCreateViewComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.service.getAllMembers().subscribe(d => this.members = d);
+    this.onGoToMembersPage(0);
   }
 
   public onSave(data: Fee): void {
@@ -41,6 +44,13 @@ export class FeeCreateViewComponent implements OnInit {
   public onSelectMember(member: Member){
     this.member = member;
     this.selectingMember = false;
+  }
+
+  public onGoToMembersPage(page: number){
+    this.service.getMembers(page).subscribe(response => {
+      this.members = response.content;
+      this.membersPageInfo = response;
+    });
   }
 
 }

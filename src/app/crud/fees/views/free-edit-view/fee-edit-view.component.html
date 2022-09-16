@@ -5,5 +5,5 @@
     <crud-form-fee [data]="fee" [member]="member" (save)="onSave($event)" (delete)="onDelete($event)" (selectMember)="onRequestMember()"></crud-form-fee>
 </ng-template>
 <ng-template #member_selection>
-    <crud-member-selection [members]="members" (select)="onSelectMember($event)"></crud-member-selection>
+    <crud-member-selection [members]="members" (select)="onSelectMember($event)" [pageInfo]="membersPageInfo" (goToPage)="onGoToMembersPage($event)"></crud-member-selection>
 </ng-template>

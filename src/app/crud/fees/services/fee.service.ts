@@ -54,11 +54,12 @@ export class FeeService {
     return clt.fetchOneUnwrapped();
   }
 
-  public getAllMembers(): Observable<Member[]> {
+  public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     const sort: Sort<Member> = new Sort<Member>('name');
+    clt.page({ page });
     clt.sort(sort);
-    return clt.fetchUnwrapped();
+    return clt.fetchPaged();
   }
 
 }

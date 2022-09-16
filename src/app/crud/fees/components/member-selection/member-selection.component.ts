@@ -15,14 +15,16 @@ export class MemberSelectionComponent {
 
   @Output() public select = new EventEmitter<Member>();
 
+  @Output() public goToPage = new EventEmitter<number>();
+
   constructor() { }
 
-  public onSelect(event: any) {
-    if (event.value) {
-      const index = Number(event.value);
-      const member = this.members[index];
-      this.select.emit(member);
-    }
+  public onSelect(member: Member) {
+    this.select.emit(member);
+  }
+
+  public onGoToPage(page: number) {
+    this.goToPage.emit(page);
   }
 
 }
