@@ -10,8 +10,12 @@ export class ButtonDeleteComponent {
 
   @Output() public save = new EventEmitter<void>();
 
-  public deleteIcon = faTrashCan;
+  public icon = faTrashCan;
 
   constructor() { }
+
+  public onAction() {
+    this.save.emit();
+  }
 
 }

@@ -8,6 +8,7 @@ import { ButtonLinkEditComponent } from './button-link-edit/button-link-edit.com
 import { FormControlsComponent } from './form-controls/form-controls.component';
 import { ButtonBackwardComponent } from './button-backward/button-backward.component';
 import { ButtonForwardComponent } from './button-forward/button-forward.component';
+import { ButtonSearchComponent } from './button-search/button-search.component';
 
 
 
@@ -18,7 +19,8 @@ import { ButtonForwardComponent } from './button-forward/button-forward.componen
     ButtonLinkCreateComponent,
     ButtonDeleteComponent,
     ButtonBackwardComponent,
-    ButtonForwardComponent
+    ButtonForwardComponent,
+    ButtonSearchComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { ButtonForwardComponent } from './button-forward/button-forward.componen
     ButtonLinkCreateComponent,
     ButtonLinkEditComponent,
     ButtonBackwardComponent,
-    ButtonForwardComponent
+    ButtonForwardComponent,
+    ButtonSearchComponent
   ]
 })
 export class ControlsModule { }

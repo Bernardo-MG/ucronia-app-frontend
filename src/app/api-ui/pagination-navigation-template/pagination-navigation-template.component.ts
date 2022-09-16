@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { PageInfo } from '@app/api/models/page-info';
+import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'pagination-navigation-template',
@@ -13,6 +14,9 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
   @Output() goTo = new EventEmitter<number>();
 
   public currentPage: number = 0;
+  
+  public backwardIcon = faBackward;
+  public forwardIcon = faForward;
 
   constructor() { }
 
