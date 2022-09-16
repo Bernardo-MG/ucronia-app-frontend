@@ -47,7 +47,7 @@ export class FeeEditViewComponent implements OnInit {
     });
   }
 
-  public onRequestMember(){
+  public onRequestMember() {
     this.selectingMember = true;
   }
 
@@ -56,7 +56,7 @@ export class FeeEditViewComponent implements OnInit {
     this.selectingMember = false;
   }
 
-  public onGoToMembersPage(page: number){
+  public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
       this.membersPageInfo = response;
@@ -69,6 +69,7 @@ export class FeeEditViewComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.fee = d;
+          this.service.getOneMember(this.fee.memberId).subscribe(d => this.member = d);
         });
     }
   }

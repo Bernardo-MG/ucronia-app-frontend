@@ -62,4 +62,9 @@ export class FeeService {
     return clt.fetchPaged();
   }
 
+  public getOneMember(id: number): Observable<Member> {
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
+    return clt.fetchOneUnwrapped();
+  }
+
 }
