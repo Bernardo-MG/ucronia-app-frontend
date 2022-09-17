@@ -37,14 +37,7 @@ export class TransactionFormComponent implements OnChanges {
   }
 
   public saveData() {
-    const transaction: Transaction = { ...this.form.value };
-
-    const date = new Date(this.form.value.date);
-    transaction.day = date.getDay();
-    transaction.month = date.getMonth();
-    transaction.year = date.getFullYear();
-
-    this.save.emit(transaction);
+    this.save.emit(this.form.value);
   }
 
   public deleteData() {

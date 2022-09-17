@@ -30,7 +30,7 @@ export class FeeFormComponent implements OnChanges {
   form: FormGroup = this.fb.group({
     id: [-1],
     memberId: [0, Validators.required],
-    date: [new Date(), Validators.required],
+    payDate: [new Date(), Validators.required],
     paid: [true, Validators.required]
   });
 
@@ -43,10 +43,10 @@ export class FeeFormComponent implements OnChanges {
       // Create the date from the year and month
       let date;
 
-      if (this.data.month >= 10) {
-        date = `${this.data.year}-${this.data.month}`;
+      if (this.data.payDate.getMonth() >= 10) {
+        date = `${this.data.payDate.getFullYear()}-${this.data.payDate.getMonth()}`;
       } else {
-        date = `${this.data.year}-0${this.data.month}`;
+        date = `${this.data.payDate.getFullYear()}-0${this.data.payDate.getMonth()}`;
       }
       const update: any = {
         ...this.data,
@@ -57,14 +57,7 @@ export class FeeFormComponent implements OnChanges {
   }
 
   public saveData() {
-    const fee: Fee = { ...this.form.value };
-
-    const date = new Date(this.form.value.date);
-    // Correct the month index, which starts at 0
-    fee.month = date.getMonth() + 1;
-    fee.year = date.getFullYear();
-
-    this.save.emit(fee);
+    this.save.emit(this.form.value);
   }
 
   public deleteData() {
