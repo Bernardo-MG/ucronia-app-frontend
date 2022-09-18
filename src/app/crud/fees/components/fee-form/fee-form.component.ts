@@ -62,7 +62,12 @@ export class FeeFormComponent implements OnChanges {
   }
 
   public saveData() {
-    this.save.emit(this.form.value);
+    const payDate = new Date(this.form.value.payDate);
+
+    this.save.emit({
+      ...this.form.value,
+      payDate
+    });
   }
 
   public deleteData() {
