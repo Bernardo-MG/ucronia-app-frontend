@@ -22,7 +22,7 @@ export class TransactionFormComponent implements OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     description: ['', Validators.required],
-    date: [new Date(), Validators.required],
+    payDate: [new Date(), Validators.required],
     quantity: [0, Validators.required]
   });
 
