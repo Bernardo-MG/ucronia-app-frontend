@@ -42,15 +42,20 @@ export class FeeFormComponent implements OnChanges {
     if (!changes['data'].firstChange) {
       // Create the date from the year and month
       let date;
+      let month;
 
-      if (this.data.payDate.getMonth() >= 10) {
-        date = `${this.data.payDate.getFullYear()}-${this.data.payDate.getMonth()}`;
+      const payDate = new Date(this.data.payDate);
+
+      if (payDate.getMonth() >= 9) {
+        month = `${payDate.getMonth() + 1}`;
       } else {
-        date = `${this.data.payDate.getFullYear()}-0${this.data.payDate.getMonth()}`;
+        month = `0${payDate.getMonth() + 1}`;
       }
+
+      date = `${payDate.getFullYear()}-${month}`;
       const update: any = {
         ...this.data,
-        date
+        payDate: date
       }
       this.form.patchValue(update);
     }

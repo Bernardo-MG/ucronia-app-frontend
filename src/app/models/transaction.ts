@@ -1,6 +1,6 @@
 export class Transaction {
     id: number = 0;
     description: string = "";
-    payDate: Date = new Date();
+    payDate: string = "";
     quantity: number = 0;
 }
