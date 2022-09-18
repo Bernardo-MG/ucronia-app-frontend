@@ -66,6 +66,7 @@ export class FeeFormComponent implements OnChanges {
 
     this.save.emit({
       ...this.form.value,
+      memberId: this.member.id,
       payDate
     });
   }
