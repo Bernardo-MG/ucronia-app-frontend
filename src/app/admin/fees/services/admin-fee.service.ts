@@ -20,7 +20,7 @@ export class AdminFeeService {
   public getAllForYear(year: number): Observable<FeeYear[]> {
     const url = `${this.feeYearUrl}/${year}`;
     const clt: ReadOperations<FeeYear> = this.client.read(url);
-    const sort = new Sort<FeeYear>("memberId");
+    const sort = new Sort<FeeYear>("member");
 
     clt.sort(sort);
     return clt.fetchUnwrapped();
