@@ -7,6 +7,8 @@
         <tr>
             <th scope="col"></th>
             <th scope="col"><route-order-button property="description"></route-order-button>description</th>
+            <th scope="col"><route-order-button property="payDate"></route-order-button>payDate</th>
+            <th scope="col"><route-order-button property="quantity"></route-order-button>quantity</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +19,7 @@
                 </td>
                 <td>{{transaction.description}}</td>
                 <td>{{transaction.payDate}}</td>
+                <td>{{transaction.quantity}}</td>
             </tr>
         </ng-template>
     </tbody>
