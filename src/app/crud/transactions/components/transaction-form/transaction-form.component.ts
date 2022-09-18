@@ -23,7 +23,7 @@ export class TransactionFormComponent implements OnChanges {
     id: [-1],
     description: ['', Validators.required],
     payDate: [new Date(), Validators.required],
-    quantity: [0, Validators.required]
+    amount: [0, Validators.required]
   });
 
   constructor(
