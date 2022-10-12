@@ -33,7 +33,7 @@ export class RoutePaginationObserver {
   }
 
   private getPageNumber(params: ParamMap): number | undefined {
-    let pageNumber;
+    let pageNumber: number | undefined;
 
     if (params.has('page')) {
       pageNumber = Number(params.get('page'));
@@ -45,7 +45,7 @@ export class RoutePaginationObserver {
   }
 
   private getSizeNumber(params: ParamMap): number | undefined {
-    let pageNumber;
+    let pageNumber: number | undefined;
 
     if (params.has('size')) {
       pageNumber = Number(params.get('size'));
@@ -61,6 +61,7 @@ export class RoutePaginationObserver {
     let pageSortValue: string | null;
     let pageSortPair: string[];
     let property: string;
+    let direction: string;
 
     if (params.has('sort')) {
       pageSortValue = params.get('sort');
@@ -68,11 +69,11 @@ export class RoutePaginationObserver {
         pageSortPair = pageSortValue.split(',');
         property = pageSortPair[0];
         pageSort = new Sort<any>(property);
+
         if (pageSortPair.length > 1) {
-          if (pageSortPair[1] === 'desc') {
-            pageSort.order = 'desc';
-          } else {
-            pageSort.order = 'asc';
+          direction = pageSortPair[1];
+          if ((direction === 'desc') || (direction === 'asc')) {
+            pageSort.order = direction;
           }
         }
       } else {
