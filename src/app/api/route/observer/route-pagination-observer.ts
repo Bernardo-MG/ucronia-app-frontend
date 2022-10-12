@@ -15,24 +15,11 @@ export class RoutePaginationObserver {
 
     // Listens to route changes
     route.queryParamMap.subscribe(params => {
-      let found = false;
-
       const pageNumber = this.getPageNumber(params);
-      if (pageNumber) {
-        found = true;
-      }
-
       const pageSize = this.getSizeNumber(params);
-      if (pageSize) {
-        found = true;
-      }
-
       const pageSort = this.getSort(params);
-      if (pageSort) {
-        found = true;
-      }
 
-      if (found) {
+      if ((pageNumber) || (pageSize) || (pageSort)) {
         const pagination = new PaginationRequest();
         pagination.page = pageNumber;
         pagination.size = pageSize;
