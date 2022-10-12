@@ -24,18 +24,21 @@ export class TransactionListViewComponent implements OnInit {
     route: ActivatedRoute
   ) {
     this.routePaginationObserver = new RoutePaginationObserver(route)
-  }
-
-  ngOnInit(): void {
-    // Initial request
-    this.load({});
+    
     // Listens for changes on pagination params
     this.routePaginationObserver.pagination.subscribe(pagination => {
       this.load(pagination);
     });
   }
 
-  private load(pagination: PaginationRequest) {
+  ngOnInit(): void {
+    // Initial request
+    if (this.routePaginationObserver.empty) {
+      this.load();
+    }
+  }
+
+  private load(pagination: PaginationRequest = new PaginationRequest()) {
     this.service.getAll(pagination).subscribe(page => {
       this.transactions = page.content;
       this.pageInfo = page;

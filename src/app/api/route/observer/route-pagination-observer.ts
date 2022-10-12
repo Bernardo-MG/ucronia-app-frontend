@@ -7,6 +7,8 @@ export class RoutePaginationObserver {
 
   public pagination = new ReplaySubject<PaginationRequest>();
 
+  public empty: boolean = true;
+
   constructor(
     route: ActivatedRoute
   ) {
@@ -59,6 +61,8 @@ export class RoutePaginationObserver {
         pagination.sort = pageSort;
 
         this.pagination.next(pagination);
+
+        this.empty = false;
       }
     });
   }
