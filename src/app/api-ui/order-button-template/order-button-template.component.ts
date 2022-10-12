@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'order-button-template',
@@ -12,35 +12,39 @@ export class OrderButtonTemplateComponent {
 
   @Output() descending = new EventEmitter<void>();
 
-  public currentDirectionIcon;
-  public alternativeDirectionIcon;
+  public directionIcon;
 
-  private currentEvent;
-  private alternativeEvent;
+  private directionEvent = this.ascending;
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
+  private defaultIcon = faSort;
+
+  private isAscending = true;
 
   constructor() {
-    this.currentDirectionIcon = this.ascendingIcon;
-    this.alternativeDirectionIcon = this.descendingIcon;
-
-    this.currentEvent = this.ascending;
-    this.alternativeEvent = this.descending;
+    this.directionIcon = this.defaultIcon;
   }
 
   public onChangeOrder() {
     // Switch icons
-    const tempIcon = this.currentDirectionIcon;
-    this.currentDirectionIcon = this.alternativeDirectionIcon;
-    this.alternativeDirectionIcon = tempIcon;
+    if (this.isAscending) {
+      // Currently it is in ascending order
+      // Switching to descending order
+      this.isAscending = false;
 
-    // Switch events
-    const tempEvent = this.currentEvent;
-    this.currentEvent = this.alternativeEvent;
-    this.alternativeEvent = tempEvent;
+      this.directionIcon = this.descendingIcon;
+      this.directionEvent = this.descending;
+    } else {
+      // Currently it is in descending order
+      // Switching to ascending order
+      this.isAscending = true;
 
-    this.currentEvent.emit();
+      this.directionIcon = this.ascendingIcon;
+      this.directionEvent = this.ascending;
+    }
+
+    this.directionEvent.emit();
   }
 
 }
