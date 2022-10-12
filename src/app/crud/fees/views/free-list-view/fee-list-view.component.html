@@ -6,8 +6,9 @@
     <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col"><route-order-button property="member"></route-order-button>member</th>
-            <th scope="col"><route-order-button property="payDate"></route-order-button>pay date</th>
+            <th scope="col"><route-order-button property="name"></route-order-button>name</th>
+            <th scope="col"><route-order-button property="surname"></route-order-button>surname</th>
+            <th scope="col"><route-order-button property="date"></route-order-button>pay date</th>
             <th scope="col"><route-order-button property="paid"></route-order-button>paid</th>
         </tr>
     </thead>
@@ -17,8 +18,9 @@
                 <td>
                     <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
                 </td>
-                <td>{{fee.member}}</td>
-                <td>{{fee.payDate}}</td>
+                <td>{{fee.name}}</td>
+                <td>{{fee.surname}}</td>
+                <td>{{fee.date}}</td>
                 <td>{{fee.paid}}</td>
             </tr>
         </ng-template>

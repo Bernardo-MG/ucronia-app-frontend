@@ -7,7 +7,7 @@
         <tr>
             <th scope="col"></th>
             <th scope="col"><route-order-button property="description"></route-order-button>description</th>
-            <th scope="col"><route-order-button property="payDate"></route-order-button>payDate</th>
+            <th scope="col"><route-order-button property="date"></route-order-button>pay date</th>
             <th scope="col"><route-order-button property="amount"></route-order-button>amount</th>
         </tr>
     </thead>
@@ -18,7 +18,7 @@
                     <button-link-edit link="/transactions/{{transaction.id}}"></button-link-edit>
                 </td>
                 <td>{{transaction.description}}</td>
-                <td>{{transaction.payDate}}</td>
+                <td>{{transaction.date}}</td>
                 <td>{{transaction.amount}}</td>
             </tr>
         </ng-template>

@@ -30,7 +30,7 @@ export class FeeFormComponent implements OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     memberId: [0, Validators.required],
-    payDate: [new Date(), Validators.required],
+    date: [new Date(), Validators.required],
     paid: [true, Validators.required]
   });
 
@@ -41,33 +41,33 @@ export class FeeFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
       // Create the date from the year and month
-      let date;
+      let formattedDate;
       let month;
 
-      const payDate = new Date(this.data.payDate);
+      const date = new Date(this.data.date);
 
-      if (payDate.getMonth() >= 9) {
-        month = `${payDate.getMonth() + 1}`;
+      if (date.getMonth() >= 9) {
+        month = `${date.getMonth() + 1}`;
       } else {
-        month = `0${payDate.getMonth() + 1}`;
+        month = `0${date.getMonth() + 1}`;
       }
 
-      date = `${payDate.getFullYear()}-${month}`;
+      formattedDate = `${date.getFullYear()}-${month}`;
       const update: any = {
         ...this.data,
-        payDate: date
+        date: formattedDate
       }
       this.form.patchValue(update);
     }
   }
 
   public saveData() {
-    const payDate = new Date(this.form.value.payDate);
+    const date = new Date(this.form.value.date);
 
     this.save.emit({
       ...this.form.value,
       memberId: this.member.id,
-      payDate
+      date
     });
   }
 

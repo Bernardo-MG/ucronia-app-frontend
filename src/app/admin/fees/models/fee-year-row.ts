@@ -1,5 +1,6 @@
 export class FeeYearRow {
-    member: string = '';
+    name: string = '';
+    surname: string = '';
     active: boolean = false;
     months: (boolean | undefined)[] = [];
 }

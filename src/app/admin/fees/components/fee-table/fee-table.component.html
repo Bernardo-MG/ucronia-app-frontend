@@ -22,10 +22,10 @@
                 <td>
                     <div *ngIf="row.active; then activeMember else inactiveMember"></div>
                     <ng-template #activeMember>
-                        {{row.member}}
+                        {{row.name}} {{row.surname}}
                     </ng-template>
                     <ng-template #inactiveMember>
-                        <div class="text-decoration-line-through">{{row.member}}</div>
+                        <div class="text-decoration-line-through">{{row.name}} {{row.surname}}</div>
                     </ng-template>
                 </td>
                 <ng-template ngFor let-column [ngForOf]="row.months">

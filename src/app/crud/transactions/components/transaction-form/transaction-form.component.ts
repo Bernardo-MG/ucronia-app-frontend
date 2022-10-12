@@ -22,7 +22,7 @@ export class TransactionFormComponent implements OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     description: ['', Validators.required],
-    payDate: [new Date(), Validators.required],
+    date: [new Date(), Validators.required],
     amount: [0, Validators.required]
   });
 
@@ -33,28 +33,28 @@ export class TransactionFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
       // Create the date
-      let date;
+      let formattedDate;
       let month;
       let day;
 
-      const payDate = new Date(this.data.payDate);
+      const date = new Date(this.data.date);
 
-      if (payDate.getMonth() >= 9) {
-        month = `${payDate.getMonth() + 1}`;
+      if (date.getMonth() >= 9) {
+        month = `${date.getMonth() + 1}`;
       } else {
-        month = `0${payDate.getMonth() + 1}`;
+        month = `0${date.getMonth() + 1}`;
       }
 
-      if (payDate.getDate() >= 10) {
-        day = `${payDate.getDate()}`;
+      if (date.getDate() >= 10) {
+        day = `${date.getDate()}`;
       } else {
-        day = `0${payDate.getDate()}`;
+        day = `0${date.getDate()}`;
       }
 
-      date = `${payDate.getFullYear()}-${month}-${day}`;
+      formattedDate = `${date.getFullYear()}-${month}-${day}`;
       const update: any = {
         ...this.data,
-        payDate: date
+        date: formattedDate
       }
       this.form.patchValue(update);
     }
