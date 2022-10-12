@@ -30,7 +30,7 @@
                 </td>
                 <ng-template ngFor let-column [ngForOf]="row.months">
                     <td>
-                        <ng-template [ngIf]="column != undefined"><input type="checkbox" [checked]="column"
+                        <ng-template [ngIf]="column !== undefined"><input type="checkbox" [checked]="column"
                                 [attr.disabled]="true" id="active" class="form-check-input">
                         </ng-template>
                     </td>
