@@ -4,9 +4,9 @@ import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
-  selector: 'route-pagination-size-selector',
-  templateUrl: './route-pagination-size-selector.component.html',
-  styleUrls: ['./route-pagination-size-selector.component.sass']
+  selector: 'pagination-route-size-selector',
+  templateUrl: './pagination-route-size-selector.component.html',
+  styleUrls: ['./pagination-route-size-selector.component.sass']
 })
 export class RoutePaginationSizeSelectorComponent {
 

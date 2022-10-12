@@ -4,9 +4,9 @@ import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
-  selector: 'route-pagination-navigation',
-  templateUrl: './route-pagination-navigation.component.html',
-  styleUrls: ['./route-pagination-navigation.component.sass']
+  selector: 'pagination-route-navigation',
+  templateUrl: './pagination-route-navigation.component.html',
+  styleUrls: ['./pagination-route-navigation.component.sass']
 })
 export class RoutePaginationNavigationComponent {
 
