@@ -1,14 +1,14 @@
 <h1>transactions</h1>
 <button-link-create link="/transactions/create"></button-link-create>
-<pagination-route-navigation [pageInfo]="pageInfo"></pagination-route-navigation>
-<pagination-route-size-selector [pageInfo]="pageInfo"></pagination-route-size-selector>
+<pagination-navigation [pageInfo]="pageInfo"></pagination-navigation>
+<pagination-size-selector [pageInfo]="pageInfo"></pagination-size-selector>
 <table class="table">
     <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col"><order-route-button property="description"></order-route-button>description</th>
-            <th scope="col"><order-route-button property="date"></order-route-button>pay date</th>
-            <th scope="col"><order-route-button property="amount"></order-route-button>amount</th>
+            <th scope="col"><order-button property="description"></order-button>description</th>
+            <th scope="col"><order-button property="date"></order-button>pay date</th>
+            <th scope="col"><order-button property="amount"></order-button>amount</th>
         </tr>
     </thead>
     <tbody>

@@ -4,11 +4,11 @@ import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
-  selector: 'pagination-route-navigation',
-  templateUrl: './pagination-route-navigation.component.html',
-  styleUrls: ['./pagination-route-navigation.component.sass']
+  selector: 'pagination-navigation',
+  templateUrl: './pagination-navigation.component.html',
+  styleUrls: ['./pagination-navigation.component.sass']
 })
-export class RoutePaginationNavigationComponent {
+export class PaginationNavigationComponent {
 
   @Input() public pageInfo: PageInfo = new PageInfo();
 

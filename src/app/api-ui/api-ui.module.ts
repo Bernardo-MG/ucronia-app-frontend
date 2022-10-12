@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OrderButtonTemplateComponent } from './order-button-template/order-button-template.component';
-import { RouteOrderButtonComponent } from './order-route-button/order-route-button.component';
-import { RoutePaginationNavigationComponent } from './pagination-route-navigation/pagination-route-navigation.component';
+import { OrderButtonComponent } from './order-button/order-button.component';
 import { PaginationNavigationTemplateComponent } from './pagination-navigation-template/pagination-navigation-template.component';
+import { PaginationNavigationComponent } from './pagination-navigation/pagination-navigation.component';
 import { PaginationSizeSelectorTemplateComponent } from './pagination-size-selector-template/pagination-size-selector-template.component';
-import { RoutePaginationSizeSelectorComponent } from './pagination-route-size-selector/pagination-route-size-selector.component';
+import { PaginationSizeSelectorComponent } from './pagination-size-selector/pagination-size-selector.component';
 
 
 
@@ -15,9 +15,9 @@ import { RoutePaginationSizeSelectorComponent } from './pagination-route-size-se
     PaginationNavigationTemplateComponent,
     PaginationSizeSelectorTemplateComponent,
     OrderButtonTemplateComponent,
-    RoutePaginationNavigationComponent,
-    RouteOrderButtonComponent,
-    RoutePaginationSizeSelectorComponent
+    PaginationNavigationComponent,
+    OrderButtonComponent,
+    PaginationSizeSelectorComponent
   ],
   imports: [
     CommonModule,
@@ -27,9 +27,9 @@ import { RoutePaginationSizeSelectorComponent } from './pagination-route-size-se
     PaginationNavigationTemplateComponent,
     PaginationSizeSelectorTemplateComponent,
     OrderButtonTemplateComponent,
-    RoutePaginationNavigationComponent,
-    RouteOrderButtonComponent,
-    RoutePaginationSizeSelectorComponent
+    PaginationNavigationComponent,
+    OrderButtonComponent,
+    PaginationSizeSelectorComponent
   ]
 })
 export class ApiUiModule { }

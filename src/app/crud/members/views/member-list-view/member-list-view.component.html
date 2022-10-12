@@ -1,19 +1,19 @@
 <h1>members</h1>
 <button-link-create link="/members/create"></button-link-create>
-<pagination-route-navigation [pageInfo]="pageInfo"></pagination-route-navigation>
-<pagination-route-size-selector [pageInfo]="pageInfo"></pagination-route-size-selector>
+<pagination-navigation [pageInfo]="pageInfo"></pagination-navigation>
+<pagination-size-selector [pageInfo]="pageInfo"></pagination-size-selector>
 <table class="table">
     <thead>
         <tr>
             <th scope="col"></th>
             <th scope="col">
-                <order-route-button property="active"></order-route-button>active
+                <order-button property="active"></order-button>active
             </th>
             <th scope="col">
-                <order-route-button property="name"></order-route-button>name
+                <order-button property="name"></order-button>name
             </th>
             <th scope="col">
-                <order-route-button property="surname"></order-route-button>surname
+                <order-button property="surname"></order-button>surname
             </th>
         </tr>
     </thead>
