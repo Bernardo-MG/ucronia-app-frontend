@@ -1,14 +1,15 @@
 <h1>fees</h1>
 <button-link-create link="/fees/create"></button-link-create>
-<pagination-navigation [pageInfo]="pageInfo"></pagination-navigation>
-<pagination-size-selector [pageInfo]="pageInfo"></pagination-size-selector>
+<pagination-route-navigation [pageInfo]="pageInfo"></pagination-route-navigation>
+<pagination-route-size-selector [pageInfo]="pageInfo"></pagination-route-size-selector>
 <table class="table">
     <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col"><order-button property="member"></order-button>member</th>
-            <th scope="col"><order-button property="year"></order-button>year</th>
-            <th scope="col"><order-button property="month"></order-button>month</th>
+            <th scope="col"><order-route-button property="name"></order-route-button>name</th>
+            <th scope="col"><order-route-button property="surname"></order-route-button>surname</th>
+            <th scope="col"><order-route-button property="date"></order-route-button>pay date</th>
+            <th scope="col"><order-route-button property="paid"></order-route-button>paid</th>
         </tr>
     </thead>
     <tbody>
@@ -17,9 +18,10 @@
                 <td>
                     <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
                 </td>
-                <td>{{fee.member}}</td>
-                <td>{{fee.year}}</td>
-                <td>{{fee.month}}</td>
+                <td>{{fee.name}}</td>
+                <td>{{fee.surname}}</td>
+                <td>{{fee.date}}</td>
+                <td>{{fee.paid}}</td>
             </tr>
         </ng-template>
     </tbody>

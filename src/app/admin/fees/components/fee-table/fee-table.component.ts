@@ -17,10 +17,12 @@ export class FeeTableComponent implements OnChanges {
 
   constructor() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.feesTable = this.feeYears.map(year => {
       const row = new FeeYearRow();
-      row.member = year.member;
+      row.name = year.name;
+      row.surname = year.surname;
+      row.active = year.active;
       this.months.forEach(month => {
         const feeMonth = year.months.find(m => m.month === month);
         var column;

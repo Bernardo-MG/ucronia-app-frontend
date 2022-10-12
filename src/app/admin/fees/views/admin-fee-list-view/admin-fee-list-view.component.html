@@ -1,13 +1,13 @@
 <h1>{{year}}</h1>
 <div class="row">
     <div class="col-4">
-        <button-backward (backward)="toPreviousYear()"></button-backward>
+        <button-backward (action)="toPreviousYear()"></button-backward>
     </div>
     <div class="col-4">
         {{year}}
     </div>
     <div class="col-4">
-        <button-forward (forward)="toNextYear()"></button-forward>
+        <button-forward (action)="toNextYear()"></button-forward>
     </div>
 </div>
 <admin-fee-table [feeYears]="feeYears"></admin-fee-table>

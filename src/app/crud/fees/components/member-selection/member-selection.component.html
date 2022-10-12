@@ -1,0 +1,22 @@
+<pagination-navigation-template [pageInfo]="pageInfo" (goTo)="onGoToPage($event)">
+</pagination-navigation-template>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">
+                name
+            </th>
+            <th scope="col">
+                surname
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-member [ngForOf]="members">
+            <tr (click)="onSelect(member)">
+                <td>{{member.name}}</td>
+                <td>{{member.surname}}</td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'crud-form-fee',
@@ -10,9 +11,9 @@ import { Member } from '@app/models/member';
 })
 export class FeeFormComponent implements OnChanges {
 
-  @Input() public data: Fee = new Fee();
+  @Input() public data = new Fee();
 
-  @Input() public members: Member[] = [];
+  @Input() public member = new Member();
 
   @Input() public disabledSave: boolean = false;
 
@@ -22,7 +23,11 @@ export class FeeFormComponent implements OnChanges {
 
   @Output() public delete = new EventEmitter<number>();
 
-  form: FormGroup = this.fb.group({
+  @Output() public selectMember = new EventEmitter<void>();
+
+  public searchIcon = faMagnifyingGlass;
+
+  public form: FormGroup = this.fb.group({
     id: [-1],
     memberId: [0, Validators.required],
     date: [new Date(), Validators.required],
@@ -36,33 +41,34 @@ export class FeeFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
       // Create the date from the year and month
-      let date;
+      let formattedDate;
+      let month;
 
-      if (this.data.month >= 10) {
-        date = `${this.data.year}-${this.data.month}`;
+      const date = new Date(this.data.date);
+
+      if (date.getMonth() >= 9) {
+        month = `${date.getMonth() + 1}`;
       } else {
-        date = `${this.data.year}-0${this.data.month}`;
+        month = `0${date.getMonth() + 1}`;
       }
+
+      formattedDate = `${date.getFullYear()}-${month}`;
       const update: any = {
         ...this.data,
-        date
+        date: formattedDate
       }
       this.form.patchValue(update);
     }
   }
 
   public saveData() {
-    const fee = new Fee();
-    fee.id = this.form.value.id;
-    fee.memberId = this.form.value.memberId;
-    fee.paid = this.form.value.paid;
-
     const date = new Date(this.form.value.date);
-    // Correct the month index, which starts at 0
-    fee.month = date.getMonth() + 1;
-    fee.year = date.getFullYear();
 
-    this.save.emit(fee);
+    this.save.emit({
+      ...this.form.value,
+      memberId: this.member.id,
+      date
+    });
   }
 
   public deleteData() {
@@ -79,6 +85,14 @@ export class FeeFormComponent implements OnChanges {
 
   public canDelete(): boolean {
     return ((!this.disabledDelete) && (this.form.valid));
+  }
+
+  public onSelectMember() {
+    this.selectMember.emit();
+  }
+
+  public isFormInvalid(): boolean {
+    return this.form.invalid && (this.form.dirty || this.form.touched);
   }
 
 }

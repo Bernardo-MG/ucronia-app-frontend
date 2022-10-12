@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PaginationNavigationComponent } from './pagination-navigation.component';
 
-describe('PaginationNavigationComponent', () => {
-  let component: PaginationNavigationComponent;
-  let fixture: ComponentFixture<PaginationNavigationComponent>;
+import { RouteOrderButtonComponent } from './order-route-button.component';
+
+describe('RouteOrderButtonComponent', () => {
+  let component: RouteOrderButtonComponent;
+  let fixture: ComponentFixture<RouteOrderButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,14 +13,14 @@ describe('PaginationNavigationComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        PaginationNavigationComponent
+        RouteOrderButtonComponent
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationNavigationComponent);
+    fixture = TestBed.createComponent(RouteOrderButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

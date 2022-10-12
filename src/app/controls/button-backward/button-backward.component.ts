@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { faBackward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'button-backward',
@@ -7,12 +8,14 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class ButtonBackwardComponent {
 
-  @Output() backward = new EventEmitter<number>();
+  @Output() action = new EventEmitter<number>();
+
+  public icon = faBackward;
 
   constructor() { }
 
   public onAction() {
-    this.backward.emit();
+    this.action.emit();
   }
 
 }

@@ -22,10 +22,8 @@ export class TransactionFormComponent implements OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     description: ['', Validators.required],
-    day: [new Date().getDay(), Validators.required],
-    month: [new Date().getMonth(), Validators.required],
-    year: [new Date().getFullYear(), Validators.required],
-    quantity: [0, Validators.required]
+    date: [new Date(), Validators.required],
+    amount: [0, Validators.required]
   });
 
   constructor(
@@ -34,7 +32,31 @@ export class TransactionFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
-      this.form.patchValue(this.data);
+      // Create the date
+      let formattedDate;
+      let month;
+      let day;
+
+      const date = new Date(this.data.date);
+
+      if (date.getMonth() >= 9) {
+        month = `${date.getMonth() + 1}`;
+      } else {
+        month = `0${date.getMonth() + 1}`;
+      }
+
+      if (date.getDate() >= 10) {
+        day = `${date.getDate()}`;
+      } else {
+        day = `0${date.getDate()}`;
+      }
+
+      formattedDate = `${date.getFullYear()}-${month}-${day}`;
+      const update: any = {
+        ...this.data,
+        date: formattedDate
+      }
+      this.form.patchValue(update);
     }
   }
 
@@ -56,6 +78,10 @@ export class TransactionFormComponent implements OnChanges {
 
   public canDelete(): boolean {
     return ((!this.disabledDelete) && (this.form.valid));
+  }
+
+  public isFormInvalid(): boolean {
+    return this.form.invalid && (this.form.dirty || this.form.touched);
   }
 
 }
