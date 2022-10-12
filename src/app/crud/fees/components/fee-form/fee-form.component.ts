@@ -27,7 +27,7 @@ export class FeeFormComponent implements OnChanges {
 
   public searchIcon = faMagnifyingGlass;
 
-  form: FormGroup = this.fb.group({
+  public form: FormGroup = this.fb.group({
     id: [-1],
     memberId: [0, Validators.required],
     payDate: [new Date(), Validators.required],
@@ -89,6 +89,10 @@ export class FeeFormComponent implements OnChanges {
 
   public onSelectMember() {
     this.selectMember.emit();
+  }
+
+  public isFormInvalid(): boolean {
+    return this.form.invalid && (this.form.dirty || this.form.touched);
   }
 
 }

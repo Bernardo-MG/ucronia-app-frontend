@@ -80,4 +80,8 @@ export class TransactionFormComponent implements OnChanges {
     return ((!this.disabledDelete) && (this.form.valid));
   }
 
+  public isFormInvalid(): boolean {
+    return this.form.invalid && (this.form.dirty || this.form.touched);
+  }
+
 }
