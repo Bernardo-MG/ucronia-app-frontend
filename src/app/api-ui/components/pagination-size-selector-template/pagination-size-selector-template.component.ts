@@ -7,9 +7,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class PaginationSizeSelectorTemplateComponent {
 
-  @Input() public sizes: number[] = [5, 10, 15, 20];
+  @Input() public sizes: number[] = [];
 
-  @Input() public selected: number = 5;
+  @Input() public selected: number = 0;
 
   @Output() public selectSize = new EventEmitter<number>();
 
