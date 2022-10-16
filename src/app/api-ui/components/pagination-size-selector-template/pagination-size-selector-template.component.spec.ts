@@ -22,7 +22,15 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create one option for each size received', () => {
+  it('should create no option when no values were received', () => {
+    component.sizes = [];
+    fixture.detectChanges();
+
+    const options = fixture.nativeElement.querySelectorAll('option');
+    expect(options.length).toEqual(0);
+  });
+
+  it('should create one option for each size value received', () => {
     component.sizes = [1, 2, 3];
     fixture.detectChanges();
 
