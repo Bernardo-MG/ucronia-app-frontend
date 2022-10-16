@@ -13,7 +13,7 @@ export class RoutePaginationReader {
     const pageSort = this.getSort(params);
 
     let pagination;
-    if ((pageNumber) || (pageSize) || (pageSort)) {
+    if ((pageNumber != null) || (pageSize != null) || (pageSort != null)) {
       pagination = new PaginationRequest();
       pagination.page = pageNumber;
       pagination.size = pageSize;
