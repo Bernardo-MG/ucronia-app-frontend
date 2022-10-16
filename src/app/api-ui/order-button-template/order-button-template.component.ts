@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -6,7 +6,9 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
   templateUrl: './order-button-template.component.html',
   styleUrls: ['./order-button-template.component.sass']
 })
-export class OrderButtonTemplateComponent {
+export class OrderButtonTemplateComponent implements OnChanges {
+
+  @Input() direction: 'asc' | 'desc' | 'disabled' = 'disabled';
 
   @Output() ascending = new EventEmitter<void>();
 
@@ -18,28 +20,56 @@ export class OrderButtonTemplateComponent {
   private descendingIcon = faSortDown;
   private defaultIcon = faSort;
 
-  private isAscending = true;
-
   constructor() {
     this.directionIcon = this.defaultIcon;
   }
 
-  public onChangeOrder() {
+  ngOnChanges(): void {
     // Switch icons
-    if (this.isAscending) {
-      // Currently it is in ascending order
-      // Switching to descending order
-      this.isAscending = false;
+    switch (this.direction) {
+      case 'asc': {
+        this.directionIcon = this.ascendingIcon;
+        break;
+      }
+      case 'desc': {
+        this.directionIcon = this.descendingIcon;
+        break;
+      }
+      default: {
+        this.directionIcon = this.defaultIcon;
+      }
+    }
+  }
 
-      this.directionIcon = this.descendingIcon;
-      this.descending.emit();
-    } else {
-      // Currently it is in descending order
-      // Switching to ascending order
-      this.isAscending = true;
+  public onChangeOrder() {
+    switch (this.direction) {
+      case 'asc': {
+        // Currently it is in ascending order
+        // Switching to descending order
+        this.direction = 'desc';
 
-      this.directionIcon = this.ascendingIcon;
-      this.ascending.emit();
+        this.directionIcon = this.descendingIcon;
+        this.descending.emit();
+        break;
+      }
+      case 'desc': {
+        // Currently it is in descending order
+        // Switching to ascending order
+        this.direction = 'asc';
+
+        this.directionIcon = this.ascendingIcon;
+        this.ascending.emit();
+        break;
+      }
+      default: {
+        // Any other case
+        // Switching to descending order
+        this.direction = 'desc';
+
+        this.directionIcon = this.descendingIcon;
+        this.descending.emit();
+        break;
+      }
     }
   }
 

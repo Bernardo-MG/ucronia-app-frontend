@@ -23,7 +23,7 @@ export class FeeListViewComponent implements OnInit {
     private service: FeeService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationObserver(route)
+    this.routePaginationObserver = new RoutePaginationObserver(route);
 
     // Listens for changes on pagination params
     this.routePaginationObserver.pagination.subscribe(pagination => {

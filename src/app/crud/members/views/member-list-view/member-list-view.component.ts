@@ -23,7 +23,7 @@ export class MemberListViewComponent implements OnInit {
     private service: MemberService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationObserver(route)
+    this.routePaginationObserver = new RoutePaginationObserver(route);
     
     // Listens for changes on pagination params
     this.routePaginationObserver.pagination.subscribe(pagination => {

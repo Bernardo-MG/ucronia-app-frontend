@@ -23,7 +23,7 @@ export class TransactionListViewComponent implements OnInit {
     private service: TransactionService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationObserver(route)
+    this.routePaginationObserver = new RoutePaginationObserver(route);
     
     // Listens for changes on pagination params
     this.routePaginationObserver.pagination.subscribe(pagination => {

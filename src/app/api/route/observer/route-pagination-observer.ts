@@ -1,6 +1,5 @@
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import { PaginationRequest } from "@app/api/models/pagination-request";
-import { Sort } from "@app/api/models/sort";
 import { BehaviorSubject } from "rxjs";
 import { RoutePaginationReader } from "./route-pagination-reader";
 
