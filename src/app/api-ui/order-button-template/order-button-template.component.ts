@@ -14,8 +14,6 @@ export class OrderButtonTemplateComponent {
 
   public directionIcon;
 
-  private directionEvent = this.ascending;
-
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
   private defaultIcon = faSort;
@@ -34,17 +32,15 @@ export class OrderButtonTemplateComponent {
       this.isAscending = false;
 
       this.directionIcon = this.descendingIcon;
-      this.directionEvent = this.descending;
+      this.descending.emit();
     } else {
       // Currently it is in descending order
       // Switching to ascending order
       this.isAscending = true;
 
       this.directionIcon = this.ascendingIcon;
-      this.directionEvent = this.ascending;
+      this.ascending.emit();
     }
-
-    this.directionEvent.emit();
   }
 
 }

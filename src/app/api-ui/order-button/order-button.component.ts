@@ -21,18 +21,17 @@ export class OrderButtonComponent {
   }
 
   public onSortAscending() {
-    const sort: Sort<any> = {
-      property: this.property,
-      order: "asc"
-    };
-
-    this.apiActuator.setOrder(sort);
+    this.sort('asc');
   }
 
   public onSortDescending() {
+    this.sort('desc');
+  }
+
+  private sort(direction: 'asc' | 'desc') {
     const sort: Sort<any> = {
       property: this.property,
-      order: "desc"
+      order: direction
     };
 
     this.apiActuator.setOrder(sort);
