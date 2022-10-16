@@ -41,6 +41,17 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     expect(options[2].selected).toEqual(false);
   });
 
+  it('should select the default value for a selected value outside the list', () => {
+    component.sizes = [1, 2, 3];
+    component.selected = 100;
+    fixture.detectChanges();
+
+    const options = fixture.nativeElement.querySelectorAll('option');
+    expect(options[0].selected).toEqual(true);
+    expect(options[1].selected).toEqual(false);
+    expect(options[2].selected).toEqual(false);
+  });
+
   it('should send an event to change size when selecting a value', () => {
     component.sizes = [1, 2, 3];
     component.selected = 2;
