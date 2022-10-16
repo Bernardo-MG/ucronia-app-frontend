@@ -26,7 +26,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should show total pages', () => {
-    component.pageInfo.totalPages = 10;
+    component.totalPages = 10;
     fixture.detectChanges();
 
     const total = fixture.nativeElement.querySelector('#total_pages');
@@ -34,7 +34,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should disable the previous button when it is the first page', () => {
-    component.pageInfo.first = true;
+    component.first = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#go_to_previous_page');
@@ -42,7 +42,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should enable the previous button when it is not the first page', () => {
-    component.pageInfo.first = false;
+    component.first = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#go_to_previous_page');
@@ -50,7 +50,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should disable the next button when it is the last page', () => {
-    component.pageInfo.last = true;
+    component.last = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#go_to_next_page');
@@ -58,7 +58,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should enable the next button when it is not the last page', () => {
-    component.pageInfo.last = false;
+    component.last = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#go_to_next_page');
@@ -66,7 +66,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should send an event to go to the previous page when clicking the previous button', () => {
-    component.pageInfo.page = 2;
+    component.page = 2;
     fixture.detectChanges();
 
     let page: number | undefined;
@@ -79,7 +79,7 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should send an event to go to the next page when clicking the next button', () => {
-    component.pageInfo.page = 2;
+    component.page = 2;
     fixture.detectChanges();
 
     let page: number | undefined;
