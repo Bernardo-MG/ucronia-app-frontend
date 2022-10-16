@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
@@ -12,7 +11,7 @@ export class PaginationSizeSelectorComponent {
 
   @Input() public sizes: number[] = [5, 10, 15, 20];
 
-  @Input() public pageInfo: PageInfo = new PageInfo();
+  @Input() public selected: number = 5;
 
   private apiActuator: RouteApiActuator;
 
