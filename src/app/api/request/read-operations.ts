@@ -48,12 +48,15 @@ export class ReadOperations<T> {
     return this.fetchOne().pipe(map(r => r.content));
   }
 
-  public sort(sort: Sort<T>): ReadOperations<T> {
+  public sort(sort: Sort<T>[]): ReadOperations<T> {
     let prms: HttpParams;
 
     prms = this.getHttpParams();
 
-    prms = prms.append('sort', `${String(sort.property)},${sort.order}`);
+    for (var i = 0; i < sort.length; i += 1) {
+      const fieldSort = sort[i];
+      prms = prms.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
+    }
 
     this.params = { params: prms };
 

@@ -26,7 +26,7 @@ export class TransactionService {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
     clt.page(pagination);
     if(pagination.sort){
-      clt.sort(<Sort<Transaction>>pagination.sort);
+      clt.sort(pagination.sort);
     }
     return clt.fetchPaged();
   }

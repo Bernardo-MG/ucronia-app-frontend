@@ -22,7 +22,7 @@ export class AdminFeeService {
     const clt: ReadOperations<FeeYear> = this.client.read(url);
     const sort = new Sort<FeeYear>("name");
 
-    clt.sort(sort);
+    clt.sort([sort]);
     return clt.fetchUnwrapped();
   }
 

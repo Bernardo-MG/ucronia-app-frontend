@@ -29,7 +29,7 @@ export class FeeService {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
     clt.page(pagination);
     if (pagination.sort) {
-      clt.sort(<Sort<Fee>>pagination.sort);
+      clt.sort(pagination.sort);
     }
     return clt.fetchPaged();
   }
@@ -58,7 +58,7 @@ export class FeeService {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     const sort: Sort<Member> = new Sort<Member>('name');
     clt.page({ page });
-    clt.sort(sort);
+    clt.sort([sort]);
     return clt.fetchPaged();
   }
 

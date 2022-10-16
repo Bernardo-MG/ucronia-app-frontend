@@ -26,7 +26,7 @@ export class MemberService {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     clt.page(pagination);
     if(pagination.sort){
-      clt.sort(<Sort<Member>>pagination.sort);
+      clt.sort(pagination.sort);
     }
     return clt.fetchPaged();
   }
