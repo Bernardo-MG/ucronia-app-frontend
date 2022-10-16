@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -8,11 +8,11 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
 })
 export class OrderButtonTemplateComponent implements OnChanges {
 
-  @Input() direction: 'asc' | 'desc' | 'disabled' = 'disabled';
+  @Input() public direction: 'asc' | 'desc' | 'disabled' = 'disabled';
 
-  @Output() ascending = new EventEmitter<void>();
+  @Output() public ascending = new EventEmitter<void>();
 
-  @Output() descending = new EventEmitter<void>();
+  @Output() public descending = new EventEmitter<void>();
 
   public directionIcon;
 
