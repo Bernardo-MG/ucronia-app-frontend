@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageInfo } from '@app/api/models/page-info';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 
 @Component({
@@ -10,7 +9,13 @@ import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 })
 export class PaginationNavigationComponent {
 
-  @Input() public pageInfo: PageInfo = new PageInfo();
+  @Input() public page: number = 0;
+
+  @Input() public totalPages: number = 0;
+
+  @Input() public first: boolean = false;
+
+  @Input() public last: boolean = false;
 
   private apiActuator: RouteApiActuator;
 

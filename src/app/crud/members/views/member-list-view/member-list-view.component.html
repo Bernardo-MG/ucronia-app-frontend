@@ -1,6 +1,7 @@
 <h1>members</h1>
 <button-link-create link="/members/create"></button-link-create>
-<pagination-navigation [pageInfo]="pageInfo"></pagination-navigation>
+<pagination-navigation [page]="pageInfo.page" [totalPages]="pageInfo.totalPages" [first]="pageInfo.first"
+    [last]="pageInfo.last"></pagination-navigation>
 <pagination-size-selector [pageInfo]="pageInfo"></pagination-size-selector>
 <table class="table">
     <thead>
