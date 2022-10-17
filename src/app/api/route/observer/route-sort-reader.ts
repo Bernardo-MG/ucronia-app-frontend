@@ -5,9 +5,9 @@ export class RouteSortReader {
 
   constructor() { }
 
-  public read(params: ParamMap): Sort<any>[] {
+  public read(params: ParamMap): Sort<any>[] | undefined {
     let pageSort: Sort<any>;
-    let pageSorts: Sort<any>[];
+    let pageSorts: Sort<any>[] | undefined;
     let pageSortValues: string[] | null;
 
     if (params.has('sort')) {
@@ -21,7 +21,7 @@ export class RouteSortReader {
         }
       }
     } else {
-      pageSorts = [];
+      pageSorts = undefined;
     }
 
     return pageSorts;

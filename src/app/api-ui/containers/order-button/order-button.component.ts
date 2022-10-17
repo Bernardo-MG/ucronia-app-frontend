@@ -29,9 +29,13 @@ export class OrderButtonComponent implements OnInit {
 
   ngOnInit(): void {
     this.sortObserver.sort.subscribe(p => {
-      const propertySort = p.find(s => s.property === this.property);
-      if (propertySort) {
-        this.direction = propertySort.order;
+      if (p) {
+        const propertySort = p.find(s => s.property === this.property);
+        if (propertySort) {
+          this.direction = propertySort.order;
+        } else {
+          this.direction = 'unsorted';
+        }
       } else {
         this.direction = 'unsorted';
       }

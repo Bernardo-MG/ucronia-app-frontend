@@ -5,7 +5,7 @@ import { RouteSortReader } from "./route-sort-reader";
 
 export class RouteSortObserver {
 
-  public sort = new BehaviorSubject<Sort<any>[]>([]);
+  public sort = new BehaviorSubject<Sort<any>[] | undefined>([]);
 
   private reader = new RouteSortReader();
 
