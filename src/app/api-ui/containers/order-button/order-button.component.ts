@@ -50,6 +50,10 @@ export class OrderButtonComponent implements OnInit {
     this.sort('desc');
   }
 
+  public onSortUnsorted() {
+    this.apiActuator.removeOrder(this.property);
+  }
+
   private sort(direction: 'asc' | 'desc') {
     const sort: Sort<any> = {
       property: this.property,

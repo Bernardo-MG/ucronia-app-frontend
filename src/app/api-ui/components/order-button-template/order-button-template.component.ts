@@ -17,6 +17,8 @@ export class OrderButtonTemplateComponent implements OnChanges {
 
   @Output() public descending = new EventEmitter<void>();
 
+  @Output() public unsorted = new EventEmitter<void>();
+
   public directionIcon;
 
   private ascendingIcon = faSortUp;
@@ -60,11 +62,11 @@ export class OrderButtonTemplateComponent implements OnChanges {
       }
       case 'desc': {
         // Currently it is in descending order
-        // Switching to ascending order
-        this.direction = 'asc';
+        // Switching to unsorted order
+        this.direction = 'unsorted';
 
-        this.directionIcon = this.ascendingIcon;
-        this.ascending.emit();
+        this.directionIcon = this.defaultIcon;
+        this.unsorted.emit();
         break;
       }
       default: {

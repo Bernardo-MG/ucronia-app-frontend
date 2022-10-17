@@ -36,8 +36,16 @@ export class RouteApiActuator {
         this.navigate(parameters);
     }
 
-    private getUrlParams(): any {
-        const urlParams: any = {};
+    public removeOrder(property: string): void {
+        const parameters = this.getUrlParams();
+
+        delete parameters['sort'];
+
+        this.navigate(parameters);
+    }
+
+    private getUrlParams(): { [key: string]: string } {
+        const urlParams: { [key: string]: string } = {};
 
         const sections = this.router.url.split('?');
         if (sections.length > 1) {
