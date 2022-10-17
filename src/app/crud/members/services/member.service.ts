@@ -30,17 +30,7 @@ export class MemberService {
 
   public getAll(): Observable<PaginatedResponse<Member[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
-      let result;
-
-      if (p) {
-        result = this.read(p);
-      } else {
-        result = EMPTY;
-      }
-
-      return result;
-    }));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
   }
 
   public create(member: Member): Observable<Member> {
@@ -62,12 +52,14 @@ export class MemberService {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
     return clt.fetchOneUnwrapped();
   }
-  
-  private read(pagination: PaginationRequest): Observable<PaginatedResponse<Member[]>> {
+
+  private read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
-    clt.page(pagination);
-    if (pagination.sort) {
-      clt.sort(pagination.sort);
+    if (pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
     }
     return clt.fetchPaged();
   }

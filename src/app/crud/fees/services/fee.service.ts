@@ -34,17 +34,7 @@ export class FeeService {
 
   public getAll(): Observable<PaginatedResponse<Fee[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
-      let result;
-
-      if (p) {
-        result = this.read(p);
-      } else {
-        result = EMPTY;
-      }
-
-      return result;
-    }));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
   }
 
   public create(fee: Fee): Observable<Fee> {
@@ -80,11 +70,13 @@ export class FeeService {
     return clt.fetchOneUnwrapped();
   }
 
-  private read(pagination: PaginationRequest): Observable<PaginatedResponse<Fee[]>> {
+  private read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
-    clt.page(pagination);
-    if (pagination.sort) {
-      clt.sort(pagination.sort);
+    if(pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
     }
     return clt.fetchPaged();
   }

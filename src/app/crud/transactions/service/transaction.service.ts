@@ -31,17 +31,7 @@ export class TransactionService {
 
   public getAll(): Observable<PaginatedResponse<Transaction[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
-      let result;
-
-      if (p) {
-        result = this.read(p);
-      } else {
-        result = EMPTY;
-      }
-
-      return result;
-    }));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
   }
 
   public create(member: Transaction): Observable<Transaction> {
@@ -64,11 +54,13 @@ export class TransactionService {
     return clt.fetchOneUnwrapped();
   }
 
-  private read(pagination: PaginationRequest): Observable<PaginatedResponse<Transaction[]>> {
+  private read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Transaction[]>> {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
-    clt.page(pagination);
-    if (pagination.sort) {
-      clt.sort(pagination.sort);
+    if (pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
     }
     return clt.fetchPaged();
   }
