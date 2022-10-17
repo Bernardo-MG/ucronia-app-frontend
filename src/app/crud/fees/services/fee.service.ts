@@ -8,11 +8,11 @@ import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
-import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
+import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { EMPTY, mergeMap, Observable } from 'rxjs';
+import { mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,13 +23,13 @@ export class FeeService {
 
   private memberUrl = environment.apiUrl + "/member";
 
-  private routePaginationObserver: RoutePaginationObserver;
+  private routePaginationObserver: RoutePaginationRequestObserver;
 
   constructor(
     private client: RequestClient,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationObserver(route);
+    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
   }
 
   public getAll(): Observable<PaginatedResponse<Fee[]>> {

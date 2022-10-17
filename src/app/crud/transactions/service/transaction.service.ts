@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { PaginationRequest } from '@app/api/models/pagination-request';
-import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
-import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
+import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
-import { EMPTY, empty, mergeMap, Observable } from 'rxjs';
+import { mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +19,13 @@ export class TransactionService {
 
   private transactionUrl = environment.apiUrl + "/transaction";
 
-  private routePaginationObserver: RoutePaginationObserver;
+  private routePaginationObserver: RoutePaginationRequestObserver;
 
   constructor(
     private client: RequestClient,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationObserver(route);
+    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
   }
 
   public getAll(): Observable<PaginatedResponse<Transaction[]>> {
