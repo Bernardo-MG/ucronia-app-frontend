@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { CreateOperations } from '@app/api/request/create-operations';
@@ -7,10 +6,9 @@ import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
-import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
-import { mergeMap, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,18 +17,19 @@ export class TransactionService {
 
   private transactionUrl = environment.apiUrl + "/transaction";
 
-  private routePaginationObserver: RoutePaginationRequestObserver;
-
   constructor(
-    private client: RequestClient,
-    route: ActivatedRoute
-  ) {
-    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
-  }
+    private client: RequestClient
+  ) { }
 
-  public getAll(): Observable<PaginatedResponse<Transaction[]>> {
-    // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
+  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Transaction[]>> {
+    const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
+    if (pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
+    }
+    return clt.fetchPaged();
   }
 
   public create(member: Transaction): Observable<Transaction> {
@@ -51,17 +50,6 @@ export class TransactionService {
   public getOne(id: number): Observable<Transaction> {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl + `/${id}`);
     return clt.fetchOneUnwrapped();
-  }
-
-  private read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Transaction[]>> {
-    const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
-    if (pagination) {
-      clt.page(pagination);
-      if (pagination.sort) {
-        clt.sort(pagination.sort);
-      }
-    }
-    return clt.fetchPaged();
   }
 
 }
