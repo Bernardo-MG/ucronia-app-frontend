@@ -5,7 +5,7 @@ import { RoutePaginationReader } from "./route-pagination-reader";
 
 export class RoutePaginationObserver {
 
-  public pagination = new BehaviorSubject<Pagination | undefined>(new Pagination());
+  public pagination = new BehaviorSubject<Pagination | undefined>(undefined);
 
   public empty: boolean = true;
 
