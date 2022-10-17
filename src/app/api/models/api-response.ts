@@ -1,4 +1,3 @@
-
 export class ApiResponse<T> {
 
     constructor(cont: T) {

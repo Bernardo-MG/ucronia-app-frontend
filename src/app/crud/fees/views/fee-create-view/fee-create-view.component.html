@@ -1,1 +1,12 @@
-<crud-form-fee [members]="members" (save)="save($event)"></crud-form-fee>
+<div *ngIf="selectingMember; then member_selection else member_edition"></div>
+
+<ng-template #member_edition>
+    <crud-form-fee [data]="fee" [member]="member" [disabledDelete]=true (save)="onSave($event)"
+        (selectMember)="onRequestMember()">
+    </crud-form-fee>
+</ng-template>
+<ng-template #member_selection>
+    <crud-member-selection [members]="members" (selectPage)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+        (goToPage)="onGoToMembersPage($event)">
+    </crud-member-selection>
+</ng-template>

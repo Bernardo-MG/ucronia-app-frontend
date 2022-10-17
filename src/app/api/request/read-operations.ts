@@ -8,7 +8,9 @@ import { PaginatedResponse } from '../models/paginated-response';
 
 export class ReadOperations<T> {
 
-  protected params: { params?: HttpParams } = {};
+  protected options: {
+    params?: HttpParams
+  } = {};
 
   constructor(
     private http: HttpClient,
@@ -16,7 +18,7 @@ export class ReadOperations<T> {
   ) { }
 
   public fetch(): Observable<ApiResponse<T[]>> {
-    return this.http.get<ApiResponse<T[]>>(this.queryUrl, this.params).pipe(
+    return this.http.get<ApiResponse<T[]>>(this.queryUrl, this.options).pipe(
       map((response: ApiResponse<T[]>) => { return response })
     ).pipe(
       catchError(this.handleError())
@@ -24,7 +26,7 @@ export class ReadOperations<T> {
   }
 
   public fetchPaged(): Observable<PaginatedResponse<T[]>> {
-    return this.http.get<PaginatedResponse<T[]>>(this.queryUrl, this.params).pipe(
+    return this.http.get<PaginatedResponse<T[]>>(this.queryUrl, this.options).pipe(
       map((response: PaginatedResponse<T[]>) => { return response })
     ).pipe(
       catchError(this.handleError())
@@ -36,7 +38,7 @@ export class ReadOperations<T> {
   }
 
   public fetchOne(): Observable<ApiResponse<T>> {
-    return this.http.get<ApiResponse<T>>(this.queryUrl, this.params).pipe(
+    return this.http.get<ApiResponse<T>>(this.queryUrl, this.options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
       catchError(this.handleError())
@@ -48,60 +50,67 @@ export class ReadOperations<T> {
     return this.fetchOne().pipe(map(r => r.content));
   }
 
-  public sort(sort: Sort<T>): ReadOperations<T> {
-    let prms: HttpParams;
+  public sort(sort: Sort<T>[]): ReadOperations<T> {
+    let params: HttpParams;
 
-    prms = this.getHttpParams();
+    params = this.getHttpParams();
 
-    prms = prms.append('sort', `${String(sort.property)},${sort.order}`);
+    for (var i = 0; i < sort.length; i += 1) {
+      const fieldSort = sort[i];
+      params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
+    }
 
-    this.params = { params: prms };
+    this.options = { params: params };
 
     return this;
   }
 
-  public page(pagination: PaginationRequest | undefined): ReadOperations<T> {
-    let prms: HttpParams;
+  public page(pagination: PaginationRequest): ReadOperations<T> {
+    let params: HttpParams;
+    let paged: boolean;
 
-    if (pagination) {
-      prms = this.getHttpParams();
+    params = this.getHttpParams();
 
-      if (pagination.page) {
-        prms = prms.set('page', pagination.page);
-      }
-      if (pagination.size) {
-        prms = prms.set('size', pagination.size);
-      }
+    paged = false;
+    if (pagination.page) {
+      params = params.set('page', pagination.page);
+      paged = true;
+    }
+    if (pagination.size) {
+      params = params.set('size', pagination.size);
+      paged = true;
+    }
 
-      this.params = { params: prms };
+    if (paged) {
+      this.options = { params: params };
     }
 
     return this;
   }
 
   public parameter(name: string, value: any): ReadOperations<T> {
-    let prms: HttpParams;
+    let params: HttpParams;
 
-    prms = this.getHttpParams();
+    params = this.getHttpParams();
 
-    prms = prms.append(name, value);
+    params = params.append(name, value);
 
-    this.params = { params: prms };
+    this.options = { params: params };
 
     return this;
   }
 
   private getHttpParams(): HttpParams {
-    let prms: HttpParams;
+    let params: HttpParams;
 
-    if (this.params.params) {
-      prms = this.params.params;
+    if (this.options.params) {
+      params = this.options.params;
     } else {
-      prms = new HttpParams();
-      this.params = { params: prms };
+      params = new HttpParams();
+      this.options = { params: params };
     }
 
-    return prms;
+    return params;
   }
 
   private handleError() {

@@ -1,37 +1,27 @@
-<form-controls (save)="saveData()" (delete)="deleteData()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()"></form-controls>
+<form-controls (save)="saveData()" (delete)="deleteData()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
+</form-controls>
 <form [formGroup]="form" (ngSubmit)="saveData()">
     <div class="form-group row">
         <label for="description" class="col-sm-2 col-form-label">description</label>
         <div class="col-sm-10">
-            <input type="text" id="description" formControlName="description" class="form-control">
+            <input type="text" id="description" formControlName="description" class="form-control"
+            [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('description')?.errors }">
         </div>
     </div>
     <div class="form-group row">
-        <label for="quantity" class="col-sm-2 col-form-label">quantity</label>
+        <label for="amount" class="col-sm-2 col-form-label">amount</label>
         <div class="col-sm-10">
-            <input type="text" id="quantity" formControlName="quantity" class="form-control">
+            <input type="text" id="amount" formControlName="amount" class="form-control">
         </div>
     </div>
     <div class="form-group row">
-        <label for="day" class="col-sm-2 col-form-label">day</label>
+        <label for="date" class="col-sm-2 col-form-label">date</label>
         <div class="col-sm-10">
-            <input type="text" id="day" formControlName="day" class="form-control">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="month" class="col-sm-2 col-form-label">month</label>
-        <div class="col-sm-10">
-            <input type="text" id="month" formControlName="month" class="form-control">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="year" class="col-sm-2 col-form-label">year</label>
-        <div class="col-sm-10">
-            <input type="text" id="year" formControlName="year" class="form-control">
+            <input type="date" id="date" formControlName="date" class="form-control">
         </div>
     </div>
 </form>
-<div *ngIf="form.invalid && (form.dirty || form.touched)" class="alert alert-danger">
+<div *ngIf="isFormInvalid()" class="alert alert-danger">
     <div *ngIf="form.get('description')?.hasError('required')">
         Description is required.
     </div>

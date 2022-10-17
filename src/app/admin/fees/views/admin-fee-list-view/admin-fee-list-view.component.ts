@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { FeeYear } from '@app/models/fee-year';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
@@ -15,11 +14,24 @@ export class AdminFeeListViewComponent {
   public year: number = -1;
 
   constructor(
-    private service: AdminFeeService,
-    private router: Router
+    private service: AdminFeeService
   ) {
     this.year = new Date().getFullYear();
-    this.service.getAllForYear(this.year).subscribe(d => this.feeYears = d);
+    this.toYear(this.year);
+  }
+
+  public toPreviousYear() {
+    this.year = this.year - 1;
+    this.toYear(this.year);
+  }
+
+  public toNextYear() {
+    this.year = this.year + 1;
+    this.toYear(this.year);
+  }
+
+  private toYear(year: number) {
+    this.service.getAllForYear(year).subscribe(d => this.feeYears = d);
   }
 
 }

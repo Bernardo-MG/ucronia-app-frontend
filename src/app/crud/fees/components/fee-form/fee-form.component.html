@@ -1,25 +1,21 @@
-<form-controls (save)="saveData()" [disabledSave]="!canSave()"></form-controls>
+<form-controls (save)="saveData()" (delete)="deleteData()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
+</form-controls>
 <form [formGroup]="form" (ngSubmit)="saveData()">
     <div class="form-group row">
-        <label for="memberId" class="col-sm-2 col-form-label">member</label>
-        <div class="col-sm-10">
-            <select class="form-select" id="memberId" formControlName="memberId">
-                <ng-template ngFor let-member [ngForOf]="members">
-                    <option value="{{member.id}}">{{member.name}}</option>
-                </ng-template>
-            </select>
+        <div class="input-group">
+            <label for="member" class="col-sm-2 col-form-label">member</label>
+            <input type="text" id="member" class="form-control" [value]="member.name">
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop" aria-label="Search" (click)="onSelectMember()">
+                <fa-icon [icon]="searchIcon"></fa-icon>
+            </button>
         </div>
     </div>
     <div class="form-group row">
-        <label for="month" class="col-sm-2 col-form-label">month</label>
+        <label for="date" class="col-sm-2 col-form-label">date</label>
         <div class="col-sm-10">
-            <input type="text" id="month" formControlName="month" class="form-control">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="year" class="col-sm-2 col-form-label">year</label>
-        <div class="col-sm-10">
-            <input type="text" id="year" formControlName="year" class="form-control">
+            <input type="month" id="date" formControlName="date" class="form-control"
+                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('username')?.errors }">
         </div>
     </div>
     <div class="form-group row">
@@ -29,8 +25,8 @@
         </div>
     </div>
 </form>
-<div *ngIf="form.invalid && (form.dirty || form.touched)" class="alert alert-danger">
-    <div *ngIf="form.get('memberId')?.hasError('required')">
+<div *ngIf="isFormInvalid()" class="alert alert-danger">
+    <div *ngIf="form.get('date')?.hasError('required')">
         Member is required.
     </div>
 </div>

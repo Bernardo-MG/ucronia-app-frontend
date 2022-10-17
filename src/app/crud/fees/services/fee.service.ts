@@ -23,13 +23,15 @@ export class FeeService {
 
   constructor(
     private client: RequestClient
-  ) { }
+  ) {}
 
-  public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Fee[]>> {
+  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
-    clt.page(pagination);
-    if(pagination.sort){
-      clt.sort(<Sort<Fee>>pagination.sort);
+    if(pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
     }
     return clt.fetchPaged();
   }
@@ -54,9 +56,17 @@ export class FeeService {
     return clt.fetchOneUnwrapped();
   }
 
-  public getAllMembers(): Observable<Member[]> {
+  public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
-    return clt.fetchUnwrapped();
+    const sort: Sort<Member> = new Sort<Member>('name');
+    clt.page({ page });
+    clt.sort([sort]);
+    return clt.fetchPaged();
+  }
+
+  public getOneMember(id: number): Observable<Member> {
+    const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
+    return clt.fetchOneUnwrapped();
   }
 
 }
