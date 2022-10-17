@@ -11,7 +11,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
-import { mergeMap, Observable } from 'rxjs';
+import { EMPTY, empty, mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,17 @@ export class TransactionService {
 
   public getAll(): Observable<PaginatedResponse<Transaction[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
+      let result;
+
+      if (p) {
+        result = this.read(p);
+      } else {
+        result = EMPTY;
+      }
+
+      return result;
+    }));
   }
 
   public create(member: Transaction): Observable<Transaction> {
@@ -57,7 +67,7 @@ export class TransactionService {
   private read(pagination: PaginationRequest): Observable<PaginatedResponse<Transaction[]>> {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
     clt.page(pagination);
-    if(pagination.sort){
+    if (pagination.sort) {
       clt.sort(pagination.sort);
     }
     return clt.fetchPaged();

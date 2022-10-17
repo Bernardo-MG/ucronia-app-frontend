@@ -1,11 +1,11 @@
 import { ActivatedRoute } from "@angular/router";
-import { PaginationRequest } from "@app/api/models/pagination-request";
+import { Pagination } from "@app/api/models/pagination";
 import { BehaviorSubject } from "rxjs";
 import { RoutePaginationReader } from "./route-pagination-reader";
 
 export class RoutePaginationObserver {
 
-  public pagination = new BehaviorSubject<PaginationRequest>(new PaginationRequest());
+  public pagination = new BehaviorSubject<Pagination | undefined>(new Pagination());
 
   public empty: boolean = true;
 
@@ -16,7 +16,7 @@ export class RoutePaginationObserver {
   ) {
     // Listens to route changes
     route.queryParamMap.subscribe(params => {
-      const pageRequest = this.reader.readPagination(params);
+      const pageRequest = this.reader.read(params);
 
       if (pageRequest) {
         this.pagination.next(pageRequest);

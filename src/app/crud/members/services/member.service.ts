@@ -10,7 +10,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { mergeMap, Observable } from 'rxjs';
+import { EMPTY, mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,17 @@ export class MemberService {
 
   public getAll(): Observable<PaginatedResponse<Member[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
+      let result;
+
+      if (p) {
+        result = this.read(p);
+      } else {
+        result = EMPTY;
+      }
+
+      return result;
+    }));
   }
 
   public create(member: Member): Observable<Member> {

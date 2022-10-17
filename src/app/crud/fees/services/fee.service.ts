@@ -12,7 +12,7 @@ import { RoutePaginationObserver } from '@app/api/route/observer/route-paginatio
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { mergeMap, Observable } from 'rxjs';
+import { EMPTY, mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,17 @@ export class FeeService {
 
   public getAll(): Observable<PaginatedResponse<Fee[]>> {
     // Listens for changes on pagination params and reads again
-    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => {
+      let result;
+
+      if (p) {
+        result = this.read(p);
+      } else {
+        result = EMPTY;
+      }
+
+      return result;
+    }));
   }
 
   public create(fee: Fee): Observable<Fee> {
