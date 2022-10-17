@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
+import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
 
 @Component({
   selector: 'pagination-size-selector',
@@ -15,10 +16,14 @@ export class PaginationSizeSelectorComponent {
 
   private apiActuator: RouteApiActuator;
 
+  private routePaginationObserver: RoutePaginationObserver;
+
   constructor(
-    router: Router
+    router: Router,
+    route: ActivatedRoute
   ) {
     this.apiActuator = new RouteApiActuator(router);
+    this.routePaginationObserver = new RoutePaginationObserver(route);
   }
 
   public onSelect(size: number) {

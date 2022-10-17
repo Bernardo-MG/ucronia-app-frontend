@@ -7,7 +7,6 @@ export class RoutePaginationReader {
   constructor() { }
 
   public readPagination(params: ParamMap): PaginationRequest {
-    // TODO: Extract. This methods should be private for this class
     const pageNumber = this.getPageNumber(params);
     const pageSize = this.getSizeNumber(params);
     const pageSort = this.getSort(params);

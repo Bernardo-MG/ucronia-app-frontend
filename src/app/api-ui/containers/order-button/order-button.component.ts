@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sort } from '@app/api/models/sort';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
-import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
+import { RouteSortObserver } from '@app/api/route/observer/route-sort-observer';
 
 @Component({
   selector: 'order-button',
@@ -17,19 +17,19 @@ export class OrderButtonComponent implements OnInit {
 
   private apiActuator: RouteApiActuator;
 
-  private routePaginationObserver: RoutePaginationObserver;
+  private sortObserver: RouteSortObserver;
 
   constructor(
     router: Router,
     route: ActivatedRoute
   ) {
     this.apiActuator = new RouteApiActuator(router);
-    this.routePaginationObserver = new RoutePaginationObserver(route);
+    this.sortObserver = new RouteSortObserver(route);
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.subscribe(p => {
-      const propertySort = p.sort?.find(s => s.property === this.property);
+    this.sortObserver.sort.subscribe(p => {
+      const propertySort = p.find(s => s.property === this.property);
       if (propertySort) {
         this.direction = propertySort.order;
       } else {
