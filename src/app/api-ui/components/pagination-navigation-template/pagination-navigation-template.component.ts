@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
-import { PageInfo } from '@app/api/models/page-info';
 import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,7 +8,13 @@ import { faBackward, faForward } from '@fortawesome/free-solid-svg-icons';
 })
 export class PaginationNavigationTemplateComponent implements OnChanges {
 
-  @Input() public pageInfo: PageInfo = new PageInfo();
+  @Input() public page: number = 0;
+
+  @Input() public totalPages: number = 0;
+
+  @Input() public first: boolean = false;
+
+  @Input() public last: boolean = false;
 
   @Output() goTo = new EventEmitter<number>();
 
@@ -21,7 +26,7 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
   constructor() { }
 
   ngOnChanges(): void {
-    this.currentPage = this.pageInfo.page + 1;
+    this.currentPage = this.page + 1;
   }
 
   public onChoosePage(event: any) {
@@ -35,11 +40,11 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
   }
 
   public onPrevious() {
-    this.goTo.emit(this.pageInfo.page - 1);
+    this.goTo.emit(this.page - 1);
   }
 
   public onNext() {
-    this.goTo.emit(this.pageInfo.page + 1);
+    this.goTo.emit(this.page + 1);
   }
 
 }

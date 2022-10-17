@@ -1,10 +1,13 @@
-import { Router } from "@angular/router";
+import { Params, Router } from "@angular/router";
 import { PaginationRequest } from "../../models/pagination-request";
 import { Sort } from "../../models/sort";
+import { UrlParamsExtractor } from "./url-params-extractor";
 
 export class RouteApiActuator {
 
     private path: string;
+
+    private extractor = new UrlParamsExtractor();
 
     constructor(
         private router: Router
@@ -26,35 +29,30 @@ export class RouteApiActuator {
 
     public setOrder(sort: Sort<any>): void {
         const value = `${String(sort.property)},${sort.order}`
-        this.setParameter({ sort: value });
-    }
+        let parameters = this.extractor.getUrlParams(this.router.url);
 
-    public setParameter(params: any): void {
-        const urlParams = this.getUrlParams();
+        parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
+        parameters = this.extractor.appendParameter(parameters, 'sort', value);
 
-        const parameters = { ...urlParams, ...params };
         this.navigate(parameters);
     }
 
-    private getUrlParams(): any {
-        const urlParams: any = {};
+    public setParameter(params: any): void {
+        const urlParams = this.extractor.getUrlParams(this.router.url);
+        const parameters = { ...urlParams, ...params };
 
-        const sections = this.router.url.split('?');
-        if (sections.length > 1) {
-            const paramSection = sections[1];
-            const pairs = paramSection.split('&');
-            pairs.forEach(p => {
-                const pair = p.split('=');
-                if (pair.length >= 2) {
-                    urlParams[pair[0]] = pair[1];
-                }
-            });
-        }
-
-        return urlParams;
+        this.navigate(parameters);
     }
 
-    private navigate(parameters: any = {}): void {
+    public removeOrder(property: string): void {
+        let parameters = this.extractor.getUrlParams(this.router.url);
+
+        parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${property},`));
+
+        this.navigate(parameters);
+    }
+
+    private navigate(parameters: Params): void {
         this.router.navigate([this.path], { queryParams: parameters });
     }
 

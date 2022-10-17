@@ -1,15 +1,15 @@
 import { ActivatedRoute } from "@angular/router";
-import { Pagination } from "@app/api/models/pagination";
+import { PaginationRequest } from "@app/api/models/pagination-request";
 import { BehaviorSubject } from "rxjs";
-import { RoutePaginationReader } from "./route-pagination-reader";
+import { RoutePaginationRequestReader } from "./route-pagination-request-reader";
 
-export class RoutePaginationObserver {
+export class RoutePaginationRequestObserver {
 
-  public pagination = new BehaviorSubject<Pagination | undefined>(undefined);
+  public pagination = new BehaviorSubject<PaginationRequest | undefined>(undefined);
 
   public empty: boolean = true;
 
-  private reader = new RoutePaginationReader();
+  private reader = new RoutePaginationRequestReader();
 
   constructor(
     route: ActivatedRoute

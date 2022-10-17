@@ -1,4 +1,5 @@
-<pagination-navigation-template [pageInfo]="pageInfo" (goTo)="onGoToPage($event)">
+<pagination-navigation-template [page]="pageInfo.page" [totalPages]="pageInfo.totalPages" [first]="pageInfo.first"
+    [last]="pageInfo.last" (goTo)="onGoToPage($event)">
 </pagination-navigation-template>
 <table class="table table-hover">
     <thead>

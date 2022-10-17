@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { Sort } from '@app/api/models/sort';
@@ -7,10 +8,11 @@ import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
+import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { mergeMap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,17 +23,18 @@ export class FeeService {
 
   private memberUrl = environment.apiUrl + "/member";
 
-  constructor(
-    private client: RequestClient
-  ) { }
+  private routePaginationObserver: RoutePaginationRequestObserver;
 
-  public getAll(pagination: PaginationRequest): Observable<PaginatedResponse<Fee[]>> {
-    const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
-    clt.page(pagination);
-    if (pagination.sort) {
-      clt.sort(<Sort<Fee>>pagination.sort);
-    }
-    return clt.fetchPaged();
+  constructor(
+    private client: RequestClient,
+    route: ActivatedRoute
+  ) {
+    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
+  }
+
+  public getAll(): Observable<PaginatedResponse<Fee[]>> {
+    // Listens for changes on pagination params and reads again
+    return this.routePaginationObserver.pagination.pipe(mergeMap(p => this.read(p)));
   }
 
   public create(fee: Fee): Observable<Fee> {
@@ -58,13 +61,24 @@ export class FeeService {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
     const sort: Sort<Member> = new Sort<Member>('name');
     clt.page({ page });
-    clt.sort(sort);
+    clt.sort([sort]);
     return clt.fetchPaged();
   }
 
   public getOneMember(id: number): Observable<Member> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
     return clt.fetchOneUnwrapped();
+  }
+
+  private read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
+    const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
+    if(pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
+    }
+    return clt.fetchPaged();
   }
 
 }
