@@ -65,19 +65,23 @@ export class ReadOperations<T> {
     return this;
   }
 
-  public page(pagination: PaginationRequest | undefined): ReadOperations<T> {
+  public page(pagination: PaginationRequest): ReadOperations<T> {
     let params: HttpParams;
+    let paged: boolean;
 
-    if (pagination) {
-      params = this.getHttpParams();
+    params = this.getHttpParams();
 
-      if (pagination.page) {
-        params = params.set('page', pagination.page);
-      }
-      if (pagination.size) {
-        params = params.set('size', pagination.size);
-      }
+    paged = false;
+    if (pagination.page) {
+      params = params.set('page', pagination.page);
+      paged = true;
+    }
+    if (pagination.size) {
+      params = params.set('size', pagination.size);
+      paged = true;
+    }
 
+    if (paged) {
       this.options = { params: params };
     }
 

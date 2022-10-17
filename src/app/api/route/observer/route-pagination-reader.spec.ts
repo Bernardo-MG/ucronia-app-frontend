@@ -15,10 +15,13 @@ describe('RoutePaginationReader', () => {
     reader = new RoutePaginationReader();
   });
 
-  it('provides no pagination when there is no pagination parameters', () => {
+  it('should provide an empty pagination when there is no pagination parameters', () => {
     const params = convertToParamMap({});
     const request = reader.readPagination(params);
-    expect(request).toBeUndefined();
+    expect(request).not.toBeUndefined();
+    expect(request.page).toBeUndefined();
+    expect(request.size).toBeUndefined();
+    expect(request.sort).toBeUndefined();
   });
 
   it('should be able to parse pagination when all parameters are provided', () => {
