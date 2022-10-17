@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
+/**
+ * Loops through unsorted -> ascending -> descending -> unsorted
+ */
 @Component({
   selector: 'order-button-template',
   templateUrl: './order-button-template.component.html',
@@ -25,17 +28,20 @@ export class OrderButtonTemplateComponent implements OnChanges {
   }
 
   ngOnChanges(): void {
-    // Switch icons
+    // Pick icon based on direction
     switch (this.direction) {
       case 'asc': {
+        // Ascending
         this.directionIcon = this.ascendingIcon;
         break;
       }
       case 'desc': {
+        // Descending
         this.directionIcon = this.descendingIcon;
         break;
       }
       default: {
+        // Unsorted
         this.directionIcon = this.defaultIcon;
       }
     }
@@ -63,11 +69,11 @@ export class OrderButtonTemplateComponent implements OnChanges {
       }
       default: {
         // Any other case
-        // Switching to descending order
-        this.direction = 'desc';
+        // Switching to ascending order
+        this.direction = 'asc';
 
-        this.directionIcon = this.descendingIcon;
-        this.descending.emit();
+        this.directionIcon = this.ascendingIcon;
+        this.ascending.emit();
         break;
       }
     }
