@@ -29,7 +29,11 @@ export class RouteApiActuator {
 
     public setOrder(sort: Sort<any>): void {
         const value = `${String(sort.property)},${sort.order}`
-        this.setParameter({ sort: value });
+        let parameters = this.extractor.getUrlParams(this.router.url);
+
+        parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
+        parameters = this.appendParameter(parameters, 'sort', value);
+        this.navigate(parameters);
     }
 
     public setParameter(params: any): void {
@@ -37,6 +41,21 @@ export class RouteApiActuator {
 
         const parameters = { ...urlParams, ...params };
         this.navigate(parameters);
+    }
+
+    private appendParameter(parameters: { [key: string]: any }, key: string, value: any): { [key: string]: any } {
+        const param = parameters[key];
+        if (param) {
+            if (Array.isArray(param)) {
+                param.push(value);
+            } else {
+                parameters[key] = [param, value];
+            }
+        } else {
+            parameters[key] = value;
+        }
+
+        return parameters;
     }
 
     public removeOrder(property: string): void {

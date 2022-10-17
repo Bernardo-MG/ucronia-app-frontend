@@ -31,9 +31,9 @@ export class UrlParamsExtractor {
 
     public getUrlParamsWithout(parameters: { [key: string]: any }, key: string, selector: (sort: any) => boolean): { [key: string]: any } {
         if (key in parameters) {
-            const sorts = parameters[key];
-            if (Array.isArray(sorts)) {
-                const validSorts = sorts.filter(s => !selector(s));
+            const value = parameters[key];
+            if (Array.isArray(value)) {
+                const validSorts = value.filter(s => !selector(s));
 
                 if (validSorts.length == 1) {
                     parameters[key] = validSorts[0];
@@ -42,7 +42,7 @@ export class UrlParamsExtractor {
                 } else {
                     delete parameters[key];
                 }
-            } else if (selector(sorts)) {
+            } else if (selector(value)) {
                 delete parameters[key];
             }
         }
