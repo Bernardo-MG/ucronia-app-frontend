@@ -13,7 +13,7 @@ export class OrderButtonComponent implements OnInit {
 
   @Input() property: string = '';
 
-  @Input() direction: 'asc' | 'desc' | 'disabled' = 'disabled';
+  @Input() direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 
   private apiActuator: RouteApiActuator;
 
@@ -34,10 +34,10 @@ export class OrderButtonComponent implements OnInit {
         if (propertySort) {
           this.direction = propertySort.order;
         } else {
-          this.direction = 'disabled';
+          this.direction = 'unsorted';
         }
       } else {
-        this.direction = 'disabled';
+        this.direction = 'unsorted';
       }
     });
   }

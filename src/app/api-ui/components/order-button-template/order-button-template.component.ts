@@ -8,7 +8,7 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
 })
 export class OrderButtonTemplateComponent implements OnChanges {
 
-  @Input() public direction: 'asc' | 'desc' | 'disabled' = 'disabled';
+  @Input() public direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 
   @Output() public ascending = new EventEmitter<void>();
 

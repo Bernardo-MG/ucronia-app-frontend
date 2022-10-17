@@ -47,7 +47,7 @@ describe('OrderButtonComponent', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('disabled');
+    expect(component.direction).toBe('unsorted');
   });
 
   it('should set disabled direction when an empty property is received', () => {
@@ -56,7 +56,7 @@ describe('OrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('disabled');
+    expect(component.direction).toBe('unsorted');
   });
 
   it('should set ascending icon when receiving an ascending property', () => {
