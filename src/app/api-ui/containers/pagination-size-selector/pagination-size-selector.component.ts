@@ -9,9 +9,9 @@ import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 })
 export class PaginationSizeSelectorComponent {
 
-  @Input() public sizes: number[] = [];
+  @Input() public sizes: number[] = [5, 10, 15, 20];
 
-  @Input() public selected: number = 0;
+  @Input() public selected: number = 5;
 
   private apiActuator: RouteApiActuator;
 
