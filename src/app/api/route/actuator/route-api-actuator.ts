@@ -1,4 +1,4 @@
-import { Router } from "@angular/router";
+import { Params, Router } from "@angular/router";
 import { PaginationRequest } from "../../models/pagination-request";
 import { Sort } from "../../models/sort";
 import { UrlParamsExtractor } from "./url-params-extractor";
@@ -32,40 +32,27 @@ export class RouteApiActuator {
         let parameters = this.extractor.getUrlParams(this.router.url);
 
         parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
-        parameters = this.appendParameter(parameters, 'sort', value);
+        parameters = this.extractor.appendParameter(parameters, 'sort', value);
+
         this.navigate(parameters);
     }
 
     public setParameter(params: any): void {
         const urlParams = this.extractor.getUrlParams(this.router.url);
-
         const parameters = { ...urlParams, ...params };
+
         this.navigate(parameters);
-    }
-
-    private appendParameter(parameters: { [key: string]: any }, key: string, value: any): { [key: string]: any } {
-        const param = parameters[key];
-        if (param) {
-            if (Array.isArray(param)) {
-                param.push(value);
-            } else {
-                parameters[key] = [param, value];
-            }
-        } else {
-            parameters[key] = value;
-        }
-
-        return parameters;
     }
 
     public removeOrder(property: string): void {
         let parameters = this.extractor.getUrlParams(this.router.url);
+
         parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${property},`));
 
         this.navigate(parameters);
     }
 
-    private navigate(parameters: any = {}): void {
+    private navigate(parameters: Params): void {
         this.router.navigate([this.path], { queryParams: parameters });
     }
 

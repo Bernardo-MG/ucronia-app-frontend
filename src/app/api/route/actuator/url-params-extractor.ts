@@ -50,4 +50,19 @@ export class UrlParamsExtractor {
         return parameters;
     }
 
+    public appendParameter(parameters: { [key: string]: any }, key: string, value: any): { [key: string]: any } {
+        const param = parameters[key];
+        if (param) {
+            if (Array.isArray(param)) {
+                param.push(value);
+            } else {
+                parameters[key] = [param, value];
+            }
+        } else {
+            parameters[key] = value;
+        }
+
+        return parameters;
+    }
+
 }
