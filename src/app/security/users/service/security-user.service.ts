@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class SecurityUserService {
 
-  private roleUrl = environment.apiUrl + "/security/role";
+  private roleUrl = environment.apiUrl + "/security/user";
 
   constructor(
     private client: RequestClient
