@@ -10,9 +10,7 @@ import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MemberService {
 
   private memberUrl = environment.apiUrl + "/member";
@@ -32,14 +30,14 @@ export class MemberService {
     return clt.fetchPaged();
   }
 
-  public create(member: Member): Observable<Member> {
+  public create(data: Member): Observable<Member> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    return clt.body(member).pushUnwrapped();
+    return clt.body(data).pushUnwrapped();
   }
 
-  public update(id: number, member: Member): Observable<Member> {
+  public update(id: number, data: Member): Observable<Member> {
     const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    return clt.id(id).body(member).pushUnwrapped();
+    return clt.id(id).body(data).pushUnwrapped();
   }
 
   public delete(id: number): Observable<Member> {

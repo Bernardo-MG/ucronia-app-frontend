@@ -12,9 +12,7 @@ import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FeeService {
 
   private feeUrl = environment.apiUrl + "/fee";
@@ -23,11 +21,11 @@ export class FeeService {
 
   constructor(
     private client: RequestClient
-  ) {}
+  ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
-    if(pagination) {
+    if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
@@ -36,14 +34,14 @@ export class FeeService {
     return clt.fetchPaged();
   }
 
-  public create(fee: Fee): Observable<Fee> {
+  public create(data: Fee): Observable<Fee> {
     const clt: CreateOperations<Fee> = this.client.create(this.feeUrl);
-    return clt.body(fee).pushUnwrapped();
+    return clt.body(data).pushUnwrapped();
   }
 
-  public update(id: number, member: Fee): Observable<Fee> {
+  public update(id: number, data: Fee): Observable<Fee> {
     const clt: UpdateOperations<Fee> = this.client.update(this.feeUrl);
-    return clt.id(id).body(member).pushUnwrapped();
+    return clt.id(id).body(data).pushUnwrapped();
   }
 
   public delete(id: number): Observable<Fee> {

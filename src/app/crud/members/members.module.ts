@@ -5,6 +5,7 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MembersRoutingModule } from './members-routing.module';
+import { MemberService } from './services/member.service';
 import { MemberCreateViewComponent } from './views/member-create-view/member-create-view.component';
 import { MemberEditViewComponent } from './views/member-edit-view/member-edit-view.component';
 import { MemberListViewComponent } from './views/member-list-view/member-list-view.component';
@@ -27,6 +28,9 @@ import { MemberListViewComponent } from './views/member-list-view/member-list-vi
   ],
   exports: [
     MemberFormComponent
+  ],
+  providers: [
+    MemberService
   ]
 })
 export class MembersModule { }

@@ -1,1 +1,16 @@
-<p>security-role-form works!</p>
+<form-controls (save)="saveData()" (delete)="deleteData()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
+</form-controls>
+<form [formGroup]="form" (ngSubmit)="saveData()">
+    <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">name</label>
+        <div class="col-sm-10">
+            <input type="text" id="name" formControlName="name" class="form-control"
+                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('name')?.errors }">
+        </div>
+    </div>
+</form>
+<div *ngIf="isFormInvalid()" class="alert alert-danger">
+    <div *ngIf="form.get('name')?.hasError('required')">
+        Name is required.
+    </div>
+</div>
