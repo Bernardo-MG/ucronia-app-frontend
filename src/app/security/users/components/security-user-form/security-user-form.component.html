@@ -8,6 +8,37 @@
                 [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('username')?.errors }">
         </div>
     </div>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">email</label>
+        <div class="col-sm-10">
+            <input type="text" id="email" formControlName="email" class="form-control"
+                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('email')?.errors }">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="credentialsExpired" class="col-sm-2 col-form-label">credentialsExpired</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="credentialsExpired" formControlName="credentialsExpired" class="form-check-input">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="enabled" class="col-sm-2 col-form-label">enabled</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="enabled" formControlName="enabled" class="form-check-input">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="expired" class="col-sm-2 col-form-label">expired</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="expired" formControlName="expired" class="form-check-input">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="locked" class="col-sm-2 col-form-label">locked</label>
+        <div class="col-sm-10">
+            <input type="checkbox" id="locked" formControlName="locked" class="form-check-input">
+        </div>
+    </div>
 </form>
 <div *ngIf="isFormInvalid()" class="alert alert-danger">
     <div *ngIf="form.get('username')?.hasError('required')">

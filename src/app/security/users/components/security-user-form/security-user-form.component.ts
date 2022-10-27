@@ -21,7 +21,12 @@ export class SecurityUserFormComponent implements OnChanges {
 
   public form: FormGroup = this.fb.group({
     id: [-1],
-    username: ['', Validators.required]
+    username: ['', Validators.required],
+    email: ['', Validators.required],
+    credentialsExpired: [false, Validators.required],
+    enabled: [false, Validators.required],
+    expired: [false, Validators.required],
+    locked: [false, Validators.required]
   });
 
   constructor(
