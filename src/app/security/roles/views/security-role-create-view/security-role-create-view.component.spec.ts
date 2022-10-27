@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SecurityRoleService } from '../../service/security-role.service';
 
 import { SecurityRoleCreateViewComponent } from './security-role-create-view.component';
 
@@ -8,9 +11,18 @@ describe('SecurityRoleCreateViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityRoleCreateViewComponent ]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        SecurityRoleCreateViewComponent
+      ],
+      providers: [
+        SecurityRoleService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityRoleCreateViewComponent);
     component = fixture.componentInstance;

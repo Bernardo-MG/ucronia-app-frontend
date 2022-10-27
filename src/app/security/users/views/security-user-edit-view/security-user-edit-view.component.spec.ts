@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SecurityUserService } from '../../service/security-user.service';
 
 import { SecurityUserEditViewComponent } from './security-user-edit-view.component';
 
@@ -8,9 +11,18 @@ describe('SecurityUserEditViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityUserEditViewComponent ]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        SecurityUserEditViewComponent
+      ],
+      providers: [
+        SecurityUserService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityUserEditViewComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SecurityUserFormComponent } from './security-user-form.component';
 
@@ -8,9 +9,14 @@ describe('SecurityUserFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityUserFormComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+        SecurityUserFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityUserFormComponent);
     component = fixture.componentInstance;

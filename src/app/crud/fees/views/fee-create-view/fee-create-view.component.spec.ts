@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FeeService } from '../../services/fee.service';
 
 import { FeeCreateViewComponent } from './fee-create-view.component';
 
@@ -16,6 +17,9 @@ describe('FeeCreateViewComponent', () => {
       ],
       declarations: [
         FeeCreateViewComponent
+      ],
+      providers: [
+        FeeService
       ]
     })
       .compileComponents();
