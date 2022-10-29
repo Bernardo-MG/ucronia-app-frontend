@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
+import { SecurityRegisterViewComponent } from './register/views/security-register-view/security-register-view.component';
 import { SecurityRoleCreateViewComponent } from './roles/views/security-role-create-view/security-role-create-view.component';
 import { SecurityRoleEditViewComponent } from './roles/views/security-role-edit-view/security-role-edit-view.component';
 import { SecurityRoleListViewComponent } from './roles/views/security-role-list-view/security-role-list-view.component';
@@ -24,6 +26,12 @@ const routes: Routes = [
             { path: 'create', component: SecurityUserCreateViewComponent },
             { path: ':id', component: SecurityUserEditViewComponent }
         ]
+    },
+    {
+        path: 'register', component: SecurityRegisterViewComponent
+    },
+    {
+        path: 'password', component: SecurityChangePasswordViewComponent
     }
 ];
 

@@ -15,6 +15,11 @@ import { SecurityUserService } from './users/service/security-user.service';
 import { SecurityUserCreateViewComponent } from './users/views/security-user-create-view/security-user-create-view.component';
 import { SecurityUserEditViewComponent } from './users/views/security-user-edit-view/security-user-edit-view.component';
 import { SecurityUserListViewComponent } from './users/views/security-user-list-view/security-user-list-view.component';
+import { SecurityRegisterViewComponent } from './register/views/security-register-view/security-register-view.component';
+import { SecurityRegisterService } from './register/service/security-register.service';
+import { SecurityRegisterFormComponent } from './register/components/security-register-form/security-register-form.component';
+import { SecurityChangePasswordFormComponent } from './register/components/security-change-password-form/security-change-password-form.component';
+import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
 
 
 
@@ -27,7 +32,11 @@ import { SecurityUserListViewComponent } from './users/views/security-user-list-
     SecurityRoleFormComponent,
     SecurityRoleCreateViewComponent,
     SecurityRoleEditViewComponent,
-    SecurityRoleListViewComponent
+    SecurityRoleListViewComponent,
+    SecurityRegisterViewComponent,
+    SecurityRegisterFormComponent,
+    SecurityChangePasswordFormComponent,
+    SecurityChangePasswordViewComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +48,8 @@ import { SecurityUserListViewComponent } from './users/views/security-user-list-
   ],
   providers: [
     SecurityRoleService,
-    SecurityUserService
+    SecurityUserService,
+    SecurityRegisterService
   ]
 })
 export class SecurityModule { }
