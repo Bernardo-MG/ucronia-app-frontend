@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoggedInGuard } from './authentication/guard/logged-in.guard';
-import { LoggedOutGuard } from './authentication/guard/logged-out.guard';
+import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
+import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/api/models/api-response';
-import { LoginDetails } from '@app/authentication/model/login-details';
-import { LoginRequest } from '@app/authentication/model/login-request';
-import { AuthenticationContainer } from '@app/authentication/service/authentication-container.service';
+import { LoginDetails } from '@app/security/authentication/model/login-details';
+import { LoginRequest } from '@app/security/authentication/model/login-request';
+import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 

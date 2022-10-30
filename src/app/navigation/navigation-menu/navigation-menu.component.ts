@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AuthenticationContainer } from '@app/authentication/service/authentication-container.service';
+import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
 import { Menu } from '../model/menu';
 
 @Component({
