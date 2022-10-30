@@ -4,6 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SecurityChangePasswordFormComponent } from './register/components/security-change-password-form/security-change-password-form.component';
+import { SecurityRegisterFormComponent } from './register/components/security-register-form/security-register-form.component';
+import { SecurityChangePasswordService } from './register/service/security-change-password.service';
+import { SecurityRegisterService } from './register/service/security-register.service';
+import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
+import { SecurityRegisterViewComponent } from './register/views/security-register-view/security-register-view.component';
 import { SecurityRoleFormComponent } from './roles/components/security-role-form/security-role-form.component';
 import { SecurityRoleService } from './roles/service/security-role.service';
 import { SecurityRoleCreateViewComponent } from './roles/views/security-role-create-view/security-role-create-view.component';
@@ -15,13 +21,6 @@ import { SecurityUserService } from './users/service/security-user.service';
 import { SecurityUserCreateViewComponent } from './users/views/security-user-create-view/security-user-create-view.component';
 import { SecurityUserEditViewComponent } from './users/views/security-user-edit-view/security-user-edit-view.component';
 import { SecurityUserListViewComponent } from './users/views/security-user-list-view/security-user-list-view.component';
-import { SecurityRegisterViewComponent } from './register/views/security-register-view/security-register-view.component';
-import { SecurityRegisterService } from './register/service/security-register.service';
-import { SecurityRegisterFormComponent } from './register/components/security-register-form/security-register-form.component';
-import { SecurityChangePasswordFormComponent } from './register/components/security-change-password-form/security-change-password-form.component';
-import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
-import { SecurityChangePasswordService } from './register/service/security-change-password.service';
-import { LoginModule } from './login/login.module';
 
 
 
@@ -46,8 +45,7 @@ import { LoginModule } from './login/login.module';
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,
-    ApiUiModule,
-    LoginModule
+    ApiUiModule
   ],
   providers: [
     SecurityRoleService,

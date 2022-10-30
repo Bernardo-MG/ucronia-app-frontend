@@ -16,6 +16,7 @@ const transactionModule = () => import('@app/crud/transactions/transactions.modu
 
 const routes: Routes = [
   { path: '', loadChildren: frontpageModule },
+  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
   { path: 'security', loadChildren: securityModule, canActivate: [LoggedInGuard] },
   { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
   { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
