@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginFormUser } from '@app/login/model/login-form-user';
-import { LoginService } from '@app/login/service/login.service';
+import { LoginFormUser } from '../../model/login-form-user';
+import { LoginService } from '../../service/login.service';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.

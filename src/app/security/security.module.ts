@@ -21,6 +21,7 @@ import { SecurityRegisterFormComponent } from './register/components/security-re
 import { SecurityChangePasswordFormComponent } from './register/components/security-change-password-form/security-change-password-form.component';
 import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
 import { SecurityChangePasswordService } from './register/service/security-change-password.service';
+import { LoginModule } from './login/login.module';
 
 
 
@@ -45,7 +46,8 @@ import { SecurityChangePasswordService } from './register/service/security-chang
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,
-    ApiUiModule
+    ApiUiModule,
+    LoginModule
   ],
   providers: [
     SecurityRoleService,

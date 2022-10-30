@@ -5,7 +5,7 @@ import { LoggedOutGuard } from './authentication/guard/logged-out.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 
-const loginModule = () => import('@app/login/login.module').then(m => m.LoginModule);
+const loginModule = () => import('@app/security/login/login.module').then(m => m.LoginModule);
 const securityModule = () => import('@app/security/security.module').then(m => m.SecurityModule);
 
 const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminModule);
@@ -16,7 +16,6 @@ const transactionModule = () => import('@app/crud/transactions/transactions.modu
 
 const routes: Routes = [
   { path: '', loadChildren: frontpageModule },
-  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
   { path: 'security', loadChildren: securityModule, canActivate: [LoggedInGuard] },
   { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
   { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
