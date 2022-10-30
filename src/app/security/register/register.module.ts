@@ -5,6 +5,7 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRegisterFormComponent } from './components/security-register-form/security-register-form.component';
+import { RegisterRoutingModule } from './register-routing.module';
 import { SecurityRegisterService } from './service/security-register.service';
 import { SecurityRegisterViewComponent } from './views/security-register-view/security-register-view.component';
 
@@ -17,6 +18,7 @@ import { SecurityRegisterViewComponent } from './views/security-register-view/se
   ],
   imports: [
     CommonModule,
+    RegisterRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,

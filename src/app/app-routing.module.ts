@@ -6,7 +6,10 @@ import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 
 const loginModule = () => import('@app/security/login/login.module').then(m => m.LoginModule);
-const securityModule = () => import('@app/security/security.module').then(m => m.SecurityModule);
+const roleModule = () => import('@app/security/data/roles/roles.module').then(m => m.RolesModule);
+const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
+const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
+const passwordModule = () => import('@app/security/password/password.module').then(m => m.PasswordModule);
 
 const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminModule);
 
@@ -16,8 +19,13 @@ const transactionModule = () => import('@app/crud/transactions/transactions.modu
 
 const routes: Routes = [
   { path: '', loadChildren: frontpageModule },
+  // Security
   { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
-  { path: 'security', loadChildren: securityModule, canActivate: [LoggedInGuard] },
+  { path: 'security/roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
+  { path: 'security/users', loadChildren: userModule, canActivate: [LoggedInGuard] },
+  { path: 'security/register', loadChildren: registerModule, canActivate: [LoggedInGuard] },
+  { path: 'security/password', loadChildren: passwordModule, canActivate: [LoggedInGuard] },
+  // Admin
   { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
   { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
   { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },

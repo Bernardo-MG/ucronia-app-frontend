@@ -8,14 +8,12 @@ import { RolesModule } from './data/roles/roles.module';
 import { UsersModule } from './data/users/users.module';
 import { PasswordModule } from './password/password.module';
 import { RegisterModule } from './register/register.module';
-import { SecurityRoutingModule } from './security-routing.module';
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    SecurityRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,

@@ -5,6 +5,7 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityChangePasswordFormComponent } from './components/security-change-password-form/security-change-password-form.component';
+import { PasswordRoutingModule } from './password-routing.module';
 import { SecurityChangePasswordService } from './service/security-change-password.service';
 import { SecurityChangePasswordViewComponent } from './views/security-change-password-view/security-change-password-view.component';
 
@@ -17,6 +18,7 @@ import { SecurityChangePasswordViewComponent } from './views/security-change-pas
   ],
   imports: [
     CommonModule,
+    PasswordRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,
