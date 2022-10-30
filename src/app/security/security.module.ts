@@ -20,6 +20,7 @@ import { SecurityRegisterService } from './register/service/security-register.se
 import { SecurityRegisterFormComponent } from './register/components/security-register-form/security-register-form.component';
 import { SecurityChangePasswordFormComponent } from './register/components/security-change-password-form/security-change-password-form.component';
 import { SecurityChangePasswordViewComponent } from './register/views/security-change-password-view/security-change-password-view.component';
+import { SecurityChangePasswordService } from './register/service/security-change-password.service';
 
 
 
@@ -49,7 +50,8 @@ import { SecurityChangePasswordViewComponent } from './register/views/security-c
   providers: [
     SecurityRoleService,
     SecurityUserService,
-    SecurityRegisterService
+    SecurityRegisterService,
+    SecurityChangePasswordService
   ]
 })
 export class SecurityModule { }

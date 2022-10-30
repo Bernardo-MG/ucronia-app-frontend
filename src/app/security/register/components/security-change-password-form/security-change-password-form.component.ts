@@ -9,7 +9,7 @@ import { ChangePasswordForm } from '../../model/change-password-form';
 })
 export class SecurityChangePasswordFormComponent {
 
-  @Output() public register = new EventEmitter<ChangePasswordForm>();
+  @Output() public changePassword = new EventEmitter<ChangePasswordForm>();
 
   public form = this.formBuilder.nonNullable.group({
     password: ['', Validators.required],
@@ -30,7 +30,7 @@ export class SecurityChangePasswordFormComponent {
         user.password = this.form.value.password;
       }
 
-      this.register.emit(user);
+      this.changePassword.emit(user);
     }
   }
 

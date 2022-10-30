@@ -3,19 +3,19 @@ import { CreateOperations } from '@app/api/request/create-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { RegisterForm } from '../model/register-form';
+import { ChangePasswordForm } from '../model/change-password-form';
 
 @Injectable()
-export class SecurityRegisterService {
+export class SecurityChangePasswordService {
 
-  private registerUrl = environment.apiUrl + "/security/register";
+  private registerUrl = environment.apiUrl + "/security/password";
 
   constructor(
     private client: RequestClient
   ) { }
 
-  public register(data: RegisterForm): Observable<RegisterForm> {
-    const clt: CreateOperations<RegisterForm> = this.client.create(this.registerUrl);
+  public changePassword(data: ChangePasswordForm): Observable<ChangePasswordForm> {
+    const clt: CreateOperations<ChangePasswordForm> = this.client.create(this.registerUrl);
     return clt.body(data).pushUnwrapped();
   }
 
