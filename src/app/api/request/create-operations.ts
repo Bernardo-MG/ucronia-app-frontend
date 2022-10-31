@@ -43,8 +43,10 @@ export class CreateOperations<T> {
 
       console.error(error.message);
 
-      const errorResponse: ErrorResponse = error.error;
-      errorResponse.errors.forEach(e => console.error(e.message));
+      if(error.error){
+        const errorResponse: ErrorResponse = error.error;
+        errorResponse.errors.forEach(e => console.error(e.message));
+      }
 
       throw new Error(error.message);
     };
