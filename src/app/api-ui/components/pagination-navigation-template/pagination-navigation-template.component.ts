@@ -12,9 +12,9 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   @Input() public totalPages: number = 0;
 
-  @Input() public first: boolean = false;
+  @Input() public first: boolean = true;
 
-  @Input() public last: boolean = false;
+  @Input() public last: boolean = true;
 
   @Output() goTo = new EventEmitter<number>();
 
