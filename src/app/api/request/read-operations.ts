@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { Sort } from '@app/api/models/sort';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { ErrorResponse } from '../models/error-response';
 import { PaginatedResponse } from '../models/paginated-response';
 
 export class ReadOperations<T> {
@@ -114,11 +115,14 @@ export class ReadOperations<T> {
   }
 
   private handleError() {
-    return (error: any) => {
+    return (error: HttpErrorResponse) => {
 
-      console.error(error);
+      console.error(error.message);
 
-      throw new Error(error);
+      const errorResponse: ErrorResponse = error.error;
+      errorResponse.errors.forEach(e => console.error(e.message));
+
+      throw new Error(error.message);
     };
   }
 

@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { ErrorResponse } from '../models/error-response';
 
 export class DeleteOperations<T> {
 
@@ -33,11 +34,14 @@ export class DeleteOperations<T> {
   }
 
   private handleError() {
-    return (error: any) => {
+    return (error: HttpErrorResponse) => {
 
-      console.error(error);
+      console.error(error.message);
 
-      throw new Error(error);
+      const errorResponse: ErrorResponse = error.error;
+      errorResponse.errors.forEach(e => console.error(e.message));
+
+      throw new Error(error.message);
     };
   }
 
