@@ -33,6 +33,16 @@ describe('PaginationNavigationTemplateComponent', () => {
     expect(total.textContent).toEqual('10');
   });
 
+  it('should disable the previous button by default', () => {
+    const button = fixture.nativeElement.querySelector('#go_to_previous_page');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should disable the next button by default', () => {
+    const button = fixture.nativeElement.querySelector('#go_to_next_page');
+    expect(button.disabled).toEqual(true);
+  });
+
   it('should disable the previous button when it is the first page', () => {
     component.first = true;
     fixture.detectChanges();
