@@ -47,4 +47,12 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
     this.goTo.emit(this.page + 1);
   }
 
+  public isPreviousDisabled() {
+    return (this.first === undefined) || (this.first === null) || this.first
+  }
+
+  public isNextDisabled() {
+    return (this.last === undefined) || (this.last === null) || this.last
+  }
+
 }
