@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SecurityChangePasswordFormComponent } from './security-change-password-form.component';
 
@@ -8,9 +9,14 @@ describe('SecurityChangePasswordFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityChangePasswordFormComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+        SecurityChangePasswordFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityChangePasswordFormComponent);
     component = fixture.componentInstance;
