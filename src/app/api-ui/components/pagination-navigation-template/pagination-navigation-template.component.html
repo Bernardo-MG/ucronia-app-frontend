@@ -1,8 +1,8 @@
 <nav aria-label="Page navigation">
     <ul class="pagination pagination-sm">
-        <li class="page-item" [ngClass]="{'disabled': first}">
-            <button id="go_to_previous_page" type="button" (click)="onPrevious()" [disabled]="first"
-                [attr.aria-disabled]="first" class="page-link" aria-label="Previous page">
+        <li class="page-item" [ngClass]="{'disabled': isPreviousDisabled()}">
+            <button id="go_to_previous_page" type="button" (click)="onPrevious()" [disabled]="isPreviousDisabled()"
+                [attr.aria-disabled]="isPreviousDisabled()" class="page-link" aria-label="Previous page">
                 <fa-icon [icon]="backwardIcon"></fa-icon>
             </button>
         </li>
@@ -14,9 +14,9 @@
                 <div id="total_pages">{{totalPages}}</div>
             </div>
         </li>
-        <li class="page-item" [ngClass]="{'disabled': last}">
-            <button id="go_to_next_page" type="button" (click)="onNext()" [disabled]="last"
-                [attr.aria-disabled]="last" class="page-link" aria-label="Next page">
+        <li class="page-item" [ngClass]="{'disabled': isNextDisabled()}">
+            <button id="go_to_next_page" type="button" (click)="onNext()" [disabled]="isNextDisabled()"
+                [attr.aria-disabled]="isNextDisabled()" class="page-link" aria-label="Next page">
                 <fa-icon [icon]="forwardIcon"></fa-icon>
             </button>
         </li>
