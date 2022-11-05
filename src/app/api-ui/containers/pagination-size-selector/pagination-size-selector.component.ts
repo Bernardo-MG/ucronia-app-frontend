@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
 import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
@@ -8,7 +8,7 @@ import { RoutePaginationObserver } from '@app/api/route/observer/route-paginatio
   templateUrl: './pagination-size-selector.component.html',
   styleUrls: ['./pagination-size-selector.component.sass']
 })
-export class PaginationSizeSelectorComponent {
+export class PaginationSizeSelectorComponent implements OnInit {
 
   @Input() public sizes: number[] = [5, 10, 15, 20];
 
@@ -24,6 +24,14 @@ export class PaginationSizeSelectorComponent {
   ) {
     this.apiActuator = new RouteApiActuator(router);
     this.routePaginationObserver = new RoutePaginationObserver(route);
+  }
+
+  ngOnInit(): void {
+    this.routePaginationObserver.pagination.subscribe(p => {
+      if ((p) && (p.size)) {
+        this.selected = p.size;
+      }
+    });
   }
 
   public onSelect(size: number) {

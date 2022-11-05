@@ -12,14 +12,32 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   @Input() public totalPages: number = 0;
 
-  @Input() public first: boolean = false;
+  private _first: boolean = true;
 
-  @Input() public last: boolean = false;
+  @Input()
+  get first(): boolean {
+    return this._first;
+  }
+
+  set first(value: boolean) {
+    this._first = (value === undefined) || (value === null) || value;
+  }
+
+  private _last: boolean = true;
+
+  @Input()
+  get last(): boolean {
+    return this._last;
+  }
+
+  set last(value: boolean) {
+    this._last = (value === undefined) || (value === null) || value;
+  }
 
   @Output() goTo = new EventEmitter<number>();
 
   public currentPage: number = 0;
-  
+
   public backwardIcon = faBackward;
   public forwardIcon = faForward;
 

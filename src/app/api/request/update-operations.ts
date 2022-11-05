@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { ErrorResponse } from '../models/error-response';
 
 export class UpdateOperations<T> {
 
@@ -11,7 +12,7 @@ export class UpdateOperations<T> {
     })
   }
 
-  private identifier: number = -1;
+  private identifier: number | undefined = undefined;
 
   private content: T | undefined = undefined;
 
@@ -21,17 +22,17 @@ export class UpdateOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
-    const url = `${this.queryUrl}/${this.identifier}`;
-    return this.http.put<ApiResponse<T>>(url, this.content, this.options).pipe(
-      map((response: ApiResponse<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError())
-    );
-  }
+    let url;
+    if (this.identifier) {
+      url = `${this.queryUrl}/${this.identifier}`;
+    } else {
+      url = this.queryUrl;
+    }
 
-  public pushUnwrapped(): Observable<T> {
-    // TODO: add unwrap operation to be used after fetch
-    return this.push().pipe(map(r => r.content));
+    return this.http.put<ApiResponse<T>>(url, this.content, this.options)
+      .pipe(
+        catchError(this.handleError())
+      );
   }
 
   public id(id: number): UpdateOperations<T> {
@@ -40,18 +41,23 @@ export class UpdateOperations<T> {
     return this;
   }
 
-  public body(content: T): UpdateOperations<T> {
+  public body(content: any): UpdateOperations<T> {
     this.content = content;
-    
+
     return this;
   }
 
   private handleError() {
-    return (error: any) => {
+    return (error: HttpErrorResponse) => {
 
-      console.error(error);
+      console.error(error.message);
 
-      throw new Error(error);
+      if (error.error) {
+        const errorResponse: ErrorResponse = error.error;
+        errorResponse.errors.forEach(e => console.error(e.message));
+      }
+
+      throw new Error(error.message);
     };
   }
 

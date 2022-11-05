@@ -1,0 +1,9 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <div class="card">
+        <h4 class="card-header">Login</h4>
+        <div class="card-body">
+            <login-form (login)="onLogin($event)"></login-form>
+            <div *ngIf="failed" class="alert alert-danger mt-3 mb-0">Invalid user</div>
+        </div>
+    </div>
+</div>

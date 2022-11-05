@@ -4,6 +4,6 @@ export class PageInfo {
     elementsInPage: number = 0;
     totalElements: number = 0;
     totalPages: number = 0;
-    first: boolean = false;
-    last: boolean = false;
+    first: boolean = true;
+    last: boolean = true;
 }

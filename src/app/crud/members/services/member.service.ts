@@ -4,15 +4,14 @@ import { PaginationRequest } from '@app/api/models/pagination-request';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
+import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class MemberService {
 
   private memberUrl = environment.apiUrl + "/member";
@@ -22,34 +21,34 @@ export class MemberService {
   ) {}
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
     }
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
-  public create(member: Member): Observable<Member> {
+  public create(data: Member): Observable<Member> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    return clt.body(member).pushUnwrapped();
+    return clt.body(data).push().pipe(map(r => r.content));
   }
 
-  public update(id: number, member: Member): Observable<Member> {
+  public update(id: number, data: Member): Observable<Member> {
     const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    return clt.id(id).body(member).pushUnwrapped();
+    return clt.id(id).body(data).push().pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<Member> {
     const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
-    return clt.id(id).pushUnwrapped();
+    return clt.id(id).push().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
 }

@@ -1,7 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
+import { ErrorResponse } from '../models/error-response';
 
 export class CreateOperations<T> {
 
@@ -19,16 +20,10 @@ export class CreateOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(this.queryUrl, this.content, this.options).pipe(
-      map((response: ApiResponse<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError())
-    );
-  }
-
-  public pushUnwrapped(): Observable<T> {
-    // TODO: add unwrap operation to be used after fetch
-    return this.push().pipe(map(r => r.content));
+    return this.http.post<ApiResponse<T>>(this.queryUrl, this.content, this.options)
+      .pipe(
+        catchError(this.handleError())
+      );
   }
 
   public body(content: T): CreateOperations<T> {
@@ -38,11 +33,16 @@ export class CreateOperations<T> {
   }
 
   private handleError() {
-    return (error: any) => {
+    return (error: HttpErrorResponse) => {
 
-      console.error(error);
+      console.error(error.message);
 
-      throw new Error(error);
+      if (error.error) {
+        const errorResponse: ErrorResponse = error.error;
+        errorResponse.errors.forEach(e => console.error(e.message));
+      }
+
+      throw new Error(error.message);
     };
   }
 

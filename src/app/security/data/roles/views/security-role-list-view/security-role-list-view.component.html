@@ -1,0 +1,25 @@
+<h1>roles</h1>
+<button-link-create link="/security/roles/create"></button-link-create>
+<pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
+</pagination-navigation>
+<pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-role [ngForOf]="roles">
+            <tr>
+                <td>
+                    <button-link-edit link="/security/roles/{{role.id}}"></button-link-edit>
+                </td>
+                <td>{{role.name}}</td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>

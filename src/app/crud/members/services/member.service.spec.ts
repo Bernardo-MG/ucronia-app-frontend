@@ -14,6 +14,9 @@ describe('MemberService', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule
+      ],
+      providers: [
+        MemberService
       ]
     });
 

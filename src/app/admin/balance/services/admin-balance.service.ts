@@ -3,7 +3,7 @@ import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { Balance } from '@app/models/balance';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class AdminBalanceService {
 
   public getBalance(): Observable<Balance> {
     const clt: ReadOperations<Balance> = this.client.read(this.balanceUrl);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
 }
