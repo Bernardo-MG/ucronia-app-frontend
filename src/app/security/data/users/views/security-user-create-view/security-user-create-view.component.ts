@@ -15,7 +15,7 @@ export class SecurityUserCreateViewComponent {
     private router: Router
   ) { }
 
-  save(data: User): void {
+  onSave(data: User): void {
     this.service.create(data).subscribe(d => {
       this.router.navigate(['/security/users']);
     });

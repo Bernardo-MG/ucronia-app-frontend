@@ -27,14 +27,14 @@ export class SecurityRoleEditViewComponent implements OnInit {
     });
   }
 
-  save(data: Role): void {
+  onSave(data: Role): void {
     this.service.update(data.id, data).subscribe(d => {
       this.router.navigate(['/security/roles']);
     });
   }
 
-  delete(id: number): void {
-    this.service.delete(id).subscribe(d => {
+  onDelete(): void {
+    this.service.delete(this.role.id).subscribe(d => {
       this.router.navigate(['/security/roles']);
     });
   }

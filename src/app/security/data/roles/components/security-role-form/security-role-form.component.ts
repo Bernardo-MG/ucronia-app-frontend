@@ -17,7 +17,7 @@ export class SecurityRoleFormComponent implements OnChanges {
 
   @Output() public save = new EventEmitter<Role>();
 
-  @Output() public delete = new EventEmitter<number>();
+  @Output() public delete = new EventEmitter<void>();
 
   public form: FormGroup = this.fb.group({
     id: [-1],
@@ -39,11 +39,7 @@ export class SecurityRoleFormComponent implements OnChanges {
   }
 
   public onDelete() {
-    const id = this.form.get('id');
-
-    if (id) {
-      this.delete.emit(id.value);
-    }
+    this.delete.emit();
   }
 
   public canSave(): boolean {
