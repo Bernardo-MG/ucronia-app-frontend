@@ -20,6 +20,8 @@ export class SecurityRoleEditViewComponent implements OnInit {
 
   public selectingPrivilege = false;
 
+  public privilegeSelectionPageInfo = new PageInfo();
+
   public privilegesPageInfo = new PageInfo();
 
   constructor(
@@ -46,19 +48,29 @@ export class SecurityRoleEditViewComponent implements OnInit {
     });
   }
 
-  public onAddPrivilege(data: Privilege): void {
-    this.service.addPrivilege(this.role.id, data.id).subscribe();
+  public onShowAddPrivilege(): void {
     this.selectingPrivilege = true;
   }
 
-  public onSelectPrivilege(privilege: Privilege) {
-    this.privileges.push(privilege);
+  public onAddPrivilege(data: Privilege): void {
+    this.service.addPrivilege(this.role.id, data.id).subscribe(p => this.onGoToPrivilegePage(0));
     this.selectingPrivilege = false;
   }
 
-  public onGoToPrivilegesPage(page: number) {
+  public onRemovePrivilege(data: Privilege): void {
+    this.service.removePrivilege(this.role.id, data.id).subscribe(p => this.onGoToPrivilegePage(0));
+  }
+
+  public onGoToPrivilegeSelectionPage(page: number) {
     this.service.getPrivilegeSelection(page).subscribe(response => {
       this.privilegeSelection = response.content;
+      this.privilegeSelectionPageInfo = response;
+    });
+  }
+
+  public onGoToPrivilegePage(page: number) {
+    this.service.getPrivileges(this.role.id, page).subscribe(response => {
+      this.privileges = response.content;
       this.privilegesPageInfo = response;
     });
   }
@@ -69,10 +81,7 @@ export class SecurityRoleEditViewComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.role = d;
-        });
-      this.service.getPrivileges(identifier, { page: 0 })
-        .subscribe(d => {
-          this.privileges = d.content;
+          this.onGoToPrivilegePage(0);
         });
     }
   }

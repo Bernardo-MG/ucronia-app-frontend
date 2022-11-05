@@ -34,14 +34,11 @@ export class SecurityRoleService {
     return clt.fetchPaged();
   }
 
-  public getPrivileges(id: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Privilege[]>> {
+  public getPrivileges(id: number, page: number): Observable<PaginatedResponse<Privilege[]>> {
     const clt: ReadOperations<Privilege> = this.client.read(`${this.roleUrl}/${id}/privilege`);
-    if (pagination) {
-      clt.page(pagination);
-      if (pagination.sort) {
-        clt.sort(pagination.sort);
-      }
-    }
+    const sort: Sort<Privilege> = new Sort<Privilege>('name');
+    clt.page({ page });
+    clt.sort([sort]);
     return clt.fetchPaged();
   }
 
@@ -75,12 +72,12 @@ export class SecurityRoleService {
 
   public addPrivilege(id: number, privilege: number): Observable<Privilege[]> {
     const clt: UpdateOperations<Privilege[]> = this.client.update(`${this.roleUrl}/${id}/privilege`);
-    return clt.id(id).body({ id: privilege }).pushUnwrapped();
+    return clt.body({ id: privilege }).pushUnwrapped();
   }
 
   public removePrivilege(id: number, privilege: number): Observable<Privilege[]> {
     const clt: DeleteOperations<Privilege[]> = this.client.delete(`${this.roleUrl}/${id}/privilege`);
-    return clt.id(id).body({ id: privilege }).pushUnwrapped();
+    return clt.id(privilege).pushUnwrapped();
   }
 
 }

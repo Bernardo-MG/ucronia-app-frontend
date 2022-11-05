@@ -12,7 +12,9 @@ export class SecurityRolePrivilegeFormComponent {
 
   @Input() public selection: Privilege[] = [];
 
-  @Output() public addPrivilege = new EventEmitter<Privilege>();
+  @Output() public addPrivilege = new EventEmitter<void>();
+
+  @Output() public removePrivilege = new EventEmitter<Privilege>();
 
   constructor() { }
 
@@ -20,8 +22,8 @@ export class SecurityRolePrivilegeFormComponent {
     this.addPrivilege.emit();
   }
 
-  public onDeleteAt(index: number) {
-    this.privileges.splice(index, 1);
+  public onRemove(privilege: Privilege) {
+    this.removePrivilege.emit(privilege);
   }
 
 }

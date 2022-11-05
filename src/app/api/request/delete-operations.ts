@@ -10,7 +10,7 @@ export class DeleteOperations<T> {
     'Content-Type': 'application/json'
   })
 
-  private identifier: number = -1;
+  private identifier: number | undefined = undefined;
 
   private content: T | undefined = undefined;
 
@@ -24,7 +24,13 @@ export class DeleteOperations<T> {
       headers: this.headers,
       body: this.content
     };
-    const url = `${this.queryUrl}/${this.identifier}`;
+    let url;
+    if (this.identifier) {
+      url = `${this.queryUrl}/${this.identifier}`;
+    } else {
+      url = this.queryUrl;
+    }
+
     return this.http.delete<ApiResponse<T>>(url, options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
