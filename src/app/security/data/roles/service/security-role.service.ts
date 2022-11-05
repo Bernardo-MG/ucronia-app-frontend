@@ -6,6 +6,7 @@ import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
+import { Privilege } from '@app/security/models/privilege';
 import { Role } from '@app/security/models/role';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -21,6 +22,17 @@ export class SecurityRoleService {
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
     const clt: ReadOperations<Role> = this.client.read(this.roleUrl);
+    if (pagination) {
+      clt.page(pagination);
+      if (pagination.sort) {
+        clt.sort(pagination.sort);
+      }
+    }
+    return clt.fetchPaged();
+  }
+
+  public getPrivileges(id: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Privilege[]>> {
+    const clt: ReadOperations<Privilege> = this.client.read(`${this.roleUrl}/${id}/privilege`);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {

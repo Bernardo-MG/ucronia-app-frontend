@@ -1,6 +1,6 @@
-<form-controls (save)="saveData()" (delete)="deleteData()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
+<form-controls (save)="onSave()" (delete)="onDelete()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
 </form-controls>
-<form [formGroup]="form" (ngSubmit)="saveData()">
+<form [formGroup]="form" (ngSubmit)="onSave()">
     <div class="form-group row">
         <div class="input-group">
             <label for="member" class="col-sm-2 col-form-label">member</label>

@@ -9,7 +9,7 @@ import { User } from '@app/security/models/user';
 })
 export class SecurityUserFormComponent implements OnChanges {
 
-  @Input() public data = new User();
+  @Input() public user = new User();
 
   @Input() public disabledSave: boolean = false;
 
@@ -34,16 +34,16 @@ export class SecurityUserFormComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['data'].firstChange) {
-      this.form.patchValue(this.data);
+    if (!changes['user'].firstChange) {
+      this.form.patchValue(this.user);
     }
   }
 
-  public saveData() {
+  public onSave() {
     this.save.emit(this.form.value);
   }
 
-  public deleteData() {
+  public onDelete() {
     const id = this.form.get('id');
 
     if (id) {

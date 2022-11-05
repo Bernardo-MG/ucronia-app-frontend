@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="onSave()">
+    <ul class="list-group">
+        <ng-template ngFor let-privilege [ngForOf]="privileges">
+            <li class="list-group-item">{{privilege.name}}</li>
+        </ng-template>
+    </ul>
+</form>

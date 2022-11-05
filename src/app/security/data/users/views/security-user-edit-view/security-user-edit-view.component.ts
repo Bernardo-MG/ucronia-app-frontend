@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Role } from '@app/security/models/role';
 import { User } from '@app/security/models/user';
 import { SecurityUserService } from '../../service/security-user.service';
 
@@ -10,7 +11,9 @@ import { SecurityUserService } from '../../service/security-user.service';
 })
 export class SecurityUserEditViewComponent implements OnInit {
 
-  role: User = new User();
+  public user: User = new User();
+
+  public roles: Role[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +44,11 @@ export class SecurityUserEditViewComponent implements OnInit {
       const identifier: number = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.role = d;
+          this.user = d;
+        });
+      this.service.getRoles(identifier, { page: 0 })
+        .subscribe(d => {
+          this.roles = d.content;
         });
     }
   }

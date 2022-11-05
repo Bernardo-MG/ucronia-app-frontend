@@ -61,7 +61,7 @@ export class FeeFormComponent implements OnChanges {
     }
   }
 
-  public saveData() {
+  public onSave() {
     const date = new Date(this.form.value.date);
 
     this.save.emit({
@@ -71,7 +71,7 @@ export class FeeFormComponent implements OnChanges {
     });
   }
 
-  public deleteData() {
+  public onDelete() {
     const id = this.form.get('id');
 
     if (id) {

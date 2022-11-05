@@ -10,6 +10,7 @@ import { UserRoutingModule } from './users-routing.module';
 import { SecurityUserCreateViewComponent } from './views/security-user-create-view/security-user-create-view.component';
 import { SecurityUserEditViewComponent } from './views/security-user-edit-view/security-user-edit-view.component';
 import { SecurityUserListViewComponent } from './views/security-user-list-view/security-user-list-view.component';
+import { SecurityUserRoleFormComponent } from './components/security-user-role-form/security-user-role-form.component';
 
 
 
@@ -18,7 +19,8 @@ import { SecurityUserListViewComponent } from './views/security-user-list-view/s
     SecurityUserFormComponent,
     SecurityUserCreateViewComponent,
     SecurityUserEditViewComponent,
-    SecurityUserListViewComponent
+    SecurityUserListViewComponent,
+    SecurityUserRoleFormComponent
   ],
   imports: [
     CommonModule,

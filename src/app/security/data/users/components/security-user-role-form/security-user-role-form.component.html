@@ -1,0 +1,7 @@
+<form [formGroup]="form" (ngSubmit)="onSave()">
+    <ul class="list-group">
+        <ng-template ngFor let-role [ngForOf]="roles">
+            <li class="list-group-item">{{role.name}}</li>
+        </ng-template>
+    </ul>
+</form>

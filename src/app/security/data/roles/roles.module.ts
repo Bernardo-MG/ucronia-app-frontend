@@ -10,6 +10,7 @@ import { SecurityRoleService } from './service/security-role.service';
 import { SecurityRoleCreateViewComponent } from './views/security-role-create-view/security-role-create-view.component';
 import { SecurityRoleEditViewComponent } from './views/security-role-edit-view/security-role-edit-view.component';
 import { SecurityRoleListViewComponent } from './views/security-role-list-view/security-role-list-view.component';
+import { SecurityRolePrivilegeFormComponent } from './components/security-role-privilege-form/security-role-privilege-form.component';
 
 
 
@@ -19,6 +20,7 @@ import { SecurityRoleListViewComponent } from './views/security-role-list-view/s
     SecurityRoleCreateViewComponent,
     SecurityRoleEditViewComponent,
     SecurityRoleListViewComponent,
+    SecurityRolePrivilegeFormComponent,
   ],
   imports: [
     CommonModule,

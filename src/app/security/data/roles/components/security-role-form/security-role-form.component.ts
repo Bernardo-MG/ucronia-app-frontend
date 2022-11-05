@@ -9,7 +9,7 @@ import { Role } from '@app/security/models/role';
 })
 export class SecurityRoleFormComponent implements OnChanges {
 
-  @Input() public data = new Role();
+  @Input() public role = new Role();
 
   @Input() public disabledSave: boolean = false;
 
@@ -29,16 +29,16 @@ export class SecurityRoleFormComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['data'].firstChange) {
-      this.form.patchValue(this.data);
+    if (!changes['role'].firstChange) {
+      this.form.patchValue(this.role);
     }
   }
 
-  public saveData() {
+  public onSave() {
     this.save.emit(this.form.value);
   }
 
-  public deleteData() {
+  public onDelete() {
     const id = this.form.get('id');
 
     if (id) {

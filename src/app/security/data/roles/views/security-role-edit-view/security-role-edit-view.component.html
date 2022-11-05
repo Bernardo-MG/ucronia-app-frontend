@@ -1,2 +1,3 @@
 <h1>edit role</h1>
-<security-role-form (save)="save($event)" (delete)="delete($event)" [data]="role"></security-role-form>
+<security-role-form (save)="save($event)" (delete)="delete($event)" [role]="role"></security-role-form>
+<security-role-privilege-form [privileges]="privileges"></security-role-privilege-form>

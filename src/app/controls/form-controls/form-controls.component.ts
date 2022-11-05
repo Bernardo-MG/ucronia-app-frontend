@@ -21,11 +21,11 @@ export class FormControlsComponent {
 
   constructor() { }
 
-  public saveData() {
+  public onSave() {
     this.save.emit();
   }
 
-  public deleteData() {
+  public onDelete() {
     this.delete.emit();
   }
 

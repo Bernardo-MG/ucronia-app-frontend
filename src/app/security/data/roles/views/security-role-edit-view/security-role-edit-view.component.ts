@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Privilege } from '@app/security/models/privilege';
 import { Role } from '@app/security/models/role';
 import { SecurityRoleService } from '../../service/security-role.service';
 
@@ -10,7 +11,9 @@ import { SecurityRoleService } from '../../service/security-role.service';
 })
 export class SecurityRoleEditViewComponent implements OnInit {
 
-  role: Role = new Role();
+  public role: Role = new Role();
+
+  public privileges: Privilege[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -42,6 +45,10 @@ export class SecurityRoleEditViewComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.role = d;
+        });
+      this.service.getPrivileges(identifier, { page: 0 })
+        .subscribe(d => {
+          this.privileges = d.content;
         });
     }
   }
