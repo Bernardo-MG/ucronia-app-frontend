@@ -6,7 +6,13 @@ import { ErrorResponse } from '../models/error-response';
 
 export class DeleteOperations<T> {
 
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+
   private identifier: number = -1;
+
+  private content: T | undefined = undefined;
 
   constructor(
     private http: HttpClient,
@@ -14,8 +20,12 @@ export class DeleteOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
+    const options = {
+      headers: this.headers,
+      body: this.content
+    };
     const url = `${this.queryUrl}/${this.identifier}`;
-    return this.http.delete<ApiResponse<T>>(url).pipe(
+    return this.http.delete<ApiResponse<T>>(url, options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
       catchError(this.handleError())
@@ -33,12 +43,18 @@ export class DeleteOperations<T> {
     return this;
   }
 
+  public body(content: any): DeleteOperations<T> {
+    this.content = content;
+
+    return this;
+  }
+
   private handleError() {
     return (error: HttpErrorResponse) => {
 
       console.error(error.message);
 
-      if(error.error){
+      if (error.error) {
         const errorResponse: ErrorResponse = error.error;
         errorResponse.errors.forEach(e => console.error(e.message));
       }

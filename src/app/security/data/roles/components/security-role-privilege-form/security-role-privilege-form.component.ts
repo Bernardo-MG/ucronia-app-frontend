@@ -12,22 +12,12 @@ export class SecurityRolePrivilegeFormComponent {
 
   @Input() public selection: Privilege[] = [];
 
-  @Output() public save = new EventEmitter<Privilege[]>();
-
-  @Output() public addPrivilege = new EventEmitter<void>();
+  @Output() public addPrivilege = new EventEmitter<Privilege>();
 
   constructor() { }
 
-  public onSave() {
-    this.save.emit(this.privileges);
-  }
-
   public onAdd() {
     this.addPrivilege.emit();
-  }
-
-  public canSave(): boolean {
-    return true;
   }
 
   public onDeleteAt(index: number) {

@@ -73,9 +73,14 @@ export class SecurityRoleService {
     return clt.fetchOneUnwrapped();
   }
 
-  public updatePrivileges(id: number, ids: number[]): Observable<Privilege[]> {
-    const clt: UpdateOperations<Privilege[]> = this.client.update(this.roleUrl);
-    return clt.id(id).body(ids).pushUnwrapped();
+  public addPrivilege(id: number, privilege: number): Observable<Privilege[]> {
+    const clt: UpdateOperations<Privilege[]> = this.client.update(`${this.roleUrl}/${id}/privilege`);
+    return clt.id(id).body({ id: privilege }).pushUnwrapped();
+  }
+
+  public removePrivilege(id: number, privilege: number): Observable<Privilege[]> {
+    const clt: DeleteOperations<Privilege[]> = this.client.delete(`${this.roleUrl}/${id}/privilege`);
+    return clt.id(id).body({ id: privilege }).pushUnwrapped();
   }
 
 }

@@ -46,12 +46,8 @@ export class SecurityRoleEditViewComponent implements OnInit {
     });
   }
 
-  public onSavePrivilege(data: Privilege[]): void {
-    const ids = data.map(p => p.id);
-    this.service.updatePrivileges(this.role.id, ids).subscribe();
-  }
-
-  public onAddPrivilege(): void {
+  public onAddPrivilege(data: Privilege): void {
+    this.service.addPrivilege(this.role.id, data.id).subscribe();
     this.selectingPrivilege = true;
   }
 

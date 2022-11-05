@@ -2,7 +2,7 @@
 <div *ngIf="selectingPrivilege; then privilege_selection else role_edition"></div>
 <ng-template #role_edition>
     <security-role-form (save)="onSave($event)" (delete)="onDelete()" [role]="role"></security-role-form>
-    <security-role-privilege-form (save)="onSavePrivilege($event)" (addPrivilege)="onAddPrivilege()" [privileges]="privileges"></security-role-privilege-form>
+    <security-role-privilege-form (addPrivilege)="onAddPrivilege($event)" [privileges]="privileges"></security-role-privilege-form>
 </ng-template>
 <ng-template #privilege_selection>
     <security-role-privilege-selection (selectPrivilege)="onSelectPrivilege($event)" [pageInfo]="privilegesPageInfo"
