@@ -5,6 +5,7 @@ import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
+import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Privilege } from '@app/security/models/privilege';
@@ -24,30 +25,30 @@ export class SecurityRoleService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    const clt: ReadOperations<Role> = this.client.read(this.roleUrl);
+    const clt: ReadPagedOperations<Role> = this.client.readPaged(this.roleUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
     }
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public getPrivileges(id: number, page: number): Observable<PaginatedResponse<Privilege[]>> {
-    const clt: ReadOperations<Privilege> = this.client.read(`${this.roleUrl}/${id}/privilege`);
+    const clt: ReadPagedOperations<Privilege> = this.client.readPaged(`${this.roleUrl}/${id}/privilege`);
     const sort: Sort<Privilege> = new Sort<Privilege>('name');
     clt.page({ page });
     clt.sort([sort]);
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public getPrivilegeSelection(page: number): Observable<PaginatedResponse<Privilege[]>> {
-    const clt: ReadOperations<Privilege> = this.client.read(this.privilegeUrl);
+    const clt: ReadPagedOperations<Privilege> = this.client.readPaged(this.privilegeUrl);
     const sort: Sort<Privilege> = new Sort<Privilege>('name');
     clt.page({ page });
     clt.sort([sort]);
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public create(data: Role): Observable<Role> {

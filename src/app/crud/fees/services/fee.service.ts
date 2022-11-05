@@ -5,6 +5,7 @@ import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
+import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Fee } from '@app/models/fee';
@@ -24,14 +25,14 @@ export class FeeService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
-    const clt: ReadOperations<Fee> = this.client.read(this.feeUrl);
+    const clt: ReadPagedOperations<Fee> = this.client.readPaged(this.feeUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
     }
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public create(data: Fee): Observable<Fee> {
@@ -55,11 +56,11 @@ export class FeeService {
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
-    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
     const sort: Sort<Member> = new Sort<Member>('name');
     clt.page({ page });
     clt.sort([sort]);
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public getOneMember(id: number): Observable<Member> {

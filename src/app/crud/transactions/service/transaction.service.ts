@@ -4,6 +4,7 @@ import { PaginationRequest } from '@app/api/models/pagination-request';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
+import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Transaction } from '@app/models/transaction';
@@ -20,14 +21,14 @@ export class TransactionService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Transaction[]>> {
-    const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl);
+    const clt: ReadPagedOperations<Transaction> = this.client.readPaged(this.transactionUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
     }
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public create(data: Transaction): Observable<Transaction> {

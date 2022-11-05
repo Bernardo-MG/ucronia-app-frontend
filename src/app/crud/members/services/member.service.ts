@@ -4,6 +4,7 @@ import { PaginationRequest } from '@app/api/models/pagination-request';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
+import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Member } from '@app/models/member';
@@ -20,14 +21,14 @@ export class MemberService {
   ) {}
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    const clt: ReadOperations<Member> = this.client.read(this.memberUrl);
+    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
     }
-    return clt.fetchPaged();
+    return clt.fetch();
   }
 
   public create(data: Member): Observable<Member> {
