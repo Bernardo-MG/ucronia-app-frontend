@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
@@ -9,7 +9,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })
-export class FeeFormComponent implements OnChanges {
+export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public data = new Fee();
 
@@ -38,26 +38,13 @@ export class FeeFormComponent implements OnChanges {
     private fb: FormBuilder
   ) { }
 
+  ngOnInit(): void {
+    this.reload();
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
-      // Create the date from the year and month
-      let formattedDate;
-      let month;
-
-      const date = new Date(this.data.date);
-
-      if (date.getMonth() >= 9) {
-        month = `${date.getMonth() + 1}`;
-      } else {
-        month = `0${date.getMonth() + 1}`;
-      }
-
-      formattedDate = `${date.getFullYear()}-${month}`;
-      const update: any = {
-        ...this.data,
-        date: formattedDate
-      }
-      this.form.patchValue(update);
+      this.reload();
     }
   }
 
@@ -93,6 +80,27 @@ export class FeeFormComponent implements OnChanges {
 
   public isFormInvalid(): boolean {
     return this.form.invalid && (this.form.dirty || this.form.touched);
+  }
+
+  private reload() {
+    // Create the date from the year and month
+    let formattedDate;
+    let month;
+
+    const date = new Date(this.data.date);
+
+    if (date.getMonth() >= 9) {
+      month = `${date.getMonth() + 1}`;
+    } else {
+      month = `0${date.getMonth() + 1}`;
+    }
+
+    formattedDate = `${date.getFullYear()}-${month}`;
+    const update: any = {
+      ...this.data,
+      date: formattedDate
+    }
+    this.form.patchValue(update);
   }
 
 }

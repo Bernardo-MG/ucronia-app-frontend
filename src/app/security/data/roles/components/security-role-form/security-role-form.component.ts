@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Role } from '@app/security/models/role';
 
@@ -7,7 +7,7 @@ import { Role } from '@app/security/models/role';
   templateUrl: './security-role-form.component.html',
   styleUrls: ['./security-role-form.component.sass']
 })
-export class SecurityRoleFormComponent implements OnChanges {
+export class SecurityRoleFormComponent implements OnInit, OnChanges {
 
   @Input() public role = new Role();
 
@@ -25,6 +25,10 @@ export class SecurityRoleFormComponent implements OnChanges {
   constructor(
     private fb: FormBuilder
   ) { }
+
+  ngOnInit(): void {
+    this.form.patchValue(this.role);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['role'].firstChange) {
