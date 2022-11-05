@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
 import { ErrorResponse } from '../models/error-response';
 
@@ -29,11 +29,10 @@ export class UpdateOperations<T> {
       url = this.queryUrl;
     }
 
-    return this.http.put<ApiResponse<T>>(url, this.content, this.options).pipe(
-      map((response: ApiResponse<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError())
-    );
+    return this.http.put<ApiResponse<T>>(url, this.content, this.options)
+      .pipe(
+        catchError(this.handleError())
+      );
   }
 
   public id(id: number): UpdateOperations<T> {

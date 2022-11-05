@@ -31,11 +31,10 @@ export class DeleteOperations<T> {
       url = this.queryUrl;
     }
 
-    return this.http.delete<ApiResponse<T>>(url, options).pipe(
-      map((response: ApiResponse<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError())
-    );
+    return this.http.delete<ApiResponse<T>>(url, options)
+      .pipe(
+        catchError(this.handleError())
+      );
   }
 
   public id(id: number): DeleteOperations<T> {

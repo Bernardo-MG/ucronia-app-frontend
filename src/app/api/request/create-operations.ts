@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response';
 import { ErrorResponse } from '../models/error-response';
 
@@ -20,11 +20,10 @@ export class CreateOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
-    return this.http.post<ApiResponse<T>>(this.queryUrl, this.content, this.options).pipe(
-      map((response: ApiResponse<T>) => { return response })
-    ).pipe(
-      catchError(this.handleError())
-    );
+    return this.http.post<ApiResponse<T>>(this.queryUrl, this.content, this.options)
+      .pipe(
+        catchError(this.handleError())
+      );
   }
 
   public body(content: T): CreateOperations<T> {
@@ -38,7 +37,7 @@ export class CreateOperations<T> {
 
       console.error(error.message);
 
-      if(error.error){
+      if (error.error) {
         const errorResponse: ErrorResponse = error.error;
         errorResponse.errors.forEach(e => console.error(e.message));
       }
