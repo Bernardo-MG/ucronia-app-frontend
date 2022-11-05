@@ -38,11 +38,6 @@ export class DeleteOperations<T> {
     );
   }
 
-  public pushUnwrapped(): Observable<T> {
-    // TODO: add unwrap operation to be used after fetch
-    return this.push().pipe(map(r => r.content));
-  }
-
   public id(id: number): DeleteOperations<T> {
     this.identifier = id;
 

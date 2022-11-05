@@ -18,7 +18,7 @@ export class AdminMemberService {
 
   public getStatus(): Observable<MemberStats> {
     const clt: ReadOperations<MemberStats> = this.client.read(this.memberUrl);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
 }

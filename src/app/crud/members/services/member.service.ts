@@ -8,7 +8,7 @@ import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class MemberService {
@@ -32,22 +32,22 @@ export class MemberService {
 
   public create(data: Member): Observable<Member> {
     const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    return clt.body(data).pushUnwrapped();
+    return clt.body(data).push().pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
     const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    return clt.id(id).body(data).pushUnwrapped();
+    return clt.id(id).body(data).push().pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<Member> {
     const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
-    return clt.id(id).pushUnwrapped();
+    return clt.id(id).push().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
 }

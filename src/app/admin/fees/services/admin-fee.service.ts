@@ -4,7 +4,7 @@ import { ReadOperations } from '@app/api/request/read-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { FeeYear } from '@app/models/fee-year';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class AdminFeeService {
     const sort = new Sort<FeeYear>("name");
 
     clt.sort([sort]);
-    return clt.fetchUnwrapped();
+    return clt.fetch().pipe(map(r => r.content));
   }
 
 }

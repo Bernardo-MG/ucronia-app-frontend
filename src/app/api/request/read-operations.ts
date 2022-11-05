@@ -34,21 +34,12 @@ export class ReadOperations<T> {
     );
   }
 
-  public fetchUnwrapped(): Observable<T[]> {
-    return this.fetch().pipe(map(r => r.content));
-  }
-
   public fetchOne(): Observable<ApiResponse<T>> {
     return this.http.get<ApiResponse<T>>(this.queryUrl, this.options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
       catchError(this.handleError())
     );
-  }
-
-  public fetchOneUnwrapped(): Observable<T> {
-    // TODO: add unwrap operation to be used after fetch
-    return this.fetchOne().pipe(map(r => r.content));
   }
 
   public sort(sort: Sort<T>[]): ReadOperations<T> {

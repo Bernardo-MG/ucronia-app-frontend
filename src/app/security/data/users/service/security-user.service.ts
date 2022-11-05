@@ -10,7 +10,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { Role } from '@app/security/models/role';
 import { User } from '@app/security/models/user';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class SecurityUserService {
@@ -52,32 +52,32 @@ export class SecurityUserService {
 
   public create(data: User): Observable<User> {
     const clt: CreateOperations<User> = this.client.create(this.userUrl);
-    return clt.body(data).pushUnwrapped();
+    return clt.body(data).push().pipe(map(r => r.content));
   }
 
   public update(id: number, data: User): Observable<User> {
     const clt: UpdateOperations<User> = this.client.update(this.userUrl);
-    return clt.id(id).body(data).pushUnwrapped();
+    return clt.id(id).body(data).push().pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<User> {
     const clt: DeleteOperations<User> = this.client.delete(this.userUrl);
-    return clt.id(id).pushUnwrapped();
+    return clt.id(id).push().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<User> {
     const clt: ReadOperations<User> = this.client.read(this.userUrl + `/${id}`);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
   public addRole(id: number, role: number): Observable<Boolean> {
     const clt: UpdateOperations<Boolean> = this.client.update(`${this.userUrl}/${id}/role`);
-    return clt.body({ id: role }).pushUnwrapped();
+    return clt.body({ id: role }).push().pipe(map(r => r.content));
   }
 
   public removeRole(id: number, role: number): Observable<Boolean> {
     const clt: DeleteOperations<Boolean> = this.client.delete(`${this.userUrl}/${id}/role`);
-    return clt.id(role).pushUnwrapped();
+    return clt.id(role).push().pipe(map(r => r.content));
   }
 
 }

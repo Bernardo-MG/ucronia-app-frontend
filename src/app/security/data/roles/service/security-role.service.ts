@@ -10,7 +10,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { Privilege } from '@app/security/models/privilege';
 import { Role } from '@app/security/models/role';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class SecurityRoleService {
@@ -52,32 +52,32 @@ export class SecurityRoleService {
 
   public create(data: Role): Observable<Role> {
     const clt: CreateOperations<Role> = this.client.create(this.roleUrl);
-    return clt.body(data).pushUnwrapped();
+    return clt.body(data).push().pipe(map(r => r.content));
   }
 
   public update(id: number, data: Role): Observable<Role> {
     const clt: UpdateOperations<Role> = this.client.update(this.roleUrl);
-    return clt.id(id).body(data).pushUnwrapped();
+    return clt.id(id).body(data).push().pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<Role> {
     const clt: DeleteOperations<Role> = this.client.delete(this.roleUrl);
-    return clt.id(id).pushUnwrapped();
+    return clt.id(id).push().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Role> {
     const clt: ReadOperations<Role> = this.client.read(this.roleUrl + `/${id}`);
-    return clt.fetchOneUnwrapped();
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
   public addPrivilege(id: number, privilege: number): Observable<Boolean> {
     const clt: UpdateOperations<Boolean> = this.client.update(`${this.roleUrl}/${id}/privilege`);
-    return clt.body({ id: privilege }).pushUnwrapped();
+    return clt.body({ id: privilege }).push().pipe(map(r => r.content));
   }
 
   public removePrivilege(id: number, privilege: number): Observable<Boolean> {
     const clt: DeleteOperations<Boolean> = this.client.delete(`${this.roleUrl}/${id}/privilege`);
-    return clt.id(privilege).pushUnwrapped();
+    return clt.id(privilege).push().pipe(map(r => r.content));
   }
 
 }

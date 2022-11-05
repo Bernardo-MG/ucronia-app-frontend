@@ -36,11 +36,6 @@ export class UpdateOperations<T> {
     );
   }
 
-  public pushUnwrapped(): Observable<T> {
-    // TODO: add unwrap operation to be used after fetch
-    return this.push().pipe(map(r => r.content));
-  }
-
   public id(id: number): UpdateOperations<T> {
     this.identifier = id;
 
