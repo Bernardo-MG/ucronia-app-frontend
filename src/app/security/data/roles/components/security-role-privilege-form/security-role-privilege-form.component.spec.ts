@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SecurityRolePrivilegeFormComponent } from './security-role-privilege-form.component';
 
@@ -8,9 +9,14 @@ describe('SecurityRolePrivilegeFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityRolePrivilegeFormComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+        SecurityRolePrivilegeFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityRolePrivilegeFormComponent);
     component = fixture.componentInstance;
