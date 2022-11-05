@@ -12,6 +12,9 @@ describe('TransactionService', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule
+      ],
+      providers: [
+        TransactionService
       ]
     });
     service = TestBed.inject(TransactionService);

@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TransactionService } from '../../service/transaction.service';
 
 import { TransactionEditViewComponent } from './transaction-edit-view.component';
 
@@ -16,6 +17,9 @@ describe('TransactionEditViewComponent', () => {
       ],
       declarations: [
         TransactionEditViewComponent
+      ],
+      providers: [
+        TransactionService
       ]
     })
       .compileComponents();

@@ -10,9 +10,7 @@ import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TransactionService {
 
   private transactionUrl = environment.apiUrl + "/transaction";
@@ -32,14 +30,14 @@ export class TransactionService {
     return clt.fetchPaged();
   }
 
-  public create(member: Transaction): Observable<Transaction> {
+  public create(data: Transaction): Observable<Transaction> {
     const clt: CreateOperations<Transaction> = this.client.create(this.transactionUrl);
-    return clt.body(member).pushUnwrapped();
+    return clt.body(data).pushUnwrapped();
   }
 
-  public update(id: number, member: Transaction): Observable<Transaction> {
+  public update(id: number, data: Transaction): Observable<Transaction> {
     const clt: UpdateOperations<Transaction> = this.client.update(this.transactionUrl);
-    return clt.id(id).body(member).pushUnwrapped();
+    return clt.id(id).body(data).pushUnwrapped();
   }
 
   public delete(id: number): Observable<Transaction> {

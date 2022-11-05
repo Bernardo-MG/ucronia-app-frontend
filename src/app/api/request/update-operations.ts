@@ -12,7 +12,7 @@ export class UpdateOperations<T> {
     })
   }
 
-  private identifier: number = -1;
+  private identifier: number | undefined = undefined;
 
   private content: T | undefined = undefined;
 
@@ -22,7 +22,13 @@ export class UpdateOperations<T> {
   ) { }
 
   public push(): Observable<ApiResponse<T>> {
-    const url = `${this.queryUrl}/${this.identifier}`;
+    let url;
+    if (this.identifier) {
+      url = `${this.queryUrl}/${this.identifier}`;
+    } else {
+      url = this.queryUrl;
+    }
+
     return this.http.put<ApiResponse<T>>(url, this.content, this.options).pipe(
       map((response: ApiResponse<T>) => { return response })
     ).pipe(
@@ -41,9 +47,9 @@ export class UpdateOperations<T> {
     return this;
   }
 
-  public body(content: T): UpdateOperations<T> {
+  public body(content: any): UpdateOperations<T> {
     this.content = content;
-    
+
     return this;
   }
 
@@ -52,7 +58,7 @@ export class UpdateOperations<T> {
 
       console.error(error.message);
 
-      if(error.error){
+      if (error.error) {
         const errorResponse: ErrorResponse = error.error;
         errorResponse.errors.forEach(e => console.error(e.message));
       }

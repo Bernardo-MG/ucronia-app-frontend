@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { FeeService } from '@app/crud/fees/services/fee.service';
@@ -10,7 +10,7 @@ import { Member } from '@app/models/member';
   templateUrl: './fee-create-view.component.html',
   styleUrls: ['./fee-create-view.component.sass']
 })
-export class FeeCreateViewComponent implements OnInit {
+export class FeeCreateViewComponent {
 
   public members: Member[] = [];
 
@@ -27,26 +27,22 @@ export class FeeCreateViewComponent implements OnInit {
     private router: Router
   ) { }
 
-  public ngOnInit(): void {
-    this.onGoToMembersPage(0);
-  }
-
   public onSave(data: Fee): void {
     this.service.create(data).subscribe(d => {
       this.router.navigate(['/fees']);
     });
   }
 
-  public onRequestMember(){
+  public onRequestMember() {
     this.selectingMember = true;
   }
 
-  public onSelectMember(member: Member){
+  public onSelectMember(member: Member) {
     this.member = member;
     this.selectingMember = false;
   }
 
-  public onGoToMembersPage(page: number){
+  public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
       this.membersPageInfo = response;

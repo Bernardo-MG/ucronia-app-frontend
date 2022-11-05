@@ -38,11 +38,11 @@ export class MemberFormComponent implements OnChanges {
     }
   }
 
-  public saveData() {
+  public onSave() {
     this.save.emit(this.form.value);
   }
 
-  public deleteData() {
+  public onDelete() {
     const id = this.form.get('id');
 
     if (id) {

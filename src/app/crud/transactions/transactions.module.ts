@@ -8,6 +8,7 @@ import { TransactionCreateViewComponent } from './views/transaction-create-view/
 import { TransactionListViewComponent } from './views/transaction-list-view/transaction-list-view.component';
 import { TransactionEditViewComponent } from './views/transaction-edit-view/transaction-edit-view.component';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
+import { TransactionService } from './service/transaction.service';
 
 
 
@@ -24,6 +25,9 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
     ReactiveFormsModule,
     ControlsModule,
     ApiUiModule
+  ],
+  providers: [
+    TransactionService
   ]
 })
 export class TransactionsModule { }

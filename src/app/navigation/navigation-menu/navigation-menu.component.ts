@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
 import { Menu } from '../model/menu';
 
 @Component({
@@ -12,6 +13,12 @@ export class NavigationMenuComponent {
 
   @Input() title: String = '';
 
-  constructor() { }
+  public loggedIn: boolean = false;
+
+  constructor(
+    private authenticationContainer: AuthenticationContainer
+  ) {
+    this.authenticationContainer.getUserObservable().subscribe(u => { this.loggedIn = u.logged });
+  }
 
 }

@@ -1,0 +1,22 @@
+<form-controls (add)="onAdd()">
+</form-controls>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-role [ngForOf]="roles">
+            <tr>
+                <td>
+                    <button-delete (action)="onRemove(role)"></button-delete>
+                </td>
+                <td>{{role.name}}</td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>
