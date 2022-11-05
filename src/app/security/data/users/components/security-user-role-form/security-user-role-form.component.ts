@@ -11,7 +11,9 @@ export class SecurityUserRoleFormComponent {
 
   @Input() public roles: Role[] = [];
 
-  @Output() public save = new EventEmitter<Role[]>();
+  @Output() public addRole = new EventEmitter<void>();
+
+  @Output() public removeRole = new EventEmitter<Role>();
 
   public form: FormGroup = this.fb.group({
     roles: [[]]
@@ -21,16 +23,12 @@ export class SecurityUserRoleFormComponent {
     private fb: FormBuilder
   ) { }
 
-  public onSave() {
-    this.save.emit(this.form.value);
+  public onAdd() {
+    this.addRole.emit();
   }
 
-  public canSave(): boolean {
-    return this.form.valid;
-  }
-
-  public onDeleteAt(index: number) {
-    
+  public onRemove(privilege: Role) {
+    this.removeRole.emit(privilege);
   }
 
 }
