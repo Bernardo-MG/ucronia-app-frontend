@@ -1,11 +1,11 @@
 <div id="form_controls" class="btn-group" role="group" aria-label="Data edition">
-    <button *ngIf="canSave" id="save" (click)="onSave()" [disabled]="disabledSave" [attr.aria-disabled]="disabledSave" type="button" class="btn btn-default">
+    <button *ngIf="showSave()" id="save" (click)="onSave()" [disabled]="disabledSave" [attr.aria-disabled]="disabledSave" type="button" class="btn btn-default">
         <fa-icon [icon]="saveIcon"></fa-icon>
     </button>
-    <button *ngIf="canDelete" id="delete" (click)="onDelete()" [disabled]="disabledDelete" [attr.aria-disabled]="disabledDelete" type="button" class="btn btn-default">
+    <button *ngIf="showDelete()" id="delete" (click)="onDelete()" [disabled]="disabledDelete" [attr.aria-disabled]="disabledDelete" type="button" class="btn btn-default">
         <fa-icon [icon]="deleteIcon"></fa-icon>
     </button>
-    <button *ngIf="canAdd" id="add" (click)="onAdd()" [disabled]="disabledAdd" [attr.aria-disabled]="disabledAdd" type="button" class="btn btn-default">
+    <button *ngIf="showAdd()" id="add" (click)="onAdd()" [disabled]="disabledAdd" [attr.aria-disabled]="disabledAdd" type="button" class="btn btn-default">
         <fa-icon [icon]="addIcon"></fa-icon>
     </button>
 </div>

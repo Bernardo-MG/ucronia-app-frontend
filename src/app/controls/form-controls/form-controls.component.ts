@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { faFloppyDisk, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -6,7 +6,7 @@ import { faFloppyDisk, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-ic
   templateUrl: './form-controls.component.html',
   styleUrls: ['./form-controls.component.sass']
 })
-export class FormControlsComponent implements OnInit {
+export class FormControlsComponent {
 
   @Input() disabledSave: boolean = false;
 
@@ -20,21 +20,11 @@ export class FormControlsComponent implements OnInit {
 
   @Output() add = new EventEmitter<void>();
 
-  public canSave = false;
-  public canDelete = false;
-  public canAdd = false;
-
   public saveIcon = faFloppyDisk;
   public deleteIcon = faTrashCan;
   public addIcon = faPlus;
 
   constructor() { }
-
-  ngOnInit(): void {
-    this.canSave = this.save.observed;
-    this.canDelete = this.delete.observed;
-    this.canAdd = this.add.observed;
-  }
 
   public onSave() {
     this.save.emit();
@@ -46,6 +36,18 @@ export class FormControlsComponent implements OnInit {
 
   public onAdd() {
     this.add.emit();
+  }
+
+  public showSave() {
+    return this.save.observed;
+  }
+
+  public showDelete() {
+    return this.delete.observed;
+  }
+
+  public showAdd() {
+    return this.add.observed;
   }
 
 }
