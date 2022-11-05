@@ -13,14 +13,14 @@ export class MemberSelectionComponent {
 
   @Input() public pageInfo = new PageInfo();
 
-  @Output() public selectPage = new EventEmitter<Member>();
+  @Output() public selectMember = new EventEmitter<Member>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
   constructor() { }
 
   public onSelect(member: Member) {
-    this.selectPage.emit(member);
+    this.selectMember.emit(member);
   }
 
   public onGoToPage(page: number) {

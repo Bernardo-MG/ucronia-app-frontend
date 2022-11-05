@@ -41,7 +41,7 @@ export class UpdateOperations<T> {
     return this;
   }
 
-  public body(content: T): UpdateOperations<T> {
+  public body(content: any): UpdateOperations<T> {
     this.content = content;
     
     return this;

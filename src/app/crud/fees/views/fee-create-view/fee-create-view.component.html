@@ -6,7 +6,7 @@
     </crud-form-fee>
 </ng-template>
 <ng-template #member_selection>
-    <crud-member-selection [members]="members" (selectPage)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+    <crud-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
         (goToPage)="onGoToMembersPage($event)">
     </crud-member-selection>
 </ng-template>

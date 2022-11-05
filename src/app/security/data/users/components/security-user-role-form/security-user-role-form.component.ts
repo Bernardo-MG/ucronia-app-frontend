@@ -25,4 +25,12 @@ export class SecurityUserRoleFormComponent {
     this.save.emit(this.form.value);
   }
 
+  public canSave(): boolean {
+    return this.form.valid;
+  }
+
+  public onDeleteAt(index: number) {
+    
+  }
+
 }

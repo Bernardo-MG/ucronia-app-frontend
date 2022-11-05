@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { Privilege } from '@app/security/models/privilege';
 
 @Component({
@@ -11,18 +10,28 @@ export class SecurityRolePrivilegeFormComponent {
 
   @Input() public privileges: Privilege[] = [];
 
+  @Input() public selection: Privilege[] = [];
+
   @Output() public save = new EventEmitter<Privilege[]>();
 
-  public form: FormGroup = this.fb.group({
-    privileges: [[]]
-  });
+  @Output() public addPrivilege = new EventEmitter<void>();
 
-  constructor(
-    private fb: FormBuilder
-  ) { }
+  constructor() { }
 
   public onSave() {
-    this.save.emit(this.form.value);
+    this.save.emit(this.privileges);
+  }
+
+  public onAdd() {
+    this.addPrivilege.emit();
+  }
+
+  public canSave(): boolean {
+    return true;
+  }
+
+  public onDeleteAt(index: number) {
+    this.privileges.splice(index, 1);
   }
 
 }

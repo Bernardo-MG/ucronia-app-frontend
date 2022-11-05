@@ -11,8 +11,6 @@ export class SecurityUserFormComponent implements OnChanges {
 
   @Input() public user = new User();
 
-  @Input() public disabledSave: boolean = false;
-
   @Input() public disabledDelete: boolean = false;
 
   @Output() public save = new EventEmitter<User>();
@@ -48,7 +46,7 @@ export class SecurityUserFormComponent implements OnChanges {
   }
 
   public canSave(): boolean {
-    return ((!this.disabledSave) && (this.form.valid));
+    return this.form.valid;
   }
 
   public canDelete(): boolean {

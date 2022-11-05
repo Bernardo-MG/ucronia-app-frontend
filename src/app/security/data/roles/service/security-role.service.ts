@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { PaginationRequest } from '@app/api/models/pagination-request';
+import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -15,6 +16,8 @@ import { Observable } from 'rxjs';
 export class SecurityRoleService {
 
   private roleUrl = environment.apiUrl + "/security/role";
+
+  private privilegeUrl = environment.apiUrl + "/security/privilege";
 
   constructor(
     private client: RequestClient
@@ -42,6 +45,14 @@ export class SecurityRoleService {
     return clt.fetchPaged();
   }
 
+  public getPrivilegeSelection(page: number): Observable<PaginatedResponse<Privilege[]>> {
+    const clt: ReadOperations<Privilege> = this.client.read(this.privilegeUrl);
+    const sort: Sort<Privilege> = new Sort<Privilege>('name');
+    clt.page({ page });
+    clt.sort([sort]);
+    return clt.fetchPaged();
+  }
+
   public create(data: Role): Observable<Role> {
     const clt: CreateOperations<Role> = this.client.create(this.roleUrl);
     return clt.body(data).pushUnwrapped();
@@ -60,6 +71,11 @@ export class SecurityRoleService {
   public getOne(id: number): Observable<Role> {
     const clt: ReadOperations<Role> = this.client.read(this.roleUrl + `/${id}`);
     return clt.fetchOneUnwrapped();
+  }
+
+  public updatePrivileges(id: number, ids: number[]): Observable<Privilege[]> {
+    const clt: UpdateOperations<Privilege[]> = this.client.update(this.roleUrl);
+    return clt.id(id).body(ids).pushUnwrapped();
   }
 
 }

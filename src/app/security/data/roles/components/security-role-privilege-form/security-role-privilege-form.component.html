@@ -1,7 +1,22 @@
-<form [formGroup]="form" (ngSubmit)="onSave()">
-    <ul class="list-group">
-        <ng-template ngFor let-privilege [ngForOf]="privileges">
-            <li class="list-group-item">{{privilege.name}}</li>
+<form-controls (save)="onSave()" (add)="onAdd()" [disabledSave]="!canSave()">
+</form-controls>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-privilege [ngForOf]="privileges" let-i="index">
+            <tr>
+                <td>
+                    <button-delete (action)="onDeleteAt(i)"></button-delete>
+                </td>
+                <td>{{privilege.name}}</td>
+            </tr>
         </ng-template>
-    </ul>
-</form>
+    </tbody>
+</table>

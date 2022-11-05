@@ -1,7 +1,22 @@
-<form [formGroup]="form" (ngSubmit)="onSave()">
-    <ul class="list-group">
-        <ng-template ngFor let-role [ngForOf]="roles">
-            <li class="list-group-item">{{role.name}}</li>
+<form-controls (save)="onSave()" [disabledSave]="!canSave()" [disabledDelete]="true">
+</form-controls>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-template ngFor let-role [ngForOf]="roles" let-i="index">
+            <tr>
+                <td>
+                    <button-delete (action)="onDeleteAt(i)"></button-delete>
+                </td>
+                <td>{{role.name}}</td>
+            </tr>
         </ng-template>
-    </ul>
-</form>
+    </tbody>
+</table>

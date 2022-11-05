@@ -11,8 +11,6 @@ export class SecurityRoleFormComponent implements OnChanges {
 
   @Input() public role = new Role();
 
-  @Input() public disabledSave: boolean = false;
-
   @Input() public disabledDelete: boolean = false;
 
   @Output() public save = new EventEmitter<Role>();
@@ -43,7 +41,7 @@ export class SecurityRoleFormComponent implements OnChanges {
   }
 
   public canSave(): boolean {
-    return ((!this.disabledSave) && (this.form.valid));
+    return this.form.valid;
   }
 
   public canDelete(): boolean {
@@ -51,7 +49,7 @@ export class SecurityRoleFormComponent implements OnChanges {
   }
 
   public isFormInvalid(): boolean {
-    return this.form.invalid && (this.form.dirty || this.form.touched);
+    return (this.form.invalid && (this.form.dirty || this.form.touched));
   }
 
 }

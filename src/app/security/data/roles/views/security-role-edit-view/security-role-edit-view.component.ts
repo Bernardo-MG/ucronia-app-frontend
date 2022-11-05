@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageInfo } from '@app/api/models/page-info';
 import { Privilege } from '@app/security/models/privilege';
 import { Role } from '@app/security/models/role';
 import { SecurityRoleService } from '../../service/security-role.service';
@@ -15,6 +16,12 @@ export class SecurityRoleEditViewComponent implements OnInit {
 
   public privileges: Privilege[] = [];
 
+  public privilegeSelection: Privilege[] = [];
+
+  public selectingPrivilege = false;
+
+  public privilegesPageInfo = new PageInfo();
+
   constructor(
     private route: ActivatedRoute,
     private service: SecurityRoleService,
@@ -27,15 +34,36 @@ export class SecurityRoleEditViewComponent implements OnInit {
     });
   }
 
-  onSave(data: Role): void {
-    this.service.update(data.id, data).subscribe(d => {
+  public onSave(data: Role): void {
+    this.service.update(this.role.id, data).subscribe(d => {
       this.router.navigate(['/security/roles']);
     });
   }
 
-  onDelete(): void {
+  public onDelete(): void {
     this.service.delete(this.role.id).subscribe(d => {
       this.router.navigate(['/security/roles']);
+    });
+  }
+
+  public onSavePrivilege(data: Privilege[]): void {
+    const ids = data.map(p => p.id);
+    this.service.updatePrivileges(this.role.id, ids).subscribe();
+  }
+
+  public onAddPrivilege(): void {
+    this.selectingPrivilege = true;
+  }
+
+  public onSelectPrivilege(privilege: Privilege) {
+    this.privileges.push(privilege);
+    this.selectingPrivilege = false;
+  }
+
+  public onGoToPrivilegesPage(page: number) {
+    this.service.getPrivilegeSelection(page).subscribe(response => {
+      this.privilegeSelection = response.content;
+      this.privilegesPageInfo = response;
     });
   }
 

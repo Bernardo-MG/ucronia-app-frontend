@@ -8,6 +8,7 @@ import { FormControlsComponent } from './form-controls/form-controls.component';
 import { ButtonBackwardComponent } from './button-backward/button-backward.component';
 import { ButtonForwardComponent } from './button-forward/button-forward.component';
 import { ButtonSearchSecondaryComponent } from './button-search-secondary/button-search-secondary.component';
+import { ButtonDeleteComponent } from './button-delete/button-delete.component';
 
 
 
@@ -18,7 +19,8 @@ import { ButtonSearchSecondaryComponent } from './button-search-secondary/button
     ButtonLinkCreateComponent,
     ButtonBackwardComponent,
     ButtonForwardComponent,
-    ButtonSearchSecondaryComponent
+    ButtonSearchSecondaryComponent,
+    ButtonDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { ButtonSearchSecondaryComponent } from './button-search-secondary/button
     ButtonLinkEditComponent,
     ButtonBackwardComponent,
     ButtonForwardComponent,
-    ButtonSearchSecondaryComponent
+    ButtonSearchSecondaryComponent,
+    ButtonDeleteComponent
   ]
 })
 export class ControlsModule { }

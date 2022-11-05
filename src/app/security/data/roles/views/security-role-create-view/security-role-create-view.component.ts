@@ -15,7 +15,7 @@ export class SecurityRoleCreateViewComponent {
     private router: Router
   ) { }
 
-  onSave(data: Role): void {
+  public onSave(data: Role): void {
     this.service.create(data).subscribe(d => {
       this.router.navigate(['/security/roles']);
     });

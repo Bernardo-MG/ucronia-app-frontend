@@ -27,13 +27,13 @@ export class SecurityUserEditViewComponent implements OnInit {
     });
   }
 
-  onSave(data: User): void {
+  public onSave(data: User): void {
     this.service.update(data.id, data).subscribe(d => {
       this.router.navigate(['/security/users']);
     });
   }
 
-  onDelete(): void {
+  public onDelete(): void {
     this.service.delete(this.user.id).subscribe(d => {
       this.router.navigate(['/security/users']);
     });

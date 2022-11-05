@@ -11,6 +11,7 @@ import { SecurityRoleCreateViewComponent } from './views/security-role-create-vi
 import { SecurityRoleEditViewComponent } from './views/security-role-edit-view/security-role-edit-view.component';
 import { SecurityRoleListViewComponent } from './views/security-role-list-view/security-role-list-view.component';
 import { SecurityRolePrivilegeFormComponent } from './components/security-role-privilege-form/security-role-privilege-form.component';
+import { SecurityRolePrivilegeSelectionComponent } from './components/security-role-privilege-selection/security-role-privilege-selection.component';
 
 
 
@@ -21,6 +22,7 @@ import { SecurityRolePrivilegeFormComponent } from './components/security-role-p
     SecurityRoleEditViewComponent,
     SecurityRoleListViewComponent,
     SecurityRolePrivilegeFormComponent,
+    SecurityRolePrivilegeSelectionComponent,
   ],
   imports: [
     CommonModule,
