@@ -22,10 +22,9 @@ jobs:
       run: npm install -g @angular/cli
     - name: Build
       run: npm run build
-      - uses: actions/checkout@v2
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASSOCIATION_APP_FRONTEND }}'
-          channelId: live
-          projectId: association-app-frontend
+    - uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: '${{ secrets.GITHUB_TOKEN }}'
+        firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ASSOCIATION_APP_FRONTEND }}'
+        channelId: live
+        projectId: association-app-frontend
