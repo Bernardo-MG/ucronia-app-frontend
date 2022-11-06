@@ -21,7 +21,9 @@ jobs:
     - name: Install Angular CLI
       run: npm install -g @angular/cli
     - name: Build
-      run: npm run build
+      run: npm run build --configuration=production
+      env:
+          API_URL: ${{ secrets.API_URL }}
     - uses: FirebaseExtended/action-hosting-deploy@v0
       with:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
