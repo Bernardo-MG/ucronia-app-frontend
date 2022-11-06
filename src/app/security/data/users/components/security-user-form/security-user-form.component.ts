@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '@app/security/models/user';
 
@@ -7,7 +7,7 @@ import { User } from '@app/security/models/user';
   templateUrl: './security-user-form.component.html',
   styleUrls: ['./security-user-form.component.sass']
 })
-export class SecurityUserFormComponent implements OnChanges {
+export class SecurityUserFormComponent implements OnInit, OnChanges {
 
   @Input() public user = new User();
 
@@ -30,6 +30,10 @@ export class SecurityUserFormComponent implements OnChanges {
   constructor(
     private fb: FormBuilder
   ) { }
+
+  ngOnInit(): void {
+    this.form.patchValue(this.user);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['user'].firstChange) {
