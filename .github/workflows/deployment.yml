@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build:
+  buid-deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Check-out
@@ -22,9 +22,6 @@ jobs:
       run: npm install -g @angular/cli
     - name: Build
       run: npm run build
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v2
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
