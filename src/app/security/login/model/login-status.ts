@@ -1,7 +1,7 @@
 /**
- * User login details. Shows the status after a login attempt.
+ * Status after a login attempt.
  */
-export class LoginDetails {
+export class LoginStatus {
     /**
      * User username.
      */
@@ -11,7 +11,7 @@ export class LoginDetails {
      */
     logged: boolean = false;
     /**
-     * Authentication token for the user.
+     * Authentication token for the user. Only generated on a succesful login.
      */
-    token: string = '';
+    token?: string;
 }

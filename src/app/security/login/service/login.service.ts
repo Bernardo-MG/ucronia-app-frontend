@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/api/models/api-response';
-import { LoginDetails } from '@app/security/authentication/model/login-details';
-import { LoginRequest } from '@app/security/authentication/model/login-request';
+import { LoginRequest } from '@app/security/login/model/login-request';
 import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
+import { LoginStatus } from '../model/login-status';
 
 @Injectable()
 export class LoginService {
@@ -37,8 +37,8 @@ export class LoginService {
    * @param request login request
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest): Observable<LoginDetails> {
-    return this.http.post<ApiResponse<LoginDetails>>(this.loginUrl, request)
+  public login(request: LoginRequest): Observable<LoginStatus> {
+    return this.http.post<ApiResponse<LoginStatus>>(this.loginUrl, request)
       .pipe(map(response => response.content))
       .pipe(map(response => this.toUser(response)))
       .pipe(tap(user => this.storeUser(user)));
@@ -57,10 +57,10 @@ export class LoginService {
    * @param status status to map
    * @returns user generated from the login status
    */
-  private toUser(status: LoginDetails): LoginDetails {
+  private toUser(status: LoginStatus): LoginStatus {
     let loggedUser;
 
-    loggedUser = new LoginDetails();
+    loggedUser = new LoginStatus();
     if (status) {
       // Received data
       loggedUser.username = status.username;
@@ -77,7 +77,7 @@ export class LoginService {
    * 
    * @param loginDetails login details to store
    */
-  private storeUser(loginDetails: LoginDetails) {
+  private storeUser(loginDetails: LoginStatus) {
     this.authenticationContainer.setLoginDetails(loginDetails, this.rememberMe);
   }
 
