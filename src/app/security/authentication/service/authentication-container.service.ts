@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoginStatus } from '@app/security/login/model/login-status';
+import { UserStatus } from '@app/security/login/model/user-status';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,14 +9,14 @@ export class AuthenticationContainer {
 
   private userKey = 'user';
 
-  private loginStatusSubject: BehaviorSubject<LoginStatus>;
+  private userSubject: BehaviorSubject<UserStatus>;
 
-  private loginStatus: Observable<LoginStatus>;
+  private user: Observable<UserStatus>;
 
   constructor(
   ) {
-    this.loginStatusSubject = this.readUserFromLocal();
-    this.loginStatus = this.loginStatusSubject.asObservable();
+    this.userSubject = this.readUserFromLocal();
+    this.user = this.userSubject.asObservable();
   }
 
   /**
@@ -25,19 +25,19 @@ export class AuthenticationContainer {
    * 
    * @returns the user stored in the local storage as part of the 'remember me'
    */
-  private readUserFromLocal(): BehaviorSubject<LoginStatus> {
-    let subject: BehaviorSubject<LoginStatus>;
+  private readUserFromLocal(): BehaviorSubject<UserStatus> {
+    let subject: BehaviorSubject<UserStatus>;
 
     // If the user was stored, load it
     const localUser = localStorage.getItem(this.userKey);
     if (localUser) {
       // User found in local storage
       const readUser = JSON.parse(localUser);
-      subject = new BehaviorSubject<LoginStatus>(readUser);
+      subject = new BehaviorSubject<UserStatus>(readUser);
     } else {
       // User not found
       // Use default user
-      subject = new BehaviorSubject<LoginStatus>(new LoginStatus());
+      subject = new BehaviorSubject<UserStatus>(new UserStatus());
     }
 
     return subject;
@@ -48,7 +48,7 @@ export class AuthenticationContainer {
    */
   public reset() {
     // Replace local data with empty login details
-    this.loginStatusSubject.next(new LoginStatus());
+    this.userSubject.next(new UserStatus());
 
     // Clear local storage
     localStorage.removeItem(this.userKey);
@@ -58,8 +58,8 @@ export class AuthenticationContainer {
    * Returns the login details for the user currently in session.
    * @returns the user currently in session
    */
-  public getLoginStatus(): LoginStatus {
-    return this.loginStatusSubject.value;
+  public getUserStatus(): UserStatus {
+    return this.userSubject.value;
   }
 
   /**
@@ -67,23 +67,23 @@ export class AuthenticationContainer {
    * 
    * @returns the login details for the user currently in session as an observable
    */
-  public getUserObservable(): Observable<LoginStatus> {
-    return this.loginStatus;
+  public getUserStatusObservable(): Observable<UserStatus> {
+    return this.user;
   }
 
   /**
    * Stores the received login details. This takes two steps, first it is stored in the local
    * subject. Then, if the 'remember me' option is enabled, it will be stored in the local storage.
    * 
-   * @param loginStatus login details to store
+   * @param user login details to store
    */
-  public setLoginStatus(loginStatus: LoginStatus, rememberMe: Boolean) {
-    this.loginStatusSubject.next(loginStatus);
+  public setUserStatus(user: UserStatus, rememberMe: Boolean) {
+    this.userSubject.next(user);
 
     if (rememberMe) {
       // Store login details in the local storage
       // This allows getting them back on a page reload
-      localStorage.setItem(this.userKey, JSON.stringify(loginStatus));
+      localStorage.setItem(this.userKey, JSON.stringify(user));
     }
   }
 

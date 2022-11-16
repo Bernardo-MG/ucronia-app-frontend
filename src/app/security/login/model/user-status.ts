@@ -1,7 +1,7 @@
 /**
  * Status after a login attempt.
  */
-export class LoginStatus {
+export class UserStatus {
     /**
      * User username.
      */
@@ -9,7 +9,7 @@ export class LoginStatus {
     /**
      * Logged in flag. If it is true, then the user is logged in.
      */
-    successful: boolean = false;
+    logged: boolean = false;
     /**
      * Authentication token for the user. Only generated on a succesful login.
      */

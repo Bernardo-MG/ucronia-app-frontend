@@ -6,6 +6,7 @@ import { AuthenticationContainer } from '@app/security/authentication/service/au
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 import { LoginStatus } from '../model/login-status';
+import { UserStatus } from '../model/user-status';
 
 @Injectable()
 export class LoginService {
@@ -37,7 +38,7 @@ export class LoginService {
    * @param request login request
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest): Observable<LoginStatus> {
+  public login(request: LoginRequest): Observable<UserStatus> {
     return this.http.post<ApiResponse<LoginStatus>>(this.loginUrl, request)
       .pipe(map(response => response.content))
       .pipe(map(response => this.toUser(response)))
@@ -57,14 +58,14 @@ export class LoginService {
    * @param status status to map
    * @returns user generated from the login status
    */
-  private toUser(status: LoginStatus): LoginStatus {
+  private toUser(status: LoginStatus): UserStatus {
     let loggedUser;
 
-    loggedUser = new LoginStatus();
+    loggedUser = new UserStatus();
     if (status) {
       // Received data
       loggedUser.username = status.username;
-      loggedUser.logged = status.logged;
+      loggedUser.logged = status.successful;
       loggedUser.token = status.token;
     }
 
@@ -77,8 +78,8 @@ export class LoginService {
    * 
    * @param loginDetails login details to store
    */
-  private storeUser(loginDetails: LoginStatus) {
-    this.authenticationContainer.setLoginStatus(loginDetails, this.rememberMe);
+  private storeUser(loginDetails: UserStatus) {
+    this.authenticationContainer.setUserStatus(loginDetails, this.rememberMe);
   }
 
 }
