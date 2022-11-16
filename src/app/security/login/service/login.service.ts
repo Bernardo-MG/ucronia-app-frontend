@@ -78,7 +78,7 @@ export class LoginService {
    * @param loginDetails login details to store
    */
   private storeUser(loginDetails: LoginStatus) {
-    this.authenticationContainer.setLoginDetails(loginDetails, this.rememberMe);
+    this.authenticationContainer.setLoginStatus(loginDetails, this.rememberMe);
   }
 
 }

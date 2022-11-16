@@ -22,7 +22,7 @@ export class LoggedInGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const logged = this.authenticationContainer.getLoginDetails().logged;
+    const logged = this.authenticationContainer.getLoginStatus().logged;
     let active;
 
     if (logged) {

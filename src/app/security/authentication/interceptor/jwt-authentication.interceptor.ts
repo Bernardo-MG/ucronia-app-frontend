@@ -28,8 +28,8 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
       // It is a request to our API
 
       // Acquire the current user token
-      const logged = this.authenticationContainer.getLoginDetails().logged;
-      const token = this.authenticationContainer.getLoginDetails().token;
+      const logged = this.authenticationContainer.getLoginStatus().logged;
+      const token = this.authenticationContainer.getLoginStatus().token;
 
       if ((logged) && (token)) {
         // Has token
