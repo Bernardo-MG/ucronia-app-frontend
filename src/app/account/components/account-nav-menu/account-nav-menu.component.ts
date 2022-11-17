@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -10,6 +11,12 @@ export class AccountNavMenuComponent {
 
   public accountIcon = faCircleUser;
 
-  constructor() { }
+  public username = '';
+
+  constructor(
+    private authenticationContainer: AuthenticationContainer
+  ) {
+    this.authenticationContainer.getUserStatusObservable().subscribe(u => { this.username = u.username });
+  }
 
 }
