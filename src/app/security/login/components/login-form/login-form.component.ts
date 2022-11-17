@@ -71,4 +71,8 @@ export class LoginFormComponent {
     return invalid;
   }
 
+  public isFormInvalid(): boolean {
+    return this.form.invalid && (this.form.dirty || this.form.touched);
+  }
+
 }
