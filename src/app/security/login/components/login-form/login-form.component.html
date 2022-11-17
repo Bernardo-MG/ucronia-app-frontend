@@ -19,7 +19,7 @@
         <input type="checkbox" formControlName="rememberMe" class="form-check-input">
         <label for="rememberMe" class="form-check-label">Remember me</label>
     </div>
-    <button [disabled]="isFormInvalid()" class="btn btn-primary" [attr.aria-disabled]="isFormInvalid()" aria-label="Login">
+    <button [disabled]="!this.form.valid" class="btn btn-primary" [attr.aria-disabled]="!this.form.valid" aria-label="Login">
         Login
     </button>
 </form>

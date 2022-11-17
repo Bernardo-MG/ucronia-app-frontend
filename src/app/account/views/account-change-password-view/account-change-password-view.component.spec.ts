@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AccountService } from '@app/account/services/account.service';
 
 import { AccountChangePasswordViewComponent } from './account-change-password-view.component';
 
@@ -8,9 +11,18 @@ describe('AccountChangePasswordViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountChangePasswordViewComponent ]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule
+      ],
+      providers: [
+        AccountService
+      ],
+      declarations: [
+        AccountChangePasswordViewComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccountChangePasswordViewComponent);
     component = fixture.componentInstance;
