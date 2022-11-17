@@ -9,7 +9,7 @@ import { PasswordChange } from '@app/account/models/password-change';
 })
 export class AccountChangePasswordFormComponent {
 
-  @Output() public save = new EventEmitter<PasswordChange>();
+  @Output() public changePassword = new EventEmitter<PasswordChange>();
 
   public form: FormGroup = this.fb.group({
     password: ['', Validators.required],
@@ -21,7 +21,7 @@ export class AccountChangePasswordFormComponent {
   ) { }
 
   public onSave() {
-    this.save.emit(this.form.value);
+    this.changePassword.emit(this.form.value);
   }
 
   public isFormInvalid(): boolean {
