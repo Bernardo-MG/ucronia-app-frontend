@@ -12,7 +12,8 @@ export class AccountChangePasswordFormComponent {
   @Output() public changePassword = new EventEmitter<PasswordChange>();
 
   public form: FormGroup = this.fb.group({
-    password: ['', Validators.required],
+    oldPassword: ['', Validators.required],
+    newPassword: ['', Validators.required],
     passwordRepeat: ['', Validators.required]
   });
 

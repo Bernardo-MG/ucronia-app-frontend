@@ -1,4 +1,4 @@
 export class PasswordChange {
-    password = '';
-    passwordRepeat = '';
+    newPassword = '';
+    oldPassword = '';
 }
