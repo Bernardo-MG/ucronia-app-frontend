@@ -20,6 +20,7 @@ export class SecurityUserFormComponent implements OnInit, OnChanges {
   public form: FormGroup = this.fb.group({
     id: [-1],
     username: ['', Validators.required],
+    name: ['', Validators.required],
     email: ['', Validators.required],
     credentialsExpired: [false, Validators.required],
     enabled: [false, Validators.required],

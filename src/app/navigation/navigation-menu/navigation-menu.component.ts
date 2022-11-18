@@ -18,7 +18,7 @@ export class NavigationMenuComponent {
   constructor(
     private authenticationContainer: AuthenticationContainer
   ) {
-    this.authenticationContainer.getUserObservable().subscribe(u => { this.loggedIn = u.logged });
+    this.authenticationContainer.getUserStatusObservable().subscribe(u => { this.loggedIn = u.logged });
   }
 
 }
