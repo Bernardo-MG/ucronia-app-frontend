@@ -31,6 +31,8 @@ export class LoginViewComponent implements OnInit {
    */
   public failed = false;
 
+  public loading = false;
+
   /**
    * Return route. Used to redirect after login.
    */
@@ -54,6 +56,9 @@ export class LoginViewComponent implements OnInit {
    */
   public onLogin(login: LoginFormUser) {
     // Login request
+
+    this.loading = true;
+
     this.loginService.login(login)
       .subscribe({
         next: user => {
@@ -70,6 +75,7 @@ export class LoginViewComponent implements OnInit {
         error: error => {
           // Failed request
           this.failed = true;
+          this.loading = false;
         }
       });
   }

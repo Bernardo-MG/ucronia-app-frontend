@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginFormUser } from '../../model/login-form-user';
 
@@ -11,6 +11,8 @@ import { LoginFormUser } from '../../model/login-form-user';
   styleUrls: ['./login-form.component.sass']
 })
 export class LoginFormComponent {
+
+  @Input() public loading = false;
 
   /**
    * Login event. Sent when the user accepts the data in the form.
@@ -82,6 +84,10 @@ export class LoginFormComponent {
     }
 
     return invalid;
+  }
+
+  public isLoginEnabled(): boolean {
+    return ((this.form.valid) && (!this.loading));
   }
 
 }
