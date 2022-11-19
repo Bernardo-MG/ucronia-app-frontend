@@ -37,13 +37,29 @@ describe('LoginFormComponent', () => {
     expect(button.disabled).toEqual(true);
   });
 
-  it('should enable the login button when the form is valid', () => {
+  it('should enable the login button when both username and password are set', () => {
     component.form.controls['username'].setValue('username');
     component.form.controls['password'].setValue('password');
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
     expect(button.disabled).toEqual(false);
+  });
+
+  it('should disable the login button when missing the username', () => {
+    component.form.controls['password'].setValue('password');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('form button');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should disable the login button when missing the password', () => {
+    component.form.controls['username'].setValue('username');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('form button');
+    expect(button.disabled).toEqual(true);
   });
 
   it('should disable the login button when the form is valid but it is loading', () => {
