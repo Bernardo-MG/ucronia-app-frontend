@@ -47,11 +47,12 @@ export class LoginViewComponent implements OnInit {
     this.returnRoute = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  /**
+   * Handler for the login event, fired by the form.
+   * 
+   * @param login user login info
+   */
   public onLogin(login: LoginFormUser) {
-    // Activates remember me if needed
-    // Should be done first of all, or the user won't be stored
-    this.loginService.setRememberMe(login.rememberMe);
-
     // Login request
     this.loginService.login(login)
       .subscribe({
@@ -71,6 +72,15 @@ export class LoginViewComponent implements OnInit {
           this.failed = true;
         }
       });
+  }
+
+  /**
+   * Handler for the remember me event, fired by the form.
+   * 
+   * @param remember remember me flag
+   */
+  public onRememberMe(remember: boolean) {
+    this.loginService.setRememberMe(remember);
   }
 
 }
