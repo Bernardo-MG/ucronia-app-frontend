@@ -2,8 +2,13 @@
   <navigation-menu title={{title}} [menus]="menus">
   </navigation-menu>
 </header>
-<main>
-  <div class="container">
-    <router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <navigation-side-menu id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"></navigation-side-menu>
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
   </div>
-</main>
+</div>
