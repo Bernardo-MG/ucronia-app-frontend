@@ -17,6 +17,9 @@ export class LoginFormComponent {
    */
   @Output() public login = new EventEmitter<LoginFormUser>();
 
+  /**
+   * Remember me event. Sent when the user changes the remember me flag.
+   */
   @Output() public rememberMe = new EventEmitter<boolean>();
 
   /**
