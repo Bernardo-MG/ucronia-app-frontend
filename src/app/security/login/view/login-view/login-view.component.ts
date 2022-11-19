@@ -41,6 +41,11 @@ export class LoginViewComponent implements OnInit {
    */
   private returnRoute: string = '';
 
+  /**
+   * Remember me flag.
+   */
+  private rememberMe = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -63,7 +68,7 @@ export class LoginViewComponent implements OnInit {
     // Mark the form as loading
     this.loading = true;
 
-    this.loginService.login(login)
+    this.loginService.login(login, this.rememberMe)
       .subscribe({
         next: user => {
           // Succesful request
@@ -94,7 +99,7 @@ export class LoginViewComponent implements OnInit {
    * @param remember remember me flag
    */
   public onRememberMe(remember: boolean) {
-    this.loginService.setRememberMe(remember);
+    this.rememberMe = remember;
   }
 
 }
