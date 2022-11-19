@@ -1,26 +1,37 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()">
-    <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" formControlName="username" class="form-control"
-            [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
-        <div *ngIf="isFieldInvalid('username') && form.get('username')?.hasError('required')" class="invalid-feedback">
-            Username is required
+    <div class="text-center">
+        <div class="form-group mb-2">
+            <input placeholder="Username" type="text" formControlName="username" class="form-control"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
+            <div *ngIf="isFieldInvalid('username') && form.get('username')?.hasError('required')"
+                class="invalid-feedback">
+                Username is required
+            </div>
+        </div>
+        <div class="form-group mb-2">
+            <input placeholder="Password" type="password" formControlName="password" class="form-control"
+                [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
+            <div *ngIf="isFieldInvalid('password') && form.get('password')?.hasError('required')"
+                class="invalid-feedback">
+                Password is required
+            </div>
+        </div>
+        <!-- Remember me check -->
+        <div class="row mb-2">
+            <div class="d-flex justify-content-center">
+                <div class="form-check mb-3 mb-md-0">
+                    <input id="rememberMe" type="checkbox" (change)="onRememberMe($event.target)"
+                        class="form-check-input">
+                    <label for="rememberMe" class="form-check-label">Remember me</label>
+                </div>
+            </div>
+        </div>
+        <!-- Login button -->
+        <div class="d-grid gap-2">
+            <button [disabled]="!this.form.valid" class="btn btn-primary" [attr.aria-disabled]="!this.form.valid"
+                aria-label="Login">
+                Login
+            </button>
         </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" formControlName="password" class="form-control"
-            [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
-        <div *ngIf="isFieldInvalid('password') && form.get('password')?.hasError('required')" class="invalid-feedback">
-            Password is required
-        </div>
-    </div>
-    <div class="form-check">
-        <input id="rememberMe" type="checkbox" (change)="onRememberMe($event.target)" class="form-check-input">
-        <label for="rememberMe" class="form-check-label">Remember me</label>
-    </div>
-    <button [disabled]="!this.form.valid" class="btn btn-primary" [attr.aria-disabled]="!this.form.valid"
-        aria-label="Login">
-        Login
-    </button>
 </form>
