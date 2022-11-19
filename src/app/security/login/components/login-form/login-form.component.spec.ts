@@ -46,4 +46,56 @@ describe('LoginFormComponent', () => {
     expect(button.disabled).toEqual(false);
   });
 
+  it('should send a login event when clicking the login button', () => {
+    spyOn(component.login, 'emit');
+
+    component.form.controls['username'].setValue('username');
+    component.form.controls['password'].setValue('password');
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('form button');
+    button.click();
+
+    expect(component.login.emit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should send a remember me event when changing the remember me checkbox', () => {
+    spyOn(component.rememberMe, 'emit');
+
+    const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+    checkbox.click();
+
+    expect(component.rememberMe.emit).toHaveBeenCalledTimes(1);
+  });
+
+  it('should send a remember me event with active flag when changing the remember me checkbox', () => {
+    spyOn(component.rememberMe, 'emit');
+
+    const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+    checkbox.click();
+
+    expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
+  });
+
+  it('should send a remember me event when changing back the remember me checkbox', () => {
+    spyOn(component.rememberMe, 'emit');
+
+    const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+    checkbox.click();
+    checkbox.click();
+
+    expect(component.rememberMe.emit).toHaveBeenCalledTimes(2);
+  });
+
+  it('should send a remember me event with inactive flag when changing back the remember me checkbox', () => {
+    spyOn(component.rememberMe, 'emit');
+
+    const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+    checkbox.click();
+    checkbox.click();
+
+    expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
+    expect(component.rememberMe.emit).toHaveBeenCalledWith(false);
+  });
+
 });
