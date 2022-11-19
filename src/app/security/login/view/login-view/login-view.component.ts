@@ -31,6 +31,9 @@ export class LoginViewComponent implements OnInit {
    */
   public failed = false;
 
+  /**
+   * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
+   */
   public loading = false;
 
   /**
@@ -57,6 +60,7 @@ export class LoginViewComponent implements OnInit {
   public onLogin(login: LoginFormUser) {
     // Login request
 
+    // Mark the form as loading
     this.loading = true;
 
     this.loginService.login(login)
@@ -71,10 +75,14 @@ export class LoginViewComponent implements OnInit {
             // Redirects to the return route
             this.router.navigate([this.returnRoute]);
           }
+
+          // Reactivate form
+          this.loading = false;
         },
         error: error => {
           // Failed request
           this.failed = true;
+          // Reactivate form
           this.loading = false;
         }
       });

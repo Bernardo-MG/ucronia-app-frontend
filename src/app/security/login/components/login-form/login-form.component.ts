@@ -12,6 +12,9 @@ import { LoginFormUser } from '../../model/login-form-user';
 })
 export class LoginFormComponent {
 
+  /**
+   * Loading flag. Shows the loading visual cue and disables the form.
+   */
   @Input() public loading = false;
 
   /**
