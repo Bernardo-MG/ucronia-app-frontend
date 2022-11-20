@@ -26,7 +26,38 @@ export class AccountChangePasswordFormComponent {
   }
 
   public isFormInvalid(): boolean {
-    return this.form.invalid && (this.form.dirty || this.form.touched);
+    let invalid;
+
+    if (this.form.invalid) {
+      invalid = true;
+    } else {
+      invalid = (this.form.value.newPassword !== this.form.value.passwordRepeat);
+    }
+
+    return invalid;
+  }
+
+  /**
+   * Checks if the form field is invalid.
+   * 
+   * @param field field to check
+   * @returns true if the form is invalid, false otherwise
+   */
+  public isFieldInvalid(field: string): boolean {
+    let invalid: boolean;
+
+    if (this.form.invalid) {
+      const formField = this.form.get(field);
+      if (formField) {
+        invalid = (formField?.dirty || formField?.touched) && (formField?.errors != null);
+      } else {
+        invalid = false;
+      }
+    } else {
+      invalid = false;
+    }
+
+    return invalid;
   }
 
 }
