@@ -13,7 +13,6 @@ const loginModule = () => import('@app/security/login/login.module').then(m => m
 const roleModule = () => import('@app/security/data/roles/roles.module').then(m => m.RolesModule);
 const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
 const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
-const passwordModule = () => import('@app/security/password/password.module').then(m => m.PasswordModule);
 
 const memberModule = () => import('@app/crud/members/members.module').then(m => m.MembersModule);
 const feeModule = () => import('@app/crud/fees/fees.module').then(m => m.FeesModule);
@@ -26,7 +25,6 @@ const routes: Routes = [
   { path: 'security/roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
   { path: 'security/users', loadChildren: userModule, canActivate: [LoggedInGuard] },
   { path: 'security/register', loadChildren: registerModule, canActivate: [LoggedInGuard] },
-  { path: 'security/password', loadChildren: passwordModule, canActivate: [LoggedInGuard] },
   // Admin
   { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
   { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
