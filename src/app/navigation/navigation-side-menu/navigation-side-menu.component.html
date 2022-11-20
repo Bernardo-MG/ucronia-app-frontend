@@ -1,27 +1,37 @@
 <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
     <div class="position-sticky pt-3 sidebar-sticky ps-2">
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a routerLink="/admin" class="nav-link" title="admin">admin</a>
-                <a routerLink="/admin/balance" class="nav-link" title="balance">balance</a>
-                <a routerLink="/admin/fees" class="nav-link" title="admin">fees</a>
-                <a routerLink="/admin/members" class="nav-link" title="admin">members</a>
-            </li>
-        </ul>
-        <h6>data</h6>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a routerLink="/members" class="nav-link" title="members">members</a>
-                <a routerLink="/fees" class="nav-link" title="fees">fees</a>
-                <a routerLink="/transactions" class="nav-link" title="transactions">transactions</a>
-            </li>
-        </ul>
-        <h6>security</h6>
-        <ul class="nav flex-column">
-            <li class="nav-item">
-                <a routerLink="/security/roles" class="nav-link" title="roles">roles</a>
-                <a routerLink="/security/users" class="nav-link" title="users">users</a>
-            </li>
-        </ul>
+        <div *ngIf="loggedIn; then logged_menu else default_menu"></div>
+        <ng-template #logged_menu>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="/admin" class="nav-link" title="admin">admin</a>
+                    <a routerLink="/admin/balance" class="nav-link" title="balance">balance</a>
+                    <a routerLink="/admin/fees" class="nav-link" title="admin">fees</a>
+                    <a routerLink="/admin/members" class="nav-link" title="admin">members</a>
+                </li>
+            </ul>
+            <h6>data</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="/members" class="nav-link" title="members">members</a>
+                    <a routerLink="/fees" class="nav-link" title="fees">fees</a>
+                    <a routerLink="/transactions" class="nav-link" title="transactions">transactions</a>
+                </li>
+            </ul>
+            <h6>security</h6>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="/security/roles" class="nav-link" title="roles">roles</a>
+                    <a routerLink="/security/users" class="nav-link" title="users">users</a>
+                </li>
+            </ul>
+        </ng-template>
+        <ng-template #default_menu>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a routerLink="/login" class="nav-link" title="login">login</a>
+                </li>
+            </ul>
+        </ng-template>
     </div>
 </nav>

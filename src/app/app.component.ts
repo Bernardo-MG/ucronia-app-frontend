@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Menu } from './navigation/model/menu';
+import { AuthenticationContainer } from './security/authentication/service/authentication-container.service';
 
 @Component({
   selector: 'app-root',
@@ -10,15 +10,12 @@ export class AppComponent {
 
   title = 'association-app-frontend';
 
-  menus: Menu[] = [
-    // Admin links
-    {
-      name: 'admin', links: [{ name: 'admin', path: '/admin' }
-        , { name: 'roles', path: '/security/roles' }, { name: 'users', path: '/security/users' }]
-    },
-    // Data links
-    {
-      name: "data", links: [{ name: 'members', path: '/members' }, { name: 'fees', path: '/fees' }, { name: 'transactions', path: '/transactions' }]
-    }];
+  public loggedIn: boolean = false;
+
+  constructor(
+    private authenticationContainer: AuthenticationContainer
+  ) {
+    this.authenticationContainer.getUserStatusObservable().subscribe(u => { this.loggedIn = u.logged });
+  }
 
 }

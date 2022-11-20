@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'navigation-side-menu',
@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./navigation-side-menu.component.sass']
 })
 export class NavigationSideMenuComponent {
+
+  @Input() loggedIn: boolean = false;
 
   constructor() { }
 

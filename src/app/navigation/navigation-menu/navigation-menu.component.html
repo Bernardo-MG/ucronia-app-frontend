@@ -7,9 +7,6 @@
     </button>
     <div>
       <ul class="nav navbar-nav ms-auto">
-        <ng-template ngFor let-menu [ngForOf]="menus">
-          <navigation-dropdown title="{{menu.name}}" [links]="menu.links"></navigation-dropdown>
-        </ng-template>
         <ng-template [ngIf]="loggedIn">
           <account-nav-menu></account-nav-menu>
         </ng-template>
