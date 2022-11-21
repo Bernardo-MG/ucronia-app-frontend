@@ -5,6 +5,7 @@ import { FeesModule } from '@app/crud/fees/fees.module';
 import { FeeYearComponent } from './components/fee-year/fee-year.component';
 import { AdminFeesRoutingModule } from './admin-fees-routing.module';
 import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee-list-view.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -16,6 +17,8 @@ import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee
   imports: [
     CommonModule,
     AdminFeesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     FeesModule,
     ControlsModule
   ]

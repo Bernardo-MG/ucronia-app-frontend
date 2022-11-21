@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FeeYear } from '@app/models/fee-year';
+import { Observable } from 'rxjs';
 import { FeeYearRange } from '../../models/fee-year-range';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
@@ -21,22 +22,24 @@ export class AdminFeeListViewComponent {
 
   public year = -1;
 
+  public onlyActive = false;
+
   constructor(
     private service: AdminFeeService
   ) {
     this.year = new Date().getFullYear();
-    this.toYear(this.year);
+    this.toCurrentYear();
     this.service.getRange().subscribe(d => this.range = d);
   }
 
   public toPreviousYear() {
     this.year = this.year - 1;
-    this.toYear(this.year);
+    this.toCurrentYear();
   }
 
   public toNextYear() {
     this.year = this.year + 1;
-    this.toYear(this.year);
+    this.toCurrentYear();
   }
 
   public isAbleToGoForwards() {
@@ -47,9 +50,15 @@ export class AdminFeeListViewComponent {
     return ((!this.loading) && (this.range.start > 0) && (this.year > this.range.start));
   }
 
-  private toYear(year: number) {
+  public onFilterActiveMembers(event: any) {
+    this.onlyActive = event.checked;
+    this.toCurrentYear();
+  }
+
+  private toCurrentYear() {
     this.loading = true;
-    this.service.getAllForYear(year).subscribe({
+
+    this.service.getAllForYear(this.year, this.onlyActive).subscribe({
       next: years => {
         this.feeYears = years;
         this.loading = false;

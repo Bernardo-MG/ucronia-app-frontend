@@ -13,19 +13,20 @@ import { FeeYearRange } from '../models/fee-year-range';
 export class AdminFeeService {
 
   private feeYearUrl = environment.apiUrl + "/fee/year";
-  
+
   private feeYearRangeUrl = environment.apiUrl + "/fee/year/range";
 
   constructor(
     private client: RequestClient
   ) { }
 
-  public getAllForYear(year: number): Observable<FeeYear[]> {
+  public getAllForYear(year: number, onlyActive: boolean): Observable<FeeYear[]> {
     const url = `${this.feeYearUrl}/${year}`;
     const clt: ReadPagedOperations<FeeYear> = this.client.readPaged(url);
     const sort = new Sort<FeeYear>("name");
 
     clt.sort([sort]);
+    clt.parameter("onlyActive", onlyActive);
     return clt.fetch().pipe(map(r => r.content));
   }
 
