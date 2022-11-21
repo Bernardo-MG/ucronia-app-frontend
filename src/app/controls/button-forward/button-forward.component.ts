@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faForward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -7,6 +7,8 @@ import { faForward } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./button-forward.component.sass']
 })
 export class ButtonForwardComponent {
+
+  @Input() disabled = false;
 
   @Output() action = new EventEmitter<number>();
 

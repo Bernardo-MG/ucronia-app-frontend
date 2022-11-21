@@ -1,13 +1,34 @@
 <h1>{{year}}</h1>
-<div class="row">
+<div class="row text-center">
     <div class="col-4">
-        <button-backward (action)="toPreviousYear()"></button-backward>
+        <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()">
+        </button-backward>
     </div>
     <div class="col-4">
         {{year}}
     </div>
-    <div class="col-4">
-        <button-forward (action)="toNextYear()"></button-forward>
+    <div class="col-4 ">
+        <button-forward id="feeYearForward" class="end-0" (action)="toNextYear()" [disabled]="!isAbleToGoForwards()">
+        </button-forward>
     </div>
 </div>
-<admin-fee-table [feeYears]="feeYears"></admin-fee-table>
+<div *ngIf="loading; then loading_cue else fee_year"></div>
+<div class="row">
+    <ng-template #loading_cue>
+        <div class="d-flex justify-content-center">
+            <span class="spinner-border spinner-border-sm mr-1"></span>
+        </div>
+    </ng-template>
+    <ng-template #fee_year>
+        <div class="col-12">
+            <div class="form-check">
+                <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive" (change)="onFilterActiveMembers($event.target)"
+                    class="form-check-input">
+                <label for="onlyActive" class="form-check-label">only_active</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <admin-fee-year [feeYears]="feeYears"></admin-fee-year>
+        </div>
+    </ng-template>
+</div>
