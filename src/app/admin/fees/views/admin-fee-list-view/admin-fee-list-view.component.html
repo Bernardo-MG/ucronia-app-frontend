@@ -1,7 +1,8 @@
 <h1>{{year}}</h1>
 <div class="row">
     <div class="col-4">
-        <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()"></button-backward>
+        <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()">
+        </button-backward>
     </div>
     <div class="col-4">
         {{year}}
@@ -10,4 +11,14 @@
         <button-forward id="feeYearForward" (action)="toNextYear()" [disabled]="!isAbleToGoForwards()"></button-forward>
     </div>
 </div>
-<admin-fee-year [feeYears]="feeYears"></admin-fee-year>
+<div *ngIf="loading; then loading_cue else fee_year"></div>
+<div class="row">
+    <ng-template #loading_cue>
+        <div class="d-flex justify-content-center">
+            <span class="spinner-border spinner-border-sm mr-1"></span>
+        </div>
+    </ng-template>
+    <ng-template #fee_year>
+        <admin-fee-year [feeYears]="feeYears"></admin-fee-year>
+    </ng-template>
+</div>

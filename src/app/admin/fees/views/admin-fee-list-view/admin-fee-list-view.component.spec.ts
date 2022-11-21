@@ -41,9 +41,30 @@ describe('AdminFeeListViewComponent', () => {
     expect(button.disabled).toEqual(true);
   });
 
+  it('should disable the forward button when the current year is before the end but it is loading', () => {
+    component.range.end = 2020;
+    component.year = 2019;
+    component.loading = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#feeYearForward');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should disable the backward button when the current year is after the start but it is loading', () => {
+    component.range.start = 2020;
+    component.year = 2021;
+    component.loading = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#feeYearBackward');
+    expect(button.disabled).toEqual(true);
+  });
+
   it('should enable the forward button when the current year is before the end', () => {
     component.range.end = 2020;
     component.year = 2019;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearForward');
@@ -53,6 +74,7 @@ describe('AdminFeeListViewComponent', () => {
   it('should disable the forward button when the current year is equal to the end', () => {
     component.range.end = 2020;
     component.year = 2020;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearForward');
@@ -62,6 +84,7 @@ describe('AdminFeeListViewComponent', () => {
   it('should disable the forward button when the current year is after the end', () => {
     component.range.end = 2020;
     component.year = 2021;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearForward');
@@ -71,6 +94,7 @@ describe('AdminFeeListViewComponent', () => {
   it('should enable the backward button when the current year is after the start', () => {
     component.range.start = 2020;
     component.year = 2021;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearBackward');
@@ -80,6 +104,7 @@ describe('AdminFeeListViewComponent', () => {
   it('should disable the backward button when the current year is equal to the start', () => {
     component.range.start = 2020;
     component.year = 2020;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearBackward');
@@ -89,6 +114,7 @@ describe('AdminFeeListViewComponent', () => {
   it('should disable the backward button when the current year is before the start', () => {
     component.range.start = 2020;
     component.year = 2019;
+    component.loading = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#feeYearBackward');

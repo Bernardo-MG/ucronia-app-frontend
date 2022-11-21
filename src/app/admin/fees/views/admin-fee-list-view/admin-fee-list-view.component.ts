@@ -10,11 +10,16 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 })
 export class AdminFeeListViewComponent {
 
+  /**
+   * Loading flag. Shows the loading visual cue.
+   */
+  public loading = false;
+
   public feeYears: FeeYear[] = [];
 
-  public range: FeeYearRange = new FeeYearRange();
+  public range = new FeeYearRange();
 
-  public year: number = -1;
+  public year = -1;
 
   constructor(
     private service: AdminFeeService
@@ -35,15 +40,25 @@ export class AdminFeeListViewComponent {
   }
 
   public isAbleToGoForwards() {
-    return ((this.range.end > 0) && (this.year < this.range.end));
+    return ((!this.loading) && (this.range.end > 0) && (this.year < this.range.end));
   }
 
   public isAbleToGoBackwards() {
-    return ((this.range.start > 0) && (this.year > this.range.start));
+    return ((!this.loading) && (this.range.start > 0) && (this.year > this.range.start));
   }
 
   private toYear(year: number) {
-    this.service.getAllForYear(year).subscribe(d => this.feeYears = d);
+    this.loading = true;
+    this.service.getAllForYear(year).subscribe({
+      next: years => {
+        this.feeYears = years;
+        this.loading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.loading = false;
+      }
+    });
   }
 
 }
