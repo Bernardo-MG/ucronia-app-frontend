@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginFormUser } from '../../model/login-form-user';
 
@@ -13,23 +13,35 @@ import { LoginFormUser } from '../../model/login-form-user';
 export class LoginFormComponent {
 
   /**
+   * Loading flag. Shows the loading visual cue and disables the form.
+   */
+  @Input() public loading = false;
+
+  /**
    * Login event. Sent when the user accepts the data in the form.
    */
   @Output() public login = new EventEmitter<LoginFormUser>();
+
+  /**
+   * Remember me event. Sent when the user changes the remember me flag.
+   */
+  @Output() public rememberMe = new EventEmitter<boolean>();
 
   /**
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
     username: ['', Validators.required],
-    password: ['', Validators.required],
-    rememberMe: [false, Validators.required]
+    password: ['', Validators.required]
   });
 
   constructor(
     private formBuilder: FormBuilder
   ) { }
 
+  /**
+   * Handler for the login event.
+   */
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
@@ -40,12 +52,18 @@ export class LoginFormComponent {
       if (this.form.value.password) {
         user.password = this.form.value.password;
       }
-      if (this.form.value.rememberMe) {
-        user.rememberMe = this.form.value.rememberMe;
-      }
 
       this.login.emit(user);
     }
+  }
+
+  /**
+   * Handler for the remember me event.
+   * 
+   * @param event checkbox selection param
+   */
+  public onRememberMe(event: any) {
+    this.rememberMe.emit(event.checked);
   }
 
   /**
@@ -69,6 +87,10 @@ export class LoginFormComponent {
     }
 
     return invalid;
+  }
+
+  public isLoginEnabled(): boolean {
+    return ((this.form.valid) && (!this.loading));
   }
 
 }

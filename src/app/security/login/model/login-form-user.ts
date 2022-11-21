@@ -4,5 +4,4 @@
 export class LoginFormUser {
     username: string = '';
     password: string = '';
-    rememberMe: boolean = false;
 }

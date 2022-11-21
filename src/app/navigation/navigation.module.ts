@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { AccountModule } from '@app/account/account.module';
 import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
+import { NavigationSideMenuComponent } from './navigation-side-menu/navigation-side-menu.component';
 
 @NgModule({
   declarations: [
     NavigationMenuComponent,
-    NavigationDropdownComponent
+    NavigationDropdownComponent,
+    NavigationSideMenuComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { NavigationMenuComponent } from './navigation-menu/navigation-menu.compo
     AccountModule
   ],
   exports: [
-    NavigationMenuComponent
+    NavigationMenuComponent,
+    NavigationSideMenuComponent
   ]
 })
 export class NavigationModule { }

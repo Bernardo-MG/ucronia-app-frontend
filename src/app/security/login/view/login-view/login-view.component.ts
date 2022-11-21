@@ -32,9 +32,19 @@ export class LoginViewComponent implements OnInit {
   public failed = false;
 
   /**
+   * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
+   */
+  public loading = false;
+
+  /**
    * Return route. Used to redirect after login.
    */
   private returnRoute: string = '';
+
+  /**
+   * Remember me flag.
+   */
+  private rememberMe = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -47,13 +57,18 @@ export class LoginViewComponent implements OnInit {
     this.returnRoute = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  /**
+   * Handler for the login event, fired by the form.
+   * 
+   * @param login user login info
+   */
   public onLogin(login: LoginFormUser) {
-    // Activates remember me if needed
-    // Should be done first of all, or the user won't be stored
-    this.loginService.setRememberMe(login.rememberMe);
-
     // Login request
-    this.loginService.login(login)
+
+    // Mark the form as loading
+    this.loading = true;
+
+    this.loginService.login(login, this.rememberMe)
       .subscribe({
         next: user => {
           // Succesful request
@@ -65,12 +80,26 @@ export class LoginViewComponent implements OnInit {
             // Redirects to the return route
             this.router.navigate([this.returnRoute]);
           }
+
+          // Reactivate form
+          this.loading = false;
         },
         error: error => {
           // Failed request
           this.failed = true;
+          // Reactivate form
+          this.loading = false;
         }
       });
+  }
+
+  /**
+   * Handler for the remember me event, fired by the form.
+   * 
+   * @param remember remember me flag
+   */
+  public onRememberMe(remember: boolean) {
+    this.rememberMe = remember;
   }
 
 }

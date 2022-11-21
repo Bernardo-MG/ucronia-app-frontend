@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faBackward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -7,6 +7,8 @@ import { faBackward } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./button-backward.component.sass']
 })
 export class ButtonBackwardComponent {
+
+  @Input() disabled = false;
 
   @Output() action = new EventEmitter<number>();
 

@@ -3,11 +3,11 @@ import { FeeYear } from '@app/models/fee-year';
 import { FeeYearRow } from '../../models/fee-year-row';
 
 @Component({
-  selector: 'admin-fee-table',
-  templateUrl: './fee-table.component.html',
-  styleUrls: ['./fee-table.component.sass']
+  selector: 'admin-fee-year',
+  templateUrl: './fee-year.component.html',
+  styleUrls: ['./fee-year.component.sass']
 })
-export class FeeTableComponent implements OnChanges {
+export class FeeYearComponent implements OnChanges {
 
   @Input() public feeYears: FeeYear[] = [];
 
