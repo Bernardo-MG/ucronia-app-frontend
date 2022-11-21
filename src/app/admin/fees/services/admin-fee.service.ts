@@ -5,6 +5,7 @@ import { RequestClient } from '@app/api/request/request-client';
 import { FeeYear } from '@app/models/fee-year';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { FeeYearRange } from '../models/fee-year-range';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,8 @@ import { map, Observable } from 'rxjs';
 export class AdminFeeService {
 
   private feeYearUrl = environment.apiUrl + "/fee/year";
+  
+  private feeYearRangeUrl = environment.apiUrl + "/fee/year/range";
 
   constructor(
     private client: RequestClient
@@ -24,6 +27,12 @@ export class AdminFeeService {
 
     clt.sort([sort]);
     return clt.fetch().pipe(map(r => r.content));
+  }
+
+  public getRange(): Observable<FeeYearRange> {
+    const clt: ReadPagedOperations<FeeYearRange> = this.client.readPaged(this.feeYearRangeUrl);
+
+    return clt.fetchOne().pipe(map(r => r.content));
   }
 
 }
