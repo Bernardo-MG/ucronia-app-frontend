@@ -26,13 +26,13 @@ export class MemberEditViewComponent implements OnInit {
 
   save(data: Member): void {
     this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/members']);
+      this.router.navigate(['/data/members']);
     });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/members']);
+      this.router.navigate(['/data/members']);
     });
   }
 

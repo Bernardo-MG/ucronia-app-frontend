@@ -26,13 +26,13 @@ export class TransactionEditViewComponent implements OnInit {
 
   save(data: Transaction): void {
     this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/transactions']);
+      this.router.navigate(['/data/transactions']);
     });
   }
 
   delete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/transactions']);
+      this.router.navigate(['/data/transactions']);
     });
   }
 

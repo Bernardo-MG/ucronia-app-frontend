@@ -1,5 +1,5 @@
 <h1>fees</h1>
-<button-link-create link="/fees/create"></button-link-create>
+<button-link-create link="/data/fees/create"></button-link-create>
 <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
 </pagination-navigation>
 <pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
@@ -25,7 +25,7 @@
         <ng-template ngFor let-fee [ngForOf]="fees">
             <tr>
                 <td>
-                    <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
+                    <button-link-edit link="/data/fees/{{fee.id}}"></button-link-edit>
                 </td>
                 <td>{{fee.name}}</td>
                 <td>{{fee.surname}}</td>

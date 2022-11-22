@@ -17,7 +17,7 @@ export class TransactionCreateViewComponent {
 
   save(data: Transaction): void {
     this.service.create(data).subscribe(d => {
-      this.router.navigate(['/transactions']);
+      this.router.navigate(['/data/transactions']);
     });
   }
 
