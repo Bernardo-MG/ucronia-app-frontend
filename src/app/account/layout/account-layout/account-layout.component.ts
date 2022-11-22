@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'account-layout',
   templateUrl: './account-layout.component.html',
   styleUrls: ['./account-layout.component.sass']
 })
-export class AccountLayoutComponent implements OnInit {
+export class AccountLayoutComponent {
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
