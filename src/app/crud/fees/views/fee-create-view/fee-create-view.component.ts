@@ -29,7 +29,7 @@ export class FeeCreateViewComponent {
 
   public onSave(data: Fee): void {
     this.service.create(data).subscribe(d => {
-      this.router.navigate(['/fees']);
+      this.router.navigate(['/data/fees']);
     });
   }
 

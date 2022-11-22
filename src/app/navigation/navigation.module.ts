@@ -6,12 +6,14 @@ import { AccountModule } from '@app/account/account.module';
 import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
 import { NavigationSideMenuComponent } from './navigation-side-menu/navigation-side-menu.component';
+import { NavigationSideMenuWrapperComponent } from './navigation-side-menu-wrapper/navigation-side-menu-wrapper.component';
 
 @NgModule({
   declarations: [
     NavigationMenuComponent,
     NavigationDropdownComponent,
-    NavigationSideMenuComponent
+    NavigationSideMenuComponent,
+    NavigationSideMenuWrapperComponent
   ],
   imports: [
     CommonModule,

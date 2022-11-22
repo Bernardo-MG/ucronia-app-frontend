@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NavigationSideMenuWrapperComponent } from './navigation/navigation-side-menu-wrapper/navigation-side-menu-wrapper.component';
 import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
 import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
 
@@ -19,19 +20,39 @@ const feeModule = () => import('@app/crud/fees/fees.module').then(m => m.FeesMod
 const transactionModule = () => import('@app/crud/transactions/transactions.module').then(m => m.TransactionsModule);
 
 const routes: Routes = [
-  { path: '', loadChildren: frontpageModule },
   // Security
   { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
-  { path: 'security/roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
-  { path: 'security/users', loadChildren: userModule, canActivate: [LoggedInGuard] },
-  { path: 'security/register', loadChildren: registerModule, canActivate: [LoggedInGuard] },
-  // Admin
-  { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
-  { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
-  { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },
-  { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] },
-  // Account
-  { path: 'account', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+  {
+    path: '', component: NavigationSideMenuWrapperComponent, children: [
+      { path: '', loadChildren: frontpageModule },
+      {
+        path: 'security', children: [
+          { path: 'roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
+          { path: 'users', loadChildren: userModule, canActivate: [LoggedInGuard] },
+          { path: 'register', loadChildren: registerModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      // Admin
+      {
+        path: 'admin', children: [
+          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      {
+        path: 'data', children: [
+          { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
+          { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },
+          { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      // Account
+      {
+        path: 'account', children: [
+          { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+        ]
+      }
+    ]
+  }
 ];
 
 @NgModule({

@@ -37,13 +37,13 @@ export class FeeEditViewComponent implements OnInit {
 
   public onSave(data: Fee): void {
     this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/fees']);
+      this.router.navigate(['/data/fees']);
     });
   }
 
   public onDelete(id: number): void {
     this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/fees']);
+      this.router.navigate(['/data/fees']);
     });
   }
 

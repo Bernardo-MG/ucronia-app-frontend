@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginModule } from '@app/security/login/login.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccountRoutingModule } from './account-routing.module';
@@ -22,6 +22,7 @@ import { AccountSettingsViewComponent } from './views/account-settings-view/acco
   imports: [
     CommonModule,
     AccountRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     LoginModule
