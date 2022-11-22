@@ -3,11 +3,11 @@ import { AuthenticationContainer } from '@app/security/authentication/service/au
 import { UserStatus } from '@app/security/login/model/user-status';
 
 @Component({
-  selector: 'account-settings-view',
-  templateUrl: './account-settings-view.component.html',
-  styleUrls: ['./account-settings-view.component.sass']
+  selector: 'account-profile-view',
+  templateUrl: './account-profile-view.component.html',
+  styleUrls: ['./account-profile-view.component.sass']
 })
-export class AccountSettingsViewComponent {
+export class AccountProfileViewComponent {
 
   public account = new UserStatus();
 

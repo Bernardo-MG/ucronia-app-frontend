@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountChangePasswordViewComponent } from './views/account-change-password-view/account-change-password-view.component';
-import { AccountSettingsViewComponent } from './views/account-settings-view/account-settings-view.component';
+import { AccountChangePasswordViewComponent } from './views/account-password-view/account-password-view.component';
+import { AccountProfileViewComponent } from './views/account-profile-view/account-profile-view.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: 'settings', component: AccountSettingsViewComponent },
-            { path: 'changePassword', component: AccountChangePasswordViewComponent }
+            {
+                path: 'settings',
+                children: [
+                    { path: 'profile', component: AccountProfileViewComponent },
+                    { path: 'password', component: AccountChangePasswordViewComponent }
+                ]
+            }
         ]
     }
 ];

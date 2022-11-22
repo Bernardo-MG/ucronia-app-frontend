@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
 import { NavigationSideMenuWrapperComponent } from './navigation/navigation-side-menu-wrapper/navigation-side-menu-wrapper.component';
 import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
 import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
@@ -44,13 +45,13 @@ const routes: Routes = [
           { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },
           { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] }
         ]
-      },
-      // Account
-      {
-        path: 'account', children: [
-          { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
-        ]
       }
+    ]
+  },
+  // Account
+  {
+    path: 'account', component: AccountLayoutComponent, children: [
+      { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
     ]
   }
 ];
