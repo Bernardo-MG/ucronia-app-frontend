@@ -14,6 +14,8 @@ export class PaginationSizeSelectorComponent implements OnInit {
 
   @Input() public selected: number = 5;
 
+  @Input() public disabled = false;
+
   private apiActuator: RouteApiActuator;
 
   private routePaginationObserver: RoutePaginationObserver;

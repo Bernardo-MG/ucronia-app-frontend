@@ -4,7 +4,7 @@ import { PageInfo } from '@app/api/models/page-info';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 import { Transaction } from '@app/models/transaction';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'crud-transaction-list-view',
@@ -12,6 +12,11 @@ import { mergeMap } from 'rxjs';
   styleUrls: ['./transaction-list-view.component.sass']
 })
 export class TransactionListViewComponent implements OnInit {
+
+  /**
+   * Loading flag.
+   */
+  public loading = false;
 
   public transactions: Transaction[] = [];
 
@@ -27,10 +32,21 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
-      .subscribe(page => {
-        this.transactions = page.content;
-        this.pageInfo = page;
+    this.loading = true;
+    this.routePaginationObserver.pagination.pipe(
+      tap(p => this.loading = true),
+      mergeMap(p => this.service.getAll(p)))
+      .subscribe({
+        next: page => {
+          this.transactions = page.content;
+          this.pageInfo = page;
+          // Reactivate view
+          this.loading = false;
+        },
+        error: error => {
+          // Reactivate view
+          this.loading = false;
+        }
       });
   }
 

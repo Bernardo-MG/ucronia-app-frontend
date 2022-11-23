@@ -1,33 +1,50 @@
 <h1>transactions</h1>
-<button-link-create link="/data/transactions/create"></button-link-create>
-<pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
-</pagination-navigation>
-<pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">
-                <order-button property="description"></order-button>description
-            </th>
-            <th scope="col">
-                <order-button property="date"></order-button>pay date
-            </th>
-            <th scope="col">
-                <order-button property="amount"></order-button>amount
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-template ngFor let-transaction [ngForOf]="transactions">
+<div class="row">
+    <button-link-create link="/data/transactions/create"></button-link-create>
+</div>
+<div class="row">
+    <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last"
+        [disabled]="loading">
+    </pagination-navigation>
+</div>
+<div class="row">
+    <pagination-size-selector [selected]="pageInfo.size" [disabled]="loading"></pagination-size-selector>
+</div>
+<div class="row">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <button-link-edit link="/data/transactions/{{transaction.id}}"></button-link-edit>
-                </td>
-                <td>{{transaction.description}}</td>
-                <td>{{transaction.date | date:'shortDate'}}</td>
-                <td>{{transaction.amount}}</td>
+                <th scope="col"></th>
+                <th scope="col">
+                    <order-button property="description" [disabled]="loading"></order-button>description
+                </th>
+                <th scope="col">
+                    <order-button property="date" [disabled]="loading"></order-button>pay date
+                </th>
+                <th scope="col">
+                    <order-button property="amount" [disabled]="loading"></order-button>amount
+                </th>
             </tr>
-        </ng-template>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <div *ngIf="loading; then loading_cue else transactions_list"></div>
+            <ng-template #loading_cue>
+                <div class="d-flex justify-content-center">
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                </div>
+            </ng-template>
+            <ng-template #transactions_list>
+                <ng-template ngFor let-transaction [ngForOf]="transactions">
+                    <tr>
+                        <td>
+                            <button-link-edit link="/data/transactions/{{transaction.id}}"></button-link-edit>
+                        </td>
+                        <td>{{transaction.description}}</td>
+                        <td>{{transaction.date | date:'shortDate'}}</td>
+                        <td>{{transaction.amount}}</td>
+                    </tr>
+                </ng-template>
+            </ng-template>
+        </tbody>
+    </table>
+</div>

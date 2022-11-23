@@ -1,4 +1,4 @@
-<h1>{{year}}</h1>
+<h1>fees</h1>
 <div class="row text-center">
     <div class="col-4">
         <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()">
@@ -22,8 +22,8 @@
     <ng-template #fee_year>
         <div class="col-12">
             <div class="form-check">
-                <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive" (change)="onFilterActiveMembers($event.target)"
-                    class="form-check-input">
+                <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive"
+                    (change)="onFilterActiveMembers($event.target)" class="form-check-input">
                 <label for="onlyActive" class="form-check-label">only_active</label>
             </div>
         </div>

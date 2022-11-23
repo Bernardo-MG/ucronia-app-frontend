@@ -12,6 +12,8 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   @Input() public totalPages: number = 0;
 
+  @Input() public disabled = false;
+
   private _first: boolean = true;
 
   @Input()
@@ -63,6 +65,14 @@ export class PaginationNavigationTemplateComponent implements OnChanges {
 
   public onNext() {
     this.goTo.emit(this.page + 1);
+  }
+
+  public isAbleToGoPrevious(): boolean {
+    return (!this.first) && (!this.disabled);
+  }
+
+  public isAbleToGoNext(): boolean {
+    return (!this.last) && (!this.disabled);
   }
 
 }

@@ -75,4 +75,20 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     expect(size).toEqual(2);
   });
 
+  it('should disable the input when the component is disabled', () => {
+    component.disabled = true;
+    fixture.detectChanges();
+
+    const select = fixture.nativeElement.querySelector('select');
+    expect(select.disabled).toEqual(true);
+  });
+
+  it('should enable the input when the component is enabled', () => {
+    component.disabled = false;
+    fixture.detectChanges();
+
+    const select = fixture.nativeElement.querySelector('select');
+    expect(select.disabled).toEqual(false);
+  });
+
 });
