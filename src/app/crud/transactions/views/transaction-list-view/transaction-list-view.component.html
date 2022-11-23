@@ -25,7 +25,7 @@
                     <button-link-edit link="/data/transactions/{{transaction.id}}"></button-link-edit>
                 </td>
                 <td>{{transaction.description}}</td>
-                <td>{{transaction.date}}</td>
+                <td>{{transaction.date | date:'shortDate'}}</td>
                 <td>{{transaction.amount}}</td>
             </tr>
         </ng-template>
