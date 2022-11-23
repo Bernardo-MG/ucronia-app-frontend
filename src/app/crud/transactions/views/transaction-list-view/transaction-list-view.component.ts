@@ -49,4 +49,8 @@ export class TransactionListViewComponent implements OnInit {
       });
   }
 
+  public isLoading(): boolean {
+    return (this.transactions.length == 0) && this.loading;
+  }
+
 }
