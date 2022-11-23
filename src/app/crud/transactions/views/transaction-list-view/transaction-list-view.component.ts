@@ -32,7 +32,6 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loading = true;
     this.routePaginationObserver.pagination.pipe(
       tap(p => this.loading = true),
       mergeMap(p => this.service.getAll(p)))
