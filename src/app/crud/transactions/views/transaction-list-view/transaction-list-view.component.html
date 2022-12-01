@@ -27,13 +27,13 @@
             </tr>
         </thead>
         <tbody>
-            <div *ngIf="isLoading(); then loading_cue else transactions_list"></div>
+            <div *ngIf="isLoading(); then loading_cue else data_list"></div>
             <ng-template #loading_cue>
                 <div class="d-flex justify-content-center">
                     <span class="spinner-border spinner-border-sm mr-1"></span>
                 </div>
             </ng-template>
-            <ng-template #transactions_list>
+            <ng-template #data_list>
                 <ng-template ngFor let-transaction [ngForOf]="transactions">
                     <tr>
                         <td>

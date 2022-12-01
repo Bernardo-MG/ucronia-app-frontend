@@ -4,7 +4,7 @@ import { PageInfo } from '@app/api/models/page-info';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'crud-member-list-view',
@@ -12,6 +12,11 @@ import { mergeMap } from 'rxjs';
   styleUrls: ['./member-list-view.component.sass']
 })
 export class MemberListViewComponent implements OnInit {
+
+  /**
+   * Loading flag.
+   */
+  public loading = false;
 
   public members: Member[] = [];
 
@@ -27,11 +32,25 @@ export class MemberListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
-      .subscribe(page => {
-        this.members = page.content;
-        this.pageInfo = page;
+    this.routePaginationObserver.pagination.pipe(
+      tap(p => this.loading = true),
+      mergeMap(p => this.service.getAll(p)))
+      .subscribe({
+        next: page => {
+          this.members = page.content;
+          this.pageInfo = page;
+          // Reactivate view
+          this.loading = false;
+        },
+        error: error => {
+          // Reactivate view
+          this.loading = false;
+        }
       });
+  }
+
+  public isLoading(): boolean {
+    return this.loading;
   }
 
 }
