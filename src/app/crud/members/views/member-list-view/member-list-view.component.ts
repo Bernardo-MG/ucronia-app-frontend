@@ -22,6 +22,10 @@ export class MemberListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
+  public selected = new Member();
+
+  private formValid = false;
+
   private routePaginationObserver: RoutePaginationRequestObserver;
 
   constructor(
@@ -49,8 +53,24 @@ export class MemberListViewComponent implements OnInit {
       });
   }
 
+  onSave(): void {
+    this.service.create(this.selected).subscribe();
+  }
+
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onStartCreate() {
+    this.selected = new Member();
+  }
+
   public isLoading(): boolean {
     return this.loading;
+  }
+
+  public isFormEnabled() {
+    return this.formValid;
   }
 
 }

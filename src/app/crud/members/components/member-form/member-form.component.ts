@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
 
@@ -11,13 +11,11 @@ export class MemberFormComponent implements OnChanges {
 
   @Input() public data: Member = new Member();
 
-  @Input() public disabledSave: boolean = false;
-
-  @Input() public disabledDelete: boolean = false;
-
   @Output() public save = new EventEmitter<Member>();
 
   @Output() public delete = new EventEmitter<number>();
+
+  @Output() public validChange = new EventEmitter<boolean>();
 
   public form: FormGroup = this.fb.group({
     id: [-1],
@@ -30,7 +28,15 @@ export class MemberFormComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.form.statusChanges.subscribe(status => {
+      if (status === "VALID") {
+        this.validChange.emit(true);
+      } else {
+        this.validChange.emit(false);
+      }
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
@@ -48,14 +54,6 @@ export class MemberFormComponent implements OnChanges {
     if (id) {
       this.delete.emit(id.value);
     }
-  }
-
-  public canSave(): boolean {
-    return ((!this.disabledSave) && (this.form.valid));
-  }
-
-  public canDelete(): boolean {
-    return ((!this.disabledDelete) && (this.form.valid));
   }
 
   public isFormInvalid(): boolean {
