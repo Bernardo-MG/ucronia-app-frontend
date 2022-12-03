@@ -46,8 +46,4 @@ export class MemberFormComponent implements OnChanges {
     this.save.emit(this.form.value);
   }
 
-  public isFormInvalid(): boolean {
-    return this.form.invalid && (this.form.dirty || this.form.touched);
-  }
-
 }

@@ -4,7 +4,7 @@
             <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">name</label>
             <div class="col-sm-10">
                 <input type="text" id="nameInput" aria-describedby="nameLabel" formControlName="name"
-                    class="form-control" [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('name')?.errors }">
+                    class="form-control" [ngClass]="{ 'is-invalid': form.get('name')?.errors }">
                 <div class="invalid-feedback">
                     <div *ngIf="form.get('name')?.hasError('required')">
                         missing_name
@@ -16,30 +16,28 @@
             <label for="surnameInput" id="surnameLabel" class="col-sm-2 col-form-label">surname</label>
             <div class="col-sm-10">
                 <input type="text" id="surnameInput" aria-describedby="surnameLabel" formControlName="surname"
-                    class="form-control" [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('surname')?.errors }">
+                    class="form-control" [ngClass]="{ 'is-invalid': form.get('surname')?.errors }">
             </div>
         </div>
         <div class="row mb-2">
             <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">phone</label>
             <div class="col-sm-10">
                 <input type="text" id="phoneInput" aria-describedby="phoneLabel" formControlName="phone"
-                    class="form-control" [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('phone')?.errors }">
+                    class="form-control" [ngClass]="{ 'is-invalid': form.get('phone')?.errors }">
             </div>
         </div>
         <div class="row mb-2">
             <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">identifier</label>
             <div class="col-sm-10">
                 <input type="text" id="identifierInput" aria-describedby="identifierLabel" formControlName="identifier"
-                    class="form-control"
-                    [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('identifier')?.errors }">
+                    class="form-control" [ngClass]="{ 'is-invalid': form.get('identifier')?.errors }">
             </div>
         </div>
         <div class="row mb-2">
             <div class="col-sm-10 offset-sm-2">
                 <div class="form-check">
                     <input type="checkbox" id="activeInput" aria-describedby="activeLabel" formControlName="active"
-                        class="form-check-input"
-                        [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('active')?.errors }">
+                        class="form-check-input" [ngClass]="{ 'is-invalid': form.get('active')?.errors }">
                     <label for="activeInput" id="activeLabel" class="col-sm-2 col-form-label">active</label>
                 </div>
             </div>
