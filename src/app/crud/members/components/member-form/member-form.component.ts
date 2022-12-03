@@ -13,8 +13,6 @@ export class MemberFormComponent implements OnChanges {
 
   @Output() public save = new EventEmitter<Member>();
 
-  @Output() public delete = new EventEmitter<number>();
-
   @Output() public validChange = new EventEmitter<boolean>();
 
   public form: FormGroup = this.fb.group({
@@ -46,14 +44,6 @@ export class MemberFormComponent implements OnChanges {
 
   public onSave() {
     this.save.emit(this.form.value);
-  }
-
-  public onDelete() {
-    const id = this.form.get('id');
-
-    if (id) {
-      this.delete.emit(id.value);
-    }
   }
 
   public isFormInvalid(): boolean {

@@ -57,6 +57,10 @@ export class MemberListViewComponent implements OnInit {
     this.service.create(this.selected).subscribe();
   }
 
+  onSaveFromForm(member: Member): void {
+    this.service.create(member).subscribe();
+  }
+
   public onFormValidChange(valid: boolean): void {
     this.formValid = valid;
   }
