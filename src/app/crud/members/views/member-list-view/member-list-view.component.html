@@ -82,7 +82,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <crud-form-member [data]="selected" (save)="onSaveFromForm($event)" (validChange)="onFormValidChange($event)"></crud-form-member>
+                <crud-form-member [data]="selected" (save)="onSaveFromForm($event)" (valueChange)="onFormChange($event)"
+                    (validChange)="onFormValidChange($event)"></crud-form-member>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>

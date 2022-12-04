@@ -69,6 +69,10 @@ export class MemberListViewComponent implements OnInit {
     this.selected = new Member();
   }
 
+  public onFormChange(value: Member) {
+    this.selected = value;
+  }
+
   public isLoading(): boolean {
     return this.loading;
   }

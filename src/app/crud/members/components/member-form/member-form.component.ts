@@ -13,6 +13,8 @@ export class MemberFormComponent implements OnChanges {
 
   @Output() public save = new EventEmitter<Member>();
 
+  @Output() public valueChange = new EventEmitter<Member>();
+
   @Output() public validChange = new EventEmitter<boolean>();
 
   public form: FormGroup = this.fb.group({
@@ -33,6 +35,9 @@ export class MemberFormComponent implements OnChanges {
       } else {
         this.validChange.emit(false);
       }
+    });
+    this.form.valueChanges.subscribe(value => {
+      this.valueChange.emit(value);
     });
   }
 
