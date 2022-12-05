@@ -74,20 +74,20 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="formModalLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="saveModalLabel">add_member</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <crud-form-member [data]="selected" (save)="onSaveFromForm($event)" (valueChange)="onFormChange($event)"
+                <crud-form-member [data]="selected" (save)="onSave()" (valueChange)="onFormChange($event)"
                     (validChange)="onFormValidChange($event)"></crud-form-member>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
-                <button type="button" class="btn btn-primary" [disabled]="!isFormEnabled()"
+                <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
+                <button type="button" class="btn btn-primary" [disabled]="!isAbleToSave()"
                     (click)="onSave()">save</button>
             </div>
         </div>
