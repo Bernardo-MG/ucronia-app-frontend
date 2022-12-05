@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
@@ -37,7 +38,7 @@ export class MemberListViewComponent implements OnInit {
     this.routePaginationObserver = new RoutePaginationRequestObserver(route);
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.routePaginationObserver.pagination.pipe(
       tap(p => this.loading = true),
       mergeMap(p => this.service.getAll(p)))
@@ -55,9 +56,12 @@ export class MemberListViewComponent implements OnInit {
       });
   }
 
-  onSave(): void {
+  public onSave(): void {
     this.service.create(this.selected).subscribe(r => {
+      const pagination = this.routePaginationObserver.pagination.getValue();
       this.closebutton.nativeElement.click();
+
+      this.load(pagination);
     });
   }
 
@@ -79,6 +83,21 @@ export class MemberListViewComponent implements OnInit {
 
   public isAbleToSave() {
     return this.formValid;
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.service.getAll(pagination).subscribe({
+      next: page => {
+        this.members = page.content;
+        this.pageInfo = page;
+        // Reactivate view
+        this.loading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.loading = false;
+      }
+    });
   }
 
 }
