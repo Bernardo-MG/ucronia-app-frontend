@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
@@ -12,6 +12,8 @@ import { mergeMap, tap } from 'rxjs';
   styleUrls: ['./member-list-view.component.sass']
 })
 export class MemberListViewComponent implements OnInit {
+
+  @ViewChild('closebutton') closebutton: any = null;
 
   /**
    * Loading flag.
@@ -54,7 +56,9 @@ export class MemberListViewComponent implements OnInit {
   }
 
   onSave(): void {
-    this.service.create(this.selected).subscribe();
+    this.service.create(this.selected).subscribe(r => {
+      this.closebutton.nativeElement.click();
+    });
   }
 
   public onFormValidChange(valid: boolean): void {
