@@ -14,8 +14,6 @@ import { mergeMap, tap } from 'rxjs';
 })
 export class MemberListViewComponent implements OnInit {
 
-  @ViewChild('closebutton') closebutton: any = null;
-
   /**
    * Loading flag.
    */
@@ -24,10 +22,6 @@ export class MemberListViewComponent implements OnInit {
   public members: Member[] = [];
 
   public pageInfo = new PageInfo();
-
-  public selected = new Member();
-
-  private formValid = false;
 
   private routePaginationObserver: RoutePaginationRequestObserver;
 
@@ -56,33 +50,8 @@ export class MemberListViewComponent implements OnInit {
       });
   }
 
-  public onSave(): void {
-    this.service.create(this.selected).subscribe(r => {
-      const pagination = this.routePaginationObserver.pagination.getValue();
-      this.closebutton.nativeElement.click();
-
-      this.load(pagination);
-    });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onStartCreate() {
-    this.selected = new Member();
-  }
-
-  public onFormChange(value: Member) {
-    this.selected = value;
-  }
-
   public isLoading(): boolean {
     return this.loading;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
   private load(pagination: PaginationRequest | undefined) {

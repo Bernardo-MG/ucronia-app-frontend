@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/crud/members/services/member.service';
 import { Member } from '@app/models/member';
 
@@ -12,10 +12,11 @@ export class MemberEditViewComponent implements OnInit {
 
   member: Member = new Member();
 
+  private formValid = false;
+
   constructor(
     private route: ActivatedRoute,
-    private service: MemberService,
-    private router: Router
+    private service: MemberService
   ) { }
 
   ngOnInit(): void {
@@ -24,16 +25,20 @@ export class MemberEditViewComponent implements OnInit {
     });
   }
 
-  save(data: Member): void {
-    this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/data/members']);
-    });
+  public onSave(): void {
+    this.service.update(this.member.id, this.member).subscribe();
   }
 
-  delete(id: number): void {
-    this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/data/members']);
-    });
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Member) {
+    this.member = value;
+  }
+
+  public isAbleToSave() {
+    return this.formValid;
   }
 
   private load(id: string | null): void {

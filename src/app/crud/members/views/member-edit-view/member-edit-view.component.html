@@ -1,2 +1,4 @@
 <h1>edit member</h1>
-<crud-form-member [data]="member"></crud-form-member>
+<form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()">
+</form-controls>
+<crud-form-member [data]="member" (save)="onSave()" (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)"></crud-form-member>

@@ -8,10 +8,6 @@
                 <div class="row">
                     <div class="d-flex align-items-center justify-content-evenly">
                         <button-link-create link="/data/members/create"></button-link-create>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal"
-                            (click)="onStartCreate()">
-                            +
-                        </button>
                     </div>
                 </div>
             </div>
@@ -70,25 +66,6 @@
                         </pagination-navigation>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="saveModalLabel">add_member</h1>
-                <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <crud-form-member [data]="selected" (save)="onSave()" (valueChange)="onFormChange($event)"
-                    (validChange)="onFormValidChange($event)"></crud-form-member>
-            </div>
-            <div class="modal-footer">
-                <button id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">close</button>
-                <button type="button" class="btn btn-primary" [disabled]="!isAbleToSave()"
-                    (click)="onSave()">save</button>
             </div>
         </div>
     </div>
