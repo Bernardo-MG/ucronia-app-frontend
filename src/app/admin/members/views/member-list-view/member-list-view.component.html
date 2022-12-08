@@ -7,15 +7,12 @@
         active: {{activeCount}}
     </div>
 </div>
-<!-- Controls -->
-<div class="row justify-content-start">
+<!-- Pagination and controls -->
+<div class="row">
     <div class="col-1">
         <button-link-create link="/members/create"></button-link-create>
     </div>
-</div>
-<!-- Pagination -->
-<div class="row justify-content-end">
-    <div class="col-2">
+    <div class="col-2 offset-5">
         <pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
     </div>
     <div class="col-4">
