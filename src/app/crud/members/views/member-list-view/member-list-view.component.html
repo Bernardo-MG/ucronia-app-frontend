@@ -46,7 +46,10 @@
                             </td>
                             <td>
                                 <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
-                                <button-delete></button-delete>
+                                <button-delete (click)="select(member)" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal">
+                                    Launch static backdrop modal
+                                </button-delete>
                             </td>
                         </tr>
                     </ng-template>
@@ -67,6 +70,22 @@
                         </pagination-navigation>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure you want to delete the data?</p>
+                <p class="text-warning"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button type="button" class="btn btn-danger" (click)="onDelete()"
+                    data-bs-dismiss="modal">delete</button>
             </div>
         </div>
     </div>
