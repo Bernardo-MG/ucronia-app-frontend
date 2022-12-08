@@ -17,16 +17,16 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col"></th>
-                    <th scope="col">
-                        <order-button property="active"></order-button>active
-                    </th>
                     <th scope="col">
                         <order-button property="name"></order-button>name
                     </th>
                     <th scope="col">
                         <order-button property="surname"></order-button>surname
                     </th>
+                    <th scope="col">
+                        <order-button property="active"></order-button>active
+                    </th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -39,14 +39,15 @@
                 <ng-template #data_list>
                     <ng-template ngFor let-member [ngForOf]="members">
                         <tr>
-                            <td>
-                                <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
-                            </td>
+                            <td>{{member.name}}</td>
+                            <td>{{member.surname}}</td>
                             <td><input type="checkbox" [checked]="member.active" [attr.disabled]="true"
                                     class="form-check-input">
                             </td>
-                            <td>{{member.name}}</td>
-                            <td>{{member.surname}}</td>
+                            <td>
+                                <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
+                                <button-delete></button-delete>
+                            </td>
                         </tr>
                     </ng-template>
                 </ng-template>
