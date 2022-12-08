@@ -21,7 +21,7 @@ export class MemberCreateViewComponent {
 
   public onSave(): void {
     this.service.create(this.member).subscribe(d => {
-      this.router.navigate([`/data/members/${d.id}`]);
+      this.router.navigate([`/members/${d.id}`]);
     });
   }
 

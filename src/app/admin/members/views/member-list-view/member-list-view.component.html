@@ -10,7 +10,7 @@
 <!-- Controls -->
 <div class="row justify-content-start">
     <div class="col-1">
-        <button-link-create link="/data/members/create"></button-link-create>
+        <button-link-create link="/members/create"></button-link-create>
     </div>
 </div>
 <!-- Pagination -->
@@ -60,7 +60,7 @@
                             class="form-check-input">
                     </td>
                     <td>
-                        <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
+                        <button-link-edit link="/members/{{member.id}}"></button-link-edit>
                         <button-delete (click)="select(member)" data-bs-toggle="modal" data-bs-target="#deleteModal">
                             Launch static backdrop modal
                         </button-delete>
