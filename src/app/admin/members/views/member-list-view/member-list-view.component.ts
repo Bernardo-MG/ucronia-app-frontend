@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
-import { MemberService } from '@app/crud/members/services/member.service';
+import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
 import { mergeMap, tap } from 'rxjs';
 
