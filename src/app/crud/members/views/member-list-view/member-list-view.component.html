@@ -1,79 +1,69 @@
-<div class="card">
-    <div class="card-header">
+<div class="row">
+    <h1>members</h1>
+</div>
+<!-- Controls -->
+<div class="row justify-content-start">
+    <div class="col-1">
+        <button-link-create link="/data/members/create"></button-link-create>
+    </div>
+</div>
+<!-- Pagination -->
+<div class="row justify-content-end">
+    <div class="col-2">
+        <pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
+    </div>
+    <div class="col-4">
         <div class="row">
-            <div class="col-2">
-                <h1>members</h1>
-            </div>
-            <div class="col-2 offset-8">
-                <div class="row">
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <button-link-create link="/data/members/create"></button-link-create>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <order-button property="name"></order-button>name
-                    </th>
-                    <th scope="col">
-                        <order-button property="surname"></order-button>surname
-                    </th>
-                    <th scope="col">
-                        <order-button property="active"></order-button>active
-                    </th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <div *ngIf="isLoading(); then loading_cue else data_list"></div>
-                <ng-template #loading_cue>
-                    <div class="d-flex justify-content-center">
-                        <span class="spinner-border spinner-border-sm mr-1"></span>
-                    </div>
-                </ng-template>
-                <ng-template #data_list>
-                    <ng-template ngFor let-member [ngForOf]="members">
-                        <tr>
-                            <td>{{member.name}}</td>
-                            <td>{{member.surname}}</td>
-                            <td><input type="checkbox" [checked]="member.active" [attr.disabled]="true"
-                                    class="form-check-input">
-                            </td>
-                            <td>
-                                <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
-                                <button-delete (click)="select(member)" data-bs-toggle="modal"
-                                    data-bs-target="#deleteModal">
-                                    Launch static backdrop modal
-                                </button-delete>
-                            </td>
-                        </tr>
-                    </ng-template>
-                </ng-template>
-            </tbody>
-        </table>
-    </div>
-    <div class="card-footer text-muted">
-        <div class="row justify-content-end">
-            <div class="col-2">
-                <pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
-            </div>
-            <div class="col-4">
-                <div class="row">
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first"
-                            [last]="pageInfo.last">
-                        </pagination-navigation>
-                    </div>
-                </div>
+            <div class="d-flex align-items-center justify-content-evenly">
+                <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first"
+                    [last]="pageInfo.last">
+                </pagination-navigation>
             </div>
         </div>
     </div>
 </div>
+<!-- Table -->
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                <order-button property="name"></order-button>name
+            </th>
+            <th scope="col">
+                <order-button property="surname"></order-button>surname
+            </th>
+            <th scope="col">
+                <order-button property="active"></order-button>active
+            </th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <div *ngIf="isLoading(); then loading_cue else data_list"></div>
+        <ng-template #loading_cue>
+            <div class="d-flex justify-content-center">
+                <span class="spinner-border spinner-border-sm mr-1"></span>
+            </div>
+        </ng-template>
+        <ng-template #data_list>
+            <ng-template ngFor let-member [ngForOf]="members">
+                <tr>
+                    <td>{{member.name}}</td>
+                    <td>{{member.surname}}</td>
+                    <td><input type="checkbox" [checked]="member.active" [attr.disabled]="true"
+                            class="form-check-input">
+                    </td>
+                    <td>
+                        <button-link-edit link="/data/members/{{member.id}}"></button-link-edit>
+                        <button-delete (click)="select(member)" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            Launch static backdrop modal
+                        </button-delete>
+                    </td>
+                </tr>
+            </ng-template>
+        </ng-template>
+    </tbody>
+</table>
 
 <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-hidden="true">
