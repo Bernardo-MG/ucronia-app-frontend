@@ -23,6 +23,8 @@ export class MemberListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
+  public activeCount = 0;
+
   private routePaginationObserver: RoutePaginationRequestObserver;
 
   private selected = new Member();
@@ -50,6 +52,8 @@ export class MemberListViewComponent implements OnInit {
           this.loading = false;
         }
       });
+
+    this.service.countActive().subscribe(r => this.activeCount = r);
   }
 
   public isLoading(): boolean {

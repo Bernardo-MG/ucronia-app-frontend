@@ -9,7 +9,7 @@ import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Member } from '@app/models/member';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { map, Observable, ObservedValueOf } from 'rxjs';
 
 @Injectable()
 export class MemberService {
@@ -18,7 +18,7 @@ export class MemberService {
 
   constructor(
     private client: RequestClient
-  ) {}
+  ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
     const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
@@ -49,6 +49,13 @@ export class MemberService {
   public getOne(id: number): Observable<Member> {
     const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
     return clt.fetchOne().pipe(map(r => r.content));
+  }
+
+  public countActive(): Observable<number> {
+    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
+
+    clt.parameter("active", true);
+    return clt.fetch().pipe(map(r => r.totalElements));
   }
 
 }
