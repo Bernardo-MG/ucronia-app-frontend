@@ -9,6 +9,7 @@ import { MemberService } from './services/member.service';
 import { MemberCreateViewComponent } from './views/member-create-view/member-create-view.component';
 import { MemberEditViewComponent } from './views/member-edit-view/member-edit-view.component';
 import { MemberListViewComponent } from './views/member-list-view/member-list-view.component';
+import { LayoutModule } from '@app/layout/layout.module';
 
 
 
@@ -24,7 +25,8 @@ import { MemberListViewComponent } from './views/member-list-view/member-list-vi
     MembersRoutingModule,
     ReactiveFormsModule,
     ControlsModule,
-    ApiUiModule
+    ApiUiModule,
+    LayoutModule
   ],
   exports: [
     MemberFormComponent

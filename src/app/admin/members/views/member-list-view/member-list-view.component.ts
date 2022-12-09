@@ -56,10 +56,6 @@ export class MemberListViewComponent implements OnInit {
     this.service.countActive().subscribe(r => this.activeCount = r);
   }
 
-  public isLoading(): boolean {
-    return this.loading;
-  }
-
   public select(data: Member) {
     this.selected = data;
   }
