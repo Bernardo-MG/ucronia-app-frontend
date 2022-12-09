@@ -27,7 +27,7 @@ export class MemberListViewComponent implements OnInit {
 
   private routePaginationObserver: RoutePaginationRequestObserver;
 
-  private selected = new Member();
+  private selected: { id: number } = { id: -1 };
 
   constructor(
     private service: MemberService,
@@ -56,7 +56,7 @@ export class MemberListViewComponent implements OnInit {
     this.service.countActive().subscribe(r => this.activeCount = r);
   }
 
-  public select(data: Member) {
+  public select(data: { id: number }) {
     this.selected = data;
   }
 

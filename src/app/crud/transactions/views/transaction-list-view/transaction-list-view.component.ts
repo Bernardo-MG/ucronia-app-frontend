@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
+import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 import { Transaction } from '@app/models/transaction';
@@ -23,6 +24,8 @@ export class TransactionListViewComponent implements OnInit {
   public pageInfo = new PageInfo();
 
   private routePaginationObserver: RoutePaginationRequestObserver;
+
+  private selected: { id: number } = { id: -1 };
 
   constructor(
     private service: TransactionService,
@@ -51,6 +54,34 @@ export class TransactionListViewComponent implements OnInit {
 
   public isLoading(): boolean {
     return (this.transactions.length == 0) && this.loading;
+  }
+
+  public onDelete() {
+    if (this.selected.id > 0) {
+      this.service.delete(this.selected.id).subscribe(r => {
+        const pagination = this.routePaginationObserver.pagination.value;
+        this.load(pagination);
+      });
+    }
+  }
+
+  public select(data: { id: number }) {
+    this.selected = data;
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.service.getAll(pagination).subscribe({
+      next: page => {
+        this.transactions = page.content;
+        this.pageInfo = page;
+        // Reactivate view
+        this.loading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.loading = false;
+      }
+    });
   }
 
 }

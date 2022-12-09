@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
+import { LayoutModule } from '@app/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
@@ -28,7 +29,8 @@ import { FeeListViewComponent } from './views/free-list-view/fee-list-view.compo
     ReactiveFormsModule,
     FontAwesomeModule,
     ControlsModule,
-    ApiUiModule
+    ApiUiModule,
+    LayoutModule
   ],
   exports: [
     FeeFormComponent,

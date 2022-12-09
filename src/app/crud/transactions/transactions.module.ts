@@ -9,6 +9,7 @@ import { TransactionListViewComponent } from './views/transaction-list-view/tran
 import { TransactionEditViewComponent } from './views/transaction-edit-view/transaction-edit-view.component';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { TransactionService } from './service/transaction.service';
+import { LayoutModule } from '@app/layout/layout.module';
 
 
 
@@ -24,7 +25,8 @@ import { TransactionService } from './service/transaction.service';
     TransactionsRoutingModule,
     ReactiveFormsModule,
     ControlsModule,
-    ApiUiModule
+    ApiUiModule,
+    LayoutModule
   ],
   providers: [
     TransactionService
