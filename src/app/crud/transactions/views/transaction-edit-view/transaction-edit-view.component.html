@@ -1,2 +1,12 @@
-<h1>edit transaction</h1>
-<crud-form-transaction (save)="save($event)" (delete)="delete($event)" [data]="transaction"></crud-form-transaction>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">
+            <a routerLink="/members" class="btn btn-default" role="button">members</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">edit</li>
+    </ol>
+</nav>
+
+<form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
+<crud-form-transaction (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></crud-form-transaction>

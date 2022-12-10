@@ -10,7 +10,7 @@ import { Member } from '@app/models/member';
 })
 export class MemberCreateViewComponent {
 
-  private member: Member = new Member();
+  private member = new Member();
 
   private formValid = false;
 

@@ -10,15 +10,31 @@ import { Transaction } from '@app/models/transaction';
 })
 export class TransactionCreateViewComponent {
 
+  private transaction = new Transaction();
+
+  private formValid = false;
+
   constructor(
     private service: TransactionService,
     private router: Router
     ) { }
 
-  save(data: Transaction): void {
-    this.service.create(data).subscribe(d => {
-      this.router.navigate(['/data/transactions']);
-    });
-  }
+    public onSave(): void {
+      this.service.create(this.transaction).subscribe(d => {
+        this.router.navigate([`/data/transaction/${d.id}`]);
+      });
+    }
+  
+    public onFormValidChange(valid: boolean): void {
+      this.formValid = valid;
+    }
+  
+    public onFormChange(value: Transaction) {
+      this.transaction = value;
+    }
+  
+    public isAbleToSave() {
+      return this.formValid;
+    }
 
 }

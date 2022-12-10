@@ -11,13 +11,11 @@ export class TransactionFormComponent implements OnChanges {
 
   @Input() public data: Transaction = new Transaction();
 
-  @Input() public disabledSave: boolean = false;
-
-  @Input() public disabledDelete: boolean = false;
-
   @Output() public save = new EventEmitter<Transaction>();
 
-  @Output() public delete = new EventEmitter<number>();
+  @Output() public valueChange = new EventEmitter<Transaction>();
+
+  @Output() public validChange = new EventEmitter<boolean>();
 
   public form: FormGroup = this.fb.group({
     id: [-1],
@@ -62,26 +60,6 @@ export class TransactionFormComponent implements OnChanges {
 
   public onSave() {
     this.save.emit(this.form.value);
-  }
-
-  public onDelete() {
-    const id = this.form.get('id');
-
-    if (id) {
-      this.delete.emit(id.value);
-    }
-  }
-
-  public canSave(): boolean {
-    return ((!this.disabledSave) && (this.form.valid));
-  }
-
-  public canDelete(): boolean {
-    return ((!this.disabledDelete) && (this.form.valid));
-  }
-
-  public isFormInvalid(): boolean {
-    return this.form.invalid && (this.form.dirty || this.form.touched);
   }
 
 }

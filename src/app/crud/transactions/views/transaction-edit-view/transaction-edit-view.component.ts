@@ -12,6 +12,8 @@ export class TransactionEditViewComponent implements OnInit {
 
   transaction: Transaction = new Transaction();
 
+  private formValid = false;
+
   constructor(
     private route: ActivatedRoute,
     private service: TransactionService,
@@ -24,16 +26,20 @@ export class TransactionEditViewComponent implements OnInit {
     });
   }
 
-  save(data: Transaction): void {
-    this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/data/transactions']);
-    });
+  public onSave(): void {
+    this.service.update(this.transaction.id, this.transaction).subscribe();
   }
 
-  delete(id: number): void {
-    this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/data/transactions']);
-    });
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Transaction) {
+    this.transaction = value;
+  }
+
+  public isAbleToSave() {
+    return this.formValid;
   }
 
   private load(id: string | null): void {
