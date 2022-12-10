@@ -34,7 +34,18 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.form.statusChanges.subscribe(status => {
+      if (status === "VALID") {
+        this.validChange.emit(true);
+      } else {
+        this.validChange.emit(false);
+      }
+    });
+    this.form.valueChanges.subscribe(value => {
+      this.valueChange.emit(value);
+    });
+  }
 
   ngOnInit(): void {
     this.reload();

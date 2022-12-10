@@ -26,7 +26,18 @@ export class TransactionFormComponent implements OnChanges {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.form.statusChanges.subscribe(status => {
+      if (status === "VALID") {
+        this.validChange.emit(true);
+      } else {
+        this.validChange.emit(false);
+      }
+    });
+    this.form.valueChanges.subscribe(value => {
+      this.valueChange.emit(value);
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {

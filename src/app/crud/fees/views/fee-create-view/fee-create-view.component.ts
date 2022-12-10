@@ -58,7 +58,7 @@ export class FeeCreateViewComponent {
       this.membersPageInfo = response;
     });
   }
-  
+
   public isAbleToSave() {
     return this.formValid;
   }
