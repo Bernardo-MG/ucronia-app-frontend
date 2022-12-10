@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Transaction } from '@app/models/transaction';
+import { ActivatedRoute } from '@angular/router';
 import { TransactionService } from '@app/crud/transactions/service/transaction.service';
+import { Transaction } from '@app/models/transaction';
 
 @Component({
   selector: 'crud-transaction-edit-view',
@@ -10,14 +10,13 @@ import { TransactionService } from '@app/crud/transactions/service/transaction.s
 })
 export class TransactionEditViewComponent implements OnInit {
 
-  private transaction: Transaction = new Transaction();
+  public transaction: Transaction = new Transaction();
 
   private formValid = false;
 
   constructor(
     private route: ActivatedRoute,
-    private service: TransactionService,
-    private router: Router
+    private service: TransactionService
   ) { }
 
   ngOnInit(): void {

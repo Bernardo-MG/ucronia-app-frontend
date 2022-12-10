@@ -10,7 +10,7 @@ import { Transaction } from '@app/models/transaction';
 })
 export class TransactionCreateViewComponent {
 
-  private transaction = new Transaction();
+  public transaction = new Transaction();
 
   private formValid = false;
 
