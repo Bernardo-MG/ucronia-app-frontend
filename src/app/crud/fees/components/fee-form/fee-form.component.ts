@@ -15,13 +15,11 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public member = new Member();
 
-  @Input() public disabledSave: boolean = false;
-
-  @Input() public disabledDelete: boolean = false;
-
   @Output() public save = new EventEmitter<Fee>();
 
-  @Output() public delete = new EventEmitter<number>();
+  @Output() public valueChange = new EventEmitter<Fee>();
+
+  @Output() public validChange = new EventEmitter<boolean>();
 
   @Output() public selectMember = new EventEmitter<void>();
 
@@ -56,22 +54,6 @@ export class FeeFormComponent implements OnInit, OnChanges {
       memberId: this.member.id,
       date
     });
-  }
-
-  public onDelete() {
-    const id = this.form.get('id');
-
-    if (id) {
-      this.delete.emit(id.value);
-    }
-  }
-
-  public canSave(): boolean {
-    return ((!this.disabledSave) && (this.form.valid));
-  }
-
-  public canDelete(): boolean {
-    return ((!this.disabledDelete) && (this.form.valid));
   }
 
   public onSelectMember() {

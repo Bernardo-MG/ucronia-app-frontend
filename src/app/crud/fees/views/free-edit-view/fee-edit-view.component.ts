@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { FeeService } from '@app/crud/fees/services/fee.service';
 import { Fee } from '@app/models/fee';
@@ -22,10 +22,11 @@ export class FeeEditViewComponent implements OnInit {
 
   public selectingMember = false;
 
+  private formValid = false;
+
   constructor(
     private route: ActivatedRoute,
-    private service: FeeService,
-    private router: Router
+    private service: FeeService
   ) { }
 
   public ngOnInit(): void {
@@ -35,16 +36,20 @@ export class FeeEditViewComponent implements OnInit {
     });
   }
 
-  public onSave(data: Fee): void {
-    this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/data/fees']);
-    });
+  public onSave(): void {
+    this.service.update(this.member.id, this.fee).subscribe();
   }
 
-  public onDelete(id: number): void {
-    this.service.delete(id).subscribe(d => {
-      this.router.navigate(['/data/fees']);
-    });
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Fee) {
+    this.fee = value;
+  }
+
+  public isAbleToSave() {
+    return this.formValid;
   }
 
   public onRequestMember() {

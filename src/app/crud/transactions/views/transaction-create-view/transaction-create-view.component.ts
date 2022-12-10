@@ -17,24 +17,24 @@ export class TransactionCreateViewComponent {
   constructor(
     private service: TransactionService,
     private router: Router
-    ) { }
+  ) { }
 
-    public onSave(): void {
-      this.service.create(this.transaction).subscribe(d => {
-        this.router.navigate([`/data/transaction/${d.id}`]);
-      });
-    }
-  
-    public onFormValidChange(valid: boolean): void {
-      this.formValid = valid;
-    }
-  
-    public onFormChange(value: Transaction) {
-      this.transaction = value;
-    }
-  
-    public isAbleToSave() {
-      return this.formValid;
-    }
+  public onSave(): void {
+    this.service.create(this.transaction).subscribe(d => {
+      this.router.navigate([`/data/transactions/${d.id}`]);
+    });
+  }
+
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Transaction) {
+    this.transaction = value;
+  }
+
+  public isAbleToSave() {
+    return this.formValid;
+  }
 
 }

@@ -10,7 +10,7 @@ import { TransactionService } from '@app/crud/transactions/service/transaction.s
 })
 export class TransactionEditViewComponent implements OnInit {
 
-  transaction: Transaction = new Transaction();
+  private transaction: Transaction = new Transaction();
 
   private formValid = false;
 

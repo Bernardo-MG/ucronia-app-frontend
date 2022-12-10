@@ -22,15 +22,25 @@ export class FeeCreateViewComponent {
 
   public selectingMember = false;
 
+  private formValid = false;
+
   constructor(
     private service: FeeService,
     private router: Router
   ) { }
 
-  public onSave(data: Fee): void {
-    this.service.create(data).subscribe(d => {
-      this.router.navigate(['/data/fees']);
+  public onSave(): void {
+    this.service.create(this.fee).subscribe(d => {
+      this.router.navigate([`/data/fees/${d.id}`]);
     });
+  }
+
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Fee) {
+    this.fee = value;
   }
 
   public onRequestMember() {
@@ -47,6 +57,10 @@ export class FeeCreateViewComponent {
       this.members = response.content;
       this.membersPageInfo = response;
     });
+  }
+  
+  public isAbleToSave() {
+    return this.formValid;
   }
 
 }

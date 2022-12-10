@@ -1,19 +1,20 @@
 <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">
-            <a routerLink="/fees" class="btn btn-default" role="button">fees</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">edit</li>
-    </ol>
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <a routerLink="/fees" class="btn btn-default" role="button">fees</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">edit</li>
+  </ol>
 </nav>
 
 <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
 
 <ng-template #fee_edition>
-    <crud-form-fee [data]="fee" [member]="member" (save)="onSave($event)" (delete)="onDelete($event)"
-        (selectMember)="onRequestMember()"></crud-form-fee>
+  <form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
+  <crud-form-fee [data]="fee" [member]="member" (save)="onSave()"
+    (selectMember)="onRequestMember()"></crud-form-fee>
 </ng-template>
 <ng-template #member_selection>
-    <crud-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
-        (goToPage)="onGoToMembersPage($event)"></crud-member-selection>
+  <crud-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+    (goToPage)="onGoToMembersPage($event)"></crud-member-selection>
 </ng-template>
