@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 import { Transaction } from '@app/models/transaction';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'crud-transaction-create-view',
@@ -21,7 +21,7 @@ export class TransactionCreateViewComponent {
 
   public onSave(): void {
     this.service.create(this.transaction).subscribe(d => {
-      this.router.navigate([`/data/transactions/${d.id}`]);
+      this.router.navigate([`/transactions/${d.id}`]);
     });
   }
 

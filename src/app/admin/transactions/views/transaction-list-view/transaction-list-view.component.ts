@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
-import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 import { Transaction } from '@app/models/transaction';
 import { mergeMap, tap } from 'rxjs';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'crud-transaction-list-view',

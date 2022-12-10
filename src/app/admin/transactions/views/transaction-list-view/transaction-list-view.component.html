@@ -1,7 +1,7 @@
 <div class="row">
   <h1>transactions</h1>
 </div>
-<layout-data-list createRoute="/data/transactions/create" [loading]="loading" [pageInfo]="pageInfo"
+<layout-data-list createRoute="/transactions/create" [loading]="loading" [pageInfo]="pageInfo"
   (delete)="onDelete()">
   <table class="table">
     <thead>
@@ -32,7 +32,7 @@
             <td>{{transaction.date | date:'shortDate'}}</td>
             <td>{{transaction.amount}}</td>
             <td>
-              <button-link-edit link="/data/transactions/{{transaction.id}}"></button-link-edit>
+              <button-link-edit link="/transactions/{{transaction.id}}"></button-link-edit>
               <button-delete (click)="select(transaction)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
             </td>
           </tr>

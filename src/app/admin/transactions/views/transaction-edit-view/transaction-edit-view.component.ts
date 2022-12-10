@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TransactionService } from '@app/crud/transactions/service/transaction.service';
 import { Transaction } from '@app/models/transaction';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'crud-transaction-edit-view',
