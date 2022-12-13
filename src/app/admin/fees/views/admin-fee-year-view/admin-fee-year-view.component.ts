@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { FeeYear } from '@app/models/fee-year';
-import { Observable } from 'rxjs';
 import { FeeYearRange } from '../../models/fee-year-range';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
-  selector: 'app-admin-fee-list-view',
-  templateUrl: './admin-fee-list-view.component.html',
-  styleUrls: ['./admin-fee-list-view.component.sass']
+  selector: 'admin-fee-year-view',
+  templateUrl: './admin-fee-year-view.component.html',
+  styleUrls: ['./admin-fee-year-view.component.sass']
 })
-export class AdminFeeListViewComponent {
+export class AdminFeeYearViewComponent {
 
   /**
    * Loading flag. Shows the loading visual cue.

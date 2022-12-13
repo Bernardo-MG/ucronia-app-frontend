@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminFeeListViewComponent } from './views/admin-fee-list-view/admin-fee-list-view.component';
+import { AdminFeeYearViewComponent } from './views/admin-fee-year-view/admin-fee-year-view.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: AdminFeeListViewComponent }
+            { path: '', component: AdminFeeYearViewComponent }
         ]
     }
 ];
