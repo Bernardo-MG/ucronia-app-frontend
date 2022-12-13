@@ -25,6 +25,8 @@ describe('PaginationNavigationTemplateComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // Display info
+
   it('should show total pages', () => {
     component.totalPages = 10;
     fixture.detectChanges();
@@ -32,6 +34,8 @@ describe('PaginationNavigationTemplateComponent', () => {
     const total = fixture.nativeElement.querySelector('#total_pages');
     expect(total.textContent).toEqual('10');
   });
+
+  // Disable based on status flags
 
   it('should disable the previous button by default', () => {
     const button = fixture.nativeElement.querySelector('#go_to_previous_page');
@@ -74,6 +78,70 @@ describe('PaginationNavigationTemplateComponent', () => {
     const button = fixture.nativeElement.querySelector('#go_to_next_page');
     expect(button.disabled).toEqual(false);
   });
+
+  // Disable status
+
+  it('should disable the backward button when the component is disabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_previous_page');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should enable the backward button when the component is enabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = false;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_previous_page');
+    expect(button.disabled).toEqual(false);
+  });
+
+  it('should disable the forward button when the component is disabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_next_page');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should enable the forward button when the component is enabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = false;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_next_page');
+    expect(button.disabled).toEqual(false);
+  });
+
+  it('should disable the go to page input when the component is disabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_page');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should enable the go to page input when the component is enabled', () => {
+    component.first = false;
+    component.last = false;
+    component.disabled = false;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#go_to_page');
+    expect(button.disabled).toEqual(false);
+  });
+
+  // Event handling
 
   it('should send an event to go to the previous page when clicking the previous button', () => {
     component.page = 2;

@@ -16,38 +16,30 @@ const roleModule = () => import('@app/security/data/roles/roles.module').then(m 
 const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
 const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
 
-const memberModule = () => import('@app/crud/members/members.module').then(m => m.MembersModule);
-const feeModule = () => import('@app/crud/fees/fees.module').then(m => m.FeesModule);
-const transactionModule = () => import('@app/crud/transactions/transactions.module').then(m => m.TransactionsModule);
-
 const routes: Routes = [
-  // Security
-  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
+  // Main app
   {
     path: '', component: NavigationSideMenuWrapperComponent, children: [
+      // Front page
       { path: '', loadChildren: frontpageModule },
+      // Admin
+      {
+        path: '', children: [
+          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      // Security
       {
         path: 'security', children: [
           { path: 'roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
           { path: 'users', loadChildren: userModule, canActivate: [LoggedInGuard] },
           { path: 'register', loadChildren: registerModule, canActivate: [LoggedInGuard] }
         ]
-      },
-      // Admin
-      {
-        path: 'admin', children: [
-          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
-        ]
-      },
-      {
-        path: 'data', children: [
-          { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
-          { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },
-          { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] }
-        ]
       }
     ]
   },
+  // Login
+  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
   // Account
   {
     path: 'account', component: AccountLayoutComponent, children: [

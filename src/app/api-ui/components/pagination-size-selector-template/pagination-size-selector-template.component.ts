@@ -9,7 +9,9 @@ export class PaginationSizeSelectorTemplateComponent {
 
   @Input() public sizes: number[] = [];
 
-  @Input() public selected: number = 0;
+  @Input() public selected = 0;
+
+  @Input() public disabled = false;
 
   @Output() public selectSize = new EventEmitter<number>();
 

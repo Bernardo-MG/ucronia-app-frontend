@@ -1,0 +1,12 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">
+      <a routerLink="/transactions" class="btn btn-default" role="button">transactions</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">edit</li>
+  </ol>
+</nav>
+
+<form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
+<admin-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
+  (validChange)="onFormValidChange($event)"></admin-form-transaction>

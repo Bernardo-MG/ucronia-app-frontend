@@ -16,6 +16,8 @@ export class PaginationNavigationComponent implements OnInit {
 
   @Input() public last: boolean = false;
 
+  @Input() public disabled = false;
+
   public page: number = 0;
 
   private apiActuator: RouteApiActuator;
