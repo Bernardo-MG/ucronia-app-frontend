@@ -5,7 +5,7 @@ import { Member } from '@app/models/member';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'crud-form-fee',
+  selector: 'admin-form-fee',
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })

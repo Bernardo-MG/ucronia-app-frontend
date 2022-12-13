@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction } from '@app/models/transaction';
 
 @Component({
-  selector: 'crud-form-transaction',
+  selector: 'admin-form-transaction',
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.sass']
 })

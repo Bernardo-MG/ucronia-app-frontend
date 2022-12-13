@@ -4,7 +4,7 @@ import { Transaction } from '@app/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'crud-transaction-edit-view',
+  selector: 'admin-transaction-edit-view',
   templateUrl: './transaction-edit-view.component.html',
   styleUrls: ['./transaction-edit-view.component.sass']
 })

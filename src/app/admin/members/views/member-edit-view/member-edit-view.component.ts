@@ -4,7 +4,7 @@ import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'crud-member-edit-view',
+  selector: 'admin-member-edit-view',
   templateUrl: './member-edit-view.component.html',
   styleUrls: ['./member-edit-view.component.sass']
 })

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const balanceModule = () => import('@app/admin/balance/balance.module').then(m => m.BalanceModule);
-const feeModule = () => import('@app/admin/fees/admin-fees.module').then(m => m.AdminFeesModule);
+const feeModule = () => import('@app/admin/fees/fees.module').then(m => m.FeesModule);
 
 
 const routes: Routes = [

@@ -8,5 +8,5 @@
 </nav>
 
 <form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
-<crud-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
-  (validChange)="onFormValidChange($event)"></crud-form-transaction>
+<admin-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
+  (validChange)="onFormValidChange($event)"></admin-form-transaction>

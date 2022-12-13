@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'crud-form-member',
+  selector: 'admin-form-member',
   templateUrl: './member-form.component.html',
   styleUrls: ['./member-form.component.sass']
 })

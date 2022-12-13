@@ -8,7 +8,7 @@ import { Member } from '@app/models/member';
 import { mergeMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'crud-member-list-view',
+  selector: 'admin-member-list-view',
   templateUrl: './member-list-view.component.html',
   styleUrls: ['./member-list-view.component.sass']
 })

@@ -3,7 +3,7 @@ import { PageInfo } from '@app/api/models/page-info';
 import { Member } from '@app/models/member';
 
 @Component({
-  selector: 'crud-member-selection',
+  selector: 'admin-member-selection',
   templateUrl: './member-selection.component.html',
   styleUrls: ['./member-selection.component.sass']
 })

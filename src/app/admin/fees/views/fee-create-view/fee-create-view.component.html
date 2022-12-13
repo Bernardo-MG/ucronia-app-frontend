@@ -11,11 +11,11 @@
 
 <ng-template #fee_edition>
   <form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
-  <crud-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()">
-  </crud-form-fee>
+  <admin-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()">
+  </admin-form-fee>
 </ng-template>
 <ng-template #member_selection>
-  <crud-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+  <admin-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
     (goToPage)="onGoToMembersPage($event)">
-  </crud-member-selection>
+  </admin-member-selection>
 </ng-template>

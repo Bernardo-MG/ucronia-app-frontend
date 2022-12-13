@@ -5,7 +5,7 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { LayoutModule } from '@app/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AdminFeesRoutingModule } from './admin-fees-routing.module';
+import { FeesRoutingModule } from './fees-routing.module';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { FeeYearComponent } from './components/fee-year/fee-year.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
@@ -31,7 +31,7 @@ import { AdminFeeTabsComponent } from './components/admin-fee-tabs/admin-fee-tab
   ],
   imports: [
     CommonModule,
-    AdminFeesRoutingModule,
+    FeesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
@@ -43,4 +43,4 @@ import { AdminFeeTabsComponent } from './components/admin-fee-tabs/admin-fee-tab
     FeeService
   ]
 })
-export class AdminFeesModule { }
+export class FeesModule { }

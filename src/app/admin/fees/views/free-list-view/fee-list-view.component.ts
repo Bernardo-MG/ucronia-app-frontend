@@ -8,7 +8,7 @@ import { mergeMap } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'crud-fee-list-view',
+  selector: 'admin-fee-list-view',
   templateUrl: './fee-list-view.component.html',
   styleUrls: ['./fee-list-view.component.sass']
 })

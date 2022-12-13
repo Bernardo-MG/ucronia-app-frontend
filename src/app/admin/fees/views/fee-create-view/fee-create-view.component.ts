@@ -6,7 +6,7 @@ import { Member } from '@app/models/member';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'crud-fee-create-view',
+  selector: 'admin-fee-create-view',
   templateUrl: './fee-create-view.component.html',
   styleUrls: ['./fee-create-view.component.sass']
 })

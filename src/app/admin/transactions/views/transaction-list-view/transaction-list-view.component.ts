@@ -8,7 +8,7 @@ import { mergeMap, tap } from 'rxjs';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'crud-transaction-list-view',
+  selector: 'admin-transaction-list-view',
   templateUrl: './transaction-list-view.component.html',
   styleUrls: ['./transaction-list-view.component.sass']
 })
