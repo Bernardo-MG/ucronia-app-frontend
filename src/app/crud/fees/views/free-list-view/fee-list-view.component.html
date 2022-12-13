@@ -1,5 +1,5 @@
 <h1>fees</h1>
-<layout-data-list createRoute="/data/fees/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+<layout-data-list createRoute="/fees/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
   <table class="table">
     <thead>
       <tr>
@@ -26,7 +26,7 @@
           <td>{{fee.date | date:'shortDate'}}</td>
           <td>{{fee.paid}}</td>
           <td>
-            <button-link-edit link="/data/fees/{{fee.id}}"></button-link-edit>
+            <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
             <button-delete (click)="select(fee)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
           </td>
         </tr>

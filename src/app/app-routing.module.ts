@@ -39,13 +39,9 @@ const routes: Routes = [
           { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
         ]
       },
-      {
-        path: 'data', children: [
-          { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] }
-        ]
-      },
       { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] },
-      { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] }
+      { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
+      { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] }
     ]
   },
   // Account
