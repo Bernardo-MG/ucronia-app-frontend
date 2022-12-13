@@ -11,6 +11,7 @@ const routes: Routes = [
         path: '',
         children: [
             { path: '', component: FeeListViewComponent },
+            { path: 'list', component: FeeListViewComponent },
             { path: 'year', component: AdminFeeYearViewComponent },
             { path: 'create', component: FeeCreateViewComponent },
             { path: ':id', component: FeeEditViewComponent }
