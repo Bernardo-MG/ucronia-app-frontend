@@ -17,7 +17,7 @@ const userModule = () => import('@app/security/data/users/users.module').then(m 
 const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
 
 const memberModule = () => import('@app/admin/members/members.module').then(m => m.MembersModule);
-const feeModule = () => import('@app/crud/fees/fees.module').then(m => m.FeesModule);
+const feeModule = () => import('@app/admin/fees/admin-fees.module').then(m => m.AdminFeesModule);
 const transactionModule = () => import('@app/admin/transactions/transactions.module').then(m => m.TransactionsModule);
 
 const routes: Routes = [

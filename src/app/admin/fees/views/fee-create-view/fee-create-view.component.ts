@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
-import { FeeService } from '@app/crud/fees/services/fee.service';
 import { Fee } from '@app/models/fee';
 import { Member } from '@app/models/member';
+import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'crud-fee-create-view',
