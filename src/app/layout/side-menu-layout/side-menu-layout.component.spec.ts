@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountNavMenuComponent } from './account-nav-menu.component';
+import { SideMenuLayoutComponent } from './side-menu-layout.component';
 
-describe('AccountNavMenuComponent', () => {
-  let component: AccountNavMenuComponent;
-  let fixture: ComponentFixture<AccountNavMenuComponent>;
+describe('SideMenuLayoutComponent', () => {
+  let component: SideMenuLayoutComponent;
+  let fixture: ComponentFixture<SideMenuLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountNavMenuComponent ]
+      declarations: [ SideMenuLayoutComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AccountNavMenuComponent);
+    fixture = TestBed.createComponent(SideMenuLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
