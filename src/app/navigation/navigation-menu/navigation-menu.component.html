@@ -4,7 +4,9 @@
     <div>
       <ul class="nav navbar-nav ms-auto">
         <ng-template [ngIf]="loggedIn">
-          <account-nav-menu></account-nav-menu>
+          <li class="nav-item dropdown">
+            <navigation-account-menu-options></navigation-account-menu-options>
+          </li>
         </ng-template>
       </ul>
     </div>

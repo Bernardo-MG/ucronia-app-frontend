@@ -1,0 +1,26 @@
+<a href="#" class="nav-link dropdown-toggle" id="menuDropdown" data-bs-toggle="dropdown" role="button"
+  aria-haspopup="true" aria-expanded="false">
+  <fa-icon [icon]="accountIcon"></fa-icon>
+</a>
+<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="menuDropdown">
+  <li>
+    <div class="d-flex justify-content-center">{{username}}</div>
+  </li>
+  <li>
+    <hr class="dropdown-divider">
+  </li>
+  <li>
+    <div class="d-flex justify-content-center">
+      <a routerLink="/account/settings" class="btn btn-default" title="Settings"><fa-icon
+          [icon]="settingsIcon"></fa-icon> settings</a>
+    </div>
+  </li>
+  <li>
+    <hr class="dropdown-divider">
+  </li>
+  <li>
+    <div class="d-flex justify-content-center">
+      <logout-button>logout</logout-button>
+    </div>
+  </li>
+</ul>
