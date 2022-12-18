@@ -1,12 +1,16 @@
-<!-- Sidebar -->
-<nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar" id="sidebarMenu">
-  <div class="position-sticky pt-3 sidebar-sticky ps-2">
-    <navigation-side-menu-options [loggedIn]="loggedIn"></navigation-side-menu-options>
+<div class="container">
+  <div class="row mt-3">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block bg-light border" id="sidebarMenu">
+      <div class="position-sticky pt-3">
+        <navigation-side-menu-options [loggedIn]="loggedIn"></navigation-side-menu-options>
+      </div>
+    </nav>
+    <!-- Page content -->
+    <main class="ms-sm-auto col-md-9 col-lg-10 px-md-4">
+      <div class="container">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
   </div>
-</nav>
-<!-- Page content -->
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+</div>
