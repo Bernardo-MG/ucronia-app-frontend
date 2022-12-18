@@ -4,13 +4,13 @@ import { RouterModule } from '@angular/router';
 import { AccountModule } from '@app/account/account.module';
 import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
-import { NavigationSideMenuComponent } from './navigation-side-menu/navigation-side-menu.component';
+import { NavigationSideMenuOptionsComponent } from './navigation-side-menu-options/navigation-side-menu-options.component';
 
 @NgModule({
   declarations: [
     NavigationMenuComponent,
     NavigationDropdownComponent,
-    NavigationSideMenuComponent
+    NavigationSideMenuOptionsComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +19,7 @@ import { NavigationSideMenuComponent } from './navigation-side-menu/navigation-s
   ],
   exports: [
     NavigationMenuComponent,
-    NavigationSideMenuComponent
+    NavigationSideMenuOptionsComponent
   ]
 })
 export class NavigationModule { }

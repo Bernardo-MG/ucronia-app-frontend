@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountSideMenuComponent } from './account-side-menu.component';
+import { AccountSideMenuComponent } from './account-side-menu-content.component';
 
 describe('AccountSideMenuComponent', () => {
   let component: AccountSideMenuComponent;
