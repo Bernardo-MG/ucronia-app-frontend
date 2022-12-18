@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
-import { NavigationSideMenuWrapperComponent } from './navigation/navigation-side-menu-wrapper/navigation-side-menu-wrapper.component';
+import { SideMenuLayoutComponent } from './layout/side-menu-layout/side-menu-layout.component';
 import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
 import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
 
@@ -19,7 +19,7 @@ const registerModule = () => import('@app/security/register/register.module').th
 const routes: Routes = [
   // Main app
   {
-    path: '', component: NavigationSideMenuWrapperComponent, children: [
+    path: '', component: SideMenuLayoutComponent, children: [
       // Front page
       { path: '', loadChildren: frontpageModule },
       // Admin
