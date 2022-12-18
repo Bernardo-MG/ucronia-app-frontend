@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ControlsModule } from '@app/controls/controls.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
@@ -23,7 +24,8 @@ import { LoginViewComponent } from './view/login-view/login-view.component';
     AuthenticationModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ControlsModule
   ],
   exports: [
     LogoutButtonComponent

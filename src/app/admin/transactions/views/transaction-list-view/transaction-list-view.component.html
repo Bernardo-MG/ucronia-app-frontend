@@ -1,0 +1,43 @@
+<div class="row">
+  <h1>transactions</h1>
+</div>
+<layout-data-list createRoute="/transactions/create" [loading]="loading" [pageInfo]="pageInfo"
+  (delete)="onDelete()">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+          <order-button property="description" [disabled]="isLoading()"></order-button>description
+        </th>
+        <th scope="col">
+          <order-button property="date" [disabled]="isLoading()"></order-button>pay date
+        </th>
+        <th scope="col">
+          <order-button property="amount" [disabled]="isLoading()"></order-button>amount
+        </th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngIf="isLoading(); then loading_cue else data_list"></div>
+      <ng-template #loading_cue>
+        <div class="d-flex justify-content-center">
+          <span class="spinner-border spinner-border-sm mr-1"></span>
+        </div>
+      </ng-template>
+      <ng-template #data_list>
+        <ng-template ngFor let-transaction [ngForOf]="transactions">
+          <tr>
+            <td>{{transaction.description}}</td>
+            <td>{{transaction.date | date:'shortDate'}}</td>
+            <td>{{transaction.amount}}</td>
+            <td>
+              <button-link-edit link="/transactions/{{transaction.id}}"></button-link-edit>
+              <button-delete (click)="select(transaction)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
+            </td>
+          </tr>
+        </ng-template>
+      </ng-template>
+    </tbody>
+  </table>
+</layout-data-list>

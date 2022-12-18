@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
+import { SideMenuLayoutComponent } from './layout/side-menu-layout/side-menu-layout.component';
 import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
 import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
 
@@ -14,24 +16,36 @@ const roleModule = () => import('@app/security/data/roles/roles.module').then(m 
 const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
 const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
 
-const memberModule = () => import('@app/crud/members/members.module').then(m => m.MembersModule);
-const feeModule = () => import('@app/crud/fees/fees.module').then(m => m.FeesModule);
-const transactionModule = () => import('@app/crud/transactions/transactions.module').then(m => m.TransactionsModule);
-
 const routes: Routes = [
-  { path: '', loadChildren: frontpageModule },
-  // Security
+  // Main app
+  {
+    path: '', component: SideMenuLayoutComponent, children: [
+      // Front page
+      { path: '', loadChildren: frontpageModule },
+      // Admin
+      {
+        path: '', children: [
+          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      // Security
+      {
+        path: 'security', children: [
+          { path: 'roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
+          { path: 'users', loadChildren: userModule, canActivate: [LoggedInGuard] },
+          { path: 'register', loadChildren: registerModule, canActivate: [LoggedInGuard] }
+        ]
+      }
+    ]
+  },
+  // Login
   { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
-  { path: 'security/roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
-  { path: 'security/users', loadChildren: userModule, canActivate: [LoggedInGuard] },
-  { path: 'security/register', loadChildren: registerModule, canActivate: [LoggedInGuard] },
-  // Admin
-  { path: 'admin', loadChildren: adminModule, canActivate: [LoggedInGuard] },
-  { path: 'members', loadChildren: memberModule, canActivate: [LoggedInGuard] },
-  { path: 'fees', loadChildren: feeModule, canActivate: [LoggedInGuard] },
-  { path: 'transactions', loadChildren: transactionModule, canActivate: [LoggedInGuard] },
   // Account
-  { path: 'account', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+  {
+    path: 'account', component: AccountLayoutComponent, children: [
+      { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+    ]
+  }
 ];
 
 @NgModule({

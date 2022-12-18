@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
 
 @Component({
@@ -9,13 +9,25 @@ import { PasswordChange } from '@app/account/models/password-change';
 })
 export class AccountChangePasswordFormComponent {
 
+  /**
+   * Loading flag. Shows the loading visual cue and disables the form.
+   */
+  @Input() public saving = false;
+
   @Output() public changePassword = new EventEmitter<PasswordChange>();
+
+  checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    let pass = group.get('newPassword')?.value;
+    let confirmPass = group.get('passwordRepeat')?.value
+    return pass === confirmPass ? null : { notSame: true }
+  }
 
   public form: FormGroup = this.fb.group({
     oldPassword: ['', Validators.required],
     newPassword: ['', Validators.required],
     passwordRepeat: ['', Validators.required]
-  });
+  },
+    { validators: this.checkPasswords });
 
   constructor(
     private fb: FormBuilder
@@ -23,18 +35,6 @@ export class AccountChangePasswordFormComponent {
 
   public onSave() {
     this.changePassword.emit(this.form.value);
-  }
-
-  public isFormInvalid(): boolean {
-    let invalid;
-
-    if (this.form.invalid) {
-      invalid = true;
-    } else {
-      invalid = (this.form.value.newPassword !== this.form.value.passwordRepeat);
-    }
-
-    return invalid;
   }
 
   /**
@@ -58,6 +58,10 @@ export class AccountChangePasswordFormComponent {
     }
 
     return invalid;
+  }
+
+  public isSaveEnabled(): boolean {
+    return ((this.form.valid) && (!this.saving));
   }
 
 }

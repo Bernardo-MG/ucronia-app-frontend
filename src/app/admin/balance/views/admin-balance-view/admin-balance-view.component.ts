@@ -3,7 +3,7 @@ import { Balance } from '@app/models/balance';
 import { AdminBalanceService } from '../../services/admin-balance.service';
 
 @Component({
-  selector: 'app-admin-balance-view',
+  selector: 'admin-balance-view',
   templateUrl: './admin-balance-view.component.html',
   styleUrls: ['./admin-balance-view.component.sass']
 })

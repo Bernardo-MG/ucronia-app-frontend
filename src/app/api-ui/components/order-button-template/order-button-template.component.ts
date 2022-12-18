@@ -13,6 +13,8 @@ export class OrderButtonTemplateComponent implements OnChanges {
 
   @Input() public direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 
+  @Input() public disabled = false;
+
   @Output() public ascending = new EventEmitter<void>();
 
   @Output() public descending = new EventEmitter<void>();

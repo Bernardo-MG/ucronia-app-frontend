@@ -27,8 +27,8 @@ describe('OrderButtonTemplateComponent', () => {
   it('should send an event to change to ascending direction when clicking for the first time', () => {
     spyOn(component.ascending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
 
     expect(component.ascending.emit).toHaveBeenCalledTimes(1);
   });
@@ -36,8 +36,8 @@ describe('OrderButtonTemplateComponent', () => {
   it('should not send an event to change to descending direction when clicking for the first time', () => {
     spyOn(component.descending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
 
     expect(component.descending.emit).toHaveBeenCalledTimes(0);
   });
@@ -45,9 +45,9 @@ describe('OrderButtonTemplateComponent', () => {
   it('should send an event to change to descending direction when clicking for the second time', () => {
     spyOn(component.descending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
 
     expect(component.descending.emit).toHaveBeenCalledTimes(1);
   });
@@ -55,9 +55,9 @@ describe('OrderButtonTemplateComponent', () => {
   it('should not send an additional event to change to ascending direction when clicking for the second time', () => {
     spyOn(component.ascending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
 
     expect(component.ascending.emit).toHaveBeenCalledTimes(1);
   });
@@ -66,10 +66,10 @@ describe('OrderButtonTemplateComponent', () => {
     spyOn(component.ascending, 'emit');
     spyOn(component.descending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
 
     expect(component.ascending.emit).toHaveBeenCalledTimes(1);
     expect(component.descending.emit).toHaveBeenCalledTimes(1);
@@ -78,13 +78,29 @@ describe('OrderButtonTemplateComponent', () => {
   it('should send an event to loop back to ascending direction when clicking for the fourth time', () => {
     spyOn(component.ascending, 'emit');
 
-    const option = fixture.debugElement.query(By.css('button'));
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
-    option.triggerEventHandler('click');
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
 
     expect(component.ascending.emit).toHaveBeenCalledTimes(2);
+  });
+
+  it('should disable the button when the component is disabled', () => {
+    component.disabled = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should enable the button when the component is enabled', () => {
+    component.disabled = false;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('button');
+    expect(button.disabled).toEqual(false);
   });
 
 });

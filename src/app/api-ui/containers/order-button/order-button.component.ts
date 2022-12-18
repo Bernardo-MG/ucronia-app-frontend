@@ -15,6 +15,8 @@ export class OrderButtonComponent implements OnInit {
 
   @Input() direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 
+  @Input() public disabled = false;
+
   private apiActuator: RouteApiActuator;
 
   private sortObserver: RouteSortObserver;

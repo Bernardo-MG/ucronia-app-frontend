@@ -1,0 +1,37 @@
+<h1>fees</h1>
+<admin-fee-tabs [listActive]=true></admin-fee-tabs>
+<layout-data-list createRoute="/fees/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">
+          <order-button property="name"></order-button>name
+        </th>
+        <th scope="col">
+          <order-button property="surname"></order-button>surname
+        </th>
+        <th scope="col">
+          <order-button property="date"></order-button>pay date
+        </th>
+        <th scope="col">
+          <order-button property="paid"></order-button>paid
+        </th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-fee [ngForOf]="fees">
+        <tr>
+          <td>{{fee.name}}</td>
+          <td>{{fee.surname}}</td>
+          <td>{{fee.date | date:'shortDate'}}</td>
+          <td>{{fee.paid}}</td>
+          <td>
+            <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
+            <button-delete (click)="select(fee)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</layout-data-list>
