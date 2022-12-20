@@ -43,7 +43,13 @@ export class FeeFormComponent implements OnInit, OnChanges {
       }
     });
     this.form.valueChanges.subscribe(value => {
-      this.valueChange.emit(value);
+      const date = new Date(this.form.value.date);
+
+      this.valueChange.emit({
+        ...this.form.value,
+        memberId: this.member.id,
+        date
+      });
     });
   }
 
