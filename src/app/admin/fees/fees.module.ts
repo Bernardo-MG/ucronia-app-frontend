@@ -12,8 +12,8 @@ import { MemberSelectionComponent } from './components/member-selection/member-s
 import { FeeService } from './services/fee.service';
 import { AdminFeeYearViewComponent } from './views/admin-fee-year-view/admin-fee-year-view.component';
 import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
-import { FeeEditViewComponent } from './views/free-edit-view/fee-edit-view.component';
-import { FeeListViewComponent } from './views/free-list-view/fee-list-view.component';
+import { FeeEditViewComponent } from './views/fee-edit-view/fee-edit-view.component';
+import { FeeListViewComponent } from './views/fee-list-view/fee-list-view.component';
 import { AdminFeeTabsComponent } from './components/admin-fee-tabs/admin-fee-tabs.component';
 
 
