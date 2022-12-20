@@ -11,7 +11,8 @@
 
 <ng-template #fee_edition>
   <form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
-  <admin-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()">
+  <admin-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()"
+    (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
   </admin-form-fee>
 </ng-template>
 <ng-template #member_selection>
