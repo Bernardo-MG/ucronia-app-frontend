@@ -11,6 +11,7 @@ import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { TransactionService } from './service/transaction.service';
 import { LayoutModule } from '@app/layout/layout.module';
 import { TransactionCalendarViewComponent } from './views/transaction-calendar-view/transaction-calendar-view.component';
+import { TransactionTabsComponent } from './components/transaction-tabs/transaction-tabs.component';
 
 
 
@@ -20,7 +21,8 @@ import { TransactionCalendarViewComponent } from './views/transaction-calendar-v
     TransactionCreateViewComponent,
     TransactionListViewComponent,
     TransactionEditViewComponent,
-    TransactionCalendarViewComponent
+    TransactionCalendarViewComponent,
+    TransactionTabsComponent
   ],
   imports: [
     CommonModule,

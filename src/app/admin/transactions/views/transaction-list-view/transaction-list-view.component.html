@@ -1,6 +1,7 @@
 <div class="row">
   <h1>transactions</h1>
 </div>
+<admin-transaction-tabs [listActive]=true></admin-transaction-tabs>
 <layout-data-list createRoute="/transactions/create" [loading]="loading" [pageInfo]="pageInfo"
   (delete)="onDelete()">
   <table class="table">

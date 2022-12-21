@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FeeYear } from '@app/models/fee-year';
-import { FeeYearRange } from '../../models/fee-year-range';
+import { FeeCalendarRange } from '../../models/fee-calendar-range';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
-  selector: 'admin-fee-year-view',
-  templateUrl: './fee-year-view.component.html',
-  styleUrls: ['./fee-year-view.component.sass']
+  selector: 'admin-fee-calendar-view',
+  templateUrl: './fee-calendar-view.component.html',
+  styleUrls: ['./fee-calendar-view.component.sass']
 })
-export class FeeYearViewComponent {
+export class FeeCalendarViewComponent {
 
   /**
    * Loading flag. Shows the loading visual cue.
@@ -17,7 +17,7 @@ export class FeeYearViewComponent {
 
   public feeYears: FeeYear[] = [];
 
-  public range = new FeeYearRange();
+  public range = new FeeCalendarRange();
 
   public year = -1;
 

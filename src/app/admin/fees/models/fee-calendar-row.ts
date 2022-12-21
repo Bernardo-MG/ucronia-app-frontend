@@ -1,4 +1,4 @@
-export class FeeYearRow {
+export class FeeCalendarRow {
     name: string = '';
     surname: string = '';
     active: boolean = false;
