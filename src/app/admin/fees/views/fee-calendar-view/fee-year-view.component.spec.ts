@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AdminFeeYearViewComponent } from './admin-fee-year-view.component';
+import { FeeYearViewComponent } from './fee-year-view.component';
 
-describe('AdminFeeYearViewComponent', () => {
-  let component: AdminFeeYearViewComponent;
-  let fixture: ComponentFixture<AdminFeeYearViewComponent>;
+describe('FeeYearViewComponent', () => {
+  let component: FeeYearViewComponent;
+  let fixture: ComponentFixture<FeeYearViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,12 +15,12 @@ describe('AdminFeeYearViewComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        AdminFeeYearViewComponent
+        FeeYearViewComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AdminFeeYearViewComponent);
+    fixture = TestBed.createComponent(FeeYearViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

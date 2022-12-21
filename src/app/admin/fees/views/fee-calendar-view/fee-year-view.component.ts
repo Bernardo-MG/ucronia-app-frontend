@@ -5,10 +5,10 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
   selector: 'admin-fee-year-view',
-  templateUrl: './admin-fee-year-view.component.html',
-  styleUrls: ['./admin-fee-year-view.component.sass']
+  templateUrl: './fee-year-view.component.html',
+  styleUrls: ['./fee-year-view.component.sass']
 })
-export class AdminFeeYearViewComponent {
+export class FeeYearViewComponent {
 
   /**
    * Loading flag. Shows the loading visual cue.
