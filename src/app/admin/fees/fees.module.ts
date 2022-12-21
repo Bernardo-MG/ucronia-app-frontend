@@ -14,7 +14,7 @@ import { FeeYearViewComponent } from './views/fee-calendar-view/fee-year-view.co
 import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
 import { FeeEditViewComponent } from './views/fee-edit-view/fee-edit-view.component';
 import { FeeListViewComponent } from './views/fee-list-view/fee-list-view.component';
-import { AdminFeeTabsComponent } from './components/admin-fee-tabs/admin-fee-tabs.component';
+import { FeeTabsComponent } from './components/fee-tabs/fee-tabs.component';
 
 
 
@@ -27,7 +27,7 @@ import { AdminFeeTabsComponent } from './components/admin-fee-tabs/admin-fee-tab
     FeeListViewComponent,
     FeeEditViewComponent,
     MemberSelectionComponent,
-    AdminFeeTabsComponent
+    FeeTabsComponent
   ],
   imports: [
     CommonModule,

@@ -10,6 +10,7 @@ import { TransactionEditViewComponent } from './views/transaction-edit-view/tran
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { TransactionService } from './service/transaction.service';
 import { LayoutModule } from '@app/layout/layout.module';
+import { TransactionCalendarViewComponent } from './views/transaction-calendar-view/transaction-calendar-view.component';
 
 
 
@@ -18,7 +19,8 @@ import { LayoutModule } from '@app/layout/layout.module';
     TransactionFormComponent,
     TransactionCreateViewComponent,
     TransactionListViewComponent,
-    TransactionEditViewComponent
+    TransactionEditViewComponent,
+    TransactionCalendarViewComponent
   ],
   imports: [
     CommonModule,
