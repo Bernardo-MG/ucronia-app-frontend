@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { FeeYear } from '@app/models/fee-year';
+import { FeeCalendar } from '@app/models/fee-calendar';
 import { FeeCalendarRow } from '../../models/fee-calendar-row';
 
 @Component({
@@ -9,7 +9,7 @@ import { FeeCalendarRow } from '../../models/fee-calendar-row';
 })
 export class FeeYearComponent implements OnChanges {
 
-  @Input() public feeYears: FeeYear[] = [];
+  @Input() public feeYears: FeeCalendar[] = [];
 
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
@@ -39,7 +39,7 @@ export class FeeYearComponent implements OnChanges {
     });
   }
 
-  public containsMonth(month: number, year: FeeYear): boolean {
+  public containsMonth(month: number, year: FeeCalendar): boolean {
     return year.months.some(m => month === m.month);
   }
 

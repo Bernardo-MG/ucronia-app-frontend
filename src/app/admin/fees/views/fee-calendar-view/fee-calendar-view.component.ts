@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FeeYear } from '@app/models/fee-year';
+import { FeeCalendar } from '@app/models/fee-calendar';
 import { FeeCalendarRange } from '../../models/fee-calendar-range';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
@@ -15,7 +15,7 @@ export class FeeCalendarViewComponent {
    */
   public loading = false;
 
-  public feeYears: FeeYear[] = [];
+  public feeYears: FeeCalendar[] = [];
 
   public range = new FeeCalendarRange();
 
