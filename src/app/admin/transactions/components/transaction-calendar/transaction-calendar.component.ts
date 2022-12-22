@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Calendar, CalendarWeek } from '@app/models/calendar';
 
 @Component({
@@ -6,19 +6,34 @@ import { Calendar, CalendarWeek } from '@app/models/calendar';
   templateUrl: './transaction-calendar.component.html',
   styleUrls: ['./transaction-calendar.component.sass']
 })
-export class TransactionCalendarComponent {
+export class TransactionCalendarComponent implements OnInit {
 
   public calendar: Calendar = new Calendar();
+
   private date = new Date();
 
-  constructor() {
-    this.loadMonth(this.date.getFullYear(), this.date.getMonth());
+  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  constructor() { }
+
+  public ngOnInit(): void {
+    this.loadMonth();
   }
 
-  private loadMonth(year: number, month: number) {
-    this.calendar.year = year;
-    this.calendar.month = this.getMonthName(month);
-    this.calendar.weeks = this.generateWeeks(this.calendar.year, month);
+  public onGoPrevious() {
+    this.date.setMonth(this.date.getMonth() - 1);
+    this.loadMonth();
+  }
+
+  public onGoNext() {
+    this.date.setMonth(this.date.getMonth() + 1);
+    this.loadMonth();
+  }
+
+  private loadMonth() {
+    this.calendar.year = this.date.getFullYear();
+    this.calendar.month = this.getMonthName(this.date.getMonth());
+    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
   }
 
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
@@ -56,18 +71,7 @@ export class TransactionCalendarComponent {
   }
 
   private getMonthName(month: number): string {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    return monthNames[month];
-  }
-
-  public onGoPrevious() {
-    this.date.setMonth(this.date.getMonth() - 1);
-    this.loadMonth(this.date.getFullYear(), this.date.getMonth());
-  }
-
-  public onGoNext() {
-    this.date.setMonth(this.date.getMonth() + 1);
-    this.loadMonth(this.date.getFullYear(), this.date.getMonth());
+    return this.monthNames[month];
   }
 
 }
