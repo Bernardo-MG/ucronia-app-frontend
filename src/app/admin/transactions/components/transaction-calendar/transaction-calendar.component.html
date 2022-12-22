@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <button class="btn btn-secondary" (click)="onGoPrevious()">Previous</button>
+        <h2>{{ calendar.year }} {{ calendar.month }}</h2>
+        <button class="btn btn-secondary" (click)="onGoNext()">Next</button>
+      </div>
+      <table class="table table-bordered table-responsive-sm">
+        <thead>
+          <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let week of calendar.weeks">
+            <td *ngFor="let day of week.days">{{ day }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
