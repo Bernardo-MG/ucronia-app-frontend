@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Calendar } from '@app/calendar/models/calendar';
 import { CalendarWeek } from '@app/calendar/models/calendar-week';
+import { CalendarNote } from '@app/calendar/models/calendar-note';
 
 @Component({
   selector: 'calendar-month',
@@ -9,7 +10,11 @@ import { CalendarWeek } from '@app/calendar/models/calendar-week';
 })
 export class CalendarMonthComponent implements OnInit {
 
+  @Input() public dates: CalendarNote[] = [];
+
   public calendar: Calendar = new Calendar();
+
+  public monthName: string = "";
 
   private date = new Date();
 
@@ -22,19 +27,33 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   public onGoPrevious() {
-    this.date.setMonth(this.date.getMonth() - 1);
+    this.date.setMonth(this.getCurrentMonth() - 1);
     this.loadMonth();
   }
 
   public onGoNext() {
-    this.date.setMonth(this.date.getMonth() + 1);
+    this.date.setMonth(this.getCurrentMonth() + 1);
     this.loadMonth();
+  }
+
+  public getDateInfo(year: number, month: number, day: number | null): string {
+    const found = this.dates.find(d => d.year === year && d.month === month && d.day === day);
+    let result: string;
+
+    if(found){
+      result = found.description;
+    } else {
+      result = "";
+    }
+
+    return result;
   }
 
   private loadMonth() {
     this.calendar.year = this.date.getFullYear();
-    this.calendar.month = this.getMonthName(this.date.getMonth());
-    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
+    this.calendar.month = this.getCurrentMonth();
+    this.monthName = this.getMonthName(this.calendar.month);
+    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.getCurrentMonth());
   }
 
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
@@ -69,6 +88,10 @@ export class CalendarMonthComponent implements OnInit {
     weeks.push(currentWeek);
 
     return weeks;
+  }
+
+  private getCurrentMonth(): number {
+    return this.date.getMonth() + 1;
   }
 
   private getMonthName(month: number): string {

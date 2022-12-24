@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { CalendarNote } from '@app/calendar/models/calendar-note';
 
 @Component({
   selector: 'admin-transaction-calendar',
@@ -6,7 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./transaction-calendar.component.sass']
 })
 export class TransactionCalendarComponent {
+  
+  public dates: CalendarNote[] = [];
 
-  constructor() { }
+  constructor() { 
+    const info = new CalendarNote(2022,12,2,"text");
+    this.dates.push(info);
+  }
 
 }
