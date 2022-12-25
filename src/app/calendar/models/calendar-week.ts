@@ -1,7 +1,5 @@
-export class CalendarWeek {
-  public days: (number | null)[] = [];
+import { CalendarDay } from "./calendar-day";
 
-  constructor(days: (number | null)[]) {
-    this.days = days;
-  }
+export class CalendarWeek {
+  public days: CalendarDay[] = [];
 }

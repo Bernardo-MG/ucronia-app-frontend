@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Calendar } from '@app/calendar/models/calendar';
 import { CalendarWeek } from '@app/calendar/models/calendar-week';
 import { CalendarNote } from '@app/calendar/models/calendar-note';
+import { CalendarDay } from '@app/calendar/models/calendar-day';
 
 @Component({
   selector: 'calendar-month',
@@ -36,17 +37,8 @@ export class CalendarMonthComponent implements OnInit {
     this.loadMonth();
   }
 
-  public getDateInfo(year: number, month: number, day: number | null): string {
-    const found = this.dates.find(d => d.year === year && d.month === month && d.day === day);
-    let result: string;
-
-    if(found){
-      result = found.description;
-    } else {
-      result = "";
-    }
-
-    return result;
+  public getDateInfo(year: number, month: number, day: number | null): CalendarNote | undefined {
+    return this.dates.find(d => d.year === year && d.month === month && d.day === day);
   }
 
   private loadMonth() {
@@ -54,26 +46,32 @@ export class CalendarMonthComponent implements OnInit {
     this.calendar.month = this.getCurrentMonth();
     this.monthName = this.getMonthName(this.calendar.month);
     this.calendar.weeks = this.generateWeeks(this.calendar.year, this.getCurrentMonth());
+    this.calendar.weeks.forEach(w => w.days.forEach(d => {
+      const note = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
+      if (note) {
+        d.notes.push(note);
+      }
+    }))
   }
 
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
-    const weeks: { days: (number | null)[] }[] = [];
-    let currentWeek: { days: (number | null)[] } = { days: [] };
+    const weeks: CalendarWeek[] = [];
+    let currentWeek: CalendarWeek = new CalendarWeek();
     let currentDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
     const numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
     // Add empty days to the beginning of the first week to align it with the correct day of the week
     for (let i = 0; i < currentDayOfWeek; i++) {
-      currentWeek.days.push(null);
+      currentWeek.days.push(new CalendarDay(null));
     }
 
     // Add days to the calendar
     for (let i = 1; i <= numDaysInMonth; i++) {
-      currentWeek.days.push(i);
+      currentWeek.days.push(new CalendarDay(i));
 
       if (currentDayOfWeek === 6) {
         weeks.push(currentWeek);
-        currentWeek = { days: [] };
+        currentWeek = new CalendarWeek();
         currentDayOfWeek = -1;
       }
 
@@ -82,7 +80,7 @@ export class CalendarMonthComponent implements OnInit {
 
     // Add empty days to the end of the last week to fill it out
     while (currentWeek.days.length < 7) {
-      currentWeek.days.push(null);
+      currentWeek.days.push(new CalendarDay(null));
     }
 
     weeks.push(currentWeek);

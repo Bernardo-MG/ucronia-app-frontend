@@ -17,7 +17,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let week of calendar.weeks">
-      <td *ngFor="let day of week.days"><p>{{ day }}</p><p>{{ getDateInfo(calendar.year, calendar.month, day) }}</p></td>
+      <td *ngFor="let day of week.days"><p>{{ day.number }}</p><p>{{ day.notes }}</p></td>
     </tr>
   </tbody>
 </table>
