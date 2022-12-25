@@ -28,12 +28,12 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   public onGoPrevious() {
-    this.date.setMonth(this.getCurrentMonth() - 1);
+    this.date.setMonth(this.date.getMonth() - 1);
     this.loadMonth();
   }
 
   public onGoNext() {
-    this.date.setMonth(this.getCurrentMonth() + 1);
+    this.date.setMonth(this.date.getMonth() + 1);
     this.loadMonth();
   }
 
@@ -93,7 +93,7 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   private getMonthName(month: number): string {
-    return this.monthNames[month];
+    return this.monthNames[month - 1];
   }
 
 }
