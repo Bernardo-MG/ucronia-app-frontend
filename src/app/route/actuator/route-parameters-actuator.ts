@@ -1,5 +1,5 @@
 import { Params, Router } from "@angular/router";
-import { UrlParamsExtractor } from "./url-params-extractor";
+import { UrlParamsExtractor } from "./url-parameters-extractor";
 
 /**
  * Route parameters actuator. Allows changing the query parameters on the route URL.

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { UrlParamsExtractor } from './url-params-extractor';
+import { UrlParamsExtractor } from './url-parameters-extractor';
 
 describe('UrlParamsProcessor', () => {
   let extractor: UrlParamsExtractor;
