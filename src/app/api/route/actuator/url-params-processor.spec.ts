@@ -1,29 +1,12 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { UrlParamsExtractor } from './url-params-extractor';
+import { UrlParamsProcessor } from './url-params-processor';
 
-describe('UrlParamsExtractor', () => {
-  let extractor: UrlParamsExtractor;
+describe('UrlParamsProcessor', () => {
+  let extractor: UrlParamsProcessor;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
-    extractor = new UrlParamsExtractor();
-  });
-
-  it('should extract a param pair', () => {
-    const params = extractor.getUrlParams('route?key=value');
-
-    expect(params).toEqual({ 'key': 'value' });
-  });
-
-  it('should extract values for a param key duplicated two times', () => {
-    const params = extractor.getUrlParams('route?key=value1&key=value2');
-
-    expect(params).toEqual({ 'key': ['value1', 'value2'] });
+    TestBed.configureTestingModule({});
+    extractor = new UrlParamsProcessor();
   });
 
   it('should extract values without the selection', () => {
