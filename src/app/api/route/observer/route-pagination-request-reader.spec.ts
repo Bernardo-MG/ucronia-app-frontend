@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
 import { RoutePaginationRequestReader } from './route-pagination-request-reader';
@@ -7,11 +6,7 @@ describe('RoutePaginationRequestReader', () => {
   let reader: RoutePaginationRequestReader;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
+    TestBed.configureTestingModule({});
     reader = new RoutePaginationRequestReader();
   });
 

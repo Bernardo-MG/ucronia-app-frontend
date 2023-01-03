@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
 import { RouteSortReader } from './route-sort-reader';
@@ -7,11 +6,7 @@ describe('RouteSortReader', () => {
   let reader: RouteSortReader;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
+    TestBed.configureTestingModule({});
     reader = new RouteSortReader();
   });
 
