@@ -24,13 +24,19 @@ export class FeeService {
     private client: RequestClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
+  public getAll(pagination: PaginationRequest | undefined, startDate: Date | undefined, endDate: Date | undefined): Observable<PaginatedResponse<Fee[]>> {
     const clt: ReadPagedOperations<Fee> = this.client.readPaged(this.feeUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
+    }
+    if (startDate) {
+      clt.parameter("startDate", startDate);
+    }
+    if (endDate) {
+      clt.parameter("endDate", endDate);
     }
     return clt.fetch();
   }

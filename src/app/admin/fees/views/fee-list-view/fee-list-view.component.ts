@@ -4,7 +4,7 @@ import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
 import { Fee } from '@app/models/fee';
-import { mergeMap } from 'rxjs';
+import { mergeMap, tap } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -23,6 +23,10 @@ export class FeeListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
+  public startDate: Date | undefined = undefined;
+
+  public endDate: Date | undefined = undefined;
+
   private routePaginationObserver: RoutePaginationRequestObserver;
 
   private selected: { id: number } = { id: -1 };
@@ -35,11 +39,7 @@ export class FeeListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
-      .subscribe(page => {
-        this.fees = page.content;
-        this.pageInfo = page;
-      });
+    this.reload();
   }
 
   public onDelete() {
@@ -56,7 +56,7 @@ export class FeeListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
         this.fees = page.content;
         this.pageInfo = page;
@@ -68,6 +68,24 @@ export class FeeListViewComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  public reload(): void {
+    this.routePaginationObserver.pagination.pipe(
+      tap(p => this.loading = true),
+      mergeMap(p => this.service.getAll(p, this.startDate, this.endDate)))
+      .subscribe({
+        next: page => {
+          this.fees = page.content;
+          this.pageInfo = page;
+          // Reactivate view
+          this.loading = false;
+        },
+        error: error => {
+          // Reactivate view
+          this.loading = false;
+        }
+      });
   }
 
 }
