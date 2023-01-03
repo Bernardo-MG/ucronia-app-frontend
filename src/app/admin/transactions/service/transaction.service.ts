@@ -20,13 +20,19 @@ export class TransactionService {
     private client: RequestClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Transaction[]>> {
+  public getAll(pagination: PaginationRequest | undefined, startDate: Date | undefined, endDate: Date | undefined): Observable<PaginatedResponse<Transaction[]>> {
     const clt: ReadPagedOperations<Transaction> = this.client.readPaged(this.transactionUrl);
     if (pagination) {
       clt.page(pagination);
       if (pagination.sort) {
         clt.sort(pagination.sort);
       }
+    }
+    if (startDate) {
+      clt.parameter("startDate", startDate);
+    }
+    if (endDate) {
+      clt.parameter("endDate", endDate);
     }
     return clt.fetch();
   }
