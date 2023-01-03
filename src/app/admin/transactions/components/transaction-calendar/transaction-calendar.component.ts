@@ -28,4 +28,8 @@ export class TransactionCalendarComponent implements OnChanges {
     this.dateChange.emit(date);
   }
 
+  public dateUrl(year: number, day: number) {
+    return "/transactions/list";
+  }
+
 }

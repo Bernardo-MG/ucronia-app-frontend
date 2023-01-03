@@ -13,6 +13,8 @@ export class CalendarMonthComponent implements OnInit {
 
   @Input() public notes: CalendarNote[] = [];
 
+  @Input() public dateUrl: (year: number, day: number) => string = (d => '');
+
   @Output() public dateChange = new EventEmitter<Date>();
 
   public calendar: Calendar = new Calendar();
