@@ -42,7 +42,7 @@
           <td>{{fee.paid}}</td>
           <td>
             <button-link-edit link="/fees/{{fee.id}}"></button-link-edit>
-            <button-delete (click)="select(fee)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
+            <button-delete (click)="onSelect(fee)" data-bs-toggle="modal" data-bs-target="#deleteModal"></button-delete>
           </td>
         </tr>
       </ng-template>

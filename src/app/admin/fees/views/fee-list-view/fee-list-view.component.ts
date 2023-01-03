@@ -23,9 +23,9 @@ export class FeeListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
-  public startDate: Date | undefined = undefined;
+  public startDate: string | undefined = undefined;
 
-  public endDate: Date | undefined = undefined;
+  public endDate: string | undefined = undefined;
 
   private routePaginationObserver: RoutePaginationRequestObserver;
 
@@ -51,23 +51,8 @@ export class FeeListViewComponent implements OnInit {
     }
   }
 
-  public select(data: { id: number }) {
+  public onSelect(data: { id: number }) {
     this.selected = data;
-  }
-
-  private load(pagination: PaginationRequest | undefined) {
-    this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
-      next: page => {
-        this.fees = page.content;
-        this.pageInfo = page;
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
   }
 
   public reload(): void {
@@ -86,6 +71,21 @@ export class FeeListViewComponent implements OnInit {
           this.loading = false;
         }
       });
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
+      next: page => {
+        this.fees = page.content;
+        this.pageInfo = page;
+        // Reactivate view
+        this.loading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.loading = false;
+      }
+    });
   }
 
 }

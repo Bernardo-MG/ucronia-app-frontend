@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Calendar } from '@app/calendar/models/calendar';
-import { CalendarWeek } from '@app/calendar/models/calendar-week';
-import { CalendarNote } from '@app/calendar/models/calendar-note';
 import { CalendarDay } from '@app/calendar/models/calendar-day';
+import { CalendarNote } from '@app/calendar/models/calendar-note';
+import { CalendarWeek } from '@app/calendar/models/calendar-week';
 
 @Component({
   selector: 'calendar-month',
@@ -12,6 +12,8 @@ import { CalendarDay } from '@app/calendar/models/calendar-day';
 export class CalendarMonthComponent implements OnInit {
 
   @Input() public dates: CalendarNote[] = [];
+
+  @Output() public dateChange = new EventEmitter<Date>();
 
   public calendar: Calendar = new Calendar();
 
@@ -30,11 +32,13 @@ export class CalendarMonthComponent implements OnInit {
   public onGoPrevious() {
     this.date.setMonth(this.date.getMonth() - 1);
     this.loadMonth();
+    this.dateChange.emit(this.date);
   }
 
   public onGoNext() {
     this.date.setMonth(this.date.getMonth() + 1);
     this.loadMonth();
+    this.dateChange.emit(this.date);
   }
 
   public getDateInfo(year: number, month: number, day: number | null): CalendarNote | undefined {

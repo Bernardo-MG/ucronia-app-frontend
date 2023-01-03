@@ -23,9 +23,9 @@ export class TransactionListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
-  public startDate: Date | undefined = undefined;
+  public startDate: string | undefined = undefined;
 
-  public endDate: Date | undefined = undefined;
+  public endDate: string | undefined = undefined;
 
   private routePaginationObserver: RoutePaginationRequestObserver;
 
