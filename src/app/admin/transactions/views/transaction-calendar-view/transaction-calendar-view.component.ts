@@ -26,10 +26,10 @@ export class TransactionCalendarViewComponent {
   ) { }
 
   public onDateChange(date: Date) {
-    this.startDate = (date.getFullYear() + '-' + ((date.getMonth() + 1)) + '-' + date.getDate());
+    this.startDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
 
     const numDaysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    this.endDate = (date.getFullYear() + '-' + ((date.getMonth() + 1)) + '-' + numDaysInMonth);
+    this.endDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + numDaysInMonth);
 
     this.load();
   }
