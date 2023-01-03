@@ -8,7 +8,10 @@ import { UrlParamsExtractor } from "./url-parameters-extractor";
  */
 export class RouteParametersActuator {
 
-    private extractor = new UrlParamsExtractor();
+    /**
+     * URL parameters extractor. This takes care of getting the parameters to be modified.
+     */
+    private urlParamsExtractor = new UrlParamsExtractor();
 
     constructor(
         private router: Router
@@ -21,7 +24,7 @@ export class RouteParametersActuator {
      */
     public addParameters(parameters: any): void {
         // Takes the parameters already existing in the URL
-        const urlParams = this.extractor.getUrlParams(this.router.url);
+        const urlParams = this.urlParamsExtractor.getUrlParams(this.router.url);
         // Adds the received parameters, overriding any existing
         const mergedParameters = { ...urlParams, ...parameters };
 
