@@ -27,22 +27,18 @@ export class RoutePaginationRequestReader implements RouteParametersReader<Pagin
   }
 
   private getPageNumber(params: ParamMap): number | undefined {
-    let pageNumber: number | undefined;
-
-    if (params.has('page')) {
-      pageNumber = Number(params.get('page'));
-    } else {
-      pageNumber = undefined;
-    }
-
-    return pageNumber;
+    return this.getNumber(params, 'page');
   }
 
   private getSizeNumber(params: ParamMap): number | undefined {
+    return this.getNumber(params, 'size');
+  }
+
+  private getNumber(params: ParamMap, key: string): number | undefined {
     let pageNumber: number | undefined;
 
-    if (params.has('size')) {
-      pageNumber = Number(params.get('size'));
+    if (params.has(key)) {
+      pageNumber = Number(params.get(key));
     } else {
       pageNumber = undefined;
     }

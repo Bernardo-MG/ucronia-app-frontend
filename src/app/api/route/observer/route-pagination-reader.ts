@@ -12,9 +12,9 @@ export class RoutePaginationReader implements RouteParametersReader<Pagination> 
 
     let pagination;
 
-    if((pageNumber != undefined) && (pageNumber != undefined)){
+    if ((pageNumber != undefined) && (pageNumber != undefined)) {
       pagination = new Pagination();
-  
+
       if (pageNumber != undefined) {
         pagination.page = pageNumber;
       }
@@ -29,22 +29,18 @@ export class RoutePaginationReader implements RouteParametersReader<Pagination> 
   }
 
   private getPageNumber(params: ParamMap): number | undefined {
-    let pageNumber: number | undefined;
-
-    if (params.has('page')) {
-      pageNumber = Number(params.get('page'));
-    } else {
-      pageNumber = undefined;
-    }
-
-    return pageNumber;
+    return this.getNumber(params, 'page');
   }
 
   private getSizeNumber(params: ParamMap): number | undefined {
+    return this.getNumber(params, 'size');
+  }
+
+  private getNumber(params: ParamMap, key: string): number | undefined {
     let pageNumber: number | undefined;
 
-    if (params.has('size')) {
-      pageNumber = Number(params.get('size'));
+    if (params.has(key)) {
+      pageNumber = Number(params.get(key));
     } else {
       pageNumber = undefined;
     }
