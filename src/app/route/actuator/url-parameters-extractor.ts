@@ -23,35 +23,40 @@ export class UrlParamsExtractor {
             const paramsSection = urlSections[1];
             // Splits the parameters to get each key-value pair separately
             const paramsPairs = paramsSection.split('&');
-            // Extract parameter pairs
-            paramsPairs.forEach(p => {
-                // Security check, to verify it is a valid pair
-                const pair = p.split('=');
-                if (pair.length >= 2) {
-                    if (pair[0] in resultUrlParams) {
-                        // The pair already exists in the resulting parameters
-                        // This is a list of parameters
 
-                        // Find the existing parameter pair
-                        const existingParamsPair = resultUrlParams[pair[0]];
-                        if (Array.isArray(existingParamsPair)) {
-                            // It is an array
-                            // Can add the current value
-                            existingParamsPair.push(pair[1]);
-                        } else {
-                            // It isn't an array
-                            // Creates a new array with the values and sets it into the result
-                            resultUrlParams[pair[0]] = [existingParamsPair, pair[1]];
-                        }
-                    } else {
-                        // New pair of parameters
-                        resultUrlParams[pair[0]] = pair[1];
-                    }
-                }
-            });
+            // Extract parameters
+            paramsPairs
+                // Split into pairs
+                .map(p => p.split('='))
+                // Security check, to verify it is a valid pair
+                .filter(p => p.length >= 2)
+                // Add pairs to the result map
+                .forEach(p => this.addParameters(p, resultUrlParams));
         }
 
         return resultUrlParams;
+    }
+
+    private addParameters(pair: string[], resultUrlParams: { [key: string]: any }) {
+        if (pair[0] in resultUrlParams) {
+            // The pair already exists in the resulting parameters
+            // This is a list of parameters
+
+            // Find the existing parameter pair
+            const existingParamsPair = resultUrlParams[pair[0]];
+            if (Array.isArray(existingParamsPair)) {
+                // It is an array
+                // Can add the current value
+                existingParamsPair.push(pair[1]);
+            } else {
+                // It isn't an array
+                // Creates a new array with the values and sets it into the result
+                resultUrlParams[pair[0]] = [existingParamsPair, pair[1]];
+            }
+        } else {
+            // New pair of parameters
+            resultUrlParams[pair[0]] = pair[1];
+        }
     }
 
 }
