@@ -1,7 +1,8 @@
 import { ParamMap } from "@angular/router";
 import { Sort } from "@app/api/models/sort";
+import { RouteParametersReader } from "@app/route/observer/route-parameters-reader";
 
-export class RouteSortReader {
+export class RouteSortReader implements RouteParametersReader<Sort<any>[]> {
 
   constructor() { }
 
