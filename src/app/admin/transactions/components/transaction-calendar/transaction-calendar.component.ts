@@ -13,12 +13,12 @@ export class TransactionCalendarComponent implements OnChanges {
 
   @Output() public dateChange = new EventEmitter<Date>();
 
-  public dates: CalendarNote[] = [];
+  public notes: CalendarNote[] = [];
 
   constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.dates = this.transactions.map(t => {
+    this.notes = this.transactions.map(t => {
       const date = new Date(t.date);
       return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDay(), t.description);
     });

@@ -11,7 +11,7 @@ import { CalendarWeek } from '@app/calendar/models/calendar-week';
 })
 export class CalendarMonthComponent implements OnInit {
 
-  @Input() public dates: CalendarNote[] = [];
+  @Input() public notes: CalendarNote[] = [];
 
   @Output() public dateChange = new EventEmitter<Date>();
 
@@ -42,7 +42,7 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   public getDateInfo(year: number, month: number, day: number | null): CalendarNote | undefined {
-    return this.dates.find(d => d.year === year && d.month === month && d.day === day);
+    return this.notes.find(d => d.year === year && d.month === month && d.day === day);
   }
 
   private loadMonth() {
