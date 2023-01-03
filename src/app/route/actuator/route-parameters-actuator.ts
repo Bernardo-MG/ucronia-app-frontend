@@ -38,7 +38,9 @@ export class RouteParametersActuator {
      * @param parameters parameters to set into the URL
      */
     public setParameters(parameters: Params): void {
+        // Takes the URL without the parameters
         const path = this.router.url.split('?')[0];
+        // Navigates adding the received parameters
         this.router.navigate([path], { queryParams: parameters });
     }
 
