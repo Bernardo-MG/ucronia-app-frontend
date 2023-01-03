@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { UrlParamsProcessor } from './url-params-processor';
 
@@ -6,11 +5,7 @@ describe('UrlParamsProcessor', () => {
   let extractor: UrlParamsProcessor;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
+    TestBed.configureTestingModule({});
     extractor = new UrlParamsProcessor();
   });
 
