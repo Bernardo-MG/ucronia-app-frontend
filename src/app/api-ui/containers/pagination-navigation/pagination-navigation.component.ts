@@ -33,7 +33,7 @@ export class PaginationNavigationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.subscribe(p => {
+    this.routePaginationObserver.subject.subscribe(p => {
       if ((p) && (p.page)) {
         this.page = p.page;
       } else {

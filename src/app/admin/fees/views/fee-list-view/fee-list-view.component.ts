@@ -35,7 +35,7 @@ export class FeeListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
+    this.routePaginationObserver.subject.pipe(mergeMap(p => this.service.getAll(p)))
       .subscribe(page => {
         this.fees = page.content;
         this.pageInfo = page;
@@ -45,7 +45,7 @@ export class FeeListViewComponent implements OnInit {
   public onDelete() {
     if (this.selected.id > 0) {
       this.service.delete(this.selected.id).subscribe(r => {
-        const pagination = this.routePaginationObserver.pagination.value;
+        const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
     }

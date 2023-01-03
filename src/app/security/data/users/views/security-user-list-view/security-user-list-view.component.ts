@@ -27,7 +27,7 @@ export class SecurityUserListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
+    this.routePaginationObserver.subject.pipe(mergeMap(p => this.service.getAll(p)))
       .subscribe(page => {
         this.users = page.content;
         this.pageInfo = page;

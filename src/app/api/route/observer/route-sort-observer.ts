@@ -1,23 +1,19 @@
 import { ActivatedRoute } from "@angular/router";
-import { Sort } from "@app/api/models/sort";
-import { BehaviorSubject } from "rxjs";
+import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
 import { RouteSortReader } from "./route-sort-reader";
 
 export class RouteSortObserver {
 
-  public sort = new BehaviorSubject<Sort<any>[] | undefined>(undefined);
-
-  private reader = new RouteSortReader();
+  private wrappedObserver;
 
   constructor(
     route: ActivatedRoute
   ) {
-    // Listens to route changes
-    route.queryParamMap.subscribe(params => {
-      const sort = this.reader.read(params);
+    this.wrappedObserver = new RouteParametersObserver(route, new RouteSortReader());
+  }
 
-      this.sort.next(sort);
-    });
+  public get subject() {
+    return this.wrappedObserver.subject;
   }
 
 }

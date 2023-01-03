@@ -29,7 +29,7 @@ export class PaginationSizeSelectorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.subscribe(p => {
+    this.routePaginationObserver.subject.subscribe(p => {
       if ((p) && (p.size)) {
         this.selected = p.size;
       }

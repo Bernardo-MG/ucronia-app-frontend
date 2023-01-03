@@ -37,7 +37,7 @@ export class MemberListViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(
+    this.routePaginationObserver.subject.pipe(
       tap(p => this.loading = true),
       mergeMap(p => this.service.getAll(p)))
       .subscribe({
@@ -63,7 +63,7 @@ export class MemberListViewComponent implements OnInit {
   public onDelete() {
     if (this.selected.id > 0) {
       this.service.delete(this.selected.id).subscribe(r => {
-        const pagination = this.routePaginationObserver.pagination.value;
+        const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
     }

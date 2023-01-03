@@ -30,7 +30,7 @@ export class OrderButtonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sortObserver.sort.subscribe(p => {
+    this.sortObserver.subject.subscribe(p => {
       if (p) {
         const propertySort = p.find(s => s.property === this.property);
         if (propertySort) {

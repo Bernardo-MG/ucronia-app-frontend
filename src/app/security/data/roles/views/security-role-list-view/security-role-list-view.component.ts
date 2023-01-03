@@ -27,7 +27,7 @@ export class SecurityRoleListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
+    this.routePaginationObserver.subject.pipe(mergeMap(p => this.service.getAll(p)))
       .subscribe(page => {
         this.roles = page.content;
         this.pageInfo = page;
