@@ -91,6 +91,24 @@ describe('PaginationRequestParametersParser', () => {
     expect(request?.size).toBeUndefined();
   });
 
+  it('should parse the default value for the page when the page is empty', () => {
+    const params = convertToParamMap({ page: '', size: '2' });
+    const request = reader.parse(params);
+
+    expect(request).not.toBeUndefined();
+    expect(request?.page).toEqual(0);
+    expect(request?.size).toEqual(2);
+  });
+
+  it('should parse the default value for the size when the size is empty', () => {
+    const params = convertToParamMap({ page: '1', size: '' });
+    const request = reader.parse(params);
+
+    expect(request).not.toBeUndefined();
+    expect(request?.page).toEqual(1);
+    expect(request?.size).toEqual(0);
+  });
+
   // SORT
 
   it('should parse no sort when there is no sort data', () => {

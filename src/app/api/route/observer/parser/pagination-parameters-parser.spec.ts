@@ -114,4 +114,22 @@ describe('PaginationParametersParser', () => {
     expect(pagination?.size).toBeUndefined();
   });
 
+  it('should parse the default value for the page when the page is empty', () => {
+    const params = convertToParamMap({ page: '', size: '2' });
+    const pagination = reader.parse(params);
+
+    expect(pagination).not.toBeUndefined();
+    expect(pagination?.page).toEqual(0);
+    expect(pagination?.size).toEqual(2);
+  });
+
+  it('should parse the default value for the size when the size is empty', () => {
+    const params = convertToParamMap({ page: '1', size: '' });
+    const pagination = reader.parse(params);
+
+    expect(pagination).not.toBeUndefined();
+    expect(pagination?.page).toEqual(1);
+    expect(pagination?.size).toEqual(0);
+  });
+
 });
