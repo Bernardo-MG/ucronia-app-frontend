@@ -75,7 +75,7 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   public reload(): void {
-    this.routePaginationObserver.pagination.pipe(
+    this.routePaginationObserver.subject.pipe(
       tap(p => this.loading = true),
       mergeMap(p => this.service.getAll(p, this.startDate, this.endDate)))
       .subscribe({
