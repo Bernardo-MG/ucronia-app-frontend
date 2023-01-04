@@ -7,7 +7,7 @@ export class RouteSortReader implements RouteParametersReader<Sort<any>[]> {
   constructor() { }
 
   public read(params: ParamMap): Sort<any>[] | undefined {
-    let pageSort: Sort<any>;
+    let pageSort: Sort<any> | undefined;
     let pageSorts: Sort<any>[] | undefined;
     let pageSortValues: string[] | null;
 
@@ -18,8 +18,13 @@ export class RouteSortReader implements RouteParametersReader<Sort<any>[]> {
         const pageSortValue = pageSortValues[i];
         if (pageSortValue) {
           pageSort = this.getSortFromValue(pageSortValue);
-          pageSorts.push(pageSort);
+          if (pageSort) {
+            pageSorts.push(pageSort);
+          }
         }
+      }
+      if (pageSorts.length === 0) {
+        pageSorts = undefined;
       }
     } else {
       pageSorts = undefined;
@@ -28,7 +33,7 @@ export class RouteSortReader implements RouteParametersReader<Sort<any>[]> {
     return pageSorts;
   }
 
-  private getSortFromValue(pageSortValue: string): Sort<any> {
+  private getSortFromValue(pageSortValue: string): Sort<any> | undefined {
     let pageSortPair: string[];
     let pageSort: Sort<any> | undefined;
     let property: string;
@@ -36,13 +41,17 @@ export class RouteSortReader implements RouteParametersReader<Sort<any>[]> {
 
     pageSortPair = pageSortValue.split(',');
     property = pageSortPair[0];
-    pageSort = new Sort<any>(property);
+    if (property.length > 0) {
+      pageSort = new Sort<any>(property);
 
-    if (pageSortPair.length > 1) {
-      direction = pageSortPair[1];
-      if ((direction === 'desc') || (direction === 'asc')) {
-        pageSort.order = direction;
+      if (pageSortPair.length > 1) {
+        direction = pageSortPair[1];
+        if ((direction === 'desc') || (direction === 'asc')) {
+          pageSort.order = direction;
+        }
       }
+    } else {
+      pageSort = undefined;
     }
 
     return pageSort;
