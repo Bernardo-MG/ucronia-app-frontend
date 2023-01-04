@@ -1,12 +1,12 @@
 import { ParamMap } from "@angular/router";
 import { Sort } from "@app/api/models/sort";
-import { ParametersReader } from "@app/route/observer/parameters-reader";
+import { ParametersParser } from "@app/route/observer/parameters-parser";
 
-export class SortParametersReader implements ParametersReader<Sort<any>[]> {
+export class SortParametersParser implements ParametersParser<Sort<any>[]> {
 
   constructor() { }
 
-  public read(params: ParamMap): Sort<any>[] | undefined {
+  public parse(params: ParamMap): Sort<any>[] | undefined {
     let pageSort: Sort<any> | undefined;
     let pageSorts: Sort<any>[] | undefined;
     let pageSortValues: string[] | null;

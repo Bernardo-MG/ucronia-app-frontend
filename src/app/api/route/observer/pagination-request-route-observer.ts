@@ -1,6 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
 import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
-import { PaginationRequestParametersReader } from "./reader/pagination-request-parameters-reader";
+import { PaginationRequestParametersParser } from "./parser/pagination-request-parameters-parser";
 
 export class PaginationRequestRouteObserver {
 
@@ -9,7 +9,7 @@ export class PaginationRequestRouteObserver {
   constructor(
     route: ActivatedRoute
   ) {
-    this.wrappedObserver = new RouteParametersObserver(route, new PaginationRequestParametersReader());
+    this.wrappedObserver = new RouteParametersObserver(route, new PaginationRequestParametersParser());
   }
 
   public get subject() {

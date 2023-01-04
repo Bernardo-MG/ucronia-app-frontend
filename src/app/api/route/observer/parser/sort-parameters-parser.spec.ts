@@ -1,25 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { SortParametersReader } from './sort-parameters-reader';
+import { SortParametersParser } from './sort-parameters-parser';
 
-describe('SortParametersReader', () => {
-  let reader: SortParametersReader;
+describe('SortParametersParser', () => {
+  let reader: SortParametersParser;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    reader = new SortParametersReader();
+    reader = new SortParametersParser();
   });
 
   it('should parse no sort when there is no sort data', () => {
     const params = convertToParamMap({});
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).toBeUndefined();
   });
 
   it('should be able to parse an ascending sort', () => {
     const params = convertToParamMap({ sort: 'property,asc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(1);
@@ -31,7 +31,7 @@ describe('SortParametersReader', () => {
 
   it('should be able to parse a descending sort', () => {
     const params = convertToParamMap({ sort: 'property,desc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(1);
@@ -43,7 +43,7 @@ describe('SortParametersReader', () => {
 
   it('should be able to parse sort with default direction when no direction is provided', () => {
     const params = convertToParamMap({ sort: 'property' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(1);
@@ -55,7 +55,7 @@ describe('SortParametersReader', () => {
 
   it('should parse the sort data with the default direction when no valid direction is provided', () => {
     const params = convertToParamMap({ sort: 'property,abc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(1);
@@ -67,7 +67,7 @@ describe('SortParametersReader', () => {
 
   it('should be able to parse multiple sort data', () => {
     const params = convertToParamMap({ sort: ['property1,asc', 'property2,desc'] });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(2);
@@ -83,14 +83,14 @@ describe('SortParametersReader', () => {
 
   it('should parse no sort data when missing the property', () => {
     const params = convertToParamMap({ sort: ',asc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).toBeUndefined();
   });
 
   it('should parse only sort data with a property', () => {
     const params = convertToParamMap({ sort: [',asc', 'property2,desc'] });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request).toHaveSize(1);

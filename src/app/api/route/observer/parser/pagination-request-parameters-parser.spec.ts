@@ -1,25 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { PaginationRequestParametersReader } from './pagination-request-parameters-reader';
+import { PaginationRequestParametersParser } from './pagination-request-parameters-parser';
 
-describe('PaginationRequestParametersReader', () => {
-  let reader: PaginationRequestParametersReader;
+describe('PaginationRequestParametersParser', () => {
+  let reader: PaginationRequestParametersParser;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    reader = new PaginationRequestParametersReader();
+    reader = new PaginationRequestParametersParser();
   });
 
   it('should provide no request when there are no request parameters', () => {
     const params = convertToParamMap({});
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).toBeUndefined();
   });
 
   it('should be able to parse the request when all parameters are provided', () => {
     const params = convertToParamMap({ page: '1', size: '2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(1);
@@ -28,7 +28,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the request when only the page is provided', () => {
     const params = convertToParamMap({ page: '1' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(1);
@@ -37,7 +37,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the request when only the size is provided', () => {
     const params = convertToParamMap({ size: '2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toBeUndefined();
@@ -48,7 +48,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the request when the page is negative', () => {
     const params = convertToParamMap({ page: '-1', size: '2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(-1);
@@ -57,7 +57,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the request when the size is negative', () => {
     const params = convertToParamMap({ page: '1', size: '-2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(1);
@@ -66,7 +66,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the request when the page and size are negative', () => {
     const params = convertToParamMap({ page: '-1', size: '-2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(-1);
@@ -75,7 +75,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should not parse the request page when the page is not a number', () => {
     const params = convertToParamMap({ page: 'abc', size: '2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toBeUndefined();
@@ -84,7 +84,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should not parse the request size when the size is not a number', () => {
     const params = convertToParamMap({ page: '1', size: 'abc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.page).toEqual(1);
@@ -95,7 +95,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should parse no sort when there is no sort data', () => {
     const params = convertToParamMap({ page: '1', size: '2' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).toBeUndefined();
@@ -103,7 +103,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse the sort data', () => {
     const params = convertToParamMap({ sort: 'property,asc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).not.toBeUndefined();
@@ -116,7 +116,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should parse the sort data with the default direction when no direction is provided', () => {
     const params = convertToParamMap({ sort: 'property' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).not.toBeUndefined();
@@ -129,7 +129,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should parse the sort data with the default direction when no valid direction is provided', () => {
     const params = convertToParamMap({ sort: 'property,abc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).not.toBeUndefined();
@@ -142,7 +142,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should be able to parse multiple sort data', () => {
     const params = convertToParamMap({ sort: ['property1,asc', 'property2,desc'] });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).not.toBeUndefined();
@@ -159,7 +159,7 @@ describe('PaginationRequestParametersReader', () => {
 
   it('should parse no sort data when missing the property', () => {
     const params = convertToParamMap({ sort: ',asc' });
-    const request = reader.read(params);
+    const request = reader.parse(params);
 
     expect(request).not.toBeUndefined();
     expect(request?.sort).toBeUndefined();

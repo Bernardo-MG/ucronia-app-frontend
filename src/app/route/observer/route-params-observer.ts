@@ -1,24 +1,24 @@
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { ParametersReader } from "./parameters-reader";
+import { ParametersParser } from "./parameters-parser";
 
 export class RouteParametersObserver<T> {
 
   public subject = new BehaviorSubject<T | undefined>(undefined);
 
-  private routeParamsReader: ParametersReader<T>;
+  private parser: ParametersParser<T>;
 
   constructor(
     route: ActivatedRoute,
-    reader: ParametersReader<T>
+    parser: ParametersParser<T>
   ) {
-    this.routeParamsReader = reader;
+    this.parser = parser;
 
     // Listens to parameter changes
     route.queryParamMap.subscribe(params => {
-      const pagination = this.routeParamsReader.read(params);
+      const value = this.parser.parse(params);
 
-      this.subject.next(pagination);
+      this.subject.next(value);
     });
   }
 

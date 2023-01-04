@@ -1,15 +1,15 @@
 import { ParamMap } from "@angular/router";
 import { PaginationRequest } from "@app/api/models/pagination-request";
-import { ParametersReader } from "@app/route/observer/parameters-reader";
-import { SortParametersReader } from "./sort-parameters-reader";
+import { ParametersParser } from "@app/route/observer/parameters-parser";
+import { SortParametersParser } from "./sort-parameters-parser";
 
-export class PaginationRequestParametersReader implements ParametersReader<PaginationRequest> {
+export class PaginationRequestParametersParser implements ParametersParser<PaginationRequest> {
 
-  private sortReader = new SortParametersReader();
+  private sortParser = new SortParametersParser();
 
   constructor() { }
 
-  public read(params: ParamMap): PaginationRequest | undefined {
+  public parse(params: ParamMap): PaginationRequest | undefined {
     let request;
 
     if ((params.has('page')) || (params.has('size')) || (params.has('sort'))) {
@@ -32,7 +32,7 @@ export class PaginationRequestParametersReader implements ParametersReader<Pagin
       }
 
       if (params.has('sort')) {
-        request.sort = this.sortReader.read(params);
+        request.sort = this.sortParser.parse(params);
       }
     } else {
       request = undefined;

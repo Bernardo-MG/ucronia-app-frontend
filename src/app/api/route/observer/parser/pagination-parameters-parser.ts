@@ -1,12 +1,12 @@
 import { ParamMap } from "@angular/router";
 import { Pagination } from "@app/api/models/pagination";
-import { ParametersReader } from "@app/route/observer/parameters-reader";
+import { ParametersParser } from "@app/route/observer/parameters-parser";
 
-export class PaginationParametersReader implements ParametersReader<Pagination> {
+export class PaginationParametersParser implements ParametersParser<Pagination> {
 
   constructor() { }
 
-  public read(params: ParamMap): Pagination | undefined {
+  public parse(params: ParamMap): Pagination | undefined {
     let pagination;
 
     // Only builds the pagination when the current page is declared
