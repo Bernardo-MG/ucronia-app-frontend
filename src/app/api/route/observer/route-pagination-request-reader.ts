@@ -2,8 +2,11 @@ import { ParamMap } from "@angular/router";
 import { PaginationRequest } from "@app/api/models/pagination-request";
 import { Sort } from "@app/api/models/sort";
 import { RouteParametersReader } from "@app/route/observer/route-parameters-reader";
+import { RouteSortReader } from "./route-sort-reader";
 
 export class RoutePaginationRequestReader implements RouteParametersReader<PaginationRequest> {
+
+  private sortReader = new RouteSortReader();
 
   constructor() { }
 
@@ -30,57 +33,13 @@ export class RoutePaginationRequestReader implements RouteParametersReader<Pagin
       }
 
       if (params.has('sort')) {
-        request.sort = this.getSort(params);
-        if(request.sort.length === 0){
-          // No valid sort argument
-          request.sort = undefined;
-        }
+        request.sort = this.sortReader.read(params);
       }
     } else {
       request = undefined;
     }
 
     return request;
-  }
-
-  private getSort(params: ParamMap): Sort<any>[] {
-    let pageSort: Sort<any>;
-    let pageSorts: Sort<any>[] | undefined;
-    let pageSortValues: string[] | null;
-
-    pageSorts = [];
-    pageSortValues = params.getAll('sort');
-    for (var i = 0; i < pageSortValues.length; i += 1) {
-      const pageSortValue = pageSortValues[i];
-      if (pageSortValue) {
-        pageSort = this.getSortFromValue(pageSortValue);
-        if (pageSort.property) {
-          pageSorts.push(pageSort);
-        }
-      }
-    }
-
-    return pageSorts;
-  }
-
-  private getSortFromValue(pageSortValue: string): Sort<any> {
-    let pageSortPair: string[];
-    let pageSort: Sort<any> | undefined;
-    let property: string;
-    let direction: string;
-
-    pageSortPair = pageSortValue.split(',');
-    property = pageSortPair[0];
-    pageSort = new Sort<any>(property);
-
-    if (pageSortPair.length > 1) {
-      direction = pageSortPair[1];
-      if ((direction === 'desc') || (direction === 'asc')) {
-        pageSort.order = direction;
-      }
-    }
-
-    return pageSort;
   }
 
 }
