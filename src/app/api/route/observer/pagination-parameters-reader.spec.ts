@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { RoutePaginationReader } from './route-pagination-reader';
+import { PaginationParametersReader } from './pagination-parameters-reader';
 
-describe('RoutePaginationReader', () => {
-  let reader: RoutePaginationReader;
+describe('PaginationParametersReader', () => {
+  let reader: PaginationParametersReader;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    reader = new RoutePaginationReader();
+    reader = new PaginationParametersReader();
   });
 
   it('should provide no pagination when there is no pagination parameters', () => {

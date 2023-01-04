@@ -1,6 +1,6 @@
 import { ParamMap } from "@angular/router";
 
-export interface RouteParametersReader<T> {
+export interface ParametersReader<T> {
 
   read(params: ParamMap): T | undefined;
 

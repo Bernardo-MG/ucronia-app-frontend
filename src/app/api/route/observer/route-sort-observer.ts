@@ -1,6 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
 import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
-import { RouteSortReader } from "./route-sort-reader";
+import { SortParametersReader } from "./sort-parameters-reader";
 
 export class RouteSortObserver {
 
@@ -9,7 +9,7 @@ export class RouteSortObserver {
   constructor(
     route: ActivatedRoute
   ) {
-    this.wrappedObserver = new RouteParametersObserver(route, new RouteSortReader());
+    this.wrappedObserver = new RouteParametersObserver(route, new SortParametersReader());
   }
 
   public get subject() {

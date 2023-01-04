@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { RouteSortReader } from './route-sort-reader';
+import { SortParametersReader } from './sort-parameters-reader';
 
-describe('RouteSortReader', () => {
-  let reader: RouteSortReader;
+describe('SortParametersReader', () => {
+  let reader: SortParametersReader;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    reader = new RouteSortReader();
+    reader = new SortParametersReader();
   });
 
   it('should parse no sort when there is no sort data', () => {

@@ -1,16 +1,16 @@
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { RouteParametersReader } from "./route-parameters-reader";
+import { ParametersReader } from "./parameters-reader";
 
 export class RouteParametersObserver<T> {
 
   public subject = new BehaviorSubject<T | undefined>(undefined);
 
-  private routeParamsReader: RouteParametersReader<T>;
+  private routeParamsReader: ParametersReader<T>;
 
   constructor(
     route: ActivatedRoute,
-    reader: RouteParametersReader<T>
+    reader: ParametersReader<T>
   ) {
     this.routeParamsReader = reader;
 

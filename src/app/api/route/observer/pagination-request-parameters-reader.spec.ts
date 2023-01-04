@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { RoutePaginationRequestReader } from './route-pagination-request-reader';
+import { PaginationRequestParametersReader } from './pagination-request-parameters-reader';
 
-describe('RoutePaginationRequestReader', () => {
-  let reader: RoutePaginationRequestReader;
+describe('PaginationRequestParametersReader', () => {
+  let reader: PaginationRequestParametersReader;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    reader = new RoutePaginationRequestReader();
+    reader = new PaginationRequestParametersReader();
   });
 
   it('should provide no request when there are no request parameters', () => {

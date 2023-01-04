@@ -1,12 +1,11 @@
 import { ParamMap } from "@angular/router";
 import { PaginationRequest } from "@app/api/models/pagination-request";
-import { Sort } from "@app/api/models/sort";
-import { RouteParametersReader } from "@app/route/observer/route-parameters-reader";
-import { RouteSortReader } from "./route-sort-reader";
+import { ParametersReader } from "@app/route/observer/parameters-reader";
+import { SortParametersReader } from "./sort-parameters-reader";
 
-export class RoutePaginationRequestReader implements RouteParametersReader<PaginationRequest> {
+export class PaginationRequestParametersReader implements ParametersReader<PaginationRequest> {
 
-  private sortReader = new RouteSortReader();
+  private sortReader = new SortParametersReader();
 
   constructor() { }
 
