@@ -8,61 +8,56 @@ export class RoutePaginationRequestReader implements RouteParametersReader<Pagin
   constructor() { }
 
   public read(params: ParamMap): PaginationRequest | undefined {
-    // TODO: Extract. This methods should be private for this class
-    const pageNumber = this.getPageNumber(params);
-    const pageSize = this.getSizeNumber(params);
-    const pageSort = this.getSort(params);
+    let request;
 
-    let pagination;
-    if ((pageNumber) || (pageSize) || (pageSort)) {
-      pagination = new PaginationRequest();
-      pagination.page = pageNumber;
-      pagination.size = pageSize;
-      pagination.sort = pageSort;
+    if ((params.has('page')) || (params.has('size')) || (params.has('sort'))) {
+      request = new PaginationRequest();
+
+      if (params.has('page')) {
+        request.page = Number(params.get('page'));
+        if (Number.isNaN(request.page)) {
+          // The page was not a number
+          request.page = undefined;
+        }
+      }
+
+      if (params.has('size')) {
+        request.size = Number(params.get('size'));
+        if (Number.isNaN(request.size)) {
+          // The size was not a number
+          request.size = undefined;
+        }
+      }
+
+      if (params.has('sort')) {
+        request.sort = this.getSort(params);
+        if(request.sort.length === 0){
+          // No valid sort argument
+          request.sort = undefined;
+        }
+      }
     } else {
-      pagination = undefined;
+      request = undefined;
     }
 
-    return pagination;
+    return request;
   }
 
-  private getPageNumber(params: ParamMap): number | undefined {
-    return this.getNumber(params, 'page');
-  }
-
-  private getSizeNumber(params: ParamMap): number | undefined {
-    return this.getNumber(params, 'size');
-  }
-
-  private getNumber(params: ParamMap, key: string): number | undefined {
-    let pageNumber: number | undefined;
-
-    if (params.has(key)) {
-      pageNumber = Number(params.get(key));
-    } else {
-      pageNumber = undefined;
-    }
-
-    return pageNumber;
-  }
-
-  private getSort(params: ParamMap): Sort<any>[] | undefined {
+  private getSort(params: ParamMap): Sort<any>[] {
     let pageSort: Sort<any>;
     let pageSorts: Sort<any>[] | undefined;
     let pageSortValues: string[] | null;
 
-    if (params.has('sort')) {
-      pageSorts = [];
-      pageSortValues = params.getAll('sort');
-      for (var i = 0; i < pageSortValues.length; i += 1) {
-        const pageSortValue = pageSortValues[i];
-        if (pageSortValue) {
-          pageSort = this.getSortFromValue(pageSortValue);
+    pageSorts = [];
+    pageSortValues = params.getAll('sort');
+    for (var i = 0; i < pageSortValues.length; i += 1) {
+      const pageSortValue = pageSortValues[i];
+      if (pageSortValue) {
+        pageSort = this.getSortFromValue(pageSortValue);
+        if (pageSort.property) {
           pageSorts.push(pageSort);
         }
       }
-    } else {
-      pageSorts = undefined;
     }
 
     return pageSorts;

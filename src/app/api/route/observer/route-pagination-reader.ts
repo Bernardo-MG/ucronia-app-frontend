@@ -7,45 +7,33 @@ export class RoutePaginationReader implements RouteParametersReader<Pagination> 
   constructor() { }
 
   public read(params: ParamMap): Pagination | undefined {
-    const pageNumber = this.getPageNumber(params);
-    const pageSize = this.getSizeNumber(params);
-
     let pagination;
 
-    if ((pageNumber != undefined) && (pageNumber != undefined)) {
+    // Only builds the pagination when the current page is declared
+    if (params.has('page')) {
       pagination = new Pagination();
+      pagination.page = Number(params.get('page'));
 
-      if (pageNumber != undefined) {
-        pagination.page = pageNumber;
-      }
-      if (pageSize != undefined) {
-        pagination.size = pageSize;
+      // If the page size was declared then it is included
+      if (params.has('size')) {
+        pagination.size = Number(params.get('size'));
+        if (Number.isNaN(pagination.size)) {
+          // The size was not a number
+          pagination.size = undefined;
+        }
       }
     } else {
+      // No current page declared
+      // No pagination
+      pagination = undefined;
+    }
+
+    if ((pagination) && (Number.isNaN(pagination.page))) {
+      // Failed to parse the page
       pagination = undefined;
     }
 
     return pagination;
-  }
-
-  private getPageNumber(params: ParamMap): number | undefined {
-    return this.getNumber(params, 'page');
-  }
-
-  private getSizeNumber(params: ParamMap): number | undefined {
-    return this.getNumber(params, 'size');
-  }
-
-  private getNumber(params: ParamMap, key: string): number | undefined {
-    let pageNumber: number | undefined;
-
-    if (params.has(key)) {
-      pageNumber = Number(params.get(key));
-    } else {
-      pageNumber = undefined;
-    }
-
-    return pageNumber;
   }
 
 }
