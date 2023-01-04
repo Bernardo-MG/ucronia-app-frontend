@@ -1,15 +1,15 @@
 import { ActivatedRoute } from "@angular/router";
 import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
-import { PaginationRequestParametersReader } from "./pagination-request-parameters-reader";
+import { SortParametersReader } from "./reader/sort-parameters-reader";
 
-export class RoutePaginationRequestObserver {
+export class SortRouteObserver {
 
   private wrappedObserver;
 
   constructor(
     route: ActivatedRoute
   ) {
-    this.wrappedObserver = new RouteParametersObserver(route, new PaginationRequestParametersReader());
+    this.wrappedObserver = new RouteParametersObserver(route, new SortParametersReader());
   }
 
   public get subject() {

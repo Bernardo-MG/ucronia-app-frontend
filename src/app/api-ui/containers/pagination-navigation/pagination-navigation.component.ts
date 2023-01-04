@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
-import { RoutePaginationObserver } from '@app/api/route/observer/route-pagination-observer';
+import { PaginationRouteObserver } from '@app/api/route/observer/pagination-route-observer';
 
 @Component({
   selector: 'pagination-navigation',
@@ -22,14 +22,14 @@ export class PaginationNavigationComponent implements OnInit {
 
   private apiActuator: RouteApiActuator;
 
-  private routePaginationObserver: RoutePaginationObserver;
+  private routePaginationObserver: PaginationRouteObserver;
 
   constructor(
     router: Router,
     route: ActivatedRoute
   ) {
     this.apiActuator = new RouteApiActuator(router);
-    this.routePaginationObserver = new RoutePaginationObserver(route);
+    this.routePaginationObserver = new PaginationRouteObserver(route);
   }
 
   ngOnInit(): void {

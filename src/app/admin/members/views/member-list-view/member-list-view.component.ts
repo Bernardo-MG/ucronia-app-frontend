@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
-import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
+import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
 import { mergeMap, tap } from 'rxjs';
@@ -25,7 +25,7 @@ export class MemberListViewComponent implements OnInit {
 
   public activeCount = 0;
 
-  private routePaginationObserver: RoutePaginationRequestObserver;
+  private routePaginationObserver: PaginationRequestRouteObserver;
 
   private selected: { id: number } = { id: -1 };
 
@@ -33,7 +33,7 @@ export class MemberListViewComponent implements OnInit {
     private service: MemberService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
+    this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   public ngOnInit(): void {

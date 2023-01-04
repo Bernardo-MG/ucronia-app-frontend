@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Sort } from '@app/api/models/sort';
 import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
-import { RouteSortObserver } from '@app/api/route/observer/route-sort-observer';
+import { SortRouteObserver } from '@app/api/route/observer/sort-route-observer';
 
 @Component({
   selector: 'order-button',
@@ -19,14 +19,14 @@ export class OrderButtonComponent implements OnInit {
 
   private apiActuator: RouteApiActuator;
 
-  private sortObserver: RouteSortObserver;
+  private sortObserver: SortRouteObserver;
 
   constructor(
     router: Router,
     route: ActivatedRoute
   ) {
     this.apiActuator = new RouteApiActuator(router);
-    this.sortObserver = new RouteSortObserver(route);
+    this.sortObserver = new SortRouteObserver(route);
   }
 
   ngOnInit(): void {
