@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
-import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
+import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Fee } from '@app/models/fee';
 import { mergeMap } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
@@ -23,7 +23,7 @@ export class FeeListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
-  private routePaginationObserver: RoutePaginationRequestObserver;
+  private routePaginationObserver: PaginationRequestRouteObserver;
 
   private selected: { id: number } = { id: -1 };
 
@@ -31,11 +31,11 @@ export class FeeListViewComponent implements OnInit {
     private service: FeeService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
+    this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
+    this.routePaginationObserver.subject.pipe(mergeMap(p => this.service.getAll(p)))
       .subscribe(page => {
         this.fees = page.content;
         this.pageInfo = page;
@@ -45,7 +45,7 @@ export class FeeListViewComponent implements OnInit {
   public onDelete() {
     if (this.selected.id > 0) {
       this.service.delete(this.selected.id).subscribe(r => {
-        const pagination = this.routePaginationObserver.pagination.value;
+        const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
     }
