@@ -3,8 +3,19 @@ import { PaginationRequest } from "@app/api/models/pagination-request";
 import { ParametersParser } from "@app/route/observer/parameters-parser";
 import { SortParametersParser } from "./sort-parameters-parser";
 
+/**
+ * Parses a {@link PaginationRequest} from the route parameters.
+ * 
+ * The parameters used to parse are:
+ * - page, containing the page number. Optional.
+ * - size, containing the page size. Optional.
+ * - sort, delegated to {@link SortParametersParser}. Optional.
+ */
 export class PaginationRequestParametersParser implements ParametersParser<PaginationRequest> {
 
+  /**
+   * Parsing the sort object is delegated to this parser.
+   */
   private sortParser = new SortParametersParser();
 
   constructor() { }

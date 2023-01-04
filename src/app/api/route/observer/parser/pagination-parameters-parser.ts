@@ -2,6 +2,13 @@ import { ParamMap } from "@angular/router";
 import { Pagination } from "@app/api/models/pagination";
 import { ParametersParser } from "@app/route/observer/parameters-parser";
 
+/**
+ * Parses a {@link Pagination} from the route parameters.
+ * 
+ * The parameters used to parse are:
+ * - page, containing the page number. This is required, if it is missing no pagination is parsed.
+ * - size, containing the page size. Optional.
+ */
 export class PaginationParametersParser implements ParametersParser<Pagination> {
 
   constructor() { }
