@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
-import { RoutePaginationRequestObserver } from '@app/api/route/observer/route-pagination-request-observer';
+import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { User } from '@app/security/models/user';
 import { mergeMap } from 'rxjs';
 import { SecurityUserService } from '../../service/security-user.service';
@@ -17,17 +17,17 @@ export class SecurityUserListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
-  private routePaginationObserver: RoutePaginationRequestObserver;
+  private routePaginationObserver: PaginationRequestRouteObserver;
 
   constructor(
     private service: SecurityUserService,
     route: ActivatedRoute
   ) {
-    this.routePaginationObserver = new RoutePaginationRequestObserver(route);
+    this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
-    this.routePaginationObserver.pagination.pipe(mergeMap(p => this.service.getAll(p)))
+    this.routePaginationObserver.subject.pipe(mergeMap(p => this.service.getAll(p)))
       .subscribe(page => {
         this.users = page.content;
         this.pageInfo = page;
