@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <button class="btn btn-secondary" (click)="onGoPrevious()">Previous</button>
+  <button class="btn btn-secondary" id="previousMonthButton" (click)="onGoPrevious()">Previous</button>
   <h2>{{ calendar.year }} {{ monthName }}</h2>
-  <button class="btn btn-secondary" (click)="onGoNext()">Next</button>
+  <button class="btn btn-secondary" id="nextMonthButton" (click)="onGoNext()">Next</button>
 </div>
 <table class="table table-bordered table-responsive-sm">
   <thead>

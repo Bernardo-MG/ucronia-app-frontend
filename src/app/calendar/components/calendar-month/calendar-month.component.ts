@@ -15,20 +15,26 @@ export class CalendarMonthComponent implements OnInit {
 
   @Input() public dateUrl: (year: number, day: number) => string = (d => '');
 
+  @Input() public date = new Date();
+
   @Output() public dateChange = new EventEmitter<Date>();
 
   public calendar: Calendar = new Calendar();
 
   public monthName: string = "";
 
-  private date = new Date();
-
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  constructor() { }
+  constructor() {
+    this.date.setHours(0);
+    this.date.setMinutes(0);
+    this.date.setSeconds(0);
+    this.date.setMilliseconds(0);
+  }
 
   public ngOnInit(): void {
     this.loadMonth();
+    this.dateChange.emit(this.date);
   }
 
   public onGoPrevious() {
