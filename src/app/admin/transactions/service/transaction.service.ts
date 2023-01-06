@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PaginatedResponse } from '@app/api/models/paginated-response';
 import { PaginationRequest } from '@app/api/models/pagination-request';
+import { Sort } from '@app/api/models/sort';
 import { CreateOperations } from '@app/api/request/create-operations';
 import { DeleteOperations } from '@app/api/request/delete-operations';
 import { ReadOperations } from '@app/api/request/read-operations';
@@ -34,6 +35,10 @@ export class TransactionService {
     if (endDate) {
       clt.parameter("endDate", endDate);
     }
+
+    const sort = new Sort<Transaction>('date');
+    clt.sort([sort]);
+
     return clt.fetch();
   }
 
