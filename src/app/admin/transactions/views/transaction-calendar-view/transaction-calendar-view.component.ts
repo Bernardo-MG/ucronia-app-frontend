@@ -21,10 +21,12 @@ export class TransactionCalendarViewComponent {
   ) { }
 
   public onDateChange(date: Date) {
-    const startDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    const month = date.getMonth() + 1;
+    const firstDay = 1;
+    const lastDay = new Date(date.getFullYear(), month, 0).getDate();
 
-    const numDaysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    const endDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + numDaysInMonth);
+    const startDate = (date.getFullYear() + '-' + month + '-' + firstDay);
+    const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
 
     this.load(startDate, endDate);
   }
