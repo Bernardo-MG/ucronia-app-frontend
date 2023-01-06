@@ -16,25 +16,21 @@ export class TransactionCalendarViewComponent {
 
   public transactions: Transaction[] = [];
 
-  public startDate: string | undefined = undefined;
-
-  public endDate: string | undefined = undefined;
-
   constructor(
     private service: TransactionService
   ) { }
 
   public onDateChange(date: Date) {
-    this.startDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    const startDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
 
     const numDaysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    this.endDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + numDaysInMonth);
+    const endDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + numDaysInMonth);
 
-    this.load();
+    this.load(startDate, endDate);
   }
 
-  private load() {
-    this.service.getAll(undefined, this.startDate, this.endDate).subscribe({
+  private load(startDate: string, endDate: string) {
+    this.service.getAll(undefined, startDate, endDate).subscribe({
       next: page => {
         this.transactions = page.content;
         // Reactivate view
