@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Calendar } from '@app/calendar/models/calendar';
 import { CalendarDay } from '@app/calendar/models/calendar-day';
 import { CalendarNote } from '@app/calendar/models/calendar-note';
@@ -9,7 +9,7 @@ import { CalendarWeek } from '@app/calendar/models/calendar-week';
   templateUrl: './calendar-month.component.html',
   styleUrls: ['./calendar-month.component.sass']
 })
-export class CalendarMonthComponent implements OnInit {
+export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public notes: CalendarNote[] = [];
 
@@ -30,6 +30,10 @@ export class CalendarMonthComponent implements OnInit {
     this.date.setMinutes(0);
     this.date.setSeconds(0);
     this.date.setMilliseconds(0);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadMonth();
   }
 
   public ngOnInit(): void {
@@ -55,9 +59,9 @@ export class CalendarMonthComponent implements OnInit {
 
   private loadMonth() {
     this.calendar.year = this.date.getFullYear();
-    this.calendar.month = this.getCurrentMonth();
+    this.calendar.month = this.date.getMonth();
     this.monthName = this.getMonthName(this.calendar.month);
-    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.getCurrentMonth());
+    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
     this.calendar.weeks.forEach(w => w.days.forEach(d => {
       const note = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
       if (note) {
@@ -100,12 +104,8 @@ export class CalendarMonthComponent implements OnInit {
     return weeks;
   }
 
-  private getCurrentMonth(): number {
-    return this.date.getMonth() + 1;
-  }
-
   private getMonthName(month: number): string {
-    return this.monthNames[month - 1];
+    return this.monthNames[month];
   }
 
 }
