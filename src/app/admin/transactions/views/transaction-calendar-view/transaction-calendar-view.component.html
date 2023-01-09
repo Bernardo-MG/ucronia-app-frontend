@@ -1,0 +1,5 @@
+<div class="row">
+    <h1>transactions</h1>
+</div>
+<admin-transaction-tabs [calendarActive]=true></admin-transaction-tabs>
+<admin-transaction-calendar (dateChange)="onDateChange($event)" [transactions]="transactions"></admin-transaction-calendar>

@@ -1,59 +1,52 @@
-import { Params, Router } from "@angular/router";
+import { Router } from "@angular/router";
+import { RouteParametersActuator } from "@app/route/actuator/route-parameters-actuator";
+import { UrlParamsExtractor } from "@app/route/actuator/url-parameters-extractor";
+import { UrlParamsProcessor } from "./url-params-processor";
 import { PaginationRequest } from "../../models/pagination-request";
 import { Sort } from "../../models/sort";
-import { UrlParamsExtractor } from "./url-params-extractor";
 
 export class RouteApiActuator {
 
-    private path: string;
+    private urlExtractor = new UrlParamsExtractor();
 
-    private extractor = new UrlParamsExtractor();
+    private urlProcessor = new UrlParamsProcessor();
+
+    private wrappedActuator;
 
     constructor(
         private router: Router
     ) {
-        this.path = this.router.url.split('?')[0];
+        this.wrappedActuator = new RouteParametersActuator(router);
     }
 
     public setPagination(pagination: PaginationRequest): void {
-        this.setParameter(pagination);
+        this.wrappedActuator.addParameters(pagination);
     }
 
     public setPage(page: number): void {
-        this.setParameter({ page });
+        this.wrappedActuator.addParameters({ page });
     }
 
     public setPageSize(size: number): void {
-        this.setParameter({ size });
+        this.wrappedActuator.addParameters({ size });
     }
 
     public setOrder(sort: Sort<any>): void {
         const value = `${String(sort.property)},${sort.order}`
-        let parameters = this.extractor.getUrlParams(this.router.url);
+        let parameters = this.urlExtractor.getUrlParams(this.router.url);
 
-        parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
-        parameters = this.extractor.appendParameter(parameters, 'sort', value);
+        parameters = this.urlProcessor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
+        parameters = this.urlProcessor.appendParameter(parameters, 'sort', value);
 
-        this.navigate(parameters);
-    }
-
-    public setParameter(params: any): void {
-        const urlParams = this.extractor.getUrlParams(this.router.url);
-        const parameters = { ...urlParams, ...params };
-
-        this.navigate(parameters);
+        this.wrappedActuator.setParameters(parameters);
     }
 
     public removeOrder(property: string): void {
-        let parameters = this.extractor.getUrlParams(this.router.url);
+        let parameters = this.urlExtractor.getUrlParams(this.router.url);
 
-        parameters = this.extractor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${property},`));
+        parameters = this.urlProcessor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${property},`));
 
-        this.navigate(parameters);
-    }
-
-    private navigate(parameters: Params): void {
-        this.router.navigate([this.path], { queryParams: parameters });
+        this.wrappedActuator.setParameters(parameters);
     }
 
 }
