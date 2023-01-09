@@ -38,6 +38,11 @@ export class FeeService {
     if (endDate) {
       clt.parameter("endDate", endDate);
     }
+
+    const sort = new Sort<Fee>('date');
+    sort.order = 'desc';
+    clt.sort([sort]);
+
     return clt.fetch();
   }
 
