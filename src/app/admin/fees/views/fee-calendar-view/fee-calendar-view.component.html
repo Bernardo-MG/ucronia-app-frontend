@@ -1,5 +1,5 @@
 <h1>fees</h1>
-<admin-fee-tabs [yearActive]=true></admin-fee-tabs>
+<admin-fee-tabs [calendarActive]=true></admin-fee-tabs>
 <div class="row text-center">
   <div class="col-4">
     <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()">
@@ -29,7 +29,7 @@
       </div>
     </div>
     <div class="col-12">
-      <admin-fee-year [feeYears]="feeYears"></admin-fee-year>
+      <admin-fee-calendar [feeYears]="feeYears"></admin-fee-calendar>
     </div>
   </ng-template>
 </div>

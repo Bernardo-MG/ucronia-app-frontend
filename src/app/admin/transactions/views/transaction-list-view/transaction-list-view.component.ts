@@ -23,6 +23,10 @@ export class TransactionListViewComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
+  public startDate: string | undefined = undefined;
+
+  public endDate: string | undefined = undefined;
+
   private routePaginationObserver: PaginationRequestRouteObserver;
 
   private selected: { id: number } = { id: -1 };
@@ -34,22 +38,8 @@ export class TransactionListViewComponent implements OnInit {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
-  ngOnInit(): void {
-    this.routePaginationObserver.subject.pipe(
-      tap(p => this.loading = true),
-      mergeMap(p => this.service.getAll(p)))
-      .subscribe({
-        next: page => {
-          this.transactions = page.content;
-          this.pageInfo = page;
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+  public ngOnInit(): void {
+    this.reload();
   }
 
   public isLoading(): boolean {
@@ -70,7 +60,7 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
         this.transactions = page.content;
         this.pageInfo = page;
@@ -82,6 +72,24 @@ export class TransactionListViewComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  public reload(): void {
+    this.routePaginationObserver.subject.pipe(
+      tap(p => this.loading = true),
+      mergeMap(p => this.service.getAll(p, this.startDate, this.endDate)))
+      .subscribe({
+        next: page => {
+          this.transactions = page.content;
+          this.pageInfo = page;
+          // Reactivate view
+          this.loading = false;
+        },
+        error: error => {
+          // Reactivate view
+          this.loading = false;
+        }
+      });
   }
 
 }

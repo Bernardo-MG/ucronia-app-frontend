@@ -1,6 +1,6 @@
 import { FeeMonth } from "./fee-month";
 
-export class FeeYear {
+export class FeeCalendar {
     name: string = '';
     surname: string = '';
     memberId: number = -1;

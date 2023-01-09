@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import { FeeYear } from '@app/models/fee-year';
-import { FeeYearRange } from '../../models/fee-year-range';
+import { FeeCalendar } from '@app/models/fee-calendar';
+import { FeeCalendarRange } from '../../models/fee-calendar-range';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
-  selector: 'admin-fee-year-view',
-  templateUrl: './admin-fee-year-view.component.html',
-  styleUrls: ['./admin-fee-year-view.component.sass']
+  selector: 'admin-fee-calendar-view',
+  templateUrl: './fee-calendar-view.component.html',
+  styleUrls: ['./fee-calendar-view.component.sass']
 })
-export class AdminFeeYearViewComponent {
+export class FeeCalendarViewComponent {
 
   /**
    * Loading flag. Shows the loading visual cue.
    */
   public loading = false;
 
-  public feeYears: FeeYear[] = [];
+  public feeYears: FeeCalendar[] = [];
 
-  public range = new FeeYearRange();
+  public range = new FeeCalendarRange();
 
   public year = -1;
 
