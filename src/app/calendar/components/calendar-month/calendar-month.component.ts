@@ -82,12 +82,14 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     this.calendar.month = this.date.getMonth();
     this.monthName = this.getMonthName(this.calendar.month);
     this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
-    this.calendar.weeks.forEach(w => w.days.forEach(d => {
-      const note = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
-      if (note) {
-        d.notes.push(note);
-      }
-    }))
+    this.calendar.weeks.forEach(w => w.days
+      .filter(d => d.number)
+      .forEach(d => {
+        const note = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
+        if (note) {
+          d.notes.push(note);
+        }
+      }))
   }
 
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
