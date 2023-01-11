@@ -23,7 +23,7 @@ export class TransactionCalendarViewComponent {
   ) { }
 
   public onDateChange(date: Date) {
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const firstDay = 1;
     const lastDay = new Date(date.getFullYear(), month, 0).getDate();
 
@@ -34,7 +34,7 @@ export class TransactionCalendarViewComponent {
   }
 
   public onPickDate(date: Date) {
-    const formattedDate = (date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate());
+    const formattedDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
     const parameters = { date: formattedDate };
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
