@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Transaction } from '@app/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
@@ -17,7 +18,8 @@ export class TransactionCalendarViewComponent {
   public transactions: Transaction[] = [];
 
   constructor(
-    private service: TransactionService
+    private service: TransactionService,
+    private router: Router
   ) { }
 
   public onDateChange(date: Date) {
@@ -29,6 +31,11 @@ export class TransactionCalendarViewComponent {
     const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
 
     this.load(startDate, endDate);
+  }
+
+  public onPickDate(date: Date) {
+    const parameters = { date };
+    this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
 
   private load(startDate: string, endDate: string) {
