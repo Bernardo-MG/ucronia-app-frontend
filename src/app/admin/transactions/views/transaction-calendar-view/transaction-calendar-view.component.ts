@@ -34,7 +34,8 @@ export class TransactionCalendarViewComponent {
   }
 
   public onPickDate(date: Date) {
-    const parameters = { date };
+    const formattedDate = date.toISOString().split("T")[0];
+    const parameters = { date: formattedDate };
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
 
