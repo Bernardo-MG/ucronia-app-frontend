@@ -39,7 +39,9 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.reload();
+    this.routePaginationObserver.subject.subscribe(p => {
+      this.load(p);
+    });
   }
 
   public isLoading(): boolean {
@@ -60,6 +62,7 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
+    this.loading = true;
     this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
         this.transactions = page.content;
@@ -75,21 +78,7 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   public reload(): void {
-    this.routePaginationObserver.subject.pipe(
-      tap(p => this.loading = true),
-      mergeMap(p => this.service.getAll(p, this.startDate, this.endDate)))
-      .subscribe({
-        next: page => {
-          this.transactions = page.content;
-          this.pageInfo = page;
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+    this.load(undefined);
   }
 
 }

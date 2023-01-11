@@ -1,1 +1,1 @@
-<calendar-month (dateChange)="onDateChange($event)" [dateUrl]="dateUrl" [notes]="notes"></calendar-month>
+<calendar-month [date]="date" [notes]="notes" (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></calendar-month>
