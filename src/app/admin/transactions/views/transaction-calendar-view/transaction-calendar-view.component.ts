@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/models/transaction';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
@@ -11,7 +11,7 @@ import { TransactionService } from '../../service/transaction.service';
   templateUrl: './transaction-calendar-view.component.html',
   styleUrls: ['./transaction-calendar-view.component.sass']
 })
-export class TransactionCalendarViewComponent {
+export class TransactionCalendarViewComponent implements OnInit {
 
   /**
    * Loading flag.
@@ -33,7 +33,9 @@ export class TransactionCalendarViewComponent {
   ) {
     this.routeActuator = new RouteParametersActuator(router);
     this.routeObserver = new RouteParametersObserver(route, new DateParametersParser());
+  }
 
+  ngOnInit(): void {
     this.routeObserver.subject.subscribe(d => {
       if (d) {
         this.date = d;

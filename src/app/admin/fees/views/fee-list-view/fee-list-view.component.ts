@@ -39,7 +39,9 @@ export class FeeListViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reload();
+    this.routePaginationObserver.subject.subscribe(p => {
+      this.load(p);
+    });
   }
 
   public onDelete() {
@@ -55,25 +57,8 @@ export class FeeListViewComponent implements OnInit {
     this.selected = data;
   }
 
-  public reload(): void {
-    this.routePaginationObserver.subject.pipe(
-      tap(p => this.loading = true),
-      mergeMap(p => this.service.getAll(p, this.startDate, this.endDate)))
-      .subscribe({
-        next: page => {
-          this.fees = page.content;
-          this.pageInfo = page;
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
-  }
-
   private load(pagination: PaginationRequest | undefined) {
+    this.loading = true;
     this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
         this.fees = page.content;
@@ -86,6 +71,10 @@ export class FeeListViewComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  public reload(): void {
+    this.load(undefined);
   }
 
 }
