@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/models/transaction';
+import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
+import { DateParametersParser } from '@app/route/date/date-parameters-parser';
+import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -17,20 +20,32 @@ export class TransactionCalendarViewComponent {
 
   public transactions: Transaction[] = [];
 
+  public date = new Date();
+
+  private routeActuator: RouteParametersActuator;
+
+  private routeObserver: RouteParametersObserver<Date>;
+
   constructor(
     private service: TransactionService,
-    private router: Router
-  ) { }
+    private router: Router,
+    route: ActivatedRoute
+  ) {
+    this.routeActuator = new RouteParametersActuator(router);
+    this.routeObserver = new RouteParametersObserver(route, new DateParametersParser());
+
+    this.routeObserver.subject.subscribe(d => {
+      if (d) {
+        this.date = d;
+        this.load(d);
+      }
+    });
+  }
 
   public onDateChange(date: Date) {
-    const month = date.getMonth() + 1;
-    const firstDay = 1;
-    const lastDay = new Date(date.getFullYear(), month, 0).getDate();
-
-    const startDate = (date.getFullYear() + '-' + month + '-' + firstDay);
-    const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
-
-    this.load(startDate, endDate);
+    this.date = date;
+    const formattedDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-1');
+    this.routeActuator.setParameters({ date: formattedDate });
   }
 
   public onPickDate(date: Date) {
@@ -39,7 +54,15 @@ export class TransactionCalendarViewComponent {
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
 
-  private load(startDate: string, endDate: string) {
+  private load(date: Date) {
+    const month = date.getMonth() + 1;
+    const firstDay = 1;
+    const lastDay = new Date(date.getFullYear(), month, 0).getDate();
+
+    const startDate = (date.getFullYear() + '-' + month + '-' + firstDay);
+    const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
+
+    this.loading = true
     this.service.getAll(undefined, startDate, endDate).subscribe({
       next: page => {
         this.transactions = page.content;

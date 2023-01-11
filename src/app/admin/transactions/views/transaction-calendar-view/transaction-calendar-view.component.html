@@ -2,4 +2,4 @@
     <h1>transactions</h1>
 </div>
 <admin-transaction-tabs [calendarActive]=true></admin-transaction-tabs>
-<admin-transaction-calendar (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)" [transactions]="transactions"></admin-transaction-calendar>
+<admin-transaction-calendar [date]="date" [transactions]="transactions" (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></admin-transaction-calendar>

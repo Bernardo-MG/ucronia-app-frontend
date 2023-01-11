@@ -33,12 +33,17 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.date.setDate(1);
+    this.date.setHours(0);
+    this.date.setMinutes(0);
+    this.date.setSeconds(0);
+    this.date.setMilliseconds(0);
+
     this.loadMonth();
   }
 
   public ngOnInit(): void {
     this.loadMonth();
-    this.dateChange.emit(this.date);
   }
 
   public onGoPrevious() {

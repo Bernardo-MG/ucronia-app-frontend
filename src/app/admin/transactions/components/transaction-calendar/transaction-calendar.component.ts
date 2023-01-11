@@ -11,6 +11,8 @@ export class TransactionCalendarComponent implements OnChanges {
 
   @Input() public transactions: Transaction[] = [];
 
+  @Input() public date = new Date();
+
   @Output() public dateChange = new EventEmitter<Date>();
 
   @Output() public pickDate = new EventEmitter<Date>();
