@@ -11,7 +11,11 @@ export class TransactionCalendarComponent implements OnChanges {
 
   @Input() public transactions: Transaction[] = [];
 
+  @Input() public date = new Date();
+
   @Output() public dateChange = new EventEmitter<Date>();
+
+  @Output() public pickDate = new EventEmitter<Date>();
 
   public notes: CalendarNote[] = [];
 
@@ -28,8 +32,8 @@ export class TransactionCalendarComponent implements OnChanges {
     this.dateChange.emit(date);
   }
 
-  public dateUrl(year: number, day: number) {
-    return "/transactions/list";
+  public onPickDate(date: Date) {
+    this.pickDate.emit(date);
   }
 
 }

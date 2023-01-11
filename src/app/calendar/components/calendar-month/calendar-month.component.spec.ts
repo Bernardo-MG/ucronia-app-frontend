@@ -22,37 +22,6 @@ describe('CalendarMonthComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Init
-
-  it('should send an event notifying the date when initializing', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.date.setFullYear(2020);
-    component.date.setMonth(1);
-
-    component.ngOnInit();
-
-    expect(component.dateChange.emit).toHaveBeenCalledTimes(1);
-  });
-
-  it('should send an event with the current month when initializing', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.date.setFullYear(2020);
-    component.date.setMonth(1);
-
-    component.ngOnInit();
-
-    const date = new Date();
-    date.setFullYear(2020);
-    date.setMonth(1);
-    date.setHours(0);
-    date.setMinutes(0);
-    date.setSeconds(0);
-    date.setMilliseconds(0);
-    expect(component.dateChange.emit).toHaveBeenCalledWith(date);
-  });
-
   // Moving through months
 
   it('should send an event notifying the date when moving to the previous month', () => {

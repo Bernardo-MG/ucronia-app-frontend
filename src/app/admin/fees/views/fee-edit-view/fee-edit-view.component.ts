@@ -37,7 +37,7 @@ export class FeeEditViewComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.service.update(this.member.id, this.fee).subscribe();
+    this.service.update(this.fee.id, this.fee).subscribe();
   }
 
   public onFormValidChange(valid: boolean): void {

@@ -37,6 +37,7 @@ export class TransactionService {
     }
 
     const sort = new Sort<Transaction>('date');
+    sort.order = 'desc';
     clt.sort([sort]);
 
     return clt.fetch();

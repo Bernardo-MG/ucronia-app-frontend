@@ -37,22 +37,9 @@ export class MemberListViewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.routePaginationObserver.subject.pipe(
-      tap(p => this.loading = true),
-      mergeMap(p => this.service.getAll(p)))
-      .subscribe({
-        next: page => {
-          this.members = page.content;
-          this.pageInfo = page;
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
-
+    this.routePaginationObserver.subject.subscribe(p => {
+      this.load(p);
+    });
     this.service.countActive().subscribe(r => this.activeCount = r);
   }
 
@@ -70,6 +57,7 @@ export class MemberListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
+    this.loading = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.members = page.content;

@@ -13,11 +13,11 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public notes: CalendarNote[] = [];
 
-  @Input() public dateUrl: (year: number, day: number) => string = (d => '');
-
   @Input() public date = new Date();
 
   @Output() public dateChange = new EventEmitter<Date>();
+
+  @Output() public pickDate = new EventEmitter<Date>();
 
   public calendar: Calendar = new Calendar();
 
@@ -33,12 +33,17 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.date.setDate(1);
+    this.date.setHours(0);
+    this.date.setMinutes(0);
+    this.date.setSeconds(0);
+    this.date.setMilliseconds(0);
+
     this.loadMonth();
   }
 
   public ngOnInit(): void {
     this.loadMonth();
-    this.dateChange.emit(this.date);
   }
 
   public onGoPrevious() {
@@ -51,6 +56,21 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     this.date.setMonth(this.date.getMonth() + 1);
     this.loadMonth();
     this.dateChange.emit(this.date);
+  }
+
+  public onPickDate(year: number, month: number, day: number | null) {
+    if (day) {
+      const date = new Date();
+      date.setFullYear(year);
+      date.setMonth(month);
+      date.setDate(day);
+      date.setHours(0);
+      date.setMinutes(0);
+      date.setSeconds(0);
+      date.setMilliseconds(0);
+
+      this.pickDate.emit(date);
+    }
   }
 
   public getDateInfo(year: number, month: number, day: number | null): CalendarNote | undefined {
