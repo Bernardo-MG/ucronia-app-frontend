@@ -1,5 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
+import { ParamsObserver } from "./params-observer";
 import { ParametersParser } from "./parameters-parser";
 
 /**
@@ -7,7 +8,7 @@ import { ParametersParser } from "./parameters-parser";
  * 
  * The data is updated with a {@link ParametersParser}, which will parse the updated parameters.
  */
-export class RouteParametersObserver<T> {
+export class RouteParametersObserver<T> implements ParamsObserver<T> {
 
   /**
    * Subject containing the data after the latest change.

@@ -1,17 +1,17 @@
 import { ActivatedRoute } from "@angular/router";
-import { Sort } from "@app/api/models/sort";
 import { ParamsObserver } from "@app/route/observer/params-observer";
 import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
-import { SortParametersParser } from "./parser/sort-parameters-parser";
+import { TransactionFilter } from "../../models/transaction-filter";
+import { TransactionFilterParser } from "./transaction-filter-parser";
 
-export class SortRouteObserver implements ParamsObserver<Sort<any>[]> {
+export class TransactionFilterRouteObserver implements ParamsObserver<TransactionFilter> {
 
   private wrappedObserver;
 
   constructor(
     route: ActivatedRoute
   ) {
-    this.wrappedObserver = new RouteParametersObserver(route, new SortParametersParser());
+    this.wrappedObserver = new RouteParametersObserver(route, new TransactionFilterParser());
   }
 
   public get subject() {
