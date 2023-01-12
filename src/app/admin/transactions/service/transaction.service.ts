@@ -11,7 +11,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { TransactionFilter } from './model/transaction-filter';
+import { TransactionFilter } from '../models/transaction-filter';
 
 @Injectable()
 export class TransactionService {

@@ -4,7 +4,9 @@ import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Transaction } from '@app/models/transaction';
-import { TransactionFilter } from '../../service/model/transaction-filter';
+import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
+import { TransactionFilter } from '../../models/transaction-filter';
+import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -29,20 +31,31 @@ export class TransactionListViewComponent implements OnInit {
 
   public date: string | undefined = undefined;
 
+  private selected: { id: number } = { id: -1 };
+
   private routePaginationObserver: PaginationRequestRouteObserver;
 
-  private selected: { id: number } = { id: -1 };
+  private filterObserver: TransactionFilterRouteObserver;
 
   constructor(
     private service: TransactionService,
     route: ActivatedRoute
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
+    this.filterObserver = new TransactionFilterRouteObserver(route);
   }
 
   public ngOnInit(): void {
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
+    });
+
+    this.filterObserver.subject.subscribe(f => {
+      this.date = f?.date;
+      this.startDate = f?.startDate;
+      this.endDate = f?.endDate;
+
+      this.load(undefined);
     });
   }
 
