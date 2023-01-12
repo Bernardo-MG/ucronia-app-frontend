@@ -8,18 +8,23 @@ export class TransactionFilterParser implements ParametersParser<TransactionFilt
 
   parse(params: ParamMap): TransactionFilter | undefined {
     let filter;
-    let date;
 
-    if ((params.has('startDate'))||(params.has('endDate'))||(params.has('date'))) {
+    if ((params.has('startDate')) || (params.has('endDate')) || (params.has('date'))) {
       filter = new TransactionFilter();
 
       if (params.has('date')) {
-        const dateText = (params.get('date') as string);
-        date = new Date(dateText);
-        if (isNaN(date.getTime())) {
-          date = undefined;
-        }
+        const date = (params.get('date') as string);
         filter.date = date;
+      }
+
+      if (params.has('startDate')) {
+        const date = (params.get('startDate') as string);
+        filter.startDate = date;
+      }
+
+      if (params.has('endDate')) {
+        const date = (params.get('endDate') as string);
+        filter.endDate = date;
       }
     } else {
       filter = undefined;
