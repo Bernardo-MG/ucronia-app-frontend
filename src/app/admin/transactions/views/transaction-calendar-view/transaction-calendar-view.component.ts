@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CalendarNote } from '@app/calendar/models/calendar-note';
 import { Transaction } from '@app/models/transaction';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
 import { DateParametersParser } from '@app/route/date/date-parameters-parser';
@@ -18,13 +19,13 @@ export class TransactionCalendarViewComponent implements OnInit {
    */
   public loading = false;
 
-  public transactions: Transaction[] = [];
-
   public date = new Date();
 
   private routeActuator: RouteParametersActuator;
 
   private routeObserver: RouteParametersObserver<Date>;
+
+  public notes: CalendarNote[] = [];
 
   constructor(
     private service: TransactionService,
@@ -67,7 +68,11 @@ export class TransactionCalendarViewComponent implements OnInit {
     this.loading = true
     this.service.getAll(undefined, startDate, endDate).subscribe({
       next: page => {
-        this.transactions = page.content;
+        const transactions = page.content;
+        this.notes = transactions.map(t => {
+          const date = new Date(t.date);
+          return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
+        });
         // Reactivate view
         this.loading = false;
       },

@@ -73,8 +73,8 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     }
   }
 
-  public getDateInfo(year: number, month: number, day: number | null): CalendarNote | undefined {
-    return this.notes.find(d => d.year === year && d.month === month && d.day === day);
+  private getDateInfo(year: number, month: number, day: number | null): CalendarNote[] {
+    return this.notes.filter(d => d.year === year && d.month === month && d.day === day);
   }
 
   private loadMonth() {
@@ -85,9 +85,9 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     this.calendar.weeks.forEach(w => w.days
       .filter(d => d.number)
       .forEach(d => {
-        const note = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
-        if (note) {
-          d.notes.push(note);
+        const notes = this.getDateInfo(this.calendar.year, this.calendar.month, d.number);
+        if (notes) {
+          d.notes = notes;
         }
       }))
   }

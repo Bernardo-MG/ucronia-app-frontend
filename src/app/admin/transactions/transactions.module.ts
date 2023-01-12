@@ -12,7 +12,6 @@ import { TransactionService } from './service/transaction.service';
 import { LayoutModule } from '@app/layout/layout.module';
 import { TransactionCalendarViewComponent } from './views/transaction-calendar-view/transaction-calendar-view.component';
 import { TransactionTabsComponent } from './components/transaction-tabs/transaction-tabs.component';
-import { TransactionCalendarComponent } from './components/transaction-calendar/transaction-calendar.component';
 import { CalendarModule } from '@app/calendar/calendar.module';
 
 
@@ -24,8 +23,7 @@ import { CalendarModule } from '@app/calendar/calendar.module';
     TransactionListViewComponent,
     TransactionEditViewComponent,
     TransactionCalendarViewComponent,
-    TransactionTabsComponent,
-    TransactionCalendarComponent
+    TransactionTabsComponent
   ],
   imports: [
     CommonModule,
