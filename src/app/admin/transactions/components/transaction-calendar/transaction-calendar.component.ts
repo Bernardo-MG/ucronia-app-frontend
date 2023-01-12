@@ -24,7 +24,7 @@ export class TransactionCalendarComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.notes = this.transactions.map(t => {
       const date = new Date(t.date);
-      return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDay(), t.description);
+      return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
     });
   }
 
