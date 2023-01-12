@@ -19,10 +19,12 @@
     <tr *ngFor="let week of calendar.weeks">
       <td *ngFor="let day of week.days">
         <p>
-          <button type="button" class="btn btn-primary" [class.disabled]="day.notes.length === 0" aria-label="To Date"
-            (click)="onPickDate(calendar.year, calendar.month, day.number)">
-            {{ day.number }}
-          </button>
+          <ng-template [ngIf]="day.number">
+            <button type="button" class="btn btn-primary" [class.disabled]="day.notes.length === 0" aria-label="To Date"
+              (click)="onPickDate(calendar.year, calendar.month, day.number)">
+              {{ day.number }}
+            </button>
+          </ng-template>
         </p>
         <p *ngFor="let note of day.notes">{{ note.description }}</p>
       </td>

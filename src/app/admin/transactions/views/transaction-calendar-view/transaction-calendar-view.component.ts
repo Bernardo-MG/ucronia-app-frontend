@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Transaction } from '@app/models/transaction';
+import { CalendarNote } from '@app/calendar/models/calendar-note';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
-import { DateParametersParser } from '@app/route/date/date-parameters-parser';
+import { DateRouteObserver } from '@app/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
+import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -18,13 +19,13 @@ export class TransactionCalendarViewComponent implements OnInit {
    */
   public loading = false;
 
-  public transactions: Transaction[] = [];
-
   public date = new Date();
 
   private routeActuator: RouteParametersActuator;
 
-  private routeObserver: RouteParametersObserver<Date>;
+  private dateObserver: RouteParametersObserver<Date>;
+
+  public notes: CalendarNote[] = [];
 
   constructor(
     private service: TransactionService,
@@ -32,11 +33,11 @@ export class TransactionCalendarViewComponent implements OnInit {
     route: ActivatedRoute
   ) {
     this.routeActuator = new RouteParametersActuator(router);
-    this.routeObserver = new RouteParametersObserver(route, new DateParametersParser());
+    this.dateObserver = new DateRouteObserver(route);
   }
 
   ngOnInit(): void {
-    this.routeObserver.subject.subscribe(d => {
+    this.dateObserver.subject.subscribe(d => {
       if (d) {
         this.date = d;
         this.load(d);
@@ -57,6 +58,8 @@ export class TransactionCalendarViewComponent implements OnInit {
   }
 
   private load(date: Date) {
+    const filter = new TransactionFilter();
+
     const month = date.getMonth() + 1;
     const firstDay = 1;
     const lastDay = new Date(date.getFullYear(), month, 0).getDate();
@@ -64,10 +67,17 @@ export class TransactionCalendarViewComponent implements OnInit {
     const startDate = (date.getFullYear() + '-' + month + '-' + firstDay);
     const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
 
+    filter.startDate = startDate;
+    filter.endDate = endDate;
+
     this.loading = true
-    this.service.getAll(undefined, startDate, endDate).subscribe({
+    this.service.getAll(undefined, filter).subscribe({
       next: page => {
-        this.transactions = page.content;
+        const transactions = page.content;
+        this.notes = transactions.map(t => {
+          const date = new Date(t.date);
+          return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
+        });
         // Reactivate view
         this.loading = false;
       },
