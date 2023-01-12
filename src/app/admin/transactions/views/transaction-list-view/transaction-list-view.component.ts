@@ -4,6 +4,7 @@ import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Transaction } from '@app/models/transaction';
+import { TransactionFilter } from '../../service/model/transaction-filter';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class TransactionListViewComponent implements OnInit {
   public startDate: string | undefined = undefined;
 
   public endDate: string | undefined = undefined;
+
+  public date: string | undefined = undefined;
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
@@ -61,8 +64,13 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
+    const filter = new TransactionFilter();
+    filter.date = this.date;
+    filter.startDate = this.startDate;
+    filter.endDate = this.endDate;
+
     this.loading = true;
-    this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
+    this.service.getAll(pagination, filter).subscribe({
       next: page => {
         this.transactions = page.content;
         this.pageInfo = page;

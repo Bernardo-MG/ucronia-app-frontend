@@ -11,6 +11,7 @@ import { UpdateOperations } from '@app/api/request/update-operations';
 import { Transaction } from '@app/models/transaction';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { TransactionFilter } from './model/transaction-filter';
 
 @Injectable()
 export class TransactionService {
@@ -21,7 +22,7 @@ export class TransactionService {
     private client: RequestClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Transaction[]>> {
+  public getAll(pagination: PaginationRequest | undefined, filter: TransactionFilter): Observable<PaginatedResponse<Transaction[]>> {
     const clt: ReadPagedOperations<Transaction> = this.client.readPaged(this.transactionUrl);
     if (pagination) {
       clt.page(pagination);
@@ -29,11 +30,14 @@ export class TransactionService {
         clt.sort(pagination.sort);
       }
     }
-    if (startDate) {
-      clt.parameter("startDate", startDate);
+    if (filter.startDate) {
+      clt.parameter("startDate", filter.startDate);
     }
-    if (endDate) {
-      clt.parameter("endDate", endDate);
+    if (filter.endDate) {
+      clt.parameter("endDate", filter.endDate);
+    }
+    if (filter.date) {
+      clt.parameter("date", filter.date);
     }
 
     const sort = new Sort<Transaction>('date');
