@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Transaction } from '@app/models/transaction';
+import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
 import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
+import { filter } from 'rxjs';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
@@ -33,14 +35,18 @@ export class TransactionListViewComponent implements OnInit {
 
   private selected: { id: number } = { id: -1 };
 
+  private routeActuator: RouteParametersActuator;
+
   private routePaginationObserver: PaginationRequestRouteObserver;
 
   private filterObserver: TransactionFilterRouteObserver;
 
   constructor(
     private service: TransactionService,
+    router: Router,
     route: ActivatedRoute
   ) {
+    this.routeActuator = new RouteParametersActuator(router);
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
     this.filterObserver = new TransactionFilterRouteObserver(route);
   }
@@ -98,6 +104,7 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   public reload(): void {
+    this.routeActuator.setParameters({ date: this.date, startDate: this.startDate, endDate: this.endDate });
     this.load(undefined);
   }
 
