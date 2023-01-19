@@ -36,11 +36,11 @@ export class FeeYearComponent {
   }
 
   public isAbleToGoForwards() {
-    return ((this.end > 0) && (this.year < this.end));
+    return (this.year < this.end);
   }
 
   public isAbleToGoBackwards() {
-    return ((this.start > 0) && (this.year > this.start));
+    return (this.year > this.start);
   }
 
 }

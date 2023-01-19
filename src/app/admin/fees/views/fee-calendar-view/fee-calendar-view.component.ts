@@ -29,23 +29,24 @@ export class FeeCalendarViewComponent {
   constructor(
     private service: AdminFeeService
   ) {
-    this.load();
+    this.load(this.year);
     this.service.getRange().subscribe(d => this.range = d);
   }
 
   public onFilterActiveMembers(event: any) {
     this.onlyActive = event.checked;
-    this.load();
+    this.load(this.year);
   }
 
   public onYearChange(year: number) {
     this.year = year;
+    this.load(year);
   }
 
-  private load() {
+  private load(year: number) {
     this.loading = true;
 
-    this.service.getAllForYear(this.year, this.onlyActive).subscribe({
+    this.service.getAllForYear(year, this.onlyActive).subscribe({
       next: years => {
         this.rows = this.transformToCalendar(years);
         this.loading = false;
