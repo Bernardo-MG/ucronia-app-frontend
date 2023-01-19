@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CueLoadingComponent } from './cue-loading.component';
+import { CueLoadingComponent } from './cue-waiting.component';
 
 describe('CueLoadingComponent', () => {
   let component: CueLoadingComponent;
