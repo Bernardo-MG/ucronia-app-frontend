@@ -20,7 +20,7 @@ export class FeeCalendarViewComponent {
 
   public onlyActive = false;
 
-  public calendar: FeeCalendarRow[] = [];
+  public rows: FeeCalendarRow[] = [];
 
   public year = new Date().getFullYear();
 
@@ -47,7 +47,7 @@ export class FeeCalendarViewComponent {
 
     this.service.getAllForYear(this.year, this.onlyActive).subscribe({
       next: years => {
-        this.calendar = this.transformToCalendar(years);
+        this.rows = this.transformToCalendar(years);
         this.loading = false;
       },
       error: error => {

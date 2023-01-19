@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-12">
-      <admin-fee-calendar [data]="calendar" [range]="range" [year]="year"
+      <admin-fee-calendar [rows]="rows" [start]="range.start" [end]="range.end" [year]="year"
         (yearChange)="onYearChange($event)"></admin-fee-calendar>
     </div>
   </ng-template>

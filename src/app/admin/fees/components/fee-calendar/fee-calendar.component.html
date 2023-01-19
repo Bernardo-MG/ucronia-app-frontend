@@ -33,7 +33,7 @@
     </tr>
   </thead>
   <tbody>
-    <ng-template ngFor let-row [ngForOf]="data">
+    <ng-template ngFor let-row [ngForOf]="rows">
       <tr>
         <td>
           <div *ngIf="row.active; then activeMember else inactiveMember"></div>

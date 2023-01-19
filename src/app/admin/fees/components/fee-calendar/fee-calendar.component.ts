@@ -11,9 +11,11 @@ export class FeeYearComponent {
 
   @Input() public year: number = -1;
 
-  @Input() public data: FeeCalendarRow[] = [];
+  @Input() start: number = 0;
 
-  @Input() public range = new FeeCalendarRange();
+  @Input() end: number = 0;
+
+  @Input() public rows: FeeCalendarRow[] = [];
 
   @Output() public yearChange = new EventEmitter<number>();
 
@@ -34,11 +36,11 @@ export class FeeYearComponent {
   }
 
   public isAbleToGoForwards() {
-    return ((this.range.end > 0) && (this.year < this.range.end));
+    return ((this.end > 0) && (this.year < this.end));
   }
 
   public isAbleToGoBackwards() {
-    return ((this.range.start > 0) && (this.year > this.range.start));
+    return ((this.start > 0) && (this.year > this.start));
   }
 
 }
