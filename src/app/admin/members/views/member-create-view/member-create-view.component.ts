@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
-import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'admin-member-create-view',
@@ -16,11 +15,9 @@ export class MemberCreateViewComponent {
    */
   public waiting = false;
 
-  public saveIcon = faFloppyDisk;
+  public formValid = false;
 
   private member = new Member();
-
-  private formValid = false;
 
   constructor(
     private service: MemberService,
@@ -48,10 +45,6 @@ export class MemberCreateViewComponent {
 
   public onFormChange(value: Member) {
     this.member = value;
-  }
-
-  public isAbleToSave() {
-    return ((this.formValid) && (!this.waiting));
   }
 
 }

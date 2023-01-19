@@ -25,7 +25,8 @@ import { SideMenuLayoutComponent } from './side-menu-layout/side-menu-layout.com
   ],
   exports: [
     DataListComponent,
-    SideMenuLayoutComponent
+    SideMenuLayoutComponent,
+    DataFormComponent
   ]
 })
 export class LayoutModule { }

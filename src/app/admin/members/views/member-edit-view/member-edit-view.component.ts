@@ -10,9 +10,14 @@ import { Member } from '@app/models/member';
 })
 export class MemberEditViewComponent implements OnInit {
 
-  member: Member = new Member();
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
 
-  private formValid = false;
+  public formValid = false;
+
+  public member: Member = new Member();
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +31,17 @@ export class MemberEditViewComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.service.update(this.member.id, this.member).subscribe();
+    this.waiting = true;
+    this.service.update(this.member.id, this.member).subscribe({
+      next: d => {
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
+    });
   }
 
   public onFormValidChange(valid: boolean): void {
@@ -35,10 +50,6 @@ export class MemberEditViewComponent implements OnInit {
 
   public onFormChange(value: Member) {
     this.member = value;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
   private load(id: string | null): void {

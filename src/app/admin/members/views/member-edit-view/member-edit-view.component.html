@@ -7,6 +7,7 @@
   </ol>
 </nav>
 
-<form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
-<admin-form-member [data]="member" (save)="onSave()" (valueChange)="onFormChange($event)"
-  (validChange)="onFormValidChange($event)"></admin-form-member>
+<layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
+  <admin-form-member [data]="member" (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></admin-form-member>
+</layout-data-form>

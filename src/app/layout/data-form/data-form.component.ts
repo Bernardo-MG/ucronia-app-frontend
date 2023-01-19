@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-data-form',
+  selector: 'layout-data-form',
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.sass']
 })
@@ -13,7 +13,7 @@ export class DataFormComponent {
    */
   @Input() public waiting = false;
 
-  @Input() private formValid = false;
+  @Input() public formValid = false;
 
   @Output() public save = new EventEmitter<void>();
 

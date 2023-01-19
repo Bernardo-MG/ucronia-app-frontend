@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { LayoutModule } from '@app/layout/layout.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberTabsComponent } from './components/member-tabs/member-tabs.component';
 import { MembersRoutingModule } from './members-routing.module';
@@ -31,8 +30,7 @@ import { MemberStatsViewComponent } from './views/member-stats-view/member-stats
     ReactiveFormsModule,
     ControlsModule,
     ApiUiModule,
-    LayoutModule,
-    FontAwesomeModule
+    LayoutModule
   ],
   exports: [
     MemberFormComponent
