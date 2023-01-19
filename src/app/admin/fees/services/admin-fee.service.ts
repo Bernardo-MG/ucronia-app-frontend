@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Sort } from '@app/api/models/sort';
 import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
-import { UserFeeCalendar } from '@app/models/user-fee-calendar';
 import { FeeCalendarRange } from '@app/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/models/fee-calendar-row';
+import { UserFeeCalendar } from '@app/models/user-fee-calendar';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -15,6 +16,8 @@ export class AdminFeeService {
   private feeYearUrl = environment.apiUrl + "/fee/calendar";
 
   private feeYearRangeUrl = environment.apiUrl + "/fee/calendar/range";
+
+  private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   constructor(
     private client: RequestClient
@@ -30,10 +33,36 @@ export class AdminFeeService {
     return clt.fetch().pipe(map(r => r.content));
   }
 
+  public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
+    return this.getAllForYear(year, onlyActive).pipe(map(data => this.toCalendar(data)));
+  }
+
   public getRange(): Observable<FeeCalendarRange> {
     const clt: ReadPagedOperations<FeeCalendarRange> = this.client.readPaged(this.feeYearRangeUrl);
 
     return clt.fetchOne().pipe(map(r => r.content));
+  }
+
+  private toCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {
+    return data.map(r => {
+      const row = new FeeCalendarRow();
+      row.name = r.name;
+      row.surname = r.surname;
+      row.active = r.active;
+      this.months.forEach(month => {
+        const feeMonth = r.months.find(m => m.month === month);
+        var column;
+
+        if (feeMonth) {
+          column = feeMonth.paid;
+        } else {
+          column = undefined;
+        }
+        row.months.push(column);
+      });
+
+      return row;
+    });
   }
 
 }

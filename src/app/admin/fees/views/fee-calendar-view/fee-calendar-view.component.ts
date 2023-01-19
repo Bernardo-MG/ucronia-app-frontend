@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';import { UserFeeCalendar } from '@app/models/user-fee-calendar';
-;
+import { Component } from '@angular/core';
 import { FeeCalendarRange } from '@app/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
+;
 
 @Component({
   selector: 'admin-fee-calendar-view',
@@ -24,8 +24,6 @@ export class FeeCalendarViewComponent {
 
   public year = new Date().getFullYear();
 
-  private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
-
   constructor(
     private service: AdminFeeService
   ) {
@@ -46,37 +44,15 @@ export class FeeCalendarViewComponent {
   private load(year: number) {
     this.loading = true;
 
-    this.service.getAllForYear(year, this.onlyActive).subscribe({
-      next: years => {
-        this.rows = this.transformToCalendar(years);
+    this.service.getCalendar(year, this.onlyActive).subscribe({
+      next: data => {
+        this.rows = data;
         this.loading = false;
       },
       error: error => {
         // Reactivate view
         this.loading = false;
       }
-    });
-  }
-
-  private transformToCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {
-    return data.map(year => {
-      const row = new FeeCalendarRow();
-      row.name = year.name;
-      row.surname = year.surname;
-      row.active = year.active;
-      this.months.forEach(month => {
-        const feeMonth = year.months.find(m => m.month === month);
-        var column;
-
-        if (feeMonth) {
-          column = feeMonth.paid;
-        } else {
-          column = undefined;
-        }
-        row.months.push(column);
-      });
-
-      return row;
     });
   }
 
