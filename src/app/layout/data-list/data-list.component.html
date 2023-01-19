@@ -4,12 +4,12 @@
     <button-link-create link="{{createRoute}}"></button-link-create>
   </div>
   <div class="col-2 offset-5">
-    <pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
+    <pagination-size-selector [selected]="pageInfo.size" [disabled]="loading"></pagination-size-selector>
   </div>
   <div class="col-4">
     <div class="row">
       <div class="d-flex align-items-center justify-content-evenly">
-        <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
+        <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last" [disabled]="loading">
         </pagination-navigation>
       </div>
     </div>
