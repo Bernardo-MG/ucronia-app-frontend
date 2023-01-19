@@ -11,11 +11,11 @@ export class SecurityRoleFormComponent implements OnInit, OnChanges {
 
   @Input() public role = new Role();
 
-  @Input() public disabledDelete: boolean = false;
-
   @Output() public save = new EventEmitter<Role>();
 
-  @Output() public delete = new EventEmitter<void>();
+  @Output() public valueChange = new EventEmitter<Role>();
+
+  @Output() public validChange = new EventEmitter<boolean>();
 
   public form: FormGroup = this.fb.group({
     id: [-1],
@@ -24,7 +24,18 @@ export class SecurityRoleFormComponent implements OnInit, OnChanges {
 
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.form.statusChanges.subscribe(status => {
+      if (status === "VALID") {
+        this.validChange.emit(true);
+      } else {
+        this.validChange.emit(false);
+      }
+    });
+    this.form.valueChanges.subscribe(value => {
+      this.valueChange.emit(value);
+    });
+  }
 
   ngOnInit(): void {
     this.form.patchValue(this.role);
@@ -38,22 +49,6 @@ export class SecurityRoleFormComponent implements OnInit, OnChanges {
 
   public onSave() {
     this.save.emit(this.form.value);
-  }
-
-  public onDelete() {
-    this.delete.emit();
-  }
-
-  public canSave(): boolean {
-    return this.form.valid;
-  }
-
-  public canDelete(): boolean {
-    return ((!this.disabledDelete) && (this.form.valid));
-  }
-
-  public isFormInvalid(): boolean {
-    return (this.form.invalid && (this.form.dirty || this.form.touched));
   }
 
 }

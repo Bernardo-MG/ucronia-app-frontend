@@ -1,12 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MemberService } from '../../services/member.service';
 
-import { FeeCalendarViewComponent } from './fee-calendar-view.component';
+import { MemberStatsViewComponent } from './member-stats-view.component';
 
-describe('FeeCalendarViewComponent', () => {
-  let component: FeeCalendarViewComponent;
-  let fixture: ComponentFixture<FeeCalendarViewComponent>;
+describe('MemberStatsViewComponent', () => {
+  let component: MemberStatsViewComponent;
+  let fixture: ComponentFixture<MemberStatsViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,12 +16,15 @@ describe('FeeCalendarViewComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        FeeCalendarViewComponent
+        MemberStatsViewComponent
+      ],
+      providers: [
+        MemberService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeCalendarViewComponent);
+    fixture = TestBed.createComponent(MemberStatsViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -28,5 +32,4 @@ describe('FeeCalendarViewComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

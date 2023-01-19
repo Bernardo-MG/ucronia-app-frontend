@@ -10,9 +10,14 @@ import { Member } from '@app/models/member';
 })
 export class MemberCreateViewComponent {
 
-  private member = new Member();
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
 
-  private formValid = false;
+  public formValid = false;
+
+  private member = new Member();
 
   constructor(
     private service: MemberService,
@@ -20,8 +25,17 @@ export class MemberCreateViewComponent {
   ) { }
 
   public onSave(): void {
-    this.service.create(this.member).subscribe(d => {
-      this.router.navigate([`/members/${d.id}`]);
+    this.waiting = true;
+    this.service.create(this.member).subscribe({
+      next: d => {
+        this.router.navigate([`/members/${d.id}`]);
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
     });
   }
 
@@ -31,10 +45,6 @@ export class MemberCreateViewComponent {
 
   public onFormChange(value: Member) {
     this.member = value;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
 }

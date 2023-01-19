@@ -1,12 +1,15 @@
 <h1>edit user</h1>
 <div *ngIf="selectingRole; then role_selection else user_edition"></div>
 <ng-template #user_edition>
-    <security-user-form (save)="onSave($event)" (delete)="onDelete()" [user]="user"></security-user-form>
-    <pagination-navigation-template [page]="rolesPageInfo.page" [totalPages]="rolesPageInfo.totalPages"
-        [first]="rolesPageInfo.first" [last]="rolesPageInfo.last" (goTo)="onGoToRolePage($event)">
-    </pagination-navigation-template>
-    <security-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
-    </security-user-role-form>
+    <layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
+        <security-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
+            (validChange)="onFormValidChange($event)"></security-user-form>
+        <pagination-navigation-template [page]="rolesPageInfo.page" [totalPages]="rolesPageInfo.totalPages"
+            [first]="rolesPageInfo.first" [last]="rolesPageInfo.last" (goTo)="onGoToRolePage($event)">
+        </pagination-navigation-template>
+        <security-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+        </security-user-role-form>
+    </layout-data-form>
 </ng-template>
 <ng-template #role_selection>
     <security-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"

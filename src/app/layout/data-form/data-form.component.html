@@ -1,0 +1,13 @@
+<button id="save" (click)="onSave()" [disabled]="!isAbleToSave()" [attr.aria-disabled]="!isAbleToSave()" type="button"
+    class="btn btn-default" role="button">
+    <fa-icon [icon]="saveIcon"></fa-icon>
+</button>
+<div *ngIf="waiting; then waiting_cue else form"></div>
+<ng-template #waiting_cue>
+    <div class="d-flex justify-content-center">
+        <cue-waiting></cue-waiting>
+    </div>
+</ng-template>
+<ng-template #form>
+    <ng-content></ng-content>
+</ng-template>

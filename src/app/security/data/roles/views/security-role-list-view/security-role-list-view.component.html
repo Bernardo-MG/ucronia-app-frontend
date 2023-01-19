@@ -1,25 +1,27 @@
-<h1>roles</h1>
-<button-link-create link="/security/roles/create"></button-link-create>
-<pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
-</pagination-navigation>
-<pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">
-                <order-button property="name"></order-button>name
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-template ngFor let-role [ngForOf]="roles">
+<div class="row">
+    <h1>roles</h1>
+</div>
+<layout-data-list createRoute="/security/roles/create" [waiting]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <button-link-edit link="/security/roles/{{role.id}}"></button-link-edit>
-                </td>
-                <td>{{role.name}}</td>
+                <th scope="col">
+                    <order-button property="name" [disabled]="isLoading()"></order-button>name
+                </th>
+                <th scope="col"></th>
             </tr>
-        </ng-template>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-role [ngForOf]="roles">
+                <tr>
+                    <td>{{role.name}}</td>
+                    <td>
+                        <button-link-edit link="/security/roles/{{role.id}}"></button-link-edit>
+                        <button-delete (click)="select(role)" data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"></button-delete>
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</layout-data-list>

@@ -2,4 +2,13 @@
     <h1>transactions</h1>
 </div>
 <admin-transaction-tabs [calendarActive]=true></admin-transaction-tabs>
-<calendar-month [date]="date" [notes]="notes" (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></calendar-month>
+<div *ngIf="isLoading(); then waiting_cue else calendar"></div>
+<ng-template #waiting_cue>
+    <div class="d-flex justify-content-center">
+        <span class="spinner-border spinner-border-sm mr-1"></span>
+    </div>
+</ng-template>
+<ng-template #calendar>
+    <calendar-month [date]="date" [notes]="notes" (dateChange)="onDateChange($event)"
+        (pickDate)="onPickDate($event)"></calendar-month>
+</ng-template>

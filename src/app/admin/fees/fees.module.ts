@@ -7,7 +7,7 @@ import { LayoutModule } from '@app/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
-import { FeeYearComponent } from './components/fee-calendar/fee-calendar.component';
+import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeeService } from './services/fee.service';
 import { FeeCalendarViewComponent } from './views/fee-calendar-view/fee-calendar-view.component';
@@ -21,7 +21,7 @@ import { FeeTabsComponent } from './components/fee-tabs/fee-tabs.component';
 @NgModule({
   declarations: [
     FeeCalendarViewComponent,
-    FeeYearComponent,
+    FeeCalendarComponent,
     FeeFormComponent,
     FeeCreateViewComponent,
     FeeListViewComponent,

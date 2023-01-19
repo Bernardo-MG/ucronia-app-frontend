@@ -10,9 +10,14 @@ import { TransactionService } from '../../service/transaction.service';
 })
 export class TransactionEditViewComponent implements OnInit {
 
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
+
   public transaction: Transaction = new Transaction();
 
-  private formValid = false;
+  public formValid = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +31,17 @@ export class TransactionEditViewComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.service.update(this.transaction.id, this.transaction).subscribe();
+    this.waiting = true;
+    this.service.update(this.transaction.id, this.transaction).subscribe({
+      next: d => {
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
+    });
   }
 
   public onFormValidChange(valid: boolean): void {
@@ -35,10 +50,6 @@ export class TransactionEditViewComponent implements OnInit {
 
   public onFormChange(value: Transaction) {
     this.transaction = value;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
   private load(id: string | null): void {

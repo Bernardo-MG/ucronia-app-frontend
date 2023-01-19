@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MemberService } from '@app/admin/members/services/member.service';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
-import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
-import { mergeMap, tap } from 'rxjs';
 
 @Component({
   selector: 'admin-member-list-view',
@@ -17,13 +16,11 @@ export class MemberListViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
+  public waiting = false;
 
   public members: Member[] = [];
 
   public pageInfo = new PageInfo();
-
-  public activeCount = 0;
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
@@ -40,7 +37,6 @@ export class MemberListViewComponent implements OnInit {
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
-    this.service.countActive().subscribe(r => this.activeCount = r);
   }
 
   public select(data: { id: number }) {
@@ -57,17 +53,17 @@ export class MemberListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.loading = true;
+    this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.members = page.content;
         this.pageInfo = page;
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

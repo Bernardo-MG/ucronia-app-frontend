@@ -1,46 +1,46 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { FeeCalendar } from '@app/models/fee-calendar';
-import { FeeCalendarRow } from '../../models/fee-calendar-row';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FeeCalendarRange } from '@app/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 
 @Component({
   selector: 'admin-fee-calendar',
   templateUrl: './fee-calendar.component.html',
   styleUrls: ['./fee-calendar.component.sass']
 })
-export class FeeYearComponent implements OnChanges {
+export class FeeCalendarComponent {
 
-  @Input() public feeYears: FeeCalendar[] = [];
+  @Input() public year: number = 0;
+
+  @Input() start: number = 0;
+
+  @Input() end: number = 0;
+
+  @Input() public rows: FeeCalendarRow[] = [];
+
+  @Output() public yearChange = new EventEmitter<number>();
 
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   public feesTable: FeeCalendarRow[] = []
 
-  constructor() { }
+  constructor() {}
 
-  ngOnChanges(): void {
-    this.feesTable = this.feeYears.map(year => {
-      const row = new FeeCalendarRow();
-      row.name = year.name;
-      row.surname = year.surname;
-      row.active = year.active;
-      this.months.forEach(month => {
-        const feeMonth = year.months.find(m => m.month === month);
-        var column;
-
-        if (feeMonth) {
-          column = feeMonth.paid;
-        } else {
-          column = undefined;
-        }
-        row.months.push(column);
-      });
-
-      return row;
-    });
+  public onGoPrevious() {
+    this.year = this.year - 1;
+    this.yearChange.emit(this.year);
   }
 
-  public containsMonth(month: number, year: FeeCalendar): boolean {
-    return year.months.some(m => month === m.month);
+  public onGoNext() {
+    this.year = this.year + 1;
+    this.yearChange.emit(this.year);
+  }
+
+  public isAbleToGoForwards() {
+    return (this.year < this.end);
+  }
+
+  public isAbleToGoBackwards() {
+    return (this.year > this.start);
   }
 
 }

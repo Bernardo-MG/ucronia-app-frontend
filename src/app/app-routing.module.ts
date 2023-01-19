@@ -21,7 +21,7 @@ const routes: Routes = [
   {
     path: '', component: SideMenuLayoutComponent, children: [
       // Front page
-      { path: '', loadChildren: frontpageModule },
+      { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
       // Admin
       {
         path: '', children: [

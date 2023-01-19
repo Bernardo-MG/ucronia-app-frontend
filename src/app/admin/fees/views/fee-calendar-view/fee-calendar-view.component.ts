@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FeeCalendar } from '@app/models/fee-calendar';
-import { FeeCalendarRange } from '../../models/fee-calendar-range';
+import { FeeCalendarRange } from '@app/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
+;
 
 @Component({
   selector: 'admin-fee-calendar-view',
@@ -13,58 +14,44 @@ export class FeeCalendarViewComponent {
   /**
    * Loading flag. Shows the loading visual cue.
    */
-  public loading = false;
-
-  public feeYears: FeeCalendar[] = [];
+  public waiting = false;
 
   public range = new FeeCalendarRange();
 
-  public year = -1;
-
   public onlyActive = false;
+
+  public rows: FeeCalendarRow[] = [];
+
+  public year = new Date().getFullYear();
 
   constructor(
     private service: AdminFeeService
   ) {
-    this.year = new Date().getFullYear();
-    this.toCurrentYear();
+    this.load(this.year);
     this.service.getRange().subscribe(d => this.range = d);
-  }
-
-  public toPreviousYear() {
-    this.year = this.year - 1;
-    this.toCurrentYear();
-  }
-
-  public toNextYear() {
-    this.year = this.year + 1;
-    this.toCurrentYear();
-  }
-
-  public isAbleToGoForwards() {
-    return ((!this.loading) && (this.range.end > 0) && (this.year < this.range.end));
-  }
-
-  public isAbleToGoBackwards() {
-    return ((!this.loading) && (this.range.start > 0) && (this.year > this.range.start));
   }
 
   public onFilterActiveMembers(event: any) {
     this.onlyActive = event.checked;
-    this.toCurrentYear();
+    this.load(this.year);
   }
 
-  private toCurrentYear() {
-    this.loading = true;
+  public onYearChange(year: number) {
+    this.year = year;
+    this.load(year);
+  }
 
-    this.service.getAllForYear(this.year, this.onlyActive).subscribe({
-      next: years => {
-        this.feeYears = years;
-        this.loading = false;
+  private load(year: number) {
+    this.waiting = true;
+
+    this.service.getCalendar(year, this.onlyActive).subscribe({
+      next: data => {
+        this.rows = data;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

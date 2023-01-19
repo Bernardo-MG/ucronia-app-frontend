@@ -1,13 +1,10 @@
 <div class="row">
   <h1>members</h1>
 </div>
-<!-- Stats -->
-<div class="row">
-  <div class="col-1">
-    active: {{activeCount}}
-  </div>
-</div>
-<layout-data-list createRoute="/members/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+<!-- Tabs -->
+<admin-member-tabs [listActive]=true></admin-member-tabs>
+<!-- List -->
+<layout-data-list createRoute="/members/create" [waiting]="waiting" [pageInfo]="pageInfo" (delete)="onDelete()">
   <table class="table">
     <thead>
       <tr>

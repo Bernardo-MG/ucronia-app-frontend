@@ -12,7 +12,14 @@ import { SecurityUserService } from '../../service/security-user.service';
 })
 export class SecurityUserEditViewComponent implements OnInit {
 
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
+
   public user: User = new User();
+
+  public formValid = false;
 
   public roles: Role[] = [];
 
@@ -36,16 +43,26 @@ export class SecurityUserEditViewComponent implements OnInit {
     });
   }
 
-  public onSave(data: User): void {
-    this.service.update(data.id, data).subscribe(d => {
-      this.router.navigate(['/security/users']);
+  public onSave(): void {
+    this.waiting = true;
+    this.service.create(this.user).subscribe({
+      next: d => {
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
     });
   }
 
-  public onDelete(): void {
-    this.service.delete(this.user.id).subscribe(d => {
-      this.router.navigate(['/security/users']);
-    });
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: User) {
+    this.user = value;
   }
 
   public onShowAddRole(): void {

@@ -10,9 +10,14 @@ import { TransactionService } from '../../service/transaction.service';
 })
 export class TransactionCreateViewComponent {
 
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
+
   public transaction = new Transaction();
 
-  private formValid = false;
+  public formValid = false;
 
   constructor(
     private service: TransactionService,
@@ -20,8 +25,17 @@ export class TransactionCreateViewComponent {
   ) { }
 
   public onSave(): void {
-    this.service.create(this.transaction).subscribe(d => {
-      this.router.navigate([`/transactions/${d.id}`]);
+    this.waiting = true;
+    this.service.create(this.transaction).subscribe({
+      next: d => {
+        this.router.navigate([`/transactions/${d.id}`]);
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
     });
   }
 
@@ -31,10 +45,6 @@ export class TransactionCreateViewComponent {
 
   public onFormChange(value: Transaction) {
     this.transaction = value;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
 }

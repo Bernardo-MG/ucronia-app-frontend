@@ -12,7 +12,14 @@ import { SecurityRoleService } from '../../service/security-role.service';
 })
 export class SecurityRoleEditViewComponent implements OnInit {
 
-  public role: Role = new Role();
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
+
+  public role = new Role();
+
+  public formValid = false;
 
   public privileges: Privilege[] = [];
 
@@ -36,16 +43,26 @@ export class SecurityRoleEditViewComponent implements OnInit {
     });
   }
 
-  public onSave(data: Role): void {
-    this.service.update(this.role.id, data).subscribe(d => {
-      this.router.navigate(['/security/roles']);
+  public onSave(): void {
+    this.waiting = true;
+    this.service.create(this.role).subscribe({
+      next: d => {
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
     });
   }
 
-  public onDelete(): void {
-    this.service.delete(this.role.id).subscribe(d => {
-      this.router.navigate(['/security/roles']);
-    });
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Role) {
+    this.role = value;
   }
 
   public onShowAddPrivilege(): void {
