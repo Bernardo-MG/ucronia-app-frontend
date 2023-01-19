@@ -57,6 +57,10 @@ export class TransactionCalendarViewComponent implements OnInit {
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
 
+  public isLoading(): boolean {
+    return this.loading;
+  }
+
   private load(date: Date) {
     const filter = new TransactionFilter();
 
