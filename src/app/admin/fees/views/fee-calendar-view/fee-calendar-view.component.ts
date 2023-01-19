@@ -14,7 +14,7 @@ export class FeeCalendarViewComponent {
   /**
    * Loading flag. Shows the loading visual cue.
    */
-  public loading = false;
+  public waiting = false;
 
   public range = new FeeCalendarRange();
 
@@ -42,16 +42,16 @@ export class FeeCalendarViewComponent {
   }
 
   private load(year: number) {
-    this.loading = true;
+    this.waiting = true;
 
     this.service.getCalendar(year, this.onlyActive).subscribe({
       next: data => {
         this.rows = data;
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

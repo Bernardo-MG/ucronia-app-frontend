@@ -2,9 +2,9 @@
 <!-- Tabs -->
 <admin-fee-tabs [calendarActive]=true></admin-fee-tabs>
 <!-- Calendar -->
-<div *ngIf="loading; then loading_cue else fee_year"></div>
+<div *ngIf="waiting; then waiting_cue else fee_year"></div>
 <div class="row">
-  <ng-template #loading_cue>
+  <ng-template #waiting_cue>
     <div class="d-flex justify-content-center">
       <span class="spinner-border spinner-border-sm mr-1"></span>
     </div>

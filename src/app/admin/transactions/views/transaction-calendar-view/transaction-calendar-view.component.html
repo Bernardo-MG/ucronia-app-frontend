@@ -2,8 +2,8 @@
     <h1>transactions</h1>
 </div>
 <admin-transaction-tabs [calendarActive]=true></admin-transaction-tabs>
-<div *ngIf="isLoading(); then loading_cue else calendar"></div>
-<ng-template #loading_cue>
+<div *ngIf="isLoading(); then waiting_cue else calendar"></div>
+<ng-template #waiting_cue>
     <div class="d-flex justify-content-center">
         <span class="spinner-border spinner-border-sm mr-1"></span>
     </div>

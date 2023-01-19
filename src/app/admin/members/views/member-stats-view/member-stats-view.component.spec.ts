@@ -1,4 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MemberService } from '../../services/member.service';
 
 import { MemberStatsViewComponent } from './member-stats-view.component';
 
@@ -8,9 +11,18 @@ describe('MemberStatsViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MemberStatsViewComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      declarations: [
+        MemberStatsViewComponent
+      ],
+      providers: [
+        MemberService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MemberStatsViewComponent);
     component = fixture.componentInstance;

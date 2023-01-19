@@ -2,8 +2,8 @@
     class="btn btn-default" role="button">
     <fa-icon [icon]="saveIcon"></fa-icon>
 </button>
-<div *ngIf="waiting; then loading_cue else form"></div>
-<ng-template #loading_cue>
+<div *ngIf="waiting; then waiting_cue else form"></div>
+<ng-template #waiting_cue>
     <div class="d-flex justify-content-center">
         <cue-waiting></cue-waiting>
     </div>

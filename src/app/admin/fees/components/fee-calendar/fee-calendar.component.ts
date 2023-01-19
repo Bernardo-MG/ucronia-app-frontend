@@ -7,9 +7,9 @@ import { FeeCalendarRow } from '@app/models/fee-calendar-row';
   templateUrl: './fee-calendar.component.html',
   styleUrls: ['./fee-calendar.component.sass']
 })
-export class FeeYearComponent {
+export class FeeCalendarComponent {
 
-  @Input() public year: number = -1;
+  @Input() public year: number = 0;
 
   @Input() start: number = 0;
 
