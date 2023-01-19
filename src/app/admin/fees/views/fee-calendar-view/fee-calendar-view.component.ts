@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FeeCalendar } from '@app/models/fee-calendar';
-import { FeeCalendarRange } from '../../models/fee-calendar-range';
-import { FeeCalendarRow } from '../../models/fee-calendar-row';
+import { Component } from '@angular/core';import { UserFeeCalendar } from '@app/models/user-fee-calendar';
+;
+import { FeeCalendarRange } from '@app/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
@@ -57,7 +57,7 @@ export class FeeCalendarViewComponent {
     });
   }
 
-  private transformToCalendar(data: FeeCalendar[]): FeeCalendarRow[] {
+  private transformToCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {
     return data.map(year => {
       const row = new FeeCalendarRow();
       row.name = year.name;

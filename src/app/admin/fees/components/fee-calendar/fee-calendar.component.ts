@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FeeCalendar } from '@app/models/fee-calendar';
-import { FeeCalendarRange } from '../../models/fee-calendar-range';
-import { FeeCalendarRow } from '../../models/fee-calendar-row';
+import { FeeCalendarRange } from '@app/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 
 @Component({
   selector: 'admin-fee-calendar',
@@ -23,10 +22,6 @@ export class FeeYearComponent {
   public feesTable: FeeCalendarRow[] = []
 
   constructor() {}
-
-  public containsMonth(month: number, year: FeeCalendar): boolean {
-    return year.months.some(m => month === m.month);
-  }
 
   public onGoPrevious() {
     this.year = this.year - 1;

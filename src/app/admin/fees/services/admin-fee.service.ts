@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Sort } from '@app/api/models/sort';
 import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
-import { FeeCalendar } from '@app/models/fee-calendar';
+import { UserFeeCalendar } from '@app/models/user-fee-calendar';
+import { FeeCalendarRange } from '@app/models/fee-calendar-range';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { FeeCalendarRange } from '../models/fee-calendar-range';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +20,10 @@ export class AdminFeeService {
     private client: RequestClient
   ) { }
 
-  public getAllForYear(year: number, onlyActive: boolean): Observable<FeeCalendar[]> {
+  public getAllForYear(year: number, onlyActive: boolean): Observable<UserFeeCalendar[]> {
     const url = `${this.feeYearUrl}/${year}`;
-    const clt: ReadPagedOperations<FeeCalendar> = this.client.readPaged(url);
-    const sort = new Sort<FeeCalendar>("name");
+    const clt: ReadPagedOperations<UserFeeCalendar> = this.client.readPaged(url);
+    const sort = new Sort<UserFeeCalendar>("name");
 
     clt.sort([sort]);
     clt.parameter("onlyActive", onlyActive);
