@@ -1,1 +1,4 @@
-<security-role-form (save)="onSave($event)"></security-role-form>
+<layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
+  <security-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></security-role-form>
+</layout-data-form>

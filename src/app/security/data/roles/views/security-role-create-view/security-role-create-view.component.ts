@@ -10,15 +10,41 @@ import { SecurityRoleService } from '../../service/security-role.service';
 })
 export class SecurityRoleCreateViewComponent {
 
+  /**
+   * Loading flag.
+   */
+  public waiting = false;
+
+  public role = new Role();
+
+  public formValid = false;
+
   constructor(
     private service: SecurityRoleService,
     private router: Router
   ) { }
 
-  public onSave(data: Role): void {
-    this.service.create(data).subscribe(d => {
-      this.router.navigate(['/security/roles']);
+  public onSave(): void {
+    this.waiting = true;
+    this.service.create(this.role).subscribe({
+      next: d => {
+        this.router.navigate([`/security/roles/${d.id}`]);
+        // Reactivate view
+        this.waiting = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.waiting = false;
+      }
     });
+  }
+
+  public onFormValidChange(valid: boolean): void {
+    this.formValid = valid;
+  }
+
+  public onFormChange(value: Role) {
+    this.role = value;
   }
 
 }

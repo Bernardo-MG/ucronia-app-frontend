@@ -1,16 +1,14 @@
-<form-controls (save)="onSave()" (delete)="onDelete()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
-</form-controls>
 <form [formGroup]="form" (ngSubmit)="onSave()">
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">name</label>
-        <div class="col-sm-10">
-            <input type="text" id="name" formControlName="name" class="form-control"
-                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('name')?.errors }">
+  <div class="row mb-2">
+    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">name</label>
+    <div class="col-sm-10">
+      <input type="text" id="nameInput" aria-describedby="nameLabel" formControlName="name"
+        class="form-control" [ngClass]="{ 'is-invalid': form.get('name')?.errors }">
+      <div class="invalid-feedback">
+        <div *ngIf="form.get('name')?.hasError('required')">
+          missing_name
         </div>
+      </div>
     </div>
+  </div>
 </form>
-<div *ngIf="isFormInvalid()" class="alert alert-danger">
-    <div *ngIf="form.get('name')?.hasError('required')">
-        Name is required.
-    </div>
-</div>

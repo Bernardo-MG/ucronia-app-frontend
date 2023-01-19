@@ -1,54 +1,86 @@
-<form-controls (save)="onSave()" (delete)="onDelete()" [disabledSave]="!canSave()" [disabledDelete]="!canDelete()">
-</form-controls>
 <form [formGroup]="form" (ngSubmit)="onSave()">
-    <div class="form-group row">
-        <label for="username" class="col-sm-2 col-form-label">username</label>
-        <div class="col-sm-10">
-            <input type="text" id="username" formControlName="username" class="form-control"
-                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('username')?.errors }">
+    <div class="row mb-2">
+      <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">username</label>
+      <div class="col-sm-10">
+        <input type="text" id="usernameInput" aria-describedby="usernameLabel" formControlName="username"
+          class="form-control" [ngClass]="{ 'is-invalid': form.get('username')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('username')?.hasError('required')">
+            missing_username
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="name" class="col-sm-2 col-form-label">name</label>
-        <div class="col-sm-10">
-            <input type="text" id="name" formControlName="name" class="form-control"
-                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('name')?.errors }">
+    <div class="row mb-2">
+      <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">name</label>
+      <div class="col-sm-10">
+        <input type="text" id="nameInput" aria-describedby="nameLabel" formControlName="name"
+          class="form-control" [ngClass]="{ 'is-invalid': form.get('name')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('name')?.hasError('required')">
+            missing_name
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="email" class="col-sm-2 col-form-label">email</label>
-        <div class="col-sm-10">
-            <input type="text" id="email" formControlName="email" class="form-control"
-                [ngClass]="{ 'is-invalid': isFormInvalid() && form.get('email')?.errors }">
+    <div class="row mb-2">
+      <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">email</label>
+      <div class="col-sm-10">
+        <input type="text" id="emailInput" aria-describedby="emailLabel" formControlName="email"
+          class="form-control" [ngClass]="{ 'is-invalid': form.get('email')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('email')?.hasError('required')">
+            missing_email
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="credentialsExpired" class="col-sm-2 col-form-label">credentialsExpired</label>
-        <div class="col-sm-10">
-            <input type="checkbox" id="credentialsExpired" formControlName="credentialsExpired" class="form-check-input">
+    <div class="row mb-2">
+      <label for="credentialsExpiredInput" id="credentialsExpiredLabel" class="col-sm-2 col-form-label">credentialsExpired</label>
+      <div class="col-sm-10">
+        <input type="checkbox" id="credentialsExpiredInput" aria-describedby="credentialsExpiredLabel" formControlName="credentialsExpired"
+          class="form-check-input" [ngClass]="{ 'is-invalid': form.get('credentialsExpired')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('credentialsExpired')?.hasError('required')">
+            missing_credentialsExpired
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="enabled" class="col-sm-2 col-form-label">enabled</label>
-        <div class="col-sm-10">
-            <input type="checkbox" id="enabled" formControlName="enabled" class="form-check-input">
+    <div class="row mb-2">
+      <label for="enabledInput" id="enabledLabel" class="col-sm-2 col-form-label">enabled</label>
+      <div class="col-sm-10">
+        <input type="checkbox" id="enabledInput" aria-describedby="enabledLabel" formControlName="enabled"
+          class="form-check-input" [ngClass]="{ 'is-invalid': form.get('enabled')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('enabled')?.hasError('required')">
+            missing_enabled
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="expired" class="col-sm-2 col-form-label">expired</label>
-        <div class="col-sm-10">
-            <input type="checkbox" id="expired" formControlName="expired" class="form-check-input">
+    <div class="row mb-2">
+      <label for="expiredInput" id="expiredLabel" class="col-sm-2 col-form-label">expired</label>
+      <div class="col-sm-10">
+        <input type="checkbox" id="expiredInput" aria-describedby="expiredLabel" formControlName="expired"
+          class="form-check-input" [ngClass]="{ 'is-invalid': form.get('expired')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('expired')?.hasError('required')">
+            missing_expired
+          </div>
         </div>
+      </div>
     </div>
-    <div class="form-group row">
-        <label for="locked" class="col-sm-2 col-form-label">locked</label>
-        <div class="col-sm-10">
-            <input type="checkbox" id="locked" formControlName="locked" class="form-check-input">
+    <div class="row mb-2">
+      <label for="lockedInput" id="lockedLabel" class="col-sm-2 col-form-label">locked</label>
+      <div class="col-sm-10">
+        <input type="checkbox" id="lockedInput" aria-describedby="lockedLabel" formControlName="locked"
+          class="form-check-input" [ngClass]="{ 'is-invalid': form.get('locked')?.errors }">
+        <div class="invalid-feedback">
+          <div *ngIf="form.get('locked')?.hasError('required')">
+            missing_locked
+          </div>
         </div>
+      </div>
     </div>
 </form>
-<div *ngIf="isFormInvalid()" class="alert alert-danger">
-    <div *ngIf="form.get('username')?.hasError('required')">
-        Username is required.
-    </div>
-</div>
