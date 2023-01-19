@@ -4,7 +4,7 @@
 <!-- Tabs -->
 <admin-member-tabs [listActive]=true></admin-member-tabs>
 <!-- List -->
-<layout-data-list createRoute="/members/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+<layout-data-list createRoute="/members/create" [waiting]="waiting" [pageInfo]="pageInfo" (delete)="onDelete()">
   <table class="table">
     <thead>
       <tr>

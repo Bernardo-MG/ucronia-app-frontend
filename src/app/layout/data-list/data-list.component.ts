@@ -11,7 +11,7 @@ export class DataListComponent {
   /**
    * Loading flag.
    */
-  @Input() public loading = false;
+  @Input() public waiting = false;
   
   @Input() public createRoute = "";
 

@@ -9,7 +9,7 @@ import { ButtonBackwardComponent } from './button-backward/button-backward.compo
 import { ButtonForwardComponent } from './button-forward/button-forward.component';
 import { ButtonSearchSecondaryComponent } from './button-search-secondary/button-search-secondary.component';
 import { ButtonDeleteComponent } from './button-delete/button-delete.component';
-import { CueLoadingComponent } from './cue-loading/cue-loading.component';
+import { CueLoadingComponent } from './cue-waiting/cue-loading.component';
 
 
 

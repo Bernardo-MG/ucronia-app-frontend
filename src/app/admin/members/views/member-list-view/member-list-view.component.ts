@@ -16,7 +16,7 @@ export class MemberListViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
+  public waiting = false;
 
   public members: Member[] = [];
 
@@ -53,17 +53,17 @@ export class MemberListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.loading = true;
+    this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.members = page.content;
         this.pageInfo = page;
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

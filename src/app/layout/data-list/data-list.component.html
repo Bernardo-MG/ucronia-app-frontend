@@ -4,22 +4,22 @@
     <button-link-create link="{{createRoute}}"></button-link-create>
   </div>
   <div class="col-2 offset-5">
-    <pagination-size-selector [selected]="pageInfo.size" [disabled]="loading"></pagination-size-selector>
+    <pagination-size-selector [selected]="pageInfo.size" [disabled]="waiting"></pagination-size-selector>
   </div>
   <div class="col-4">
     <div class="row">
       <div class="d-flex align-items-center justify-content-evenly">
-        <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last" [disabled]="loading">
+        <pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last" [disabled]="waiting">
         </pagination-navigation>
       </div>
     </div>
   </div>
 </div>
 <!-- Table -->
-<div *ngIf="loading; then loading_cue else data_list"></div>
+<div *ngIf="waiting; then loading_cue else data_list"></div>
 <ng-template #loading_cue>
   <div class="d-flex justify-content-center">
-    <cue-loading></cue-loading>
+    <cue-waiting></cue-waiting>
   </div>
 </ng-template>
 <ng-template #data_list>
