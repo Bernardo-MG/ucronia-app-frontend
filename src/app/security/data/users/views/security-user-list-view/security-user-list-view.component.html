@@ -1,25 +1,27 @@
-<h1>users</h1>
-<button-link-create link="/security/users/create"></button-link-create>
-<pagination-navigation [totalPages]="pageInfo.totalPages" [first]="pageInfo.first" [last]="pageInfo.last">
-</pagination-navigation>
-<pagination-size-selector [selected]="pageInfo.size"></pagination-size-selector>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">
-                <order-button property="username"></order-button>username
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-template ngFor let-user [ngForOf]="users">
+<div class="row">
+    <h1>users</h1>
+</div>
+<layout-data-list createRoute="/security/users/create" [loading]="loading" [pageInfo]="pageInfo" (delete)="onDelete()">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <button-link-edit link="/security/users/{{user.id}}"></button-link-edit>
-                </td>
-                <td>{{user.username}}</td>
+                <th scope="col">
+                    <order-button property="username" [disabled]="isLoading()"></order-button>username
+                </th>
+                <th scope="col"></th>
             </tr>
-        </ng-template>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            <ng-template ngFor let-user [ngForOf]="users">
+                <tr>
+                    <td>{{user.username}}</td>
+                    <td>
+                        <button-link-edit link="/security/users/{{user.id}}"></button-link-edit>
+                        <button-delete (click)="select(user)" data-bs-toggle="modal"
+                          data-bs-target="#deleteModal"></button-delete>
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</layout-data-list>
