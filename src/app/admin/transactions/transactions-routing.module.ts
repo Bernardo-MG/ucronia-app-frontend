@@ -10,7 +10,7 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: TransactionListViewComponent },
+            { path: '', component: TransactionCalendarViewComponent },
             { path: 'list', component: TransactionListViewComponent },
             { path: 'calendar', component: TransactionCalendarViewComponent },
             { path: 'create', component: TransactionCreateViewComponent },

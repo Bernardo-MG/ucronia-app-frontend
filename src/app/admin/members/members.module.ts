@@ -10,6 +10,8 @@ import { MemberCreateViewComponent } from './views/member-create-view/member-cre
 import { MemberEditViewComponent } from './views/member-edit-view/member-edit-view.component';
 import { MemberListViewComponent } from './views/member-list-view/member-list-view.component';
 import { LayoutModule } from '@app/layout/layout.module';
+import { MemberStatsViewComponent } from './views/member-stats-view/member-stats-view.component';
+import { MemberTabsComponent } from './components/member-tabs/member-tabs.component';
 
 
 
@@ -18,7 +20,9 @@ import { LayoutModule } from '@app/layout/layout.module';
     MemberFormComponent,
     MemberListViewComponent,
     MemberEditViewComponent,
-    MemberCreateViewComponent
+    MemberCreateViewComponent,
+    MemberStatsViewComponent,
+    MemberTabsComponent
   ],
   imports: [
     CommonModule,

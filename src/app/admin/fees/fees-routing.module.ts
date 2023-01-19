@@ -10,7 +10,7 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: FeeListViewComponent },
+            { path: '', component: FeeCalendarViewComponent },
             { path: 'list', component: FeeListViewComponent },
             { path: 'calendar', component: FeeCalendarViewComponent },
             { path: 'create', component: FeeCreateViewComponent },
