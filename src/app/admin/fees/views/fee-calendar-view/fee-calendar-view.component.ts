@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FeeCalendar } from '@app/models/fee-calendar';
 import { FeeCalendarRange } from '../../models/fee-calendar-range';
+import { FeeCalendarRow } from '../../models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
 
 @Component({
@@ -15,57 +16,66 @@ export class FeeCalendarViewComponent {
    */
   public loading = false;
 
-  public feeYears: FeeCalendar[] = [];
-
   public range = new FeeCalendarRange();
 
-  public year = -1;
-
   public onlyActive = false;
+
+  public calendar: FeeCalendarRow[] = [];
+
+  public year = new Date().getFullYear();
+
+  private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   constructor(
     private service: AdminFeeService
   ) {
-    this.year = new Date().getFullYear();
-    this.toCurrentYear();
+    this.load();
     this.service.getRange().subscribe(d => this.range = d);
-  }
-
-  public toPreviousYear() {
-    this.year = this.year - 1;
-    this.toCurrentYear();
-  }
-
-  public toNextYear() {
-    this.year = this.year + 1;
-    this.toCurrentYear();
-  }
-
-  public isAbleToGoForwards() {
-    return ((!this.loading) && (this.range.end > 0) && (this.year < this.range.end));
-  }
-
-  public isAbleToGoBackwards() {
-    return ((!this.loading) && (this.range.start > 0) && (this.year > this.range.start));
   }
 
   public onFilterActiveMembers(event: any) {
     this.onlyActive = event.checked;
-    this.toCurrentYear();
+    this.load();
   }
 
-  private toCurrentYear() {
+  public onYearChange(year: number) {
+    this.year = year;
+  }
+
+  private load() {
     this.loading = true;
 
     this.service.getAllForYear(this.year, this.onlyActive).subscribe({
       next: years => {
-        this.feeYears = years;
+        this.calendar = this.transformToCalendar(years);
         this.loading = false;
       },
       error: error => {
         // Reactivate view
         this.loading = false;
       }
+    });
+  }
+
+  private transformToCalendar(data: FeeCalendar[]): FeeCalendarRow[] {
+    return data.map(year => {
+      const row = new FeeCalendarRow();
+      row.name = year.name;
+      row.surname = year.surname;
+      row.active = year.active;
+      this.months.forEach(month => {
+        const feeMonth = year.months.find(m => m.month === month);
+        var column;
+
+        if (feeMonth) {
+          column = feeMonth.paid;
+        } else {
+          column = undefined;
+        }
+        row.months.push(column);
+      });
+
+      return row;
     });
   }
 

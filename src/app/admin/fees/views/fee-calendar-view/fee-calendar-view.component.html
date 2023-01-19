@@ -1,18 +1,7 @@
 <h1>fees</h1>
+<!-- Tabs -->
 <admin-fee-tabs [calendarActive]=true></admin-fee-tabs>
-<div class="row text-center">
-  <div class="col-4">
-    <button-backward id="feeYearBackward" (action)="toPreviousYear()" [disabled]="!isAbleToGoBackwards()">
-    </button-backward>
-  </div>
-  <div class="col-4">
-    {{year}}
-  </div>
-  <div class="col-4 ">
-    <button-forward id="feeYearForward" class="end-0" (action)="toNextYear()" [disabled]="!isAbleToGoForwards()">
-    </button-forward>
-  </div>
-</div>
+<!-- Calendar -->
 <div *ngIf="loading; then loading_cue else fee_year"></div>
 <div class="row">
   <ng-template #loading_cue>
@@ -29,7 +18,8 @@
       </div>
     </div>
     <div class="col-12">
-      <admin-fee-calendar [feeYears]="feeYears"></admin-fee-calendar>
+      <admin-fee-calendar [data]="calendar" [range]="range" [year]="year"
+        (yearChange)="onYearChange($event)"></admin-fee-calendar>
     </div>
   </ng-template>
 </div>
