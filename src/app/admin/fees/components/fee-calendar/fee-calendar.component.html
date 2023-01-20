@@ -2,14 +2,14 @@
 <!-- Controls -->
 <div class="row text-center">
   <div class="col-4">
-    <button-backward id="feeYearBackward" (action)="onGoPrevious()" [disabled]="!isAbleToGoBackwards()">
+    <button-backward id="previousYearButton" (action)="onGoPrevious()" [disabled]="!isAbleToGoPrevious()">
     </button-backward>
   </div>
   <div class="col-4">
     {{year}}
   </div>
   <div class="col-4 ">
-    <button-forward id="feeYearForward" class="end-0" (action)="onGoNext()" [disabled]="!isAbleToGoForwards()">
+    <button-forward id="nextYearButton" class="end-0" (action)="onGoNext()" [disabled]="!isAbleToGoNext()">
     </button-forward>
   </div>
 </div>

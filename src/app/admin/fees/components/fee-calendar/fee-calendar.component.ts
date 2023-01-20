@@ -35,11 +35,11 @@ export class FeeCalendarComponent {
     this.yearChange.emit(this.year);
   }
 
-  public isAbleToGoForwards() {
+  public isAbleToGoNext() {
     return (this.year < this.end);
   }
 
-  public isAbleToGoBackwards() {
+  public isAbleToGoPrevious() {
     return (this.year > this.start);
   }
 

@@ -21,14 +21,16 @@ describe('FeeCalendarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // Range and buttons
+
   it('should disable the forward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#feeYearForward');
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
 
     expect(button.disabled).toEqual(true);
   });
 
   it('should disable the backward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#feeYearBackward');
+    const button = fixture.nativeElement.querySelector('#previousYearButton');
 
     expect(button.disabled).toEqual(true);
   });
@@ -38,7 +40,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2019;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearForward');
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
     expect(button.disabled).toEqual(false);
   });
 
@@ -47,7 +49,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2020;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearForward');
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
     expect(button.disabled).toEqual(true);
   });
 
@@ -56,7 +58,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2021;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearForward');
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
     expect(button.disabled).toEqual(true);
   });
 
@@ -65,7 +67,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2021;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearBackward');
+    const button = fixture.nativeElement.querySelector('#previousYearButton');
     expect(button.disabled).toEqual(false);
   });
 
@@ -74,7 +76,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2020;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearBackward');
+    const button = fixture.nativeElement.querySelector('#previousYearButton');
     expect(button.disabled).toEqual(true);
   });
 
@@ -83,7 +85,7 @@ describe('FeeCalendarComponent', () => {
     component.year = 2019;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#feeYearBackward');
+    const button = fixture.nativeElement.querySelector('#previousYearButton');
     expect(button.disabled).toEqual(true);
   });
 
