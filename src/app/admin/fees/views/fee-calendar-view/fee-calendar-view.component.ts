@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FeeCalendarRange } from '@app/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
@@ -9,7 +9,7 @@ import { AdminFeeService } from '../../services/admin-fee.service';
   templateUrl: './fee-calendar-view.component.html',
   styleUrls: ['./fee-calendar-view.component.sass']
 })
-export class FeeCalendarViewComponent {
+export class FeeCalendarViewComponent implements OnInit {
 
   /**
    * Loading flag. Shows the loading visual cue.
@@ -28,6 +28,9 @@ export class FeeCalendarViewComponent {
     private service: AdminFeeService
   ) {
     this.load(this.year);
+  }
+
+  ngOnInit(): void {
     this.service.getRange().subscribe(d => this.range = d);
   }
 

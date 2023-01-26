@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarNote } from '@app/calendar/models/calendar-note';
+import { TransactionCalendarRange } from '@app/models/transaction-calendar-range';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
@@ -17,7 +18,9 @@ export class TransactionCalendarViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
+  public waiting = false;
+
+  public range = new TransactionCalendarRange();
 
   public date = new Date();
 
@@ -43,6 +46,7 @@ export class TransactionCalendarViewComponent implements OnInit {
         this.load(d);
       }
     });
+    this.service.getRange().subscribe(d => this.range = d);
   }
 
   public onDateChange(date: Date) {
@@ -55,10 +59,6 @@ export class TransactionCalendarViewComponent implements OnInit {
     const formattedDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
     const parameters = { date: formattedDate };
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
-  }
-
-  public isLoading(): boolean {
-    return this.loading;
   }
 
   private load(date: Date) {
@@ -74,7 +74,7 @@ export class TransactionCalendarViewComponent implements OnInit {
     filter.startDate = startDate;
     filter.endDate = endDate;
 
-    this.loading = true
+    this.waiting = true
     this.service.getAll(undefined, filter).subscribe({
       next: page => {
         const transactions = page.content;
@@ -83,11 +83,11 @@ export class TransactionCalendarViewComponent implements OnInit {
           return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
         });
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

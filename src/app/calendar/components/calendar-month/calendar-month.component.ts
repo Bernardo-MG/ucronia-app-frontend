@@ -15,6 +15,14 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public date = new Date();
 
+  @Input() public startYear: number = 0;
+
+  @Input() public startMonth: number = 0;
+
+  @Input() public endYear: number = 0;
+
+  @Input() public endMonth: number = 0;
+
   @Output() public dateChange = new EventEmitter<Date>();
 
   @Output() public pickDate = new EventEmitter<Date>();
@@ -26,6 +34,9 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   constructor() {
+    this.date.setFullYear(0)
+    this.date.setMonth(0);
+    this.date.setDate(1);
     this.date.setHours(0);
     this.date.setMinutes(0);
     this.date.setSeconds(0);
@@ -56,6 +67,34 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     this.date.setMonth(this.date.getMonth() + 1);
     this.loadMonth();
     this.dateChange.emit(this.date);
+  }
+
+  public isAbleToGoNext() {
+    let valid;
+
+    if (this.date.getFullYear() == this.endYear) {
+      // In the same year
+      // Checks month
+      valid = (this.date.getMonth() < this.endMonth);
+    } else {
+      valid = (this.date.getFullYear() < this.endYear);
+    }
+
+    return valid;
+  }
+
+  public isAbleToGoPrevious() {
+    let valid;
+
+    if (this.date.getFullYear() == this.startYear) {
+      // In the same year
+      // Checks month
+      valid = (this.date.getMonth() > this.startMonth);
+    } else {
+      valid = (this.date.getFullYear() > this.startYear);
+    }
+
+    return valid;
   }
 
   public onPickDate(year: number, month: number, day: number | null) {

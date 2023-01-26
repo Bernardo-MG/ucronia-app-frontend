@@ -9,6 +9,7 @@ import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
 import { Transaction } from '@app/models/transaction';
+import { TransactionCalendarRange } from '@app/models/transaction-calendar-range';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
@@ -17,6 +18,8 @@ import { TransactionFilter } from '../models/transaction-filter';
 export class TransactionService {
 
   private transactionUrl = environment.apiUrl + "/transaction";
+
+  private transactionRangeUrl = environment.apiUrl + "/transaction/range";
 
   constructor(
     private client: RequestClient
@@ -64,6 +67,12 @@ export class TransactionService {
 
   public getOne(id: number): Observable<Transaction> {
     const clt: ReadOperations<Transaction> = this.client.read(this.transactionUrl + `/${id}`);
+    return clt.fetchOne().pipe(map(r => r.content));
+  }
+
+  public getRange(): Observable<TransactionCalendarRange> {
+    const clt: ReadPagedOperations<TransactionCalendarRange> = this.client.readPaged(this.transactionRangeUrl);
+
     return clt.fetchOne().pipe(map(r => r.content));
   }
 

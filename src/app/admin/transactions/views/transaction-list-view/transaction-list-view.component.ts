@@ -53,15 +53,22 @@ export class TransactionListViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.routePaginationObserver.subject.subscribe(p => {
-      this.load(p);
+      this.load(p, new TransactionFilter());
     });
 
     this.filterObserver.subject.subscribe(f => {
+      const pagination = this.routePaginationObserver.subject.value;
+      const filter = new TransactionFilter();
+      filter.date = f?.date;
+      filter.startDate = f?.startDate;
+      filter.endDate = f?.endDate;
+
+      // Updates filter data
       this.date = f?.date;
       this.startDate = f?.startDate;
       this.endDate = f?.endDate;
 
-      this.load(undefined);
+      this.load(pagination, filter);
     });
   }
 
@@ -73,7 +80,7 @@ export class TransactionListViewComponent implements OnInit {
     if (this.selected.id > 0) {
       this.service.delete(this.selected.id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination);
+        this.load(pagination, new TransactionFilter());
       });
     }
   }
@@ -82,12 +89,7 @@ export class TransactionListViewComponent implements OnInit {
     this.selected = data;
   }
 
-  private load(pagination: PaginationRequest | undefined) {
-    const filter = new TransactionFilter();
-    filter.date = this.date;
-    filter.startDate = this.startDate;
-    filter.endDate = this.endDate;
-
+  private load(pagination: PaginationRequest | undefined, filter: TransactionFilter) {
     this.loading = true;
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
@@ -105,7 +107,7 @@ export class TransactionListViewComponent implements OnInit {
 
   public reload(): void {
     this.routeActuator.setParameters({ date: this.date, startDate: this.startDate, endDate: this.endDate });
-    this.load(undefined);
+    this.load(undefined, new TransactionFilter());
   }
 
 }
