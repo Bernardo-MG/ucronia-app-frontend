@@ -60,8 +60,9 @@ export class TransactionListViewComponent implements OnInit {
       this.date = f?.date;
       this.startDate = f?.startDate;
       this.endDate = f?.endDate;
+      const pagination = this.routePaginationObserver.subject.value;
 
-      this.load(undefined);
+      this.load(pagination);
     });
   }
 
