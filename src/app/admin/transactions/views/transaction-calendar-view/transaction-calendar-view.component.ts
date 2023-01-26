@@ -46,7 +46,10 @@ export class TransactionCalendarViewComponent implements OnInit {
         this.load(d);
       }
     });
-    this.service.getRange().subscribe(d => this.range = d);
+    this.service.getRange().subscribe(d => {
+      this.range = d;
+      this.load(new Date());
+    });
   }
 
   public onDateChange(date: Date) {
