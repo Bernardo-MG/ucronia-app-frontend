@@ -25,7 +25,9 @@ export class RouteParametersObserver<T> implements ParamsObserver<T> {
       const data = parser.parse(params);
 
       // Updates subject
-      this.subject.next(data);
+      if (this.subject.value !== data) {
+        this.subject.next(data);
+      }
     });
   }
 
