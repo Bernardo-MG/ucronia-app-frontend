@@ -3,11 +3,11 @@ import { AuthenticationContainer } from '@app/security/authentication/service/au
 import { faCircleUser, faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'navigation-account-menu-options',
-  templateUrl: './navigation-account-menu-options.component.html',
-  styleUrls: ['./navigation-account-menu-options.component.sass']
+  selector: 'layout-account-menu-options',
+  templateUrl: './account-menu-options.component.html',
+  styleUrls: ['./account-menu-options.component.sass']
 })
-export class NavigationAccountMenuComponent {
+export class AccountMenuComponent {
 
   public accountIcon = faCircleUser;
 

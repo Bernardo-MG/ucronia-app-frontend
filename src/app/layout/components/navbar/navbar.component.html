@@ -1,5 +1,14 @@
 <nav id="navbar-main" class="navbar navbar-expand-md navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">{{title}}</a>
+    <div>
+      <ul class="nav navbar-nav ms-auto">
+        <ng-template [ngIf]="loggedIn">
+          <li class="nav-item dropdown">
+            <layout-account-menu-options></layout-account-menu-options>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
   </div>
 </nav>

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavigationAccountMenuComponent } from './navigation-account-menu-options.component';
+import { NavigationAccountMenuComponent } from './account-menu-options.component';
 
 describe('NavigationAccountMenuComponent', () => {
   let component: NavigationAccountMenuComponent;

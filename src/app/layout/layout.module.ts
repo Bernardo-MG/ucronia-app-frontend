@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { ControlsModule } from '@app/controls/controls.module';
-import { NavigationModule } from '@app/navigation/navigation.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
 import { HeaderLayoutComponent } from './components/header-layout/header-layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { DataFormComponent } from './data-form/data-form.component';
@@ -18,13 +18,13 @@ import { AssociationLayoutComponent } from './views/association-layout/associati
     DataFormComponent,
     HeaderLayoutComponent,
     NavbarComponent,
-    AssociationLayoutComponent
+    AssociationLayoutComponent,
+    AccountMenuComponent
   ],
   imports: [
     CommonModule,
     ControlsModule,
     ApiUiModule,
-    NavigationModule,
     RouterModule,
     FontAwesomeModule,
     ComponentsModule
