@@ -9,7 +9,7 @@ import { AuthenticationContainer } from '@app/security/authentication/service/au
 })
 export class AssociationLayoutComponent {
 
-  public title = 'Sssociation App Frontend';
+  public title = 'Association App Frontend';
 
   public loggedIn: boolean = false;
 
