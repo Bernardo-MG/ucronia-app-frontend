@@ -2,18 +2,23 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
+import { ComponentsModule } from '@app/components/components.module';
 import { ControlsModule } from '@app/controls/controls.module';
 import { NavigationModule } from '@app/navigation/navigation.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HeaderLayoutComponent } from './components/header-layout/header-layout.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { DataFormComponent } from './data-form/data-form.component';
 import { DataListComponent } from './data-list/data-list.component';
-import { SideMenuLayoutComponent } from './side-menu-layout/side-menu-layout.component';
+import { AssociationLayoutComponent } from './views/association-layout/association-layout.component';
 
 @NgModule({
   declarations: [
     DataListComponent,
-    SideMenuLayoutComponent,
-    DataFormComponent
+    DataFormComponent,
+    HeaderLayoutComponent,
+    NavbarComponent,
+    AssociationLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -21,12 +26,13 @@ import { SideMenuLayoutComponent } from './side-menu-layout/side-menu-layout.com
     ApiUiModule,
     NavigationModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ComponentsModule
   ],
   exports: [
     DataListComponent,
-    SideMenuLayoutComponent,
-    DataFormComponent
+    DataFormComponent,
+    HeaderLayoutComponent
   ]
 })
 export class LayoutModule { }

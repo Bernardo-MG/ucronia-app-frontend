@@ -1,0 +1,11 @@
+<nav class="bg-light rounded border-secondary mt-2" id="{{id}}">
+    <ng-template ngFor let-menu [ngForOf]="menus">
+        <p class="px-3 mt-3 mb-1 fw-bold text-uppercase border-bottom">
+            {{menu.title}}</p>
+        <ul class="nav flex-column">
+            <li class="nav-item" *ngFor="let link of menu.links">
+                <a routerLink="{{link.path}}" class="nav-link" title="{{link.title}}">{{link.title}}</a>
+            </li>
+        </ul>
+    </ng-template>
+</nav>
