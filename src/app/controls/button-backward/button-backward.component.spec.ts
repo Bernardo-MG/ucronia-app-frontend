@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ButtonBackwardComponent } from './button-backward.component';
 
@@ -8,9 +9,14 @@ describe('ButtonBackwardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonBackwardComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        ButtonBackwardComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ButtonBackwardComponent);
     component = fixture.componentInstance;

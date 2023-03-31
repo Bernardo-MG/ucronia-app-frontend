@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { OrderButtonTemplateComponent } from '@app/api-ui/components/order-button-template/order-button-template.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,7 +19,8 @@ describe('OrderButtonComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        OrderButtonComponent
+        OrderButtonComponent,
+        OrderButtonTemplateComponent
       ],
       providers: [
         {

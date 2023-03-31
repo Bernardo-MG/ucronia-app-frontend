@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ApiUiModule } from '@app/api-ui/api-ui.module';
+import { ControlsModule } from '@app/controls/controls.module';
 
 import { DataListComponent } from './data-list.component';
 
@@ -8,9 +11,16 @@ describe('DataListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataListComponent ]
+      imports: [
+        ControlsModule,
+        ApiUiModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        DataListComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DataListComponent);
     component = fixture.componentInstance;

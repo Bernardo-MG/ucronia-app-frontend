@@ -1,6 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CalendarModule } from '@app/calendar/calendar.module';
+import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
 
 import { TransactionCalendarViewComponent } from './transaction-calendar-view.component';
@@ -13,10 +15,12 @@ describe('TransactionCalendarViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        CalendarModule
       ],
       declarations: [
-        TransactionCalendarViewComponent
+        TransactionCalendarViewComponent,
+        TransactionTabsComponent
       ],
       providers: [
         TransactionService

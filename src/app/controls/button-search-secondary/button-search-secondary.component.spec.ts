@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ButtonSearchSecondaryComponent } from './button-search-secondary.component';
 
@@ -8,9 +9,14 @@ describe('ButtonSearchComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonSearchSecondaryComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        ButtonSearchSecondaryComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ButtonSearchSecondaryComponent);
     component = fixture.componentInstance;

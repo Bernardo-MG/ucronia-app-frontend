@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ApiUiModule } from '@app/api-ui/api-ui.module';
+import { LayoutModule } from '@app/layout/layout.module';
+import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
-
 import { TransactionListViewComponent } from './transaction-list-view.component';
 
 describe('TransactionListViewComponent', () => {
@@ -13,10 +16,14 @@ describe('TransactionListViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule,
+        ApiUiModule,
+        ReactiveFormsModule
       ],
       declarations: [
-        TransactionListViewComponent
+        TransactionListViewComponent,
+        TransactionTabsComponent
       ],
       providers: [
         TransactionService

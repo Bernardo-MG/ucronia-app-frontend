@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { OrderButtonTemplateComponent } from './order-button-template.component';
 
@@ -9,7 +10,12 @@ describe('OrderButtonTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OrderButtonTemplateComponent]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        OrderButtonTemplateComponent
+      ]
     })
       .compileComponents();
   });

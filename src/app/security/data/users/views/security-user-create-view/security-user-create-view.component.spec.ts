@@ -1,6 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DataFormComponent } from '@app/layout/data-form/data-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SecurityUserFormComponent } from '../../components/security-user-form/security-user-form.component';
 import { SecurityUserService } from '../../service/security-user.service';
 
 import { SecurityUserCreateViewComponent } from './security-user-create-view.component';
@@ -13,10 +17,14 @@ describe('SecurityUserCreateViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        FontAwesomeModule,
+        ReactiveFormsModule
       ],
       declarations: [
-        SecurityUserCreateViewComponent
+        SecurityUserCreateViewComponent,
+        DataFormComponent,
+        SecurityUserFormComponent
       ],
       providers: [
         SecurityUserService

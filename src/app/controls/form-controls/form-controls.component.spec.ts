@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { FormControlsComponent } from './form-controls.component';
 
@@ -9,7 +10,12 @@ describe('FormControlsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormControlsComponent]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        FormControlsComponent
+      ]
     })
       .compileComponents();
 

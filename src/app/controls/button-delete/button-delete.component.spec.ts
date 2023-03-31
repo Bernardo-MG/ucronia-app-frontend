@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ButtonDeleteComponent } from './button-delete.component';
 
@@ -8,9 +9,14 @@ describe('ButtonDeleteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonDeleteComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        ButtonDeleteComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ButtonDeleteComponent);
     component = fixture.componentInstance;

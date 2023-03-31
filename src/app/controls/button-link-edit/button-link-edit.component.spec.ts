@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { ButtonLinkEditComponent } from './button-link-edit.component';
 
@@ -8,9 +10,15 @@ describe('ButtonLinkEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonLinkEditComponent ]
+      imports: [
+        FontAwesomeModule,
+        RouterTestingModule
+      ],
+      declarations: [
+        ButtonLinkEditComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ButtonLinkEditComponent);
     component = fixture.componentInstance;

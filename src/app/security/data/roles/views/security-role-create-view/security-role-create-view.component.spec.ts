@@ -1,8 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DataFormComponent } from '@app/layout/data-form/data-form.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SecurityRoleFormComponent } from '../../components/security-role-form/security-role-form.component';
 import { SecurityRoleService } from '../../service/security-role.service';
-
 import { SecurityRoleCreateViewComponent } from './security-role-create-view.component';
 
 describe('SecurityRoleCreateViewComponent', () => {
@@ -13,10 +16,14 @@ describe('SecurityRoleCreateViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule
+        RouterTestingModule,
+        FontAwesomeModule,
+        ReactiveFormsModule
       ],
       declarations: [
-        SecurityRoleCreateViewComponent
+        SecurityRoleCreateViewComponent,
+        DataFormComponent,
+        SecurityRoleFormComponent
       ],
       providers: [
         SecurityRoleService

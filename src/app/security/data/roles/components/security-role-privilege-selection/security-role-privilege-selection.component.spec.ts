@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ApiUiModule } from '@app/api-ui/api-ui.module';
 
 import { SecurityRolePrivilegeSelectionComponent } from './security-role-privilege-selection.component';
 
@@ -8,9 +9,14 @@ describe('SecurityRolePrivilegeSelectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityRolePrivilegeSelectionComponent ]
+      imports: [
+        ApiUiModule
+      ],
+      declarations: [
+        SecurityRolePrivilegeSelectionComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(SecurityRolePrivilegeSelectionComponent);
     component = fixture.componentInstance;

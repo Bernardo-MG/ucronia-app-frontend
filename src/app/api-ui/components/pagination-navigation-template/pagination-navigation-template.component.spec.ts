@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { first } from 'rxjs';
-
 import { PaginationNavigationTemplateComponent } from './pagination-navigation-template.component';
 
 describe('PaginationNavigationTemplateComponent', () => {
@@ -10,7 +10,12 @@ describe('PaginationNavigationTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginationNavigationTemplateComponent]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        PaginationNavigationTemplateComponent
+      ]
     })
       .compileComponents();
   });
