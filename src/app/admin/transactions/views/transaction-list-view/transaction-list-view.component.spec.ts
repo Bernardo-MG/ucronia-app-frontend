@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { LayoutModule } from '@app/layout/layout.module';
@@ -19,6 +19,7 @@ describe('TransactionListViewComponent', () => {
         HttpClientTestingModule,
         LayoutModule,
         ApiUiModule,
+        FormsModule,
         ReactiveFormsModule
       ],
       declarations: [

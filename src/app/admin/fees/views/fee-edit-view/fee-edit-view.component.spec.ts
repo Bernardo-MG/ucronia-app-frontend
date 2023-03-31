@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormControlsComponent } from '@app/controls/form-controls/form-controls.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -17,6 +17,7 @@ describe('FeeEditViewComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
+        FormsModule,
         FontAwesomeModule,
         ReactiveFormsModule
       ],
