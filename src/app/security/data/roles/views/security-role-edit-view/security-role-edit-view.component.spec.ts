@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { ControlsModule } from '@app/controls/controls.module';
@@ -22,7 +23,8 @@ describe('SecurityRoleEditViewComponent', () => {
         RouterTestingModule,
         ApiUiModule,
         FontAwesomeModule,
-        ControlsModule
+        ControlsModule,
+        ReactiveFormsModule
       ],
       declarations: [
         SecurityRoleEditViewComponent,
