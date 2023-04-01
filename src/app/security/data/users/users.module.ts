@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityUserFormComponent } from './components/security-user-form/security-user-form.component';
@@ -29,7 +28,6 @@ import { SecurityUserListViewComponent } from './views/security-user-list-view/s
     UserRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    ApiUiModule,
     CoreModule
   ],
   providers: [

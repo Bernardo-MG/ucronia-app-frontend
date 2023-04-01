@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
-
+import { CoreModule } from '@app/core/core.module';
 import { SecurityUserRoleSelectionComponent } from './security-user-role-selection.component';
 
 describe('SecurityUserRoleSelectionComponent', () => {
@@ -10,7 +9,7 @@ describe('SecurityUserRoleSelectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ApiUiModule
+        CoreModule
       ],
       declarations: [ 
         SecurityUserRoleSelectionComponent 

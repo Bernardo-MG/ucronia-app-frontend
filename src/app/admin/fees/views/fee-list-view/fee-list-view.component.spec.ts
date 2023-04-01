@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { CoreModule } from '@app/core/core.module';
 import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeService } from '../../services/fee.service';
@@ -18,7 +17,6 @@ describe('FeeListViewComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         CoreModule,
-        ApiUiModule,
         FormsModule,
         ReactiveFormsModule
       ],

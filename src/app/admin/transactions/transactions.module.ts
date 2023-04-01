@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { CalendarModule } from '@app/calendar/calendar.module';
 import { CoreModule } from '@app/core/core.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
@@ -29,7 +28,6 @@ import { TransactionListViewComponent } from './views/transaction-list-view/tran
     TransactionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ApiUiModule,
     CoreModule,
     CalendarModule
   ],

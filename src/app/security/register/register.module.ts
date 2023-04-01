@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRegisterFormComponent } from './components/security-register-form/security-register-form.component';
@@ -21,8 +20,7 @@ import { SecurityRegisterViewComponent } from './views/security-register-view/se
     RegisterRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    CoreModule,
-    ApiUiModule
+    CoreModule
   ],
   providers: [
     SecurityRegisterService

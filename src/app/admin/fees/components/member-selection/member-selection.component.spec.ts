@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
-
+import { CoreModule } from '@app/core/core.module';
 import { MemberSelectionComponent } from './member-selection.component';
 
 describe('MemberSelectionComponent', () => {
@@ -10,7 +9,7 @@ describe('MemberSelectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ApiUiModule
+        CoreModule
       ],
       declarations: [
         MemberSelectionComponent

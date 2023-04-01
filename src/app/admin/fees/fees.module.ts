@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
@@ -34,8 +33,7 @@ import { FeeListViewComponent } from './views/fee-list-view/fee-list-view.compon
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    CoreModule,
-    ApiUiModule
+    CoreModule
   ],
   providers: [
     FeeService

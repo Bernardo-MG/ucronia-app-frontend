@@ -1,8 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { FormControlsComponent } from '@app/controls/form-controls/form-controls.component';
+import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
@@ -25,11 +24,10 @@ describe('FeeCreateViewComponent', () => {
         FontAwesomeModule,
         FormsModule,
         ReactiveFormsModule,
-        ApiUiModule
+        CoreModule
       ],
       declarations: [
         FeeCreateViewComponent,
-        FormControlsComponent,
         FeeFormComponent,
         MemberSelectionComponent
       ],

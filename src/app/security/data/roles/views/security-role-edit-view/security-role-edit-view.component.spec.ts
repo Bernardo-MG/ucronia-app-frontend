@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ApiUiModule } from '@app/api-ui/api-ui.module';
 import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -20,7 +19,6 @@ describe('SecurityRoleEditViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ApiUiModule,
         FontAwesomeModule,
         CoreModule,
         ReactiveFormsModule
