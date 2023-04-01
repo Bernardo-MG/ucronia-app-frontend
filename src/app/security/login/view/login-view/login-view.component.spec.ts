@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ControlsModule } from '@app/controls/controls.module';
+import { CoreModule } from '@app/core/core.module';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { LoginService } from '../../service/login.service';
 import { LoginViewComponent } from './login-view.component';
@@ -17,7 +17,7 @@ describe('LoginViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ControlsModule,
+        CoreModule,
         ReactiveFormsModule,
       ],
       declarations: [

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
-import { AssociationLayoutComponent } from './layout/views/association-layout/association-layout.component';
+import { AssociationLayoutComponent } from './core/views/association-layout/association-layout.component';
 import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
 import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
 

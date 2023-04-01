@@ -5,8 +5,6 @@ import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Transaction } from '@app/models/transaction';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
-import { RouteParametersObserver } from '@app/route/observer/route-params-observer';
-import { filter } from 'rxjs';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';

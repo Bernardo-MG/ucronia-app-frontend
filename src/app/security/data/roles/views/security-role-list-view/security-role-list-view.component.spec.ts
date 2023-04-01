@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { LayoutModule } from '@app/layout/layout.module';
+import { CoreModule } from '@app/core/core.module';
 import { SecurityRoleService } from '../../service/security-role.service';
 import { SecurityRoleListViewComponent } from './security-role-list-view.component';
 
@@ -15,7 +15,7 @@ describe('SecurityRoleListViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        LayoutModule,
+        CoreModule,
         ApiUiModule
       ],
       declarations: [ 

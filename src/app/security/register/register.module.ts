@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { ControlsModule } from '@app/controls/controls.module';
+import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRegisterFormComponent } from './components/security-register-form/security-register-form.component';
 import { RegisterRoutingModule } from './register-routing.module';
@@ -21,7 +21,7 @@ import { SecurityRegisterViewComponent } from './views/security-register-view/se
     RegisterRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    ControlsModule,
+    CoreModule,
     ApiUiModule
   ],
   providers: [

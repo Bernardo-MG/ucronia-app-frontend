@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { ControlsModule } from '@app/controls/controls.module';
-import { LayoutModule } from '@app/layout/layout.module';
+import { CoreModule } from '@app/core/core.module';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberTabsComponent } from './components/member-tabs/member-tabs.component';
 import { MembersRoutingModule } from './members-routing.module';
@@ -28,9 +27,8 @@ import { MemberStatsViewComponent } from './views/member-stats-view/member-stats
     CommonModule,
     MembersRoutingModule,
     ReactiveFormsModule,
-    ControlsModule,
-    ApiUiModule,
-    LayoutModule
+    CoreModule,
+    ApiUiModule
   ],
   exports: [
     MemberFormComponent

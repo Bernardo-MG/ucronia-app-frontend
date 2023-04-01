@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlsModule } from '@app/controls/controls.module';
+import { CoreModule } from '@app/core/core.module';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountChangePasswordFormComponent } from './components/account-change-password-form/account-change-password-form.component';
 import { AccountSideMenuOptionsComponent } from './components/account-side-menu-options/account-side-menu-options.component';
@@ -25,7 +25,7 @@ import { AccountProfileViewComponent } from './views/account-profile-view/accoun
     AccountRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ControlsModule
+    CoreModule
   ],
   providers: [
     AccountService

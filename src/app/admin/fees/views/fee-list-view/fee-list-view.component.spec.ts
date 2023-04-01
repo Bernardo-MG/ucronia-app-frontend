@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { LayoutModule } from '@app/layout/layout.module';
+import { CoreModule } from '@app/core/core.module';
 import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeListViewComponent } from './fee-list-view.component';
@@ -17,7 +17,7 @@ describe('FeeListViewComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule,
+        CoreModule,
         ApiUiModule,
         FormsModule,
         ReactiveFormsModule

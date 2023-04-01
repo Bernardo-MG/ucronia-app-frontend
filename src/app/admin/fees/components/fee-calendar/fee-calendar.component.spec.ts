@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonBackwardComponent } from '@app/controls/button-backward/button-backward.component';
+import { ButtonBackwardComponent } from '@app/core/components/button-backward/button-backward.component';
 import { ButtonForwardComponent } from '@app/controls/button-forward/button-forward.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 

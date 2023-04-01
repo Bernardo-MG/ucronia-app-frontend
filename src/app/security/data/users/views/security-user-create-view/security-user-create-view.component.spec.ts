@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataFormComponent } from '@app/layout/data-form/data-form.component';
+import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityUserFormComponent } from '../../components/security-user-form/security-user-form.component';
 import { SecurityUserService } from '../../service/security-user.service';

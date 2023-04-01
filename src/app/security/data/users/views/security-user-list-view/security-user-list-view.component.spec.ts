@@ -2,9 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { LayoutModule } from '@app/layout/layout.module';
+import { CoreModule } from '@app/core/core.module';
 import { SecurityUserService } from '../../service/security-user.service';
-
 import { SecurityUserListViewComponent } from './security-user-list-view.component';
 
 describe('SecurityUserListViewComponent', () => {
@@ -16,7 +15,7 @@ describe('SecurityUserListViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        LayoutModule,
+        CoreModule,
         ApiUiModule
       ],
       declarations: [
