@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ApiUiModule } from '@app/api-ui/api-ui.module';
-import { ComponentsModule } from '@app/components/components.module';
 import { ControlsModule } from '@app/controls/controls.module';
+import { CoreModule } from '@app/core/core.module';
 import { LoginModule } from '@app/security/login/login.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
@@ -26,7 +26,7 @@ import { AssociationLayoutComponent } from './views/association-layout/associati
     ApiUiModule,
     RouterModule,
     FontAwesomeModule,
-    ComponentsModule,
+    CoreModule,
     LoginModule
   ],
   exports: [

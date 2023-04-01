@@ -1,7 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MenuComponent } from './components/menu/menu.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -17,4 +17,4 @@ import { MenuComponent } from './components/menu/menu.component';
     MenuComponent
   ]
 })
-export class ComponentsModule { }
+export class CoreModule { }
