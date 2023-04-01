@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
-import { Role } from '@app/security/models/role';
-import { User } from '@app/security/models/user';
+import { Role } from '@app/core/models/role';
+import { User } from '@app/core/models/user';
 import { SecurityUserService } from '../../service/security-user.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthenticationContainer } from '@app/security/authentication/service/authentication-container.service';
+import { AuthenticationContainer } from '@app/core/services/authentication-container.service';
 import { faCircleUser, faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

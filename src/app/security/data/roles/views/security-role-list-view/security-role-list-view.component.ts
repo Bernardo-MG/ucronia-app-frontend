@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
-import { Role } from '@app/security/models/role';
+import { Role } from '@app/core/models/role';
 import { SecurityRoleService } from '../../service/security-role.service';
 
 @Component({

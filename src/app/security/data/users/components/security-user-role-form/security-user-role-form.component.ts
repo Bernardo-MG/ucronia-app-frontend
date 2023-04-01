@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Role } from '@app/security/models/role';
+import { Role } from '@app/core/models/role';
 
 @Component({
   selector: 'security-user-role-form',

@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { LoginService } from '../../../security/login/service/login.service';
 import { LoginViewComponent } from './login-view.component';
+import { LoginService } from '@app/core/services/login.service';
 
 describe('LoginViewComponent', () => {
   let component: LoginViewComponent;

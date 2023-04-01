@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
 import { AssociationLayoutComponent } from './core/containers/association-layout/association-layout.component';
-import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
-import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
+import { LoggedInGuard } from './core/guards/logged-in.guard';
+import { LoggedOutGuard } from './core/guards/logged-out.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 

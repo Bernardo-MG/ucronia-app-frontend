@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LoginFormUser } from '../../../security/login/model/login-form-user';
+import { LoginFormUser } from '../../models/login-form-user';
 
 /**
  * Login form component. Dumb component for handling the form. Includes checkbox for the 'remember me' functionality.

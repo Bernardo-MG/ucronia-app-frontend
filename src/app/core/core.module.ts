@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
@@ -26,7 +27,7 @@ import { LogoutButtonComponent } from './containers/logout-button/logout-button.
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { PaginationNavigationComponent } from './containers/pagination-navigation/pagination-navigation.component';
 import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginService } from './services/login.service';
 
 
 
@@ -63,6 +64,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    LoginService
   ],
   exports: [
     MenuComponent,

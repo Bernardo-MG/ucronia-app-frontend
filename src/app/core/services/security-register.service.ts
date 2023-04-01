@@ -3,7 +3,7 @@ import { CreateOperations } from '@app/api/request/create-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { RegisterForm } from '../model/register-form';
+import { RegisterForm } from '../models/register-form';
 
 @Injectable()
 export class SecurityRegisterService {

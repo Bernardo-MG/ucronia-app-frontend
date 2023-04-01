@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Role } from '@app/security/models/role';
+import { Role } from '@app/core/models/role';
 
 @Component({
   selector: 'security-role-form',
