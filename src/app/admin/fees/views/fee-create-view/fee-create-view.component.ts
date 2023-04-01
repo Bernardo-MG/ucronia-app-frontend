@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { Fee } from '@app/models/fee';
@@ -10,7 +10,7 @@ import { FeeService } from '../../services/fee.service';
   templateUrl: './fee-create-view.component.html',
   styleUrls: ['./fee-create-view.component.sass']
 })
-export class FeeCreateViewComponent {
+export class FeeCreateViewComponent implements AfterContentInit {
 
   public members: Member[] = [];
 
@@ -26,8 +26,13 @@ export class FeeCreateViewComponent {
 
   constructor(
     private service: FeeService,
-    private router: Router
+    private router: Router,
+    private cdRef: ChangeDetectorRef
   ) { }
+
+  ngAfterContentInit(): void {
+    this.cdRef.detectChanges();
+  }
 
   public onSave(): void {
     this.service.create(this.fee).subscribe(d => {

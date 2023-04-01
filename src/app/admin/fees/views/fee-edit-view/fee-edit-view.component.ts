@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { Fee } from '@app/models/fee';
@@ -10,7 +10,7 @@ import { FeeService } from '../../services/fee.service';
   templateUrl: './fee-edit-view.component.html',
   styleUrls: ['./fee-edit-view.component.sass']
 })
-export class FeeEditViewComponent implements OnInit {
+export class FeeEditViewComponent implements OnInit, AfterContentInit {
 
   public members: Member[] = [];
 
@@ -26,8 +26,13 @@ export class FeeEditViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: FeeService
+    private service: FeeService,
+    private cdRef: ChangeDetectorRef
   ) { }
+
+  ngAfterContentInit(): void {
+    this.cdRef.detectChanges();
+  }
 
   public ngOnInit(): void {
     this.onGoToMembersPage(0);
