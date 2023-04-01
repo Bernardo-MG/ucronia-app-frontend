@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormControlsComponent } from '@app/controls/form-controls/form-controls.component';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
@@ -29,7 +28,6 @@ describe('FeeEditViewComponent', () => {
       ],
       declarations: [
         FeeEditViewComponent,
-        FormControlsComponent,
         FeeFormComponent,
         MemberSelectionComponent
       ],
