@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CalendarModule } from '@app/calendar/calendar.module';
 import { CoreModule } from '@app/core/core.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionTabsComponent } from './components/transaction-tabs/transaction-tabs.component';
@@ -28,8 +27,7 @@ import { TransactionListViewComponent } from './views/transaction-list-view/tran
     TransactionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreModule,
-    CalendarModule
+    CoreModule
   ],
   providers: [
     TransactionService

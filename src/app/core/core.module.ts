@@ -23,6 +23,7 @@ import { LogoutButtonComponent } from './containers/logout-button/logout-button.
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { PaginationNavigationComponent } from './containers/pagination-navigation/pagination-navigation.component';
 import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
+import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 
 
 
@@ -48,7 +49,8 @@ import { PaginationSizeSelectorComponent } from './containers/pagination-size-se
     OrderButtonTemplateComponent,
     PaginationNavigationComponent,
     OrderButtonComponent,
-    PaginationSizeSelectorComponent
+    PaginationSizeSelectorComponent,
+    CalendarMonthComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +76,8 @@ import { PaginationSizeSelectorComponent } from './containers/pagination-size-se
     OrderButtonTemplateComponent,
     PaginationNavigationComponent,
     OrderButtonComponent,
-    PaginationSizeSelectorComponent
+    PaginationSizeSelectorComponent,
+    CalendarMonthComponent
   ]
 })
 export class CoreModule { }
