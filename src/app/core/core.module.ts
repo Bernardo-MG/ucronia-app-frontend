@@ -9,21 +9,24 @@ import { ButtonForwardComponent } from './components/button-forward/button-forwa
 import { ButtonLinkCreateComponent } from './components/button-link-create/button-link-create.component';
 import { ButtonLinkEditComponent } from './components/button-link-edit/button-link-edit.component';
 import { ButtonSearchSecondaryComponent } from './components/button-search-secondary/button-search-secondary.component';
+import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 import { CueLoadingComponent } from './components/cue-waiting/cue-waiting.component';
 import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
 import { PaginationNavigationTemplateComponent } from './components/pagination-navigation-template/pagination-navigation-template.component';
 import { PaginationSizeSelectorTemplateComponent } from './components/pagination-size-selector-template/pagination-size-selector-template.component';
 import { AssociationLayoutComponent } from './containers/association-layout/association-layout.component';
+import { LoginViewComponent } from './containers/login-view/login-view.component';
 import { LogoutButtonComponent } from './containers/logout-button/logout-button.component';
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { PaginationNavigationComponent } from './containers/pagination-navigation/pagination-navigation.component';
 import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
-import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -50,12 +53,16 @@ import { CalendarMonthComponent } from './components/calendar-month/calendar-mon
     PaginationNavigationComponent,
     OrderButtonComponent,
     PaginationSizeSelectorComponent,
-    CalendarMonthComponent
+    CalendarMonthComponent,
+    LoginFormComponent,
+    LoginViewComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     MenuComponent,
@@ -77,7 +84,8 @@ import { CalendarMonthComponent } from './components/calendar-month/calendar-mon
     PaginationNavigationComponent,
     OrderButtonComponent,
     PaginationSizeSelectorComponent,
-    CalendarMonthComponent
+    CalendarMonthComponent,
+    LoginViewComponent
   ]
 })
 export class CoreModule { }
