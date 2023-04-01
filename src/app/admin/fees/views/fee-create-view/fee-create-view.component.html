@@ -9,14 +9,14 @@
 
 <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
 
+<ng-template #member_selection>
+  <admin-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+    (goToPage)="onGoToMembersPage($event)">
+  </admin-member-selection>
+</ng-template>
 <ng-template #fee_edition>
   <form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></form-controls>
   <admin-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()"
     (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
   </admin-form-fee>
-</ng-template>
-<ng-template #member_selection>
-  <admin-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
-    (goToPage)="onGoToMembersPage($event)">
-  </admin-member-selection>
 </ng-template>
