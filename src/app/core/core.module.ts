@@ -27,7 +27,7 @@ import { LogoutButtonComponent } from './containers/logout-button/logout-button.
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { PaginationNavigationComponent } from './containers/pagination-navigation/pagination-navigation.component';
 import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
-import { LoginService } from './services/login.service';
+import { SecurityModule } from './security/security.module';
 
 
 
@@ -63,10 +63,8 @@ import { LoginService } from './services/login.service';
     RouterModule,
     FontAwesomeModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
-  providers: [
-    LoginService
+    ReactiveFormsModule,
+    SecurityModule
   ],
   exports: [
     MenuComponent,

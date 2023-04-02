@@ -2,9 +2,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SecurityRegisterService } from '@app/core/services/security-register.service';
 import { SecurityRegisterFormComponent } from '../../components/security-register-form/security-register-form.component';
 import { SecurityRegisterViewComponent } from './security-register-view.component';
+import { SecurityRegisterService } from '@app/core/security/services/security-register.service';
 
 describe('SecurityRegisterViewComponent', () => {
   let component: SecurityRegisterViewComponent;

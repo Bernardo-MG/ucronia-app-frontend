@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginService } from '@app/core/services/login.service';
+import { LoginService } from '@app/core/security/services/login.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LogoutButtonComponent } from './logout-button.component';
 

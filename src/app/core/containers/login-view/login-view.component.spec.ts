@@ -3,9 +3,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
+import { LoginService } from '@app/core/security/services/login.service';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { LoginViewComponent } from './login-view.component';
-import { LoginService } from '@app/core/services/login.service';
 
 describe('LoginViewComponent', () => {
   let component: LoginViewComponent;

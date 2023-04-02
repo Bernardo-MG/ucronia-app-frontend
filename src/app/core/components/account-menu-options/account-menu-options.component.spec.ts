@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginModule } from '@app/security/login/login.module';
+import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccountMenuComponent } from './account-menu-options.component';
 
@@ -14,7 +14,7 @@ describe('AccountMenuComponent', () => {
       imports: [
         RouterTestingModule,
         FontAwesomeModule,
-        LoginModule,
+        CoreModule,
         HttpClientTestingModule
       ],
       declarations: [

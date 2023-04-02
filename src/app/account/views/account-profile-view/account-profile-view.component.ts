@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { UserStatus } from '@app/core/models/user-status';
-import { AuthenticationContainer } from '@app/core/services/authentication-container.service';
+import { UserStatus } from '@app/core/security/models/user-status';
+import { AuthenticationContainer } from '@app/core/security/services/authentication-container.service';
 
 @Component({
   selector: 'account-profile-view',

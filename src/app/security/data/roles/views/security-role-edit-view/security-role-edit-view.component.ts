@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
-import { Privilege } from '@app/core/models/privilege';
-import { Role } from '@app/core/models/role';
+import { Privilege } from '@app/core/security/models/privilege';
 import { SecurityRoleService } from '../../service/security-role.service';
+import { Role } from '@app/core/security/models/role';
 
 @Component({
   selector: 'security-role-edit-view',

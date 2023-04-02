@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageInfo } from '@app/api/models/page-info';
-import { Privilege } from '@app/core/models/privilege';
+import { Privilege } from '@app/core/security/models/privilege';
 
 @Component({
   selector: 'security-role-privilege-selection',

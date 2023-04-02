@@ -11,7 +11,6 @@ const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminMod
 
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 
-const loginModule = () => import('@app/security/login/login.module').then(m => m.LoginModule);
 const roleModule = () => import('@app/security/data/roles/roles.module').then(m => m.RolesModule);
 const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
 const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
@@ -38,8 +37,6 @@ const routes: Routes = [
       }
     ]
   },
-  // Login
-  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
   // Account
   {
     path: 'account', component: AccountLayoutComponent, children: [
