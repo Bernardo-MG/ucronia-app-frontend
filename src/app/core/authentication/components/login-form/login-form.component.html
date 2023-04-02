@@ -32,7 +32,7 @@
         <div class="d-grid gap-2">
             <button [disabled]="!isLoginEnabled()" class="btn btn-primary" [attr.aria-disabled]="!isLoginEnabled()"
                 aria-label="Login">
-                <cue-waiting *ngIf="loading"></cue-waiting> Login
+                <icon-waiting *ngIf="loading"></icon-waiting> Login
             </button>
         </div>
     </div>

@@ -1,10 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationTemplateComponent } from '../pagination-template/pagination-template.component';
 import { PaginationComponent } from './pagination.component';
-import { BackwardIconComponent } from '@app/shared/icons/icon-backward/icon-backward.component';
-import { ForwardIconComponent } from '@app/shared/icons/icon-forward/icon-forward.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent;
@@ -18,9 +16,7 @@ describe('PaginationComponent', () => {
       ],
       declarations: [
         PaginationComponent,
-        PaginationTemplateComponent,
-        BackwardIconComponent,
-        ForwardIconComponent
+        PaginationTemplateComponent
       ]
     })
       .compileComponents();

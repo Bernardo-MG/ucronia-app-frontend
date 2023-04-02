@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CueLoadingComponent } from './cue-waiting.component';
+import { CueLoadingComponent } from './icon-waiting.component';
 
 describe('CueLoadingComponent', () => {
   let component: CueLoadingComponent;

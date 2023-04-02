@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
+import { AuthenticationContainer } from './authentication-container.service';
 import { LoginService } from './login.service';
 
 describe('LoginService', () => {
@@ -12,7 +12,8 @@ describe('LoginService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        LoginService
+        LoginService,
+        AuthenticationContainer
       ]
     });
     service = TestBed.inject(LoginService);

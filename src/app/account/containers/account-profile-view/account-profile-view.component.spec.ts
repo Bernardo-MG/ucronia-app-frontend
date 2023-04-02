@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { AccountProfileViewComponent } from './account-profile-view.component';
 
 describe('AccountProfileViewComponent', () => {
@@ -8,9 +8,14 @@ describe('AccountProfileViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountProfileViewComponent ]
+      declarations: [
+        AccountProfileViewComponent
+      ],
+      providers: [
+        AuthenticationContainer
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccountProfileViewComponent);
     component = fixture.componentInstance;
