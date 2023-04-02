@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CueLoadingComponent } from './cue-waiting.component';
 
 describe('CueLoadingComponent', () => {
@@ -8,9 +8,14 @@ describe('CueLoadingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CueLoadingComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        CueLoadingComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CueLoadingComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconEditComponent } from './icon-edit.component';
 
 describe('IconEditComponent', () => {
@@ -8,9 +8,14 @@ describe('IconEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconEditComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        IconEditComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(IconEditComponent);
     component = fixture.componentInstance;
