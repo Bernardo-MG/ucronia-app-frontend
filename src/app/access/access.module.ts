@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RegisterModule } from './register/register.module';
 import { RolesModule } from './roles/roles.module';
 import { UsersModule } from './users/users.module';
+import { AccessRoutingModule } from './access-routing.module';
 
 
 
@@ -12,7 +13,8 @@ import { UsersModule } from './users/users.module';
     CommonModule,
     UsersModule,
     RolesModule,
-    RegisterModule
+    RegisterModule,
+    AccessRoutingModule
   ]
 })
 export class AccessModule { }

@@ -10,9 +10,7 @@ const associationModule = () => import('@app/association/association.module').th
 
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 
-const roleModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
-const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
-const registerModule = () => import('@app/access/register/register.module').then(m => m.RegisterModule);
+const accessModule = () => import('@app/access/access.module').then(m => m.AccessModule);
 
 const routes: Routes = [
   // Main app
@@ -21,19 +19,9 @@ const routes: Routes = [
       // Front page
       { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
       // Admin
-      {
-        path: '', children: [
-          { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] }
-        ]
-      },
+      { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] },
       // Security
-      {
-        path: 'security', children: [
-          { path: 'roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
-          { path: 'users', loadChildren: userModule, canActivate: [LoggedInGuard] },
-          { path: 'register', loadChildren: registerModule, canActivate: [LoggedInGuard] }
-        ]
-      }
+      { path: 'security', loadChildren: accessModule, canActivate: [LoggedInGuard] }
     ]
   },
   // Account
