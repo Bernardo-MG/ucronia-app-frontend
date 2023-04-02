@@ -1,6 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
-import { ParamsObserver } from "@app/route/observer/params-observer";
-import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
+import { ParamsObserver } from "@app/shared/route/observer/params-observer";
+import { RouteParametersObserver } from "@app/shared/route/observer/route-params-observer";
 import { TransactionFilter } from "../../models/transaction-filter";
 import { TransactionFilterParser } from "./transaction-filter-parser";
 

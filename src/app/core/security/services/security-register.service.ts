@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CreateOperations } from '@app/api/request/create-operations';
-import { RequestClient } from '@app/api/request/request-client';
+import { CreateOperations } from '@app/shared/api/request/create-operations';
+import { RequestClient } from '@app/shared/api/request/request-client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { RegisterForm } from '../models/register-form';

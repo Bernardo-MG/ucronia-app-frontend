@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Sort } from '@app/api/models/sort';
-import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
-import { RequestClient } from '@app/api/request/request-client';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
+import { Sort } from '@app/shared/api/models/sort';
+import { ReadPagedOperations } from '@app/shared/api/request/read-paged-operations';
+import { RequestClient } from '@app/shared/api/request/request-client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

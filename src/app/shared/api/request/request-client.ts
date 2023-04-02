@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { CreateOperations } from "./create-operations";
 import { DeleteOperations } from "./delete-operations";
 import { ReadOperations } from "./read-operations";
-import { CreateOperations } from "./create-operations";
-import { UpdateOperations } from "./update-operations";
 import { ReadPagedOperations } from "./read-paged-operations";
+import { UpdateOperations } from "./update-operations";
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PageInfo } from '@app/api/models/page-info';
-import { PaginationRequest } from '@app/api/models/pagination-request';
-import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Fee } from '@app/association/models/fee';
-import { mergeMap, tap } from 'rxjs';
+import { PageInfo } from '@app/shared/api/models/page-info';
+import { PaginationRequest } from '@app/shared/api/models/pagination-request';
+import { PaginationRequestRouteObserver } from '@app/shared/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
 
 @Component({

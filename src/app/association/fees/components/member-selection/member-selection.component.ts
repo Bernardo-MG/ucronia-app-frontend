@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PageInfo } from '@app/api/models/page-info';
 import { Member } from '@app/association/models/member';
+import { PageInfo } from '@app/shared/api/models/page-info';
 
 @Component({
   selector: 'admin-member-selection',

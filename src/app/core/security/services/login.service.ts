@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/api/models/api-response';
+import { ApiResponse } from '@app/shared/api/models/api-response';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
-import { AuthenticationContainer } from './authentication-container.service';
 import { LoginRequest } from '../models/login-request';
 import { LoginStatus } from '../models/login-status';
 import { UserStatus } from '../models/user-status';
+import { AuthenticationContainer } from './authentication-container.service';
 
 @Injectable()
 export class LoginService {

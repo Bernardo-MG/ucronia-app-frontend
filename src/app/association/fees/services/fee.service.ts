@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { PaginatedResponse } from '@app/api/models/paginated-response';
-import { PaginationRequest } from '@app/api/models/pagination-request';
-import { Sort } from '@app/api/models/sort';
-import { CreateOperations } from '@app/api/request/create-operations';
-import { DeleteOperations } from '@app/api/request/delete-operations';
-import { ReadOperations } from '@app/api/request/read-operations';
-import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
-import { RequestClient } from '@app/api/request/request-client';
-import { UpdateOperations } from '@app/api/request/update-operations';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
+import { PaginatedResponse } from '@app/shared/api/models/paginated-response';
+import { PaginationRequest } from '@app/shared/api/models/pagination-request';
+import { Sort } from '@app/shared/api/models/sort';
+import { CreateOperations } from '@app/shared/api/request/create-operations';
+import { DeleteOperations } from '@app/shared/api/request/delete-operations';
+import { ReadOperations } from '@app/shared/api/request/read-operations';
+import { ReadPagedOperations } from '@app/shared/api/request/read-paged-operations';
+import { RequestClient } from '@app/shared/api/request/request-client';
+import { UpdateOperations } from '@app/shared/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

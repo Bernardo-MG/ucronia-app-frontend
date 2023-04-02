@@ -1,7 +1,7 @@
 import { ActivatedRoute } from "@angular/router";
-import { Sort } from "@app/api/models/sort";
-import { ParamsObserver } from "@app/route/observer/params-observer";
-import { RouteParametersObserver } from "@app/route/observer/route-params-observer";
+import { ParamsObserver } from "@app/shared/route/observer/params-observer";
+import { RouteParametersObserver } from "@app/shared/route/observer/route-params-observer";
+import { Sort } from "../../models/sort";
 import { SortParametersParser } from "./parser/sort-parameters-parser";
 
 export class SortRouteObserver implements ParamsObserver<Sort<any>[]> {

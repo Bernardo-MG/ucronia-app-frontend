@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageInfo } from '@app/api/models/page-info';
-import { SecurityUserService } from '../../services/security-user.service';
 import { Role } from '@app/core/security/models/role';
 import { User } from '@app/core/security/models/user';
+import { PageInfo } from '@app/shared/api/models/page-info';
+import { SecurityUserService } from '../../services/security-user.service';
 
 @Component({
   selector: 'security-user-edit-view',

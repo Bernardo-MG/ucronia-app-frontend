@@ -1,5 +1,5 @@
 import { ParamMap } from "@angular/router";
-import { ParametersParser } from "@app/route/observer/parameters-parser";
+import { ParametersParser } from "../observer/parameters-parser";
 
 export class DateParametersParser implements ParametersParser<Date> {
 

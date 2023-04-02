@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sort } from '@app/api/models/sort';
-import { RouteApiActuator } from '@app/api/route/actuator/route-api-actuator';
-import { SortRouteObserver } from '@app/api/route/observer/sort-route-observer';
+import { Sort } from '@app/shared/api/models/sort';
+import { RouteApiActuator } from '@app/shared/api/route/actuator/route-api-actuator';
+import { SortRouteObserver } from '@app/shared/api/route/observer/sort-route-observer';
 
 @Component({
   selector: 'order-button',

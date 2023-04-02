@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { RequestClient } from '@app/api/request/request-client';
-import { UpdateOperations } from '@app/api/request/update-operations';
+import { RequestClient } from '@app/shared/api/request/request-client';
+import { UpdateOperations } from '@app/shared/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PasswordChange } from '../models/password-change';

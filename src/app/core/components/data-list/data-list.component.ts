@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PageInfo } from '@app/api/models/page-info';
+import { PageInfo } from '@app/shared/api/models/page-info';
 
 @Component({
   selector: 'layout-data-list',
