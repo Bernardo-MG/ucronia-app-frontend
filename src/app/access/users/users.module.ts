@@ -14,6 +14,7 @@ import { SecurityUserListViewComponent } from './containers/security-user-list-v
 import { SecurityUserService } from './services/security-user.service';
 import { UserRoutingModule } from './users-routing.module';
 import { CoreModule } from '@app/core/core.module';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 
 
 
@@ -34,7 +35,8 @@ import { CoreModule } from '@app/core/core.module';
     IconsModule,
     SharedModule,
     PaginationModule,
-    CoreModule
+    CoreModule,
+    ButtonsModule
   ],
   providers: [
     SecurityUserService

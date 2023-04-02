@@ -2,12 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ButtonDeleteComponent } from '../shared/buttons/components/button-delete/button-delete.component';
 import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
-import { ButtonDeleteComponent } from './components/button-delete/button-delete.component';
-import { ButtonLinkCreateComponent } from './components/button-link-create/button-link-create.component';
-import { ButtonLinkEditComponent } from './components/button-link-edit/button-link-edit.component';
-import { ButtonSearchSecondaryComponent } from './components/button-search-secondary/button-search-secondary.component';
 import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 import { CueLoadingComponent } from './components/cue-waiting/cue-waiting.component';
 import { DataFormComponent } from './components/data-form/data-form.component';
@@ -24,7 +23,6 @@ import { LogoutButtonComponent } from './containers/logout-button/logout-button.
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
 import { SecurityModule } from './security/security.module';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
 
 
 
@@ -37,9 +35,6 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
     AssociationLayoutComponent,
     DataListComponent,
     FormControlsComponent,
-    ButtonLinkEditComponent,
-    ButtonLinkCreateComponent,
-    ButtonSearchSecondaryComponent,
     ButtonDeleteComponent,
     CueLoadingComponent,
     LogoutButtonComponent,
@@ -58,7 +53,8 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
     FormsModule,
     ReactiveFormsModule,
     SecurityModule,
-    PaginationModule
+    PaginationModule,
+    ButtonsModule
   ],
   exports: [
     MenuComponent,
@@ -66,9 +62,6 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
     AssociationLayoutComponent,
     DataListComponent,
     FormControlsComponent,
-    ButtonLinkCreateComponent,
-    ButtonLinkEditComponent,
-    ButtonSearchSecondaryComponent,
     ButtonDeleteComponent,
     CueLoadingComponent,
     LogoutButtonComponent,

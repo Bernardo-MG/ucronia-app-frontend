@@ -10,6 +10,7 @@ import { TransactionCalendarViewComponent } from './containers/transaction-calen
 import { TransactionCreateViewComponent } from './containers/transaction-create-view/transaction-create-view.component';
 import { TransactionEditViewComponent } from './containers/transaction-edit-view/transaction-edit-view.component';
 import { TransactionListViewComponent } from './containers/transaction-list-view/transaction-list-view.component';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 
 
 
@@ -27,7 +28,8 @@ import { TransactionListViewComponent } from './containers/transaction-list-view
     TransactionsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreModule
+    CoreModule,
+    ButtonsModule
   ],
   providers: [
     TransactionService

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRoleFormComponent } from './components/security-role-form/security-role-form.component';
@@ -30,7 +31,8 @@ import { SecurityRoleService } from './services/security-role.service';
     ReactiveFormsModule,
     FontAwesomeModule,
     CoreModule,
-    PaginationModule
+    PaginationModule,
+    ButtonsModule
   ],
   providers: [
     SecurityRoleService

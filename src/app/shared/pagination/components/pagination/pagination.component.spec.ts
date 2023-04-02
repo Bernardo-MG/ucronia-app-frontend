@@ -5,7 +5,6 @@ import { PaginationComponent } from './pagination.component';
 import { BackwardIconComponent } from '@app/shared/icons/backward-icon/backward-icon.component';
 import { ForwardIconComponent } from '@app/shared/icons/forward-icon/forward-icon.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { ButtonComponent } from '@app/shared/components/button/button.component';
 
 describe('PaginationComponent', () => {
   let component: PaginationComponent;
@@ -20,7 +19,6 @@ describe('PaginationComponent', () => {
       declarations: [
         PaginationComponent,
         PaginationTemplateComponent,
-        ButtonComponent,
         BackwardIconComponent,
         ForwardIconComponent
       ]

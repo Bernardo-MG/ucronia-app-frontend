@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonComponent } from '@app/shared/components/button/button.component';
 import { BackwardIconComponent } from '@app/shared/icons/backward-icon/backward-icon.component';
 import { ForwardIconComponent } from '@app/shared/icons/forward-icon/forward-icon.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -20,7 +19,6 @@ describe('PaginationTemplateComponent', () => {
       declarations: [
         PaginationTemplateComponent,
         PageButtonComponent,
-        ButtonComponent,
         BackwardIconComponent,
         ForwardIconComponent
       ]
