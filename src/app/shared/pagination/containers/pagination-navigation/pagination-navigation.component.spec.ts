@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PaginationNavigationTemplateComponent } from '@app/core/components/pagination-navigation-template/pagination-navigation-template.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PaginationTemplateComponent } from '../../components/pagination-template/pagination-template.component';
 import { PaginationNavigationComponent } from './pagination-navigation.component';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 
-describe('PaginationNavigationTemplateComponent', () => {
+describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;
   let fixture: ComponentFixture<PaginationNavigationComponent>;
 
@@ -12,11 +14,13 @@ describe('PaginationNavigationTemplateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        IconsModule
       ],
       declarations: [
         PaginationNavigationComponent,
-        PaginationNavigationTemplateComponent
+        PaginationTemplateComponent,
+        PaginationComponent
       ]
     })
       .compileComponents();

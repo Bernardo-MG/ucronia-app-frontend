@@ -12,10 +12,6 @@ export class PaginationNavigationComponent implements OnInit {
 
   @Input() public totalPages: number = 0;
 
-  @Input() public first: boolean = false;
-
-  @Input() public last: boolean = false;
-
   @Input() public disabled = false;
 
   public page: number = 0;

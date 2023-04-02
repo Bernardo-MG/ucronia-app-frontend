@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from '@app/core/core.module';
 import { SecurityRolePrivilegeSelectionComponent } from './security-role-privilege-selection.component';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 
 describe('SecurityRolePrivilegeSelectionComponent', () => {
   let component: SecurityRolePrivilegeSelectionComponent;
@@ -9,7 +10,8 @@ describe('SecurityRolePrivilegeSelectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        CoreModule
+        CoreModule,
+        PaginationModule
       ],
       declarations: [
         SecurityRolePrivilegeSelectionComponent

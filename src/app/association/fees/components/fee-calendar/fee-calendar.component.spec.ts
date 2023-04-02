@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonBackwardComponent } from '@app/core/components/button-backward/button-backward.component';
 import { CoreModule } from '@app/core/core.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarComponent } from './fee-calendar.component';
 
@@ -12,7 +12,8 @@ describe('FeeCalendarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         FontAwesomeModule,
-        CoreModule
+        CoreModule,
+        IconsModule
       ],
       declarations: [
         FeeCalendarComponent

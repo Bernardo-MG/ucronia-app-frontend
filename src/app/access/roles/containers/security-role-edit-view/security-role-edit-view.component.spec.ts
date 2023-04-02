@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
 import { CoreModule } from '@app/core/core.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRoleFormComponent } from '../../components/security-role-form/security-role-form.component';
 import { SecurityRolePrivilegeFormComponent } from '../../components/security-role-privilege-form/security-role-privilege-form.component';
@@ -21,7 +22,8 @@ describe('SecurityRoleEditViewComponent', () => {
         RouterTestingModule,
         FontAwesomeModule,
         CoreModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PaginationModule
       ],
       declarations: [
         SecurityRoleEditViewComponent,

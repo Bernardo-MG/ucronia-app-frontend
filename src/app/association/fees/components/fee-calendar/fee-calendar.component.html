@@ -2,15 +2,21 @@
 <!-- Controls -->
 <div class="row text-center">
   <div class="col-4">
-    <button-backward id="previousYearButton" (action)="onGoPrevious()" [disabled]="!isAbleToGoPrevious()">
-    </button-backward>
+    <button id="previousYearButton" type="button" class="page-link" (click)="onGoPrevious()" [class.disabled]="!isAbleToGoPrevious()"
+        [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()"
+        aria-label="Previous page">
+        <dnd5-backward-icon></dnd5-backward-icon>
+    </button>
   </div>
   <div class="col-4">
     {{year}}
   </div>
   <div class="col-4 ">
-    <button-forward id="nextYearButton" class="end-0" (action)="onGoNext()" [disabled]="!isAbleToGoNext()">
-    </button-forward>
+    <button id="nextYearButton" type="button" class="page-link" (click)="onGoNext()" [class.disabled]="!isAbleToGoNext()"
+        [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()"
+        aria-label="Previous page">
+        <dnd5-forward-icon></dnd5-forward-icon>
+    </button>
   </div>
 </div>
 <!-- Data -->

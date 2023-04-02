@@ -1,0 +1,6 @@
+<li class="page-item" [class.active]="active" [class.disabled]="disabled" [attr.aria-disabled]="disabled"
+    [attr.aria-current]="getCurrentLabel()">
+    <button type="button" class="page-link" (click)="onClick()" [disabled]="disabled" [class.disabled]="disabled" [attr.aria-disabled]="disabled" aria-label="Go to page">
+        <ng-content></ng-content>
+    </button>
+</li>
