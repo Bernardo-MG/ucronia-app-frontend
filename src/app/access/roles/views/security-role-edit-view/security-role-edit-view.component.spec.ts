@@ -3,14 +3,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
+import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRoleFormComponent } from '../../components/security-role-form/security-role-form.component';
-import { SecurityRoleService } from '../../service/security-role.service';
-import { SecurityRoleCreateViewComponent } from './security-role-create-view.component';
+import { SecurityRolePrivilegeFormComponent } from '../../components/security-role-privilege-form/security-role-privilege-form.component';
+import { SecurityRoleService } from '../../services/security-role.service';
+import { SecurityRoleEditViewComponent } from './security-role-edit-view.component';
 
-describe('SecurityRoleCreateViewComponent', () => {
-  let component: SecurityRoleCreateViewComponent;
-  let fixture: ComponentFixture<SecurityRoleCreateViewComponent>;
+describe('SecurityRoleEditViewComponent', () => {
+  let component: SecurityRoleEditViewComponent;
+  let fixture: ComponentFixture<SecurityRoleEditViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,12 +20,14 @@ describe('SecurityRoleCreateViewComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         FontAwesomeModule,
+        CoreModule,
         ReactiveFormsModule
       ],
       declarations: [
-        SecurityRoleCreateViewComponent,
+        SecurityRoleEditViewComponent,
         DataFormComponent,
-        SecurityRoleFormComponent
+        SecurityRoleFormComponent,
+        SecurityRolePrivilegeFormComponent
       ],
       providers: [
         SecurityRoleService
@@ -31,7 +35,7 @@ describe('SecurityRoleCreateViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SecurityRoleCreateViewComponent);
+    fixture = TestBed.createComponent(SecurityRoleEditViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

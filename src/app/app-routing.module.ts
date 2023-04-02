@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
 import { AssociationLayoutComponent } from './core/containers/association-layout/association-layout.component';
 import { LoggedInGuard } from './core/guards/logged-in.guard';
-import { LoggedOutGuard } from './core/guards/logged-out.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 
@@ -11,9 +10,9 @@ const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminMod
 
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 
-const roleModule = () => import('@app/security/data/roles/roles.module').then(m => m.RolesModule);
-const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
-const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
+const roleModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
+const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
+const registerModule = () => import('@app/access/register/register.module').then(m => m.RegisterModule);
 
 const routes: Routes = [
   // Main app

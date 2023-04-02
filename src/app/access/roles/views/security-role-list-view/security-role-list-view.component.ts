@@ -3,22 +3,22 @@ import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
-import { SecurityUserService } from '../../service/security-user.service';
-import { User } from '@app/core/security/models/user';
+import { Role } from '@app/core/security/models/role';
+import { SecurityRoleService } from '../../services/security-role.service';
 
 @Component({
-  selector: 'security-user-list-view',
-  templateUrl: './security-user-list-view.component.html',
-  styleUrls: ['./security-user-list-view.component.sass']
+  selector: 'security-role-list-view',
+  templateUrl: './security-role-list-view.component.html',
+  styleUrls: ['./security-role-list-view.component.sass']
 })
-export class SecurityUserListViewComponent implements OnInit {
+export class SecurityRoleListViewComponent implements OnInit {
 
   /**
    * Loading flag.
    */
   public loading = false;
 
-  public users: User[] = [];
+  public roles: Role[] = [];
 
   public pageInfo = new PageInfo();
 
@@ -27,7 +27,7 @@ export class SecurityUserListViewComponent implements OnInit {
   private routePaginationObserver: PaginationRequestRouteObserver;
 
   constructor(
-    private service: SecurityUserService,
+    private service: SecurityRoleService,
     route: ActivatedRoute
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
@@ -40,7 +40,7 @@ export class SecurityUserListViewComponent implements OnInit {
   }
 
   public isLoading(): boolean {
-    return (this.users.length == 0) && this.loading;
+    return (this.roles.length == 0) && this.loading;
   }
 
   public select(data: { id: number }) {
@@ -60,7 +60,7 @@ export class SecurityUserListViewComponent implements OnInit {
     this.loading = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-        this.users = page.content;
+        this.roles = page.content;
         this.pageInfo = page;
         // Reactivate view
         this.loading = false;

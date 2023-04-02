@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from '@app/core/security/models/role';
-import { SecurityRoleService } from '../../service/security-role.service';
+import { SecurityRoleService } from '../../services/security-role.service';
 
 @Component({
   selector: 'security-role-create-view',

@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityUserFormComponent } from './components/security-user-form/security-user-form.component';
 import { SecurityUserRoleFormComponent } from './components/security-user-role-form/security-user-role-form.component';
 import { SecurityUserRoleSelectionComponent } from './components/security-user-role-selection/security-user-role-selection.component';
-import { SecurityUserService } from './service/security-user.service';
+import { SecurityUserService } from './services/security-user.service';
 import { UserRoutingModule } from './users-routing.module';
 import { SecurityUserCreateViewComponent } from './views/security-user-create-view/security-user-create-view.component';
 import { SecurityUserEditViewComponent } from './views/security-user-edit-view/security-user-edit-view.component';

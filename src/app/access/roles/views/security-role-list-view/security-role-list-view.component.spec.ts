@@ -2,12 +2,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { SecurityUserService } from '../../service/security-user.service';
-import { SecurityUserListViewComponent } from './security-user-list-view.component';
+import { SecurityRoleService } from '../../services/security-role.service';
+import { SecurityRoleListViewComponent } from './security-role-list-view.component';
 
-describe('SecurityUserListViewComponent', () => {
-  let component: SecurityUserListViewComponent;
-  let fixture: ComponentFixture<SecurityUserListViewComponent>;
+describe('SecurityRoleListViewComponent', () => {
+  let component: SecurityRoleListViewComponent;
+  let fixture: ComponentFixture<SecurityRoleListViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,16 +16,16 @@ describe('SecurityUserListViewComponent', () => {
         RouterTestingModule,
         CoreModule
       ],
-      declarations: [
-        SecurityUserListViewComponent
+      declarations: [ 
+        SecurityRoleListViewComponent 
       ],
       providers: [
-        SecurityUserService
+        SecurityRoleService
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(SecurityUserListViewComponent);
+    fixture = TestBed.createComponent(SecurityRoleListViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

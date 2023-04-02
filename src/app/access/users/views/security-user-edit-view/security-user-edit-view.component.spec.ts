@@ -3,28 +3,29 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { CoreModule } from '@app/core/core.module';
 import { SecurityUserFormComponent } from '../../components/security-user-form/security-user-form.component';
-import { SecurityUserService } from '../../service/security-user.service';
+import { SecurityUserRoleFormComponent } from '../../components/security-user-role-form/security-user-role-form.component';
+import { SecurityUserService } from '../../services/security-user.service';
+import { SecurityUserEditViewComponent } from './security-user-edit-view.component';
 
-import { SecurityUserCreateViewComponent } from './security-user-create-view.component';
-
-describe('SecurityUserCreateViewComponent', () => {
-  let component: SecurityUserCreateViewComponent;
-  let fixture: ComponentFixture<SecurityUserCreateViewComponent>;
+describe('SecurityUserEditViewComponent', () => {
+  let component: SecurityUserEditViewComponent;
+  let fixture: ComponentFixture<SecurityUserEditViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        CoreModule
       ],
       declarations: [
-        SecurityUserCreateViewComponent,
+        SecurityUserEditViewComponent,
         DataFormComponent,
-        SecurityUserFormComponent
+        SecurityUserFormComponent,
+        SecurityUserRoleFormComponent
       ],
       providers: [
         SecurityUserService
@@ -32,7 +33,7 @@ describe('SecurityUserCreateViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SecurityUserCreateViewComponent);
+    fixture = TestBed.createComponent(SecurityUserEditViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
