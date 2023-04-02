@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouteApiActuator } from '@app/shared/api/route/actuator/route-api-actuator';
-import { PaginationRouteObserver } from '@app/shared/api/route/observer/pagination-route-observer';
+import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
+import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
 
 @Component({
   selector: 'pagination-navigation',

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
-import { PageInfo } from '@app/shared/api/models/page-info';
-import { PaginationRequest } from '@app/shared/api/models/pagination-request';
-import { PaginationRequestRouteObserver } from '@app/shared/api/route/observer/pagination-request-route-observer';
+import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
+import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
 
 @Component({

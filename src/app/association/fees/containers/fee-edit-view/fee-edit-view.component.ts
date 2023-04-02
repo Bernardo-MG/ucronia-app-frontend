@@ -2,7 +2,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular
 import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
-import { PageInfo } from '@app/shared/api/models/page-info';
+import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
 
 @Component({

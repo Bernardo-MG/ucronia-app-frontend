@@ -1,6 +1,6 @@
 import { ParamMap } from "@angular/router";
-import { Pagination } from "@app/shared/api/models/pagination";
-import { ParametersParser } from "@app/shared/route/observer/parameters-parser";
+import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
+import { Pagination } from "../../../models/pagination";
 
 /**
  * Parses a {@link Pagination} from the route parameters.

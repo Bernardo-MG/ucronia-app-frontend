@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Balance } from '@app/association/models/balance';
-import { ReadOperations } from '@app/shared/api/request/read-operations';
-import { RequestClient } from '@app/shared/api/request/request-client';
+import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
+import { RequestClient } from '@app/shared/utils/api/request/request-client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

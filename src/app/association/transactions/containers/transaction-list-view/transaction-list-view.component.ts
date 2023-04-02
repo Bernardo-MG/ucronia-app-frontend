@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
-import { PageInfo } from '@app/shared/api/models/page-info';
-import { PaginationRequest } from '@app/shared/api/models/pagination-request';
-import { PaginationRequestRouteObserver } from '@app/shared/api/route/observer/pagination-request-route-observer';
-import { RouteParametersActuator } from '@app/shared/route/actuator/route-parameters-actuator';
+import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
+import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
+import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';

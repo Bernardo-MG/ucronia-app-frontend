@@ -1,6 +1,6 @@
 import { ActivatedRoute } from "@angular/router";
-import { ParamsObserver } from "@app/shared/route/observer/params-observer";
-import { RouteParametersObserver } from "@app/shared/route/observer/route-params-observer";
+import { ParamsObserver } from "@app/shared/utils/route/observer/params-observer";
+import { RouteParametersObserver } from "@app/shared/utils/route/observer/route-params-observer";
 import { PaginationRequest } from "../../models/pagination-request";
 import { PaginationRequestParametersParser } from "./parser/pagination-request-parameters-parser";
 

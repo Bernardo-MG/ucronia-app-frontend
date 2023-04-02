@@ -1,5 +1,5 @@
 import { ParamMap } from "@angular/router";
-import { ParametersParser } from "@app/shared/route/observer/parameters-parser";
+import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
 import { TransactionFilter } from "../../models/transaction-filter";
 
 export class TransactionFilterParser implements ParametersParser<TransactionFilter> {

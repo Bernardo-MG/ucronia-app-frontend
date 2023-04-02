@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/shared/api/models/api-response';
+import { ApiResponse } from '@app/shared/utils/api/models/api-response';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 import { LoginRequest } from '../models/login-request';

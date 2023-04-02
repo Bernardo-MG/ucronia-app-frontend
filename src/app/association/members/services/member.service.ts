@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Member } from '@app/association/models/member';
-import { PaginatedResponse } from '@app/shared/api/models/paginated-response';
-import { PaginationRequest } from '@app/shared/api/models/pagination-request';
-import { CreateOperations } from '@app/shared/api/request/create-operations';
-import { DeleteOperations } from '@app/shared/api/request/delete-operations';
-import { ReadOperations } from '@app/shared/api/request/read-operations';
-import { ReadPagedOperations } from '@app/shared/api/request/read-paged-operations';
-import { RequestClient } from '@app/shared/api/request/request-client';
-import { UpdateOperations } from '@app/shared/api/request/update-operations';
+import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
+import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
+import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
+import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
+import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
+import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
+import { RequestClient } from '@app/shared/utils/api/request/request-client';
+import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
