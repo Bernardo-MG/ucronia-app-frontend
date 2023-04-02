@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MemberService } from '@app/admin/members/services/member.service';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
 import { Member } from '@app/models/member';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'admin-member-list-view',

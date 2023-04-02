@@ -6,7 +6,7 @@ import { LoggedInGuard } from './core/guards/logged-in.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 
-const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminModule);
+const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 
@@ -23,7 +23,7 @@ const routes: Routes = [
       // Admin
       {
         path: '', children: [
-          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
+          { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] }
         ]
       },
       // Security

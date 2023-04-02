@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'admin-member-create-view',

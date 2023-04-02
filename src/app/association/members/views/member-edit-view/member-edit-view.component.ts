@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MemberService } from '@app/admin/members/services/member.service';
 import { Member } from '@app/models/member';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'admin-member-edit-view',

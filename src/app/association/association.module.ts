@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AdminRoutingModule } from './admin-routing.module';
+import { AssociationRoutingModule } from './association-routing.module';
 
 
 
@@ -8,7 +8,7 @@ import { AdminRoutingModule } from './admin-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AssociationRoutingModule
   ]
 })
-export class AdminModule { }
+export class AssociationModule { }
