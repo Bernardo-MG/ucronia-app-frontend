@@ -8,8 +8,8 @@ import { ReadOperations } from '@app/api/request/read-operations';
 import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
-import { Fee } from '@app/models/fee';
-import { Member } from '@app/models/member';
+import { Fee } from '@app/association/models/fee';
+import { Member } from '@app/association/models/member';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

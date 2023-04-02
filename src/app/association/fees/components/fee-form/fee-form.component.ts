@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Fee } from '@app/models/fee';
-import { Member } from '@app/models/member';
+import { Fee } from '@app/association/models/fee';
+import { Member } from '@app/association/models/member';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

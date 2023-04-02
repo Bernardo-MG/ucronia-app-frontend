@@ -7,7 +7,7 @@ import { ReadOperations } from '@app/api/request/read-operations';
 import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
 import { UpdateOperations } from '@app/api/request/update-operations';
-import { Member } from '@app/models/member';
+import { Member } from '@app/association/models/member';
 import { environment } from 'environments/environment';
 import { map, Observable, ObservedValueOf } from 'rxjs';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CalendarNote } from '@app/core/models/calendar-note';
-import { TransactionCalendarRange } from '@app/models/transaction-calendar-range';
+import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/route/observer/route-params-observer';

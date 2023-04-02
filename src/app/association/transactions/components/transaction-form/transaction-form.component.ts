@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Transaction } from '@app/models/transaction';
+import { Transaction } from '@app/association/models/transaction';
 
 @Component({
   selector: 'admin-form-transaction',

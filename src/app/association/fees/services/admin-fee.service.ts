@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Sort } from '@app/api/models/sort';
 import { ReadPagedOperations } from '@app/api/request/read-paged-operations';
 import { RequestClient } from '@app/api/request/request-client';
-import { FeeCalendarRange } from '@app/models/fee-calendar-range';
-import { FeeCalendarRow } from '@app/models/fee-calendar-row';
-import { UserFeeCalendar } from '@app/models/user-fee-calendar';
+import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

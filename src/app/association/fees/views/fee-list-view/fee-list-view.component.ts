@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
-import { Fee } from '@app/models/fee';
+import { Fee } from '@app/association/models/fee';
 import { mergeMap, tap } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 

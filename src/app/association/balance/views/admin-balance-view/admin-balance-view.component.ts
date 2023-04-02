@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Balance } from '@app/models/balance';
+import { Balance } from '@app/association/models/balance';
 import { AdminBalanceService } from '../../services/admin-balance.service';
 
 @Component({

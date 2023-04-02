@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Member } from '@app/models/member';
+import { Member } from '@app/association/models/member';
 
 @Component({
   selector: 'admin-form-member',

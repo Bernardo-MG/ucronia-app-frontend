@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Transaction } from '@app/models/transaction';
+import { Transaction } from '@app/association/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({

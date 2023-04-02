@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FeeCalendarRange } from '@app/models/fee-calendar-range';
-import { FeeCalendarRow } from '@app/models/fee-calendar-row';
+import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
+import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 
 @Component({
   selector: 'admin-fee-calendar',

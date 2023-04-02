@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PageInfo } from '@app/api/models/page-info';
 import { PaginationRequest } from '@app/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/api/route/observer/pagination-request-route-observer';
-import { Transaction } from '@app/models/transaction';
+import { Transaction } from '@app/association/models/transaction';
 import { RouteParametersActuator } from '@app/route/actuator/route-parameters-actuator';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
