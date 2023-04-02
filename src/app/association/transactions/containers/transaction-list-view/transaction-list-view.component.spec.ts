@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionListViewComponent } from './transaction-list-view.component';
@@ -17,10 +18,11 @@ describe('TransactionListViewComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        CoreModule,
         FormsModule,
         ReactiveFormsModule,
-        ButtonsModule
+        ButtonsModule,
+        PaginationModule,
+        CoreModule
       ],
       declarations: [
         TransactionListViewComponent,

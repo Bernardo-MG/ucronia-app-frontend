@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ButtonDeleteComponent } from '../shared/buttons/components/button-delete/button-delete.component';
+import { AuthenticationModule } from './authentication/authentication.module';
 import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
 import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 import { DataFormComponent } from './components/data-form/data-form.component';
@@ -14,13 +16,9 @@ import { FormControlsComponent } from './components/form-controls/form-controls.
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
-import { PaginationSizeSelectorTemplateComponent } from './components/pagination-size-selector-template/pagination-size-selector-template.component';
 import { AssociationLayoutComponent } from './containers/association-layout/association-layout.component';
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
-import { PaginationSizeSelectorComponent } from './containers/pagination-size-selector/pagination-size-selector.component';
 import { SecurityModule } from './security/security.module';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 
 
 
@@ -28,17 +26,15 @@ import { IconsModule } from '@app/shared/icons/icons.module';
   declarations: [
     MenuComponent,
     NavbarComponent,
-    AccountMenuComponent,
     DataFormComponent,
     AssociationLayoutComponent,
     DataListComponent,
     FormControlsComponent,
     ButtonDeleteComponent,
-    PaginationSizeSelectorTemplateComponent,
     OrderButtonTemplateComponent,
     OrderButtonComponent,
-    PaginationSizeSelectorComponent,
-    CalendarMonthComponent
+    CalendarMonthComponent,
+    AccountMenuComponent
   ],
   imports: [
     CommonModule,
@@ -47,10 +43,10 @@ import { IconsModule } from '@app/shared/icons/icons.module';
     FormsModule,
     ReactiveFormsModule,
     SecurityModule,
-    PaginationModule,
     ButtonsModule,
     AuthenticationModule,
-    IconsModule
+    IconsModule,
+    PaginationModule
   ],
   exports: [
     MenuComponent,
@@ -59,10 +55,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
     DataListComponent,
     FormControlsComponent,
     ButtonDeleteComponent,
-    PaginationSizeSelectorTemplateComponent,
     OrderButtonTemplateComponent,
     OrderButtonComponent,
-    PaginationSizeSelectorComponent,
     CalendarMonthComponent
   ]
 })

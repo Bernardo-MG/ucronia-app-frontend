@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { SecurityUserService } from '../../services/security-user.service';
 import { SecurityUserListViewComponent } from './security-user-list-view.component';
 
@@ -14,6 +15,7 @@ describe('SecurityUserListViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
+        PaginationModule,
         CoreModule
       ],
       declarations: [
