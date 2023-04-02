@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityRegisterViewComponent } from './views/security-register-view/security-register-view.component';
+import { SecurityRegisterViewComponent } from './containers/security-register-view/security-register-view.component';
 
 
 const routes: Routes = [

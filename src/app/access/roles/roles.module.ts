@@ -8,9 +8,9 @@ import { SecurityRolePrivilegeFormComponent } from './components/security-role-p
 import { SecurityRolePrivilegeSelectionComponent } from './components/security-role-privilege-selection/security-role-privilege-selection.component';
 import { RoleRoutingModule } from './roles-routing.module';
 import { SecurityRoleService } from './services/security-role.service';
-import { SecurityRoleCreateViewComponent } from './views/security-role-create-view/security-role-create-view.component';
-import { SecurityRoleEditViewComponent } from './views/security-role-edit-view/security-role-edit-view.component';
-import { SecurityRoleListViewComponent } from './views/security-role-list-view/security-role-list-view.component';
+import { SecurityRoleCreateViewComponent } from './containers/security-role-create-view/security-role-create-view.component';
+import { SecurityRoleEditViewComponent } from './containers/security-role-edit-view/security-role-edit-view.component';
+import { SecurityRoleListViewComponent } from './containers/security-role-list-view/security-role-list-view.component';
 
 
 

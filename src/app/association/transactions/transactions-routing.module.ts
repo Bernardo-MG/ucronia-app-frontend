@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TransactionCalendarViewComponent } from './views/transaction-calendar-view/transaction-calendar-view.component';
-import { TransactionCreateViewComponent } from './views/transaction-create-view/transaction-create-view.component';
-import { TransactionEditViewComponent } from './views/transaction-edit-view/transaction-edit-view.component';
-import { TransactionListViewComponent } from './views/transaction-list-view/transaction-list-view.component';
+import { TransactionCalendarViewComponent } from './containers/transaction-calendar-view/transaction-calendar-view.component';
+import { TransactionCreateViewComponent } from './containers/transaction-create-view/transaction-create-view.component';
+import { TransactionEditViewComponent } from './containers/transaction-edit-view/transaction-edit-view.component';
+import { TransactionListViewComponent } from './containers/transaction-list-view/transaction-list-view.component';
 
 
 const routes: Routes = [

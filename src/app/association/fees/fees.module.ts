@@ -9,10 +9,10 @@ import { FeeTabsComponent } from './components/fee-tabs/fee-tabs.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
-import { FeeCalendarViewComponent } from './views/fee-calendar-view/fee-calendar-view.component';
-import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
-import { FeeEditViewComponent } from './views/fee-edit-view/fee-edit-view.component';
-import { FeeListViewComponent } from './views/fee-list-view/fee-list-view.component';
+import { FeeCalendarViewComponent } from './containers/fee-calendar-view/fee-calendar-view.component';
+import { FeeCreateViewComponent } from './containers/fee-create-view/fee-create-view.component';
+import { FeeEditViewComponent } from './containers/fee-edit-view/fee-edit-view.component';
+import { FeeListViewComponent } from './containers/fee-list-view/fee-list-view.component';
 
 
 

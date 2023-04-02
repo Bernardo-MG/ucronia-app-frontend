@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeeCalendarViewComponent } from './views/fee-calendar-view/fee-calendar-view.component';
-import { FeeCreateViewComponent } from './views/fee-create-view/fee-create-view.component';
-import { FeeEditViewComponent } from './views/fee-edit-view/fee-edit-view.component';
-import { FeeListViewComponent } from './views/fee-list-view/fee-list-view.component';
+import { FeeCalendarViewComponent } from './containers/fee-calendar-view/fee-calendar-view.component';
+import { FeeCreateViewComponent } from './containers/fee-create-view/fee-create-view.component';
+import { FeeEditViewComponent } from './containers/fee-edit-view/fee-edit-view.component';
+import { FeeListViewComponent } from './containers/fee-list-view/fee-list-view.component';
 
 
 const routes: Routes = [

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityRoleCreateViewComponent } from './views/security-role-create-view/security-role-create-view.component';
-import { SecurityRoleEditViewComponent } from './views/security-role-edit-view/security-role-edit-view.component';
-import { SecurityRoleListViewComponent } from './views/security-role-list-view/security-role-list-view.component';
+import { SecurityRoleCreateViewComponent } from './containers/security-role-create-view/security-role-create-view.component';
+import { SecurityRoleEditViewComponent } from './containers/security-role-edit-view/security-role-edit-view.component';
+import { SecurityRoleListViewComponent } from './containers/security-role-list-view/security-role-list-view.component';
 
 
 const routes: Routes = [

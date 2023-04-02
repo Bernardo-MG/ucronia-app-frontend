@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminBalanceViewComponent } from './views/admin-balance-view/admin-balance-view.component';
+import { AdminBalanceViewComponent } from './containers/admin-balance-view/admin-balance-view.component';
 
 
 const routes: Routes = [

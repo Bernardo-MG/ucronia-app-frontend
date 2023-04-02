@@ -5,7 +5,7 @@ import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRegisterFormComponent } from './components/security-register-form/security-register-form.component';
 import { RegisterRoutingModule } from './register-routing.module';
-import { SecurityRegisterViewComponent } from './views/security-register-view/security-register-view.component';
+import { SecurityRegisterViewComponent } from './containers/security-register-view/security-register-view.component';
 
 
 
