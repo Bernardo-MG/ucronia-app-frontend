@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '@app/core/security/models/user';
 import { PageInfo } from '@app/shared/api/models/page-info';
 import { PaginationRequest } from '@app/shared/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/api/route/observer/pagination-request-route-observer';
 import { SecurityUserService } from '../../services/security-user.service';
+import { User } from '@app/core/authentication/models/user';
 
 @Component({
   selector: 'security-user-list-view',

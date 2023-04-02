@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RegisterForm } from '@app/core/security/models/register-form';
-import { SecurityRegisterService } from '@app/core/security/services/security-register.service';
+import { SecurityRegisterService } from '@app/access/register/security-register.service';
+import { RegisterForm } from '@app/core/authentication/models/register-form';
 
 @Component({
   selector: 'app-security-register-view',

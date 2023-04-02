@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { Menu } from '@app/core/models/menu';
-import { AuthenticationContainer } from '@app/core/security/services/authentication-container.service';
 
 @Component({
   selector: 'app-association-layout',

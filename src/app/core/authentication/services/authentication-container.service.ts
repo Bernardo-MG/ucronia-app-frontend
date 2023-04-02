@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserStatus } from '@app/core/authentication/models/user-status';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthenticationContainer {
 
   private userKey = 'user';

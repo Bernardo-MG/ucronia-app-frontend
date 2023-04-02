@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Role } from '@app/core/security/models/role';
-import { User } from '@app/core/security/models/user';
+import { Role } from '@app/core/authentication/models/role';
+import { User } from '@app/core/authentication/models/user';
 import { PaginatedResponse } from '@app/shared/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/api/models/pagination-request';
 import { Sort } from '@app/shared/api/models/sort';

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { RegisterForm } from '@app/core/security/models/register-form';
+import { RegisterForm } from '@app/core/authentication/models/register-form';
 
 @Component({
   selector: 'security-register-form',

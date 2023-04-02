@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '@app/core/authentication/models/user';
 import { SecurityUserService } from '../../services/security-user.service';
-import { User } from '@app/core/security/models/user';
 
 @Component({
   selector: 'security-user-create-view',

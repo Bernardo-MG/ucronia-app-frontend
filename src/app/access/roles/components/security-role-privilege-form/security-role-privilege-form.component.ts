@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Privilege } from '@app/core/security/models/privilege';
+import { Privilege } from '@app/core/authentication/models/privilege';
 
 @Component({
   selector: 'security-role-privilege-form',

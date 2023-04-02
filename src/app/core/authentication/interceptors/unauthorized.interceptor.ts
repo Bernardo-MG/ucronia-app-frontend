@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { environment } from 'environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
-import { AuthenticationContainer } from '../services/authentication-container.service';
 
 /**
  * Unauthorized error interceptor. Logs out the user in session on an authorization error.

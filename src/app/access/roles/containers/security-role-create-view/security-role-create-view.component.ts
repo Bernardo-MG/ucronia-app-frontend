@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Role } from '@app/core/security/models/role';
+import { Role } from '@app/core/authentication/models/role';
 import { SecurityRoleService } from '../../services/security-role.service';
 
 @Component({

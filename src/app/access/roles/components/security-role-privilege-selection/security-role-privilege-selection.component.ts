@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Privilege } from '@app/core/security/models/privilege';
+import { Privilege } from '@app/core/authentication/models/privilege';
 import { PageInfo } from '@app/shared/api/models/page-info';
 
 @Component({

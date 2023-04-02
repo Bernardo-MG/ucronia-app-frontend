@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Role } from '@app/core/security/models/role';
+import { Role } from '@app/core/authentication/models/role';
 import { PageInfo } from '@app/shared/api/models/page-info';
 
 @Component({

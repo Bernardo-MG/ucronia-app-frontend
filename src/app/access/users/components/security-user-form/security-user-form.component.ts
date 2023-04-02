@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '@app/core/security/models/user';
+import { User } from '@app/core/authentication/models/user';
 
 @Component({
   selector: 'security-user-form',

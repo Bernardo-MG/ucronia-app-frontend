@@ -16,7 +16,6 @@ import { FormControlsComponent } from './components/form-controls/form-controls.
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AssociationLayoutComponent } from './containers/association-layout/association-layout.component';
-import { SecurityModule } from './security/security.module';
 
 
 
@@ -38,7 +37,6 @@ import { SecurityModule } from './security/security.module';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
-    SecurityModule,
     ButtonsModule,
     AuthenticationModule,
     IconsModule,
