@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { AuthenticationContainer } from '@app/core/security/services/authentication-container.service';
 import { Observable } from 'rxjs';
-import { AuthenticationContainer } from '../security/services/authentication-container.service';
 
 /**
  * Logged out guard. Allows access only if the user in session is logged out. Otherwise redirects

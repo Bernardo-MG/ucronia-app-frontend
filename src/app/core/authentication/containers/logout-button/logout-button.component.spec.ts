@@ -1,8 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoginService } from '@app/core/security/services/login.service';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LoginService } from '../../services/login.service';
 import { LogoutButtonComponent } from './logout-button.component';
 
 describe('LogoutButtonComponent', () => {
@@ -15,7 +16,8 @@ describe('LogoutButtonComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        IconsModule
       ],
       declarations: [
         LogoutButtonComponent

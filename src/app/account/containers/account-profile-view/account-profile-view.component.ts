@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserStatus } from '@app/core/security/models/user-status';
+import { UserStatus } from '@app/core/authentication/models/user-status';
 import { AuthenticationContainer } from '@app/core/security/services/authentication-container.service';
 
 @Component({

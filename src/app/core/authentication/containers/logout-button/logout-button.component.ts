@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginService } from '@app/core/security/services/login.service';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { LoginService } from '../../services/login.service';
 
 /**
  * Logout button container. Smart component for handling the form. On click logs out.

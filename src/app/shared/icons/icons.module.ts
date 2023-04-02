@@ -5,6 +5,8 @@ import { BackwardIconComponent } from './backward-icon/backward-icon.component';
 import { FastBackwardIconComponent } from './fast-backward-icon/fast-backward-icon.component';
 import { FastForwardIconComponent } from './fast-forward-icon/fast-forward-icon.component';
 import { ForwardIconComponent } from './forward-icon/forward-icon.component';
+import { LogoutIconComponent } from './logout-icon/logout-icon.component';
+import { CueLoadingComponent } from './cue-waiting/cue-waiting.component';
 
 
 
@@ -13,7 +15,9 @@ import { ForwardIconComponent } from './forward-icon/forward-icon.component';
     BackwardIconComponent,
     ForwardIconComponent,
     FastBackwardIconComponent,
-    FastForwardIconComponent
+    FastForwardIconComponent,
+    LogoutIconComponent,
+    CueLoadingComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,9 @@ import { ForwardIconComponent } from './forward-icon/forward-icon.component';
     BackwardIconComponent,
     ForwardIconComponent,
     FastBackwardIconComponent,
-    FastForwardIconComponent
+    FastForwardIconComponent,
+    LogoutIconComponent,
+    CueLoadingComponent
   ]
 })
 export class IconsModule { }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { UserStatus } from '@app/core/authentication/models/user-status';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { UserStatus } from '../models/user-status';
 
 @Injectable({
   providedIn: 'root'
