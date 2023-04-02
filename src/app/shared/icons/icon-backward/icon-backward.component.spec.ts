@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BackwardIconComponent } from './icon-backward.component';
 
-import { FastForwardIconComponent } from './fast-forward-icon.component';
-
-describe('FastForwardIconComponent', () => {
-  let component: FastForwardIconComponent;
-  let fixture: ComponentFixture<FastForwardIconComponent>;
+describe('BackwardIconComponent', () => {
+  let component: BackwardIconComponent;
+  let fixture: ComponentFixture<BackwardIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +12,12 @@ describe('FastForwardIconComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        FastForwardIconComponent
+        BackwardIconComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FastForwardIconComponent);
+    fixture = TestBed.createComponent(BackwardIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { BackwardIconComponent } from './backward-icon/backward-icon.component';
-import { FastBackwardIconComponent } from './fast-backward-icon/fast-backward-icon.component';
-import { FastForwardIconComponent } from './fast-forward-icon/fast-forward-icon.component';
-import { ForwardIconComponent } from './forward-icon/forward-icon.component';
-import { LogoutIconComponent } from './logout-icon/logout-icon.component';
 import { CueLoadingComponent } from './cue-waiting/cue-waiting.component';
+import { BackwardIconComponent } from './icon-backward/icon-backward.component';
+import { IconCreateComponent } from './icon-create/icon-create.component';
+import { DeleteIconComponent } from './icon-delete/icon-delete.component';
+import { IconEditComponent } from './icon-edit/icon-edit.component';
+import { FastBackwardIconComponent } from './icon-fast-backward/icon-fast-backward.component';
+import { FastForwardIconComponent } from './icon-fast-forward/icon-fast-forward.component';
+import { ForwardIconComponent } from './icon-forward/icon-forward.component';
+import { LogoutIconComponent } from './icon-logout/icon-logout.component';
+import { IconSearchComponent } from './icon-search/icon-search.component';
 
 
 
@@ -17,7 +21,11 @@ import { CueLoadingComponent } from './cue-waiting/cue-waiting.component';
     FastBackwardIconComponent,
     FastForwardIconComponent,
     LogoutIconComponent,
-    CueLoadingComponent
+    CueLoadingComponent,
+    DeleteIconComponent,
+    IconCreateComponent,
+    IconEditComponent,
+    IconSearchComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +37,11 @@ import { CueLoadingComponent } from './cue-waiting/cue-waiting.component';
     FastBackwardIconComponent,
     FastForwardIconComponent,
     LogoutIconComponent,
-    CueLoadingComponent
+    CueLoadingComponent,
+    DeleteIconComponent,
+    IconCreateComponent,
+    IconEditComponent,
+    IconSearchComponent
   ]
 })
 export class IconsModule { }

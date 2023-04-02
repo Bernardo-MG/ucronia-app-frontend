@@ -5,7 +5,7 @@
     <button id="previousYearButton" type="button" class="page-link" (click)="onGoPrevious()" [class.disabled]="!isAbleToGoPrevious()"
         [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()"
         aria-label="Previous page">
-        <dnd5-backward-icon></dnd5-backward-icon>
+        <icon-backward></icon-backward>
     </button>
   </div>
   <div class="col-4">
@@ -15,7 +15,7 @@
     <button id="nextYearButton" type="button" class="page-link" (click)="onGoNext()" [class.disabled]="!isAbleToGoNext()"
         [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()"
         aria-label="Previous page">
-        <dnd5-forward-icon></dnd5-forward-icon>
+        <icon-forward></icon-forward>
     </button>
   </div>
 </div>

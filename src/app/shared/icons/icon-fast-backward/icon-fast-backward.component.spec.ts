@@ -1,26 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { ButtonDeleteComponent } from './button-delete.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { FastBackwardIconComponent } from './icon-fast-backward.component';
 
-describe('ButtonDeleteComponent', () => {
-  let component: ButtonDeleteComponent;
-  let fixture: ComponentFixture<ButtonDeleteComponent>;
+describe('FastBackwardIconComponent', () => {
+  let component: FastBackwardIconComponent;
+  let fixture: ComponentFixture<FastBackwardIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule,
-        IconsModule
+        FontAwesomeModule
       ],
       declarations: [
-        ButtonDeleteComponent
+        FastBackwardIconComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ButtonDeleteComponent);
+    fixture = TestBed.createComponent(FastBackwardIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

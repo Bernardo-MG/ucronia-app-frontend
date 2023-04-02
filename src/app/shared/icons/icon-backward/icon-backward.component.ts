@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'dnd5-backward-icon',
-  templateUrl: './backward-icon.component.html',
-  styleUrls: ['./backward-icon.component.sass']
+  selector: 'icon-backward',
+  templateUrl: './icon-backward.component.html',
+  styleUrls: ['./icon-backward.component.sass']
 })
 export class BackwardIconComponent {
 

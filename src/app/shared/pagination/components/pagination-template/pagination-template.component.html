@@ -5,13 +5,13 @@
             <button type="button" class="page-link" (click)="onGoToFirst()" [class.disabled]="isBackwardDisabled()"
                 [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()"
                 aria-label="Previous page">
-                <dnd5-fast-backward-icon></dnd5-fast-backward-icon>
+                <icon-fast-backward></icon-fast-backward>
             </button>
         </li>
         <li class="page-item" [class.disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()">
             <button type="button" class="page-link" (click)="onBackward()" [class.disabled]="isBackwardDisabled()"
                 [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()" aria-label="First page">
-                <dnd5-backward-icon></dnd5-backward-icon>
+                <icon-backward></icon-backward>
             </button>
         </li>
         <!-- Left range -->
@@ -43,13 +43,13 @@
         <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
             <button type="button" class="page-link" (click)="onForward()" [class.disabled]="isForwardDisabled()"
                 [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Next page">
-                <dnd5-forward-icon></dnd5-forward-icon>
+                <icon-forward></icon-forward>
             </button>
         </li>
         <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
             <button type="button" class="page-link" (click)="onGoToLast()" [class.disabled]="isForwardDisabled()"
                 [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Last page">
-                <dnd5-fast-forward-icon></dnd5-fast-forward-icon>
+                <icon-fast-forward></icon-fast-forward>
             </button>
         </li>
     </ul>

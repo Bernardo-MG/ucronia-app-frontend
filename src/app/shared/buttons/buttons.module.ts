@@ -8,6 +8,7 @@ import { ButtonSearchSecondaryComponent } from './components/button-search-secon
 import { ButtonComponent } from './components/button/button.component';
 import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
 import { OrderButtonComponent } from './containers/order-button/order-button.component';
+import { IconsModule } from '../icons/icons.module';
 
 
 
@@ -23,7 +24,8 @@ import { OrderButtonComponent } from './containers/order-button/order-button.com
   imports: [
     CommonModule,
     FontAwesomeModule,
-    RouterModule
+    RouterModule,
+    IconsModule
   ],
   exports: [
     ButtonComponent,

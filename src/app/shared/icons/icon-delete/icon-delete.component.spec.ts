@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LogoutIconComponent } from './logout-icon.component';
+import { DeleteIconComponent } from './icon-delete.component';
 
-describe('LogoutIconComponent', () => {
-  let component: LogoutIconComponent;
-  let fixture: ComponentFixture<LogoutIconComponent>;
+describe('DeleteIconComponent', () => {
+  let component: DeleteIconComponent;
+  let fixture: ComponentFixture<DeleteIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,12 +12,12 @@ describe('LogoutIconComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        LogoutIconComponent
+        DeleteIconComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LogoutIconComponent);
+    fixture = TestBed.createComponent(DeleteIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

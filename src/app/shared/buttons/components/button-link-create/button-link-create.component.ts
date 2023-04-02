@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'button-link-create',
@@ -9,8 +8,6 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 export class ButtonLinkCreateComponent {
 
   @Input() link: string = "";
-
-  public icon = faCirclePlus;
 
   constructor() { }
 
