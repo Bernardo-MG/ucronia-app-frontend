@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeService } from '../../services/fee.service';
@@ -20,7 +21,8 @@ describe('FeeListViewComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         PaginationModule,
-        CoreModule
+        CoreModule,
+        ButtonsModule
       ],
       declarations: [
         FeeListViewComponent,

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { OrderButtonTemplateComponent } from '@app/core/components/order-button-template/order-button-template.component';
+import { OrderButtonTemplateComponent } from '@app/shared/buttons/components/order-button-template/order-button-template.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 

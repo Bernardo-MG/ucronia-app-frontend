@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { SecurityUserRoleFormComponent } from './security-user-role-form.component';
 
 describe('SecurityUserRoleFormComponent', () => {
@@ -11,9 +12,11 @@ describe('SecurityUserRoleFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FormsModule,
         ReactiveFormsModule,
-        CoreModule,
-        RouterTestingModule
+        RouterTestingModule,
+        ButtonsModule,
+        CoreModule
       ],
       declarations: [
         SecurityUserRoleFormComponent

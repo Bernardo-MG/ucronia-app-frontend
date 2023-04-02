@@ -15,9 +15,7 @@ import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
 import { AssociationLayoutComponent } from './containers/association-layout/association-layout.component';
-import { OrderButtonComponent } from './containers/order-button/order-button.component';
 import { SecurityModule } from './security/security.module';
 
 
@@ -31,8 +29,6 @@ import { SecurityModule } from './security/security.module';
     DataListComponent,
     FormControlsComponent,
     ButtonDeleteComponent,
-    OrderButtonTemplateComponent,
-    OrderButtonComponent,
     CalendarMonthComponent,
     AccountMenuComponent
   ],
@@ -55,8 +51,6 @@ import { SecurityModule } from './security/security.module';
     DataListComponent,
     FormControlsComponent,
     ButtonDeleteComponent,
-    OrderButtonTemplateComponent,
-    OrderButtonComponent,
     CalendarMonthComponent
   ]
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Privilege } from '@app/core/security/models/privilege';
 import { Role } from '@app/core/security/models/role';
 import { PageInfo } from '@app/shared/api/models/page-info';
@@ -33,8 +33,7 @@ export class SecurityRoleEditViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: SecurityRoleService,
-    private router: Router
+    private service: SecurityRoleService
   ) { }
 
   ngOnInit(): void {

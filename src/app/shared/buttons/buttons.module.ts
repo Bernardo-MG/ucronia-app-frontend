@@ -6,6 +6,8 @@ import { ButtonLinkCreateComponent } from './components/button-link-create/butto
 import { ButtonLinkEditComponent } from './components/button-link-edit/button-link-edit.component';
 import { ButtonSearchSecondaryComponent } from './components/button-search-secondary/button-search-secondary.component';
 import { ButtonComponent } from './components/button/button.component';
+import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
+import { OrderButtonComponent } from './containers/order-button/order-button.component';
 
 
 
@@ -14,7 +16,9 @@ import { ButtonComponent } from './components/button/button.component';
     ButtonComponent,
     ButtonLinkCreateComponent,
     ButtonLinkEditComponent,
-    ButtonSearchSecondaryComponent
+    ButtonSearchSecondaryComponent,
+    OrderButtonTemplateComponent,
+    OrderButtonComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,8 @@ import { ButtonComponent } from './components/button/button.component';
     ButtonComponent,
     ButtonLinkCreateComponent,
     ButtonLinkEditComponent,
-    ButtonSearchSecondaryComponent
+    ButtonSearchSecondaryComponent,
+    OrderButtonComponent
   ]
 })
 export class ButtonsModule { }
