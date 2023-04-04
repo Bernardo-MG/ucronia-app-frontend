@@ -17,8 +17,8 @@ export class AccountChangePasswordFormComponent {
   @Output() public changePassword = new EventEmitter<PasswordChange>();
 
   checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
-    let pass = group.get('newPassword')?.value;
-    let confirmPass = group.get('passwordRepeat')?.value
+    const pass = group.get('newPassword')?.value;
+    const confirmPass = group.get('passwordRepeat')?.value
     return pass === confirmPass ? null : { notSame: true }
   }
 

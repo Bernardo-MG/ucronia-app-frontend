@@ -1,8 +1,8 @@
 export class CalendarNote {
-  public year: number = 0;
-  public month: number = 0;
-  public day: number = 0;
-  public description: string = "";
+  public year = 0;
+  public month = 0;
+  public day = 0;
+  public description = "";
 
   constructor(year: number, month: number, day: number, description: string) {
     this.year = year;

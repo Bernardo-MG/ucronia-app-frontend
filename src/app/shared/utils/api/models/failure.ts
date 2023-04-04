@@ -1,6 +1,6 @@
 export class Failure {
-    message: string = "";
-    field?: string = "";
-    object?: string = "";
+    message = "";
+    field? = "";
+    object? = "";
     value?: any = "";
 }

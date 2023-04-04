@@ -1,8 +1,8 @@
 export class Member {
-    id: number = -1;
-    name: string = '';
-    surname: string = '';
-    identifier: string = '';
-    phone: string = '';
+    id = -1;
+    name = '';
+    surname = '';
+    identifier = '';
+    phone = '';
     active: boolean= false;
 }

@@ -1,6 +1,6 @@
 export class TransactionCalendarRange {
-    startYear: number = 0;
-    startMonth: number = 0;
-    endYear: number = 0;
-    endMonth: number = 0;
+    startYear = 0;
+    startMonth = 0;
+    endYear = 0;
+    endMonth = 0;
 }

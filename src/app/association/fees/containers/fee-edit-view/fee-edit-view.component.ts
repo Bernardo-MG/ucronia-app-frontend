@@ -18,7 +18,7 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
 
   public membersPageInfo = new PageInfo();
 
-  public fee: Fee = new Fee();
+  public fee = new Fee();
 
   public selectingMember = false;
 
@@ -75,7 +75,7 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
 
   private load(id: string | null): void {
     if (id) {
-      const identifier: number = Number(id);
+      const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.fee = d;

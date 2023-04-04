@@ -19,8 +19,6 @@ export class DataFormComponent {
 
   public saveIcon = faFloppyDisk;
 
-  constructor() { }
-
   public onSave(): void {
     this.save.emit();
   }

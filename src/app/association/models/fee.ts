@@ -1,8 +1,8 @@
 export class Fee {
-    id: number = -1;
-    memberId: number = -1;
-    name: string = '';
-    surname: string = '';
-    date: Date = new Date();
-    paid: boolean = false;
+    id = -1;
+    memberId = -1;
+    name = '';
+    surname = '';
+    date = new Date();
+    paid = false;
 }

@@ -8,11 +8,11 @@ import { faFloppyDisk, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-ic
 })
 export class FormControlsComponent {
 
-  @Input() disabledSave: boolean = false;
+  @Input() disabledSave = false;
 
-  @Input() disabledDelete: boolean = false;
+  @Input() disabledDelete = false;
 
-  @Input() disabledAdd: boolean = false;
+  @Input() disabledAdd = false;
 
   @Output() save = new EventEmitter<void>();
 
@@ -23,8 +23,6 @@ export class FormControlsComponent {
   public saveIcon = faFloppyDisk;
   public deleteIcon = faTrashCan;
   public addIcon = faPlus;
-
-  constructor() { }
 
   public onSave() {
     this.save.emit();

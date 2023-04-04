@@ -9,8 +9,6 @@ export class ButtonSearchSecondaryComponent {
 
   @Output() action = new EventEmitter<number>();
 
-  constructor() { }
-
   public onAction() {
     this.action.emit();
   }

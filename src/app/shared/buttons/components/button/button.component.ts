@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'dnd5-button',
+  selector: 'button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.sass']
 })

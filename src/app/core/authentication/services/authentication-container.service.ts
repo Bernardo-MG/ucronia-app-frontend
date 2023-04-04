@@ -75,7 +75,7 @@ export class AuthenticationContainer {
    * 
    * @param user login details to store
    */
-  public setUserStatus(user: UserStatus, rememberMe: Boolean) {
+  public setUserStatus(user: UserStatus, rememberMe: boolean) {
     this.userSubject.next(user);
 
     if (rememberMe) {

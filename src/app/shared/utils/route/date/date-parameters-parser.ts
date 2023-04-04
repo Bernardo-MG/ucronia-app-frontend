@@ -3,8 +3,6 @@ import { ParametersParser } from "../observer/parameters-parser";
 
 export class DateParametersParser implements ParametersParser<Date> {
 
-  constructor() { }
-
   parse(params: ParamMap): Date | undefined {
     let date;
 

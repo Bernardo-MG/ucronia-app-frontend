@@ -93,7 +93,7 @@ export class SecurityRoleEditViewComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      const identifier: number = Number(id);
+      const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.role = d;

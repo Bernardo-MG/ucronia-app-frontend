@@ -1,7 +1,5 @@
 export class UrlParamsProcessor {
 
-    constructor() { }
-
     public getUrlParamsWithout(parameters: { [key: string]: any }, key: string, selector: (sort: any) => boolean): { [key: string]: any } {
         if (key in parameters) {
             const value = parameters[key];

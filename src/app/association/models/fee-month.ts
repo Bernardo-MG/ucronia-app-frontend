@@ -1,4 +1,4 @@
 export class FeeMonth {
-    month: number = -1;
-    paid: boolean = false;
+    month = -1;
+    paid = false;
 }

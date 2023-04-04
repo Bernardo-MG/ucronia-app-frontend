@@ -5,9 +5,9 @@ export class LoginRequest {
     /**
      * Username for the login attempt.
      */
-    username: string = '';
+    username = '';
     /**
      * password for the login attempt.
      */
-    password: string = '';
+    password = '';
 }

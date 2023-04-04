@@ -11,7 +11,7 @@ export class AssociationLayoutComponent {
 
   public title = 'Association App Frontend';
 
-  public loggedIn: boolean = false;
+  public loggedIn = false;
 
   public menus: Menu[] = [
     {

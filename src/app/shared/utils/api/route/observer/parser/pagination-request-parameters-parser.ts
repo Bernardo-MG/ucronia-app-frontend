@@ -18,8 +18,6 @@ export class PaginationRequestParametersParser implements ParametersParser<Pagin
    */
   private sortParser = new SortParametersParser();
 
-  constructor() { }
-
   public parse(params: ParamMap): PaginationRequest | undefined {
     let request;
 

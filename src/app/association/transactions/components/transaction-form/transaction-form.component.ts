@@ -42,7 +42,6 @@ export class TransactionFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['data'].firstChange) {
       // Create the date
-      let formattedDate;
       let month;
       let day;
 
@@ -60,7 +59,7 @@ export class TransactionFormComponent implements OnChanges {
         day = `0${date.getDate()}`;
       }
 
-      formattedDate = `${date.getFullYear()}-${month}-${day}`;
+      const formattedDate = `${date.getFullYear()}-${month}-${day}`;
       const update: any = {
         ...this.data,
         date: formattedDate

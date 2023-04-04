@@ -7,10 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class MemberTabsComponent {
 
-  @Input() public listActive: boolean = false;
+  @Input() public listActive = false;
 
-  @Input() public statsActive: boolean = false;
-
-  constructor() { }
+  @Input() public statsActive = false;
 
 }

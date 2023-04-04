@@ -71,13 +71,13 @@ export class SecurityRoleService {
     return clt.fetchOne().pipe(map(r => r.content));
   }
 
-  public addPrivilege(id: number, privilege: number): Observable<Boolean> {
-    const clt: UpdateOperations<Boolean> = this.client.update(`${this.roleUrl}/${id}/privilege`);
+  public addPrivilege(id: number, privilege: number): Observable<boolean> {
+    const clt: UpdateOperations<boolean> = this.client.update(`${this.roleUrl}/${id}/privilege`);
     return clt.body({ id: privilege }).push().pipe(map(r => r.content));
   }
 
-  public removePrivilege(id: number, privilege: number): Observable<Boolean> {
-    const clt: DeleteOperations<Boolean> = this.client.delete(`${this.roleUrl}/${id}/privilege`);
+  public removePrivilege(id: number, privilege: number): Observable<boolean> {
+    const clt: DeleteOperations<boolean> = this.client.delete(`${this.roleUrl}/${id}/privilege`);
     return clt.id(privilege).push().pipe(map(r => r.content));
   }
 

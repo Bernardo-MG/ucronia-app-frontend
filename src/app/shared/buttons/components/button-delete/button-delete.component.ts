@@ -9,8 +9,6 @@ export class ButtonDeleteComponent {
 
   @Output() action = new EventEmitter<number>();
 
-  constructor() { }
-
   public onAction() {
     this.action.emit();
   }

@@ -9,8 +9,8 @@ export class TransactionTabsComponent {
 
   constructor() { }
 
-  @Input() public calendarActive: boolean = false;
+  @Input() public calendarActive = false;
 
-  @Input() public listActive: boolean = false;
+  @Input() public listActive = false;
 
 }

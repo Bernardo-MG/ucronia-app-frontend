@@ -3,8 +3,6 @@
  */
 export class UrlParamsExtractor {
 
-    constructor() { }
-
     /**
      * Extracts the parameters from the URL.
      * 

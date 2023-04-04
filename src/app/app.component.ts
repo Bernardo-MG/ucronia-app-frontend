@@ -9,9 +9,6 @@ export class AppComponent {
 
   title = 'association-app-frontend';
 
-  public loggedIn: boolean = false;
-
-  constructor(
-  ) { }
+  public loggedIn = false;
 
 }

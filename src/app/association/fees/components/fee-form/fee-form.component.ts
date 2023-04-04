@@ -83,7 +83,6 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   private reload() {
     // Create the date from the year and month
-    let formattedDate;
     let month;
 
     const date = new Date(this.data.date);
@@ -94,7 +93,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
       month = `0${date.getMonth() + 1}`;
     }
 
-    formattedDate = `${date.getFullYear()}-${month}`;
+    const formattedDate = `${date.getFullYear()}-${month}`;
     const update: any = {
       ...this.data,
       date: formattedDate

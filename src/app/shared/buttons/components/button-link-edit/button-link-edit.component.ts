@@ -7,8 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonLinkEditComponent {
 
-  @Input() link: string = "";
-
-  constructor() { }
+  @Input() link = "";
 
 }

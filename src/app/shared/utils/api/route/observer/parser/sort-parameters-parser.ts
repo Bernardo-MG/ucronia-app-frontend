@@ -10,8 +10,6 @@ import { Sort } from "../../../models/sort";
  */
 export class SortParametersParser implements ParametersParser<Sort<any>[]> {
 
-  constructor() { }
-
   public parse(params: ParamMap): Sort<any>[] | undefined {
     let pageSort: Sort<any> | undefined;
     let pageSorts: Sort<any>[] | undefined;
@@ -21,7 +19,7 @@ export class SortParametersParser implements ParametersParser<Sort<any>[]> {
     if (params.has('sort')) {
       pageSorts = [];
       pageSortValues = params.getAll('sort');
-      for (var i = 0; i < pageSortValues.length; i += 1) {
+      for (let i = 0; i < pageSortValues.length; i += 1) {
         const pageSortValue = pageSortValues[i];
         if (pageSortValue) {
           pageSort = this.parseFromPair(pageSortValue);
@@ -47,14 +45,12 @@ export class SortParametersParser implements ParametersParser<Sort<any>[]> {
    * @returns the equivalent sort, or undefined if it is invalid
    */
   private parseFromPair(pair: string): Sort<any> | undefined {
-    let splitPair: string[];
     let sort: Sort<any> | undefined;
-    let property: string;
     let direction: string;
 
-    splitPair = pair.split(',');
     // Acquire the property and check it is not empty
-    property = splitPair[0];
+    const splitPair: string[] = pair.split(',');
+    const property: string = splitPair[0];
     if (property.length > 0) {
       // Contains a property
       sort = new Sort<any>(property);

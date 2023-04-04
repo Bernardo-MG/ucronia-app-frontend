@@ -16,8 +16,6 @@ export class SecurityRolePrivilegeFormComponent {
 
   @Output() public removePrivilege = new EventEmitter<Privilege>();
 
-  constructor() { }
-
   public onAdd() {
     this.addPrivilege.emit();
   }

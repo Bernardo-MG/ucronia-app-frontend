@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { AdminFeeService } from '../../services/admin-fee.service';
-;
+
 
 @Component({
   selector: 'admin-fee-calendar-view',

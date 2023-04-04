@@ -11,7 +11,7 @@ import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-rou
 })
 export class OrderButtonComponent implements OnInit {
 
-  @Input() property: string = '';
+  @Input() property = '';
 
   @Input() direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 

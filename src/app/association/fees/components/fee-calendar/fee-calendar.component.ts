@@ -9,11 +9,11 @@ import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 })
 export class FeeCalendarComponent {
 
-  @Input() public year: number = 0;
+  @Input() public year = 0;
 
-  @Input() start: number = 0;
+  @Input() start = 0;
 
-  @Input() end: number = 0;
+  @Input() end = 0;
 
   @Input() public rows: FeeCalendarRow[] = [];
 
@@ -22,8 +22,6 @@ export class FeeCalendarComponent {
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   public feesTable: FeeCalendarRow[] = []
-
-  constructor() {}
 
   public onGoPrevious() {
     this.year = this.year - 1;

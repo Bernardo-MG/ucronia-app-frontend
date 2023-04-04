@@ -51,7 +51,7 @@ export class AdminFeeService {
       row.active = r.active;
       this.months.forEach(month => {
         const feeMonth = r.months.find(m => m.month === month);
-        var column;
+        let column;
 
         if (feeMonth) {
           column = feeMonth.paid;

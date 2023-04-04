@@ -1,4 +1,4 @@
 export class FeeCalendarRange {
-    start: number = 0;
-    end: number = 0;
+    start = 0;
+    end = 0;
 }

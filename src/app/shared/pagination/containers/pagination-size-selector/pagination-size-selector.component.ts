@@ -12,7 +12,7 @@ export class PaginationSizeSelectorComponent implements OnInit {
 
   @Input() public sizes: number[] = [5, 10, 15, 20];
 
-  @Input() public selected: number = 5;
+  @Input() public selected = 5;
 
   @Input() public disabled = false;
 

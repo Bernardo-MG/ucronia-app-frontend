@@ -39,7 +39,7 @@ export class LoginViewComponent implements OnInit {
   /**
    * Return route. Used to redirect after login.
    */
-  private returnRoute: string = '';
+  private returnRoute = '';
 
   /**
    * Remember me flag.

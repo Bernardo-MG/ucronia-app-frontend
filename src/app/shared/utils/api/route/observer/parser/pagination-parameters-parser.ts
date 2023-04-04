@@ -11,8 +11,6 @@ import { Pagination } from "../../../models/pagination";
  */
 export class PaginationParametersParser implements ParametersParser<Pagination> {
 
-  constructor() { }
-
   public parse(params: ParamMap): Pagination | undefined {
     let pagination;
 

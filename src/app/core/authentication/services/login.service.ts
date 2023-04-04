@@ -52,9 +52,7 @@ export class LoginService {
    * @returns user generated from the login status
    */
   private toUser(status: LoginStatus): UserStatus {
-    let loggedUser;
-
-    loggedUser = new UserStatus();
+    const loggedUser = new UserStatus();
     if (status) {
       // Received data
       loggedUser.username = status.username;

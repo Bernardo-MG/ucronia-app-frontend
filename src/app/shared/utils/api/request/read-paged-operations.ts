@@ -37,7 +37,7 @@ export class ReadPagedOperations<T> {
 
     params = this.getHttpParams();
 
-    for (var i = 0; i < sort.length; i += 1) {
+    for (let i = 0; i < sort.length; i += 1) {
       const fieldSort = sort[i];
       params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
     }

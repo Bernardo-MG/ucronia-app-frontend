@@ -4,8 +4,6 @@ import { TransactionFilter } from "../../models/transaction-filter";
 
 export class TransactionFilterParser implements ParametersParser<TransactionFilter> {
 
-  constructor() { }
-
   parse(params: ParamMap): TransactionFilter | undefined {
     let filter;
 

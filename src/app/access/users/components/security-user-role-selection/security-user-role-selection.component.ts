@@ -17,8 +17,6 @@ export class SecurityUserRoleSelectionComponent implements OnInit {
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  constructor() { }
-
   public ngOnInit(): void {
     this.goToPage.emit(0);
   }

@@ -10,11 +10,11 @@ import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pa
 })
 export class PaginationNavigationComponent implements OnInit {
 
-  @Input() public totalPages: number = 0;
+  @Input() public totalPages = 0;
 
   @Input() public disabled = false;
 
-  public page: number = 0;
+  public page = 0;
 
   private apiActuator: RouteApiActuator;
 

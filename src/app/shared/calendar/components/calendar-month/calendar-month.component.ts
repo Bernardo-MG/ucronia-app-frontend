@@ -15,13 +15,13 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public date = new Date();
 
-  @Input() public startYear: number = 0;
+  @Input() public startYear = 0;
 
-  @Input() public startMonth: number = 0;
+  @Input() public startMonth = 0;
 
-  @Input() public endYear: number = 0;
+  @Input() public endYear = 0;
 
-  @Input() public endMonth: number = 0;
+  @Input() public endMonth = 0;
 
   @Output() public dateChange = new EventEmitter<Date>();
 
@@ -29,7 +29,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   public calendar: Calendar = new Calendar();
 
-  public monthName: string = "";
+  public monthName = "";
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 

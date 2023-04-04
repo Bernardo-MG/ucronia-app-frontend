@@ -1,4 +1,4 @@
 export class Privilege {
-    id: number = -1;
-    name: string = '';
+    id = -1;
+    name = '';
 }

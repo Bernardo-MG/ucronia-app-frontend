@@ -1,6 +1,6 @@
 export class FeeCalendarRow {
-    name: string = '';
-    surname: string = '';
-    active: boolean = false;
+    name = '';
+    surname = '';
+    active = false;
     months: (boolean | undefined)[] = [];
 }

@@ -1,3 +1,3 @@
 export class Balance {
-    amount: number = -1;
+    amount = -1;
 }

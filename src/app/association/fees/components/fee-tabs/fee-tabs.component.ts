@@ -7,10 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class FeeTabsComponent {
 
-  @Input() public calendarActive: boolean = false;
+  @Input() public calendarActive = false;
 
-  @Input() public listActive: boolean = false;
-
-  constructor() { }
+  @Input() public listActive = false;
 
 }

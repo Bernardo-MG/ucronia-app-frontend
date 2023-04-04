@@ -9,6 +9,6 @@ export class NavbarComponent {
 
   @Input() title = '';
 
-  @Input() public loggedIn: boolean = false;
+  @Input() public loggedIn = false;
 
 }

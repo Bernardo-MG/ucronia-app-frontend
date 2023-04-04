@@ -19,8 +19,6 @@ export class DataListComponent {
 
   @Output() public delete = new EventEmitter<void>();
 
-  constructor() { }
-
   public onDelete() {
     this.delete.emit();
   }
