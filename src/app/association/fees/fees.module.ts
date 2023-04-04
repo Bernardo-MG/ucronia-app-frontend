@@ -6,7 +6,6 @@ import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { SharedModule } from '@app/shared/shared.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { FeeTabsComponent } from './components/fee-tabs/fee-tabs.component';
@@ -36,7 +35,6 @@ import { FeeService } from './services/fee.service';
     FeesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    FontAwesomeModule,
     CoreModule,
     SharedModule,
     IconsModule,

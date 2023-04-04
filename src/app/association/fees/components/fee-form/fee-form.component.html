@@ -5,7 +5,7 @@
       <input type="text" id="memberInput" [value]="member.name" aria-describedby="memberLabel" class="form-control"
         [ngClass]="{ 'is-invalid': form.get('member')?.errors }">
       <button type="button" class="btn btn-outline-secondary" aria-label="Search" (click)="onSelectMember()">
-        <fa-icon [icon]="searchIcon"></fa-icon>
+        <icon-search></icon-search>
       </button>
       <div class="invalid-feedback">
         <div *ngIf="form.get('member')?.hasError('required')">
