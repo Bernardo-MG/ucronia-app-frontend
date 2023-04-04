@@ -7,8 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class TransactionTabsComponent {
 
-  constructor() { }
-
   @Input() public calendarActive = false;
 
   @Input() public listActive = false;

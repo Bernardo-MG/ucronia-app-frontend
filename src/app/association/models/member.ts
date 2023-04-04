@@ -4,5 +4,5 @@ export class Member {
     surname = '';
     identifier = '';
     phone = '';
-    active: boolean= false;
+    active = false;
 }
