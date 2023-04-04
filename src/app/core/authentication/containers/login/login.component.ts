@@ -20,9 +20,9 @@ import { LoginService } from '../../services/login.service';
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login-view',
-  templateUrl: './login-view.component.html',
-  styleUrls: ['./login-view.component.sass']
+  selector: 'authentication-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.sass']
 })
 export class LoginViewComponent implements OnInit {
 

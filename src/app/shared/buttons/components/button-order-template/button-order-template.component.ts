@@ -5,9 +5,9 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-  selector: 'order-button-template',
-  templateUrl: './order-button-template.component.html',
-  styleUrls: ['./order-button-template.component.sass']
+  selector: 'button-order-template',
+  templateUrl: './button-order-template.component.html',
+  styleUrls: ['./button-order-template.component.sass']
 })
 export class OrderButtonTemplateComponent implements OnChanges {
 

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
-import { LoginViewComponent } from './containers/login-view/login-view.component';
+import { LoginViewComponent } from './containers/login/login.component';
 import { LogoutButtonComponent } from './containers/logout-button/logout-button.component';
 import { AuthenticationContainer } from './services/authentication-container.service';
 import { LoginService } from './services/login.service';

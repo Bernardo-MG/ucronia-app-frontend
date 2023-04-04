@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { PaginationSizeSelectorComponent } from '@app/shared/pagination/containers/pagination-size-selector/pagination-size-selector.component';
 import { IconsModule } from '../icons/icons.module';
-import { PageButtonComponent } from './components/page-button/page-button.component';
+import { PageButtonComponent } from './components/pagination-page-button/pagination-page-button.component';
 import { PaginationTemplateComponent } from './components/pagination-template/pagination-template.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PaginationNavigationComponent } from './containers/pagination-navigation/pagination-navigation.component';

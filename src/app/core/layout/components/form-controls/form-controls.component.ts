@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faFloppyDisk, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'form-controls',
+  selector: 'layout-form-controls',
   templateUrl: './form-controls.component.html',
   styleUrls: ['./form-controls.component.sass']
 })

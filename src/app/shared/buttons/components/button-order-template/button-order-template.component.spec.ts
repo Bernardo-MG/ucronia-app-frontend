@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-import { OrderButtonTemplateComponent } from './order-button-template.component';
+import { OrderButtonTemplateComponent } from './button-order-template.component';
 
 describe('OrderButtonTemplateComponent', () => {
   let component: OrderButtonTemplateComponent;

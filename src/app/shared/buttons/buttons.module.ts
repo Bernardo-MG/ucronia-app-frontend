@@ -8,8 +8,8 @@ import { ButtonLinkCreateComponent } from './components/button-link-create/butto
 import { ButtonLinkEditComponent } from './components/button-link-edit/button-link-edit.component';
 import { ButtonSearchSecondaryComponent } from './components/button-search-secondary/button-search-secondary.component';
 import { ButtonComponent } from './components/button/button.component';
-import { OrderButtonTemplateComponent } from './components/order-button-template/order-button-template.component';
-import { OrderButtonComponent } from './containers/order-button/order-button.component';
+import { OrderButtonTemplateComponent } from './components/button-order-template/button-order-template.component';
+import { OrderButtonComponent } from './containers/button-order/button-order.component';
 
 
 

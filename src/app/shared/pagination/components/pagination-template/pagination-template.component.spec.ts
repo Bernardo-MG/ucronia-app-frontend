@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PageButtonComponent } from '../page-button/page-button.component';
+import { PageButtonComponent } from '../pagination-page-button/pagination-page-button.component';
 import { PaginationTemplateComponent } from './pagination-template.component';
 
 describe('PaginationTemplateComponent', () => {

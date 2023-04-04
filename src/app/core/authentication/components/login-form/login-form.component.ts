@@ -6,7 +6,7 @@ import { LoginFormUser } from '../../models/login-form-user';
  * Login form component. Dumb component for handling the form. Includes checkbox for the 'remember me' functionality.
  */
 @Component({
-  selector: 'login-form',
+  selector: 'authentication-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.sass']
 })

@@ -15,29 +15,29 @@
             </button>
         </li>
         <!-- Left range -->
-        <dnd5-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
+        <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
             (action)="onGoTo(page)">
             {{page}}
-        </dnd5-page-button>
+        </pagination-page-button>
         <!-- Center range -->
         <ng-container *ngIf="isAbleToDrawCenterRange()">
             <li class="page-item disabled" aria-disabled="true">
                 <span class="page-link">...</span>
             </li>
-            <dnd5-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
+            <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
                 (action)="onGoTo(page)">
                 {{page}}
-            </dnd5-page-button>
+            </pagination-page-button>
         </ng-container>
         <!-- Right range -->
         <ng-container *ngIf="isAbleToDrawRightRange()">
             <li class="page-item disabled" aria-disabled="true">
                 <span class="page-link">...</span>
             </li>
-            <dnd5-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
+            <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
                 (action)="onGoTo(page)">
                 {{page}}
-            </dnd5-page-button>
+            </pagination-page-button>
         </ng-container>
         <!-- Forward buttons -->
         <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">

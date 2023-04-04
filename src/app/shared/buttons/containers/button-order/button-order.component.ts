@@ -5,9 +5,9 @@ import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
 
 @Component({
-  selector: 'order-button',
-  templateUrl: './order-button.component.html',
-  styleUrls: ['./order-button.component.sass']
+  selector: 'button-order',
+  templateUrl: './button-order.component.html',
+  styleUrls: ['./button-order.component.sass']
 })
 export class OrderButtonComponent implements OnInit {
 

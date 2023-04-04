@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PageButtonComponent } from './page-button.component';
+import { PageButtonComponent } from './pagination-page-button.component';
 
 describe('PaginationButtonComponent', () => {
   let component: PageButtonComponent;

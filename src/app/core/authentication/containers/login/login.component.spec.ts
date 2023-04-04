@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { LoginService } from '../../services/login.service';
-import { LoginViewComponent } from './login-view.component';
+import { LoginViewComponent } from './login.component';
 
 describe('LoginViewComponent', () => {
   let component: LoginViewComponent;
