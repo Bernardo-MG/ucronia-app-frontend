@@ -112,7 +112,7 @@ describe('PaginationTemplateComponent', () => {
     component.left = [1];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(1);
   });
 
@@ -120,7 +120,7 @@ describe('PaginationTemplateComponent', () => {
     component.left = [1, 2, 3];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(3);
   });
 
@@ -128,7 +128,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(0);
   });
 
@@ -137,7 +137,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(2);
   });
 
@@ -146,7 +146,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [5, 6, 7];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(6);
   });
 
@@ -154,7 +154,7 @@ describe('PaginationTemplateComponent', () => {
     component.center = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(0);
   });
 
@@ -163,7 +163,7 @@ describe('PaginationTemplateComponent', () => {
     component.center = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(2);
   });
 
@@ -172,7 +172,7 @@ describe('PaginationTemplateComponent', () => {
     component.center = [5, 6, 7];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(6);
   });
 
@@ -181,7 +181,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [10];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(0);
   });
 
@@ -191,7 +191,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [10];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(3);
   });
 
@@ -201,7 +201,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [10, 11, 12];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('dnd5-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
     expect(button.length).toEqual(9);
   });
 
@@ -346,7 +346,7 @@ describe('PaginationTemplateComponent', () => {
     component.right = [5];
     fixture.detectChanges();
 
-    const buttons = fixture.nativeElement.querySelectorAll('dnd5-page-button button.disabled');
+    const buttons = fixture.nativeElement.querySelectorAll('pagination-page-button button.disabled');
     expect(buttons.length).toEqual(3);
   });
 
