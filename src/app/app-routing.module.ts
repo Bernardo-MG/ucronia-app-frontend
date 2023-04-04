@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
-import { AssociationLayoutComponent } from './core/containers/association-layout/association-layout.component';
+import { AssociationLayoutComponent } from './core/layout/containers/association-layout/association-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 

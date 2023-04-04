@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DataFormComponent } from '@app/core/components/data-form/data-form.component';
+import { DataFormComponent } from '@app/core/layout/components/data-form/data-form.component';
 import { CoreModule } from '@app/core/core.module';
 import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';

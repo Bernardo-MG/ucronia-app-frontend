@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NavbarComponent } from '@app/core/components/navbar/navbar.component';
+import { NavbarComponent } from '@app/core/navigation/components/navbar/navbar.component';
 import { CoreModule } from '@app/core/core.module';
 import { AssociationLayoutComponent } from './association-layout.component';
 
