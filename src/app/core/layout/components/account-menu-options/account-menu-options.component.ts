@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
-import { faCircleUser, faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'layout-account-menu-options',
@@ -8,10 +7,6 @@ import { faCircleUser, faGear } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./account-menu-options.component.sass']
 })
 export class AccountMenuComponent {
-
-  public accountIcon = faCircleUser;
-
-  public settingsIcon = faGear;
 
   public username = '';
 

@@ -11,6 +11,7 @@ import { TransactionCreateViewComponent } from './containers/transaction-create-
 import { TransactionEditViewComponent } from './containers/transaction-edit-view/transaction-edit-view.component';
 import { TransactionListViewComponent } from './containers/transaction-list-view/transaction-list-view.component';
 import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { CalendarModule } from '@app/shared/calendar/calendar.module';
 
 
 
@@ -29,7 +30,8 @@ import { ButtonsModule } from '@app/shared/buttons/buttons.module';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    ButtonsModule
+    ButtonsModule,
+    CalendarModule
   ],
   providers: [
     TransactionService
