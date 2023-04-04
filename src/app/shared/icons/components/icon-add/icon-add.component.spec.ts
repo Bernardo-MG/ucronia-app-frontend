@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { IconsModule } from '../../icons.module';
 import { IconAddComponent } from './icon-add.component';
 
 describe('IconAddComponent', () => {
@@ -8,9 +8,14 @@ describe('IconAddComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconAddComponent ]
+      imports: [
+        IconsModule
+      ],
+      declarations: [
+        IconAddComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(IconAddComponent);
     component = fixture.componentInstance;

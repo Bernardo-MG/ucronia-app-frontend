@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { DataFormComponent } from './data-form.component';
 
 describe('DataFormComponent', () => {
@@ -9,7 +9,7 @@ describe('DataFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
+        IconsModule
       ],
       declarations: [
         DataFormComponent

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/layout/components/data-form/data-form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityRoleFormComponent } from '../../components/security-role-form/security-role-form.component';
 import { SecurityRoleService } from '../../services/security-role.service';
@@ -18,7 +19,8 @@ describe('SecurityRoleCreateViewComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        IconsModule
       ],
       declarations: [
         SecurityRoleCreateViewComponent,

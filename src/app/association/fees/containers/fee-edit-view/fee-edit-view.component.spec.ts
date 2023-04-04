@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { EMPTY } from 'rxjs';
 import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
@@ -22,9 +22,9 @@ describe('FeeEditViewComponent', () => {
       imports: [
         RouterTestingModule,
         FormsModule,
-        FontAwesomeModule,
         ReactiveFormsModule,
-        CoreModule
+        CoreModule,
+        IconsModule
       ],
       declarations: [
         FeeEditViewComponent,

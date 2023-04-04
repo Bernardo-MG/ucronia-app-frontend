@@ -8,8 +8,6 @@ import { Menu } from '@app/core/models/menu';
 })
 export class MenuComponent {
   
-  @Input() id = '';
-
   @Input() menus: Menu[] = [];
 
 }

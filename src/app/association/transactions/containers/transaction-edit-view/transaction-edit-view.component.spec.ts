@@ -3,10 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/layout/components/data-form/data-form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
-
 import { TransactionEditViewComponent } from './transaction-edit-view.component';
 
 describe('TransactionEditViewComponent', () => {
@@ -19,7 +19,8 @@ describe('TransactionEditViewComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        IconsModule
       ],
       declarations: [
         TransactionEditViewComponent,

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/layout/components/data-form/data-form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
@@ -21,7 +22,8 @@ describe('MemberCreateViewComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        IconsModule
       ],
       declarations: [
         MemberCreateViewComponent,

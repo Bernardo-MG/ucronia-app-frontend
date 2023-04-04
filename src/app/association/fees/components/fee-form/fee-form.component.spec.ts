@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 import { FeeFormComponent } from './fee-form.component';
 
 describe('FeeFormComponent', () => {
@@ -12,7 +12,8 @@ describe('FeeFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        IconsModule
       ],
       declarations: [
         FeeFormComponent

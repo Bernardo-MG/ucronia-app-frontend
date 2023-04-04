@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { FormControlsComponent } from './form-controls.component';
 
 describe('FormControlsComponent', () => {
@@ -11,7 +10,7 @@ describe('FormControlsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
+        IconsModule
       ],
       declarations: [
         FormControlsComponent
