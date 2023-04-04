@@ -7,16 +7,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
-import { DataFormComponent } from './layout/components/data-form/data-form.component';
 import { LayoutModule } from './layout/layout.module';
+import { NavigationModule } from './navigation/navigation.module';
 
 
 
 @NgModule({
-  declarations: [
-    CalendarMonthComponent
-  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -27,14 +23,13 @@ import { LayoutModule } from './layout/layout.module';
     AuthenticationModule,
     IconsModule,
     PaginationModule,
-    LayoutModule
+    LayoutModule,
+    NavigationModule
   ],
   exports: [
-    DataFormComponent,
-    DataListComponent,
-    CalendarMonthComponent,
     LayoutModule,
-    AuthenticationModule
+    AuthenticationModule,
+    NavigationModule
   ]
 })
 export class CoreModule { }
