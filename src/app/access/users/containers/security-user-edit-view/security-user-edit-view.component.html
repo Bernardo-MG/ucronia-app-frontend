@@ -4,9 +4,9 @@
     <layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
         <security-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
             (validChange)="onFormValidChange($event)"></security-user-form>
-        <pagination [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
+        <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
             (goTo)="onGoToRolePage($event)">
-        </pagination>
+        </pagination-navigation>
         <security-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
         </security-user-role-form>
     </layout-data-form>

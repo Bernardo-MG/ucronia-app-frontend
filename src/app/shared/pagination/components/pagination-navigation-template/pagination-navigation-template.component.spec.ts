@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PageButtonComponent } from '../pagination-page-button/pagination-page-button.component';
-import { PaginationTemplateComponent } from './pagination-template.component';
+import { PaginationNavigationTemplateComponent } from './pagination-navigation-template.component';
 
-describe('PaginationTemplateComponent', () => {
-  let component: PaginationTemplateComponent;
-  let fixture: ComponentFixture<PaginationTemplateComponent>;
+describe('PaginationNavigationTemplateComponent', () => {
+  let component: PaginationNavigationTemplateComponent;
+  let fixture: ComponentFixture<PaginationNavigationTemplateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,13 +15,13 @@ describe('PaginationTemplateComponent', () => {
         IconsModule
       ],
       declarations: [
-        PaginationTemplateComponent,
+        PaginationNavigationTemplateComponent,
         PageButtonComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PaginationTemplateComponent);
+    fixture = TestBed.createComponent(PaginationNavigationTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

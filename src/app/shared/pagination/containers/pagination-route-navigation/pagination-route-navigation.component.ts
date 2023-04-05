@@ -4,11 +4,11 @@ import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
 
 @Component({
-  selector: 'pagination-navigation',
-  templateUrl: './pagination-navigation.component.html',
-  styleUrls: ['./pagination-navigation.component.sass']
+  selector: 'pagination-route-navigation',
+  templateUrl: './pagination-route-navigation.component.html',
+  styleUrls: ['./pagination-route-navigation.component.sass']
 })
-export class PaginationNavigationComponent implements OnInit {
+export class PaginationRouteNavigationComponent implements OnInit {
 
   @Input() public totalPages = 0;
 

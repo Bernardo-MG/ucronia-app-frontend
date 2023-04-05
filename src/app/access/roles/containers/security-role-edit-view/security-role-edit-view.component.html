@@ -4,8 +4,8 @@
   <layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
     <security-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
       (validChange)="onFormValidChange($event)"></security-role-form>
-      <pagination [current]="privilegesPageInfo.page" [pages]="privilegesPageInfo.totalPages" (goTo)="onGoToPrivilegePage($event)">
-      </pagination>
+      <pagination-navigation [current]="privilegesPageInfo.page" [pages]="privilegesPageInfo.totalPages" (goTo)="onGoToPrivilegePage($event)">
+      </pagination-navigation>
       <security-role-privilege-form (addPrivilege)="onShowAddPrivilege()" (removePrivilege)="onRemovePrivilege($event)"
         [privileges]="privileges">
       </security-role-privilege-form>

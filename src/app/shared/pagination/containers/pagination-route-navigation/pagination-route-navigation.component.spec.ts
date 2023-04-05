@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationTemplateComponent } from '../../components/pagination-template/pagination-template.component';
-import { PaginationNavigationComponent } from './pagination-navigation.component';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { PaginationNavigationTemplateComponent } from '../../components/pagination-navigation-template/pagination-navigation-template.component';
+import { PaginationRouteNavigationComponent } from './pagination-route-navigation.component';
+import { PaginationNavigationComponent } from '../../components/pagination-navigation/pagination-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;
@@ -18,9 +18,9 @@ describe('PaginationNavigationComponent', () => {
         IconsModule
       ],
       declarations: [
-        PaginationNavigationComponent,
-        PaginationTemplateComponent,
-        PaginationComponent
+        PaginationRouteNavigationComponent,
+        PaginationNavigationTemplateComponent,
+        PaginationNavigationComponent
       ]
     })
       .compileComponents();

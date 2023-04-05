@@ -5,11 +5,11 @@ import { PaginationRanges } from '../../models/range/pagination-ranges';
  * Pagination component. Wraps the generic pagination template, and makes use of PaginationRanges to build the ranges.
  */
 @Component({
-  selector: 'pagination',
-  templateUrl: './pagination.component.html',
-  styleUrls: ['./pagination.component.sass']
+  selector: 'pagination-navigation',
+  templateUrl: './pagination-navigation.component.html',
+  styleUrls: ['./pagination-navigation.component.sass']
 })
-export class PaginationComponent implements OnChanges {
+export class PaginationNavigationComponent implements OnChanges {
 
   /**
    * Current page number. This is the pointer to move around the pagination.
