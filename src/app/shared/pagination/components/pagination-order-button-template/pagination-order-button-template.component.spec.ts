@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
 
-import { OrderButtonTemplateComponent } from './button-order-template.component';
-
-describe('OrderButtonTemplateComponent', () => {
-  let component: OrderButtonTemplateComponent;
-  let fixture: ComponentFixture<OrderButtonTemplateComponent>;
+describe('PaginationOrderButtonTemplateComponent', () => {
+  let component: PaginationOrderButtonTemplateComponent;
+  let fixture: ComponentFixture<PaginationOrderButtonTemplateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,14 +13,14 @@ describe('OrderButtonTemplateComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        OrderButtonTemplateComponent
+        PaginationOrderButtonTemplateComponent
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderButtonTemplateComponent);
+    fixture = TestBed.createComponent(PaginationOrderButtonTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
-import { SecurityRolePrivilegeFormComponent } from './security-role-privilege-form.component';
 import { CoreModule } from '@app/core/core.module';
+import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { SecurityRolePrivilegeFormComponent } from './security-role-privilege-form.component';
 
 describe('SecurityRolePrivilegeFormComponent', () => {
   let component: SecurityRolePrivilegeFormComponent;
@@ -16,7 +17,8 @@ describe('SecurityRolePrivilegeFormComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         ButtonsModule,
-        CoreModule
+        CoreModule,
+        PaginationModule
       ],
       declarations: [
         SecurityRolePrivilegeFormComponent

@@ -5,11 +5,11 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-  selector: 'button-order-template',
-  templateUrl: './button-order-template.component.html',
-  styleUrls: ['./button-order-template.component.sass']
+  selector: 'pagination-order-button-template',
+  templateUrl: './pagination-order-button-template.component.html',
+  styleUrls: ['./pagination-order-button-template.component.sass']
 })
-export class OrderButtonTemplateComponent implements OnChanges {
+export class PaginationOrderButtonTemplateComponent implements OnChanges {
 
   @Input() public direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
 

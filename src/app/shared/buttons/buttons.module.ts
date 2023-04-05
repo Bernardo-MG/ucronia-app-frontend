@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconsModule } from '../icons/icons.module';
 import { ButtonDeleteComponent } from './components/button-delete/button-delete.component';
 import { ButtonLinkCreateComponent } from './components/button-link-create/button-link-create.component';
 import { ButtonLinkEditComponent } from './components/button-link-edit/button-link-edit.component';
 import { ButtonSearchSecondaryComponent } from './components/button-search-secondary/button-search-secondary.component';
-import { OrderButtonTemplateComponent } from './components/button-order-template/button-order-template.component';
-import { OrderButtonComponent } from './containers/button-order/button-order.component';
 
 
 
@@ -17,13 +14,10 @@ import { OrderButtonComponent } from './containers/button-order/button-order.com
     ButtonLinkCreateComponent,
     ButtonLinkEditComponent,
     ButtonSearchSecondaryComponent,
-    ButtonDeleteComponent,
-    OrderButtonTemplateComponent,
-    OrderButtonComponent
+    ButtonDeleteComponent
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule,
     RouterModule,
     IconsModule
   ],
@@ -31,8 +25,7 @@ import { OrderButtonComponent } from './containers/button-order/button-order.com
     ButtonLinkCreateComponent,
     ButtonLinkEditComponent,
     ButtonSearchSecondaryComponent,
-    ButtonDeleteComponent,
-    OrderButtonComponent
+    ButtonDeleteComponent
   ]
 })
 export class ButtonsModule { }
