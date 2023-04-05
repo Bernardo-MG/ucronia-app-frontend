@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DataFormComponent } from '@app/core/layout/components/data-form/data-form.component';
 import { CoreModule } from '@app/core/core.module';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { SecurityUserFormComponent } from '../../components/security-user-form/security-user-form.component';
 import { SecurityUserRoleFormComponent } from '../../components/security-user-role-form/security-user-role-form.component';
@@ -22,8 +21,7 @@ describe('SecurityUserEditViewComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         CoreModule,
-        PaginationModule,
-        ButtonsModule
+        PaginationModule
       ],
       declarations: [
         SecurityUserEditViewComponent,

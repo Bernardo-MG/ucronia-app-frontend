@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { DataListComponent } from './data-list.component';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 describe('DataListComponent', () => {
   let component: DataListComponent;
@@ -13,7 +13,7 @@ describe('DataListComponent', () => {
       imports: [
         RouterTestingModule,
         PaginationModule,
-        ButtonsModule
+        IconsModule
       ],
       declarations: [
         DataListComponent

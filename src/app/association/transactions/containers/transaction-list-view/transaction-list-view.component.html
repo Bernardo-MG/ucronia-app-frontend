@@ -8,11 +8,13 @@
   <div class="accordion" id="filterAccordion">
     <div class="accordion-item">
       <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+          aria-expanded="false" aria-controls="collapseTwo">
           Filter
         </button>
       </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+        data-bs-parent="#accordionExample">
         <div class="row mb-2">
           <label for="startDateInput" id="startDateLabel" class="col-sm-2 col-form-label">startDate</label>
           <div class="col-sm-10">
@@ -30,8 +32,8 @@
         <div class="row mb-2">
           <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">date</label>
           <div class="col-sm-10">
-            <input type="date" id="dateInput" [(ngModel)]="date" (change)="reload()"
-              aria-describedby="dateLabel" class="form-control">
+            <input type="date" id="dateInput" [(ngModel)]="date" (change)="reload()" aria-describedby="dateLabel"
+              class="form-control">
           </div>
         </div>
       </div>
@@ -68,9 +70,13 @@
             <td>{{transaction.date | date:'shortDate'}}</td>
             <td>{{transaction.amount}}</td>
             <td>
-              <button-link-edit link="/transactions/{{transaction.id}}"></button-link-edit>
-              <button-delete (click)="select(transaction)" data-bs-toggle="modal"
-                data-bs-target="#deleteModal"></button-delete>
+              <a routerLink="/transactions/{{transaction.id}}" class="btn btn-default" role="button">
+                <icon-edit></icon-edit>
+              </a>
+              <button (click)="select(transaction)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
+                class="btn btn-default" role="button" aria-label="Back">
+                <icon-delete></icon-delete>
+              </button>
             </td>
           </tr>
         </ng-template>

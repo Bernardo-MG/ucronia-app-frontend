@@ -13,7 +13,9 @@
         <ng-template ngFor let-privilege [ngForOf]="privileges">
             <tr>
                 <td>
-                    <button-delete (action)="onRemove(privilege)"></button-delete>
+                    <button (click)="onRemove(privilege)" type="button" class="btn btn-default" role="button" aria-label="Back">
+                        <icon-delete></icon-delete>
+                    </button>
                 </td>
                 <td>{{privilege.name}}</td>
             </tr>

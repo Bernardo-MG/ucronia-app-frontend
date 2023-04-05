@@ -13,7 +13,10 @@
         <ng-template ngFor let-role [ngForOf]="roles">
             <tr>
                 <td>
-                    <button-delete (action)="onRemove(role)"></button-delete>
+                    <button (click)="onRemove(role)" type="button" class="btn btn-default" role="button"
+                        aria-label="Back">
+                        <icon-delete></icon-delete>
+                    </button>
                 </td>
                 <td>{{role.name}}</td>
             </tr>

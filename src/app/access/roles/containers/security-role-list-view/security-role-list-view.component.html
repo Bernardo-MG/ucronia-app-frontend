@@ -16,9 +16,13 @@
                 <tr>
                     <td>{{role.name}}</td>
                     <td>
-                        <button-link-edit link="/security/roles/{{role.id}}"></button-link-edit>
-                        <button-delete (click)="select(role)" data-bs-toggle="modal"
-                          data-bs-target="#deleteModal"></button-delete>
+                        <a routerLink="/security/roles/{{role.id}}" class="btn btn-default" role="button">
+                            <icon-edit></icon-edit>
+                        </a>
+                        <button (click)="select(role)" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                            type="button" class="btn btn-default" role="button" aria-label="Back">
+                            <icon-delete></icon-delete>
+                        </button>
                     </td>
                 </tr>
             </ng-template>

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
@@ -13,6 +12,7 @@ import { TransactionEditViewComponent } from './containers/transaction-edit-view
 import { TransactionListViewComponent } from './containers/transaction-list-view/transaction-list-view.component';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 
 
@@ -33,7 +33,7 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     CoreModule,
     CalendarModule,
     PaginationModule,
-    ButtonsModule
+    IconsModule
   ],
   providers: [
     TransactionService

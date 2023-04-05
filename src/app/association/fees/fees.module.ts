@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { SharedModule } from '@app/shared/shared.module';
@@ -38,8 +37,7 @@ import { FeeService } from './services/fee.service';
     CoreModule,
     SharedModule,
     IconsModule,
-    PaginationModule,
-    ButtonsModule
+    PaginationModule
   ],
   providers: [
     FeeService

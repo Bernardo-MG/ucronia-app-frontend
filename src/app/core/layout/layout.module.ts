@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ButtonsModule } from '@app/shared/buttons/buttons.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
@@ -30,7 +29,6 @@ import { AssociationLayoutComponent } from './containers/association-layout/asso
     RouterModule,
     IconsModule,
     PaginationModule,
-    ButtonsModule,
     AuthenticationModule
   ],
   exports: [
