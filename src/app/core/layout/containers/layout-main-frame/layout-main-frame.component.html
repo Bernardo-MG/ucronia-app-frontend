@@ -1,0 +1,20 @@
+<body class="d-flex flex-column">
+    <header>
+        <layout-navbar title={{title}} [loggedIn]="loggedIn">
+        </layout-navbar>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-lg-2">
+                    <layout-menu [menus]="menus" id="sidebarMenu"></layout-menu>
+                </div>
+                <div class="ms-sm-auto col-md-9 col-lg-10">
+                    <section id="main-section" class="container flex-grow-1 pt-4 mb-1">
+                        <router-outlet></router-outlet>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>

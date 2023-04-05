@@ -8,7 +8,6 @@ import { AccountChangePasswordFormComponent } from './components/account-change-
 import { AccountSideMenuOptionsComponent } from './components/account-side-menu-options/account-side-menu-options.component';
 import { AccountChangePasswordViewComponent } from './containers/account-password-view/account-password-view.component';
 import { AccountProfileViewComponent } from './containers/account-profile-view/account-profile-view.component';
-import { AccountLayoutComponent } from './layout/account-layout/account-layout.component';
 import { AccountService } from './services/account.service';
 
 
@@ -18,8 +17,7 @@ import { AccountService } from './services/account.service';
     AccountProfileViewComponent,
     AccountChangePasswordViewComponent,
     AccountChangePasswordFormComponent,
-    AccountSideMenuOptionsComponent,
-    AccountLayoutComponent
+    AccountSideMenuOptionsComponent
   ],
   imports: [
     CommonModule,

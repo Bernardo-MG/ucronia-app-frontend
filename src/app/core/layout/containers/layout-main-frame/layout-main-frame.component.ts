@@ -3,11 +3,11 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'app-association-layout',
-  templateUrl: './association-layout.component.html',
-  styleUrls: ['./association-layout.component.sass']
+  selector: 'layout-main-frame',
+  templateUrl: './layout-main-frame.component.html',
+  styleUrls: ['./layout-main-frame.component.sass']
 })
-export class AssociationLayoutComponent {
+export class MainFrameLayoutComponent {
 
   public title = 'Association App Frontend';
 

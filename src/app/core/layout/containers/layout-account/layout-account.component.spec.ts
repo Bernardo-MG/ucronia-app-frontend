@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AccountSideMenuOptionsComponent } from '@app/account/components/account-side-menu-options/account-side-menu-options.component';
 
-import { AccountLayoutComponent } from './account-layout.component';
+import { AccountLayoutComponent } from './layout-account.component';
 
 describe('AccountLayoutComponent', () => {
   let component: AccountLayoutComponent;
@@ -10,15 +8,9 @@ describe('AccountLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AccountLayoutComponent,
-        AccountSideMenuOptionsComponent
-      ]
+      declarations: [ AccountLayoutComponent ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(AccountLayoutComponent);
     component = fixture.componentInstance;

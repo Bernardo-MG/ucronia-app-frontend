@@ -24,7 +24,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
-export class LoginViewComponent implements OnInit {
+export class LoginComponent implements OnInit {
 
   /**
    * Failed login flag.

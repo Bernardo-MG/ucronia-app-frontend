@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { LoginService } from '../../services/login.service';
-import { LoginViewComponent } from './login.component';
+import { LoginComponent } from './login.component';
 
-describe('LoginViewComponent', () => {
-  let component: LoginViewComponent;
-  let fixture: ComponentFixture<LoginViewComponent>;
+describe('LoginComponent', () => {
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
   let loginService: LoginService;
 
   beforeEach(async () => {
@@ -21,7 +21,7 @@ describe('LoginViewComponent', () => {
         ReactiveFormsModule,
       ],
       declarations: [
-        LoginViewComponent,
+        LoginComponent,
         LoginFormComponent
       ],
       providers: [
@@ -34,7 +34,7 @@ describe('LoginViewComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginViewComponent);
+    fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
