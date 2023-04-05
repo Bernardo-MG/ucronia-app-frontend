@@ -1,12 +1,11 @@
-<nav id="navbar-main" class="navbar navbar-expand-md navbar-light sticky-top bg-light flex-md-nowrap p-0 shadow">
+<nav id="navbar-main" class="navbar navbar-expand-md navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">{{title}}</a>
-    <div>
+    <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
         <ng-template [ngIf]="loggedIn">
-          <li class="nav-item dropdown">
-            <layout-account-menu-options></layout-account-menu-options>
-          </li>
+          <!-- Account menu -->
+          <layout-account-menu></layout-account-menu>
         </ng-template>
       </ul>
     </div>

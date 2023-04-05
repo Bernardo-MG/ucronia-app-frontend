@@ -4,12 +4,12 @@ import { RouterModule } from '@angular/router';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { AccountMenuComponent } from './components/account-menu-options/account-menu-options.component';
 import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
 import { AssociationLayoutComponent } from './containers/association-layout/association-layout.component';
 
 
