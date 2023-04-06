@@ -4,7 +4,7 @@ import { LoginComponent } from './core/authentication/containers/login/login.com
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { AccountLayoutComponent } from './core/layout/containers/layout-account/layout-account.component';
-import { MainFrameLayoutComponent } from './core/layout/containers/layout-main-frame/layout-main-frame.component';
+import { LayoutHeaderFrameComponent } from './core/layout/containers/layout-header-frame/layout-header-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   // Main app
   {
-    path: '', component: MainFrameLayoutComponent,
+    path: '', component: LayoutHeaderFrameComponent,
     children: [
       // Front page
       { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },

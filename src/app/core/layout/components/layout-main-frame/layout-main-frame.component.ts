@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { Menu } from '@app/core/models/menu';
 
 @Component({
@@ -10,8 +9,6 @@ import { Menu } from '@app/core/models/menu';
 export class MainFrameLayoutComponent {
 
   public title = 'Association App Frontend';
-
-  public loggedIn = false;
 
   public menus: Menu[] = [
     {
@@ -29,11 +26,5 @@ export class MainFrameLayoutComponent {
       ]
     }
   ];
-
-  constructor(
-    private authenticationContainer: AuthenticationContainer
-  ) {
-    this.authenticationContainer.getUserStatusObservable().subscribe(u => { this.loggedIn = u.logged });
-  }
 
 }

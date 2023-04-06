@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MainFrameLayoutComponent } from '@app/core/layout/components/layout-main-frame/layout-main-frame.component';
 
 const balanceModule = () => import('@app/association/balance/balance.module').then(m => m.BalanceModule);
 const memberModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
@@ -9,6 +10,7 @@ const transactionModule = () => import('@app/association/transactions/transactio
 const routes: Routes = [
     {
         path: '',
+        component: MainFrameLayoutComponent,
         children: [
             { path: 'balance', loadChildren: balanceModule },
             { path: 'transactions', loadChildren: transactionModule },
