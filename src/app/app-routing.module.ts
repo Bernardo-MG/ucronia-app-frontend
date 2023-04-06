@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/containers/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { BlankFrameLayoutComponent } from './core/layout/components/layout-blank-frame/layout-blank-frame.component';
 import { AccountLayoutComponent } from './core/layout/containers/layout-account/layout-account.component';
 import { MainFrameLayoutComponent } from './core/layout/containers/layout-main-frame/layout-main-frame.component';
 
@@ -15,10 +14,7 @@ const accessModule = () => import('@app/access/access.module').then(m => m.Acces
 const routes: Routes = [
   // Login
   {
-    path: '', component: BlankFrameLayoutComponent, canActivate: [LoggedOutGuard],
-    children: [
-      { path: 'login', component: LoginComponent }
-    ]
+    path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard]
   },
   // Main app
   {

@@ -7,12 +7,11 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
-import { BlankFrameLayoutComponent } from './components/layout-blank-frame/layout-blank-frame.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
-import { MainFrameLayoutComponent } from './containers/layout-main-frame/layout-main-frame.component';
 import { AccountLayoutComponent } from './containers/layout-account/layout-account.component';
+import { MainFrameLayoutComponent } from './containers/layout-main-frame/layout-main-frame.component';
 
 
 @NgModule({
@@ -24,7 +23,6 @@ import { AccountLayoutComponent } from './containers/layout-account/layout-accou
     MainFrameLayoutComponent,
     AccountMenuComponent,
     NavbarComponent,
-    BlankFrameLayoutComponent,
     AccountLayoutComponent
   ],
   imports: [
