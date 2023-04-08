@@ -7,12 +7,12 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
-import { MainFrameLayoutComponent } from './components/layout-main-frame/layout-main-frame.component';
+import { MainFrameComponent } from './components/main-frame/main-frame.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
-import { AccountLayoutComponent } from './containers/layout-account/layout-account.component';
-import { LayoutHeaderFrameComponent } from './containers/layout-header-frame/layout-header-frame.component';
+import { AccountFrameComponent } from './containers/account-frame/account-frame.component';
+import { HeaderFrameComponent } from './containers/header-frame/header-frame.component';
 
 
 @NgModule({
@@ -21,11 +21,11 @@ import { LayoutHeaderFrameComponent } from './containers/layout-header-frame/lay
     DataListComponent,
     FormControlsComponent,
     MenuComponent,
-    MainFrameLayoutComponent,
+    MainFrameComponent,
     AccountMenuComponent,
     NavbarComponent,
-    AccountLayoutComponent,
-    LayoutHeaderFrameComponent
+    AccountFrameComponent,
+    HeaderFrameComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,7 @@ import { LayoutHeaderFrameComponent } from './containers/layout-header-frame/lay
     DataFormComponent,
     DataListComponent,
     FormControlsComponent,
-    MainFrameLayoutComponent,
+    MainFrameComponent,
     NavbarComponent
   ],
 })

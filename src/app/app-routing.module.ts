@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/containers/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { AccountLayoutComponent } from './core/layout/containers/layout-account/layout-account.component';
-import { LayoutHeaderFrameComponent } from './core/layout/containers/layout-header-frame/layout-header-frame.component';
+import { AccountFrameComponent } from './core/layout/containers/account-frame/account-frame.component';
+import { HeaderFrameComponent } from './core/layout/containers/header-frame/header-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -18,7 +18,7 @@ const routes: Routes = [
   },
   // Main app
   {
-    path: '', component: LayoutHeaderFrameComponent,
+    path: '', component: HeaderFrameComponent,
     children: [
       // Front page
       { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
@@ -30,7 +30,7 @@ const routes: Routes = [
   },
   // Account
   {
-    path: 'account', component: AccountLayoutComponent, children: [
+    path: 'account', component: AccountFrameComponent, children: [
       { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
     ]
   }

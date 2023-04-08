@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainFrameLayoutComponent } from '@app/core/layout/components/layout-main-frame/layout-main-frame.component';
+import { MainFrameComponent } from '@app/core/layout/components/main-frame/main-frame.component';
 import { HighlightsComponent } from './highlights/highlights.component';
 
 
 const routes: Routes = [
     {
         path: '',
-        component: MainFrameLayoutComponent,
+        component: MainFrameComponent,
         children: [
             { path: '', component: HighlightsComponent }
         ]

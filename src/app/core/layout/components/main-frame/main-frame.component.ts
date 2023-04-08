@@ -3,10 +3,10 @@ import { Menu } from '@app/core/models/menu';
 
 @Component({
   selector: 'layout-main-frame',
-  templateUrl: './layout-main-frame.component.html',
-  styleUrls: ['./layout-main-frame.component.sass']
+  templateUrl: './main-frame.component.html',
+  styleUrls: ['./main-frame.component.sass']
 })
-export class MainFrameLayoutComponent {
+export class MainFrameComponent {
 
   public title = 'Association App Frontend';
 

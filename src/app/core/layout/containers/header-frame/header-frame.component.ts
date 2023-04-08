@@ -3,10 +3,10 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 
 @Component({
   selector: 'layout-header-frame',
-  templateUrl: './layout-header-frame.component.html',
-  styleUrls: ['./layout-header-frame.component.sass']
+  templateUrl: './header-frame.component.html',
+  styleUrls: ['./header-frame.component.sass']
 })
-export class LayoutHeaderFrameComponent {
+export class HeaderFrameComponent {
 
   public title = 'Association App Frontend';
 
