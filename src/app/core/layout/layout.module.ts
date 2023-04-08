@@ -6,7 +6,6 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
-import { FormControlsComponent } from './components/form-controls/form-controls.component';
 import { MainFrameComponent } from './components/main-frame/main-frame.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
@@ -20,7 +19,6 @@ import { MenuModule } from '@app/shared/menu/menu.module';
   declarations: [
     DataFormComponent,
     DataListComponent,
-    FormControlsComponent,
     MainFrameComponent,
     AccountMenuComponent,
     NavbarComponent,
@@ -39,7 +37,6 @@ import { MenuModule } from '@app/shared/menu/menu.module';
   exports: [
     DataFormComponent,
     DataListComponent,
-    FormControlsComponent,
     MainFrameComponent,
     NavbarComponent,
     WaitingWrapperComponent
