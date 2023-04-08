@@ -1,6 +1,6 @@
-import { MenuLink } from "./menu-link";
+import { MenuCollapseLinks } from "./menu-collapse-links";
 
 export interface Menu {
     title: string;
-    links: MenuLink[];
+    links: MenuCollapseLinks[];
 }

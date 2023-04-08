@@ -13,16 +13,40 @@ export class MainFrameComponent {
   public menus: Menu[] = [
     {
       title: 'Admin', links: [
-        { title: 'Fees', path: '/fees' },
-        { title: 'Balance', path: '/balance' },
-        { title: 'Members', path: '/members' },
-        { title: 'Transactions', path: '/transactions' }
+        {
+          title: 'Fees', links: [
+            { title: 'List', path: '/fees' }
+          ]
+        },
+        {
+          title: 'Balance', links: [
+            { title: 'List', path: '/balance' }
+          ]
+        },
+        {
+          title: 'Members', links: [
+            { title: 'List', path: '/members' }
+          ]
+        },
+        {
+          title: 'Transactions', links: [
+            { title: 'List', path: '/transactions' }
+          ]
+        }
       ]
     },
     {
       title: 'security', links: [
-        { title: 'Roles', path: '/security/roles' },
-        { title: 'Users', path: '/security/users' }
+        {
+          title: 'Roles', links: [
+            { title: 'List', path: '/security/roles' }
+          ]
+        },
+        {
+          title: 'Users', links: [
+            { title: 'List', path: '/security/users' }
+          ]
+        }
       ]
     }
   ];

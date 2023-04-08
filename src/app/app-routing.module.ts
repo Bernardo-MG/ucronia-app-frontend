@@ -5,6 +5,7 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { AccountFrameComponent } from './core/layout/containers/account-frame/account-frame.component';
 import { HeaderFrameComponent } from './core/layout/containers/header-frame/header-frame.component';
+import { MainFrameComponent } from './core/layout/components/main-frame/main-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -20,18 +21,24 @@ const routes: Routes = [
   {
     path: '', component: HeaderFrameComponent,
     children: [
-      // Front page
-      { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
-      // Admin
-      { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] },
-      // Security
-      { path: 'security', loadChildren: accessModule, canActivate: [LoggedInGuard] }
-    ]
-  },
-  // Account
-  {
-    path: 'account', component: AccountFrameComponent, children: [
-      { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+      // Association
+      {
+        path: '', component: MainFrameComponent,
+        children: [
+          // Front page
+          { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
+          // Admin
+          { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] },
+          // Security
+          { path: 'security', loadChildren: accessModule, canActivate: [LoggedInGuard] }
+        ]
+      },
+      // Account
+      {
+        path: 'account', component: AccountFrameComponent, children: [
+          { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+        ]
+      }
     ]
   }
 ];

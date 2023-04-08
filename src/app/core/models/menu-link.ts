@@ -1,4 +1,4 @@
-export interface MenuLink {
-    title: string;
-    path: string;
+export class MenuLink {
+    title = '';
+    path = '';
 }

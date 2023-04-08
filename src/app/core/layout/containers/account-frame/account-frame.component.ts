@@ -16,8 +16,16 @@ export class AccountFrameComponent {
   public menus: Menu[] = [
     {
       title: 'Account', links: [
-        { title: 'Profile', path: '/account/settings/profile' },
-        { title: 'Password', path: '/account/settings/password' }
+        {
+          title: 'Profile', links: [
+            { title: 'Info', path: '/account/settings/profile' }
+          ]
+        },
+        {
+          title: 'Password', links: [
+            { title: 'Change', path: '/account/settings/password' }
+          ]
+        }
       ]
     }
   ];
