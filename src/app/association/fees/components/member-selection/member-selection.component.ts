@@ -3,7 +3,7 @@ import { Member } from '@app/association/models/member';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 
 @Component({
-  selector: 'admin-member-selection',
+  selector: 'assoc-member-selection',
   templateUrl: './member-selection.component.html',
   styleUrls: ['./member-selection.component.sass']
 })

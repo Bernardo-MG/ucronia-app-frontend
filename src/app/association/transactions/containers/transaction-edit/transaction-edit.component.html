@@ -3,6 +3,6 @@
 </header>
 
 <layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
-  <admin-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
-    (validChange)="onFormValidChange($event)"></admin-form-transaction>
+  <assoc-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></assoc-form-transaction>
 </layout-data-form>

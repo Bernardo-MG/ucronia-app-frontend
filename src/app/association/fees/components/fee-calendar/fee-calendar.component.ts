@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 
 @Component({
-  selector: 'admin-fee-calendar',
+  selector: 'assoc-fee-calendar',
   templateUrl: './fee-calendar.component.html',
   styleUrls: ['./fee-calendar.component.sass']
 })

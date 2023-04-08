@@ -27,7 +27,7 @@ const routes: Routes = [
         children: [
           // Front page
           { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
-          // Admin
+          // Association
           { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] },
           // Security
           { path: 'security', loadChildren: accessModule, canActivate: [LoggedInGuard] }

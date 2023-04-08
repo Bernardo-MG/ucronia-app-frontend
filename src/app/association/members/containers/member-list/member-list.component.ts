@@ -8,7 +8,7 @@ import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/obse
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'admin-member-list',
+  selector: 'assoc-member-list',
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.sass']
 })

@@ -5,13 +5,13 @@
 <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
 
 <ng-template #member_selection>
-  <admin-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+  <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
     (goToPage)="onGoToMembersPage($event)">
-  </admin-member-selection>
+  </assoc-member-selection>
 </ng-template>
 <ng-template #fee_edition>
   <layout-form-controls (save)="onSave()" [disabledSave]="!isAbleToSave()"></layout-form-controls>
-  <admin-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()"
+  <assoc-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()"
     (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
-  </admin-form-fee>
+  </assoc-form-fee>
 </ng-template>

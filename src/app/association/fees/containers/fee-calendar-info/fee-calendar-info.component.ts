@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
-import { AdminFeeService } from '../../services/admin-fee.service';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 
 @Component({
-  selector: 'admin-fee-calendar-info',
+  selector: 'assoc-fee-calendar-info',
   templateUrl: './fee-calendar-info.component.html',
   styleUrls: ['./fee-calendar-info.component.sass']
 })
@@ -25,7 +25,7 @@ export class FeeCalendarInfoComponent implements OnInit {
   public year = new Date().getFullYear();
 
   constructor(
-    private service: AdminFeeService
+    private service: FeeCalendarService
   ) {
     this.load(this.year);
   }

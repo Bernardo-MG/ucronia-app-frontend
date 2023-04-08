@@ -4,7 +4,7 @@ import { Member } from '@app/association/models/member';
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'admin-member-create',
+  selector: 'assoc-member-create',
   templateUrl: './member-create.component.html',
   styleUrls: ['./member-create.component.sass']
 })

@@ -11,7 +11,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminFeeService {
+export class FeeCalendarService {
 
   private feeYearUrl = environment.apiUrl + "/fee/calendar";
 

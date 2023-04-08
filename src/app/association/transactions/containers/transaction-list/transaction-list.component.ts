@@ -11,7 +11,7 @@ import { TransactionFilterRouteObserver } from '../../route/observer/transaction
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-list',
+  selector: 'assoc-transaction-list',
   templateUrl: './transaction-list.component.html',
   styleUrls: ['./transaction-list.component.sass']
 })

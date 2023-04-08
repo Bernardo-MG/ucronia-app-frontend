@@ -9,7 +9,7 @@ import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-calendar',
+  selector: 'assoc-transaction-calendar',
   templateUrl: './transaction-calendar.component.html',
   styleUrls: ['./transaction-calendar.component.sass']
 })

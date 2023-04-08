@@ -9,7 +9,7 @@ import { FeeService } from '../../services/fee.service';
 import { TableRow } from '@app/core/models/table-row';
 
 @Component({
-  selector: 'admin-fee-list',
+  selector: 'assoc-fee-list',
   templateUrl: './fee-list.component.html',
   styleUrls: ['./fee-list.component.sass']
 })

@@ -6,7 +6,7 @@ import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'admin-fee-create',
+  selector: 'assoc-fee-create',
   templateUrl: './fee-create.component.html',
   styleUrls: ['./fee-create.component.sass']
 })

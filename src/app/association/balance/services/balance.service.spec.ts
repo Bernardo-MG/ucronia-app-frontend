@@ -1,10 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { AdminFeeService } from './admin-fee.service';
+import { BalanceService } from './balance.service';
 
-describe('AdminFeeService', () => {
-  let service: AdminFeeService;
+describe('BalanceService', () => {
+  let service: BalanceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,7 +12,7 @@ describe('AdminFeeService', () => {
         HttpClientTestingModule
       ]
     });
-    service = TestBed.inject(AdminFeeService);
+    service = TestBed.inject(BalanceService);
   });
 
   it('should be created', () => {

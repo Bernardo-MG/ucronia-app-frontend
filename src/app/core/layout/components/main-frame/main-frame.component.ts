@@ -12,7 +12,7 @@ export class MainFrameComponent {
 
   public menus: Menu[] = [
     {
-      title: 'Admin', links: [
+      title: 'Association', links: [
         {
           title: 'Fees', links: [
             { title: 'Calendar', path: '/fees/calendar' },

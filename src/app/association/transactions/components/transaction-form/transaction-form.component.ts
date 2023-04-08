@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Transaction } from '@app/association/models/transaction';
 
 @Component({
-  selector: 'admin-form-transaction',
+  selector: 'assoc-form-transaction',
   templateUrl: './transaction-form.component.html',
   styleUrls: ['./transaction-form.component.sass']
 })

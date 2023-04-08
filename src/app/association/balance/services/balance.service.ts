@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AdminBalanceService {
+export class BalanceService {
 
   private balanceUrl = environment.apiUrl + "/balance";
 

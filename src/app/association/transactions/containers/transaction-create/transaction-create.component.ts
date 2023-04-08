@@ -4,7 +4,7 @@ import { Transaction } from '@app/association/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-create',
+  selector: 'assoc-transaction-create',
   templateUrl: './transaction-create.component.html',
   styleUrls: ['./transaction-create.component.sass']
 })
