@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Table } from '@app/core/models/table';
+import { TableHeaderCell } from '@app/core/models/table-header-cell';
+import { TableRow } from '@app/core/models/table-row';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
@@ -29,7 +30,9 @@ export class TransactionListComponent implements OnInit {
 
   public date: string | undefined = undefined;
 
-  public table = new Table();
+  public rows: TableRow[] = [];
+
+  public header: TableHeaderCell[] = [];
 
   private routeActuator: RouteParametersActuator;
 
@@ -48,6 +51,8 @@ export class TransactionListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.header = [{ name: 'description', property: 'description' }, { name: 'date', property: 'date' }, { name: 'amount', property: 'amount' }];
+
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p, new TransactionFilter());
     });
@@ -86,10 +91,8 @@ export class TransactionListComponent implements OnInit {
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
         const transactions = page.content;
-        
-        this.table = new Table();
-        this.table.header = [{ name: 'description', property: 'description' }, { name: 'date', property: 'date' }, { name: 'amount', property: 'amount' }];
-        this.table.rows = transactions.map(m => {
+
+        this.rows = transactions.map(m => {
           return {
             id: m.id,
             cells: [m.description, m.date, m.amount]

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Table } from '@app/core/models/table';
+import { TableHeaderCell } from '@app/core/models/table-header-cell';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
+import { TableRow } from '@app/core/models/table-row';
 
 @Component({
   selector: 'admin-fee-list',
@@ -24,7 +26,9 @@ export class FeeListComponent implements OnInit {
 
   public endDate: string | undefined = undefined;
 
-  public table = new Table();
+  public header: TableHeaderCell[] = [];
+
+  public rows: TableRow[] = [];
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
@@ -36,6 +40,8 @@ export class FeeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'pay date', property: 'date' }, { name: 'paid', property: 'paid' }];
+
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
@@ -56,9 +62,7 @@ export class FeeListComponent implements OnInit {
       next: page => {
         const fees = page.content;
 
-        this.table = new Table();
-        this.table.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'pay date', property: 'date' }, { name: 'paid', property: 'paid' }];
-        this.table.rows = fees.map(f => {
+        this.rows = fees.map(f => {
           return {
             id: f.id,
             cells: [f.name, f.surname, f.date, f.paid]

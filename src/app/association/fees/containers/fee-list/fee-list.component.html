@@ -32,6 +32,6 @@
   </div>
 </div>
 <layout-waiting-wrapper [waiting]="waiting">
-  <layout-data-list [table]="table" route="/fees" [pageInfo]="pageInfo" (delete)="onDelete($event)">
+  <layout-data-list [rows]="rows" [header]="header" route="/fees" [pageInfo]="pageInfo" (delete)="onDelete($event)">
   </layout-data-list>
 </layout-waiting-wrapper>

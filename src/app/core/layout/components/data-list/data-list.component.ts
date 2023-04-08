@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Table } from '@app/core/models/table';
+import { TableHeaderCell } from '@app/core/models/table-header-cell';
+import { TableRow } from '@app/core/models/table-row';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 
 @Component({
@@ -12,8 +14,10 @@ export class DataListComponent {
   @Input() public disabled = false;
 
   @Input() public pageInfo = new PageInfo();
-
-  @Input() public table = new Table();
+  
+  @Input() public header: TableHeaderCell[] = [];
+  
+  @Input() public rows: TableRow[] = [];
 
   @Input() public route = '';
 

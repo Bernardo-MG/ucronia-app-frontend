@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Table } from '@app/core/models/table';
+import { TableHeaderCell } from '@app/core/models/table-header-cell';
+import { TableRow } from '@app/core/models/table-row';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
@@ -20,7 +21,9 @@ export class MemberListComponent implements OnInit {
 
   public pageInfo = new PageInfo();
 
-  public table = new Table();
+  public header: TableHeaderCell[] = [];
+
+  public rows: TableRow[] = [];
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
@@ -32,6 +35,8 @@ export class MemberListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'active', property: 'active' }];
+
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
@@ -52,9 +57,7 @@ export class MemberListComponent implements OnInit {
       next: page => {
         const members = page.content;
 
-        this.table = new Table();
-        this.table.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'active', property: 'active' }];
-        this.table.rows = members.map(m => {
+        this.rows = members.map(m => {
           return {
             id: m.id,
             cells: [m.name, m.surname, m.active]
