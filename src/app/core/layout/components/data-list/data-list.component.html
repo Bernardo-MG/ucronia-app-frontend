@@ -21,12 +21,12 @@
           <!-- Button cell -->
           <td>
             <!-- Edit icon -->
-            <a routerLink="{{route}}/{{row.id}}" class="btn btn-default" role="button">
+            <a routerLink="{{route}}/{{row.id}}" class="btn btn-link link-dark" role="button">
               <icon-edit></icon-edit>
             </a>
             <!-- Delete icon -->
             <button (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
-              class="btn btn-default" role="button" aria-label="Back">
+              class="btn btn-link link-dark" role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>
