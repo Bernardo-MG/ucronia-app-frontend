@@ -10,8 +10,9 @@ import { FormControlsComponent } from './components/form-controls/form-controls.
 import { MainFrameComponent } from './components/main-frame/main-frame.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
+import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { AccountFrameComponent } from './containers/account-frame/account-frame.component';
+import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
 import { HeaderFrameComponent } from './containers/header-frame/header-frame.component';
 
 
@@ -25,7 +26,8 @@ import { HeaderFrameComponent } from './containers/header-frame/header-frame.com
     AccountMenuComponent,
     NavbarComponent,
     AccountFrameComponent,
-    HeaderFrameComponent
+    HeaderFrameComponent,
+    WaitingWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { HeaderFrameComponent } from './containers/header-frame/header-frame.com
     DataListComponent,
     FormControlsComponent,
     MainFrameComponent,
-    NavbarComponent
+    NavbarComponent,
+    WaitingWrapperComponent
   ],
 })
 export class LayoutModule { }

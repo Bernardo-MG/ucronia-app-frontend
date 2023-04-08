@@ -9,10 +9,7 @@ import { PageInfo } from '@app/shared/utils/api/models/page-info';
 })
 export class DataListComponent {
 
-  /**
-   * Loading flag.
-   */
-  @Input() public waiting = false;
+  @Input() public disabled = false;
 
   @Input() public pageInfo = new PageInfo();
 

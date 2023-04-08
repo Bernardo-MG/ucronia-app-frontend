@@ -7,6 +7,8 @@
 <a routerLink="/members/create" class="btn btn-default" role="button">
   <icon-create></icon-create>
 </a>
-<layout-data-list [table]="table" route="/members" [waiting]="waiting" [pageInfo]="pageInfo"
-  (delete)="onDelete($event)">
-</layout-data-list>
+<layout-waiting-wrapper [waiting]="waiting">
+  <layout-data-list [table]="table" route="/members" [pageInfo]="pageInfo"
+    (delete)="onDelete($event)">
+  </layout-data-list>
+</layout-waiting-wrapper>

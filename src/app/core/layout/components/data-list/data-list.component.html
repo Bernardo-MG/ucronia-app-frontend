@@ -1,48 +1,42 @@
-<!-- Pagination and controls -->
 <div class="card">
   <div class="card-body">
     <!-- Table -->
-    <div *ngIf="waiting; then waiting_cue else data_list"></div>
-    <ng-template #waiting_cue>
-      <div class="d-flex justify-content-center">
-        <icon-waiting></icon-waiting>
-      </div>
-    </ng-template>
-    <ng-template #data_list>
-      <table class="table">
-        <thead>
-          <tr>
-            <th *ngFor="let cell of table.header" scope="col">
-              <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
-            </th>
-            <!-- Empty header for the buttons -->
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of table.rows">
-            <td *ngFor="let cell of row.cells">
-              {{cell}}
-            </td>
-            <td>
-              <!-- Edit icon -->
-              <a routerLink="{{route}}/{{row.id}}" class="btn btn-default" role="button">
-                <icon-edit></icon-edit>
-              </a>
-              <!-- Delete icon -->
-              <button (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
-                class="btn btn-default" role="button" aria-label="Back">
-                <icon-delete></icon-delete>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="d-flex justify-content-center mt-1">
-        <pagination-route-navigation [totalPages]="pageInfo.totalPages" [disabled]="waiting">
-        </pagination-route-navigation>
-      </div>
-    </ng-template>
+    <table class="table">
+      <thead>
+        <tr>
+          <!-- Data headers -->
+          <th *ngFor="let cell of table.header" scope="col">
+            <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
+          </th>
+          <!-- Empty header for the buttons -->
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of table.rows">
+          <!-- Data cells -->
+          <td *ngFor="let cell of row.cells">
+            {{cell}}
+          </td>
+          <!-- Button cell -->
+          <td>
+            <!-- Edit icon -->
+            <a routerLink="{{route}}/{{row.id}}" class="btn btn-default" role="button">
+              <icon-edit></icon-edit>
+            </a>
+            <!-- Delete icon -->
+            <button (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
+              class="btn btn-default" role="button" aria-label="Back">
+              <icon-delete></icon-delete>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center mt-1">
+      <pagination-route-navigation [totalPages]="pageInfo.totalPages" [disabled]="disabled">
+      </pagination-route-navigation>
+    </div>
 
     <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
       aria-hidden="true">
