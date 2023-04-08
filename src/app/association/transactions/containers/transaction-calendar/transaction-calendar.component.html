@@ -1,7 +1,6 @@
-<div class="row">
-    <h1>transactions</h1>
-</div>
-<admin-transaction-tabs [calendarActive]=true></admin-transaction-tabs>
+<header class="pb-2 mt-4 mb-2 border-bottom">
+    <h1>Transactions calendar</h1>
+</header>
 <div *ngIf="waiting; then waiting_cue else calendar"></div>
 <ng-template #waiting_cue>
     <div class="d-flex justify-content-center">

@@ -1,11 +1,6 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">
-      <a routerLink="/fees" class="btn btn-default" role="button">fees</a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">create</li>
-  </ol>
-</nav>
+<header class="pb-2 mt-4 mb-2 border-bottom">
+  <h1>Create fee</h1>
+</header>
 
 <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
 

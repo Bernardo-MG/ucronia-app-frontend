@@ -1,8 +1,6 @@
-<div class="row">
-  <h1>transactions</h1>
-</div>
-<!-- Tabs -->
-<admin-transaction-tabs [listActive]=true></admin-transaction-tabs>
+<header class="pb-2 mt-4 mb-2 border-bottom">
+  <h1>Transactions</h1>
+</header>
 <!-- Filter -->
 <div>
   <div class="accordion" id="filterAccordion">
@@ -40,9 +38,6 @@
     </div>
   </div>
 </div>
-<a routerLink="/transactions/create" class="btn btn-default" role="button">
-  <icon-create></icon-create>
-</a>
 <layout-waiting-wrapper [waiting]="waiting">
   <layout-data-list [table]="table" route="/transactions" [pageInfo]="pageInfo" (delete)="onDelete($event)">
   </layout-data-list>

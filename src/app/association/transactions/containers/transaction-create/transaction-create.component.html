@@ -1,11 +1,6 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active" aria-current="page">
-      <a routerLink="/transactions" class="btn btn-default" role="button">transactions</a>
-    </li>
-    <li class="breadcrumb-item active" aria-current="page">create</li>
-  </ol>
-</nav>
+<header class="pb-2 mt-4 mb-2 border-bottom">
+  <h1>Create transaction</h1>
+</header>
 
 <layout-data-form [waiting]="waiting" [formValid]="formValid" (save)="onSave()">
   <admin-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"

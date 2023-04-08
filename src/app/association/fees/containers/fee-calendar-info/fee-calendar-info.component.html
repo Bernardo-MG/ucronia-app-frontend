@@ -1,6 +1,6 @@
-<h1>fees</h1>
-<!-- Tabs -->
-<admin-fee-tabs [calendarActive]=true></admin-fee-tabs>
+<header class="pb-2 mt-4 mb-2 border-bottom">
+  <h1>Fees calendar</h1>
+</header>
 <!-- Calendar -->
 <div *ngIf="waiting; then waiting_cue else fee_year"></div>
 <div class="row">
