@@ -19,7 +19,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["account", "assoc", "app", "authentication", "button", "calendar", "icon", "layout", "pagination", "security"],
+            "prefix": ["account", "assoc", "app", "authentication", "button", "calendar", "icon", "layout", "pagination", "security", "shared"],
             "style": "camelCase"
           }
         ],
@@ -27,7 +27,7 @@
           "error",
           {
             "type": "element",
-            "prefix": ["account", "assoc", "app", "authentication", "button", "calendar", "icon", "layout", "pagination", "security"],
+            "prefix": ["account", "assoc", "app", "authentication", "button", "calendar", "icon", "layout", "pagination", "security", "shared"],
             "style": "kebab-case"
           }
         ]
