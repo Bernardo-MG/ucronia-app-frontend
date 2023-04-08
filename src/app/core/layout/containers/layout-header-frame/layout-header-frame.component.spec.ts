@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { LayoutHeaderFrameComponent } from './layout-header-frame.component';
 
 describe('LayoutHeaderFrameComponent', () => {
@@ -8,9 +10,18 @@ describe('LayoutHeaderFrameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LayoutHeaderFrameComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        LayoutHeaderFrameComponent,
+        NavbarComponent
+      ],
+      providers: [
+        AuthenticationContainer
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LayoutHeaderFrameComponent);
     component = fixture.componentInstance;
