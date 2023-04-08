@@ -17,6 +17,8 @@ export class DataFormComponent {
 
   @Output() public save = new EventEmitter<void>();
 
+  @Output() public cancel = new EventEmitter<void>();
+
   public saveIcon = faFloppyDisk;
 
   public onSave(): void {
