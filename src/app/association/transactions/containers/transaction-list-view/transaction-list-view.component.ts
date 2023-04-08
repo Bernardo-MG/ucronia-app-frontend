@@ -8,6 +8,7 @@ import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
+import { Table } from '@app/core/models/table';
 
 @Component({
   selector: 'admin-transaction-list-view',
@@ -19,9 +20,7 @@ export class TransactionListViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
-
-  public transactions: Transaction[] = [];
+  public waiting = false;
 
   public pageInfo = new PageInfo();
 
@@ -31,7 +30,7 @@ export class TransactionListViewComponent implements OnInit {
 
   public date: string | undefined = undefined;
 
-  private selected: { id: number } = { id: -1 };
+  public table = new Table();
 
   private routeActuator: RouteParametersActuator;
 
@@ -71,34 +70,41 @@ export class TransactionListViewComponent implements OnInit {
   }
 
   public isLoading(): boolean {
-    return (this.transactions.length == 0) && this.loading;
+    return this.waiting;
   }
 
-  public onDelete() {
-    if (this.selected.id > 0) {
-      this.service.delete(this.selected.id).subscribe(r => {
+  public onDelete(id: number) {
+    if (id > 0) {
+      this.service.delete(id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination, new TransactionFilter());
       });
     }
   }
 
-  public select(data: { id: number }) {
-    this.selected = data;
-  }
-
   private load(pagination: PaginationRequest | undefined, filter: TransactionFilter) {
-    this.loading = true;
+    this.waiting = true;
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
-        this.transactions = page.content;
+        const transactions = page.content;
+        
+        this.table = new Table();
+        this.table.header = [{ name: 'description', property: 'description' }, { name: 'date', property: 'date' }, { name: 'amount', property: 'amount' }];
+        this.table.rows = transactions.map(m => {
+          return {
+            id: m.id,
+            cells: [m.description, m.date, m.amount]
+          };
+        });
+
+
         this.pageInfo = page;
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }

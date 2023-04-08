@@ -8,7 +8,6 @@
   <icon-create></icon-create>
 </a>
 <layout-waiting-wrapper [waiting]="waiting">
-  <layout-data-list [table]="table" route="/members" [pageInfo]="pageInfo"
-    (delete)="onDelete($event)">
+  <layout-data-list [table]="table" route="/members" [pageInfo]="pageInfo" (delete)="onDelete($event)">
   </layout-data-list>
 </layout-waiting-wrapper>

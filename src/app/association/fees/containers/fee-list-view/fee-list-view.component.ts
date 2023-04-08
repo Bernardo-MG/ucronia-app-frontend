@@ -5,6 +5,7 @@ import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
+import { Table } from '@app/core/models/table';
 
 @Component({
   selector: 'admin-fee-list-view',
@@ -16,9 +17,7 @@ export class FeeListViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
-
-  public fees: Fee[] = [];
+  public waiting = false;
 
   public pageInfo = new PageInfo();
 
@@ -26,9 +25,9 @@ export class FeeListViewComponent implements OnInit {
 
   public endDate: string | undefined = undefined;
 
-  private routePaginationObserver: PaginationRequestRouteObserver;
+  public table = new Table();
 
-  private selected: { id: number } = { id: -1 };
+  private routePaginationObserver: PaginationRequestRouteObserver;
 
   constructor(
     private service: FeeService,
@@ -43,31 +42,37 @@ export class FeeListViewComponent implements OnInit {
     });
   }
 
-  public onDelete() {
-    if (this.selected.id > 0) {
-      this.service.delete(this.selected.id).subscribe(r => {
+  public onDelete(id: number) {
+    if (id > 0) {
+      this.service.delete(id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
     }
   }
 
-  public onSelect(data: { id: number }) {
-    this.selected = data;
-  }
-
   private load(pagination: PaginationRequest | undefined) {
-    this.loading = true;
+    this.waiting = true;
     this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
-        this.fees = page.content;
+        const fees = page.content;
+
+        this.table = new Table();
+        this.table.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'pay date', property: 'date' }, { name: 'paid', property: 'paid' }];
+        this.table.rows = fees.map(f => {
+          return {
+            id: f.id,
+            cells: [f.name, f.surname, f.date, f.paid]
+          };
+        });
+
         this.pageInfo = page;
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }
