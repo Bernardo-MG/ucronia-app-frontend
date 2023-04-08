@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Transaction } from '@app/association/models/transaction';
+import { Table } from '@app/core/models/table';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
@@ -8,14 +8,13 @@ import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
-import { Table } from '@app/core/models/table';
 
 @Component({
-  selector: 'admin-transaction-list-view',
-  templateUrl: './transaction-list-view.component.html',
-  styleUrls: ['./transaction-list-view.component.sass']
+  selector: 'admin-transaction-list',
+  templateUrl: './transaction-list.component.html',
+  styleUrls: ['./transaction-list.component.sass']
 })
-export class TransactionListViewComponent implements OnInit {
+export class TransactionListComponent implements OnInit {
 
   /**
    * Loading flag.

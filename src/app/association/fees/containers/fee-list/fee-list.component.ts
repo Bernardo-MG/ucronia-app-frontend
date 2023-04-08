@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Fee } from '@app/association/models/fee';
+import { Table } from '@app/core/models/table';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
-import { Table } from '@app/core/models/table';
 
 @Component({
-  selector: 'admin-fee-list-view',
-  templateUrl: './fee-list-view.component.html',
-  styleUrls: ['./fee-list-view.component.sass']
+  selector: 'admin-fee-list',
+  templateUrl: './fee-list.component.html',
+  styleUrls: ['./fee-list.component.sass']
 })
-export class FeeListViewComponent implements OnInit {
+export class FeeListComponent implements OnInit {
 
   /**
    * Loading flag.

@@ -6,11 +6,11 @@ import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionListViewComponent } from './transaction-list-view.component';
+import { TransactionListComponent } from './transaction-list.component';
 
 describe('TransactionListViewComponent', () => {
-  let component: TransactionListViewComponent;
-  let fixture: ComponentFixture<TransactionListViewComponent>;
+  let component: TransactionListComponent;
+  let fixture: ComponentFixture<TransactionListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('TransactionListViewComponent', () => {
         CoreModule
       ],
       declarations: [
-        TransactionListViewComponent,
+        TransactionListComponent,
         TransactionTabsComponent
       ],
       providers: [
@@ -32,7 +32,7 @@ describe('TransactionListViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionListViewComponent);
+    fixture = TestBed.createComponent(TransactionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

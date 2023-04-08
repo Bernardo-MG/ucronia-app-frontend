@@ -4,11 +4,11 @@ import { Transaction } from '@app/association/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-edit-view',
-  templateUrl: './transaction-edit-view.component.html',
-  styleUrls: ['./transaction-edit-view.component.sass']
+  selector: 'admin-transaction-edit',
+  templateUrl: './transaction-edit.component.html',
+  styleUrls: ['./transaction-edit.component.sass']
 })
-export class TransactionEditViewComponent implements OnInit {
+export class TransactionEditComponent implements OnInit {
 
   /**
    * Loading flag.

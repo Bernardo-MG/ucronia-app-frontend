@@ -7,11 +7,11 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionCreateViewComponent } from './transaction-create-view.component';
+import { TransactionCreateComponent } from './transaction-create.component';
 
-describe('TransactionCreateViewComponent', () => {
-  let component: TransactionCreateViewComponent;
-  let fixture: ComponentFixture<TransactionCreateViewComponent>;
+describe('TransactionCreateComponent', () => {
+  let component: TransactionCreateComponent;
+  let fixture: ComponentFixture<TransactionCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('TransactionCreateViewComponent', () => {
         IconsModule
       ],
       declarations: [
-        TransactionCreateViewComponent,
+        TransactionCreateComponent,
         DataFormComponent,
         TransactionFormComponent
       ],
@@ -33,7 +33,7 @@ describe('TransactionCreateViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionCreateViewComponent);
+    fixture = TestBed.createComponent(TransactionCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,11 +7,11 @@ import { EMPTY } from 'rxjs';
 import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
-import { FeeEditViewComponent } from './fee-edit-view.component';
+import { FeeCreateComponent } from './fee-create.component';
 
-describe('FeeEditViewComponent', () => {
-  let component: FeeEditViewComponent;
-  let fixture: ComponentFixture<FeeEditViewComponent>;
+describe('FeeCreateComponent', () => {
+  let component: FeeCreateComponent;
+  let fixture: ComponentFixture<FeeCreateComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('FeeEditViewComponent', () => {
         IconsModule
       ],
       declarations: [
-        FeeEditViewComponent,
+        FeeCreateComponent,
         FeeFormComponent,
         MemberSelectionComponent
       ],
@@ -37,7 +37,7 @@ describe('FeeEditViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeEditViewComponent);
+    fixture = TestBed.createComponent(FeeCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

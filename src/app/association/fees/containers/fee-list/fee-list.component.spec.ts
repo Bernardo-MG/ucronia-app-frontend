@@ -6,11 +6,11 @@ import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeService } from '../../services/fee.service';
-import { FeeListViewComponent } from './fee-list-view.component';
+import { FeeListComponent } from './fee-list.component';
 
-describe('FeeListViewComponent', () => {
-  let component: FeeListViewComponent;
-  let fixture: ComponentFixture<FeeListViewComponent>;
+describe('FeeListComponent', () => {
+  let component: FeeListComponent;
+  let fixture: ComponentFixture<FeeListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('FeeListViewComponent', () => {
         CoreModule
       ],
       declarations: [
-        FeeListViewComponent,
+        FeeListComponent,
         FeeTabsComponent
       ],
       providers: [
@@ -32,7 +32,7 @@ describe('FeeListViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeListViewComponent);
+    fixture = TestBed.createComponent(FeeListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

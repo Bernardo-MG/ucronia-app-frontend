@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TransactionCalendarViewComponent } from './containers/transaction-calendar-view/transaction-calendar-view.component';
-import { TransactionCreateViewComponent } from './containers/transaction-create-view/transaction-create-view.component';
-import { TransactionEditViewComponent } from './containers/transaction-edit-view/transaction-edit-view.component';
-import { TransactionListViewComponent } from './containers/transaction-list-view/transaction-list-view.component';
+import { TransactionCalendarComponent } from './containers/transaction-calendar/transaction-calendar.component';
+import { TransactionCreateComponent } from './containers/transaction-create/transaction-create.component';
+import { TransactionEditComponent } from './containers/transaction-edit/transaction-edit.component';
+import { TransactionListComponent } from './containers/transaction-list/transaction-list.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: TransactionCalendarViewComponent },
-            { path: 'list', component: TransactionListViewComponent },
-            { path: 'calendar', component: TransactionCalendarViewComponent },
-            { path: 'create', component: TransactionCreateViewComponent },
-            { path: ':id', component: TransactionEditViewComponent }
+            { path: '', component: TransactionCalendarComponent },
+            { path: 'list', component: TransactionListComponent },
+            { path: 'calendar', component: TransactionCalendarComponent },
+            { path: 'create', component: TransactionCreateComponent },
+            { path: ':id', component: TransactionEditComponent }
         ]
     }
 ];

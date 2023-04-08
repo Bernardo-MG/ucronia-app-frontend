@@ -3,11 +3,11 @@ import { Balance } from '@app/association/models/balance';
 import { AdminBalanceService } from '../../services/admin-balance.service';
 
 @Component({
-  selector: 'admin-balance-view',
-  templateUrl: './admin-balance-view.component.html',
-  styleUrls: ['./admin-balance-view.component.sass']
+  selector: 'admin-balance-info',
+  templateUrl: './balance-info.component.html',
+  styleUrls: ['./balance-info.component.sass']
 })
-export class AdminBalanceViewComponent implements OnInit {
+export class BalanceInfoComponent implements OnInit {
 
   public balance: Balance = new Balance();
 

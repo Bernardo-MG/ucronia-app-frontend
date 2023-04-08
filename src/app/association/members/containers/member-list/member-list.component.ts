@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Member } from '@app/association/models/member';
+import { Table } from '@app/core/models/table';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { MemberService } from '../../services/member.service';
-import { Table } from '@app/core/models/table';
 
 @Component({
   selector: 'admin-member-list',
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.sass']
 })
-export class MemberListViewComponent implements OnInit {
+export class MemberListComponent implements OnInit {
 
   /**
    * Loading flag.

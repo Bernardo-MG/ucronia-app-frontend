@@ -8,7 +8,7 @@ import { MemberService } from '../../services/member.service';
   templateUrl: './member-edit.component.html',
   styleUrls: ['./member-edit.component.sass']
 })
-export class MemberEditViewComponent implements OnInit {
+export class MemberEditComponent implements OnInit {
 
   /**
    * Loading flag.

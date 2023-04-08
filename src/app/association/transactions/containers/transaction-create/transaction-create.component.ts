@@ -4,11 +4,11 @@ import { Transaction } from '@app/association/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-create-view',
-  templateUrl: './transaction-create-view.component.html',
-  styleUrls: ['./transaction-create-view.component.sass']
+  selector: 'admin-transaction-create',
+  templateUrl: './transaction-create.component.html',
+  styleUrls: ['./transaction-create.component.sass']
 })
-export class TransactionCreateViewComponent {
+export class TransactionCreateComponent {
 
   /**
    * Loading flag.

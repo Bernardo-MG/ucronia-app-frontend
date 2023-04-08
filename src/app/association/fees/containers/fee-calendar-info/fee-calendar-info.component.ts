@@ -5,11 +5,11 @@ import { AdminFeeService } from '../../services/admin-fee.service';
 
 
 @Component({
-  selector: 'admin-fee-calendar-view',
-  templateUrl: './fee-calendar-view.component.html',
-  styleUrls: ['./fee-calendar-view.component.sass']
+  selector: 'admin-fee-calendar-info',
+  templateUrl: './fee-calendar-info.component.html',
+  styleUrls: ['./fee-calendar-info.component.sass']
 })
-export class FeeCalendarViewComponent implements OnInit {
+export class FeeCalendarInfoComponent implements OnInit {
 
   /**
    * Loading flag. Shows the loading visual cue.

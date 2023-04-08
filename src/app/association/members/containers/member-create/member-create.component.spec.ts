@@ -7,11 +7,11 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
-import { MemberCreateViewComponent } from './member-create.component';
+import { MemberCreateComponent } from './member-create.component';
 
-describe('MemberCreateViewComponent', () => {
-  let component: MemberCreateViewComponent;
-  let fixture: ComponentFixture<MemberCreateViewComponent>;
+describe('MemberCreateComponent', () => {
+  let component: MemberCreateComponent;
+  let fixture: ComponentFixture<MemberCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,14 +26,14 @@ describe('MemberCreateViewComponent', () => {
         IconsModule
       ],
       declarations: [
-        MemberCreateViewComponent,
+        MemberCreateComponent,
         DataFormComponent,
         MemberFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberCreateViewComponent);
+    fixture = TestBed.createComponent(MemberCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

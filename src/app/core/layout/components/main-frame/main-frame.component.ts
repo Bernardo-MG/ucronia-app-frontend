@@ -15,22 +15,28 @@ export class MainFrameComponent {
       title: 'Admin', links: [
         {
           title: 'Fees', links: [
-            { title: 'List', path: '/fees' }
+            { title: 'Calendar', path: '/fees/calendar' },
+            { title: 'List', path: '/fees/list' },
+            { title: 'Create', path: '/fees/create' }
           ]
         },
         {
           title: 'Balance', links: [
-            { title: 'List', path: '/balance' }
+            { title: 'Info', path: '/balance' }
           ]
         },
         {
           title: 'Members', links: [
-            { title: 'List', path: '/members' }
+            { title: 'Stats', path: '/members/stats' },
+            { title: 'List', path: '/members/list' },
+            { title: 'Create', path: '/members/create' }
           ]
         },
         {
           title: 'Transactions', links: [
-            { title: 'List', path: '/transactions' }
+            { title: 'Calendar', path: '/transactions/calendar' },
+            { title: 'List', path: '/transactions/list' },
+            { title: 'Create', path: '/transactions/create' }
           ]
         }
       ]

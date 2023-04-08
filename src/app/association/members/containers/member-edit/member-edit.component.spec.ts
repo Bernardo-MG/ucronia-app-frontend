@@ -7,11 +7,11 @@ import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
-import { MemberEditViewComponent } from './member-edit.component';
+import { MemberEditComponent } from './member-edit.component';
 
-describe('MemberEditViewComponent', () => {
-  let component: MemberEditViewComponent;
-  let fixture: ComponentFixture<MemberEditViewComponent>;
+describe('MemberEditComponent', () => {
+  let component: MemberEditComponent;
+  let fixture: ComponentFixture<MemberEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,7 +23,7 @@ describe('MemberEditViewComponent', () => {
         ReactiveFormsModule
       ],
       declarations: [
-        MemberEditViewComponent,
+        MemberEditComponent,
         DataFormComponent,
         MemberFormComponent
       ],
@@ -33,7 +33,7 @@ describe('MemberEditViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberEditViewComponent);
+    fixture = TestBed.createComponent(MemberEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

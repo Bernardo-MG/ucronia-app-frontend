@@ -1,16 +1,16 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'admin-fee-edit-view',
-  templateUrl: './fee-edit-view.component.html',
-  styleUrls: ['./fee-edit-view.component.sass']
+  selector: 'admin-fee-create',
+  templateUrl: './fee-create.component.html',
+  styleUrls: ['./fee-create.component.sass']
 })
-export class FeeEditViewComponent implements OnInit, AfterContentInit {
+export class FeeCreateComponent implements AfterContentInit {
 
   public members: Member[] = [];
 
@@ -18,15 +18,15 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
 
   public membersPageInfo = new PageInfo();
 
-  public fee = new Fee();
+  public fee: Fee = new Fee();
 
   public selectingMember = false;
 
   private formValid = false;
 
   constructor(
-    private route: ActivatedRoute,
     private service: FeeService,
+    private router: Router,
     private cdRef: ChangeDetectorRef
   ) { }
 
@@ -34,15 +34,10 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
     this.cdRef.detectChanges();
   }
 
-  public ngOnInit(): void {
-    this.onGoToMembersPage(0);
-    this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
-    });
-  }
-
   public onSave(): void {
-    this.service.update(this.fee.id, this.fee).subscribe();
+    this.service.create(this.fee).subscribe(d => {
+      this.router.navigate([`/fees/${d.id}`]);
+    });
   }
 
   public onFormValidChange(valid: boolean): void {
@@ -51,10 +46,6 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
 
   public onFormChange(value: Fee) {
     this.fee = value;
-  }
-
-  public isAbleToSave() {
-    return this.formValid;
   }
 
   public onRequestMember() {
@@ -73,15 +64,8 @@ export class FeeEditViewComponent implements OnInit, AfterContentInit {
     });
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      const identifier = Number(id);
-      this.service.getOne(identifier)
-        .subscribe(d => {
-          this.fee = d;
-          this.service.getOneMember(this.fee.memberId).subscribe(d => this.member = d);
-        });
-    }
+  public isAbleToSave() {
+    return this.formValid;
   }
 
 }

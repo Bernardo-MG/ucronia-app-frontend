@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CoreModule } from '@app/core/core.module';
 import { BalanceRoutingModule } from './balance-routing.module';
-import { AdminBalanceViewComponent } from './containers/admin-balance-view/admin-balance-view.component';
+import { BalanceInfoComponent } from './containers/balance-info/balance-info.component';
 
 
 
 @NgModule({
   declarations: [
-    AdminBalanceViewComponent
+    BalanceInfoComponent
   ],
   imports: [
     CommonModule,

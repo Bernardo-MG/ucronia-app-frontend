@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminBalanceViewComponent } from './containers/admin-balance-view/admin-balance-view.component';
+import { BalanceInfoComponent } from './containers/balance-info/balance-info.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: AdminBalanceViewComponent }
+            { path: '', component: BalanceInfoComponent }
         ]
     }
 ];

@@ -9,11 +9,11 @@ import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'admin-transaction-calendar-view',
-  templateUrl: './transaction-calendar-view.component.html',
-  styleUrls: ['./transaction-calendar-view.component.sass']
+  selector: 'admin-transaction-calendar',
+  templateUrl: './transaction-calendar.component.html',
+  styleUrls: ['./transaction-calendar.component.sass']
 })
-export class TransactionCalendarViewComponent implements OnInit {
+export class TransactionCalendarComponent implements OnInit {
 
   /**
    * Loading flag.

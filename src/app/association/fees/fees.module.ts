@@ -9,10 +9,10 @@ import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.com
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { FeeTabsComponent } from './components/fee-tabs/fee-tabs.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
-import { FeeCalendarViewComponent } from './containers/fee-calendar-view/fee-calendar-view.component';
-import { FeeCreateViewComponent } from './containers/fee-create-view/fee-create-view.component';
-import { FeeEditViewComponent } from './containers/fee-edit-view/fee-edit-view.component';
-import { FeeListViewComponent } from './containers/fee-list-view/fee-list-view.component';
+import { FeeCalendarInfoComponent } from './containers/fee-calendar-info/fee-calendar-info.component';
+import { FeeCreateComponent } from './containers/fee-create/fee-create.component';
+import { FeeEditComponent } from './containers/fee-edit/fee-edit.component';
+import { FeeListComponent } from './containers/fee-list/fee-list.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
 
@@ -20,12 +20,12 @@ import { FeeService } from './services/fee.service';
 
 @NgModule({
   declarations: [
-    FeeCalendarViewComponent,
     FeeCalendarComponent,
+    FeeCalendarInfoComponent,
     FeeFormComponent,
-    FeeCreateViewComponent,
-    FeeListViewComponent,
-    FeeEditViewComponent,
+    FeeCreateComponent,
+    FeeListComponent,
+    FeeEditComponent,
     MemberSelectionComponent,
     FeeTabsComponent
   ],

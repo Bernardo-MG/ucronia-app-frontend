@@ -5,11 +5,11 @@ import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
 import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionCalendarViewComponent } from './transaction-calendar-view.component';
+import { TransactionCalendarComponent } from './transaction-calendar.component';
 
-describe('TransactionCalendarViewComponent', () => {
-  let component: TransactionCalendarViewComponent;
-  let fixture: ComponentFixture<TransactionCalendarViewComponent>;
+describe('TransactionCalendarComponent', () => {
+  let component: TransactionCalendarComponent;
+  let fixture: ComponentFixture<TransactionCalendarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('TransactionCalendarViewComponent', () => {
         CalendarModule
       ],
       declarations: [
-        TransactionCalendarViewComponent,
+        TransactionCalendarComponent,
         TransactionTabsComponent
       ],
       providers: [
@@ -29,7 +29,7 @@ describe('TransactionCalendarViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionCalendarViewComponent);
+    fixture = TestBed.createComponent(TransactionCalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

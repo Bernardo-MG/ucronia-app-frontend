@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeeCalendarViewComponent } from './containers/fee-calendar-view/fee-calendar-view.component';
-import { FeeCreateViewComponent } from './containers/fee-create-view/fee-create-view.component';
-import { FeeEditViewComponent } from './containers/fee-edit-view/fee-edit-view.component';
-import { FeeListViewComponent } from './containers/fee-list-view/fee-list-view.component';
+import { FeeCalendarInfoComponent } from './containers/fee-calendar-info/fee-calendar-info.component';
+import { FeeCreateComponent } from './containers/fee-create/fee-create.component';
+import { FeeEditComponent } from './containers/fee-edit/fee-edit.component';
+import { FeeListComponent } from './containers/fee-list/fee-list.component';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
-            { path: '', component: FeeCalendarViewComponent },
-            { path: 'list', component: FeeListViewComponent },
-            { path: 'calendar', component: FeeCalendarViewComponent },
-            { path: 'create', component: FeeCreateViewComponent },
-            { path: ':id', component: FeeEditViewComponent }
+            { path: '', component: FeeCalendarInfoComponent },
+            { path: 'list', component: FeeListComponent },
+            { path: 'calendar', component: FeeCalendarInfoComponent },
+            { path: 'create', component: FeeCreateComponent },
+            { path: ':id', component: FeeEditComponent }
         ]
     }
 ];

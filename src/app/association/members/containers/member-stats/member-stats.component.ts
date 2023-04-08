@@ -6,7 +6,7 @@ import { MemberService } from '../../services/member.service';
   templateUrl: './member-stats.component.html',
   styleUrls: ['./member-stats.component.sass']
 })
-export class MemberStatsViewComponent implements OnInit {
+export class MemberStatsComponent implements OnInit {
 
   public activeCount = 0;
 

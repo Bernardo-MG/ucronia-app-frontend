@@ -1,11 +1,11 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminBalanceViewComponent } from './admin-balance-view.component';
+import { BalanceInfoComponent } from './balance-info.component';
 
-describe('AdminBalanceViewComponent', () => {
-  let component: AdminBalanceViewComponent;
-  let fixture: ComponentFixture<AdminBalanceViewComponent>;
+describe('BalanceInfoComponent', () => {
+  let component: BalanceInfoComponent;
+  let fixture: ComponentFixture<BalanceInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +13,12 @@ describe('AdminBalanceViewComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        AdminBalanceViewComponent
+        BalanceInfoComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AdminBalanceViewComponent);
+    fixture = TestBed.createComponent(BalanceInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -8,7 +8,7 @@ import { MemberService } from '../../services/member.service';
   templateUrl: './member-create.component.html',
   styleUrls: ['./member-create.component.sass']
 })
-export class MemberCreateViewComponent {
+export class MemberCreateComponent {
 
   /**
    * Loading flag.
