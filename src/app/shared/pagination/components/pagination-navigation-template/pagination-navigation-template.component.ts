@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 /**
  * Pagination component template.
@@ -35,16 +35,6 @@ export class PaginationNavigationTemplateComponent {
    * Disabled flag. To disable all the inner components.
    */
   @Input() public disabled = false;
-
-  /**
-   * Disabled backward flag. To disable the backward button.
-   */
-  @Input() public disableBackward = true;
-
-  /**
-   * Disabled forward flag. To disable the forward button.
-   */
-  @Input() public disableForward = true;
 
   /**
    * Left page range.
@@ -107,7 +97,7 @@ export class PaginationNavigationTemplateComponent {
    * @returns true if the backward button should be disabled, false otherwise
    */
   public isBackwardDisabled(): boolean {
-    return ((this.disableBackward) || (this.disabled));
+    return ((this.current <= 1) || (this.disabled));
   }
 
   /**
@@ -116,7 +106,7 @@ export class PaginationNavigationTemplateComponent {
    * @returns true if the forward button should be disabled, false otherwise
    */
   public isForwardDisabled(): boolean {
-    return ((this.disableForward) || (this.disabled));
+    return ((this.current >= this.last) || (this.disabled));
   }
 
   /**

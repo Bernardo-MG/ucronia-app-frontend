@@ -7,7 +7,7 @@ import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
-import { MemberEditViewComponent } from './member-edit-view.component';
+import { MemberEditViewComponent } from './member-edit.component';
 
 describe('MemberEditViewComponent', () => {
   let component: MemberEditViewComponent;

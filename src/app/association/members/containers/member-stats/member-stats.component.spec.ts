@@ -1,26 +1,23 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@app/core/core.module';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { MemberTabsComponent } from '../../components/member-tabs/member-tabs.component';
 import { MemberService } from '../../services/member.service';
-import { MemberListViewComponent } from './member-list-view.component';
 
-describe('MemberListViewComponent', () => {
-  let component: MemberListViewComponent;
-  let fixture: ComponentFixture<MemberListViewComponent>;
+import { MemberStatsViewComponent } from './member-stats.component';
+
+describe('MemberStatsViewComponent', () => {
+  let component: MemberStatsViewComponent;
+  let fixture: ComponentFixture<MemberStatsViewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule,
-        PaginationModule,
-        CoreModule
+        HttpClientTestingModule
       ],
       declarations: [
-        MemberListViewComponent,
+        MemberStatsViewComponent,
         MemberTabsComponent
       ],
       providers: [
@@ -29,7 +26,7 @@ describe('MemberListViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberListViewComponent);
+    fixture = TestBed.createComponent(MemberStatsViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

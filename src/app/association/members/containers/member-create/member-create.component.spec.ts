@@ -7,7 +7,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
-import { MemberCreateViewComponent } from './member-create-view.component';
+import { MemberCreateViewComponent } from './member-create.component';
 
 describe('MemberCreateViewComponent', () => {
   let component: MemberCreateViewComponent;

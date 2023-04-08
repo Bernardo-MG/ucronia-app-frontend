@@ -1,44 +1,35 @@
 <!-- Pagination and controls -->
-<div class="row">
-  <div class="col-1">
-    <a routerLink="{{createRoute}}" class="btn btn-default" role="button">
-      <icon-create></icon-create>
-    </a>
-    <div class="col-2 offset-5">
-      <pagination-size-selector [selected]="pageInfo.size" [disabled]="waiting"></pagination-size-selector>
-    </div>
-    <div class="col-4">
-      <div class="row">
-        <div class="d-flex align-items-center justify-content-evenly">
-          <pagination-route-navigation [totalPages]="pageInfo.totalPages" [disabled]="waiting">
-          </pagination-route-navigation>
-        </div>
+<div class="card">
+  <div class="card-body">
+    <!-- Table -->
+    <div *ngIf="waiting; then waiting_cue else data_list"></div>
+    <ng-template #waiting_cue>
+      <div class="d-flex justify-content-center">
+        <icon-waiting></icon-waiting>
       </div>
-    </div>
-  </div>
-  <!-- Table -->
-  <div *ngIf="waiting; then waiting_cue else data_list"></div>
-  <ng-template #waiting_cue>
-    <div class="d-flex justify-content-center">
-      <icon-waiting></icon-waiting>
-    </div>
-  </ng-template>
-  <ng-template #data_list>
-    <ng-content></ng-content>
-  </ng-template>
+    </ng-template>
+    <ng-template #data_list>
+      <ng-content></ng-content>
+      <div class="d-flex justify-content-center mt-1">
+        <pagination-route-navigation [totalPages]="pageInfo.totalPages" [disabled]="waiting">
+        </pagination-route-navigation>
+      </div>
+    </ng-template>
 
-  <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p>Are you sure you want to delete the data?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-          <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">delete</button>
+    <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p>Are you sure you want to delete the data?</p>
+            <p class="text-warning"><small>This action cannot be undone.</small></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+            <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">delete</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>

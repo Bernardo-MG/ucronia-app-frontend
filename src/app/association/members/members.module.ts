@@ -6,10 +6,10 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberTabsComponent } from './components/member-tabs/member-tabs.component';
-import { MemberCreateViewComponent } from './containers/member-create-view/member-create-view.component';
-import { MemberEditViewComponent } from './containers/member-edit-view/member-edit-view.component';
-import { MemberListViewComponent } from './containers/member-list-view/member-list-view.component';
-import { MemberStatsViewComponent } from './containers/member-stats-view/member-stats-view.component';
+import { MemberCreateViewComponent } from './containers/member-create/member-create.component';
+import { MemberEditViewComponent } from './containers/member-edit/member-edit.component';
+import { MemberListViewComponent } from './containers/member-list/member-list.component';
+import { MemberStatsViewComponent } from './containers/member-stats/member-stats.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
 

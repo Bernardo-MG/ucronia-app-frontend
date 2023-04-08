@@ -7,9 +7,9 @@ import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/obse
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'admin-member-list-view',
-  templateUrl: './member-list-view.component.html',
-  styleUrls: ['./member-list-view.component.sass']
+  selector: 'admin-member-list',
+  templateUrl: './member-list.component.html',
+  styleUrls: ['./member-list.component.sass']
 })
 export class MemberListViewComponent implements OnInit {
 
