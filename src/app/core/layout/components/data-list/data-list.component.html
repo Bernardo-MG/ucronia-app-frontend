@@ -9,7 +9,35 @@
       </div>
     </ng-template>
     <ng-template #data_list>
-      <ng-content></ng-content>
+      <table class="table">
+        <thead>
+          <tr>
+            <th *ngFor="let cell of table.header" scope="col">
+              <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
+            </th>
+            <!-- Empty header for the buttons -->
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of table.rows">
+            <td *ngFor="let cell of row.cells">
+              {{cell}}
+            </td>
+            <td>
+              <!-- Edit icon -->
+              <a routerLink="{{route}}/{{row.id}}" class="btn btn-default" role="button">
+                <icon-edit></icon-edit>
+              </a>
+              <!-- Delete icon -->
+              <button (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
+                class="btn btn-default" role="button" aria-label="Back">
+                <icon-delete></icon-delete>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div class="d-flex justify-content-center mt-1">
         <pagination-route-navigation [totalPages]="pageInfo.totalPages" [disabled]="waiting">
         </pagination-route-navigation>

@@ -7,40 +7,6 @@
 <a routerLink="/members/create" class="btn btn-default" role="button">
   <icon-create></icon-create>
 </a>
-<layout-data-list [waiting]="waiting" [pageInfo]="pageInfo" (delete)="onDelete()">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">
-          <pagination-order-button property="name"></pagination-order-button>name
-        </th>
-        <th scope="col">
-          <pagination-order-button property="surname"></pagination-order-button>surname
-        </th>
-        <th scope="col">
-          <pagination-order-button property="active"></pagination-order-button>active
-        </th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-template ngFor let-member [ngForOf]="members">
-        <tr>
-          <td>{{member.name}}</td>
-          <td>{{member.surname}}</td>
-          <td><input type="checkbox" [checked]="member.active" [attr.disabled]="true" class="form-check-input">
-          </td>
-          <td>
-            <a routerLink="/members/{{member.id}}" class="btn btn-default" role="button">
-              <icon-edit></icon-edit>
-            </a>
-            <button (click)="select(member)" data-bs-toggle="modal" data-bs-target="#deleteModal" type="button"
-              class="btn btn-default" role="button" aria-label="Back">
-              <icon-delete></icon-delete>
-            </button>
-          </td>
-        </tr>
-      </ng-template>
-    </tbody>
-  </table>
+<layout-data-list [table]="table" route="/members" [waiting]="waiting" [pageInfo]="pageInfo"
+  (delete)="onDelete($event)">
 </layout-data-list>

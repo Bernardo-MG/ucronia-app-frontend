@@ -5,6 +5,7 @@ import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { MemberService } from '../../services/member.service';
+import { Table } from '@app/core/models/table';
 
 @Component({
   selector: 'admin-member-list',
@@ -18,13 +19,11 @@ export class MemberListViewComponent implements OnInit {
    */
   public waiting = false;
 
-  public members: Member[] = [];
-
   public pageInfo = new PageInfo();
 
-  private routePaginationObserver: PaginationRequestRouteObserver;
+  public table = new Table();
 
-  private selected: { id: number } = { id: -1 };
+  private routePaginationObserver: PaginationRequestRouteObserver;
 
   constructor(
     private service: MemberService,
@@ -39,13 +38,9 @@ export class MemberListViewComponent implements OnInit {
     });
   }
 
-  public select(data: { id: number }) {
-    this.selected = data;
-  }
-
-  public onDelete() {
-    if (this.selected.id > 0) {
-      this.service.delete(this.selected.id).subscribe(r => {
+  public onDelete(id: number) {
+    if (id > 0) {
+      this.service.delete(id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
@@ -56,7 +51,17 @@ export class MemberListViewComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-        this.members = page.content;
+        const members = page.content;
+
+        this.table = new Table();
+        this.table.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'active', property: 'active' }];
+        this.table.rows = members.map(m => {
+          return {
+            id: m.id,
+            cells: [m.name, m.surname, m.active]
+          };
+        });
+
         this.pageInfo = page;
         // Reactivate view
         this.waiting = false;
