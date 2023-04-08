@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'layout-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.sass']
+  selector: 'shared-sidenav',
+  templateUrl: './sidenav.component.html',
+  styleUrls: ['./sidenav.component.sass']
 })
 export class MenuComponent {
   

@@ -8,12 +8,12 @@ import { DataFormComponent } from './components/data-form/data-form.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { FormControlsComponent } from './components/form-controls/form-controls.component';
 import { MainFrameComponent } from './components/main-frame/main-frame.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { AccountFrameComponent } from './containers/account-frame/account-frame.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
 import { HeaderFrameComponent } from './containers/header-frame/header-frame.component';
+import { MenuModule } from '@app/shared/menu/menu.module';
 
 
 @NgModule({
@@ -21,7 +21,6 @@ import { HeaderFrameComponent } from './containers/header-frame/header-frame.com
     DataFormComponent,
     DataListComponent,
     FormControlsComponent,
-    MenuComponent,
     MainFrameComponent,
     AccountMenuComponent,
     NavbarComponent,
@@ -34,7 +33,8 @@ import { HeaderFrameComponent } from './containers/header-frame/header-frame.com
     RouterModule,
     IconsModule,
     PaginationModule,
-    AuthenticationModule
+    AuthenticationModule,
+    MenuModule
   ],
   exports: [
     DataFormComponent,

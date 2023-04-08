@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { IconsModule } from './icons/icons.module';
 import { PaginationModule } from './pagination/pagination.module';
 import { CalendarModule } from './calendar/calendar.module';
+import { MenuModule } from './menu/menu.module';
 
 
 
@@ -11,13 +12,15 @@ import { CalendarModule } from './calendar/calendar.module';
     CommonModule,
     IconsModule,
     PaginationModule,
-    CalendarModule
+    CalendarModule,
+    MenuModule
   ],
   exports: [
     CommonModule,
     IconsModule,
     PaginationModule,
-    CalendarModule
+    CalendarModule,
+    MenuModule
   ]
 })
 export class SharedModule { }
