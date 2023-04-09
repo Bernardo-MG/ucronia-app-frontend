@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'layout-navbar',
+  selector: 'view-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.sass']
 })

@@ -4,7 +4,7 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 import { LoginService } from '@app/core/authentication/services/login.service';
 
 @Component({
-  selector: 'layout-account-menu',
+  selector: 'view-account-menu',
   templateUrl: './account-menu.component.html',
   styleUrls: ['./account-menu.component.sass']
 })

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 
 @Component({
-  selector: 'layout-header',
+  selector: 'view-header-layout',
   templateUrl: './header-layout.component.html',
   styleUrls: ['./header-layout.component.sass']
 })

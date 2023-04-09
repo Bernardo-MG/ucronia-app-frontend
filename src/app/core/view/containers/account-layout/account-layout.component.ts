@@ -3,7 +3,7 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'layout-account',
+  selector: 'view-account-layout',
   templateUrl: './account-layout.component.html',
   styleUrls: ['./account-layout.component.sass']
 })

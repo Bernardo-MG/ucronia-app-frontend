@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'layout-main',
+  selector: 'view-main-layout',
   templateUrl: './main-layout.component.html',
   styleUrls: ['./main-layout.component.sass']
 })
