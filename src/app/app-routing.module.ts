@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/containers/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { AccountFrameComponent } from './core/layout/containers/account-frame/account-frame.component';
-import { HeaderFrameComponent } from './core/layout/containers/header-frame/header-frame.component';
-import { MainFrameComponent } from './core/layout/components/main-frame/main-frame.component';
+import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
+import { AccountLayoutComponent } from './core/layout/containers/account-layout/account-layout.component';
+import { HeaderLayoutComponent } from './core/layout/containers/header-layout/header-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -19,11 +19,11 @@ const routes: Routes = [
   },
   // Main app
   {
-    path: '', component: HeaderFrameComponent,
+    path: '', component: HeaderLayoutComponent,
     children: [
       // Association
       {
-        path: '', component: MainFrameComponent,
+        path: '', component: MainLayoutComponent,
         children: [
           // Front page
           { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
@@ -35,7 +35,7 @@ const routes: Routes = [
       },
       // Account
       {
-        path: 'account', component: AccountFrameComponent, children: [
+        path: 'account', component: AccountLayoutComponent, children: [
           { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
         ]
       }

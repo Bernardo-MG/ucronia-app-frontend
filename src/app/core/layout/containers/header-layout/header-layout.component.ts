@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 
 @Component({
-  selector: 'layout-header-frame',
-  templateUrl: './header-frame.component.html',
-  styleUrls: ['./header-frame.component.sass']
+  selector: 'layout-header',
+  templateUrl: './header-layout.component.html',
+  styleUrls: ['./header-layout.component.sass']
 })
-export class HeaderFrameComponent {
+export class HeaderLayoutComponent {
 
   public title = 'Association App Frontend';
 

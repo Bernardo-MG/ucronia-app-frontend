@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { CoreModule } from '@app/core/core.module';
-import { AccountFrameComponent } from './account-frame.component';
+import { MainLayoutComponent } from './main-layout.component';
 
-describe('AccountFrameComponent', () => {
-  let component: AccountFrameComponent;
-  let fixture: ComponentFixture<AccountFrameComponent>;
+describe('MainLayoutComponent', () => {
+  let component: MainLayoutComponent;
+  let fixture: ComponentFixture<MainLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,13 +14,14 @@ describe('AccountFrameComponent', () => {
         CoreModule,
         RouterTestingModule
       ],
-      declarations: [ 
-        AccountFrameComponent
+      declarations: [
+        MainLayoutComponent,
+        NavbarComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(AccountFrameComponent);
+    fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

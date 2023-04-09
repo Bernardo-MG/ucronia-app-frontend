@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { HeaderFrameComponent } from './header-frame.component';
+import { HeaderLayoutComponent } from './header-layout.component';
 
-describe('HeaderFrameComponent', () => {
-  let component: HeaderFrameComponent;
-  let fixture: ComponentFixture<HeaderFrameComponent>;
+describe('HeaderLayoutComponent', () => {
+  let component: HeaderLayoutComponent;
+  let fixture: ComponentFixture<HeaderLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('HeaderFrameComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        HeaderFrameComponent,
+        HeaderLayoutComponent,
         NavbarComponent
       ],
       providers: [
@@ -23,7 +23,7 @@ describe('HeaderFrameComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(HeaderFrameComponent);
+    fixture = TestBed.createComponent(HeaderLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

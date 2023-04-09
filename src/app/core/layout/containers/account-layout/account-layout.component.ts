@@ -3,11 +3,11 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'layout-account-frame',
-  templateUrl: './account-frame.component.html',
-  styleUrls: ['./account-frame.component.sass']
+  selector: 'layout-account',
+  templateUrl: './account-layout.component.html',
+  styleUrls: ['./account-layout.component.sass']
 })
-export class AccountFrameComponent {
+export class AccountLayoutComponent {
 
   public title = 'Association App Frontend';
 

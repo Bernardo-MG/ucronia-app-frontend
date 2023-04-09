@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Menu } from '@app/core/models/menu';
 
 @Component({
-  selector: 'layout-main-frame',
-  templateUrl: './main-frame.component.html',
-  styleUrls: ['./main-frame.component.sass']
+  selector: 'layout-main',
+  templateUrl: './main-layout.component.html',
+  styleUrls: ['./main-layout.component.sass']
 })
-export class MainFrameComponent {
+export class MainLayoutComponent {
 
   public title = 'Association App Frontend';
 
