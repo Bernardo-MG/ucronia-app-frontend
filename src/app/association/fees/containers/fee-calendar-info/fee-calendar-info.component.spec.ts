@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeCalendarInfoComponent } from './fee-calendar-info.component';
 
 describe('FeeCalendarInfoComponent', () => {
@@ -15,8 +14,7 @@ describe('FeeCalendarInfoComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        FeeCalendarInfoComponent,
-        FeeTabsComponent
+        FeeCalendarInfoComponent
       ]
     })
       .compileComponents();

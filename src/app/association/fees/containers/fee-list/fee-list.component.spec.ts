@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { FeeTabsComponent } from '../../components/fee-tabs/fee-tabs.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeListComponent } from './fee-list.component';
 
@@ -23,8 +22,7 @@ describe('FeeListComponent', () => {
         CoreModule
       ],
       declarations: [
-        FeeListComponent,
-        FeeTabsComponent
+        FeeListComponent
       ],
       providers: [
         FeeService

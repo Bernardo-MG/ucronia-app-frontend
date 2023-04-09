@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { MemberTabsComponent } from '../../components/member-tabs/member-tabs.component';
 import { MemberService } from '../../services/member.service';
 import { MemberListComponent } from './member-list.component';
 
@@ -22,8 +21,7 @@ describe('MemberListComponent', () => {
         IconsModule
       ],
       declarations: [
-        MemberListComponent,
-        MemberTabsComponent
+        MemberListComponent
       ],
       providers: [
         MemberService

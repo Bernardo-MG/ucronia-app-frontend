@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
-import { TransactionTabsComponent } from '../../components/transaction-tabs/transaction-tabs.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCalendarComponent } from './transaction-calendar.component';
 
@@ -20,8 +19,7 @@ describe('TransactionCalendarComponent', () => {
         CalendarModule
       ],
       declarations: [
-        TransactionCalendarComponent,
-        TransactionTabsComponent
+        TransactionCalendarComponent
       ],
       providers: [
         TransactionService
