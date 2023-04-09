@@ -5,7 +5,7 @@ import { CalendarNote } from '@app/core/models/calendar-note';
 import { CalendarWeek } from '@app/core/models/calendar-week';
 
 @Component({
-  selector: 'calendar-month',
+  selector: 'shared-calendar-month',
   templateUrl: './calendar-month.component.html',
   styleUrls: ['./calendar-month.component.sass']
 })

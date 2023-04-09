@@ -8,7 +8,7 @@
     </div>
 </ng-template>
 <ng-template #calendar>
-    <calendar-month [date]="date" [notes]="notes" [startYear]="range.startYear" [startMonth]="range.startMonth"
+    <shared-calendar-month [date]="date" [notes]="notes" [startYear]="range.startYear" [startMonth]="range.startMonth"
         [endYear]="range.startYear" [endMonth]="range.startMonth" (dateChange)="onDateChange($event)"
-        (pickDate)="onPickDate($event)"></calendar-month>
+        (pickDate)="onPickDate($event)"></shared-calendar-month>
 </ng-template>
