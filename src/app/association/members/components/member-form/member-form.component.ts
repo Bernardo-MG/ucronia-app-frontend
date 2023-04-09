@@ -9,6 +9,11 @@ import { Member } from '@app/association/models/member';
 })
 export class MemberFormComponent implements OnChanges {
 
+  /**
+   * Disabled flag.
+   */
+  @Input() public disabled = false;
+
   @Input() public data: Member = new Member();
 
   @Output() public save = new EventEmitter<Member>();

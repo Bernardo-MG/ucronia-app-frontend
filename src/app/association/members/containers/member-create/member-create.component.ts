@@ -13,7 +13,7 @@ export class MemberCreateComponent {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public saving = false;
 
   public formValid = false;
 
@@ -25,16 +25,16 @@ export class MemberCreateComponent {
   ) { }
 
   public onSave(): void {
-    this.waiting = true;
+    this.saving = true;
     this.service.create(this.member).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
   }

@@ -1,19 +1,19 @@
 <div class="card">
     <div class="card-body">
-        <div *ngIf="waiting; then waiting_cue else form"></div>
-        <ng-template #waiting_cue>
-            <div class="d-flex justify-content-center">
-                <icon-waiting></icon-waiting>
-            </div>
-        </ng-template>
-        <ng-template #form>
-            <ng-content></ng-content>
-        </ng-template>
+        <ng-content></ng-content>
         <div class="row">
-           <!-- Save button -->
-           <div class="col-sm-2 d-grid gap-2">
-              <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="!isAbleToSave()" [attr.aria-disabled]="!isAbleToSave()" aria-label="Save">Save</button>
-           </div>
+            <!-- Save button -->
+            <div class="col-sm-2 d-grid gap-2">
+                <div *ngIf="saving; then saving_cue else save"></div>
+                <ng-template #saving_cue>
+                    <button type="submit" class="btn btn-primary"
+                        aria-label="Save"><icon-waiting></icon-waiting></button>
+                </ng-template>
+                <ng-template #save>
+                    <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="!isAbleToSave()"
+                        [attr.aria-disabled]="!isAbleToSave()" aria-label="Save">Save</button>
+                </ng-template>
+            </div>
         </div>
     </div>
 </div>

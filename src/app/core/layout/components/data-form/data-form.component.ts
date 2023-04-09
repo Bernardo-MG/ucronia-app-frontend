@@ -9,9 +9,9 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 export class DataFormComponent {
 
   /**
-   * Loading flag.
+   * Saving flag.
    */
-  @Input() public waiting = false;
+  @Input() public saving = false;
 
   @Input() public formValid = false;
 
@@ -26,7 +26,7 @@ export class DataFormComponent {
   }
 
   public isAbleToSave() {
-    return ((this.formValid) && (!this.waiting));
+    return ((this.formValid) && (!this.saving));
   }
 
 }

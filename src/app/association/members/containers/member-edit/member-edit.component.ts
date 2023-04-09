@@ -11,9 +11,9 @@ import { MemberService } from '../../services/member.service';
 export class MemberEditComponent implements OnInit {
 
   /**
-   * Loading flag.
+   * Saving flag.
    */
-  public waiting = false;
+  public saving = false;
 
   public formValid = false;
 
@@ -31,15 +31,15 @@ export class MemberEditComponent implements OnInit {
   }
 
   public onSave(): void {
-    this.waiting = true;
+    this.saving = true;
     this.service.update(this.member.id, this.member).subscribe({
       next: d => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
   }
