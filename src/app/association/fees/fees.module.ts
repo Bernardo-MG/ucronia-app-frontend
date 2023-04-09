@@ -14,6 +14,7 @@ import { FeeEditComponent } from './containers/fee-edit/fee-edit.component';
 import { FeeListComponent } from './containers/fee-list/fee-list.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -35,7 +36,8 @@ import { FeeService } from './services/fee.service';
     CoreModule,
     SharedModule,
     IconsModule,
-    PaginationModule
+    PaginationModule,
+    LayoutModule
   ],
   providers: [
     FeeService

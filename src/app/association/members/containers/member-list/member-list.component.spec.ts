@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { SharedModule } from '@app/shared/shared.module';
 import { MemberService } from '../../services/member.service';
 import { MemberListComponent } from './member-list.component';
 
@@ -18,7 +18,7 @@ describe('MemberListComponent', () => {
         HttpClientTestingModule,
         PaginationModule,
         CoreModule,
-        IconsModule
+        SharedModule
       ],
       declarations: [
         MemberListComponent

@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/containers/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
-import { AccountLayoutComponent } from './core/layout/containers/account-layout/account-layout.component';
-import { HeaderLayoutComponent } from './core/layout/containers/header-layout/header-layout.component';
+import { MainLayoutComponent } from './core/view/components/main-layout/main-layout.component';
+import { AccountLayoutComponent } from './core/view/containers/account-layout/account-layout.component';
+import { HeaderLayoutComponent } from './core/view/containers/header-layout/header-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);

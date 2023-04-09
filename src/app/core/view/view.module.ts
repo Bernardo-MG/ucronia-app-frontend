@@ -5,10 +5,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { DataListComponent } from './components/data-list/data-list.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { AccountLayoutComponent } from './containers/account-layout/account-layout.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
 import { HeaderLayoutComponent } from './containers/header-layout/header-layout.component';
@@ -16,13 +14,11 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
 
 @NgModule({
   declarations: [
-    DataListComponent,
     MainLayoutComponent,
     AccountMenuComponent,
     NavbarComponent,
     AccountLayoutComponent,
-    HeaderLayoutComponent,
-    WaitingWrapperComponent
+    HeaderLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -33,10 +29,8 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
     MenuModule
   ],
   exports: [
-    DataListComponent,
     MainLayoutComponent,
-    NavbarComponent,
-    WaitingWrapperComponent
+    NavbarComponent
   ],
 })
-export class LayoutModule { }
+export class ViewModule { }
