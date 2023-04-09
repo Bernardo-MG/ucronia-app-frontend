@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Member } from '@app/association/models/member';
+import { Form } from '../../models/form';
 
 @Component({
-  selector: 'assoc-form-member',
-  templateUrl: './member-form.component.html',
-  styleUrls: ['./member-form.component.sass']
+  selector: 'app-dynamic-form',
+  templateUrl: './dynamic-form.component.html',
+  styleUrls: ['./dynamic-form.component.sass']
 })
-export class MemberFormComponent implements OnChanges {
+export class DynamicFormComponent {
 
   /**
    * Disabled flag.
@@ -20,7 +21,9 @@ export class MemberFormComponent implements OnChanges {
     }
   }
 
-  @Input() public data: Member = new Member();
+  @Input() public data: any;
+  
+  @Input() public fields: Form[] = [];
 
   @Output() public save = new EventEmitter<Member>();
 
