@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'layout-data-form',
-  templateUrl: './data-form.component.html',
-  styleUrls: ['./data-form.component.sass']
+  selector: 'layout-form-frame',
+  templateUrl: './form-frame.component.html',
+  styleUrls: ['./form-frame.component.sass']
 })
 export class DataFormComponent {
 

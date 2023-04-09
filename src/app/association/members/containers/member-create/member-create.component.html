@@ -2,7 +2,7 @@
   <h1>Create member</h1>
 </header>
 
-<layout-data-form [saving]="saving" [formValid]="formValid" (save)="onSave()">
+<layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
   <assoc-form-member [disabled]="saving" (save)="onSave()" (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
   </assoc-form-member>
-</layout-data-form>
+</layout-form-frame>

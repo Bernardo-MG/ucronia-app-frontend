@@ -1,7 +1,7 @@
 <h1>edit role</h1>
 <div *ngIf="selectingPrivilege; then privilege_selection else role_edition"></div>
 <ng-template #role_edition>
-  <layout-data-form [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+  <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
     <security-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
       (validChange)="onFormValidChange($event)"></security-role-form>
       <pagination-navigation [current]="privilegesPageInfo.page" [pages]="privilegesPageInfo.totalPages" (goTo)="onGoToPrivilegePage($event)">
@@ -9,7 +9,7 @@
       <security-role-privilege-form (addPrivilege)="onShowAddPrivilege()" (removePrivilege)="onRemovePrivilege($event)"
         [privileges]="privileges">
       </security-role-privilege-form>
-  </layout-data-form>
+  </layout-form-frame>
 </ng-template>
 <ng-template #privilege_selection>
   <security-role-privilege-selection (selectPrivilege)="onAddPrivilege($event)" [pageInfo]="privilegesPageInfo"

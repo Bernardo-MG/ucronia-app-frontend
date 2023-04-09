@@ -1,4 +1,4 @@
-<layout-data-form [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+<layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
     <security-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
       (validChange)="onFormValidChange($event)"></security-user-form>
-  </layout-data-form>
+  </layout-form-frame>

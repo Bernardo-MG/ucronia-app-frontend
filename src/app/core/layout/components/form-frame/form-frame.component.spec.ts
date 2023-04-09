@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { DataFormComponent } from './data-form.component';
+import { DataFormComponent } from './form-frame.component';
 
 describe('DataFormComponent', () => {
   let component: DataFormComponent;
