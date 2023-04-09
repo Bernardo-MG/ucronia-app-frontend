@@ -13,7 +13,7 @@ export class MemberFormComponent implements OnChanges {
    * Disabled flag.
    */
   @Input() set disabled(flag: boolean) {
-    if(flag){
+    if (flag) {
       this.form.disable();
     } else {
       this.form.enable();
@@ -53,7 +53,7 @@ export class MemberFormComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['data'].firstChange) {
+    if ((changes['data']) && (!changes['data'].firstChange)) {
       this.form.patchValue(this.data);
     }
   }
