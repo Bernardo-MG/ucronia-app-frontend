@@ -12,7 +12,13 @@ export class MemberFormComponent implements OnChanges {
   /**
    * Disabled flag.
    */
-  @Input() public disabled = false;
+  @Input() set disabled(flag: boolean) {
+    if(flag){
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
 
   @Input() public data: Member = new Member();
 
