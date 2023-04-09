@@ -14,6 +14,7 @@ import { SecurityUserEditViewComponent } from './containers/security-user-edit-v
 import { SecurityUserListViewComponent } from './containers/security-user-list-view/security-user-list-view.component';
 import { SecurityUserService } from './services/security-user.service';
 import { UserRoutingModule } from './users-routing.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -34,7 +35,8 @@ import { UserRoutingModule } from './users-routing.module';
     IconsModule,
     SharedModule,
     PaginationModule,
-    CoreModule
+    CoreModule,
+    LayoutModule
   ],
   providers: [
     SecurityUserService

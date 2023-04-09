@@ -13,6 +13,7 @@ import { SecurityRoleEditViewComponent } from './containers/security-role-edit-v
 import { SecurityRoleListViewComponent } from './containers/security-role-list-view/security-role-list-view.component';
 import { RoleRoutingModule } from './roles-routing.module';
 import { SecurityRoleService } from './services/security-role.service';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -32,7 +33,8 @@ import { SecurityRoleService } from './services/security-role.service';
     FontAwesomeModule,
     CoreModule,
     PaginationModule,
-    IconsModule
+    IconsModule,
+    LayoutModule
   ],
   providers: [
     SecurityRoleService

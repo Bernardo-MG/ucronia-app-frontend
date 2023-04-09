@@ -11,6 +11,7 @@ import { MemberListComponent } from './containers/member-list/member-list.compon
 import { MemberStatsComponent } from './containers/member-stats/member-stats.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -28,7 +29,8 @@ import { MemberService } from './services/member.service';
     ReactiveFormsModule,
     CoreModule,
     PaginationModule,
-    IconsModule
+    IconsModule,
+    LayoutModule
   ],
   exports: [
     MemberFormComponent

@@ -12,6 +12,7 @@ import { TransactionEditComponent } from './containers/transaction-edit/transact
 import { TransactionListComponent } from './containers/transaction-list/transaction-list.component';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -31,7 +32,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     CoreModule,
     CalendarModule,
     PaginationModule,
-    IconsModule
+    IconsModule,
+    LayoutModule
   ],
   providers: [
     TransactionService

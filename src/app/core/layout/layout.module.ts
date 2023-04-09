@@ -5,7 +5,6 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { DataFormComponent } from './components/form-frame/form-frame.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -17,7 +16,6 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
 
 @NgModule({
   declarations: [
-    DataFormComponent,
     DataListComponent,
     MainLayoutComponent,
     AccountMenuComponent,
@@ -35,7 +33,6 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
     MenuModule
   ],
   exports: [
-    DataFormComponent,
     DataListComponent,
     MainLayoutComponent,
     NavbarComponent,
