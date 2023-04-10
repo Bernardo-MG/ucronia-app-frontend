@@ -2,12 +2,23 @@
   <ng-template ngFor let-field [ngForOf]="fields">
     <div class="text-center">
       <div class="row mb-2">
-        <label for="{{field.property}}Input" id="{{field.property}}Label"
-          class="col-sm-2 col-form-label">{{field.name}}</label>
         <div class="col-sm-10">
-          <input type="text" id="{{field.property}}Input" formControlName="{{field.property}}" class="form-control"
-            [ngClass]="{ 'is-invalid': form.get('{{field.property}}')?.errors }"
-            attr.aria-describedby="{{field.property}}Label">
+          <label for="{{field.property}}Input" id="{{field.property}}Label"
+            class="col-sm-2 col-form-label">{{field.name}}</label>
+          <ng-template [ngIf]="field.type === 'string'">
+            <input type="text" id="{{field.property}}Input" formControlName="{{field.property}}" class="form-control"
+              [ngClass]="{ 'is-invalid': form.get('{{field.property}}')?.errors }"
+              attr.aria-describedby="{{field.property}}Label">
+          </ng-template>
+          <ng-template [ngIf]="field.type === 'boolean'">
+            <div class="form-check">
+              <input type="checkbox" id="{{field.property}}Input" formControlName="{{field.property}}"
+                class="form-check-input" [ngClass]="{ 'is-invalid': form.get('{{field.property}}')?.errors }"
+                attr.aria-describedby="{{field.property}}Label">
+              <label for="{{field.property}}Input" id="{{field.property}}Label"
+                class="col-sm-2 col-form-label">{{field.name}}</label>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

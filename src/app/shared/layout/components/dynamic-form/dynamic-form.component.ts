@@ -22,7 +22,7 @@ export class DynamicFormComponent {
   }
 
   @Input() public data: any;
-  
+
   @Input() public fields: Form[] = [];
 
   @Output() public save = new EventEmitter<Member>();
