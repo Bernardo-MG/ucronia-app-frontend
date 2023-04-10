@@ -3,6 +3,6 @@
 </header>
 
 <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-  <assoc-form-member [disabled]="saving" (save)="onSave()" (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
-  </assoc-form-member>
+  <layout-dynamic-form [fields]="fields" [disabled]="saving" (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></layout-dynamic-form>
 </layout-form-frame>

@@ -1,4 +1,4 @@
-export class Form {
+export class FormDescription {
     name: string = '';
     property: string = '';
     type: string = '';

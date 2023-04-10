@@ -28,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   exports: [
     DataFormComponent,
     DataListComponent,
-    WaitingWrapperComponent
+    WaitingWrapperComponent,
+    DynamicFormComponent
   ]
 })
 export class LayoutModule { }

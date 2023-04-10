@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
+import { FormDescription } from '@app/shared/layout/models/form-description';
 import { MemberService } from '../../services/member.service';
 
 @Component({
@@ -16,6 +17,14 @@ export class MemberCreateComponent {
   public saving = false;
 
   public formValid = false;
+
+  public fields: FormDescription[] = [
+    { name: 'Name', property: 'name', type: 'string' },
+    { name: 'Surname', property: 'surname', type: 'string' },
+    { name: 'Identifier', property: 'identifier', type: 'string' },
+    { name: 'Phone', property: 'phone', type: 'string' },
+    { name: 'Active', property: 'active', type: 'boolean' }
+  ];
 
   private member = new Member();
 

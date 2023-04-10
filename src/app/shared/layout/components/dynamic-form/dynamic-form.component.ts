@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Member } from '@app/association/models/member';
-import { Form } from '../../models/form';
+import { FormDescription } from '../../models/form-description';
 
 @Component({
-  selector: 'app-dynamic-form',
+  selector: 'layout-dynamic-form',
   templateUrl: './dynamic-form.component.html',
   styleUrls: ['./dynamic-form.component.sass']
 })
@@ -21,9 +21,33 @@ export class DynamicFormComponent {
     }
   }
 
-  @Input() public data: any;
+  private _fields: FormDescription[] = [];
 
-  @Input() public fields: Form[] = [];
+  @Input() set fields(data: FormDescription[]) {
+    this._fields = data;
+
+    const formProperties: any = {};
+    formProperties['id'] = [-1];
+    for (let i = 0; i < data.length; i++) {
+      const input = data[i];
+      let value;
+      if (input.type === 'boolean') {
+        value = false;
+      } else {
+        value = '';
+      }
+
+      formProperties[data[i].property] = [value];
+      // name: ['', Validators.required]
+    }
+    this.form = this.fb.group(formProperties);
+  }
+
+  get fields(): FormDescription[] {
+    return this._fields;
+  }
+
+  @Input() public data: any;
 
   @Output() public save = new EventEmitter<Member>();
 
@@ -31,14 +55,7 @@ export class DynamicFormComponent {
 
   @Output() public validChange = new EventEmitter<boolean>();
 
-  public form: FormGroup = this.fb.group({
-    id: [-1],
-    name: ['', Validators.required],
-    surname: [''],
-    identifier: [''],
-    phone: [''],
-    active: [false, Validators.required]
-  });
+  public form: FormGroup = this.fb.group({});
 
   constructor(
     private fb: FormBuilder
