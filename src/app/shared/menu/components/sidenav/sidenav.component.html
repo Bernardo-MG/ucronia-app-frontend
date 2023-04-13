@@ -6,12 +6,12 @@
             <p class="px-3 mt-3 mb-1 fw-bold text-uppercase">
                 <button type="button"
                     class="btn btn-toggle shadow-none d-inline-flex align-items-center collapsed px-0 py-0"
-                    data-bs-toggle="collapse" attr.href="#collapseMenu{{i}}" aria-expanded="false"
-                    attr.aria-controls="collapseMenu{{i}}">
+                    data-bs-toggle="collapse" attr.href="#{{menu.title}}-collapseMenu{{i}}" aria-expanded="false"
+                    attr.aria-controls="{{menu.title}}-collapseMenu{{i}}">
                     {{collapsible.title}}
                 </button>
             </p>
-            <div class="collapse" id="collapseMenu{{i}}">
+            <div class="collapse" id="{{menu.title}}-collapseMenu{{i}}">
                 <ul class="nav flex-column">
                     <li class="nav-item" *ngFor="let link of collapsible.links">
                         <a routerLink="{{link.path}}" class="nav-link" title="{{link.title}}">{{link.title}}</a>
