@@ -5,51 +5,60 @@
             <button type="button" class="page-link" (click)="onGoToFirst()" [class.disabled]="isBackwardDisabled()"
                 [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()"
                 aria-label="Previous page">
-                <icon-fast-backward></icon-fast-backward>
+                &laquo;
             </button>
         </li>
         <li class="page-item" [class.disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()">
             <button type="button" class="page-link" (click)="onBackward()" [class.disabled]="isBackwardDisabled()"
                 [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()" aria-label="First page">
-                <icon-backward></icon-backward>
+                &lsaquo;
             </button>
         </li>
         <!-- Left range -->
-        <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
-            (action)="onGoTo(page)">
-            {{page}}
-        </pagination-page-button>
+        <li *ngFor="let page of left" class="page-item page-item-number" [class.active]="isCurrent(page)" [class.disabled]="disabled" [attr.aria-disabled]="disabled"
+            [attr.aria-current]="getCurrentLabel(page)">
+            <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled"
+                [class.disabled]="disabled" [attr.aria-disabled]="disabled" aria-label="Go to page">
+                {{page}}
+            </button>
+        </li>
         <!-- Center range -->
         <ng-container *ngIf="isAbleToDrawCenterRange()">
             <li class="page-item disabled" aria-disabled="true">
                 <span class="page-link">...</span>
             </li>
-            <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
-                (action)="onGoTo(page)">
-                {{page}}
-            </pagination-page-button>
+            <li *ngFor="let page of center" class="page-item page-item-number" [class.active]="isCurrent(page)" [class.disabled]="disabled" [attr.aria-disabled]="disabled"
+                [attr.aria-current]="getCurrentLabel(page)">
+                <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled"
+                    [class.disabled]="disabled" [attr.aria-disabled]="disabled" aria-label="Go to page">
+                    {{page}}
+                </button>
+            </li>
         </ng-container>
         <!-- Right range -->
         <ng-container *ngIf="isAbleToDrawRightRange()">
             <li class="page-item disabled" aria-disabled="true">
                 <span class="page-link">...</span>
             </li>
-            <pagination-page-button *ngFor="let page of left" [disabled]="disabled" [active]="isCurrent(page)"
-                (action)="onGoTo(page)">
-                {{page}}
-            </pagination-page-button>
+            <li *ngFor="let page of right" class="page-item page-item-number" [class.active]="isCurrent(page)" [class.disabled]="disabled" [attr.aria-disabled]="disabled"
+                [attr.aria-current]="getCurrentLabel(page)">
+                <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled"
+                    [class.disabled]="disabled" [attr.aria-disabled]="disabled" aria-label="Go to page">
+                    {{page}}
+                </button>
+            </li>
         </ng-container>
         <!-- Forward buttons -->
         <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
             <button type="button" class="page-link" (click)="onForward()" [class.disabled]="isForwardDisabled()"
                 [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Next page">
-                <icon-forward></icon-forward>
+                &rsaquo;
             </button>
         </li>
         <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
             <button type="button" class="page-link" (click)="onGoToLast()" [class.disabled]="isForwardDisabled()"
                 [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Last page">
-                <icon-fast-forward></icon-fast-forward>
+                &raquo;
             </button>
         </li>
     </ul>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
  * Pagination component template.
@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
  * this will show a list of pages like "1, 2, 3 ... 5, 6, 7 ... 9, 10, 11".
  */
 @Component({
-  selector: 'pagination-navigation-template',
+  selector: 'shared-pagination-navigation-template',
   templateUrl: './pagination-navigation-template.component.html',
   styleUrls: ['./pagination-navigation-template.component.sass']
 })
@@ -35,6 +35,16 @@ export class PaginationNavigationTemplateComponent {
    * Disabled flag. To disable all the inner components.
    */
   @Input() public disabled = false;
+
+  /**
+   * Disabled backward flag. To disable the backward button.
+   */
+  @Input() public disableBackward = true;
+
+  /**
+   * Disabled forward flag. To disable the forward button.
+   */
+  @Input() public disableForward = true;
 
   /**
    * Left page range.
@@ -97,7 +107,7 @@ export class PaginationNavigationTemplateComponent {
    * @returns true if the backward button should be disabled, false otherwise
    */
   public isBackwardDisabled(): boolean {
-    return ((this.current <= 1) || (this.disabled));
+    return ((this.disableBackward) || (this.disabled));
   }
 
   /**
@@ -106,7 +116,7 @@ export class PaginationNavigationTemplateComponent {
    * @returns true if the forward button should be disabled, false otherwise
    */
   public isForwardDisabled(): boolean {
-    return ((this.current >= this.last) || (this.disabled));
+    return ((this.disableForward) || (this.disabled));
   }
 
   /**
@@ -135,6 +145,26 @@ export class PaginationNavigationTemplateComponent {
    */
   public isCurrent(page: number) {
     return page === this.current;
+  }
+
+  /**
+   * Returns the current page aria label, if the received page is the current one.
+   * 
+   * @param page page to check
+   * @returns the current page aria label
+   */
+  public getCurrentLabel(page: number) {
+    let label;
+
+    if (this.isCurrent(page)) {
+      // Current page
+      label = 'page';
+    } else {
+      // Any other page
+      label = '';
+    }
+
+    return label;
   }
 
 }

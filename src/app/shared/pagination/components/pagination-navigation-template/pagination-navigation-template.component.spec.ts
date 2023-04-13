@@ -1,7 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PageButtonComponent } from '../pagination-page-button/pagination-page-button.component';
 import { PaginationNavigationTemplateComponent } from './pagination-navigation-template.component';
 
 describe('PaginationNavigationTemplateComponent', () => {
@@ -10,13 +7,8 @@ describe('PaginationNavigationTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FontAwesomeModule,
-        IconsModule
-      ],
       declarations: [
-        PaginationNavigationTemplateComponent,
-        PageButtonComponent
+        PaginationNavigationTemplateComponent
       ]
     })
       .compileComponents();
@@ -112,7 +104,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.left = [1];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(1);
   });
 
@@ -120,7 +112,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.left = [1, 2, 3];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(3);
   });
 
@@ -128,7 +120,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(0);
   });
 
@@ -137,7 +129,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(2);
   });
 
@@ -146,7 +138,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [5, 6, 7];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(6);
   });
 
@@ -154,7 +146,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.center = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(0);
   });
 
@@ -163,7 +155,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.center = [5];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(2);
   });
 
@@ -172,7 +164,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.center = [5, 6, 7];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(6);
   });
 
@@ -181,7 +173,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [10];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(0);
   });
 
@@ -191,7 +183,7 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [10];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(3);
   });
 
@@ -201,12 +193,12 @@ describe('PaginationNavigationTemplateComponent', () => {
     component.right = [10, 11, 12];
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('pagination-page-button button');
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button');
     expect(button.length).toEqual(9);
   });
 
   // **************************************************************************
-  // Disable based on page location
+  // Disable based on first and last flags
   // **************************************************************************
 
   it('should disable the go to first button by default', () => {
@@ -229,102 +221,64 @@ describe('PaginationNavigationTemplateComponent', () => {
     expect(button.disabled).toEqual(true);
   });
 
-  it('should disable the backward button when the current page is the first one', () => {
-    component.current = 1;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[1];
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the backward button when the current page is below the first one', () => {
-    component.current = 0;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[1];
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should ensable the backward button when the current page is after the first one', () => {
-    component.current = 2;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[1];
-    expect(button.disabled).toEqual(false);
-  });
-
-  it('should disable the forward button when the current page is the last one', () => {
-    component.current = 5;
-    component.last = 5;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[2];
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the forward button when the current page is after the last one', () => {
-    component.current = 6;
-    component.last = 5;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[2];
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should enable the forward button when the current page is before the last one', () => {
-    component.current = 4;
-    component.last = 5;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelectorAll('button')[2];
-    expect(button.disabled).toEqual(false);
-  });
-
-  it('should disable the go to first button when the current page is the first one', () => {
-    component.current = 1;
+  it('should disable the go to first button when its disable flag is set', () => {
+    component.disableBackward = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelectorAll('button')[0];
     expect(button.disabled).toEqual(true);
   });
 
-  it('should disable the go to first button when the current page is below the first one', () => {
-    component.current = 0;
+  it('should disable the backward button when its disable flag is set', () => {
+    component.disableBackward = true;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('button')[0];
+    const button = fixture.nativeElement.querySelectorAll('button')[1];
     expect(button.disabled).toEqual(true);
   });
 
-  it('should ensable the go to first button when the current page is after the first one', () => {
-    component.current = 2;
+  it('should enable the go to first button when its disable flag is not set', () => {
+    component.disableBackward = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelectorAll('button')[0];
     expect(button.disabled).toEqual(false);
   });
 
-  it('should disable the go to last button when the current page is the last one', () => {
-    component.current = 5;
-    component.last = 5;
+  it('should enable the backward button when its disable flag is not set', () => {
+    component.disableBackward = false;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelectorAll('button')[1];
+    expect(button.disabled).toEqual(false);
+  });
+
+  it('should disable the forward button when its disable flag is set', () => {
+    component.disableForward = true;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelectorAll('button')[2];
+    expect(button.disabled).toEqual(true);
+  });
+
+  it('should disable the go to last button when its disable flag is set', () => {
+    component.disableForward = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelectorAll('button')[3];
     expect(button.disabled).toEqual(true);
   });
 
-  it('should disable the go to last button when the current page is after the last one', () => {
-    component.current = 6;
-    component.last = 5;
+  it('should enable the forward button when its disable flag is not set', () => {
+    component.disableForward = false;
     fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelectorAll('button')[3];
-    expect(button.disabled).toEqual(true);
+    const button = fixture.nativeElement.querySelectorAll('button')[2];
+    expect(button.disabled).toEqual(false);
   });
 
-  it('should enable the go to last button when the current page is before the last one', () => {
-    component.current = 4;
-    component.last = 5;
+  it('should enable the go to last button when its disable flag is not set', () => {
+    component.disableForward = false;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelectorAll('button')[3];
@@ -336,8 +290,8 @@ describe('PaginationNavigationTemplateComponent', () => {
   // **************************************************************************
 
   it('should disable the backward button when the component is disabled', () => {
-    component.current = 4;
-    component.last = 5;
+    component.disableBackward = false;
+    component.disableForward = false;
     component.disabled = true;
     fixture.detectChanges();
 
@@ -346,8 +300,8 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should enable the backward button when the component is enabled', () => {
-    component.current = 4;
-    component.last = 5;
+    component.disableBackward = false;
+    component.disableForward = false;
     component.disabled = false;
     fixture.detectChanges();
 
@@ -356,8 +310,8 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should disable the forward button when the component is disabled', () => {
-    component.current = 4;
-    component.last = 5;
+    component.disableBackward = false;
+    component.disableForward = false;
     component.disabled = true;
     fixture.detectChanges();
 
@@ -366,8 +320,8 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should enable the forward button when the component is enabled', () => {
-    component.current = 4;
-    component.last = 5;
+    component.disableBackward = false;
+    component.disableForward = false;
     component.disabled = false;
     fixture.detectChanges();
 
@@ -376,15 +330,15 @@ describe('PaginationNavigationTemplateComponent', () => {
   });
 
   it('should disable the page buttons when the component is disabled', () => {
-    component.current = 4;
-    component.last = 5;
+    component.disableBackward = false;
+    component.disableForward = false;
     component.disabled = true;
     component.left = [1];
     component.center = [3];
     component.right = [5];
     fixture.detectChanges();
 
-    const buttons = fixture.nativeElement.querySelectorAll('pagination-page-button button.disabled');
+    const buttons = fixture.nativeElement.querySelectorAll('.page-item-number button.disabled');
     expect(buttons.length).toEqual(3);
   });
 
