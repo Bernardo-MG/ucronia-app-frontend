@@ -5,7 +5,7 @@ import { PaginationRanges } from '../../models/range/pagination-ranges';
  * Pagination component. Wraps the generic pagination template, and makes use of PaginationRanges to build the ranges.
  */
 @Component({
-  selector: 'shared-pagination-navigation',
+  selector: 'pagination-navigation',
   templateUrl: './pagination-navigation.component.html',
   styleUrls: ['./pagination-navigation.component.sass']
 })
