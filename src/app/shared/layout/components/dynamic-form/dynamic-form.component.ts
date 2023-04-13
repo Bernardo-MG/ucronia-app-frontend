@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Member } from '@app/association/models/member';
 import { FormDescription } from '../../models/form-description';
 
@@ -23,22 +23,21 @@ export class DynamicFormComponent {
 
   private _fields: FormDescription[] = [];
 
-  @Input() set fields(data: FormDescription[]) {
-    this._fields = data;
+  @Input() set fields(definitions: FormDescription[]) {
+    this._fields = definitions;
 
     const formProperties: any = {};
     formProperties['id'] = [-1];
-    for (let i = 0; i < data.length; i++) {
-      const input = data[i];
+    for (let i = 0; i < definitions.length; i++) {
+      const definition = definitions[i];
       let value;
-      if (input.type === 'boolean') {
+      if (definition.type === 'boolean') {
         value = false;
       } else {
         value = '';
       }
 
-      formProperties[data[i].property] = [value];
-      // name: ['', Validators.required]
+      formProperties[definitions[i].property] = [value, definition.validator];
     }
     this.form = this.fb.group(formProperties);
   }
@@ -80,6 +79,10 @@ export class DynamicFormComponent {
 
   public onSave() {
     this.save.emit(this.form.value);
+  }
+
+  public isInvalid(property: string) {
+    return this.form.get(property)?.errors;
   }
 
 }

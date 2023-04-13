@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { FormDescription } from '@app/shared/layout/models/form-description';
 import { MemberService } from '../../services/member.service';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'assoc-member-create',
@@ -16,14 +17,14 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public formValid = false;
+  public formValid = true;
 
   public fields: FormDescription[] = [
-    { name: 'Name', property: 'name', type: 'string' },
-    { name: 'Surname', property: 'surname', type: 'string' },
-    { name: 'Identifier', property: 'identifier', type: 'string' },
-    { name: 'Phone', property: 'phone', type: 'string' },
-    { name: 'Active', property: 'active', type: 'boolean' }
+    { name: 'Name', property: 'name', type: 'string', validator: Validators.required },
+    { name: 'Surname', property: 'surname', type: 'string', validator: null },
+    { name: 'Identifier', property: 'identifier', type: 'string', validator: null },
+    { name: 'Phone', property: 'phone', type: 'string', validator: null },
+    { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
   ];
 
   private member = new Member();
