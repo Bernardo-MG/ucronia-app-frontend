@@ -40,6 +40,8 @@ export class DynamicFormComponent {
       formProperties[definitions[i].property] = [value, definition.validator];
     }
     this.form = this.fb.group(formProperties);
+    // TODO: Remove previous subscribe
+    this.listenForChanges();
   }
 
   get fields(): FormDescription[] {
@@ -58,18 +60,7 @@ export class DynamicFormComponent {
 
   constructor(
     private fb: FormBuilder
-  ) {
-    this.form.statusChanges.subscribe(status => {
-      if (status === "VALID") {
-        this.validChange.emit(true);
-      } else {
-        this.validChange.emit(false);
-      }
-    });
-    this.form.valueChanges.subscribe(value => {
-      this.valueChange.emit(value);
-    });
-  }
+  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['data']) && (!changes['data'].firstChange)) {
@@ -83,6 +74,19 @@ export class DynamicFormComponent {
 
   public isInvalid(property: string) {
     return this.form.get(property)?.errors;
+  }
+
+  private listenForChanges() {
+    this.form.statusChanges.subscribe(status => {
+      if (status === "VALID") {
+        this.validChange.emit(true);
+      } else {
+        this.validChange.emit(false);
+      }
+    });
+    this.form.valueChanges.subscribe(value => {
+      this.valueChange.emit(value);
+    });
   }
 
 }
