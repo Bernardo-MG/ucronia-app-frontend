@@ -7,7 +7,7 @@
     </ng-template>
     <ng-template #calendar>
         <shared-calendar-month [date]="date" [notes]="notes" [startYear]="range.startYear" [startMonth]="range.startMonth"
-            [endYear]="range.startYear" [endMonth]="range.startMonth" (dateChange)="onDateChange($event)"
+            [endYear]="range.endYear" [endMonth]="range.endMonth" (dateChange)="onDateChange($event)"
             (pickDate)="onPickDate($event)"></shared-calendar-month>
     </ng-template>
 </layout-article>
