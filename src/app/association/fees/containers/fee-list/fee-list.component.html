@@ -1,37 +1,36 @@
-<header class="pb-2 mt-4 mb-2 border-bottom">
-  <h1>Fees</h1>
-</header>
-<!-- Filter -->
-<div>
-  <div class="accordion" id="filterAccordion">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingTwo">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-          aria-expanded="false" aria-controls="collapseTwo">
-          Filter
-        </button>
-      </h2>
-      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-        data-bs-parent="#accordionExample">
-        <div class="row mb-2">
-          <label for="startDateInput" id="startDateLabel" class="col-sm-2 col-form-label">startDate</label>
-          <div class="col-sm-10">
-            <input type="month" id="startDateInput" [(ngModel)]="startDate" (change)="reload()"
-              aria-describedby="startDateLabel" class="form-control">
+<layout-article title="Fees">
+  <!-- Filter -->
+  <div>
+    <div class="accordion" id="filterAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+            aria-expanded="false" aria-controls="collapseTwo">
+            Filter
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+          data-bs-parent="#accordionExample">
+          <div class="row mb-2">
+            <label for="startDateInput" id="startDateLabel" class="col-sm-2 col-form-label">startDate</label>
+            <div class="col-sm-10">
+              <input type="month" id="startDateInput" [(ngModel)]="startDate" (change)="reload()"
+                aria-describedby="startDateLabel" class="form-control">
+            </div>
           </div>
-        </div>
-        <div class="row mb-2">
-          <label for="endDateInput" id="endDateLabel" class="col-sm-2 col-form-label">endDate</label>
-          <div class="col-sm-10">
-            <input type="month" id="endDateInput" [(ngModel)]="endDate" (change)="reload()"
-              aria-describedby="endDateLabel" class="form-control">
+          <div class="row mb-2">
+            <label for="endDateInput" id="endDateLabel" class="col-sm-2 col-form-label">endDate</label>
+            <div class="col-sm-10">
+              <input type="month" id="endDateInput" [(ngModel)]="endDate" (change)="reload()"
+                aria-describedby="endDateLabel" class="form-control">
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<layout-waiting-wrapper [waiting]="waiting">
-  <layout-data-list [rows]="rows" [header]="header" route="/fees" [pageInfo]="pageInfo" (delete)="onDelete($event)">
-  </layout-data-list>
-</layout-waiting-wrapper>
+  <layout-waiting-wrapper [waiting]="waiting">
+    <layout-data-list [rows]="rows" [header]="header" route="/fees" [pageInfo]="pageInfo" (delete)="onDelete($event)">
+    </layout-data-list>
+  </layout-waiting-wrapper>
+</layout-article>

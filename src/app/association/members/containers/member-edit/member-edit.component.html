@@ -1,8 +1,6 @@
-<header class="pb-2 mt-4 mb-2 border-bottom">
-  <h1>Edit member</h1>
-</header>
-
-<layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-  <assoc-form-member [disabled]="saving" [data]="member" (save)="onSave()" (valueChange)="onFormChange($event)"
-    (validChange)="onFormValidChange($event)"></assoc-form-member>
-</layout-form-frame>
+<layout-article title="Edit member">
+  <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
+    <assoc-form-member [disabled]="saving" [data]="member" (save)="onSave()" (valueChange)="onFormChange($event)"
+      (validChange)="onFormValidChange($event)"></assoc-form-member>
+  </layout-form-frame>
+</layout-article>

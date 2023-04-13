@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from '@app/core/core.module';
 import { BalanceRoutingModule } from './balance-routing.module';
 import { BalanceInfoComponent } from './containers/balance-info/balance-info.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -13,7 +14,8 @@ import { BalanceInfoComponent } from './containers/balance-info/balance-info.com
   imports: [
     CommonModule,
     BalanceRoutingModule,
-    CoreModule
+    CoreModule,
+    LayoutModule
   ]
 })
 export class BalanceModule { }

@@ -8,6 +8,7 @@ import { DataFormComponent } from './components/form-frame/form-frame.component'
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ArticleComponent } from './components/article/article.component';
 
 
 
@@ -16,7 +17,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DataFormComponent,
     DataListComponent,
     WaitingWrapperComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
+    ArticleComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     DataFormComponent,
     DataListComponent,
     WaitingWrapperComponent,
-    DynamicFormComponent
+    DynamicFormComponent,
+    ArticleComponent
   ]
 })
 export class LayoutModule { }

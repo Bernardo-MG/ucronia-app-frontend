@@ -1,8 +1,7 @@
-<header class="pb-2 mt-4 mb-2 border-bottom">
-  <h1>Members</h1>
-</header>
-<!-- List -->
-<layout-waiting-wrapper [waiting]="waiting">
-  <layout-data-list [rows]="rows" [header]="header" route="/members" [pageInfo]="pageInfo" (delete)="onDelete($event)">
-  </layout-data-list>
-</layout-waiting-wrapper>
+<layout-article title="Members">
+  <!-- List -->
+  <layout-waiting-wrapper [waiting]="waiting">
+    <layout-data-list [rows]="rows" [header]="header" route="/members" [pageInfo]="pageInfo" (delete)="onDelete($event)">
+    </layout-data-list>
+  </layout-waiting-wrapper>
+</layout-article>

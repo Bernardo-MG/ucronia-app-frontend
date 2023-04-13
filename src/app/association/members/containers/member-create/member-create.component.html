@@ -1,8 +1,6 @@
-<header class="pb-2 mt-4 mb-2 border-bottom">
-  <h1>Create member</h1>
-</header>
-
-<layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-  <layout-dynamic-form [fields]="fields" [disabled]="saving" (save)="onSave()" (valueChange)="onFormChange($event)"
-    (validChange)="onFormValidChange($event)"></layout-dynamic-form>
-</layout-form-frame>
+<layout-article title="Create member">
+  <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
+    <layout-dynamic-form [fields]="fields" [disabled]="saving" (save)="onSave()" (valueChange)="onFormChange($event)"
+      (validChange)="onFormValidChange($event)"></layout-dynamic-form>
+  </layout-form-frame>
+</layout-article>

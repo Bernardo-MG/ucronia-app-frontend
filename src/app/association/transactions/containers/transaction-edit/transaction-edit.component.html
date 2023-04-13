@@ -1,8 +1,6 @@
-<header class="pb-2 mt-4 mb-2 border-bottom">
-  <h1>Edit transaction</h1>
-</header>
-
-<layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
-  <assoc-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
-    (validChange)="onFormValidChange($event)"></assoc-form-transaction>
-</layout-form-frame>
+<layout-article title="Edit transaction">
+  <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+    <assoc-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
+      (validChange)="onFormValidChange($event)"></assoc-form-transaction>
+  </layout-form-frame>
+</layout-article>
