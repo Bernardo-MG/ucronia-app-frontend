@@ -66,7 +66,7 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the backward button should be disabled, false otherwise
    */
   public isBackwardDisabled(): boolean {
-    return this.current === 1;
+    return (this.current <= 1);
   }
 
   /**
@@ -75,7 +75,7 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the forward button should be disabled, false otherwise
    */
   public isForwardDisabled(): boolean {
-    return this.current === this.pages;
+    return (this.current >= this.pages);
   }
 
 }
