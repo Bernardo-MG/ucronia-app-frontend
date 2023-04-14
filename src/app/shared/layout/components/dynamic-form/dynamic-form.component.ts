@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Member } from '@app/association/models/member';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormDescription } from '../../models/form-description';
 
 @Component({
@@ -50,9 +49,9 @@ export class DynamicFormComponent {
 
   @Input() public data: any;
 
-  @Output() public save = new EventEmitter<Member>();
+  @Output() public save = new EventEmitter<any>();
 
-  @Output() public valueChange = new EventEmitter<Member>();
+  @Output() public valueChange = new EventEmitter<any>();
 
   @Output() public validChange = new EventEmitter<boolean>();
 

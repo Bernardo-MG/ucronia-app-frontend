@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { MemberService } from '../../services/member.service';
+import { Validators } from '@angular/forms';
+import { FormDescription } from '@app/shared/layout/models/form-description';
 
 @Component({
   selector: 'assoc-member-edit',
@@ -18,6 +20,14 @@ export class MemberEditComponent implements OnInit {
   public formValid = false;
 
   public member: Member = new Member();
+
+  public fields: FormDescription[] = [
+    { name: 'Name', property: 'name', type: 'string', validator: Validators.required },
+    { name: 'Surname', property: 'surname', type: 'string', validator: null },
+    { name: 'Identifier', property: 'identifier', type: 'string', validator: null },
+    { name: 'Phone', property: 'phone', type: 'string', validator: null },
+    { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
+  ];
 
   constructor(
     private route: ActivatedRoute,
