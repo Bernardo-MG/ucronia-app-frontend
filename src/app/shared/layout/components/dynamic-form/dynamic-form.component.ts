@@ -41,4 +41,8 @@ export class DynamicFormComponent {
     this.data = value;
   }
 
+  public isDisabled() {
+    return this.disabled || this.saving;
+  }
+
 }

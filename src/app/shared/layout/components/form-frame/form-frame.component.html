@@ -9,12 +9,12 @@
                 <ng-template #saving_cue>
                     <!-- Saving cue on button-->
                     <button type="submit" class="btn btn-primary"
-                        aria-label="Save"><icon-waiting></icon-waiting></button>
+                        aria-label="Save" disabled><icon-waiting></icon-waiting></button>
                 </ng-template>
                 <ng-template #save>
                     <!-- Save button-->
-                    <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="!isAbleToSave()"
-                        [attr.aria-disabled]="!isAbleToSave()" aria-label="Save">Save</button>
+                    <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="isDisabled()"
+                        [attr.aria-disabled]="isDisabled()" aria-label="Save">Save</button>
                 </ng-template>
             </div>
         </div>

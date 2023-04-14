@@ -1,4 +1,4 @@
 <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-    <layout-dynamic-form-body [fields]="fields" [data]="data" [disabled]="saving" (save)="onSave()"
+    <layout-dynamic-form-body [fields]="fields" [data]="data" [disabled]="isDisabled()" (save)="onSave()"
         (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)"></layout-dynamic-form-body>
 </layout-form-frame>
