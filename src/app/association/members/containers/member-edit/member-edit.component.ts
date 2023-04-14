@@ -34,15 +34,15 @@ export class MemberEditComponent implements OnInit {
     private service: MemberService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
   }
 
-  public onSave(): void {
+  public onSave(data: Member): void {
     this.saving = true;
-    this.service.update(this.member.id, this.member).subscribe({
+    this.service.update(data.id, data).subscribe({
       next: d => {
         // Reactivate view
         this.saving = false;
@@ -52,14 +52,6 @@ export class MemberEditComponent implements OnInit {
         this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Member) {
-    this.member = value;
   }
 
   private load(id: string | null): void {

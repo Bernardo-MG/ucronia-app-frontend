@@ -17,8 +17,6 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public formValid = true;
-
   public fields: FormDescription[] = [
     { name: 'Name', property: 'name', type: 'string', validator: Validators.required },
     { name: 'Surname', property: 'surname', type: 'string', validator: null },
@@ -27,16 +25,14 @@ export class MemberCreateComponent {
     { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
   ];
 
-  private member = new Member();
-
   constructor(
     private service: MemberService,
     private router: Router
   ) { }
 
-  public onSave(): void {
+  public onSave(data: Member): void {
     this.saving = true;
-    this.service.create(this.member).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
         // Reactivate view
@@ -47,14 +43,6 @@ export class MemberCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Member) {
-    this.member = value;
   }
 
 }

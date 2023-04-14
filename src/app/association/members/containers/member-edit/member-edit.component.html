@@ -1,6 +1,4 @@
 <layout-article title="Edit member">
-  <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-    <layout-dynamic-form [fields]="fields" [data]="member" [disabled]="saving" (save)="onSave()"
-      (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)"></layout-dynamic-form>
-  </layout-form-frame>
+  <layout-dynamic-form [disabled]="saving" [saving]="saving" [fields]="fields" [data]="member" (save)="onSave($event)">
+  </layout-dynamic-form>
 </layout-article>

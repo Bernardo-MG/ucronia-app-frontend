@@ -6,7 +6,7 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './form-frame.component.html',
   styleUrls: ['./form-frame.component.sass']
 })
-export class DataFormComponent {
+export class FormFrameComponent {
 
   /**
    * Saving flag.

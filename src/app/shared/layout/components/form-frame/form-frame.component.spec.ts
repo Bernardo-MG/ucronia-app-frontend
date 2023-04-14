@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { DataFormComponent } from './form-frame.component';
+import { FormFrameComponent } from './form-frame.component';
 
-describe('DataFormComponent', () => {
-  let component: DataFormComponent;
-  let fixture: ComponentFixture<DataFormComponent>;
+describe('FormFrameComponent', () => {
+  let component: FormFrameComponent;
+  let fixture: ComponentFixture<FormFrameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,12 +12,12 @@ describe('DataFormComponent', () => {
         IconsModule
       ],
       declarations: [
-        DataFormComponent
+        FormFrameComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(DataFormComponent);
+    fixture = TestBed.createComponent(FormFrameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
