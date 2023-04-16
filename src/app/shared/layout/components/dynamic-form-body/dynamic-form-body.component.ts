@@ -29,14 +29,7 @@ export class DynamicFormBodyComponent {
     formProperties['id'] = [-1];
     for (let i = 0; i < definitions.length; i++) {
       const definition = definitions[i];
-      let value;
-      if (definition.type === 'boolean') {
-        value = false;
-      } else {
-        value = '';
-      }
-
-      formProperties[definitions[i].property] = [value, definition.validator];
+      formProperties[definition.property] = [undefined, definition.validator];
     }
     this.form = this.fb.group(formProperties);
     // TODO: Remove previous subscribe
