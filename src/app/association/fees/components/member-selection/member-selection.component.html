@@ -1,22 +1,3 @@
-<pagination-navigation [current]="pageInfo.page" [pages]="pageInfo.totalPages" (goTo)="onGoToPage($event)">
+<layout-button-list [values]="members" (select)="onSelect($event)"></layout-button-list>
+<pagination-navigation [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
 </pagination-navigation>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">
-        name
-      </th>
-      <th scope="col">
-        surname
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-template ngFor let-member [ngForOf]="members">
-      <tr (click)="onSelect(member)">
-        <td>{{member.name}}</td>
-        <td>{{member.surname}}</td>
-      </tr>
-    </ng-template>
-  </tbody>
-</table>

@@ -2,7 +2,7 @@
   <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
 
   <ng-template #member_selection>
-    <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [pageInfo]="membersPageInfo"
+    <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPageInfo.page" [pages]="membersPageInfo.totalPages"
       (goToPage)="onGoToMembersPage($event)"></assoc-member-selection>
   </ng-template>
   <ng-template #fee_edition>

@@ -4,6 +4,7 @@ import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
+import { TitleValue } from '@app/shared/layout/models/link';
 
 @Component({
   selector: 'assoc-fee-edit',
@@ -12,7 +13,7 @@ import { FeeService } from '../../services/fee.service';
 })
 export class FeeEditComponent implements OnInit, AfterContentInit {
 
-  public members: Member[] = [];
+  public members: TitleValue[] = [];
 
   public member = new Member();
 
@@ -68,7 +69,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
-      this.members = response.content;
+      this.members = response.content.map(v => this.toValue(v));
       this.membersPageInfo = response;
     });
   }
@@ -81,6 +82,13 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
           this.fee = d;
           this.service.getOneMember(this.fee.memberId).subscribe(d => this.member = d);
         });
+    }
+  }
+
+  private toValue(member: Member) {
+    return {
+      title: `${member.name} ${member.surname}`,
+      value: member
     }
   }
 
