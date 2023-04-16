@@ -1,6 +1,4 @@
 <layout-article title="Edit transaction">
-  <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
-    <assoc-form-transaction [data]="transaction" (save)="onSave()" (valueChange)="onFormChange($event)"
-      (validChange)="onFormValidChange($event)"></assoc-form-transaction>
-  </layout-form-frame>
+  <layout-dynamic-form [saving]="saving" [fields]="fields" [data]="transaction" (save)="onSave($event)">
+  </layout-dynamic-form>
 </layout-article>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionService } from '../../service/transaction.service';
+import { Validators } from '@angular/forms';
+import { FormDescription } from '@app/shared/layout/models/form-description';
 
 @Component({
   selector: 'assoc-transaction-edit',
@@ -13,7 +15,13 @@ export class TransactionEditComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public saving = false;
+
+  public fields: FormDescription[] = [
+    { name: 'Description', property: 'description', type: 'string', validator: Validators.required },
+    { name: 'Date', property: 'date', type: 'date', validator: Validators.required },
+    { name: 'Amount', property: 'amount', type: 'string', validator: Validators.required }
+  ];
 
   public transaction: Transaction = new Transaction();
 
@@ -30,26 +38,18 @@ export class TransactionEditComponent implements OnInit {
     });
   }
 
-  public onSave(): void {
-    this.waiting = true;
-    this.service.update(this.transaction.id, this.transaction).subscribe({
+  public onSave(data: Transaction): void {
+    this.saving = true;
+    this.service.update(this.transaction.id, data).subscribe({
       next: d => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Transaction) {
-    this.transaction = value;
   }
 
   private load(id: string | null): void {
