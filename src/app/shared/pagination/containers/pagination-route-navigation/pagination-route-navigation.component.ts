@@ -33,7 +33,7 @@ export class PaginationRouteNavigationComponent implements OnInit {
       if ((p) && (p.page)) {
         this.page = p.page;
       } else {
-        this.page = 0;
+        this.page = 1;
       }
     });
   }
