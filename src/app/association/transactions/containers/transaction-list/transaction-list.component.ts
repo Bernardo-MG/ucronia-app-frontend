@@ -51,7 +51,7 @@ export class TransactionListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.header = [{ name: 'description', property: 'description' }, { name: 'date', property: 'date' }, { name: 'amount', property: 'amount' }];
+    this.header = [{ name: 'Description', property: 'description' }, { name: 'Date', property: 'date' }, { name: 'Amount', property: 'amount' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p, new TransactionFilter());

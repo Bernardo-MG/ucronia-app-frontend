@@ -34,7 +34,7 @@ export class MemberListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'active', property: 'active' }];
+    this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Active', property: 'active' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);

@@ -38,7 +38,7 @@ export class FeeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.header = [{ name: 'name', property: 'name' }, { name: 'surname', property: 'surname' }, { name: 'pay date', property: 'date' }, { name: 'paid', property: 'paid' }];
+    this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Pay date', property: 'date' }, { name: 'Paid', property: 'paid' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
