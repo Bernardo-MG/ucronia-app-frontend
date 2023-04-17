@@ -9,6 +9,7 @@ import { AccountSideMenuOptionsComponent } from './components/account-side-menu-
 import { AccountChangePasswordViewComponent } from './containers/account-password-view/account-password-view.component';
 import { AccountProfileViewComponent } from './containers/account-profile-view/account-profile-view.component';
 import { AccountService } from './services/account.service';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -25,7 +26,8 @@ import { AccountService } from './services/account.service';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    IconsModule
+    IconsModule,
+    LayoutModule
   ],
   providers: [
     AccountService

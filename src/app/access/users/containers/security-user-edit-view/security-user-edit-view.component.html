@@ -1,18 +1,19 @@
-<h1>edit user</h1>
-<div *ngIf="selectingRole; then role_selection else user_edition"></div>
-<ng-template #user_edition>
-    <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
-        <security-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
-            (validChange)="onFormValidChange($event)"></security-user-form>
-        <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
-            (goTo)="onGoToRolePage($event)">
-        </pagination-navigation>
-        <security-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
-        </security-user-role-form>
-    </layout-form-frame>
-</ng-template>
-<ng-template #role_selection>
-    <security-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
-        (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">
-    </security-user-role-selection>
-</ng-template>
+<layout-article title="Edit user">
+    <div *ngIf="selectingRole; then role_selection else user_edition"></div>
+    <ng-template #user_edition>
+        <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+            <security-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
+                (validChange)="onFormValidChange($event)"></security-user-form>
+            <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
+                (goTo)="onGoToRolePage($event)">
+            </pagination-navigation>
+            <security-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+            </security-user-role-form>
+        </layout-form-frame>
+    </ng-template>
+    <ng-template #role_selection>
+        <security-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
+            (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">
+        </security-user-role-selection>
+    </ng-template>
+</layout-article>

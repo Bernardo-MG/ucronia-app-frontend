@@ -45,12 +45,14 @@ export class MainLayoutComponent {
       title: 'security', links: [
         {
           title: 'Roles', links: [
-            { title: 'List', path: '/security/roles' }
+            { title: 'List', path: '/security/roles' },
+            { title: 'Create', path: '/security/roles/create' }
           ]
         },
         {
           title: 'Users', links: [
-            { title: 'List', path: '/security/users' }
+            { title: 'List', path: '/security/users' },
+            { title: 'Create', path: '/security/users/create' }
           ]
         }
       ]
