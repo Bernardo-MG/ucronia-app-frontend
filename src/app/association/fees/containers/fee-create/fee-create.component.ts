@@ -12,17 +12,24 @@ import { FeeService } from '../../services/fee.service';
 })
 export class FeeCreateComponent implements AfterContentInit {
 
+  /**
+   * Saving flag.
+   */
+  public saving = false;
+
+  public readingMembers: boolean = false;
+
   public members: Member[] = [];
 
   public member = new Member();
 
   public membersPageInfo = new PageInfo();
 
-  public fee: Fee = new Fee();
+  public fee = new Fee();
 
   public selectingMember = false;
 
-  private formValid = false;
+  public formValid = false;
 
   constructor(
     private service: FeeService,
@@ -35,8 +42,10 @@ export class FeeCreateComponent implements AfterContentInit {
   }
 
   public onSave(): void {
+    this.saving = true;
     this.service.create(this.fee).subscribe(d => {
       this.router.navigate([`/fees/${d.id}`]);
+      this.saving = false;
     });
   }
 
@@ -58,14 +67,16 @@ export class FeeCreateComponent implements AfterContentInit {
   }
 
   public onGoToMembersPage(page: number) {
+    this.readingMembers = true;
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
       this.membersPageInfo = response;
+      this.readingMembers = false;
     });
   }
 
-  public isAbleToSave() {
-    return this.formValid;
+  public onCancelSelectMember() {
+    this.selectingMember = false;
   }
 
 }

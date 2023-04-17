@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
-import { Member } from '@app/association/models/member';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -13,7 +12,9 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public data = new Fee();
 
-  @Input() public member = new Member();
+  @Input() public memberId = 0;
+
+  @Input() public memberName = '';
 
   @Output() public save = new EventEmitter<Fee>();
 
@@ -47,7 +48,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
       this.valueChange.emit({
         ...this.form.value,
-        memberId: this.member.id,
+        memberId: this.memberId,
         date
       });
     });
@@ -68,7 +69,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
     this.save.emit({
       ...this.form.value,
-      memberId: this.member.id,
+      memberId: this.memberId,
       date
     });
   }

@@ -12,6 +12,13 @@ import { FeeService } from '../../services/fee.service';
 })
 export class FeeEditComponent implements OnInit, AfterContentInit {
 
+  /**
+   * Saving flag.
+   */
+  public saving = false;
+
+  public readingMembers: boolean = false;
+
   public members: Member[] = [];
 
   public member = new Member();
@@ -22,7 +29,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public selectingMember = false;
 
-  private formValid = false;
+  public formValid = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +89,10 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
           this.service.getOneMember(this.fee.memberId).subscribe(d => this.member = d);
         });
     }
+  }
+
+  public onCancelSelectMember() {
+    this.selectingMember = false;
   }
 
 }

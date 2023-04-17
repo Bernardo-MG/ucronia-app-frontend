@@ -1,18 +1,22 @@
 <layout-article title="Create fee">
-  <div *ngIf="selectingMember; then member_selection else fee_edition"></div>
-  
-  <ng-template #member_selection>
-    <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPageInfo.page" [pages]="membersPageInfo.totalPages"
-      (goToPage)="onGoToMembersPage($event)">
-    </assoc-member-selection>
+  <div *ngIf="selectingMember; then member_selection else fee_form"></div>
+
+  <!-- Fee form -->
+  <ng-template #fee_form>
+    <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
+      <assoc-form-fee [data]="fee" [memberId]="member.id" [memberName]="member.name" (save)="onSave()"
+        (selectMember)="onRequestMember()" (valueChange)="onFormChange($event)"
+        (validChange)="onFormValidChange($event)">
+      </assoc-form-fee>
+    </layout-form-frame>
   </ng-template>
-  <ng-template #fee_edition>
-    <!-- Save button -->
-    <div class="col-sm-2 d-grid gap-2">
-       <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="!isAbleToSave()" [attr.aria-disabled]="!isAbleToSave()" aria-label="Save">Save</button>
-    </div>
-    <assoc-form-fee [data]="fee" [member]="member" (save)="onSave()" (selectMember)="onRequestMember()"
-      (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)">
-    </assoc-form-fee>
+  <!-- Member selection -->
+  <ng-template #member_selection>
+    <layout-waiting-wrapper [waiting]="readingMembers">
+      <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)"
+        [current]="membersPageInfo.page" [pages]="membersPageInfo.totalPages" (goToPage)="onGoToMembersPage($event)">
+      </assoc-member-selection>
+      <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
+    </layout-waiting-wrapper>
   </ng-template>
 </layout-article>
