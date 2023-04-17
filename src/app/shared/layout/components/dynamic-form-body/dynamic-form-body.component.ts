@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormDescription } from '../../models/form-description';
 
@@ -7,7 +7,7 @@ import { FormDescription } from '../../models/form-description';
   templateUrl: './dynamic-form-body.component.html',
   styleUrls: ['./dynamic-form-body.component.sass']
 })
-export class DynamicFormBodyComponent {
+export class DynamicFormBodyComponent implements OnChanges {
 
   /**
    * Disabled flag.
