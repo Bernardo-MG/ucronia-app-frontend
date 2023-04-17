@@ -4,6 +4,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { SecurityRoleService } from '../../services/security-role.service';
+import { TableRow } from '@app/core/models/table-row';
 
 @Component({
   selector: 'security-role-list-view',
@@ -17,11 +18,11 @@ export class SecurityRoleListViewComponent implements OnInit {
    */
   public loading = false;
 
-  public roles: Role[] = [];
+  public rows: TableRow[] = [];
+
+  public header = [{ name: 'Name', property: 'name' }];
 
   public totalPages = 0;
-
-  private selected: { id: number } = { id: -1 };
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
@@ -39,16 +40,12 @@ export class SecurityRoleListViewComponent implements OnInit {
   }
 
   public isLoading(): boolean {
-    return (this.roles.length == 0) && this.loading;
+    return this.loading;
   }
 
-  public select(data: { id: number }) {
-    this.selected = data;
-  }
-
-  public onDelete() {
-    if (this.selected.id > 0) {
-      this.service.delete(this.selected.id).subscribe(r => {
+  public onDelete(id: number) {
+    if (id > 0) {
+      this.service.delete(id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
         this.load(pagination);
       });
@@ -59,7 +56,14 @@ export class SecurityRoleListViewComponent implements OnInit {
     this.loading = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-        this.roles = page.content;
+
+        this.rows = page.content.map(m => {
+          return {
+            id: m.id,
+            cells: [m.name]
+          };
+        });
+
         this.totalPages = page.totalPages;
         // Reactivate view
         this.loading = false;

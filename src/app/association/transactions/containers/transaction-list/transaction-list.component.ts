@@ -32,7 +32,7 @@ export class TransactionListComponent implements OnInit {
 
   public rows: TableRow[] = [];
 
-  public header: TableHeaderCell[] = [];
+  public header = [{ name: 'Description', property: 'description' }, { name: 'Date', property: 'date' }, { name: 'Amount', property: 'amount' }];
 
   private routeActuator: RouteParametersActuator;
 
@@ -51,8 +51,6 @@ export class TransactionListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.header = [{ name: 'Description', property: 'description' }, { name: 'Date', property: 'date' }, { name: 'Amount', property: 'amount' }];
-
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p, new TransactionFilter());
     });
@@ -90,9 +88,7 @@ export class TransactionListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
-        const transactions = page.content;
-
-        this.rows = transactions.map(m => {
+        this.rows = page.content.map(m => {
           return {
             id: m.id,
             cells: [m.description, m.date, m.amount]

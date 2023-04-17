@@ -4,6 +4,7 @@ import { User } from '@app/core/authentication/models/user';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { SecurityUserService } from '../../services/security-user.service';
+import { TableRow } from '@app/core/models/table-row';
 
 @Component({
   selector: 'security-user-list-view',
@@ -17,7 +18,9 @@ export class SecurityUserListViewComponent implements OnInit {
    */
   public loading = false;
 
-  public users: User[] = [];
+  public rows: TableRow[] = [];
+
+  public header = [{ name: 'Username', property: 'username' }];
 
   public totalPages = 0;
 
@@ -39,14 +42,10 @@ export class SecurityUserListViewComponent implements OnInit {
   }
 
   public isLoading(): boolean {
-    return (this.users.length == 0) && this.loading;
+    return this.loading;
   }
 
-  public select(data: { id: number }) {
-    this.selected = data;
-  }
-
-  public onDelete() {
+  public onDelete(id: number) {
     if (this.selected.id > 0) {
       this.service.delete(this.selected.id).subscribe(r => {
         const pagination = this.routePaginationObserver.subject.value;
@@ -59,7 +58,14 @@ export class SecurityUserListViewComponent implements OnInit {
     this.loading = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-        this.users = page.content;
+
+        this.rows = page.content.map(m => {
+          return {
+            id: m.id,
+            cells: [m.username]
+          };
+        });
+
         this.totalPages = page.totalPages;
         // Reactivate view
         this.loading = false;
