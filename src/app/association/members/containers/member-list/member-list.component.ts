@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TableHeaderCell } from '@app/core/models/table-header-cell';
 import { TableRow } from '@app/core/models/table-row';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { MemberService } from '../../services/member.service';
@@ -19,7 +18,7 @@ export class MemberListComponent implements OnInit {
    */
   public waiting = false;
 
-  public pageInfo = new PageInfo();
+  public totalPages = 0;
 
   public header: TableHeaderCell[] = [];
 
@@ -64,7 +63,7 @@ export class MemberListComponent implements OnInit {
           };
         });
 
-        this.pageInfo = page;
+        this.totalPages = page.totalPages;
         // Reactivate view
         this.waiting = false;
       },

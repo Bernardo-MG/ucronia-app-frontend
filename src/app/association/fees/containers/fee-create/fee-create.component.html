@@ -14,7 +14,7 @@
   <ng-template #member_selection>
     <layout-waiting-wrapper [waiting]="readingMembers">
       <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)"
-        [current]="membersPageInfo.page" [pages]="membersPageInfo.totalPages" (goToPage)="onGoToMembersPage($event)">
+        [current]="membersPage" [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
       </assoc-member-selection>
       <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
     </layout-waiting-wrapper>

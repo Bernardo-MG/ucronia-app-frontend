@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
-import { SecurityRoleService } from '../../services/security-role.service';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
+import { SecurityRoleService } from '../../services/security-role.service';
 
 @Component({
   selector: 'security-role-list-view',
@@ -20,7 +19,7 @@ export class SecurityRoleListViewComponent implements OnInit {
 
   public roles: Role[] = [];
 
-  public pageInfo = new PageInfo();
+  public totalPages = 0;
 
   private selected: { id: number } = { id: -1 };
 
@@ -61,7 +60,7 @@ export class SecurityRoleListViewComponent implements OnInit {
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.roles = page.content;
-        this.pageInfo = page;
+        this.totalPages = page.totalPages;
         // Reactivate view
         this.loading = false;
       },

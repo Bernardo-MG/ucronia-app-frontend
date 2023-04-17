@@ -23,13 +23,15 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public member = new Member();
 
-  public membersPageInfo = new PageInfo();
-
   public fee = new Fee();
 
   public selectingMember = false;
 
   public formValid = false;
+
+  public membersPage = 0;
+
+  public membersTotalPages = 0;
 
   constructor(
     private service: FeeService,
@@ -70,7 +72,8 @@ export class FeeCreateComponent implements AfterContentInit {
     this.readingMembers = true;
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
-      this.membersPageInfo = response;
+      this.membersPage = response.page + 1;
+      this.membersTotalPages = response.totalPages;
       this.readingMembers = false;
     });
   }

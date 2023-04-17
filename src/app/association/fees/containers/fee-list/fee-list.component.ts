@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Table } from '@app/core/models/table';
 import { TableHeaderCell } from '@app/core/models/table-header-cell';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { TableRow } from '@app/core/models/table-row';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
-import { TableRow } from '@app/core/models/table-row';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -20,7 +18,7 @@ export class FeeListComponent implements OnInit {
    */
   public waiting = false;
 
-  public pageInfo = new PageInfo();
+  public totalPages = 0;
 
   public startDate: string | undefined = undefined;
 
@@ -69,7 +67,7 @@ export class FeeListComponent implements OnInit {
           };
         });
 
-        this.pageInfo = page;
+        this.totalPages = page.totalPages;
         // Reactivate view
         this.waiting = false;
       },

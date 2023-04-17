@@ -22,7 +22,7 @@ export class TransactionListComponent implements OnInit {
    */
   public waiting = false;
 
-  public pageInfo = new PageInfo();
+  public totalPages = 0;
 
   public startDate: string | undefined = undefined;
 
@@ -100,7 +100,7 @@ export class TransactionListComponent implements OnInit {
         });
 
 
-        this.pageInfo = page;
+        this.totalPages = page.totalPages;
         // Reactivate view
         this.waiting = false;
       },
