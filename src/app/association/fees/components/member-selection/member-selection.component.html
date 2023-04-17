@@ -1,3 +1,3 @@
-<layout-button-list [values]="members" (select)="onSelect($event)"></layout-button-list>
+<layout-button-list [values]="members" [renderer]="nameRenderer" (select)="onSelect($event)"></layout-button-list>
 <pagination-navigation [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
 </pagination-navigation>

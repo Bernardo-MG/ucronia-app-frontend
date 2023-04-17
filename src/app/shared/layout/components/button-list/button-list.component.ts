@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TitleValue } from '../../models/link';
 
 /**
  * List of links component. They will be shown in the same order as received.
@@ -14,7 +13,9 @@ export class ButtonListComponent {
   /**
    * Links to show in the list.
    */
-  @Input() public values: TitleValue[] = [];
+  @Input() public values: any[] = [];
+  
+  @Input() public renderer: (d: any) => string = (a) => '';
 
   @Output() public select = new EventEmitter<any>();
 

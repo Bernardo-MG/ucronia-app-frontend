@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Member } from '@app/association/models/member';
-import { TitleValue } from '@app/shared/layout/models/link';
 
 @Component({
   selector: 'assoc-member-selection',
@@ -9,7 +8,7 @@ import { TitleValue } from '@app/shared/layout/models/link';
 })
 export class MemberSelectionComponent implements OnInit {
 
-  @Input() public members: TitleValue[] = [];
+  @Input() public members: Member[] = [];
 
   /**
    * Current page number. This is the pointer to move around the pagination.
@@ -35,6 +34,10 @@ export class MemberSelectionComponent implements OnInit {
 
   public onGoToPage(page: number) {
     this.goToPage.emit(page);
+  }
+
+  public nameRenderer(member: Member) {
+    return member.name;
   }
 
 }
