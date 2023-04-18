@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TableHeaderCell } from '@app/core/models/table-header-cell';
-import { TableRow } from '@app/core/models/table-row';
+import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
+import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { MemberService } from '../../services/member.service';
