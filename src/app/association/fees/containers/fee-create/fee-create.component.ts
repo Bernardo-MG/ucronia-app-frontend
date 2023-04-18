@@ -17,7 +17,7 @@ export class FeeCreateComponent implements AfterContentInit {
    */
   public saving = false;
 
-  public readingMembers: boolean = false;
+  public readingMembers = false;
 
   public members: Member[] = [];
 

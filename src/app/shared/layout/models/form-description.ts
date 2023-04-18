@@ -1,8 +1,8 @@
 import { ValidationErrors } from "@angular/forms";
 
 export class FormDescription {
-    name: string = '';
-    property: string = '';
-    type: string = '';
+    name = '';
+    property = '';
+    type = '';
     validator: ValidationErrors | null = null;
 }

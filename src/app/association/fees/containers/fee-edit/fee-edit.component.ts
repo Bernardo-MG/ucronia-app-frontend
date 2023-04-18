@@ -17,7 +17,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
    */
   public saving = false;
 
-  public readingMembers: boolean = false;
+  public readingMembers = false;
 
   public members: Member[] = [];
 

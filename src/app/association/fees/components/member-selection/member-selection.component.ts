@@ -28,7 +28,7 @@ export class MemberSelectionComponent implements OnInit {
     this.goToPage.emit(0);
   }
 
-  public onSelect(member: Member) {
+  public onPick(member: Member) {
     this.selectMember.emit(member);
   }
 

@@ -17,10 +17,10 @@ export class ButtonListComponent {
   
   @Input() public renderer: (d: any) => string = (a) => '';
 
-  @Output() public select = new EventEmitter<any>();
+  @Output() public pick = new EventEmitter<any>();
 
-  public onSelect(value: any) {
-    this.select.emit(value);
+  public onPick(value: any) {
+    this.pick.emit(value);
   }
 
 }
