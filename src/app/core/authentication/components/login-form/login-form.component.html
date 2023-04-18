@@ -3,20 +3,10 @@
         <div class="mb-2">
             <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
                 [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
-            <div class="invalid-feedback">
-                <div *ngIf="form.get('username')?.hasError('required')">
-                    missing_username
-                </div>
-            </div>
         </div>
         <div class="mb-2">
             <input placeholder="Password" type="password" id="passwordInput" formControlName="password"
                 class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
-            <div class="invalid-feedback">
-                <div *ngIf="form.get('password')?.hasError('required')">
-                    missing_password
-                </div>
-            </div>
         </div>
         <!-- Remember me check -->
         <div class="row mb-2">
