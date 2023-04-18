@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MemberService } from '../../services/member.service';
 import { MemberStatsComponent } from './member-stats.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('MemberStatsComponent', () => {
   let component: MemberStatsComponent;
@@ -12,7 +13,8 @@ describe('MemberStatsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
         MemberStatsComponent

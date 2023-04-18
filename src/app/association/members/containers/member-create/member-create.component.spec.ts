@@ -5,9 +5,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
 import { MemberCreateComponent } from './member-create.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('MemberCreateComponent', () => {
   let component: MemberCreateComponent;
@@ -23,12 +23,12 @@ describe('MemberCreateComponent', () => {
         HttpClientTestingModule,
         FontAwesomeModule,
         ReactiveFormsModule,
-        IconsModule
+        IconsModule,
+        LayoutModule
       ],
       declarations: [
         MemberCreateComponent,
-        FormFrameComponent,
-        MemberFormComponent
+        FormFrameComponent
       ]
     })
       .compileComponents();

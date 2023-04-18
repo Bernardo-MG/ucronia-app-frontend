@@ -9,6 +9,7 @@ import { SecurityUserFormComponent } from '../../components/security-user-form/s
 import { SecurityUserRoleFormComponent } from '../../components/security-user-role-form/security-user-role-form.component';
 import { SecurityUserService } from '../../services/security-user.service';
 import { SecurityUserEditViewComponent } from './security-user-edit-view.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('SecurityUserEditViewComponent', () => {
   let component: SecurityUserEditViewComponent;
@@ -21,7 +22,8 @@ describe('SecurityUserEditViewComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         CoreModule,
-        PaginationModule
+        PaginationModule,
+        LayoutModule
       ],
       declarations: [
         SecurityUserEditViewComponent,

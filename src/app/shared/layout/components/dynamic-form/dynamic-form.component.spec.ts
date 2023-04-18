@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { LayoutModule } from '../../layout.module';
 import { DynamicFormComponent } from './dynamic-form.component';
 
 describe('DynamicFormComponent', () => {
@@ -8,7 +8,12 @@ describe('DynamicFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DynamicFormComponent ]
+      imports: [
+        LayoutModule
+      ],
+      declarations: [ 
+        DynamicFormComponent
+       ]
     })
     .compileComponents();
 

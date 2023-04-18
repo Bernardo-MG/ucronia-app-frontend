@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BalanceInfoComponent } from './balance-info.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('BalanceInfoComponent', () => {
   let component: BalanceInfoComponent;
@@ -10,7 +11,8 @@ describe('BalanceInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
         BalanceInfoComponent

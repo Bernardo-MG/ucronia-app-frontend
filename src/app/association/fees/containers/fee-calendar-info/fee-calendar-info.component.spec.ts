@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarInfoComponent } from './fee-calendar-info.component';
 
 describe('FeeCalendarInfoComponent', () => {
@@ -11,7 +12,8 @@ describe('FeeCalendarInfoComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
         FeeCalendarInfoComponent

@@ -6,6 +6,7 @@ import { AccountChangePasswordFormComponent } from '@app/account/components/acco
 import { AccountService } from '@app/account/services/account.service';
 
 import { AccountChangePasswordViewComponent } from './account-password-view.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('AccountChangePasswordViewComponent', () => {
   let component: AccountChangePasswordViewComponent;
@@ -16,7 +17,8 @@ describe('AccountChangePasswordViewComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LayoutModule
       ],
       providers: [
         AccountService

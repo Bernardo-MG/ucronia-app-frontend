@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { AccountProfileViewComponent } from './account-profile-view.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('AccountProfileViewComponent', () => {
   let component: AccountProfileViewComponent;
@@ -8,6 +9,9 @@ describe('AccountProfileViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        LayoutModule
+      ],
       declarations: [
         AccountProfileViewComponent
       ],

@@ -10,6 +10,7 @@ import { SecurityRoleFormComponent } from '../../components/security-role-form/s
 import { SecurityRolePrivilegeFormComponent } from '../../components/security-role-privilege-form/security-role-privilege-form.component';
 import { SecurityRoleService } from '../../services/security-role.service';
 import { SecurityRoleEditViewComponent } from './security-role-edit-view.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('SecurityRoleEditViewComponent', () => {
   let component: SecurityRoleEditViewComponent;
@@ -24,7 +25,8 @@ describe('SecurityRoleEditViewComponent', () => {
         RouterTestingModule,
         FontAwesomeModule,
         PaginationModule,
-        CoreModule
+        CoreModule,
+        LayoutModule
       ],
       declarations: [
         SecurityRoleEditViewComponent,

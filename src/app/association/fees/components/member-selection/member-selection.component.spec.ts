@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { MemberSelectionComponent } from './member-selection.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('MemberSelectionComponent', () => {
   let component: MemberSelectionComponent;
@@ -11,7 +12,8 @@ describe('MemberSelectionComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         CoreModule,
-        PaginationModule
+        PaginationModule,
+        LayoutModule
       ],
       declarations: [
         MemberSelectionComponent

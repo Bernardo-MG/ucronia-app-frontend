@@ -5,9 +5,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
 import { MemberEditComponent } from './member-edit.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('MemberEditComponent', () => {
   let component: MemberEditComponent;
@@ -20,12 +20,12 @@ describe('MemberEditComponent', () => {
         HttpClientTestingModule,
         CoreModule,
         FontAwesomeModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        LayoutModule
       ],
       declarations: [
         MemberEditComponent,
-        FormFrameComponent,
-        MemberFormComponent
+        FormFrameComponent
       ],
       providers: [
         MemberService

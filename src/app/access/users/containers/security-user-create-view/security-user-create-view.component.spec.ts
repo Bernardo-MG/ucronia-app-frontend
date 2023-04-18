@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SecurityUserFormComponent } from '../../components/security-user-form/security-user-form.component';
 import { SecurityUserService } from '../../services/security-user.service';
 import { SecurityUserCreateViewComponent } from './security-user-create-view.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('SecurityUserCreateViewComponent', () => {
   let component: SecurityUserCreateViewComponent;
@@ -20,7 +21,8 @@ describe('SecurityUserCreateViewComponent', () => {
         RouterTestingModule,
         FontAwesomeModule,
         ReactiveFormsModule,
-        IconsModule
+        IconsModule,
+        LayoutModule
       ],
       declarations: [
         SecurityUserCreateViewComponent,

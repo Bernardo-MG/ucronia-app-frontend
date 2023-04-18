@@ -8,6 +8,7 @@ import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeEditComponent } from './fee-edit.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('FeeEditComponent', () => {
   let component: FeeEditComponent;
@@ -24,7 +25,8 @@ describe('FeeEditComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         CoreModule,
-        IconsModule
+        IconsModule,
+        LayoutModule
       ],
       declarations: [
         FeeEditComponent,

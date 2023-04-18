@@ -5,9 +5,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCreateComponent } from './transaction-create.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('TransactionCreateComponent', () => {
   let component: TransactionCreateComponent;
@@ -20,12 +20,12 @@ describe('TransactionCreateComponent', () => {
         HttpClientTestingModule,
         FontAwesomeModule,
         ReactiveFormsModule,
-        IconsModule
+        IconsModule,
+        LayoutModule
       ],
       declarations: [
         TransactionCreateComponent,
-        FormFrameComponent,
-        TransactionFormComponent
+        FormFrameComponent
       ],
       providers: [
         TransactionService

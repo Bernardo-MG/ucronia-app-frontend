@@ -5,6 +5,7 @@ import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCalendarComponent } from './transaction-calendar.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('TransactionCalendarComponent', () => {
   let component: TransactionCalendarComponent;
@@ -16,7 +17,8 @@ describe('TransactionCalendarComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         CoreModule,
-        CalendarModule
+        CalendarModule,
+        LayoutModule
       ],
       declarations: [
         TransactionCalendarComponent
