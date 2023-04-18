@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { CueLoadingComponent } from './icon-waiting.component';
+import { IconWaitingComponent } from './icon-waiting.component';
 
-describe('CueLoadingComponent', () => {
-  let component: CueLoadingComponent;
-  let fixture: ComponentFixture<CueLoadingComponent>;
+describe('IconWaitingComponent', () => {
+  let component: IconWaitingComponent;
+  let fixture: ComponentFixture<IconWaitingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,12 +12,12 @@ describe('CueLoadingComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        CueLoadingComponent
+        IconWaitingComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(CueLoadingComponent);
+    fixture = TestBed.createComponent(IconWaitingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

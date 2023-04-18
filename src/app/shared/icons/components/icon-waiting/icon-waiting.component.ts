@@ -5,6 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './icon-waiting.component.html',
   styleUrls: ['./icon-waiting.component.sass']
 })
-export class CueLoadingComponent {
+export class IconWaitingComponent {
 
 }

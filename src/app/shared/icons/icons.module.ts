@@ -14,7 +14,7 @@ import { LogoutIconComponent } from './components/icon-logout/icon-logout.compon
 import { IconSaveComponent } from './components/icon-save/icon-save.component';
 import { IconSearchComponent } from './components/icon-search/icon-search.component';
 import { IconSettingsComponent } from './components/icon-settings/icon-settings.component';
-import { CueLoadingComponent } from './components/icon-waiting/icon-waiting.component';
+import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
 
 
 
@@ -25,7 +25,7 @@ import { CueLoadingComponent } from './components/icon-waiting/icon-waiting.comp
     FastBackwardIconComponent,
     FastForwardIconComponent,
     LogoutIconComponent,
-    CueLoadingComponent,
+    IconWaitingComponent,
     DeleteIconComponent,
     IconCreateComponent,
     IconEditComponent,
@@ -45,7 +45,7 @@ import { CueLoadingComponent } from './components/icon-waiting/icon-waiting.comp
     FastBackwardIconComponent,
     FastForwardIconComponent,
     LogoutIconComponent,
-    CueLoadingComponent,
+    IconWaitingComponent,
     DeleteIconComponent,
     IconCreateComponent,
     IconEditComponent,
