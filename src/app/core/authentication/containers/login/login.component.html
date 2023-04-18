@@ -1,7 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <authentication-login-form [loading]="loading" (login)="onLogin($event)"
-            (rememberMe)="onRememberMe($event)"></authentication-login-form>
-        <div *ngIf="failed" class="alert alert-danger mt-3 mb-0">Invalid user</div>
+       <authentication-login-form [loading]="loading" [failed]="failed" (login)="onLogin($event)"
+          (rememberMe)="onRememberMe($event)"></authentication-login-form>
     </div>
-</div>
+ </div>

@@ -7,8 +7,7 @@ import { LoginFormUser } from '../../models/login-form-user';
  */
 @Component({
   selector: 'authentication-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.sass']
+  templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
 
@@ -16,6 +15,11 @@ export class LoginFormComponent {
    * Loading flag. Shows the loading visual cue and disables the form.
    */
   @Input() public loading = false;
+
+  /**
+   * Failed login flag. Shows the failure warning.
+   */
+  @Input() public failed = false;
 
   /**
    * Login event. Sent when the user accepts the data in the form.
