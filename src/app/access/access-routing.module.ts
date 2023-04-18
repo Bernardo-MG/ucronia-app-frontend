@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const roleModule = () => import('./roles/roles.module').then(m => m.RolesModule);
-const userModule = () => import('./users/users.module').then(m => m.UsersModule);
-const registerModule = () => import('./register/register.module').then(m => m.RegisterModule);
+const roleModule = () => import('./roles/access-roles.module').then(m => m.AccessRolesModule);
+const userModule = () => import('./users/access-users.module').then(m => m.AccessUsersModule);
+const registerModule = () => import('./register/access-register.module').then(m => m.AccessRegisterModule);
 
 const routes: Routes = [
     {

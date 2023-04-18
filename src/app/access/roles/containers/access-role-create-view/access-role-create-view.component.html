@@ -1,0 +1,6 @@
+<layout-article title="Create role">
+  <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+    <access-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
+      (validChange)="onFormValidChange($event)"></access-role-form>
+  </layout-form-frame>
+</layout-article>
