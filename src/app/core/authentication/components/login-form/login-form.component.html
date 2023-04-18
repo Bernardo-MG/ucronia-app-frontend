@@ -22,7 +22,7 @@
         </div>
         <!-- Login button -->
         <div class="d-grid gap-2">
-            <button [disabled]="!isLoginEnabled()" class="btn btn-primary" [attr.aria-disabled]="!isLoginEnabled()"
+            <button type="submit" [disabled]="!isLoginEnabled()" class="btn btn-primary" [attr.aria-disabled]="!isLoginEnabled()"
                 aria-label="Login">
                 <icon-waiting *ngIf="loading"></icon-waiting> Login
             </button>
