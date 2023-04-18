@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Calendar } from '@app/core/models/calendar';
-import { CalendarDay } from '@app/core/models/calendar-day';
-import { CalendarNote } from '@app/core/models/calendar-note';
-import { CalendarWeek } from '@app/core/models/calendar-week';
+import { CalendarDay } from '../../models/calendar-day';
+import { Calendar } from '../../models/calendar';
+import { CalendarNote } from '../../models/calendar-note';
+import { CalendarWeek } from '../../models/calendar-week';
 
 @Component({
   selector: 'shared-calendar-month',

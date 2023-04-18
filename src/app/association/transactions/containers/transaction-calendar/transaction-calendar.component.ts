@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
-import { CalendarNote } from '@app/core/models/calendar-note';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionService } from '../../service/transaction.service';
+import { CalendarNote } from '@app/shared/calendar/models/calendar-note';
 
 @Component({
   selector: 'assoc-transaction-calendar',
