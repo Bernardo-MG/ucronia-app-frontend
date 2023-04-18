@@ -10,6 +10,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { AccountLayoutComponent } from './containers/account-layout/account-layout.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
 import { HeaderLayoutComponent } from './containers/header-layout/header-layout.component';
+import { CenteredLayoutComponent } from './containers/centered-layout/centered-layout.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
     AccountMenuComponent,
     NavbarComponent,
     AccountLayoutComponent,
-    HeaderLayoutComponent
+    HeaderLayoutComponent,
+    CenteredLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { HeaderLayoutComponent } from './containers/header-layout/header-layout.
   ],
   exports: [
     MainLayoutComponent,
+    CenteredLayoutComponent,
     NavbarComponent
   ],
 })

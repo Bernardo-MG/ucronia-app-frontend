@@ -6,6 +6,7 @@ import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { MainLayoutComponent } from './core/view/components/main-layout/main-layout.component';
 import { AccountLayoutComponent } from './core/view/containers/account-layout/account-layout.component';
 import { HeaderLayoutComponent } from './core/view/containers/header-layout/header-layout.component';
+import { CenteredLayoutComponent } from './core/view/containers/centered-layout/centered-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -15,7 +16,12 @@ const accessModule = () => import('@app/access/access.module').then(m => m.Acces
 const routes: Routes = [
   // Login
   {
-    path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard]
+    path: '', component: CenteredLayoutComponent,
+    children: [
+      {
+        path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard]
+      }
+    ]
   },
   // Main app
   {

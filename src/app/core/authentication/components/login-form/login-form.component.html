@@ -1,9 +1,11 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()" class="needs-validation" novalidate>
     <div class="text-center">
+        <!-- Username -->
         <div class="mb-2">
             <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
                 [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
         </div>
+        <!-- Password -->
         <div class="mb-2">
             <input placeholder="Password" type="password" id="passwordInput" formControlName="password"
                 class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
