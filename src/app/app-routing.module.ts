@@ -14,35 +14,39 @@ const accountModule = () => import('@app/account/account.module').then(m => m.Ac
 const accessModule = () => import('@app/access/access.module').then(m => m.AccessModule);
 
 const routes: Routes = [
-  // Login
-  {
-    path: '', component: CenteredLayoutComponent,
-    children: [
-      {
-        path: 'login', component: LoginComponent, canActivate: [LoggedOutGuard]
-      }
-    ]
-  },
   // Main app
   {
     path: '', component: HeaderLayoutComponent,
     children: [
+      // Login
+      {
+        path: '', component: CenteredLayoutComponent,
+        canActivate: [LoggedOutGuard],
+        children: [
+          {
+            path: 'login', component: LoginComponent
+          }
+        ]
+      },
       // Association
       {
         path: '', component: MainLayoutComponent,
+        canActivate: [LoggedInGuard],
         children: [
           // Front page
-          { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
+          { path: '', loadChildren: frontpageModule },
           // Association
-          { path: '', loadChildren: associationModule, canActivate: [LoggedInGuard] },
+          { path: '', loadChildren: associationModule },
           // Security
-          { path: 'security', loadChildren: accessModule, canActivate: [LoggedInGuard] }
+          { path: 'security', loadChildren: accessModule }
         ]
       },
       // Account
       {
-        path: 'account', component: AccountLayoutComponent, children: [
-          { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
+        path: 'account', component: AccountLayoutComponent,
+        canActivate: [LoggedInGuard],
+        children: [
+          { path: '', loadChildren: accountModule }
         ]
       }
     ]
