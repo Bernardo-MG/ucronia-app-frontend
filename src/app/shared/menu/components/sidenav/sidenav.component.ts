@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Menu } from '@app/core/models/menu';
+import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'shared-sidenav',

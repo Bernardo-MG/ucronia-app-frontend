@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
-import { Menu } from '@app/core/models/menu';
+import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'view-account-layout',
