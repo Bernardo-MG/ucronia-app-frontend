@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { CenteredLayoutComponent } from './centered-layout.component';
 
 describe('CenteredLayoutComponent', () => {
@@ -8,9 +8,14 @@ describe('CenteredLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CenteredLayoutComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        CenteredLayoutComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(CenteredLayoutComponent);
     component = fixture.componentInstance;
