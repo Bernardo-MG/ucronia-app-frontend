@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { ViewModule } from '../../view.module';
+import { ViewsModule } from '../../views.module';
 import { MainLayoutComponent } from './main-layout.component';
 
 describe('MainLayoutComponent', () => {
@@ -13,7 +13,7 @@ describe('MainLayoutComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
-        ViewModule
+        ViewsModule
       ],
       declarations: [
         MainLayoutComponent

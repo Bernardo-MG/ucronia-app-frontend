@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/authentication/containers/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { MainLayoutComponent } from './core/view/components/main-layout/main-layout.component';
-import { AccountLayoutComponent } from './core/view/containers/account-layout/account-layout.component';
-import { HeaderLayoutComponent } from './core/view/containers/header-layout/header-layout.component';
-import { CenteredLayoutComponent } from './core/view/containers/centered-layout/centered-layout.component';
+import { MainLayoutComponent } from './core/views/components/main-layout/main-layout.component';
+import { AccountLayoutComponent } from './core/views/containers/account-layout/account-layout.component';
+import { HeaderLayoutComponent } from './core/views/containers/header-layout/header-layout.component';
+import { CenteredLayoutComponent } from './core/views/containers/centered-layout/centered-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);

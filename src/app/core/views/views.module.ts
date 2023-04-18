@@ -36,4 +36,4 @@ import { CenteredLayoutComponent } from './containers/centered-layout/centered-l
     NavbarComponent
   ],
 })
-export class ViewModule { }
+export class ViewsModule { }
