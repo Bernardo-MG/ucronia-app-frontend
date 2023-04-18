@@ -1,29 +1,40 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()" class="needs-validation" novalidate>
-    <div *ngIf="failed" class="text-danger text-center">Invalid user</div>
-    <!-- Username -->
-    <div class="mb-2">
-       <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
-    </div>
-    <!-- Password -->
-    <div class="mb-2">
-       <input placeholder="Password" type="password" id="passwordInput" formControlName="password" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
-    </div>
-    <!-- Remember me check -->
-    <div class="row mb-2">
-       <div class="d-flex justify-content-center">
-          <div class="form-check form-switch mb-3 mb-md-0">
-             <input id="rememberMe" type="checkbox" (change)="onRememberMe($event.target)" class="form-check-input">
-             <label for="rememberMe" class="form-check-label">Remember me</label>
-          </div>
-       </div>
-    </div>
-    <!-- Login button -->
-    <div class="d-grid gap-2">
-       <button [disabled]="!isLoginEnabled()" class="btn btn-primary" [attr.aria-disabled]="!isLoginEnabled()"
-          aria-label="Login">
-          <icon-waiting *ngIf="loading"></icon-waiting> Login
-       </button>
-    </div>
- </form>
+   <div *ngIf="failed" class="text-danger text-center">Invalid user</div>
+   <!-- Username -->
+   <div class="mb-2">
+      <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
+         [ngClass]="{ 'is-invalid': isInvalid('username') }" [disabled]="!isInputEnabled()"
+         [attr.aria-disabled]="!isInputEnabled()" />
+   </div>
+   <!-- Password -->
+   <div class="mb-2">
+      <input placeholder="Password" type="password" id="passwordInput" formControlName="password" class="form-control"
+         [ngClass]="{ 'is-invalid': isInvalid('password') }" [disabled]="!isInputEnabled()"
+         [attr.aria-disabled]="!isInputEnabled()" />
+   </div>
+   <!-- Remember me check -->
+   <div class="row mb-2">
+      <div class="d-flex justify-content-center">
+         <div class="form-check form-switch mb-3 mb-md-0">
+            <input id="rememberMe" type="checkbox" (change)="onRememberMe($event.target)" class="form-check-input"
+               [disabled]="!isInputEnabled()" [attr.aria-disabled]="!isInputEnabled()">
+            <label for="rememberMe" class="form-check-label">Remember me</label>
+         </div>
+      </div>
+   </div>
+   <div class="d-grid gap-2">
+      <div *ngIf="waiting; then waiting_cue else login_button"></div>
+      <ng-template #waiting_cue>
+         <!-- Waiting cue -->
+         <button type="submit" class="btn btn-primary" aria-label="Login"
+            disabled><icon-waiting></icon-waiting></button>
+      </ng-template>
+      <ng-template #login_button>
+         <!-- Login button -->
+         <button type="submit" [disabled]="!isLoginEnabled()" class="btn btn-primary"
+            [attr.aria-disabled]="!isLoginEnabled()" aria-label="Login">
+            <icon-waiting *ngIf="waiting"></icon-waiting> Login
+         </button>
+      </ng-template>
+   </div>
+</form>

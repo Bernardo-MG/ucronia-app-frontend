@@ -12,14 +12,19 @@ import { LoginFormUser } from '../../models/login-form-user';
 export class LoginFormComponent {
 
   /**
-   * Loading flag. Shows the loading visual cue and disables the form.
+   * Waiting flag. Shows the waiting visual cue and disables the form.
    */
-  @Input() public loading = false;
+  @Input() public waiting = false;
 
   /**
    * Failed login flag. Shows the failure warning.
    */
   @Input() public failed = false;
+
+  /**
+   * Disabled form flag.
+   */
+  @Input() public disabled = false;
 
   /**
    * Login event. Sent when the user accepts the data in the form.
@@ -76,7 +81,7 @@ export class LoginFormComponent {
    * @param field field to check
    * @returns true if the form is invalid, false otherwise
    */
-  public isFieldInvalid(field: string): boolean {
+  public isInvalid(field: string): boolean {
     let invalid: boolean;
 
     if (this.form.invalid) {
@@ -93,8 +98,22 @@ export class LoginFormComponent {
     return invalid;
   }
 
+  /**
+   * Returns true if the login button is enabled.
+   * 
+   * @returns true if the login button is enabled, false otherwise
+   */
   public isLoginEnabled(): boolean {
-    return ((this.form.valid) && (!this.loading));
+    return ((this.form.valid) && (!this.waiting) && (!this.disabled));
+  }
+
+  /**
+   * Returns true if the inputs are enabled.
+   * 
+   * @returns true if the inputs are enabled, false otherwise
+   */
+  public isInputEnabled(): boolean {
+    return ((!this.waiting) && (!this.disabled));
   }
 
 }
