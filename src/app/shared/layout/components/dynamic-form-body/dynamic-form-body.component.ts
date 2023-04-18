@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { FormDescription } from '../../models/form-description';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormDescription } from '../../models/form-description';
   templateUrl: './dynamic-form-body.component.html',
   styleUrls: ['./dynamic-form-body.component.sass']
 })
-export class DynamicFormBodyComponent implements OnChanges {
+export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   /**
    * Disabled flag.
@@ -29,11 +29,8 @@ export class DynamicFormBodyComponent implements OnChanges {
     formProperties['id'] = [-1];
     for (let i = 0; i < definitions.length; i++) {
       const definition = definitions[i];
-      formProperties[definition.property] = [undefined, definition.validator];
+      this.form.setControl(definition.property, new FormControl(undefined, definition.validator));
     }
-    this.form = this.fb.group(formProperties);
-    // TODO: Remove previous subscribe
-    this.listenForChanges();
   }
 
   get fields(): FormDescription[] {
@@ -53,6 +50,10 @@ export class DynamicFormBodyComponent implements OnChanges {
   constructor(
     private fb: FormBuilder
   ) { }
+
+  ngOnInit(): void {
+    this.listenForChanges();
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['data']) && (!changes['data'].firstChange)) {

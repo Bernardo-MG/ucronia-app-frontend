@@ -11,11 +11,11 @@ describe('DynamicFormComponent', () => {
       imports: [
         LayoutModule
       ],
-      declarations: [ 
+      declarations: [
         DynamicFormComponent
-       ]
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DynamicFormComponent);
     component = fixture.componentInstance;
