@@ -15,15 +15,15 @@ import { AccessRegisterService } from './services/access-register.service';
     AccessRegisterViewComponent,
     AcessRegisterFormComponent
   ],
-  providers: [
-    AccessRegisterService
-  ],
   imports: [
     CommonModule,
     AccessRegisterRoutingModule,
     ReactiveFormsModule,
     FontAwesomeModule,
     CoreModule
+  ],
+  providers: [
+    AccessRegisterService
   ]
 })
 export class AccessRegisterModule { }
