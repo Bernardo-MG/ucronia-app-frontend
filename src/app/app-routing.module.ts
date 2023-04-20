@@ -16,21 +16,24 @@ const accessModule = () => import('@app/access/access.module').then(m => m.Acces
 const routes: Routes = [
   // Main app
   {
-    path: '', component: HeaderLayoutComponent,
+    path: '',
+    component: HeaderLayoutComponent,
     children: [
       // Login
       {
-        path: '', component: CenteredLayoutComponent,
+        path: 'login',
+        component: CenteredLayoutComponent,
         canActivate: [LoggedOutGuard],
         children: [
           {
-            path: 'login', component: LoginComponent
+            path: '', component: LoginComponent
           }
         ]
       },
       // Association
       {
-        path: '', component: MainLayoutComponent,
+        path: '',
+        component: MainLayoutComponent,
         canActivate: [LoggedInGuard],
         children: [
           // Front page
@@ -43,7 +46,8 @@ const routes: Routes = [
       },
       // Account
       {
-        path: 'account', component: AccountLayoutComponent,
+        path: 'account',
+        component: AccountLayoutComponent,
         canActivate: [LoggedInGuard],
         children: [
           { path: '', loadChildren: accountModule }
