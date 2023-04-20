@@ -1,7 +1,7 @@
 <layout-article title="Fees">
   <layout-waiting-wrapper [waiting]="waiting">
     <!-- Filter -->
-    <div>
+    <div class="my-1">
       <div class="accordion" id="filterAccordion">
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingTwo">
@@ -30,7 +30,8 @@
         </div>
       </div>
     </div>
-    <layout-data-list [rows]="rows" [header]="header" route="/fees" [totalPages]="totalPages" (delete)="onDelete($event)">
+    <layout-data-list [rows]="rows" [header]="header" route="/fees" [totalPages]="totalPages"
+      (delete)="onDelete($event)">
     </layout-data-list>
   </layout-waiting-wrapper>
 </layout-article>

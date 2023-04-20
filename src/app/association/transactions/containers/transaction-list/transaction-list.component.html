@@ -1,7 +1,7 @@
 <layout-article title="Transactions">
   <layout-waiting-wrapper [waiting]="waiting">
-    <!-- Filter -->
-    <div>
+    <div class="my-1">
+      <!-- Filter -->
       <div class="accordion" id="filterAccordion">
         <div class="accordion-item">
           <h2 class="accordion-header" id="headingTwo">
@@ -13,21 +13,21 @@
           <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
             data-bs-parent="#accordionExample">
             <div class="row mb-2">
-              <label for="startDateInput" id="startDateLabel" class="col-sm-2 col-form-label">startDate</label>
+              <label for="startDateInput" id="startDateLabel" class="col-sm-2 col-form-label">Start date</label>
               <div class="col-sm-10">
                 <input type="date" id="startDateInput" [(ngModel)]="startDate" (change)="reload()"
                   aria-describedby="startDateLabel" class="form-control">
               </div>
             </div>
             <div class="row mb-2">
-              <label for="endDateInput" id="endDateLabel" class="col-sm-2 col-form-label">endDate</label>
+              <label for="endDateInput" id="endDateLabel" class="col-sm-2 col-form-label">End date</label>
               <div class="col-sm-10">
                 <input type="date" id="endDateInput" [(ngModel)]="endDate" (change)="reload()"
                   aria-describedby="endDateLabel" class="form-control">
               </div>
             </div>
             <div class="row mb-2">
-              <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">date</label>
+              <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
               <div class="col-sm-10">
                 <input type="date" id="dateInput" [(ngModel)]="date" (change)="reload()" aria-describedby="dateLabel"
                   class="form-control">
