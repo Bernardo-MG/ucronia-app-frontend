@@ -16,6 +16,24 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public memberName = '';
 
+  public _disabled = false;
+
+  /**
+   * Disabled flag.
+   */
+  @Input() set disabled(flag: boolean) {
+    this._disabled = flag;
+    if (flag) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+  public get disabled() {
+    return this._disabled;
+  }
+
   @Output() public save = new EventEmitter<Fee>();
 
   @Output() public valueChange = new EventEmitter<Fee>();
@@ -28,7 +46,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
 
   public form: FormGroup = this.fb.group({
     id: [-1],
-    memberId: [0, Validators.required],
+    memberId: [null, Validators.required],
     date: [new Date(), Validators.required],
     paid: [true, Validators.required]
   });

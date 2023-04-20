@@ -3,9 +3,9 @@
 
   <!-- Fee form -->
   <ng-template #fee_form>
-    <layout-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-      <assoc-form-fee [data]="fee" [memberId]="member.id" [memberName]="member.name" (save)="onSave()"
-        (selectMember)="onRequestMember()" (valueChange)="onFormChange($event)"
+    <layout-form-frame [saving]="saving" [formValid]="isFormValid()" (save)="onSave()">
+      <assoc-form-fee [data]="fee" [memberId]="memberId" [memberName]="member.name" [disabled]="saving"
+        (save)="onSave()" (selectMember)="onRequestMember()" (valueChange)="onFormChange($event)"
         (validChange)="onFormValidChange($event)">
       </assoc-form-fee>
     </layout-form-frame>
@@ -13,8 +13,8 @@
   <!-- Member selection -->
   <ng-template #member_selection>
     <layout-waiting-wrapper [waiting]="readingMembers">
-      <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)"
-        [current]="membersPageInfo.page" [pages]="membersPageInfo.totalPages" (goToPage)="onGoToMembersPage($event)">
+      <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
+        [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
       </assoc-member-selection>
       <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
     </layout-waiting-wrapper>

@@ -23,6 +23,8 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public member = new Member();
 
+  public memberId = 0;
+
   public fee = new Fee();
 
   public selectingMember = false;
@@ -65,6 +67,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSelectMember(member: Member) {
     this.member = member;
+    this.memberId = member.id;
     this.selectingMember = false;
   }
 
@@ -80,6 +83,10 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isFormValid() {
+    return (this.formValid && (this.memberId > 0))
   }
 
 }

@@ -2,7 +2,6 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular
 import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -23,13 +22,17 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public member = new Member();
 
-  public membersPageInfo = new PageInfo();
+  public memberId = 0;
 
   public fee = new Fee();
 
   public selectingMember = false;
 
   public formValid = false;
+
+  public membersPage = 0;
+
+  public membersTotalPages = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -70,14 +73,20 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public onSelectMember(member: Member) {
     this.member = member;
+    this.memberId = member.id;
     this.selectingMember = false;
   }
 
   public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
-      this.membersPageInfo = response;
+      this.membersPage = response.page + 1;
+      this.membersTotalPages = response.totalPages;
     });
+  }
+
+  public isFormValid() {
+    return (this.formValid && (this.memberId > 0))
   }
 
   private load(id: string | null): void {
