@@ -3,22 +3,21 @@ import { FormDescription } from '../../models/form-description';
 
 @Component({
   selector: 'layout-dynamic-form',
-  templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.sass']
+  templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent {
-  
+
   /**
    * Saving flag.
    */
   @Input() public saving = false;
 
   @Input() public formValid = false;
-  
+
   @Input() public disabled = false;
 
   @Input() public fields: FormDescription[] = [];
-  
+
   @Input() public data: any;
 
   @Output() public save = new EventEmitter<any>();

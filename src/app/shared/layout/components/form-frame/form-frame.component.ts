@@ -3,8 +3,7 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'layout-form-frame',
-  templateUrl: './form-frame.component.html',
-  styleUrls: ['./form-frame.component.sass']
+  templateUrl: './form-frame.component.html'
 })
 export class FormFrameComponent {
 

@@ -4,16 +4,16 @@ import { BalanceInfoComponent } from './containers/balance-info/balance-info.com
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', component: BalanceInfoComponent }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: '', component: BalanceInfoComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class BalanceRoutingModule { }

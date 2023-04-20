@@ -4,9 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountChangePasswordFormComponent } from '@app/account/components/account-change-password-form/account-change-password-form.component';
 import { AccountService } from '@app/account/services/account.service';
-
-import { AccountChangePasswordViewComponent } from './account-password-view.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { AccountChangePasswordViewComponent } from './account-password-view.component';
 
 describe('AccountChangePasswordViewComponent', () => {
   let component: AccountChangePasswordViewComponent;

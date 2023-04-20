@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreModule } from '@app/core/core.module';
-import { AccessRolePrivilegeSelectionComponent } from './access-role-privilege-selection.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { AccessRolePrivilegeSelectionComponent } from './access-role-privilege-selection.component';
 
 describe('AccessRolePrivilegeSelectionComponent', () => {
   let component: AccessRolePrivilegeSelectionComponent;

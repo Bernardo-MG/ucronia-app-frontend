@@ -1,6 +1,6 @@
 export class Transaction {
-    id = 0;
-    description = "";
-    date = "";
-    amount = 0;
+  id = 0;
+  description = "";
+  date = "";
+  amount = 0;
 }

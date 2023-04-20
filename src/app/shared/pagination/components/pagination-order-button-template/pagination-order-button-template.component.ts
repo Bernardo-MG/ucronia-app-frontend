@@ -6,8 +6,7 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
  */
 @Component({
   selector: 'pagination-order-button-template',
-  templateUrl: './pagination-order-button-template.component.html',
-  styleUrls: ['./pagination-order-button-template.component.sass']
+  templateUrl: './pagination-order-button-template.component.html'
 })
 export class PaginationOrderButtonTemplateComponent implements OnChanges {
 

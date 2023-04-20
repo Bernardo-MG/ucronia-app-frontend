@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
-import { AccessUserService } from '../../services/access-user.service';
-import { Validators } from '@angular/forms';
 import { FormDescription } from '@app/shared/layout/models/form-description';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-create-view',
-  templateUrl: './access-user-create-view.component.html',
-  styleUrls: ['./access-user-create-view.component.sass']
+  templateUrl: './access-user-create-view.component.html'
 })
 export class AccessUserCreateViewComponent {
 

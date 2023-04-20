@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 import { FastBackwardIconComponent } from './icon-fast-backward.component';
 
 describe('FastBackwardIconComponent', () => {

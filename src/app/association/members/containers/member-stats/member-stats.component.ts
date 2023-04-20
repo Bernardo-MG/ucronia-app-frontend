@@ -3,8 +3,7 @@ import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-stats',
-  templateUrl: './member-stats.component.html',
-  styleUrls: ['./member-stats.component.sass']
+  templateUrl: './member-stats.component.html'
 })
 export class MemberStatsComponent implements OnInit {
 

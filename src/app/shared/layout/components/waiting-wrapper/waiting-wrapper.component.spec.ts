@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { WaitingWrapperComponent } from './waiting-wrapper.component';
 
 describe('WaitingWrapperComponent', () => {
@@ -8,9 +7,9 @@ describe('WaitingWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WaitingWrapperComponent ]
+      declarations: [WaitingWrapperComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(WaitingWrapperComponent);
     component = fixture.componentInstance;

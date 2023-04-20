@@ -7,8 +7,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-list-view',
-  templateUrl: './access-role-list-view.component.html',
-  styleUrls: ['./access-role-list-view.component.sass']
+  templateUrl: './access-role-list-view.component.html'
 })
 export class AccessRoleListViewComponent implements OnInit {
 

@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { FormDescription } from '@app/shared/layout/models/form-description';
 import { MemberService } from '../../services/member.service';
-import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'assoc-member-create',
-  templateUrl: './member-create.component.html',
-  styleUrls: ['./member-create.component.sass']
+  templateUrl: './member-create.component.html'
 })
 export class MemberCreateComponent {
 

@@ -4,8 +4,7 @@ import { User } from '@app/core/authentication/models/user';
 
 @Component({
   selector: 'access-user-form',
-  templateUrl: './access-user-form.component.html',
-  styleUrls: ['./access-user-form.component.sass']
+  templateUrl: './access-user-form.component.html'
 })
 export class AccessUserFormComponent implements OnInit, OnChanges {
 

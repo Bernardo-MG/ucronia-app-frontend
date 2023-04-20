@@ -7,8 +7,7 @@ import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'assoc-transaction-create',
-  templateUrl: './transaction-create.component.html',
-  styleUrls: ['./transaction-create.component.sass']
+  templateUrl: './transaction-create.component.html'
 })
 export class TransactionCreateComponent {
 

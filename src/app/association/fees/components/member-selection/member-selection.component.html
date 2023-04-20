@@ -1,6 +1,6 @@
 <div>Pick member</div>
 <layout-button-list [values]="members" [renderer]="nameRenderer" (pick)="onPick($event)"></layout-button-list>
 <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
-    </pagination-navigation>
+  <pagination-navigation [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
+  </pagination-navigation>
 </div>

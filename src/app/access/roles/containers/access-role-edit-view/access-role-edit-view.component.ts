@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Privilege } from '@app/core/authentication/models/privilege';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-edit-view',
-  templateUrl: './access-role-edit-view.component.html',
-  styleUrls: ['./access-role-edit-view.component.sass']
+  templateUrl: './access-role-edit-view.component.html'
 })
 export class AccessRoleEditViewComponent implements OnInit {
 
@@ -16,7 +15,7 @@ export class AccessRoleEditViewComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
-  
+
   public waitingPrivileges = false;
 
   public role = new Role();

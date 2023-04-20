@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-highlights',
-  templateUrl: './highlights.component.html',
-  styleUrls: ['./highlights.component.sass']
+  templateUrl: './highlights.component.html'
 })
 export class HighlightsComponent {
 

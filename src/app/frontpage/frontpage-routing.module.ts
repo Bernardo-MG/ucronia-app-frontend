@@ -4,16 +4,16 @@ import { HighlightsComponent } from './highlights/highlights.component';
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', component: HighlightsComponent }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: '', component: HighlightsComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class FrontpageRoutingModule { }

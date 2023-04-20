@@ -26,9 +26,11 @@
         </ng-template>
         <!-- Date input -->
         <ng-template [ngIf]="field.type === 'date'">
-          <label for="{{field.property}}Input" id="{{field.property}}Label" class="col-sm-2 col-form-label">{{field.name}}</label>
+          <label for="{{field.property}}Input" id="{{field.property}}Label"
+            class="col-sm-2 col-form-label">{{field.name}}</label>
           <div class="col-sm-10">
-            <input type="date" id="{{field.property}}Input" attr.aria-describedby="{{field.property}}Label" formControlName="{{field.property}}" class="form-control"
+            <input type="date" id="{{field.property}}Input" attr.aria-describedby="{{field.property}}Label"
+              formControlName="{{field.property}}" class="form-control"
               [ngClass]="{ 'is-invalid': isInvalid(field.property) }">
           </div>
         </ng-template>

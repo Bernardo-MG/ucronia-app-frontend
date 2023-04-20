@@ -7,20 +7,20 @@ import { TransactionListComponent } from './containers/transaction-list/transact
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', component: TransactionCalendarComponent },
-            { path: 'list', component: TransactionListComponent },
-            { path: 'calendar', component: TransactionCalendarComponent },
-            { path: 'create', component: TransactionCreateComponent },
-            { path: ':id', component: TransactionEditComponent }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: '', component: TransactionCalendarComponent },
+      { path: 'list', component: TransactionListComponent },
+      { path: 'calendar', component: TransactionCalendarComponent },
+      { path: 'create', component: TransactionCreateComponent },
+      { path: ':id', component: TransactionEditComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class TransactionsRoutingModule { }

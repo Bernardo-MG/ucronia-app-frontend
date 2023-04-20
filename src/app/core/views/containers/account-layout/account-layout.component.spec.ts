@@ -13,11 +13,11 @@ describe('AccountLayoutComponent', () => {
         CoreModule,
         RouterTestingModule
       ],
-      declarations: [ 
+      declarations: [
         AccountLayoutComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccountLayoutComponent);
     component = fixture.componentInstance;

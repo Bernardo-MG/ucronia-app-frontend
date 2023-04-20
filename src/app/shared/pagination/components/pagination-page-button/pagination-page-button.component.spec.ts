@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PageButtonComponent } from './pagination-page-button.component';
 
 describe('PaginationButtonComponent', () => {
@@ -8,9 +7,9 @@ describe('PaginationButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PageButtonComponent ]
+      declarations: [PageButtonComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PageButtonComponent);
     component = fixture.componentInstance;

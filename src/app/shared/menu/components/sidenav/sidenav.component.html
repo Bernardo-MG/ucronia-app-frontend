@@ -1,23 +1,22 @@
 <nav class="bg-light rounded border-secondary mt-2">
-    <ng-template ngFor let-menu [ngForOf]="menus">
-        <p class="px-3 mt-3 mb-1 fw-bold text-uppercase border-bottom">
-            {{menu.title}}</p>
-        <ng-template ngFor let-collapsible [ngForOf]="menu.links" let-i="index">
-            <p class="px-3 mt-3 mb-1 fw-bold text-uppercase">
-                <button type="button"
-                    class="btn btn-toggle shadow-none d-inline-flex align-items-center collapsed px-0 py-0"
-                    data-bs-toggle="collapse" attr.href="#{{menu.title}}-collapseMenu{{i}}" aria-expanded="false"
-                    attr.aria-controls="{{menu.title}}-collapseMenu{{i}}">
-                    {{collapsible.title}}
-                </button>
-            </p>
-            <div class="collapse" id="{{menu.title}}-collapseMenu{{i}}">
-                <ul class="nav flex-column">
-                    <li class="nav-item" *ngFor="let link of collapsible.links">
-                        <a routerLink="{{link.path}}" class="nav-link" title="{{link.title}}">{{link.title}}</a>
-                    </li>
-                </ul>
-            </div>
-        </ng-template>
+  <ng-template ngFor let-menu [ngForOf]="menus">
+    <p class="px-3 mt-3 mb-1 fw-bold text-uppercase border-bottom">
+      {{menu.title}}</p>
+    <ng-template ngFor let-collapsible [ngForOf]="menu.links" let-i="index">
+      <p class="px-3 mt-3 mb-1 fw-bold text-uppercase">
+        <button type="button" class="btn btn-toggle shadow-none d-inline-flex align-items-center collapsed px-0 py-0"
+          data-bs-toggle="collapse" attr.href="#{{menu.title}}-collapseMenu{{i}}" aria-expanded="false"
+          attr.aria-controls="{{menu.title}}-collapseMenu{{i}}">
+          {{collapsible.title}}
+        </button>
+      </p>
+      <div class="collapse" id="{{menu.title}}-collapseMenu{{i}}">
+        <ul class="nav flex-column">
+          <li class="nav-item" *ngFor="let link of collapsible.links">
+            <a routerLink="{{link.path}}" class="nav-link" title="{{link.title}}">{{link.title}}</a>
+          </li>
+        </ul>
+      </div>
     </ng-template>
+  </ng-template>
 </nav>

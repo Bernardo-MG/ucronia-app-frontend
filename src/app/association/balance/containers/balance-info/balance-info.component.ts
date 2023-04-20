@@ -4,8 +4,7 @@ import { BalanceService } from '../../services/balance.service';
 
 @Component({
   selector: 'assoc-balance-info',
-  templateUrl: './balance-info.component.html',
-  styleUrls: ['./balance-info.component.sass']
+  templateUrl: './balance-info.component.html'
 })
 export class BalanceInfoComponent implements OnInit {
 
@@ -13,7 +12,7 @@ export class BalanceInfoComponent implements OnInit {
 
   constructor(
     private service: BalanceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.service.getBalance().subscribe(d => {

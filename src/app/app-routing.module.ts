@@ -5,8 +5,8 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { MainLayoutComponent } from './core/views/components/main-layout/main-layout.component';
 import { AccountLayoutComponent } from './core/views/containers/account-layout/account-layout.component';
-import { HeaderLayoutComponent } from './core/views/containers/header-layout/header-layout.component';
 import { CenteredLayoutComponent } from './core/views/containers/centered-layout/centered-layout.component';
+import { HeaderLayoutComponent } from './core/views/containers/header-layout/header-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);

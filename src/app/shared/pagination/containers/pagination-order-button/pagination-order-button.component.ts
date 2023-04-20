@@ -6,8 +6,7 @@ import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-rou
 
 @Component({
   selector: 'pagination-order-button',
-  templateUrl: './pagination-order-button.component.html',
-  styleUrls: ['./pagination-order-button.component.sass']
+  templateUrl: './pagination-order-button.component.html'
 })
 export class PaginationOrderButtonComponent implements OnInit {
 

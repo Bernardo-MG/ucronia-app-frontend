@@ -20,14 +20,14 @@ describe('AccessRoleListViewComponent', () => {
         CoreModule,
         SharedModule
       ],
-      declarations: [ 
-        AccessRoleListViewComponent 
+      declarations: [
+        AccessRoleListViewComponent
       ],
       providers: [
         AccessRoleService
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccessRoleListViewComponent);
     component = fixture.componentInstance;

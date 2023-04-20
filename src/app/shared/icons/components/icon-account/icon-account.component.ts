@@ -3,8 +3,7 @@ import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-account',
-  templateUrl: './icon-account.component.html',
-  styleUrls: ['./icon-account.component.sass']
+  templateUrl: './icon-account.component.html'
 })
 export class IconAccountComponent {
 

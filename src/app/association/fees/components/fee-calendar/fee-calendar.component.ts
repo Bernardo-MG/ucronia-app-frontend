@@ -3,8 +3,7 @@ import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  templateUrl: './fee-calendar.component.html',
-  styleUrls: ['./fee-calendar.component.sass']
+  templateUrl: './fee-calendar.component.html'
 })
 export class FeeCalendarComponent {
 

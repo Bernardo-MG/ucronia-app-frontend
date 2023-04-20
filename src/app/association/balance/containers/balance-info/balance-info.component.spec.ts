@@ -1,8 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BalanceInfoComponent } from './balance-info.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { BalanceInfoComponent } from './balance-info.component';
 
 describe('BalanceInfoComponent', () => {
   let component: BalanceInfoComponent;

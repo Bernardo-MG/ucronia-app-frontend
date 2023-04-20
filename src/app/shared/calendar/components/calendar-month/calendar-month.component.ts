@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { CalendarDay } from '../../models/calendar-day';
 import { Calendar } from '../../models/calendar';
+import { CalendarDay } from '../../models/calendar-day';
 import { CalendarNote } from '../../models/calendar-note';
 import { CalendarWeek } from '../../models/calendar-week';
 
 @Component({
   selector: 'shared-calendar-month',
-  templateUrl: './calendar-month.component.html',
-  styleUrls: ['./calendar-month.component.sass']
+  templateUrl: './calendar-month.component.html'
 })
 export class CalendarMonthComponent implements OnInit, OnChanges {
 

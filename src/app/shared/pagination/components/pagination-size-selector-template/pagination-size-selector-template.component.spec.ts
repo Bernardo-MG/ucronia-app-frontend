@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { first } from 'rxjs';
-
 import { PaginationSizeSelectorTemplateComponent } from './pagination-size-selector-template.component';
 
 describe('PaginationSizeSelectorTemplateComponent', () => {

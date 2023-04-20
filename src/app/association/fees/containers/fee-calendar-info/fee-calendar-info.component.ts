@@ -6,8 +6,7 @@ import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar-info',
-  templateUrl: './fee-calendar-info.component.html',
-  styleUrls: ['./fee-calendar-info.component.sass']
+  templateUrl: './fee-calendar-info.component.html'
 })
 export class FeeCalendarInfoComponent implements OnInit {
 

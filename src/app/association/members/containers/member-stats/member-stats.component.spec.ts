@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberService } from '../../services/member.service';
 import { MemberStatsComponent } from './member-stats.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('MemberStatsComponent', () => {
   let component: MemberStatsComponent;

@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { IconAccountComponent } from './icon-account.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconAccountComponent } from './icon-account.component';
 
 describe('IconAccountComponent', () => {
   let component: IconAccountComponent;
@@ -12,11 +11,11 @@ describe('IconAccountComponent', () => {
       imports: [
         FontAwesomeModule
       ],
-      declarations: [ 
-        IconAccountComponent 
+      declarations: [
+        IconAccountComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(IconAccountComponent);
     component = fixture.componentInstance;

@@ -30,7 +30,7 @@ describe('LoginComponent', () => {
     })
       .compileComponents();
 
-      loginService = TestBed.inject(LoginService);
+    loginService = TestBed.inject(LoginService);
   });
 
   beforeEach(() => {

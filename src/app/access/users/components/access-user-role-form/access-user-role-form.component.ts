@@ -4,8 +4,7 @@ import { Role } from '@app/core/authentication/models/role';
 
 @Component({
   selector: 'access-user-role-form',
-  templateUrl: './access-user-role-form.component.html',
-  styleUrls: ['./access-user-role-form.component.sass']
+  templateUrl: './access-user-role-form.component.html'
 })
 export class AccessUserRoleFormComponent {
 

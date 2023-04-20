@@ -4,8 +4,7 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 
 @Component({
   selector: 'account-profile-view',
-  templateUrl: './account-profile-view.component.html',
-  styleUrls: ['./account-profile-view.component.sass']
+  templateUrl: './account-profile-view.component.html'
 })
 export class AccountProfileViewComponent {
 

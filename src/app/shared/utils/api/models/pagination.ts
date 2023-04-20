@@ -1,4 +1,4 @@
 export class Pagination {
-    page = 0;
-    size?: number;
+  page = 0;
+  size?: number;
 }

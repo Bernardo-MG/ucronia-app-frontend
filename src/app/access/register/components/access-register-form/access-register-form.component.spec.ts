@@ -11,9 +11,9 @@ describe('AcessRegisterFormComponent', () => {
       imports: [
         ReactiveFormsModule
       ],
-      declarations: [ AcessRegisterFormComponent ]
+      declarations: [AcessRegisterFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AcessRegisterFormComponent);
     component = fixture.componentInstance;

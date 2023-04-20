@@ -3,8 +3,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'view-main-layout',
-  templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.sass']
+  templateUrl: './main-layout.component.html'
 })
 export class MainLayoutComponent {
 

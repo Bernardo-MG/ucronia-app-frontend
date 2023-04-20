@@ -4,8 +4,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'view-account-layout',
-  templateUrl: './account-layout.component.html',
-  styleUrls: ['./account-layout.component.sass']
+  templateUrl: './account-layout.component.html'
 })
 export class AccountLayoutComponent {
 

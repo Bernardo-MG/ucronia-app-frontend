@@ -5,8 +5,7 @@ import { AccessRegisterService } from '../../services/access-register.service';
 
 @Component({
   selector: 'access-register-view',
-  templateUrl: './access-register-view.component.html',
-  styleUrls: ['./access-register-view.component.sass']
+  templateUrl: './access-register-view.component.html'
 })
 export class AccessRegisterViewComponent {
 

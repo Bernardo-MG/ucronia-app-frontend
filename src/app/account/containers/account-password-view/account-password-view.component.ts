@@ -4,8 +4,7 @@ import { AccountService } from '@app/account/services/account.service';
 
 @Component({
   selector: 'account-password-view',
-  templateUrl: './account-password-view.component.html',
-  styleUrls: ['./account-password-view.component.sass']
+  templateUrl: './account-password-view.component.html'
 })
 export class AccountChangePasswordViewComponent {
 

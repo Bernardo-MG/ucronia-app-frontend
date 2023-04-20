@@ -6,7 +6,7 @@ describe('JwtAuthenticationInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
       JwtAuthenticationInterceptor,
-      AuthenticationContainer 
+      AuthenticationContainer
     ]
   }));
 

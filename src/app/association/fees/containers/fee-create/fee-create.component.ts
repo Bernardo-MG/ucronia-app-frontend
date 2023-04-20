@@ -2,13 +2,11 @@ import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
-  templateUrl: './fee-create.component.html',
-  styleUrls: ['./fee-create.component.sass']
+  templateUrl: './fee-create.component.html'
 })
 export class FeeCreateComponent implements AfterContentInit {
 

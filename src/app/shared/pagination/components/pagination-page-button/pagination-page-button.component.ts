@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'pagination-page-button',
-  templateUrl: './pagination-page-button.component.html',
-  styleUrls: ['./pagination-page-button.component.sass']
+  templateUrl: './pagination-page-button.component.html'
 })
 export class PageButtonComponent {
 

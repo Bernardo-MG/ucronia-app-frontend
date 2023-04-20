@@ -3,8 +3,7 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-save',
-  templateUrl: './icon-save.component.html',
-  styleUrls: ['./icon-save.component.sass']
+  templateUrl: './icon-save.component.html'
 })
 export class IconSaveComponent {
 

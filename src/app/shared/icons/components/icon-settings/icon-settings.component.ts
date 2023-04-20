@@ -3,8 +3,7 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-settings',
-  templateUrl: './icon-settings.component.html',
-  styleUrls: ['./icon-settings.component.sass']
+  templateUrl: './icon-settings.component.html'
 })
 export class IconSettingsComponent {
 

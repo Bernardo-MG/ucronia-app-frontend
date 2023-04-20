@@ -7,20 +7,20 @@ import { FeeListComponent } from './containers/fee-list/fee-list.component';
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', component: FeeCalendarInfoComponent },
-            { path: 'list', component: FeeListComponent },
-            { path: 'calendar', component: FeeCalendarInfoComponent },
-            { path: 'create', component: FeeCreateComponent },
-            { path: ':id', component: FeeEditComponent }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: '', component: FeeCalendarInfoComponent },
+      { path: 'list', component: FeeListComponent },
+      { path: 'calendar', component: FeeCalendarInfoComponent },
+      { path: 'create', component: FeeCreateComponent },
+      { path: ':id', component: FeeEditComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class FeesRoutingModule { }

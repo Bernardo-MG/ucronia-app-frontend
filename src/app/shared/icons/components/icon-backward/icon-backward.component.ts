@@ -3,8 +3,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-backward',
-  templateUrl: './icon-backward.component.html',
-  styleUrls: ['./icon-backward.component.sass']
+  templateUrl: './icon-backward.component.html'
 })
 export class BackwardIconComponent {
 

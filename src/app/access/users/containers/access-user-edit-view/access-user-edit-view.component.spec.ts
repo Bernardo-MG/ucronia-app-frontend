@@ -2,14 +2,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { CoreModule } from '@app/core/core.module';
+import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-role-form/access-user-role-form.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserEditViewComponent } from './access-user-edit-view.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 
 describe('AccessUserEditViewComponent', () => {
   let component: AccessUserEditViewComponent;

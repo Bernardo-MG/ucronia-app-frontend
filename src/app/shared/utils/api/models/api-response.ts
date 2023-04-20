@@ -1,8 +1,8 @@
 export class ApiResponse<T> {
 
-    constructor(cont: T) {
-        this.content = cont;
-    }
+  constructor(cont: T) {
+    this.content = cont;
+  }
 
-    content: T;
+  content: T;
 }

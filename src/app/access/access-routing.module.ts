@@ -6,18 +6,18 @@ const userModule = () => import('./users/access-users.module').then(m => m.Acces
 const registerModule = () => import('./register/access-register.module').then(m => m.AccessRegisterModule);
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: 'roles', loadChildren: roleModule },
-            { path: 'users', loadChildren: userModule },
-            { path: 'register', loadChildren: registerModule }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: 'roles', loadChildren: roleModule },
+      { path: 'users', loadChildren: userModule },
+      { path: 'register', loadChildren: registerModule }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AccessRoutingModule { }

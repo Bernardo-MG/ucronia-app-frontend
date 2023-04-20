@@ -1,3 +1,3 @@
 export class PasswordChangeStatus {
-    successful = false;
+	successful = false;
 }

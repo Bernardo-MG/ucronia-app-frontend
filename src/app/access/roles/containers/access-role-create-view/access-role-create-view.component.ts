@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
-import { Validators } from '@angular/forms';
 import { FormDescription } from '@app/shared/layout/models/form-description';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-create-view',
-  templateUrl: './access-role-create-view.component.html',
-  styleUrls: ['./access-role-create-view.component.sass']
+  templateUrl: './access-role-create-view.component.html'
 })
 export class AccessRoleCreateViewComponent {
 

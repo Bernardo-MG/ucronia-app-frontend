@@ -21,8 +21,7 @@ import { LoginService } from '../../services/login.service';
  */
 @Component({
   selector: 'authentication-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.sass']
+  templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
 

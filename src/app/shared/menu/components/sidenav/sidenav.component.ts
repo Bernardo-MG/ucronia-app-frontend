@@ -7,7 +7,7 @@ import { Menu } from '@app/shared/menu/models/menu';
   styleUrls: ['./sidenav.component.sass']
 })
 export class MenuComponent {
-  
+
   @Input() menus: Menu[] = [];
 
 }

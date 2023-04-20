@@ -5,22 +5,22 @@ import { AccountProfileViewComponent } from './containers/account-profile-view/a
 
 
 const routes: Routes = [
-    {
-        path: '',
+  {
+    path: '',
+    children: [
+      {
+        path: 'settings',
         children: [
-            {
-                path: 'settings',
-                children: [
-                    { path: 'profile', component: AccountProfileViewComponent },
-                    { path: 'password', component: AccountChangePasswordViewComponent }
-                ]
-            }
+          { path: 'profile', component: AccountProfileViewComponent },
+          { path: 'password', component: AccountChangePasswordViewComponent }
         ]
-    }
+      }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AccountRoutingModule { }

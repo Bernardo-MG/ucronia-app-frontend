@@ -8,8 +8,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-list',
-  templateUrl: './fee-list.component.html',
-  styleUrls: ['./fee-list.component.sass']
+  templateUrl: './fee-list.component.html'
 })
 export class FeeListComponent implements OnInit {
 

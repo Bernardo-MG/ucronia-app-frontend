@@ -4,8 +4,7 @@ import { Role } from '@app/core/authentication/models/role';
 
 @Component({
   selector: 'access-role-form',
-  templateUrl: './access-role-form.component.html',
-  styleUrls: ['./access-role-form.component.sass']
+  templateUrl: './access-role-form.component.html'
 })
 export class AccessRoleFormComponent implements OnInit, OnChanges {
 

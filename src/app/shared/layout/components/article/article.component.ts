@@ -5,8 +5,7 @@ import { Component, Input } from '@angular/core';
  */
 @Component({
   selector: 'layout-article',
-  templateUrl: './article.component.html',
-  styleUrls: ['./article.component.sass']
+  templateUrl: './article.component.html'
 })
 export class ArticleComponent {
 

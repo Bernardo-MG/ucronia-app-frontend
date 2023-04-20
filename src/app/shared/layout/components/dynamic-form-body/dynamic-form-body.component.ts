@@ -4,8 +4,7 @@ import { FormDescription } from '../../models/form-description';
 
 @Component({
   selector: 'layout-dynamic-form-body',
-  templateUrl: './dynamic-form-body.component.html',
-  styleUrls: ['./dynamic-form-body.component.sass']
+  templateUrl: './dynamic-form-body.component.html'
 })
 export class DynamicFormBodyComponent implements OnInit, OnChanges {
 

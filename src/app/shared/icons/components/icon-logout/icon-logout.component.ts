@@ -3,8 +3,7 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-logout',
-  templateUrl: './icon-logout.component.html',
-  styleUrls: ['./icon-logout.component.sass']
+  templateUrl: './icon-logout.component.html'
 })
 export class LogoutIconComponent {
 

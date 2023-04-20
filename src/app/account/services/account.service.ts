@@ -13,7 +13,7 @@ export class AccountService {
 
   constructor(
     private client: RequestClient
-  ) {}
+  ) { }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
     const clt: UpdateOperations<PasswordChangeStatus> = this.client.update(this.changePasswordUrl);

@@ -5,8 +5,7 @@ import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pa
 
 @Component({
   selector: 'pagination-route-navigation',
-  templateUrl: './pagination-route-navigation.component.html',
-  styleUrls: ['./pagination-route-navigation.component.sass']
+  templateUrl: './pagination-route-navigation.component.html'
 })
 export class PaginationRouteNavigationComponent implements OnInit {
 

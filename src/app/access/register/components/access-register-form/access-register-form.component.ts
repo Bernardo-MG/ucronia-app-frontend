@@ -4,8 +4,7 @@ import { RegisterForm } from '@app/core/authentication/models/register-form';
 
 @Component({
   selector: 'access-register-form',
-  templateUrl: './access-register-form.component.html',
-  styleUrls: ['./access-register-form.component.sass']
+  templateUrl: './access-register-form.component.html'
 })
 export class AcessRegisterFormComponent {
 

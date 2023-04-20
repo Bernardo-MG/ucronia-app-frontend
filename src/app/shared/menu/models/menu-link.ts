@@ -1,4 +1,4 @@
 export class MenuLink {
-    title = '';
-    path = '';
+  title = '';
+  path = '';
 }

@@ -13,11 +13,11 @@ describe('AccessUserRoleSelectionComponent', () => {
         CoreModule,
         PaginationModule
       ],
-      declarations: [ 
-        AccessUserRoleSelectionComponent 
+      declarations: [
+        AccessUserRoleSelectionComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccessUserRoleSelectionComponent);
     component = fixture.componentInstance;

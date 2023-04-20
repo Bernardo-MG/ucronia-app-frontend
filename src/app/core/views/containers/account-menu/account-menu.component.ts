@@ -5,8 +5,7 @@ import { LoginService } from '@app/core/authentication/services/login.service';
 
 @Component({
   selector: 'view-account-menu',
-  templateUrl: './account-menu.component.html',
-  styleUrls: ['./account-menu.component.sass']
+  templateUrl: './account-menu.component.html'
 })
 export class AccountMenuComponent {
 

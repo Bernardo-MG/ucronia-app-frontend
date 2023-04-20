@@ -3,8 +3,7 @@ import { Privilege } from '@app/core/authentication/models/privilege';
 
 @Component({
   selector: 'access-role-privilege-form',
-  templateUrl: './access-role-privilege-form.component.html',
-  styleUrls: ['./access-role-privilege-form.component.sass']
+  templateUrl: './access-role-privilege-form.component.html'
 })
 export class AccessRolePrivilegeFormComponent {
 

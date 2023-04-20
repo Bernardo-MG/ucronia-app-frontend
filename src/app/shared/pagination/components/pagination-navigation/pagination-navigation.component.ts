@@ -6,8 +6,7 @@ import { PaginationRanges } from '../../models/range/pagination-ranges';
  */
 @Component({
   selector: 'pagination-navigation',
-  templateUrl: './pagination-navigation.component.html',
-  styleUrls: ['./pagination-navigation.component.sass']
+  templateUrl: './pagination-navigation.component.html'
 })
 export class PaginationNavigationComponent implements OnChanges {
 

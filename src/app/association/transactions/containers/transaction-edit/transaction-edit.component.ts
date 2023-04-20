@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
-import { TransactionService } from '../../service/transaction.service';
-import { Validators } from '@angular/forms';
 import { FormDescription } from '@app/shared/layout/models/form-description';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'assoc-transaction-edit',
-  templateUrl: './transaction-edit.component.html',
-  styleUrls: ['./transaction-edit.component.sass']
+  templateUrl: './transaction-edit.component.html'
 })
 export class TransactionEditComponent implements OnInit {
 

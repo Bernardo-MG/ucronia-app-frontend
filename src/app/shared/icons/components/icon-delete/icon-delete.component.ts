@@ -3,8 +3,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-delete',
-  templateUrl: './icon-delete.component.html',
-  styleUrls: ['./icon-delete.component.sass']
+  templateUrl: './icon-delete.component.html'
 })
 export class DeleteIconComponent {
 

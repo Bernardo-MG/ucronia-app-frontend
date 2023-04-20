@@ -1,7 +1,7 @@
 import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
-import { ParamsObserver } from "./params-observer";
 import { ParametersParser } from "./parameters-parser";
+import { ParamsObserver } from "./params-observer";
 
 /**
  * Observes the route parameters, updating the stored data when it changes. This data is stored in a BehaviorSubject.

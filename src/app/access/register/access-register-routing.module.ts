@@ -4,11 +4,11 @@ import { AccessRegisterViewComponent } from './containers/access-register-view/a
 
 
 const routes: Routes = [
-    { path: 'register', component: AccessRegisterViewComponent }
+  { path: 'register', component: AccessRegisterViewComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AccessRegisterRoutingModule { }

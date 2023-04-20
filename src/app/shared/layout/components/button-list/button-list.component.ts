@@ -5,8 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'layout-button-list',
-  templateUrl: './button-list.component.html',
-  styleUrls: ['./button-list.component.sass']
+  templateUrl: './button-list.component.html'
 })
 export class ButtonListComponent {
 

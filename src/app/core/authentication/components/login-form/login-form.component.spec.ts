@@ -68,7 +68,7 @@ describe('LoginFormComponent', () => {
   it('should disable the login button when the form is valid but it is loading', () => {
     component.form.controls['username'].setValue('username');
     component.form.controls['password'].setValue('password');
-    component.loading = true;
+    component.waiting = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
@@ -76,7 +76,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should disable the login button when the form is loading', () => {
-    component.loading = true;
+    component.waiting = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');

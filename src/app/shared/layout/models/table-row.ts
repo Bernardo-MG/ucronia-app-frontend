@@ -1,5 +1,5 @@
 
 export interface TableRow {
-    id: number;
-    cells: any[];
+  id: number;
+  cells: any[];
 }

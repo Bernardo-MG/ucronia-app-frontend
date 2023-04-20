@@ -10,8 +10,7 @@ import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'assoc-transaction-list',
-  templateUrl: './transaction-list.component.html',
-  styleUrls: ['./transaction-list.component.sass']
+  templateUrl: './transaction-list.component.html'
 })
 export class TransactionListComponent implements OnInit {
 

@@ -8,8 +8,7 @@ import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-list',
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.sass']
+  templateUrl: './member-list.component.html'
 })
 export class MemberListComponent implements OnInit {
 

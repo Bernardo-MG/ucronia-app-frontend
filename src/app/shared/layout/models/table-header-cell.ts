@@ -1,5 +1,5 @@
 
 export interface TableHeaderCell {
-    name: string;
-    property: string;
+  name: string;
+  property: string;
 }

@@ -5,8 +5,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-form-fee',
-  templateUrl: './fee-form.component.html',
-  styleUrls: ['./fee-form.component.sass']
+  templateUrl: './fee-form.component.html'
 })
 export class FeeFormComponent implements OnInit, OnChanges {
 

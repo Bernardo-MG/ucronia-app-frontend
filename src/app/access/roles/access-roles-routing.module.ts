@@ -6,13 +6,13 @@ import { AccessRoleListViewComponent } from './containers/access-role-list-view/
 
 
 const routes: Routes = [
-    { path: '', component: AccessRoleListViewComponent },
-    { path: 'create', component: AccessRoleCreateViewComponent },
-    { path: ':id', component: AccessRoleEditViewComponent }
+  { path: '', component: AccessRoleListViewComponent },
+  { path: 'create', component: AccessRoleCreateViewComponent },
+  { path: ':id', component: AccessRoleEditViewComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AccessRoleRoutingModule { }

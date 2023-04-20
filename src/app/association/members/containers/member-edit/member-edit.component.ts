@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/association/models/member';
-import { MemberService } from '../../services/member.service';
-import { Validators } from '@angular/forms';
 import { FormDescription } from '@app/shared/layout/models/form-description';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-edit',
-  templateUrl: './member-edit.component.html',
-  styleUrls: ['./member-edit.component.sass']
+  templateUrl: './member-edit.component.html'
 })
 export class MemberEditComponent implements OnInit {
 

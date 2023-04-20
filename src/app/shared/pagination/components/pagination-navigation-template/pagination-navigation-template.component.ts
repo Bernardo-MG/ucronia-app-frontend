@@ -11,8 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'pagination-navigation-template',
-  templateUrl: './pagination-navigation-template.component.html',
-  styleUrls: ['./pagination-navigation-template.component.sass']
+  templateUrl: './pagination-navigation-template.component.html'
 })
 export class PaginationNavigationTemplateComponent {
 

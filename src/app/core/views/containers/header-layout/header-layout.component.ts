@@ -3,8 +3,7 @@ import { AuthenticationContainer } from '@app/core/authentication/services/authe
 
 @Component({
   selector: 'view-header-layout',
-  templateUrl: './header-layout.component.html',
-  styleUrls: ['./header-layout.component.sass']
+  templateUrl: './header-layout.component.html'
 })
 export class HeaderLayoutComponent {
 

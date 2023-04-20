@@ -6,8 +6,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edit',
-  templateUrl: './fee-edit.component.html',
-  styleUrls: ['./fee-edit.component.sass']
+  templateUrl: './fee-edit.component.html'
 })
 export class FeeEditComponent implements OnInit, AfterContentInit {
 

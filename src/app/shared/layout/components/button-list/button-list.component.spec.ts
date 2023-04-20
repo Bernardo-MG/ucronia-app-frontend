@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ButtonListComponent } from './button-list.component';
 
 describe('LinkListComponent', () => {
@@ -8,9 +7,9 @@ describe('LinkListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ButtonListComponent ]
+      declarations: [ButtonListComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ButtonListComponent);
     component = fixture.componentInstance;

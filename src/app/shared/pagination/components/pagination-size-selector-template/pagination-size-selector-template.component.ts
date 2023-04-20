@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'pagination-size-selector-template',
-  templateUrl: './pagination-size-selector-template.component.html',
-  styleUrls: ['./pagination-size-selector-template.component.sass']
+  templateUrl: './pagination-size-selector-template.component.html'
 })
 export class PaginationSizeSelectorTemplateComponent {
 

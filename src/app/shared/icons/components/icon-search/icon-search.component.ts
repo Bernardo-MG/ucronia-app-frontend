@@ -3,8 +3,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-search',
-  templateUrl: './icon-search.component.html',
-  styleUrls: ['./icon-search.component.sass']
+  templateUrl: './icon-search.component.html'
 })
 export class IconSearchComponent {
 

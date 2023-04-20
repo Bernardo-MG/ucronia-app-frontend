@@ -7,20 +7,20 @@ import { MemberStatsComponent } from './containers/member-stats/member-stats.com
 
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', component: MemberStatsComponent },
-            { path: 'list', component: MemberListComponent },
-            { path: 'stats', component: MemberStatsComponent },
-            { path: 'create', component: MemberCreateComponent },
-            { path: ':id', component: MemberEditComponent }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: '', component: MemberStatsComponent },
+      { path: 'list', component: MemberListComponent },
+      { path: 'stats', component: MemberStatsComponent },
+      { path: 'create', component: MemberCreateComponent },
+      { path: ':id', component: MemberEditComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class MembersRoutingModule { }

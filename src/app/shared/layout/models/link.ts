@@ -1,4 +1,4 @@
 export interface TitleValue {
-    title: string;
-    value: any;
+  title: string;
+  value: any;
 }

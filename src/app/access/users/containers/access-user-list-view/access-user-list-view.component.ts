@@ -7,8 +7,7 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-list-view',
-  templateUrl: './access-user-list-view.component.html',
-  styleUrls: ['./access-user-list-view.component.sass']
+  templateUrl: './access-user-list-view.component.html'
 })
 export class AccessUserListViewComponent implements OnInit {
 

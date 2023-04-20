@@ -1,4 +1,4 @@
 export class PasswordChange {
-    newPassword = '';
-    oldPassword = '';
+  newPassword = '';
+  oldPassword = '';
 }

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { CalendarMonthComponent } from './calendar-month.component';
 
 describe('CalendarMonthComponent', () => {
@@ -89,7 +88,7 @@ describe('CalendarMonthComponent', () => {
     date.setMinutes(0);
     date.setSeconds(0);
     date.setMilliseconds(0);
-    
+
     expect(component.date).toEqual(date);
   });
 

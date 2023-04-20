@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
-import { AccessUserService } from '../../services/access-user.service';
 import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-edit-view',
-  templateUrl: './access-user-edit-view.component.html',
-  styleUrls: ['./access-user-edit-view.component.sass']
+  templateUrl: './access-user-edit-view.component.html'
 })
 export class AccessUserEditViewComponent implements OnInit {
 
@@ -16,7 +15,7 @@ export class AccessUserEditViewComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
-  
+
   public waitingRoles = false;
 
   public user: User = new User();

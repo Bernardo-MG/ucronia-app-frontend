@@ -9,8 +9,8 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AccountLayoutComponent } from './containers/account-layout/account-layout.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
-import { HeaderLayoutComponent } from './containers/header-layout/header-layout.component';
 import { CenteredLayoutComponent } from './containers/centered-layout/centered-layout.component';
+import { HeaderLayoutComponent } from './containers/header-layout/header-layout.component';
 
 
 @NgModule({

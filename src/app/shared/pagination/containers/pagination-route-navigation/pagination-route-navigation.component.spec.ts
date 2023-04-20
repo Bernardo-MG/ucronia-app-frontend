@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationNavigationTemplateComponent } from '../../components/pagination-navigation-template/pagination-navigation-template.component';
-import { PaginationRouteNavigationComponent } from './pagination-route-navigation.component';
 import { PaginationNavigationComponent } from '../../components/pagination-navigation/pagination-navigation.component';
+import { PaginationRouteNavigationComponent } from './pagination-route-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;

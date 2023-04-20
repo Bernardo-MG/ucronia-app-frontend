@@ -4,8 +4,7 @@ import { PageInfo } from '@app/shared/utils/api/models/page-info';
 
 @Component({
   selector: 'access-role-privilege-selection',
-  templateUrl: './access-role-privilege-selection.component.html',
-  styleUrls: ['./access-role-privilege-selection.component.sass']
+  templateUrl: './access-role-privilege-selection.component.html'
 })
 export class AccessRolePrivilegeSelectionComponent implements OnInit {
 

@@ -4,8 +4,7 @@ import { PasswordChange } from '@app/account/models/password-change';
 
 @Component({
   selector: 'account-change-password-form',
-  templateUrl: './account-change-password-form.component.html',
-  styleUrls: ['./account-change-password-form.component.sass']
+  templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent {
 
