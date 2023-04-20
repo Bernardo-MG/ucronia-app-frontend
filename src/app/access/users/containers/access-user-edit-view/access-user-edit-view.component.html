@@ -4,11 +4,13 @@
         <layout-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
             <access-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
                 (validChange)="onFormValidChange($event)"></access-user-form>
-            <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
-                (goTo)="onGoToRolePage($event)">
-            </pagination-navigation>
-            <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
-            </access-user-role-form>
+            <layout-waiting-wrapper [waiting]="waitingRoles">
+                <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+                </access-user-role-form>
+                <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
+                    (goTo)="onGoToRolePage($event)">
+                </pagination-navigation>
+            </layout-waiting-wrapper>
         </layout-form-frame>
     </ng-template>
     <ng-template #role_selection>

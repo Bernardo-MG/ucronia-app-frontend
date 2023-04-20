@@ -16,6 +16,8 @@ export class AccessRoleEditViewComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+  
+  public waitingPrivileges = false;
 
   public role = new Role();
 
@@ -85,9 +87,11 @@ export class AccessRoleEditViewComponent implements OnInit {
   }
 
   public onGoToPrivilegePage(page: number) {
+    this.waitingPrivileges = true;
     this.service.getPrivileges(this.role.id, page).subscribe(response => {
       this.privileges = response.content;
       this.privilegesPageInfo = response;
+      this.waitingPrivileges = false;
     });
   }
 
