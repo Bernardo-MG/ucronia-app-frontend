@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
 import { AccessUserService } from '../../services/access-user.service';
+import { Validators } from '@angular/forms';
+import { FormDescription } from '@app/shared/layout/models/form-description';
 
 @Component({
   selector: 'access-user-create-view',
@@ -13,38 +15,36 @@ export class AccessUserCreateViewComponent {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public saving = false;
 
-  public user = new User();
-
-  public formValid = false;
+  public fields: FormDescription[] = [
+    { name: 'Username', property: 'username', type: 'string', validator: Validators.required },
+    { name: 'Name', property: 'name', type: 'string', validator: Validators.required },
+    { name: 'Email', property: 'email', type: 'string', validator: Validators.required },
+    { name: 'Credentials expired', property: 'credentialsExpired', type: 'boolean', validator: Validators.required },
+    { name: 'Enabled', property: 'enabled', type: 'boolean', validator: Validators.required },
+    { name: 'Expired', property: 'expired', type: 'boolean', validator: Validators.required },
+    { name: 'Locked', property: 'locked', type: 'boolean', validator: Validators.required }
+  ];
 
   constructor(
     private service: AccessUserService,
     private router: Router
   ) { }
 
-  public onSave(): void {
-    this.waiting = true;
-    this.service.create(this.user).subscribe({
+  public onSave(user: User): void {
+    this.saving = true;
+    this.service.create(user).subscribe({
       next: d => {
         this.router.navigate([`/security/users/${d.id}`]);
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: User) {
-    this.user = value;
   }
 
 }

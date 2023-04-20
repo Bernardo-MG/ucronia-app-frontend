@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Validators } from '@angular/forms';
+import { FormDescription } from '@app/shared/layout/models/form-description';
 
 @Component({
   selector: 'access-role-create-view',
@@ -13,38 +15,30 @@ export class AccessRoleCreateViewComponent {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public saving = false;
 
-  public role = new Role();
-
-  public formValid = false;
+  public fields: FormDescription[] = [
+    { name: 'Name', property: 'name', type: 'string', validator: Validators.required }
+  ];
 
   constructor(
     private service: AccessRoleService,
     private router: Router
   ) { }
 
-  public onSave(): void {
-    this.waiting = true;
-    this.service.create(this.role).subscribe({
+  public onSave(role: Role): void {
+    this.saving = true;
+    this.service.create(role).subscribe({
       next: d => {
         this.router.navigate([`/security/roles/${d.id}`]);
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Role) {
-    this.role = value;
   }
 
 }
