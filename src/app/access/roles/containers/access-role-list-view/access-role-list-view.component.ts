@@ -15,7 +15,7 @@ export class AccessRoleListViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public loading = false;
+  public waiting = false;
 
   public rows: TableRow[] = [];
 
@@ -38,10 +38,6 @@ export class AccessRoleListViewComponent implements OnInit {
     });
   }
 
-  public isLoading(): boolean {
-    return this.loading;
-  }
-
   public onDelete(id: number) {
     if (id > 0) {
       this.service.delete(id).subscribe(r => {
@@ -52,7 +48,7 @@ export class AccessRoleListViewComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.loading = true;
+    this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
 
@@ -65,11 +61,11 @@ export class AccessRoleListViewComponent implements OnInit {
 
         this.totalPages = page.totalPages;
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       },
       error: error => {
         // Reactivate view
-        this.loading = false;
+        this.waiting = false;
       }
     });
   }
