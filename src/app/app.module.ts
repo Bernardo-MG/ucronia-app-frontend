@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavigationModule } from './navigation/navigation.module';
-import { AuthenticationModule } from './security/authentication/authentication.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -15,9 +14,8 @@ import { AuthenticationModule } from './security/authentication/authentication.m
     BrowserModule,
     NoopAnimationsModule,
     AppRoutingModule,
-    NavigationModule,
     HttpClientModule,
-    AuthenticationModule
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

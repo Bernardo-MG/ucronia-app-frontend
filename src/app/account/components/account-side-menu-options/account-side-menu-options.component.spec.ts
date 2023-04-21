@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccountSideMenuOptionsComponent } from './account-side-menu-options.component';
 
 describe('AccountSideMenuOptionsComponent', () => {
@@ -8,9 +7,9 @@ describe('AccountSideMenuOptionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountSideMenuOptionsComponent ]
+      declarations: [AccountSideMenuOptionsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccountSideMenuOptionsComponent);
     component = fixture.componentInstance;

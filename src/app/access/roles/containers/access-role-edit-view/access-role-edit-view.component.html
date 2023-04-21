@@ -1,0 +1,22 @@
+<layout-article title="Edit role">
+  <div *ngIf="selectingPrivilege; then privilege_selection else role_edition"></div>
+  <ng-template #role_edition>
+    <edition-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
+      <access-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
+        (validChange)="onFormValidChange($event)"></access-role-form>
+      <layout-waiting-wrapper [waiting]="waitingPrivileges">
+        <access-role-privilege-form (addPrivilege)="onShowAddPrivilege()" (removePrivilege)="onRemovePrivilege($event)"
+          [privileges]="privileges">
+        </access-role-privilege-form>
+        <pagination-navigation [current]="privilegesPageInfo.page" [pages]="privilegesPageInfo.totalPages"
+          (goTo)="onGoToPrivilegePage($event)">
+        </pagination-navigation>
+      </layout-waiting-wrapper>
+    </edition-form-frame>
+  </ng-template>
+  <ng-template #privilege_selection>
+    <access-role-privilege-selection (selectPrivilege)="onAddPrivilege($event)" [pageInfo]="privilegesPageInfo"
+      (goToPage)="onGoToPrivilegeSelectionPage($event)" [privileges]="privilegeSelection">
+    </access-role-privilege-selection>
+  </ng-template>
+</layout-article>

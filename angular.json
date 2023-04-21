@@ -23,7 +23,9 @@
             "outputPath": "dist/association-app-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "sass",
             "assets": [
@@ -31,8 +33,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
+              "./node_modules/bootswatch/dist/materia/bootstrap.min.css"
             ],
             "scripts": [
               "./node_modules/@popperjs/core/dist/umd/popper.min.js",
@@ -96,21 +97,19 @@
             "ci": {
               "watch": false,
               "progress": false,
-              "browsers": "ChromeHeadlessCI"
+              "browsers": "ChromeHeadless"
             }
           },
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
             "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "sass",
             "assets": [
               "src/favicon.ico",
               "src/assets"
-            ],
-            "styles": [
-              "src/styles.sass"
             ],
             "scripts": []
           }
@@ -130,6 +129,7 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": false
   }
 }
