@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -26,11 +26,11 @@ describe('AccessRoleEditViewComponent', () => {
         FontAwesomeModule,
         PaginationModule,
         CoreModule,
-        LayoutModule
+        LayoutModule,
+        EditionModule
       ],
       declarations: [
         AccessRoleEditViewComponent,
-        FormFrameComponent,
         AccessRoleFormComponent,
         AccessRolePrivilegeFormComponent
       ],

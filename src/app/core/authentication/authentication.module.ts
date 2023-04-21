@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { LoginFormComponent } from './components/login-form/login-form.component';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { LoginComponent } from './containers/login/login.component';
 import { JwtAuthenticationInterceptor } from './interceptors/jwt-authentication.interceptor';
 import { UnauthorizedErrorInterceptor } from './interceptors/unauthorized.interceptor';
@@ -14,14 +13,13 @@ import { LoginService } from './services/login.service';
 
 @NgModule({
   declarations: [
-    LoginFormComponent,
     LoginComponent
   ],
   imports: [
     CommonModule,
-    IconsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    EditionModule
   ],
   providers: [
     AuthenticationContainer,

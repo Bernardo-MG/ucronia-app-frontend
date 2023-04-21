@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { LoginFormComponent } from '../../components/login-form/login-form.component';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { LoginService } from '../../services/login.service';
 import { LoginComponent } from './login.component';
 
@@ -19,10 +19,10 @@ describe('LoginComponent', () => {
         RouterTestingModule,
         CoreModule,
         ReactiveFormsModule,
+        EditionModule
       ],
       declarations: [
-        LoginComponent,
-        LoginFormComponent
+        LoginComponent
       ],
       providers: [
         LoginService

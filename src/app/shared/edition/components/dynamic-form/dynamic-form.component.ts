@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormDescription } from '../../models/form-description';
+import { FormDescription } from '../../../layout/models/form-description';
 
 @Component({
-  selector: 'layout-dynamic-form',
+  selector: 'edition-dynamic-form',
   templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent {

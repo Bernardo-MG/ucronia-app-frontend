@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
@@ -22,11 +22,11 @@ describe('AccessUserCreateViewComponent', () => {
         FontAwesomeModule,
         ReactiveFormsModule,
         IconsModule,
-        LayoutModule
+        LayoutModule,
+        EditionModule
       ],
       declarations: [
         AccessUserCreateViewComponent,
-        FormFrameComponent,
         AccessUserFormComponent
       ],
       providers: [

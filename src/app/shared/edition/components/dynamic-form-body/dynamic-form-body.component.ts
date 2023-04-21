@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { FormDescription } from '../../models/form-description';
+import { FormDescription } from '../../../layout/models/form-description';
 
 @Component({
-  selector: 'layout-dynamic-form-body',
+  selector: 'edition-dynamic-form-body',
   templateUrl: './dynamic-form-body.component.html'
 })
 export class DynamicFormBodyComponent implements OnInit, OnChanges {

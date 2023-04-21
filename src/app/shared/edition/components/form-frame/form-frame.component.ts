@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'layout-form-frame',
+  selector: 'edition-form-frame',
   templateUrl: './form-frame.component.html'
 })
 export class FormFrameComponent {

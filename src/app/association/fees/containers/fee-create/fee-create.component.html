@@ -3,12 +3,12 @@
 
   <!-- Fee form -->
   <ng-template #fee_form>
-    <layout-form-frame [saving]="saving" [formValid]="isFormValid()" (save)="onSave()">
+    <edition-form-frame [saving]="saving" [formValid]="isFormValid()" (save)="onSave()">
       <assoc-form-fee [data]="fee" [memberId]="memberId" [memberName]="member.name" [disabled]="saving"
         (save)="onSave()" (selectMember)="onRequestMember()" (valueChange)="onFormChange($event)"
         (validChange)="onFormValidChange($event)">
       </assoc-form-fee>
-    </layout-form-frame>
+    </edition-form-frame>
   </ng-template>
   <!-- Member selection -->
   <ng-template #member_selection>
