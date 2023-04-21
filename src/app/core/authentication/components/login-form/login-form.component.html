@@ -3,14 +3,12 @@
   <!-- Username -->
   <div class="mb-2">
     <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
-      [ngClass]="{ 'is-invalid': isInvalid('username') }" [disabled]="!isInputEnabled()"
-      [attr.aria-disabled]="!isInputEnabled()" />
+      [ngClass]="{ 'is-invalid': isInvalid('username') }" />
   </div>
   <!-- Password -->
   <div class="mb-2">
     <input placeholder="Password" type="password" id="passwordInput" formControlName="password" class="form-control"
-      [ngClass]="{ 'is-invalid': isInvalid('password') }" [disabled]="!isInputEnabled()"
-      [attr.aria-disabled]="!isInputEnabled()" />
+      [ngClass]="{ 'is-invalid': isInvalid('password') }" />
   </div>
   <!-- Remember me check -->
   <div class="row mb-2">

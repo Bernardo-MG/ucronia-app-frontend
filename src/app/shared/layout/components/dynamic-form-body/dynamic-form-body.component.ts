@@ -21,7 +21,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   private _fields: FormDescription[] = [];
 
-  @Input() set fields(definitions: FormDescription[]) {
+  @Input() public set fields(definitions: FormDescription[]) {
     this._fields = definitions;
 
     const formProperties: any = {};
@@ -32,7 +32,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     }
   }
 
-  get fields(): FormDescription[] {
+  public get fields(): FormDescription[] {
     return this._fields;
   }
 

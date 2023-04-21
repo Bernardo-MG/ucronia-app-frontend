@@ -14,7 +14,19 @@ export class LoginFormComponent {
   /**
    * Waiting flag. Shows the waiting visual cue and disables the form.
    */
-  @Input() public waiting = false;
+  private _waiting = false;
+
+  @Input() public set waiting(flag: boolean) {
+    if (flag) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+  public get waiting() {
+    return this._waiting;
+  }
 
   /**
    * Failed login flag. Shows the failure warning.
@@ -22,9 +34,15 @@ export class LoginFormComponent {
   @Input() public failed = false;
 
   /**
-   * Disabled form flag.
+   * Disabled flag.
    */
-  @Input() public disabled = false;
+  @Input() public set disabled(flag: boolean) {
+    if (flag) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
 
   /**
    * Login event. Sent when the user accepts the data in the form.
