@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { FormFrameComponent } from '@app/shared/layout/components/form-frame/form-frame.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberService } from '../../services/member.service';
 import { MemberEditComponent } from './member-edit.component';
 
@@ -19,7 +18,6 @@ describe('MemberEditComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         CoreModule,
-        FontAwesomeModule,
         ReactiveFormsModule,
         LayoutModule
       ],

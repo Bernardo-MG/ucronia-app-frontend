@@ -2,8 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@app/core/core.module';
-import { SharedModule } from '@app/shared/shared.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeService } from '../../services/fee.service';
 import { FeeListComponent } from './fee-list.component';
 
@@ -18,8 +17,7 @@ describe('FeeListComponent', () => {
         HttpClientTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        CoreModule,
-        SharedModule
+        LayoutModule
       ],
       declarations: [
         FeeListComponent
