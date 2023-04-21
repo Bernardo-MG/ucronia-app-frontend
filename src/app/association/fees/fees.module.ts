@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { SharedModule } from '@app/shared/shared.module';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
@@ -34,10 +34,10 @@ import { FeeService } from './services/fee.service';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    SharedModule,
     IconsModule,
     PaginationModule,
-    LayoutModule
+    LayoutModule,
+    EditionModule
   ],
   providers: [
     FeeService

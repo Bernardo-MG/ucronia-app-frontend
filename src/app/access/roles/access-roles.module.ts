@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
@@ -34,7 +35,8 @@ import { AccessRoleService } from './services/access-role.service';
     CoreModule,
     PaginationModule,
     IconsModule,
-    LayoutModule
+    LayoutModule,
+    EditionModule
   ],
   providers: [
     AccessRoleService

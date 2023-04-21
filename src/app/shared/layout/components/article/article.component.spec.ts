@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SharedModule } from '@app/shared/shared.module';
+import { WaitingWrapperComponent } from '../waiting-wrapper/waiting-wrapper.component';
 import { ArticleComponent } from './article.component';
 
 describe('ArticleComponent', () => {
@@ -8,11 +8,9 @@ describe('ArticleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        SharedModule
-      ],
       declarations: [
-        ArticleComponent
+        ArticleComponent,
+        WaitingWrapperComponent
       ]
     })
       .compileComponents();

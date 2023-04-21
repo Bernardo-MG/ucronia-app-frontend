@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { SharedModule } from '@app/shared/shared.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserRoutingModule } from './access-users-routing.module';
 import { AccessUserFormComponent } from './components/access-user-form/access-user-form.component';
@@ -33,10 +33,10 @@ import { AccessUserService } from './services/access-user.service';
     ReactiveFormsModule,
     FontAwesomeModule,
     IconsModule,
-    SharedModule,
     PaginationModule,
     CoreModule,
-    LayoutModule
+    LayoutModule,
+    EditionModule
   ],
   providers: [
     AccessUserService

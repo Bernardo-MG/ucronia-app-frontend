@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { SharedModule } from '@app/shared/shared.module';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserListViewComponent } from './access-user-list-view.component';
 
@@ -19,7 +18,6 @@ describe('AccessUserListViewComponent', () => {
         RouterTestingModule,
         PaginationModule,
         CoreModule,
-        SharedModule,
         LayoutModule
       ],
       declarations: [

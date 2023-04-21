@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionCalendarComponent } from './containers/transaction-calendar/transaction-calendar.component';
@@ -30,8 +30,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     CoreModule,
     CalendarModule,
     PaginationModule,
-    IconsModule,
-    LayoutModule
+    LayoutModule,
+    EditionModule
   ],
   providers: [
     TransactionService
