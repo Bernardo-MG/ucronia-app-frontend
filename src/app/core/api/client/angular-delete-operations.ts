@@ -1,14 +1,12 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { UpdateOperations } from './update-operations';
+import { DeleteOperations } from './delete-operations';
 
-export class AngularUpdateOperations implements UpdateOperations {
+export class AngularDeleteOperations implements DeleteOperations {
 
   private _route = '';
 
   private identifier: number | undefined = undefined;
-
-  private content: any | undefined = undefined;
 
   protected options: {
     params?: HttpParams
@@ -21,31 +19,25 @@ export class AngularUpdateOperations implements UpdateOperations {
 
   public push<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this.content, this.options)
+    return this.http.delete<T>(finalUrl, this.options)
       .pipe(
         catchError(this.handleError())
       );
   }
 
-  public id(id: number): UpdateOperations {
+  public id(id: number): DeleteOperations {
     this.identifier = id;
 
     return this;
   }
 
-  public body(content: any): UpdateOperations {
-    this.content = content;
-
-    return this;
-  }
-
-  public route(route: string): UpdateOperations {
+  public route(route: string): DeleteOperations {
     this._route = route;
 
     return this;
   }
 
-  public appendRoute(route: string): UpdateOperations {
+  public appendRoute(route: string): DeleteOperations {
     this._route = `${this._route}${route}`;
 
     return this;

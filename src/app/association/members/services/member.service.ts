@@ -32,8 +32,7 @@ export class MemberService {
   }
 
   public delete(id: number): Observable<Member> {
-    const clt: DeleteOperations<Member> = this.client.delete(this.memberUrl);
-    return clt.id(id).push().pipe(map(r => r.content));
+    return this.newClient.member().delete(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {

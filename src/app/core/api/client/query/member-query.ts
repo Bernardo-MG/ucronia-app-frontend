@@ -5,6 +5,7 @@ import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-respon
 import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
 import { Observable } from "rxjs";
 import { CreateOperations } from "../create-operations";
+import { DeleteOperations } from "../delete-operations";
 import { UpdateOperations } from "../update-operations";
 import { MemberQueryByIndex as MemberQueryById } from "./member-query-by-index";
 
@@ -15,11 +16,13 @@ export class MemberQuery {
   constructor(
     private readOperations: ReadOperations,
     private createOperations: CreateOperations,
-    private updateOperations: UpdateOperations
+    private updateOperations: UpdateOperations,
+    private deleteOperations: DeleteOperations
   ) {
     this.readOperations.appendRoute(this.memberRoute);
     this.createOperations.appendRoute(this.memberRoute);
     this.updateOperations.appendRoute(this.memberRoute);
+    this.deleteOperations.appendRoute(this.memberRoute);
   }
 
   public fetch(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
@@ -30,8 +33,12 @@ export class MemberQuery {
     return this.createOperations.body(data).push();
   }
 
-  public update(id:number, data: Member): Observable<ApiResponse<Member>> {
+  public update(id: number, data: Member): Observable<ApiResponse<Member>> {
     return this.updateOperations.id(id).body(data).push();
+  }
+
+  public delete(id: number): Observable<ApiResponse<Member>> {
+    return this.deleteOperations.id(id).push();
   }
 
   public id(index: number): MemberQueryById {
