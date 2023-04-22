@@ -13,7 +13,7 @@ export class MemberService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    return this.client.member().read(pagination);
+    return this.client.member().page(pagination).sort(pagination?.sort).read();
   }
 
   public create(data: Member): Observable<Member> {
@@ -33,7 +33,7 @@ export class MemberService {
   }
 
   public countActive(): Observable<number> {
-    return this.client.member().parameter("active", true).read(undefined).pipe(map(r => r.totalElements));
+    return this.client.member().parameter("active", true).read().pipe(map(r => r.totalElements));
   }
 
 }

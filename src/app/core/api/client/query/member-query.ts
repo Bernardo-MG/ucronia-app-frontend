@@ -3,11 +3,12 @@ import { ReadOperations } from "@app/core/api/client/read-operations";
 import { ApiResponse } from "@app/shared/utils/api/models/api-response";
 import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-response";
 import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
+import { Sort } from "@app/shared/utils/api/models/sort";
 import { Observable } from "rxjs";
 import { CreateOperations } from "../create-operations";
 import { DeleteOperations } from "../delete-operations";
 import { UpdateOperations } from "../update-operations";
-import { MemberQueryById as MemberQueryById } from "./member-query-by-id";
+import { MemberQueryById } from "./member-query-by-id";
 
 export class MemberQuery {
 
@@ -29,8 +30,8 @@ export class MemberQuery {
     return this.createOperations.body(data).push();
   }
 
-  public read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    return this.readOperations.page(pagination).sort(pagination?.sort).fetch();
+  public read(): Observable<PaginatedResponse<Member[]>> {
+    return this.readOperations.fetch();
   }
 
   public id(id: number): MemberQueryById {
@@ -42,6 +43,18 @@ export class MemberQuery {
 
   public parameter(name: string, value: any): MemberQuery {
     this.readOperations = this.readOperations.parameter(name, value);
+
+    return this;
+  }
+
+  public page(pagination: PaginationRequest | undefined): MemberQuery {
+    this.readOperations.page(pagination);
+
+    return this;
+  }
+
+  public sort(sort: Sort<any>[] | undefined): MemberQuery {
+    this.readOperations.sort(sort);
 
     return this;
   }
