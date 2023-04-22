@@ -3,6 +3,7 @@ import { ReadOperations } from "@app/core/api/client/read-operations";
 import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-response";
 import { Observable } from "rxjs";
 import { MemberQueryByIndex as MemberQueryById } from "./member-query-by-index";
+import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
 
 export class MemberQuery {
 
@@ -14,8 +15,8 @@ export class MemberQuery {
     this.operations.appendRoute(this.memberRoute);
   }
 
-  public fetch(): Observable<PaginatedResponse<Member[]>> {
-    return this.operations.fetch();
+  public fetch(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
+    return this.operations.page(pagination).sort(pagination?.sort).fetch();
   }
 
   public id(index: number): MemberQueryById {

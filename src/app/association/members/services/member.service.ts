@@ -23,14 +23,7 @@ export class MemberService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
-    if (pagination) {
-      clt.page(pagination);
-      if (pagination.sort) {
-        clt.sort(pagination.sort);
-      }
-    }
-    return clt.fetch();
+    return this.newClient.member().fetch(pagination);
   }
 
   public create(data: Member): Observable<Member> {

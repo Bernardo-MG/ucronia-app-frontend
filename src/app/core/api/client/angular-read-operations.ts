@@ -2,6 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ReadOperations } from './read-operations';
+import { Sort } from '@app/shared/utils/api/models/sort';
+import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 
 export class AngularReadOperations implements ReadOperations {
 
@@ -44,6 +46,48 @@ export class AngularReadOperations implements ReadOperations {
 
   public appendRoute(route: string): ReadOperations {
     this._route = `${this._route}${route}`;
+
+    return this;
+  }
+
+  public sort(sort: Sort<any>[] | undefined): ReadOperations {
+    let params: HttpParams;
+
+    if (sort) {
+      params = this.getHttpParams();
+
+      for (let i = 0; i < sort.length; i += 1) {
+        const fieldSort = sort[i];
+        params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
+      }
+
+      this.options = { params: params };
+    }
+
+    return this;
+  }
+
+  public page(pagination: PaginationRequest | undefined): ReadOperations {
+    let params: HttpParams;
+    let paged: boolean;
+
+    if (pagination) {
+      params = this.getHttpParams();
+
+      paged = false;
+      if (pagination.page) {
+        params = params.set('page', pagination.page);
+        paged = true;
+      }
+      if (pagination.size) {
+        params = params.set('size', pagination.size);
+        paged = true;
+      }
+
+      if (paged) {
+        this.options = { params: params };
+      }
+    }
 
     return this;
   }
