@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
+import { AngularAssociationApiClient } from '@app/core/api/client/angular-association-api-client';
 import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { Sort } from '@app/shared/utils/api/models/sort';
@@ -21,7 +22,8 @@ export class FeeService {
   private memberUrl = environment.apiUrl + "/member";
 
   constructor(
-    private client: RequestClient
+    private client: RequestClient,
+    private newClient: AngularAssociationApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {

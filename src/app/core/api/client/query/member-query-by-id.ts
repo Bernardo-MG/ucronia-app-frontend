@@ -5,7 +5,7 @@ import { DeleteOperations } from "../delete-operations";
 import { ReadOperations } from "../read-operations";
 import { UpdateOperations } from "../update-operations";
 
-export class MemberQueryByIndex {
+export class MemberQueryById {
 
   constructor(
     private readOperations: ReadOperations,
