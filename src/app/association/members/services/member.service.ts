@@ -3,12 +3,9 @@ import { Member } from '@app/association/models/member';
 import { AngularAssociationApiClient } from '@app/core/api/client/angular-association-api-client';
 import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
-import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
 import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
-import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
 import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
 import { RequestClient } from '@app/shared/utils/api/request/request-client';
-import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -31,8 +28,7 @@ export class MemberService {
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    const clt: UpdateOperations<Member> = this.client.update(this.memberUrl);
-    return clt.id(id).body(data).push().pipe(map(r => r.content));
+    return this.newClient.member().update(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<Member> {
