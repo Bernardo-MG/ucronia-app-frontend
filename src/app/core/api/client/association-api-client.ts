@@ -14,6 +14,7 @@ import { TransactionQuery } from "./query/transaction-query";
 import { TransactionRangeQuery } from "./query/transaction-range-query";
 import { UpdateOperations } from "./update-operations";
 import { FeeCalendarQuery } from "./query/fee-calendar-query";
+import { BalanceQuery } from "./query/balance-query";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,10 @@ export class AssociationApiClient {
   constructor(
     private http: HttpClient
   ) { }
+
+  public balance(): BalanceQuery {
+    return new BalanceQuery(this.getReadOperations());
+  }
 
   public fee(): FeeQuery {
     return new FeeQuery(this.getCreateOperations(), this.getReadOperations(), this.getUpdateOperations(), this.getDeleteOperations());
