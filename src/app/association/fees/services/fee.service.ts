@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
-import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 
 @Injectable()

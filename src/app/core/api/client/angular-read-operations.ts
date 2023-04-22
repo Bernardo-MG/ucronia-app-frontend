@@ -1,9 +1,9 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Sort } from '../models/sort';
 import { ReadOperations } from './read-operations';
-import { Sort } from '@app/shared/utils/api/models/sort';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 
 export class AngularReadOperations implements ReadOperations {
 

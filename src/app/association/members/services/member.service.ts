@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Member } from '@app/association/models/member';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
-import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { map, Observable } from 'rxjs';
 
 @Injectable()

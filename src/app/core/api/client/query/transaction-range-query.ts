@@ -1,5 +1,5 @@
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
-import { ApiResponse } from "@app/shared/utils/api/models/api-response";
+import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
 import { ReadOperations } from "../read-operations";
 

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
-import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
 

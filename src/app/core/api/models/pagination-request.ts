@@ -1,4 +1,5 @@
-import { Sort } from "../../../../core/api/models/sort";
+import { Sort } from "@app/core/api/models/sort";
+
 
 export class PaginationRequest {
   page?: number;

@@ -1,14 +1,14 @@
 import { Fee } from "@app/association/models/fee";
 import { ReadOperations } from "@app/core/api/client/read-operations";
-import { ApiResponse } from "@app/shared/utils/api/models/api-response";
-import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-response";
-import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
+import { ApiResponse } from "@app/core/api/models/api-response";
+import { PaginatedResponse } from "@app/core/api/models/paginated-response";
+import { PaginationRequest } from "@app/core/api/models/pagination-request";
 import { Observable } from "rxjs";
+import { Sort } from "../../models/sort";
 import { CreateOperations } from "../create-operations";
 import { DeleteOperations } from "../delete-operations";
 import { UpdateOperations } from "../update-operations";
 import { FeeQueryById } from "./fee-query-by-id";
-import { Sort } from "@app/shared/utils/api/models/sort";
 
 export class FeeQuery {
 

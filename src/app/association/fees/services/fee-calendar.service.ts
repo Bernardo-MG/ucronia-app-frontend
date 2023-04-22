@@ -3,7 +3,7 @@ import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 
 @Injectable({

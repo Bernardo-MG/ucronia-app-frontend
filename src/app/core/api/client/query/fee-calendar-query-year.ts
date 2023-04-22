@@ -1,9 +1,9 @@
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
 import { ReadOperations } from "@app/core/api/client/read-operations";
-import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-response";
-import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
-import { Sort } from "@app/shared/utils/api/models/sort";
+import { PaginatedResponse } from "@app/core/api/models/paginated-response";
+import { PaginationRequest } from "@app/core/api/models/pagination-request";
 import { Observable } from "rxjs";
+import { Sort } from "../../models/sort";
 
 export class FeeCalendarQueryYear {
 

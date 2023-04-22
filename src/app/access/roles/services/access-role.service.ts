@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Privilege } from '@app/core/authentication/models/privilege';
 import { Role } from '@app/core/authentication/models/role';
-import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
 import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
 import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
@@ -12,6 +11,7 @@ import { RequestClient } from '@app/shared/utils/api/request/request-client';
 import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { Sort } from '@app/core/api/models/sort';
 
 @Injectable()
 export class AccessRoleService {

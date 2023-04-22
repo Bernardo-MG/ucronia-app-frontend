@@ -1,11 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { ApiResponse } from '@app/core/api/models/api-response';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { ApiResponse } from '../models/api-response';
 import { ErrorResponse } from '../models/error-response';
-import { PaginatedResponse } from '../models/paginated-response';
 import { PaginationRequest } from '../models/pagination-request';
-import { Sort } from '../models/sort';
+import { Sort } from '../../../../core/api/models/sort';
 
 export class ReadPagedOperations<T> {
 

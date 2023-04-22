@@ -1,5 +1,5 @@
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
 import { Observable } from 'rxjs';
 
 export interface ReadOperations {

@@ -1,8 +1,8 @@
 import { Router } from "@angular/router";
 import { RouteParametersActuator } from "@app/shared/utils/route/actuator/route-parameters-actuator";
 import { UrlParamsExtractor } from "@app/shared/utils/route/actuator/url-parameters-extractor";
-import { PaginationRequest } from "../../models/pagination-request";
-import { Sort } from "../../models/sort";
+import { PaginationRequest } from "../../../../../core/api/models/pagination-request";
+import { Sort } from "../../../../../core/api/models/sort";
 import { UrlParamsProcessor } from "./url-params-processor";
 
 export class RouteApiActuator {

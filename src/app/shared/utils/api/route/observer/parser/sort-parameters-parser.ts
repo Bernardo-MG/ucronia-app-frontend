@@ -1,6 +1,6 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
-import { Sort } from "../../../models/sort";
+import { Sort } from "../../../../../../core/api/models/sort";
 
 /**
  * Parses a {@link Sort} from the route parameters.

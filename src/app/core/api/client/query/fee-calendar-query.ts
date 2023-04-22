@@ -1,6 +1,6 @@
 import { ReadOperations } from "@app/core/api/client/read-operations";
-import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
-import { Sort } from "@app/shared/utils/api/models/sort";
+import { PaginationRequest } from "@app/core/api/models/pagination-request";
+import { Sort } from "../../models/sort";
 import { FeeCalendarQueryRange } from "./fee-calendar-query-range";
 import { FeeCalendarQueryYear } from "./fee-calendar-query-year";
 

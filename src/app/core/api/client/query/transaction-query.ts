@@ -1,15 +1,15 @@
 import { Transaction } from "@app/association/models/transaction";
 import { ReadOperations } from "@app/core/api/client/read-operations";
-import { ApiResponse } from "@app/shared/utils/api/models/api-response";
-import { PaginatedResponse } from "@app/shared/utils/api/models/paginated-response";
-import { PaginationRequest } from "@app/shared/utils/api/models/pagination-request";
-import { Sort } from "@app/shared/utils/api/models/sort";
+import { ApiResponse } from "@app/core/api/models/api-response";
+import { PaginatedResponse } from "@app/core/api/models/paginated-response";
+import { PaginationRequest } from "@app/core/api/models/pagination-request";
 import { Observable } from "rxjs";
 import { CreateOperations } from "../create-operations";
 import { DeleteOperations } from "../delete-operations";
 import { UpdateOperations } from "../update-operations";
 import { TransactionQueryById } from "./transaction-query-by-id";
 import { TransactionRangeQuery } from "./transaction-range-query";
+import { Sort } from "@app/core/api/models/sort";
 
 export class TransactionQuery {
 

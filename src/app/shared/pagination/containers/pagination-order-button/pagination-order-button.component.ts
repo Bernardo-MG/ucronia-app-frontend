@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sort } from '@app/shared/utils/api/models/sort';
+import { Sort } from '@app/core/api/models/sort';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
 

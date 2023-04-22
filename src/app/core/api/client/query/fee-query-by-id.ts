@@ -1,5 +1,5 @@
 import { Fee } from "@app/association/models/fee";
-import { ApiResponse } from "@app/shared/utils/api/models/api-response";
+import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
 import { DeleteOperations } from "../delete-operations";
 import { ReadOperations } from "../read-operations";
