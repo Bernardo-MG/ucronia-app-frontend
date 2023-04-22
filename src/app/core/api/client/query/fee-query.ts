@@ -8,6 +8,7 @@ import { CreateOperations } from "../create-operations";
 import { DeleteOperations } from "../delete-operations";
 import { UpdateOperations } from "../update-operations";
 import { FeeQueryById } from "./fee-query-by-id";
+import { Sort } from "@app/shared/utils/api/models/sort";
 
 export class FeeQuery {
 
@@ -29,8 +30,8 @@ export class FeeQuery {
     return this.createOperations.body(data).push();
   }
 
-  public read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Fee[]>> {
-    return this.readOperations.page(pagination).sort(pagination?.sort).fetch();
+  public read(): Observable<PaginatedResponse<Fee[]>> {
+    return this.readOperations.fetch();
   }
 
   public id(id: number): FeeQueryById {
@@ -42,6 +43,18 @@ export class FeeQuery {
 
   public parameter(name: string, value: any): FeeQuery {
     this.readOperations = this.readOperations.parameter(name, value);
+
+    return this;
+  }
+
+  public page(pagination: PaginationRequest | undefined): FeeQuery {
+    this.readOperations.page(pagination);
+
+    return this;
+  }
+
+  public sort(sort: Sort<any>[] | undefined): FeeQuery {
+    this.readOperations.sort(sort);
 
     return this;
   }

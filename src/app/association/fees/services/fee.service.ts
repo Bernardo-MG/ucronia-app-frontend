@@ -5,80 +5,45 @@ import { AngularAssociationApiClient } from '@app/core/api/client/angular-associ
 import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { Sort } from '@app/shared/utils/api/models/sort';
-import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
-import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
-import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
-import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
-import { RequestClient } from '@app/shared/utils/api/request/request-client';
-import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
-import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class FeeService {
 
-  private feeUrl = environment.apiUrl + "/fee";
-
-  private memberUrl = environment.apiUrl + "/member";
-
   constructor(
-    private client: RequestClient,
-    private newClient: AngularAssociationApiClient
+    private client: AngularAssociationApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
-    const clt: ReadPagedOperations<Fee> = this.client.readPaged(this.feeUrl);
-    if (pagination) {
-      clt.page(pagination);
-      if (pagination.sort) {
-        clt.sort(pagination.sort);
-      }
-    }
-    if (startDate) {
-      clt.parameter("startDate", startDate);
-    }
-    if (endDate) {
-      clt.parameter("endDate", endDate);
-    }
-
     const sort = new Sort<Fee>('date');
     sort.order = 'desc';
-    clt.sort([sort]);
 
-    return clt.fetch();
+    return this.client.fee().page(pagination).sort([sort]).parameter("startDate", startDate).parameter("endDate", endDate).read();
   }
 
   public create(data: Fee): Observable<Fee> {
-    const clt: CreateOperations<Fee> = this.client.create(this.feeUrl);
-    return clt.body(data).push().pipe(map(r => r.content));
+    return this.client.fee().create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Fee): Observable<Fee> {
-    const clt: UpdateOperations<Fee> = this.client.update(this.feeUrl);
-    return clt.id(id).body(data).push().pipe(map(r => r.content));
+    return this.client.fee().id(id).update(data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<Fee> {
-    const clt: DeleteOperations<Fee> = this.client.delete(this.feeUrl);
-    return clt.id(id).push().pipe(map(r => r.content));
+    return this.client.fee().id(id).delete().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Fee> {
-    const clt: ReadOperations<Fee> = this.client.read(this.feeUrl + `/${id}`);
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.client.fee().id(id).read().pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
-    const clt: ReadPagedOperations<Member> = this.client.readPaged(this.memberUrl);
     const sort: Sort<Member> = new Sort<Member>('name');
-    clt.page({ page });
-    clt.sort([sort]);
-    return clt.fetch();
+    return this.client.member().page({ page }).sort([sort]).read();
   }
 
   public getOneMember(id: number): Observable<Member> {
-    const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.client.member().id(id).read().pipe(map(r => r.content));
   }
 
 }

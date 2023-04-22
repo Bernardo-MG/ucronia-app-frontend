@@ -9,6 +9,7 @@ import { AngularUpdateOperations } from "./angular-update-operations";
 import { AssociationApiClient } from "./association-api-client";
 import { CreateOperations } from "./create-operations";
 import { DeleteOperations } from "./delete-operations";
+import { FeeQuery } from "./query/fee-query";
 import { MemberQuery } from "./query/member-query";
 import { UpdateOperations } from "./update-operations";
 
@@ -25,6 +26,10 @@ export class AngularAssociationApiClient implements AssociationApiClient {
 
   public member(): MemberQuery {
     return new MemberQuery(this.getCreateOperations(), this.getReadOperations(), this.getUpdateOperations(), this.getDeleteOperations());
+  }
+
+  public fee(): FeeQuery {
+    return new FeeQuery(this.getCreateOperations(), this.getReadOperations(), this.getUpdateOperations(), this.getDeleteOperations());
   }
 
   private getReadOperations(): ReadOperations {

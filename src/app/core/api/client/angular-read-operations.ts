@@ -35,11 +35,13 @@ export class AngularReadOperations implements ReadOperations {
   public parameter(name: string, value: any): ReadOperations {
     let params: HttpParams;
 
-    params = this.getHttpParams();
+    if (value) {
+      params = this.getHttpParams();
 
-    params = params.append(name, value);
+      params = params.append(name, value);
 
-    this.options = { params: params };
+      this.options = { params: params };
+    }
 
     return this;
   }
