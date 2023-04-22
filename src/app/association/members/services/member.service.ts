@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Member } from '@app/association/models/member';
+import { AngularAssociationApiClient } from '@app/core/api/client/angular-association-api-client';
 import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
@@ -17,7 +18,8 @@ export class MemberService {
   private memberUrl = environment.apiUrl + "/member";
 
   constructor(
-    private client: RequestClient
+    private client: RequestClient,
+    private newClient: AngularAssociationApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
@@ -47,8 +49,7 @@ export class MemberService {
   }
 
   public getOne(id: number): Observable<Member> {
-    const clt: ReadOperations<Member> = this.client.read(this.memberUrl + `/${id}`);
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.newClient.member().id(id).fetch().pipe(map(r => r.content));
   }
 
   public countActive(): Observable<number> {
