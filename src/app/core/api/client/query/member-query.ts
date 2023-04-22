@@ -25,6 +25,12 @@ export class MemberQuery {
     this.deleteOperations.appendRoute(this.memberRoute);
   }
 
+  public parameter(name: string, value: any): MemberQuery {
+    this.readOperations = this.readOperations.parameter(name, value);
+
+    return this;
+  }
+
   public fetch(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
     return this.readOperations.page(pagination).sort(pagination?.sort).fetch();
   }
