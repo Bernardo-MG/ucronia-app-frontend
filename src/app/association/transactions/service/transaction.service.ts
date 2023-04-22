@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
-import { AngularAssociationApiClient } from '@app/core/api/client/angular-association-api-client';
+import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/shared/utils/api/models/paginated-response';
 import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
 import { Sort } from '@app/shared/utils/api/models/sort';
@@ -12,7 +12,7 @@ import { TransactionFilter } from '../models/transaction-filter';
 export class TransactionService {
 
   constructor(
-    private client: AngularAssociationApiClient
+    private client: AssociationApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, filter: TransactionFilter): Observable<PaginatedResponse<Transaction[]>> {

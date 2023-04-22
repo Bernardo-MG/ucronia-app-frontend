@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
+import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { Sort } from '@app/shared/utils/api/models/sort';
-import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
-import { RequestClient } from '@app/shared/utils/api/request/request-client';
-import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -13,24 +11,16 @@ import { map, Observable } from 'rxjs';
 })
 export class FeeCalendarService {
 
-  private feeYearUrl = environment.apiUrl + "/fee/calendar";
-
-  private feeYearRangeUrl = environment.apiUrl + "/fee/calendar/range";
-
   private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   constructor(
-    private client: RequestClient
+    private client: AssociationApiClient
   ) { }
 
   public getAllForYear(year: number, onlyActive: boolean): Observable<UserFeeCalendar[]> {
-    const url = `${this.feeYearUrl}/${year}`;
-    const clt: ReadPagedOperations<UserFeeCalendar> = this.client.readPaged(url);
     const sort = new Sort<UserFeeCalendar>("name");
 
-    clt.sort([sort]);
-    clt.parameter("onlyActive", onlyActive);
-    return clt.fetch().pipe(map(r => r.content));
+    return this.client.feeCalendar().year(year).sort([sort]).parameter("onlyActive", onlyActive).read().pipe(map(r => r.content));
   }
 
   public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
@@ -38,9 +28,7 @@ export class FeeCalendarService {
   }
 
   public getRange(): Observable<FeeCalendarRange> {
-    const clt: ReadPagedOperations<FeeCalendarRange> = this.client.readPaged(this.feeYearRangeUrl);
-
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.client.feeCalendar().range().read().pipe(map(r => r.content));
   }
 
   private toCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {
