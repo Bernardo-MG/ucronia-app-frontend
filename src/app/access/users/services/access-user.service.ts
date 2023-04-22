@@ -1,38 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
+import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
+import { Sort } from '@app/core/api/models/sort';
+import { Role } from '@app/core/authentication/models/role';
+import { User } from '@app/core/authentication/models/user';
 import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
-import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
 import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
 import { RequestClient } from '@app/shared/utils/api/request/request-client';
 import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Sort } from '@app/core/api/models/sort';
 
 @Injectable()
 export class AccessUserService {
 
   private userUrl = environment.apiUrl + "/security/user";
 
-  private roleUrl = environment.apiUrl + "/security/role";
-
   constructor(
-    private client: RequestClient
+    private client: RequestClient,
+    private newClient: AccessApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {
-    const clt: ReadPagedOperations<User> = this.client.readPaged(this.userUrl);
-    if (pagination) {
-      clt.page(pagination);
-      if (pagination.sort) {
-        clt.sort(pagination.sort);
-      }
-    }
-    return clt.fetch();
+    return this.newClient.user().page(pagination).sort(pagination?.sort).read();
   }
 
   public getRoles(id: number, page: number): Observable<PaginatedResponse<Role[]>> {
@@ -44,31 +35,24 @@ export class AccessUserService {
   }
 
   public getRoleSelection(page: number): Observable<PaginatedResponse<Role[]>> {
-    const clt: ReadPagedOperations<Role> = this.client.readPaged(this.roleUrl);
-    const sort: Sort<Role> = new Sort<Role>('name');
-    clt.page({ page });
-    clt.sort([sort]);
-    return clt.fetch();
+    const sort = new Sort<Role>('name');
+    return this.newClient.role().page({ page }).sort([sort]).read();
   }
 
   public create(data: User): Observable<User> {
-    const clt: CreateOperations<User> = this.client.create(this.userUrl);
-    return clt.body(data).push().pipe(map(r => r.content));
+    return this.newClient.user().create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: User): Observable<User> {
-    const clt: UpdateOperations<User> = this.client.update(this.userUrl);
-    return clt.id(id).body(data).push().pipe(map(r => r.content));
+    return this.newClient.user().id(id).update(data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<User> {
-    const clt: DeleteOperations<User> = this.client.delete(this.userUrl);
-    return clt.id(id).push().pipe(map(r => r.content));
+    return this.newClient.user().id(id).delete().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<User> {
-    const clt: ReadOperations<User> = this.client.read(this.userUrl + `/${id}`);
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.newClient.user().id(id).read().pipe(map(r => r.content));
   }
 
   public addRole(id: number, role: number): Observable<boolean> {
