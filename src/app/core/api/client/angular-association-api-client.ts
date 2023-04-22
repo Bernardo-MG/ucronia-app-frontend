@@ -24,7 +24,7 @@ export class AngularAssociationApiClient implements AssociationApiClient {
   ) { }
 
   public member(): MemberQuery {
-    return new MemberQuery(this.getReadOperations(), this.getCreateOperations(), this.getUpdateOperations(), this.getDeleteOperations());
+    return new MemberQuery(this.getCreateOperations(), this.getReadOperations(), this.getUpdateOperations(), this.getDeleteOperations());
   }
 
   private getReadOperations(): ReadOperations {

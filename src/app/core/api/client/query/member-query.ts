@@ -14,43 +14,36 @@ export class MemberQuery {
   private memberRoute = '/member';
 
   constructor(
-    private readOperations: ReadOperations,
     private createOperations: CreateOperations,
+    private readOperations: ReadOperations,
     private updateOperations: UpdateOperations,
     private deleteOperations: DeleteOperations
   ) {
-    this.readOperations.appendRoute(this.memberRoute);
     this.createOperations.appendRoute(this.memberRoute);
+    this.readOperations.appendRoute(this.memberRoute);
     this.updateOperations.appendRoute(this.memberRoute);
     this.deleteOperations.appendRoute(this.memberRoute);
-  }
-
-  public parameter(name: string, value: any): MemberQuery {
-    this.readOperations = this.readOperations.parameter(name, value);
-
-    return this;
-  }
-
-  public fetch(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    return this.readOperations.page(pagination).sort(pagination?.sort).fetch();
   }
 
   public create(data: Member): Observable<ApiResponse<Member>> {
     return this.createOperations.body(data).push();
   }
 
-  public update(id: number, data: Member): Observable<ApiResponse<Member>> {
-    return this.updateOperations.id(id).body(data).push();
+  public read(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
+    return this.readOperations.page(pagination).sort(pagination?.sort).fetch();
   }
 
-  public delete(id: number): Observable<ApiResponse<Member>> {
-    return this.deleteOperations.id(id).push();
+  public id(id: number): MemberQueryById {
+    this.readOperations.appendRoute(`/${id}`);
+    this.updateOperations.id(id);
+    this.deleteOperations.id(id);
+    return new MemberQueryById(this.readOperations,this.updateOperations,this.deleteOperations);
   }
 
-  public id(index: number): MemberQueryById {
-    this.readOperations.appendRoute(`/${index}`);
-    this.createOperations.appendRoute(`/${index}`);
-    return new MemberQueryById(this.readOperations);
+  public parameter(name: string, value: any): MemberQuery {
+    this.readOperations = this.readOperations.parameter(name, value);
+
+    return this;
   }
 
 }
