@@ -27,8 +27,7 @@ export class MemberService {
   }
 
   public create(data: Member): Observable<Member> {
-    const clt: CreateOperations<Member> = this.client.create(this.memberUrl);
-    return clt.body(data).push().pipe(map(r => r.content));
+    return this.newClient.member().create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
