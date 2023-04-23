@@ -4,7 +4,6 @@ import { Observable } from "rxjs";
 import { HttpOperations } from "../client/http-operations";
 import { PaginatedResponse } from "../models/paginated-response";
 import { PaginationRequest } from "../models/pagination-request";
-import { ReadPaginatedRepository } from "./read-paginated-repository";
 
 export class ReadRepository<T> {
 
@@ -26,10 +25,10 @@ export class ReadRepository<T> {
     return this;
   }
 
-  public page(pagination: PaginationRequest | undefined): ReadPaginatedRepository<T> {
+  public page(pagination: PaginationRequest | undefined): ReadRepository<T> {
     this.operations.page(pagination);
 
-    return new ReadPaginatedRepository<T>(this.operations);
+    return this;
   }
 
   public sort(sort: Sort<T>[] | undefined): ReadRepository<T> {
