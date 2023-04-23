@@ -1,9 +1,10 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
+import { Id } from "@app/core/authentication/models/id";
 import { Observable } from "rxjs";
 import { HttpOperations } from "./http-operations";
 import { ReadRepository } from "./read-repository";
 
-export class CrudRepository<T> extends ReadRepository<T> {
+export class RelationshipRepository<T> extends ReadRepository<T> {
 
   constructor(
     private oper: HttpOperations
@@ -11,22 +12,16 @@ export class CrudRepository<T> extends ReadRepository<T> {
     super(oper);
   }
 
-  public create(data: T): Observable<ApiResponse<T>> {
+  public create(data: Id): Observable<ApiResponse<boolean>> {
     return this.oper.body(data).create();
   }
 
-  public update(data: T): Observable<ApiResponse<T>> {
+  public update(data: Id): Observable<ApiResponse<boolean>> {
     return this.oper.body(data).update();
   }
 
-  public delete(): Observable<ApiResponse<boolean>> {
-    return this.oper.delete();
-  }
-
-  public id(id: number): CrudRepository<T> {
-    this.oper.appendRoute(`/${id}`);
-
-    return this;
+  public delete(id: number): Observable<ApiResponse<boolean>> {
+    return this.oper.appendRoute(`/${id}`).delete();
   }
 
 }

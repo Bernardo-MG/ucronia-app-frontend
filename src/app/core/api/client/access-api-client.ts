@@ -6,6 +6,7 @@ import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
 import { AngularHttpOperations } from "../repository/angular-http-operations";
 import { CrudRepository } from "../repository/crud-repository";
+import { RelationshipRepository } from "../repository/relationship-repository";
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,8 @@ export class AccessApiClient {
     return new CrudRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + '/role'));
   }
 
-  public rolePrivileges(id: number): CrudRepository<Role> {
-    return new CrudRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/privilege`));
+  public rolePrivileges(id: number): RelationshipRepository<Privilege> {
+    return new RelationshipRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/privilege`));
   }
 
   public privilege(): CrudRepository<Privilege> {
@@ -32,6 +33,10 @@ export class AccessApiClient {
 
   public user(): CrudRepository<User> {
     return new CrudRepository<User>(new AngularHttpOperations(this.http, this.rootUrl + '/user'));
+  }
+
+  public userRoles(id: number): RelationshipRepository<Role> {
+    return new RelationshipRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + `/user/${id}/role`));
   }
 
 }
