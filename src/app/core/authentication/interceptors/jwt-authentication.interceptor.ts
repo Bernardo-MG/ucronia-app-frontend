@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { SecurityContainer } from '../services/security-container.service';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { AuthenticationContainer } from '../services/authentication-container.service';
 
 /**
  * JWT authentication interceptor. Adds the bearer authentication token to all request to
@@ -16,7 +16,7 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
   private tokenHeaderIdentifier = 'Bearer'
 
   constructor(
-    private authenticationContainer: AuthenticationContainer
+    private securityContainer: SecurityContainer
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,8 +28,8 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
       // It is a request to our API
 
       // Acquire the current user token
-      const logged = this.authenticationContainer.getUserStatus().logged;
-      const token = this.authenticationContainer.getUserStatus().token;
+      const logged = this.securityContainer.getStatus().logged;
+      const token = this.securityContainer.getStatus().token;
 
       if ((logged) && (token)) {
         // Has token

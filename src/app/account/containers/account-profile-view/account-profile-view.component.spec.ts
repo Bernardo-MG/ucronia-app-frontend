@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
+import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccountProfileViewComponent } from './account-profile-view.component';
 
@@ -16,7 +16,7 @@ describe('AccountProfileViewComponent', () => {
         AccountProfileViewComponent
       ],
       providers: [
-        AuthenticationContainer
+        SecurityContainer
       ]
     })
       .compileComponents();

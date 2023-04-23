@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
 import { environment } from 'environments/environment';
 import { Observable, catchError, throwError } from 'rxjs';
+import { SecurityContainer } from '../services/security-container.service';
 
 /**
  * Unauthorized error interceptor. Logs out the user in session on an authorization error.
@@ -11,7 +11,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 export class UnauthorizedErrorInterceptor implements HttpInterceptor {
 
   constructor(
-    private authenticationContainer: AuthenticationContainer
+    private securityContainer: SecurityContainer
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -25,7 +25,7 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           // Unauthenticated
           // Logs out
-          this.authenticationContainer.reset();
+          this.securityContainer.reset();
           location.reload();
         }
 
