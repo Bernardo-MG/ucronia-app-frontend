@@ -8,7 +8,7 @@ import { TransactionCalendarRange } from "@app/association/models/transaction-ca
 import { environment } from "environments/environment";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
-import { HttpOperations } from "../repository/http-operations";
+import { AngularHttpOperations } from "../repository/angular-http-operations";
 import { FeeCalendarClient } from "./query/fee-calendar-client";
 
 @Injectable({
@@ -23,27 +23,27 @@ export class AssociationApiClient {
   ) { }
 
   public balance(): ReadRepository<Balance> {
-    return new ReadRepository<Balance>(new HttpOperations(this.http, this.rootUrl + '/balance'));
+    return new ReadRepository<Balance>(new AngularHttpOperations(this.http, this.rootUrl + '/balance'));
   }
 
   public fee(): CrudRepository<Fee> {
-    return new CrudRepository<Fee>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new CrudRepository<Fee>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
   public feeCalendar(): FeeCalendarClient {
-    return new FeeCalendarClient(new HttpOperations(this.http, this.rootUrl + '/fee/calendar'));
+    return new FeeCalendarClient(new AngularHttpOperations(this.http, this.rootUrl + '/fee/calendar'));
   }
 
   public member(): CrudRepository<Member> {
-    return new CrudRepository<Member>(new HttpOperations(this.http, this.rootUrl + '/member'));
+    return new CrudRepository<Member>(new AngularHttpOperations(this.http, this.rootUrl + '/member'));
   }
 
   public transaction(): CrudRepository<Transaction> {
-    return new CrudRepository<Transaction>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new CrudRepository<Transaction>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
-    return new ReadRepository<TransactionCalendarRange>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new ReadRepository<TransactionCalendarRange>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
 }

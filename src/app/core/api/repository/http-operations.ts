@@ -1,153 +1,27 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PaginationRequest } from '../models/pagination-request';
 import { Sort } from '../models/sort';
 
-export class HttpOperations {
+export interface HttpOperations {
 
-  private _route = '';
+  create<T>(): Observable<T>;
 
-  private content: any | undefined = undefined;
+  read<T>(): Observable<T>;
 
-  protected options: {
-    params?: HttpParams
-  } = {};
+  update<T>(): Observable<T>;
 
-  constructor(
-    private http: HttpClient,
-    private rootUrl: string
-  ) { }
+  delete<T>(): Observable<T>;
 
-  public create<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
-    return this.http.post<T>(finalUrl, this.content, this.options)
-      .pipe(
-        catchError(this.handleError())
-      );
-  }
+  body(content: any): HttpOperations;
 
-  public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
-    return this.http.get<T>(finalUrl, this.options)
-      .pipe(
-        catchError(this.handleError())
-      );
-  }
+  route(route: string): HttpOperations;
 
-  public update<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this.content, this.options)
-      .pipe(
-        catchError(this.handleError())
-      );
-  }
+  appendRoute(route: string): HttpOperations;
 
-  public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
-    return this.http.delete<T>(finalUrl, this.options)
-      .pipe(
-        catchError(this.handleError())
-      );
-  }
+  parameter(name: string, value: any): HttpOperations;
 
-  public body(content: any): HttpOperations {
-    this.content = content;
+  sort(sort: Sort<any>[] | undefined): HttpOperations;
 
-    return this;
-  }
-
-  public route(route: string): HttpOperations {
-    this._route = route;
-
-    return this;
-  }
-
-  public appendRoute(route: string): HttpOperations {
-    this._route = `${this._route}${route}`;
-
-    return this;
-  }
-
-  public parameter(name: string, value: any): HttpOperations {
-    let params: HttpParams;
-
-    if (value) {
-      params = this.getHttpParams();
-
-      params = params.append(name, value);
-
-      this.options = { params: params };
-    }
-
-    return this;
-  }
-
-  public sort(sort: Sort<any>[] | undefined): HttpOperations {
-    let params: HttpParams;
-
-    if (sort) {
-      params = this.getHttpParams();
-
-      for (let i = 0; i < sort.length; i += 1) {
-        const fieldSort = sort[i];
-        params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
-      }
-
-      this.options = { params: params };
-    }
-
-    return this;
-  }
-
-  public page(pagination: PaginationRequest | undefined): HttpOperations {
-    let params: HttpParams;
-    let paged: boolean;
-
-    if (pagination) {
-      params = this.getHttpParams();
-
-      paged = false;
-      if (pagination.page) {
-        params = params.set('page', pagination.page);
-        paged = true;
-      }
-      if (pagination.size) {
-        params = params.set('size', pagination.size);
-        paged = true;
-      }
-
-      if (paged) {
-        this.options = { params: params };
-      }
-    }
-
-    return this;
-  }
-
-  private getHttpParams(): HttpParams {
-    let params: HttpParams;
-
-    if (this.options.params) {
-      params = this.options.params;
-    } else {
-      params = new HttpParams();
-      this.options = { params: params };
-    }
-
-    return params;
-  }
-
-  private handleError() {
-    return (error: HttpErrorResponse) => {
-
-      console.error(error.message);
-
-      throw new Error(error.message);
-    };
-  }
-
-  private getFinalUrl(route: string) {
-    return `${this.rootUrl}${route}`;
-  }
+  page(pagination: PaginationRequest | undefined): HttpOperations;
 
 }

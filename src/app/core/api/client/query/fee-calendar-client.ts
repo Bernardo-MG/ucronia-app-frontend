@@ -1,12 +1,12 @@
 import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
 import { ReadRepository } from "../../repository/read-repository";
-import { HttpOperations } from "../../repository/http-operations";
+import { AngularHttpOperations } from "../../repository/angular-http-operations";
 
 export class FeeCalendarClient {
 
   constructor(
-    private operations: HttpOperations
+    private operations: AngularHttpOperations
   ) { }
 
   public year(year: number): ReadRepository<UserFeeCalendar> {
