@@ -29,8 +29,7 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor {
           location.reload();
         }
 
-        const errorMessage = error.error.message || error.statusText;
-        return throwError(() => new Error(errorMessage));
+        return throwError(() => error);
       } else {
         // External API
         return throwError(() => error);
