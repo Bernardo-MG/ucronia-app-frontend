@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Role } from '@app/core/authentication/models/role';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { PageInfo } from '@app/core/api/models/page-info';
 
 @Component({
   selector: 'access-user-role-selection',

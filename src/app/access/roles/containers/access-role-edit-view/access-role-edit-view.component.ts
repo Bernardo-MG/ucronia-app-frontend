@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Privilege } from '@app/core/authentication/models/privilege';
 import { Role } from '@app/core/authentication/models/role';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { PageInfo } from '@app/core/api/models/page-info';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({

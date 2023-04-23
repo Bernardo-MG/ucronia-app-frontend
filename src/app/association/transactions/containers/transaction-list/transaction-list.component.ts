@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableRow } from '@app/shared/layout/models/table-row';
-import { PaginationRequest } from '@app/shared/utils/api/models/pagination-request';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { TransactionFilter } from '../../models/transaction-filter';

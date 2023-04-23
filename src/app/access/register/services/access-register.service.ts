@@ -1,22 +1,28 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '@app/core/api/models/api-response';
+import { AngularHttpOperations } from '@app/core/api/repository/angular-http-operations';
+import { HttpOperations } from '@app/core/api/repository/http-operations';
 import { RegisterForm } from '@app/core/authentication/models/register-form';
-import { CreateOperations } from '@app/shared/utils/api/request/create-operations';
-import { RequestClient } from '@app/shared/utils/api/request/request-client';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable()
 export class AccessRegisterService {
 
+  private operations: HttpOperations;
+
   private registerUrl = environment.apiUrl + "/security/register";
 
   constructor(
-    private client: RequestClient
-  ) { }
+    http: HttpClient
+  ) {
+    this.operations = new AngularHttpOperations(http, this.registerUrl);
+  }
 
   public register(data: RegisterForm): Observable<RegisterForm> {
-    const clt: CreateOperations<RegisterForm> = this.client.create(this.registerUrl);
-    return clt.body(data).push().pipe(map(r => r.content));
+    const resp: Observable<ApiResponse<RegisterForm>> = this.operations.body(data).create();
+    return resp.pipe(map(r => r.content));
   }
 
 }

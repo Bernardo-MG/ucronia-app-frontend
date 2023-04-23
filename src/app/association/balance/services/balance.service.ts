@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Balance } from '@app/association/models/balance';
-import { ReadOperations } from '@app/shared/utils/api/request/read-operations';
-import { RequestClient } from '@app/shared/utils/api/request/request-client';
-import { environment } from 'environments/environment';
+import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -10,15 +8,12 @@ import { map, Observable } from 'rxjs';
 })
 export class BalanceService {
 
-  private balanceUrl = environment.apiUrl + "/balance";
-
   constructor(
-    private client: RequestClient
+    private client: AssociationApiClient
   ) { }
 
   public getBalance(): Observable<Balance> {
-    const clt: ReadOperations<Balance> = this.client.read(this.balanceUrl);
-    return clt.fetchOne().pipe(map(r => r.content));
+    return this.client.balance().readOne().pipe(map(r => r.content));
   }
 
 }

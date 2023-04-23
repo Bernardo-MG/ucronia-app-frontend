@@ -1,6 +1,6 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
-import { PaginationRequest } from "../../../models/pagination-request";
+import { PaginationRequest } from "../../../../../../core/api/models/pagination-request";
 import { SortParametersParser } from "./sort-parameters-parser";
 
 /**
