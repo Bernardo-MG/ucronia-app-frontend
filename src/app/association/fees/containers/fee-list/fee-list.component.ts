@@ -13,7 +13,7 @@ import { FeeService } from '../../services/fee.service';
 export class FeeListComponent implements OnInit {
 
   /**
-   * Loading flag.
+   * Waiting flag.
    */
   public waiting = false;
 

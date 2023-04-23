@@ -8,6 +8,11 @@ import { BalanceService } from '../../services/balance.service';
 })
 export class BalanceInfoComponent implements OnInit {
 
+  /**
+   * Waiting flag.
+   */
+  public waiting = false;
+
   public balance: Balance = new Balance();
 
   constructor(
@@ -15,8 +20,10 @@ export class BalanceInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.waiting = true;
     this.service.getBalance().subscribe(d => {
       this.balance = d;
+      this.waiting = false;
     });
   }
 
