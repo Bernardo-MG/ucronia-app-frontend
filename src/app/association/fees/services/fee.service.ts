@@ -29,7 +29,7 @@ export class FeeService {
     return this.client.fee().id(id).update(data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<Fee> {
+  public delete(id: number): Observable<boolean> {
     return this.client.fee().id(id).delete().pipe(map(r => r.content));
   }
 

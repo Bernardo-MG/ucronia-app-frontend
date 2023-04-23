@@ -47,7 +47,7 @@ export class AccessUserService {
     return this.newClient.user().id(id).update(data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<User> {
+  public delete(id: number): Observable<boolean> {
     return this.newClient.user().id(id).delete().pipe(map(r => r.content));
   }
 

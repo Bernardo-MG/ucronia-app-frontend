@@ -17,8 +17,6 @@ export class AccessRoleService {
 
   private roleUrl = environment.apiUrl + "/security/role";
 
-  private privilegeUrl = environment.apiUrl + "/security/privilege";
-
   constructor(
     private client: RequestClient,
     private newClient: AccessApiClient
@@ -29,11 +27,8 @@ export class AccessRoleService {
   }
 
   public getPrivileges(id: number, page: number): Observable<PaginatedResponse<Privilege[]>> {
-    const clt: ReadPagedOperations<Privilege> = this.client.readPaged(`${this.roleUrl}/${id}/privilege`);
     const sort: Sort<Privilege> = new Sort<Privilege>('name');
-    clt.page({ page });
-    clt.sort([sort]);
-    return clt.fetch();
+    return this.newClient.rolePrivileges(id).page({ page }).sort([sort]).readAll();
   }
 
   public getPrivilegeSelection(page: number): Observable<PaginatedResponse<Privilege[]>> {
@@ -49,7 +44,7 @@ export class AccessRoleService {
     return this.newClient.role().id(id).update(data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<Role> {
+  public delete(id: number): Observable<boolean> {
     return this.newClient.role().id(id).delete().pipe(map(r => r.content));
   }
 

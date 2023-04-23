@@ -16,7 +16,7 @@ export class CrudByIdRepository<T> {
     return this.operations.body(data).update();
   }
 
-  public delete(): Observable<ApiResponse<T>> {
+  public delete(): Observable<ApiResponse<boolean>> {
     return this.operations.delete();
   }
 

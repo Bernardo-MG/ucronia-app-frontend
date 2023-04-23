@@ -32,7 +32,7 @@ export class TransactionService {
     return this.client.transaction().id(id).update(data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<Transaction> {
+  public delete(id: number): Observable<boolean> {
     return this.client.transaction().id(id).delete().pipe(map(r => r.content));
   }
 

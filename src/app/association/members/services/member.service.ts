@@ -24,7 +24,7 @@ export class MemberService {
     return this.client.member().id(id).update(data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<Member> {
+  public delete(id: number): Observable<boolean> {
     return this.client.member().id(id).delete().pipe(map(r => r.content));
   }
 

@@ -22,6 +22,10 @@ export class AccessApiClient {
     return new CrudRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + '/role'));
   }
 
+  public rolePrivileges(id: number): CrudRepository<Role> {
+    return new CrudRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/privilege`));
+  }
+
   public privilege(): CrudRepository<Privilege> {
     return new CrudRepository<Privilege>(new AngularHttpOperations(this.http, this.rootUrl + '/privilege'));
   }
