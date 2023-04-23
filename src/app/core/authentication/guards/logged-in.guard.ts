@@ -1,41 +1,29 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthenticationContainer } from '../services/authentication-container.service';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { SecurityContainer } from '../services/security-container.service';
 
 /**
  * Logged in guard. Allows access only if the user in session is logged in. Otherwise redirects
  * to the login form.
  */
-@Injectable({
-  providedIn: 'root'
-})
-export class LoggedInGuard implements CanActivate {
+export const LoggedInGuard = () => {
+  const router = inject(Router);
+  const securityContainer = inject(SecurityContainer)
+  const logged = securityContainer.getStatus().logged;
+  const loginRoute = '/login';
+  let active;
 
-  private loginUrl = '/login';
-
-  constructor(
-    private router: Router,
-    private authenticationContainer: AuthenticationContainer
-  ) { }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const logged = this.authenticationContainer.getUserStatus().logged;
-    let active;
-
-    if (logged) {
-      // Logged in
-      active = true;
-    } else {
-      // Not logged in
-      // Redirect to login
-      this.router.navigate([this.loginUrl], { queryParams: { returnUrl: state.url } });
-      active = false;
+  if (logged) {
+    // Logged in
+    active = true;
+  } else {
+    // Not logged in
+    // Redirect to login
+    if (router.routerState.snapshot.url.split('?')[0] !== loginRoute) {
+      router.navigate([loginRoute], { queryParams: { returnUrl: router.routerState.snapshot.url } });
     }
-
-    return active;
+    active = false;
   }
 
+  return active;
 }

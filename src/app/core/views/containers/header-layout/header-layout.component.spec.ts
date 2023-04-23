@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
+import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { HeaderLayoutComponent } from './header-layout.component';
 
@@ -18,7 +18,7 @@ describe('HeaderLayoutComponent', () => {
         NavbarComponent
       ],
       providers: [
-        AuthenticationContainer
+        SecurityContainer
       ]
     })
       .compileComponents();

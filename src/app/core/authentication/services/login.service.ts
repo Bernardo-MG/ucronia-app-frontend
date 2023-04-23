@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
+import { LoginRequest } from '@app/core/authentication/models/login-request';
+import { SecurityStatus } from '@app/core/authentication/models/security-status';
+import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
-import { LoginRequest } from '../models/login-request';
-import { LoginStatus } from '../models/login-status';
-import { UserStatus } from '../models/user-status';
-import { AuthenticationContainer } from './authentication-container.service';
 
 @Injectable()
 export class LoginService {
@@ -18,7 +17,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private authenticationContainer: AuthenticationContainer
+    private securityContainer: SecurityContainer
   ) { }
 
   /**
@@ -31,10 +30,13 @@ export class LoginService {
    * @param rememberMe remember me flag
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest, rememberMe: boolean): Observable<UserStatus> {
-    return this.http.post<ApiResponse<LoginStatus>>(this.loginUrl, request)
+  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityStatus> {
+    return this.http
+      // Login request
+      .post<ApiResponse<SecurityStatus>>(this.loginUrl, request)
+      // Get content
       .pipe(map(response => response.content))
-      .pipe(map(response => this.toUser(response)))
+      // Store use
       .pipe(tap(user => this.storeUser(user, rememberMe)));
   }
 
@@ -42,25 +44,7 @@ export class LoginService {
    * Logs out the current user.
    */
   public logout() {
-    this.authenticationContainer.reset();
-  }
-
-  /**
-   * Maps the login status into a user.
-   * 
-   * @param status status to map
-   * @returns user generated from the login status
-   */
-  private toUser(status: LoginStatus): UserStatus {
-    const loggedUser = new UserStatus();
-    if (status) {
-      // Received data
-      loggedUser.username = status.username;
-      loggedUser.logged = status.successful;
-      loggedUser.token = status.token;
-    }
-
-    return loggedUser;
+    this.securityContainer.reset();
   }
 
   /**
@@ -70,8 +54,8 @@ export class LoginService {
    * @param loginDetails login details to store
    * @param rememberMe remember me flag
    */
-  private storeUser(loginDetails: UserStatus, rememberMe: boolean) {
-    this.authenticationContainer.setUserStatus(loginDetails, rememberMe);
+  private storeUser(loginDetails: SecurityStatus, rememberMe: boolean) {
+    this.securityContainer.setStatus(loginDetails, rememberMe);
   }
 
 }

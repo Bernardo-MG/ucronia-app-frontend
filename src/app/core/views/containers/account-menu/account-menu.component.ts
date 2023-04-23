@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationContainer } from '@app/core/authentication/services/authentication-container.service';
+import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
 import { LoginService } from '@app/core/authentication/services/login.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class AccountMenuComponent {
   private loginUrl = '/login';
 
   constructor(
-    private authenticationContainer: AuthenticationContainer,
+    private securityContainer: SecurityContainer,
     private loginService: LoginService,
     private router: Router
   ) {
-    this.authenticationContainer.getUserStatusObservable().subscribe(u => { this.username = u.username });
+    this.securityContainer.getStatusObservable().subscribe(u => { this.username = u.username });
   }
 
   public onLogout() {
