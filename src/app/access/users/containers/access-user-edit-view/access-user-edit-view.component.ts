@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
-import { PageInfo } from '@app/shared/utils/api/models/page-info';
+import { PageInfo } from '@app/core/api/models/page-info';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
