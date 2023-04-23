@@ -6,7 +6,6 @@ import { Sort } from '@app/core/api/models/sort';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { DeleteOperations } from '@app/shared/utils/api/request/delete-operations';
-import { ReadPagedOperations } from '@app/shared/utils/api/request/read-paged-operations';
 import { RequestClient } from '@app/shared/utils/api/request/request-client';
 import { UpdateOperations } from '@app/shared/utils/api/request/update-operations';
 import { environment } from 'environments/environment';
@@ -27,11 +26,8 @@ export class AccessUserService {
   }
 
   public getRoles(id: number, page: number): Observable<PaginatedResponse<Role[]>> {
-    const clt: ReadPagedOperations<Role> = this.client.readPaged(`${this.userUrl}/${id}/role`);
     const sort: Sort<Role> = new Sort<Role>('name');
-    clt.page({ page });
-    clt.sort([sort]);
-    return clt.fetch();
+    return this.newClient.role().page({ page }).sort([sort]).readAll();
   }
 
   public getRoleSelection(page: number): Observable<PaginatedResponse<Role[]>> {

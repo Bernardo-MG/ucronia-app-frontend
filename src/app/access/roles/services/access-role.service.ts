@@ -55,6 +55,7 @@ export class AccessRoleService {
   public addPrivilege(id: number, privilege: number): Observable<boolean> {
     const clt: UpdateOperations<boolean> = this.client.update(`${this.roleUrl}/${id}/privilege`);
     return clt.body({ id: privilege }).push().pipe(map(r => r.content));
+    // return this.newClient.rolePrivileges(id).update({ id: privilege }).pipe(map(r => r.content));
   }
 
   public removePrivilege(id: number, privilege: number): Observable<boolean> {
