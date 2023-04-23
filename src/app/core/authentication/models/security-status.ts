@@ -1,7 +1,7 @@
 /**
- * Status after a login attempt.
+ * Security status for a user.
  */
-export class UserStatus {
+export class SecurityStatus {
   /**
    * User username.
    */
@@ -11,7 +11,7 @@ export class UserStatus {
    */
   logged = false;
   /**
-   * Authentication token for the user. Only generated on a succesful login.
+   * Authentication token for the user.
    */
   token?: string;
 }
