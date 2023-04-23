@@ -23,7 +23,7 @@ export class AccessUserService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {
-    return this.newClient.user().page(pagination).sort(pagination?.sort).read();
+    return this.newClient.user().page(pagination).sort(pagination?.sort).readAll();
   }
 
   public getRoles(id: number, page: number): Observable<PaginatedResponse<Role[]>> {
@@ -36,7 +36,7 @@ export class AccessUserService {
 
   public getRoleSelection(page: number): Observable<PaginatedResponse<Role[]>> {
     const sort = new Sort<Role>('name');
-    return this.newClient.role().page({ page }).sort([sort]).read();
+    return this.newClient.role().page({ page }).sort([sort]).readAll();
   }
 
   public create(data: User): Observable<User> {
@@ -52,7 +52,7 @@ export class AccessUserService {
   }
 
   public getOne(id: number): Observable<User> {
-    return this.newClient.user().id(id).read().pipe(map(r => r.content));
+    return this.newClient.user().id(id).readOne().pipe(map(r => r.content));
   }
 
   public addRole(id: number, role: number): Observable<boolean> {

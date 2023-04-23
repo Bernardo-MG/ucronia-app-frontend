@@ -21,7 +21,7 @@ export class TransactionService {
 
     return this.client.transaction().page(pagination).sort([sort])
       .parameter("startDate", filter.startDate).parameter("endDate", filter.endDate).parameter("date", filter.date)
-      .read();
+      .readAll();
   }
 
   public create(data: Transaction): Observable<Transaction> {
@@ -37,7 +37,7 @@ export class TransactionService {
   }
 
   public getOne(id: number): Observable<Transaction> {
-    return this.client.transaction().id(id).read().pipe(map(r => r.content));
+    return this.client.transaction().id(id).readOne().pipe(map(r => r.content));
   }
 
   public getRange(): Observable<TransactionCalendarRange> {

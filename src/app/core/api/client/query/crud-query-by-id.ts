@@ -8,7 +8,7 @@ export class CrudQueryById<T> {
     private operations: HttpOperations
   ) { }
 
-  public read(): Observable<ApiResponse<T>> {
+  public readOne(): Observable<ApiResponse<T>> {
     return this.operations.read();
   }
 
