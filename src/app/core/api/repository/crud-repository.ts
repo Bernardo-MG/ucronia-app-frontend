@@ -1,7 +1,6 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedResponse } from "@app/core/api/models/paginated-response";
 import { Observable } from "rxjs";
-import { CrudByIdRepository } from "./crud-by-id-repository";
 import { HttpOperations } from "./http-operations";
 import { ReadRepository } from "./read-repository";
 
@@ -21,9 +20,18 @@ export class CrudRepository<T> extends ReadRepository<T> {
     return this.oper.read();
   }
 
-  public id(id: number): CrudByIdRepository<T> {
+  public update(data: T): Observable<ApiResponse<T>> {
+    return this.oper.body(data).update();
+  }
+
+  public delete(): Observable<ApiResponse<boolean>> {
+    return this.oper.delete();
+  }
+
+  public id(id: number): CrudRepository<T> {
     this.oper.appendRoute(`/${id}`);
-    return new CrudByIdRepository<T>(this.oper);
+
+    return this;
   }
 
 }
