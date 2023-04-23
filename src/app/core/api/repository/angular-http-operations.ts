@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { PaginationRequest } from '../models/pagination-request';
 import { Sort } from '../models/sort';
 import { HttpOperations } from './http-operations';
@@ -23,7 +23,7 @@ export class AngularHttpOperations implements HttpOperations {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.post<T>(finalUrl, this.content, this.options)
       .pipe(
-        catchError(this.handleError())
+        catchError(this.handleError)
       );
   }
 
@@ -31,7 +31,7 @@ export class AngularHttpOperations implements HttpOperations {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.handleError())
+        catchError(this.handleError)
       );
   }
 
@@ -39,7 +39,7 @@ export class AngularHttpOperations implements HttpOperations {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.put<T>(finalUrl, this.content, this.options)
       .pipe(
-        catchError(this.handleError())
+        catchError(this.handleError)
       );
   }
 
@@ -47,7 +47,7 @@ export class AngularHttpOperations implements HttpOperations {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.handleError())
+        catchError(this.handleError)
       );
   }
 
@@ -138,13 +138,18 @@ export class AngularHttpOperations implements HttpOperations {
     return params;
   }
 
-  private handleError() {
-    return (error: HttpErrorResponse) => {
-
-      console.error(error.message);
-
-      throw new Error(error.message);
-    };
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
   private getFinalUrl(route: string) {
