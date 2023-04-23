@@ -1,7 +1,7 @@
 import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
-import { ReadRepository } from "../../repository/read-repository";
-import { AngularHttpOperations } from "../../repository/angular-http-operations";
+import { AngularHttpOperations } from "../repository/angular-http-operations";
+import { ReadRepository } from "../repository/read-repository";
 
 export class FeeCalendarClient {
 

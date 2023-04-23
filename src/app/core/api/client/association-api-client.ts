@@ -6,10 +6,10 @@ import { Member } from "@app/association/models/member";
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
+import { AngularHttpOperations } from "../repository/angular-http-operations";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
-import { AngularHttpOperations } from "../repository/angular-http-operations";
-import { FeeCalendarClient } from "./query/fee-calendar-client";
+import { FeeCalendarClient } from "./fee-calendar-client";
 
 @Injectable({
   providedIn: 'root'
