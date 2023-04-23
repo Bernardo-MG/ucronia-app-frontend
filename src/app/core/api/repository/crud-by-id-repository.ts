@@ -1,8 +1,8 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
-import { HttpOperations } from "../http-operations";
+import { HttpOperations } from "../client/http-operations";
 
-export class CrudQueryById<T> {
+export class CrudByIdRepository<T> {
 
   constructor(
     private operations: HttpOperations

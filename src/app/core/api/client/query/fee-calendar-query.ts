@@ -1,7 +1,7 @@
 import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
 import { HttpOperations } from "../http-operations";
-import { ReadQuery } from "./read-query";
+import { ReadRepository } from "../../repository/read-repository";
 
 export class FeeCalendarQuery {
 
@@ -9,14 +9,14 @@ export class FeeCalendarQuery {
     private operations: HttpOperations
   ) { }
 
-  public year(year: number): ReadQuery<UserFeeCalendar> {
+  public year(year: number): ReadRepository<UserFeeCalendar> {
     this.operations.appendRoute(`/${year}`);
-    return new ReadQuery<UserFeeCalendar>(this.operations);
+    return new ReadRepository<UserFeeCalendar>(this.operations);
   }
 
-  public range(): ReadQuery<FeeCalendarRange> {
+  public range(): ReadRepository<FeeCalendarRange> {
     this.operations.appendRoute("/range");
-    return new ReadQuery<FeeCalendarRange>(this.operations);
+    return new ReadRepository<FeeCalendarRange>(this.operations);
   }
 
 }

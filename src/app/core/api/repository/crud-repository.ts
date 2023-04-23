@@ -1,11 +1,11 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedResponse } from "@app/core/api/models/paginated-response";
 import { Observable } from "rxjs";
-import { HttpOperations } from "../http-operations";
-import { CrudQueryById } from "./crud-query-by-id";
-import { ReadQuery } from "./read-query";
+import { HttpOperations } from "../client/http-operations";
+import { CrudByIdRepository } from "./crud-by-id-repository";
+import { ReadRepository } from "./read-repository";
 
-export class CrudQuery<T> extends ReadQuery<T> {
+export class CrudRepository<T> extends ReadRepository<T> {
 
   constructor(
     private oper: HttpOperations
@@ -21,9 +21,9 @@ export class CrudQuery<T> extends ReadQuery<T> {
     return this.oper.read();
   }
 
-  public id(id: number): CrudQueryById<T> {
+  public id(id: number): CrudByIdRepository<T> {
     this.oper.appendRoute(`/${id}`);
-    return new CrudQueryById<T>(this.oper);
+    return new CrudByIdRepository<T>(this.oper);
   }
 
 }

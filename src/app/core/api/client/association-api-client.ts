@@ -7,9 +7,9 @@ import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
 import { HttpOperations } from "./http-operations";
-import { CrudQuery } from "./query/crud-query";
+import { CrudRepository } from "../repository/crud-repository";
 import { FeeCalendarQuery } from "./query/fee-calendar-query";
-import { ReadQuery } from "./query/read-query";
+import { ReadRepository } from "../repository/read-repository";
 
 @Injectable({
   providedIn: 'root'
@@ -22,28 +22,28 @@ export class AssociationApiClient {
     private http: HttpClient
   ) { }
 
-  public balance(): ReadQuery<Balance> {
-    return new ReadQuery<Balance>(new HttpOperations(this.http, this.rootUrl + '/balance'));
+  public balance(): ReadRepository<Balance> {
+    return new ReadRepository<Balance>(new HttpOperations(this.http, this.rootUrl + '/balance'));
   }
 
-  public fee(): CrudQuery<Fee> {
-    return new CrudQuery<Fee>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+  public fee(): CrudRepository<Fee> {
+    return new CrudRepository<Fee>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
   public feeCalendar(): FeeCalendarQuery {
     return new FeeCalendarQuery(new HttpOperations(this.http, this.rootUrl + '/fee/calendar'));
   }
 
-  public member(): CrudQuery<Member> {
-    return new CrudQuery<Member>(new HttpOperations(this.http, this.rootUrl + '/member'));
+  public member(): CrudRepository<Member> {
+    return new CrudRepository<Member>(new HttpOperations(this.http, this.rootUrl + '/member'));
   }
 
-  public transaction(): CrudQuery<Transaction> {
-    return new CrudQuery<Transaction>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+  public transaction(): CrudRepository<Transaction> {
+    return new CrudRepository<Transaction>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
-  public transactionRange(): ReadQuery<TransactionCalendarRange> {
-    return new ReadQuery<TransactionCalendarRange>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
+  public transactionRange(): ReadRepository<TransactionCalendarRange> {
+    return new ReadRepository<TransactionCalendarRange>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
 }

@@ -5,7 +5,7 @@ import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
 import { HttpOperations } from "./http-operations";
-import { CrudQuery } from "./query/crud-query";
+import { CrudRepository } from "../repository/crud-repository";
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +18,16 @@ export class AccessApiClient {
     private http: HttpClient
   ) { }
 
-  public role(): CrudQuery<Role> {
-    return new CrudQuery<Role>(new HttpOperations(this.http, this.rootUrl + '/role'));
+  public role(): CrudRepository<Role> {
+    return new CrudRepository<Role>(new HttpOperations(this.http, this.rootUrl + '/role'));
   }
 
-  public privilege(): CrudQuery<Privilege> {
-    return new CrudQuery<Privilege>(new HttpOperations(this.http, this.rootUrl + '/privilege'));
+  public privilege(): CrudRepository<Privilege> {
+    return new CrudRepository<Privilege>(new HttpOperations(this.http, this.rootUrl + '/privilege'));
   }
 
-  public user(): CrudQuery<User> {
-    return new CrudQuery<User>(new HttpOperations(this.http, this.rootUrl + '/user'));
+  public user(): CrudRepository<User> {
+    return new CrudRepository<User>(new HttpOperations(this.http, this.rootUrl + '/user'));
   }
 
 }
