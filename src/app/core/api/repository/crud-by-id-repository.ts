@@ -1,6 +1,6 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
-import { HttpOperations } from "../client/http-operations";
+import { HttpOperations } from "./http-operations";
 
 export class CrudByIdRepository<T> {
 

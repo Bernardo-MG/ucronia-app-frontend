@@ -1,9 +1,9 @@
 import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
-import { HttpOperations } from "../http-operations";
 import { ReadRepository } from "../../repository/read-repository";
+import { HttpOperations } from "../../repository/http-operations";
 
-export class FeeCalendarQuery {
+export class FeeCalendarClient {
 
   constructor(
     private operations: HttpOperations

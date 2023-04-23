@@ -4,7 +4,7 @@ import { Privilege } from "@app/core/authentication/models/privilege";
 import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
-import { HttpOperations } from "./http-operations";
+import { HttpOperations } from "../repository/http-operations";
 import { CrudRepository } from "../repository/crud-repository";
 
 @Injectable({

@@ -6,10 +6,10 @@ import { Member } from "@app/association/models/member";
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
-import { HttpOperations } from "./http-operations";
 import { CrudRepository } from "../repository/crud-repository";
-import { FeeCalendarQuery } from "./query/fee-calendar-query";
 import { ReadRepository } from "../repository/read-repository";
+import { HttpOperations } from "../repository/http-operations";
+import { FeeCalendarClient } from "./query/fee-calendar-client";
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,8 @@ export class AssociationApiClient {
     return new CrudRepository<Fee>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
-  public feeCalendar(): FeeCalendarQuery {
-    return new FeeCalendarQuery(new HttpOperations(this.http, this.rootUrl + '/fee/calendar'));
+  public feeCalendar(): FeeCalendarClient {
+    return new FeeCalendarClient(new HttpOperations(this.http, this.rootUrl + '/fee/calendar'));
   }
 
   public member(): CrudRepository<Member> {

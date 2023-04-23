@@ -1,7 +1,7 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedResponse } from "@app/core/api/models/paginated-response";
 import { Observable } from "rxjs";
-import { HttpOperations } from "../client/http-operations";
+import { HttpOperations } from "./http-operations";
 import { CrudByIdRepository } from "./crud-by-id-repository";
 import { ReadRepository } from "./read-repository";
 
