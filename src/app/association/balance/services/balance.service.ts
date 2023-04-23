@@ -13,7 +13,7 @@ export class BalanceService {
   ) { }
 
   public getBalance(): Observable<Balance> {
-    return this.client.balance().read().pipe(map(r => r.content));
+    return this.client.balance().readOne().pipe(map(r => r.content));
   }
 
 }

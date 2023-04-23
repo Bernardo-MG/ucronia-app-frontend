@@ -20,7 +20,7 @@ export class FeeCalendarService {
   public getAllForYear(year: number, onlyActive: boolean): Observable<UserFeeCalendar[]> {
     const sort = new Sort<UserFeeCalendar>("name");
 
-    return this.client.feeCalendar().year(year).sort([sort]).parameter("onlyActive", onlyActive).read().pipe(map(r => r.content));
+    return this.client.feeCalendar().year(year).sort([sort]).parameter("onlyActive", onlyActive).readAll().pipe(map(r => r.content));
   }
 
   public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
@@ -28,7 +28,7 @@ export class FeeCalendarService {
   }
 
   public getRange(): Observable<FeeCalendarRange> {
-    return this.client.feeCalendar().range().read().pipe(map(r => r.content));
+    return this.client.feeCalendar().range().readOne().pipe(map(r => r.content));
   }
 
   private toCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {

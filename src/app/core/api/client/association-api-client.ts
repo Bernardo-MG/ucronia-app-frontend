@@ -1,15 +1,15 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Balance } from "@app/association/models/balance";
 import { Fee } from "@app/association/models/fee";
 import { Member } from "@app/association/models/member";
 import { Transaction } from "@app/association/models/transaction";
-import { ReadOperations } from "@app/core/api/client/read-operations";
+import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
-import { AngularReadOperations } from "./angular-read-operations";
-import { BalanceQuery } from "./query/balance-query";
+import { HttpOperations } from "./http-operations";
 import { CrudQuery } from "./query/crud-query";
 import { FeeCalendarQuery } from "./query/fee-calendar-query";
-import { TransactionRangeQuery } from "./query/transaction-range-query";
+import { ReadQuery } from "./query/read-query";
 
 @Injectable({
   providedIn: 'root'
@@ -22,32 +22,28 @@ export class AssociationApiClient {
     private http: HttpClient
   ) { }
 
-  public balance(): BalanceQuery {
-    return new BalanceQuery(this.getReadOperations());
+  public balance(): ReadQuery<Balance> {
+    return new ReadQuery<Balance>(new HttpOperations(this.http, this.rootUrl + '/balance'));
   }
 
   public fee(): CrudQuery<Fee> {
-    return new CrudQuery<Fee>(this.http, this.rootUrl + '/transaction');
+    return new CrudQuery<Fee>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
   public feeCalendar(): FeeCalendarQuery {
-    return new FeeCalendarQuery(this.getReadOperations());
+    return new FeeCalendarQuery(new HttpOperations(this.http, this.rootUrl + '/fee/calendar'));
   }
 
   public member(): CrudQuery<Member> {
-    return new CrudQuery<Member>(this.http, this.rootUrl + '/member');
+    return new CrudQuery<Member>(new HttpOperations(this.http, this.rootUrl + '/member'));
   }
 
   public transaction(): CrudQuery<Transaction> {
-    return new CrudQuery<Transaction>(this.http, this.rootUrl + '/transaction');
+    return new CrudQuery<Transaction>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
-  public transactionRange(): TransactionRangeQuery {
-    return new TransactionRangeQuery(this.getReadOperations());
-  }
-
-  private getReadOperations(): ReadOperations {
-    return new AngularReadOperations(this.http, this.rootUrl);
+  public transactionRange(): ReadQuery<TransactionCalendarRange> {
+    return new ReadQuery<TransactionCalendarRange>(new HttpOperations(this.http, this.rootUrl + '/transaction'));
   }
 
 }

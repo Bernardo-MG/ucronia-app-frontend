@@ -41,7 +41,7 @@ export class TransactionService {
   }
 
   public getRange(): Observable<TransactionCalendarRange> {
-    return this.client.transactionRange().read().pipe(map(r => r.content));
+    return this.client.transactionRange().readOne().pipe(map(r => r.content));
   }
 
 }

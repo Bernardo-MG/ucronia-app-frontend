@@ -1,22 +1,17 @@
+import { HttpClient } from "@angular/common/http";
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedResponse } from "@app/core/api/models/paginated-response";
 import { PaginationRequest } from "@app/core/api/models/pagination-request";
+import { Sort } from "@app/core/api/models/sort";
 import { Observable } from "rxjs";
-import { Sort } from "../../models/sort";
 import { HttpOperations } from "../http-operations";
 import { CrudQueryById } from "./crud-query-by-id";
-import { HttpClient } from "@angular/common/http";
 
 export class CrudQuery<T> {
 
-  private operations: HttpOperations;
-
   constructor(
-    http: HttpClient,
-    rootUrl: string
-  ) {
-    this.operations = new HttpOperations(http, rootUrl);
-  }
+    private operations: HttpOperations
+  ) { }
 
   public create(data: T): Observable<ApiResponse<T>> {
     return this.operations.body(data).create();
