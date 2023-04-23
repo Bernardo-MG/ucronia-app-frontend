@@ -20,7 +20,7 @@ export class AccessUserService {
 
   public getRoles(id: number, page: number): Observable<PaginatedResponse<Role[]>> {
     const sort: Sort<Role> = new Sort<Role>('name');
-    return this.client.role().page({ page }).sort([sort]).readAll();
+    return this.client.userRoles(id).page({ page }).sort([sort]).readAll();
   }
 
   public getRoleSelection(page: number): Observable<PaginatedResponse<Role[]>> {
@@ -45,11 +45,11 @@ export class AccessUserService {
   }
 
   public addRole(id: number, role: number): Observable<boolean> {
-    return this.client.rolePrivileges(id).update({ id: role }).pipe(map(r => r.content));
+    return this.client.userRoles(id).update({ id: role }).pipe(map(r => r.content));
   }
 
   public removeRole(id: number, role: number): Observable<boolean> {
-    return this.client.rolePrivileges(id).delete(role).pipe(map(r => r.content));
+    return this.client.userRoles(id).delete(role).pipe(map(r => r.content));
   }
 
 }
