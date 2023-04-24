@@ -67,8 +67,21 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.save.emit(this.form.value);
   }
 
-  public isInvalid(property: string) {
-    return (this.form.get(property)?.errors) || this.getFailuresMap().get(property);
+  public isInvalid(property: string): boolean {
+    return (this.form.get(property)?.invalid) || (this.getFailuresMap().get(property) !== undefined);
+  }
+
+  public getFailures(property: string): Failure[] {
+    const map = this.getFailuresMap();
+    let failures: Failure[];
+
+    if (map.get(property)) {
+      failures = (map.get(property) as Failure[]);
+    } else {
+      failures = [];
+    }
+
+    return failures;
   }
 
   private listenForChanges() {
@@ -84,11 +97,17 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     });
   }
 
-  private getFailuresMap(): Map<string, Failure> {
-    const map = new Map<string, Failure>();
+  private getFailuresMap(): Map<string, Failure[]> {
+    const map = new Map<string, Failure[]>();
     for (const failure of this.failures) {
       if (failure.field) {
-        map.set(failure.field, failure);
+        if (map.get(failure.field)) {
+          const values = (map.get(failure.field) as Failure[]);
+          values.push(failure);
+          map.set(failure.field, values);
+        } else {
+          map.set(failure.field, [failure]);
+        }
       }
     }
     return map;
