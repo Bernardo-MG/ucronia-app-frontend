@@ -1,4 +1,4 @@
 <edition-form-frame [saving]="saving" [formValid]="formValid" (save)="onSave()">
-  <edition-dynamic-form-body [fields]="fields" [data]="data" [disabled]="isDisabled()" (save)="onSave()"
+  <edition-dynamic-form-body [fields]="fields" [failures]="failures" [data]="data" [disabled]="isDisabled()" (save)="onSave()"
     (valueChange)="onFormChange($event)" (validChange)="onFormValidChange($event)"></edition-dynamic-form-body>
 </edition-form-frame>

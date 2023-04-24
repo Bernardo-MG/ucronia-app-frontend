@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
+import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/layout/models/form-description';
 import { MemberService } from '../../services/member.service';
 
@@ -24,6 +25,8 @@ export class MemberCreateComponent {
     { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
   ];
 
+  public failures: Failure[] = [];
+
   constructor(
     private service: MemberService,
     private router: Router
@@ -38,6 +41,7 @@ export class MemberCreateComponent {
         this.saving = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
         this.saving = false;
       }

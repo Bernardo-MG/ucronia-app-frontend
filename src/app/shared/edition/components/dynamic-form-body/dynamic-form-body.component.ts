@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '../../../layout/models/form-description';
 
 @Component({
@@ -38,6 +39,8 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   @Input() public data: any;
 
+  @Input() public failures: Failure[] = [];
+
   @Output() public save = new EventEmitter<any>();
 
   @Output() public valueChange = new EventEmitter<any>();
@@ -65,7 +68,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   }
 
   public isInvalid(property: string) {
-    return this.form.get(property)?.errors;
+    return (this.form.get(property)?.errors) || this.getFailuresMap().get(property);
   }
 
   private listenForChanges() {
@@ -79,6 +82,16 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(value => {
       this.valueChange.emit(value);
     });
+  }
+
+  private getFailuresMap(): Map<string, Failure> {
+    const map = new Map<string, Failure>();
+    for (const failure of this.failures) {
+      if (failure.field) {
+        map.set(failure.field, failure);
+      }
+    }
+    return map;
   }
 
 }
