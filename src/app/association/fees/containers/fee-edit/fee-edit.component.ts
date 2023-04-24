@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FeeService } from '../../services/fee.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'assoc-fee-edit',
@@ -33,6 +34,8 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public membersTotalPages = 0;
 
+  public failures: Failure[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private service: FeeService,
@@ -51,7 +54,19 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   }
 
   public onSave(): void {
-    this.service.update(this.fee.id, this.fee).subscribe();
+    this.saving = true;
+    this.service.update(this.fee.id, this.fee).subscribe({
+      next: d => {
+        this.failures = [];
+        // Reactivate view
+        this.saving = false;
+      },
+      error: error => {
+        this.failures = error.failures;
+        // Reactivate view
+        this.saving = false;
+      }
+    });
   }
 
   public onFormValidChange(valid: boolean): void {

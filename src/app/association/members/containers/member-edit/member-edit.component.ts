@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { FormDescription } from '@app/shared/layout/models/form-description';
 import { MemberService } from '../../services/member.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'assoc-member-edit',
@@ -28,6 +29,8 @@ export class MemberEditComponent implements OnInit {
     { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
   ];
 
+  public failures: Failure[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private service: MemberService
@@ -43,10 +46,12 @@ export class MemberEditComponent implements OnInit {
     this.saving = true;
     this.service.update(data.id, data).subscribe({
       next: d => {
+        this.failures = [];
         // Reactivate view
         this.saving = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
         this.saving = false;
       }

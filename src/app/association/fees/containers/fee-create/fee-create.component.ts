@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FeeService } from '../../services/fee.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'assoc-fee-create',
@@ -33,6 +34,8 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public membersTotalPages = 0;
 
+  public failures: Failure[] = [];
+
   constructor(
     private service: FeeService,
     private router: Router,
@@ -45,9 +48,18 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSave(): void {
     this.saving = true;
-    this.service.create(this.fee).subscribe(d => {
-      this.router.navigate([`/fees/${d.id}`]);
-      this.saving = false;
+    this.service.update(this.fee.id, this.fee).subscribe({
+      next: d => {
+        this.router.navigate([`/fees/${d.id}`]);
+        this.failures = [];
+        // Reactivate view
+        this.saving = false;
+      },
+      error: error => {
+        this.failures = error.failures;
+        // Reactivate view
+        this.saving = false;
+      }
     });
   }
 
