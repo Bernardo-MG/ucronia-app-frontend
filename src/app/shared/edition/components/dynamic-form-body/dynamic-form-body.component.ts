@@ -42,6 +42,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   @Input() set failures(values: Failure[]) {
+    this.fieldFailures = new Map<string, Failure[]>();
     for (const failure of values) {
       if (failure.field) {
         if (this.fieldFailures.get(failure.field)) {

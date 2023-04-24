@@ -34,6 +34,7 @@ export class MemberCreateComponent {
 
   public onSave(data: Member): void {
     this.saving = true;
+    this.failures = [];
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
