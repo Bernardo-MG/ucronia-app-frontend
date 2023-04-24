@@ -39,7 +39,21 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   @Input() public data: any;
 
-  @Input() public failures: Failure[] = [];
+  public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
+
+  @Input() set failures(values: Failure[]) {
+    for (const failure of values) {
+      if (failure.field) {
+        if (this.fieldFailures.get(failure.field)) {
+          const values = (this.fieldFailures.get(failure.field) as Failure[]);
+          values.push(failure);
+          this.fieldFailures.set(failure.field, values);
+        } else {
+          this.fieldFailures.set(failure.field, [failure]);
+        }
+      }
+    }
+  }
 
   @Output() public save = new EventEmitter<any>();
 
@@ -68,11 +82,11 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   }
 
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.getFailuresMap().get(property) !== undefined);
+    return (this.form.get(property)?.invalid) || (this.fieldFailures.get(property) !== undefined);
   }
 
   public getFailures(property: string): Failure[] {
-    const map = this.getFailuresMap();
+    const map = this.fieldFailures;
     let failures: Failure[];
 
     if (map.get(property)) {
@@ -95,22 +109,6 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.form.valueChanges.subscribe(value => {
       this.valueChange.emit(value);
     });
-  }
-
-  private getFailuresMap(): Map<string, Failure[]> {
-    const map = new Map<string, Failure[]>();
-    for (const failure of this.failures) {
-      if (failure.field) {
-        if (map.get(failure.field)) {
-          const values = (map.get(failure.field) as Failure[]);
-          values.push(failure);
-          map.set(failure.field, values);
-        } else {
-          map.set(failure.field, [failure]);
-        }
-      }
-    }
-    return map;
   }
 
 }
