@@ -44,6 +44,19 @@
             </div>
           </div>
         </ng-template>
+        <!-- Month input -->
+        <ng-template [ngIf]="field.type === 'month'">
+          <label for="{{field.property}}Input" id="{{field.property}}Label"
+            class="col-sm-2 col-form-label">{{field.name}}</label>
+          <div class="col-sm-10">
+            <input type="month" id="{{field.property}}Input" attr.aria-describedby="{{field.property}}Label"
+              formControlName="{{field.property}}" [readonly]="!field.editable" class="form-control"
+              [ngClass]="{ 'is-invalid': isInvalid(field.property) }">
+            <div class="invalid-feedback" *ngFor="let failure of getFailures(field.property)">
+              <span *ngIf="failure.field === field.property">{{failure.message}}</span>
+            </div>
+          </div>
+        </ng-template>
       </div>
     </ng-template>
   </div>
