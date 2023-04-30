@@ -20,7 +20,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public fields: FormDescription[] = [
     new FormDescription('Member', 'memberName', 'string', Validators.required),
-    new FormDescription('Date', 'date', 'string'),
+    new FormDescription('Date', 'date', 'date'),
     new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
 
