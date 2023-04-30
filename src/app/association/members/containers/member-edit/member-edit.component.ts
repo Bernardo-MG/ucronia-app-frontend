@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/association/models/member';
-import { FormDescription } from '@app/shared/layout/models/form-description';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { MemberService } from '../../services/member.service';
 import { Failure } from '@app/core/api/models/failure';
 
@@ -22,11 +22,11 @@ export class MemberEditComponent implements OnInit {
   public member: Member = new Member();
 
   public fields: FormDescription[] = [
-    { name: 'Name', property: 'name', type: 'string', validator: Validators.required },
-    { name: 'Surname', property: 'surname', type: 'string', validator: null },
-    { name: 'Identifier', property: 'identifier', type: 'string', validator: null },
-    { name: 'Phone', property: 'phone', type: 'string', validator: null },
-    { name: 'Active', property: 'active', type: 'boolean', validator: Validators.required }
+    new FormDescription('Name', 'name', 'string', Validators.required),
+    new FormDescription('Surname', 'surname', 'string'),
+    new FormDescription('Identifier', 'identifier', 'string'),
+    new FormDescription('Phone', 'phone', 'string'),
+    new FormDescription('Active', 'active', 'boolean', Validators.required)
   ];
 
   public failures: Failure[] = [];

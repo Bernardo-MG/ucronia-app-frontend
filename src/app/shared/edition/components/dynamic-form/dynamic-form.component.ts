@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FormDescription } from '../../../layout/models/form-description';
+import { FormDescription } from '../../models/form-description';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({

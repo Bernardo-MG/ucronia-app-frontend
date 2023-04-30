@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
-import { FormDescription } from '@app/shared/layout/models/form-description';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 import { Failure } from '@app/core/api/models/failure';
 
@@ -20,9 +20,9 @@ export class TransactionEditComponent implements OnInit {
   public transaction: Transaction = new Transaction();
 
   public fields: FormDescription[] = [
-    { name: 'Description', property: 'description', type: 'string', validator: Validators.required },
-    { name: 'Date', property: 'date', type: 'date', validator: Validators.required },
-    { name: 'Amount', property: 'amount', type: 'string', validator: Validators.required }
+    new FormDescription('Description', 'description', 'string', Validators.required),
+    new FormDescription('Date', 'date', 'string', Validators.required),
+    new FormDescription('Amount', 'amount', 'string', Validators.required)
   ];
 
   public failures: Failure[] = [];

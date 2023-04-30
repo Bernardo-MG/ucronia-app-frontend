@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/layout/models/form-description';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -19,9 +19,9 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   public saving = false;
 
   public fields: FormDescription[] = [
-    { name: 'Member', property: 'memberName', type: 'string', validator: Validators.required },
-    { name: 'Date', property: 'date', type: 'string', validator: null },
-    { name: 'Paid', property: 'paid', type: 'boolean', validator: Validators.required }
+    new FormDescription('Member', 'memberName', 'string', Validators.required),
+    new FormDescription('Date', 'date', 'string'),
+    new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
 
   public readingMembers = false;
