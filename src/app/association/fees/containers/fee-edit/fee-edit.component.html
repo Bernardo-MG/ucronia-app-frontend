@@ -3,12 +3,14 @@
 
   <!-- Fee form -->
   <ng-template #fee_form>
-    <edition-form-frame [saving]="saving" [formValid]="isFormValid()" (save)="onSave()">
-      <assoc-form-fee [data]="fee" [memberId]="memberId" [memberName]="member.name" [disabled]="saving"
-        (save)="onSave()" (selectMember)="onRequestMember()" (valueChange)="onFormChange($event)"
-        (validChange)="onFormValidChange($event)">
-      </assoc-form-fee>
-    </edition-form-frame>
+    <!-- Select member button -->
+    <button type="button" class="btn" aria-label="Search" [disabled]="saving" (click)="onRequestMember()">
+      <icon-search></icon-search>
+    </button>
+    <!-- Form -->
+    <edition-dynamic-form [saving]="saving" [fields]="fields" [failures]="failures" [data]="fee"
+      (save)="onSave($event)">
+    </edition-dynamic-form>
   </ng-template>
   <!-- Member selection -->
   <ng-template #member_selection>

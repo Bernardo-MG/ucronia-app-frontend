@@ -1,9 +1,11 @@
 import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
-import { FeeService } from '../../services/fee.service';
 import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '@app/shared/layout/models/form-description';
+import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
@@ -16,6 +18,12 @@ export class FeeCreateComponent implements AfterContentInit {
    */
   public saving = false;
 
+  public fields: FormDescription[] = [
+    { name: 'Member', property: 'memberName', type: 'string', validator: Validators.required },
+    { name: 'Date', property: 'date', type: 'string', validator: null },
+    { name: 'Paid', property: 'paid', type: 'boolean', validator: Validators.required }
+  ];
+
   public readingMembers = false;
 
   public members: Member[] = [];
@@ -24,11 +32,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public memberId = 0;
 
-  public fee = new Fee();
-
   public selectingMember = false;
-
-  public formValid = false;
 
   public membersPage = 0;
 
@@ -46,9 +50,9 @@ export class FeeCreateComponent implements AfterContentInit {
     this.cdRef.detectChanges();
   }
 
-  public onSave(): void {
+  public onSave(fee: Fee): void {
     this.saving = true;
-    this.service.update(this.fee.id, this.fee).subscribe({
+    this.service.update(fee.id, fee).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
         this.failures = [];
@@ -61,14 +65,6 @@ export class FeeCreateComponent implements AfterContentInit {
         this.saving = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Fee) {
-    this.fee = value;
   }
 
   public onRequestMember() {
@@ -93,10 +89,6 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
-  }
-
-  public isFormValid() {
-    return (this.formValid && (this.memberId > 0))
   }
 
 }
