@@ -18,13 +18,6 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     } else {
       this.form.enable();
     }
-    
-    for (let i = 0; i < this._fields.length; i++) {
-      const definition = this._fields[i];
-      if (!definition.editable) {
-        this.form.get(definition.property)?.disable();
-      }
-    }
   }
 
   private _fields: FormDescription[] = [];
@@ -36,7 +29,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.form.setControl('id', new FormControl(-1));
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      this.form.setControl(definition.property, new FormControl({ value: undefined, disabled: !definition.editable }, definition.validator));
+      this.form.setControl(definition.property, new FormControl(undefined, definition.validator));
     }
   }
 
