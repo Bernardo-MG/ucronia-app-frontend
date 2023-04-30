@@ -19,7 +19,6 @@ export class FeeCreateComponent implements AfterContentInit {
   public saving = false;
 
   public fields: FormDescription[] = [
-    new FormDescription('Member', 'memberName', 'string', Validators.required, false),
     new FormDescription('Date', 'date', 'date'),
     new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
@@ -28,7 +27,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public members: Member[] = [];
 
-  public member = new Member();
+  public memberName = '';
 
   public memberId = 0;
 
@@ -52,7 +51,8 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSave(fee: Fee): void {
     this.saving = true;
-    this.service.update(fee.id, fee).subscribe({
+    fee.memberId = this.memberId;
+    this.service.create(fee).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
         this.failures = [];
@@ -72,7 +72,7 @@ export class FeeCreateComponent implements AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.member = member;
+    this.memberName = member.name + ' ' + member.surname;
     this.memberId = member.id;
     this.selectingMember = false;
   }
@@ -89,6 +89,10 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isMissingMember(): boolean {
+    return this.memberId <= 0;
   }
 
 }

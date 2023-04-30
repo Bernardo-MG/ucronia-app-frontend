@@ -19,7 +19,6 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   public saving = false;
 
   public fields: FormDescription[] = [
-    new FormDescription('Member', 'memberName', 'string', Validators.required),
     new FormDescription('Date', 'date', 'date'),
     new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
@@ -28,7 +27,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public members: Member[] = [];
 
-  public member = new Member();
+  public memberName = '';
 
   public memberId = 0;
 
@@ -80,7 +79,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.member = member;
+    this.memberName = member.name + ' ' + member.surname;
     this.memberId = member.id;
     this.selectingMember = false;
   }
@@ -99,13 +98,17 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.fee = d;
-          this.service.getOneMember(this.fee.memberId).subscribe(d => this.member = d);
+          this.service.getOneMember(this.fee.memberId).subscribe(d => this.onSelectMember(d));
         });
     }
   }
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isMissingMember(): boolean {
+    return this.memberId <= 0;
   }
 
 }
