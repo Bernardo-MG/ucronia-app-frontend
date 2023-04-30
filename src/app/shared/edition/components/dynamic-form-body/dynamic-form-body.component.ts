@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { FormDescription } from '../../../layout/models/form-description';
+import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '../../models/form-description';
 
 @Component({
   selector: 'edition-dynamic-form-body',
@@ -21,13 +22,13 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   private _fields: FormDescription[] = [];
 
-  @Input() public set fields(definitions: FormDescription[]) {
-    this._fields = definitions;
+  @Input() public set fields(fields: FormDescription[]) {
+    this._fields = fields;
 
     // Id always exists
     this.form.setControl('id', new FormControl(-1));
-    for (let i = 0; i < definitions.length; i++) {
-      const definition = definitions[i];
+    for (let i = 0; i < fields.length; i++) {
+      const definition = fields[i];
       this.form.setControl(definition.property, new FormControl(undefined, definition.validator));
     }
   }
@@ -37,6 +38,23 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   }
 
   @Input() public data: any;
+
+  public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
+
+  @Input() set failures(values: Failure[]) {
+    this.fieldFailures = new Map<string, Failure[]>();
+    for (const failure of values) {
+      if (failure.field) {
+        if (this.fieldFailures.get(failure.field)) {
+          const values = (this.fieldFailures.get(failure.field) as Failure[]);
+          values.push(failure);
+          this.fieldFailures.set(failure.field, values);
+        } else {
+          this.fieldFailures.set(failure.field, [failure]);
+        }
+      }
+    }
+  }
 
   @Output() public save = new EventEmitter<any>();
 
@@ -64,8 +82,21 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.save.emit(this.form.value);
   }
 
-  public isInvalid(property: string) {
-    return this.form.get(property)?.errors;
+  public isInvalid(property: string): boolean {
+    return (this.form.get(property)?.invalid) || (this.fieldFailures.get(property) !== undefined);
+  }
+
+  public getFailures(property: string): Failure[] {
+    const map = this.fieldFailures;
+    let failures: Failure[];
+
+    if (map.get(property)) {
+      failures = (map.get(property) as Failure[]);
+    } else {
+      failures = [];
+    }
+
+    return failures;
   }
 
   private listenForChanges() {

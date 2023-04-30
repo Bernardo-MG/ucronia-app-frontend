@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormDescription } from '../../../layout/models/form-description';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FormDescription } from '../../models/form-description';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'edition-dynamic-form',
@@ -17,6 +19,8 @@ export class DynamicFormComponent {
   @Input() public disabled = false;
 
   @Input() public fields: FormDescription[] = [];
+
+  @Input() public failures: Failure[] = [];
 
   @Input() public data: any;
 

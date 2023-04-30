@@ -5,7 +5,6 @@ import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { EMPTY } from 'rxjs';
-import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeEditComponent } from './fee-edit.component';
@@ -30,7 +29,6 @@ describe('FeeEditComponent', () => {
       ],
       declarations: [
         FeeEditComponent,
-        FeeFormComponent,
         MemberSelectionComponent
       ],
       providers: [

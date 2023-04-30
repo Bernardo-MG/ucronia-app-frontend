@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
-import { FormDescription } from '@app/shared/layout/models/form-description';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class AccessRoleCreateViewComponent {
   public saving = false;
 
   public fields: FormDescription[] = [
-    { name: 'Name', property: 'name', type: 'string', validator: Validators.required }
+    new FormDescription('Name', 'name', 'string', Validators.required)
   ];
 
   constructor(

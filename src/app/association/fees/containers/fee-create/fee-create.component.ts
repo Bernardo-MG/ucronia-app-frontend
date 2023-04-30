@@ -1,7 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
+import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -15,23 +18,26 @@ export class FeeCreateComponent implements AfterContentInit {
    */
   public saving = false;
 
+  public fields: FormDescription[] = [
+    new FormDescription('Date', 'date', 'month'),
+    new FormDescription('Paid', 'paid', 'boolean', Validators.required)
+  ];
+
   public readingMembers = false;
 
   public members: Member[] = [];
 
-  public member = new Member();
+  public memberName = '';
 
   public memberId = 0;
 
-  public fee = new Fee();
-
   public selectingMember = false;
-
-  public formValid = false;
 
   public membersPage = 0;
 
   public membersTotalPages = 0;
+
+  public failures: Failure[] = [];
 
   constructor(
     private service: FeeService,
@@ -43,20 +49,22 @@ export class FeeCreateComponent implements AfterContentInit {
     this.cdRef.detectChanges();
   }
 
-  public onSave(): void {
+  public onSave(fee: Fee): void {
     this.saving = true;
-    this.service.create(this.fee).subscribe(d => {
-      this.router.navigate([`/fees/${d.id}`]);
-      this.saving = false;
+    fee.memberId = this.memberId;
+    this.service.create(fee).subscribe({
+      next: d => {
+        this.router.navigate([`/fees/${d.id}`]);
+        this.failures = [];
+        // Reactivate view
+        this.saving = false;
+      },
+      error: error => {
+        this.failures = error.failures;
+        // Reactivate view
+        this.saving = false;
+      }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Fee) {
-    this.fee = value;
   }
 
   public onRequestMember() {
@@ -64,7 +72,7 @@ export class FeeCreateComponent implements AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.member = member;
+    this.memberName = member.name + ' ' + member.surname;
     this.memberId = member.id;
     this.selectingMember = false;
   }
@@ -83,8 +91,8 @@ export class FeeCreateComponent implements AfterContentInit {
     this.selectingMember = false;
   }
 
-  public isFormValid() {
-    return (this.formValid && (this.memberId > 0))
+  public isMissingMember(): boolean {
+    return this.memberId <= 0;
   }
 
 }

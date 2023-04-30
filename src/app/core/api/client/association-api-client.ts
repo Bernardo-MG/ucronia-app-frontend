@@ -27,7 +27,7 @@ export class AssociationApiClient {
   }
 
   public fee(): CrudRepository<Fee> {
-    return new CrudRepository<Fee>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new CrudRepository<Fee>(new AngularHttpOperations(this.http, this.rootUrl + '/fee'));
   }
 
   public feeCalendar(): FeeCalendarClient {
@@ -43,7 +43,7 @@ export class AssociationApiClient {
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
-    return new ReadRepository<TransactionCalendarRange>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new ReadRepository<TransactionCalendarRange>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction/range'));
   }
 
 }
