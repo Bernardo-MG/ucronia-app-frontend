@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="title.length > 0">
   <h1 class="border-bottom">{{title}}</h1>
 </header>
 <layout-waiting-wrapper [waiting]="waiting">
