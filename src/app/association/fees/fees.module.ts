@@ -14,6 +14,7 @@ import { FeeEditComponent } from './containers/fee-edit/fee-edit.component';
 import { FeeListComponent } from './containers/fee-list/fee-list.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
+import { FeeFormComponent } from './components/fee-form/fee-form.component';
 
 
 
@@ -24,7 +25,8 @@ import { FeeService } from './services/fee.service';
     FeeCreateComponent,
     FeeListComponent,
     FeeEditComponent,
-    MemberSelectionComponent
+    MemberSelectionComponent,
+    FeeFormComponent
   ],
   imports: [
     CommonModule,

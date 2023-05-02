@@ -1,10 +1,8 @@
 import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -17,11 +15,6 @@ export class FeeCreateComponent implements AfterContentInit {
    * Saving flag.
    */
   public saving = false;
-
-  public fields: FormDescription[] = [
-    new FormDescription('Date', 'date', 'month'),
-    new FormDescription('Paid', 'paid', 'boolean', Validators.required)
-  ];
 
   public readingMembers = false;
 

@@ -20,8 +20,8 @@
       </div>
     </div>
     <!-- Form -->
-    <edition-dynamic-form [saving]="saving" [fields]="fields" [failures]="failures" (save)="onSave($event)">
-    </edition-dynamic-form>
+    <assoc-fee-form [saving]="saving" [failures]="failures" (save)="onSave($event)">
+    </assoc-fee-form>
   </ng-template>
   <!-- Member selection -->
   <ng-template #member_selection>
