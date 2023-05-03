@@ -1,25 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { EditionModule } from '@app/shared/edition/edition.module';
-import { AccessRoleFormComponent } from './access-role-form.component';
+import { TransactionFormComponent } from './transaction-form.component';
 
-describe('AccessRoleFormComponent', () => {
-  let component: AccessRoleFormComponent;
-  let fixture: ComponentFixture<AccessRoleFormComponent>;
+describe('TransactionFormComponent', () => {
+  let component: TransactionFormComponent;
+  let fixture: ComponentFixture<TransactionFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         EditionModule
       ],
       declarations: [
-        AccessRoleFormComponent
+        TransactionFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleFormComponent);
+    fixture = TestBed.createComponent(TransactionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

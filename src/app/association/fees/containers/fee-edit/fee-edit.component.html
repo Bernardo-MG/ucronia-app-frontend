@@ -3,26 +3,11 @@
 
   <!-- Fee form -->
   <ng-template #fee_form>
-    <div class="row mb-2">
-      <!-- Select member button -->
-      <div class="col-sm-1">
-        <button type="button" class="btn" aria-label="Search" [disabled]="saving" (click)="onRequestMember()">
-          <icon-search></icon-search>
-        </button>
-      </div>
-      <!-- Selected member -->
-      <div class="col-sm-1">
-        <label for="memberInput" id="memberLabel" class="col-sm-2 col-form-label">Member</label>
-      </div>
-      <div class="col-sm-10">
-        <input type="text" id="memberInput" [value]="memberName" readonly class="form-control"
-          [ngClass]="{ 'is-invalid': isMissingMember() }" aria-describedby="memberLabel">
-      </div>
-    </div>
+    <!-- Select member -->
+    <assoc-member-selection-input [saving]="saving" [member]="member" (requestMember)="onRequestMember()"></assoc-member-selection-input>
     <!-- Form -->
-    <edition-dynamic-form [saving]="saving" [fields]="fields" [failures]="failures" [data]="fee"
-      (save)="onSave($event)">
-    </edition-dynamic-form>
+    <assoc-fee-form [saving]="saving" [failures]="failures" [data]="fee" (save)="onSave($event)">
+    </assoc-fee-form>
   </ng-template>
   <!-- Member selection -->
   <ng-template #member_selection>

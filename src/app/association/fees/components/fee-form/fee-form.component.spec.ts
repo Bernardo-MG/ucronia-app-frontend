@@ -1,25 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { EditionModule } from '@app/shared/edition/edition.module';
-import { AccessRoleFormComponent } from './access-role-form.component';
+import { FeeFormComponent } from './fee-form.component';
 
-describe('AccessRoleFormComponent', () => {
-  let component: AccessRoleFormComponent;
-  let fixture: ComponentFixture<AccessRoleFormComponent>;
+describe('FeeFormComponent', () => {
+  let component: FeeFormComponent;
+  let fixture: ComponentFixture<FeeFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         EditionModule
       ],
       declarations: [
-        AccessRoleFormComponent
-      ]
+         FeeFormComponent 
+        ]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleFormComponent);
+    fixture = TestBed.createComponent(FeeFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

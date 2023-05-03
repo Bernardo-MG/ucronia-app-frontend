@@ -1,17 +1,15 @@
 <layout-article title="Edit user">
   <div *ngIf="selectingRole; then role_selection else user_edition"></div>
   <ng-template #user_edition>
-    <edition-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
-      <access-user-form [user]="user" (save)="onSave()" (valueChange)="onFormChange($event)"
-        (validChange)="onFormValidChange($event)"></access-user-form>
-      <layout-waiting-wrapper [waiting]="waitingRoles">
-        <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
-        </access-user-role-form>
-        <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
-          (goTo)="onGoToRolePage($event)">
-        </pagination-navigation>
-      </layout-waiting-wrapper>
-    </edition-form-frame>
+    <access-user-form [saving]="saving" [failures]="failures" [data]="user" (save)="onSave($event)">
+    </access-user-form>
+    <layout-waiting-wrapper [waiting]="waitingRoles">
+      <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+      </access-user-role-form>
+      <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
+        (goTo)="onGoToRolePage($event)">
+      </pagination-navigation>
+    </layout-waiting-wrapper>
   </ng-template>
   <ng-template #role_selection>
     <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"

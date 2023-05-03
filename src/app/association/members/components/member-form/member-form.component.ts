@@ -4,10 +4,11 @@ import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
-  selector: 'access-user-form',
-  templateUrl: './access-user-form.component.html'
+  selector: 'assoc-member-form',
+  templateUrl: './member-form.component.html',
+  styleUrls: ['./member-form.component.sass']
 })
-export class AccessUserFormComponent {
+export class MemberFormComponent {
 
   @Input() public data: any;
 
@@ -18,13 +19,11 @@ export class AccessUserFormComponent {
   @Output() public save = new EventEmitter<any>();
 
   public fields: FormDescription[] = [
-    new FormDescription('Username', 'username', 'string', Validators.required),
     new FormDescription('Name', 'name', 'string', Validators.required),
-    new FormDescription('Email', 'email', 'string', Validators.required),
-    new FormDescription('Credentials expired', 'credentialsExpired', 'boolean', Validators.required),
-    new FormDescription('Enabled', 'enabled', 'boolean', Validators.required),
-    new FormDescription('Expired', 'expired', 'boolean', Validators.required),
-    new FormDescription('Locked', 'locked', 'boolean', Validators.required)
+    new FormDescription('Surname', 'surname', 'string'),
+    new FormDescription('Identifier', 'identifier', 'string'),
+    new FormDescription('Phone', 'phone', 'string'),
+    new FormDescription('Active', 'active', 'boolean', Validators.required)
   ];
 
   public onSave(data: any): void {

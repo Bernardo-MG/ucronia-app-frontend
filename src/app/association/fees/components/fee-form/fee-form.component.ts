@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
-  selector: 'access-role-form',
-  templateUrl: './access-role-form.component.html'
+  selector: 'assoc-fee-form',
+  templateUrl: './fee-form.component.html',
+  styleUrls: ['./fee-form.component.sass']
 })
-export class AccessRoleFormComponent {
+export class FeeFormComponent {
 
   @Input() public data: any;
 
@@ -18,7 +19,8 @@ export class AccessRoleFormComponent {
   @Output() public save = new EventEmitter<any>();
 
   public fields: FormDescription[] = [
-    new FormDescription('Name', 'name', 'string', Validators.required)
+    new FormDescription('Date', 'date', 'month'),
+    new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
 
   public onSave(data: any): void {

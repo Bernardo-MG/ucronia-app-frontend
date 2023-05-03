@@ -1,10 +1,8 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -18,18 +16,11 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
    */
   public saving = false;
 
-  public fields: FormDescription[] = [
-    new FormDescription('Date', 'date', 'month'),
-    new FormDescription('Paid', 'paid', 'boolean', Validators.required)
-  ];
-
   public readingMembers = false;
 
   public members: Member[] = [];
 
-  public memberName = '';
-
-  public memberId = 0;
+  public member = new Member();
 
   public fee = new Fee();
 
@@ -79,8 +70,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.memberName = member.name + ' ' + member.surname;
-    this.memberId = member.id;
+    this.member = member;
     this.selectingMember = false;
   }
 
@@ -105,10 +95,6 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
-  }
-
-  public isMissingMember(): boolean {
-    return this.memberId <= 0;
   }
 
 }

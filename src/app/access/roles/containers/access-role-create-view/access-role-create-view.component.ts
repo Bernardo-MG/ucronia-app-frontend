@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Failure } from '@app/core/api/models/failure';
 import { Role } from '@app/core/authentication/models/role';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -16,9 +15,7 @@ export class AccessRoleCreateViewComponent {
    */
   public saving = false;
 
-  public fields: FormDescription[] = [
-    new FormDescription('Name', 'name', 'string', Validators.required)
-  ];
+  public failures: Failure[] = [];
 
   constructor(
     private service: AccessRoleService,
@@ -30,10 +27,12 @@ export class AccessRoleCreateViewComponent {
     this.service.create(role).subscribe({
       next: d => {
         this.router.navigate([`/security/roles/${d.id}`]);
+        this.failures = [];
         // Reactivate view
         this.saving = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
         this.saving = false;
       }

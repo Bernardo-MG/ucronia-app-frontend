@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
-import { FormDescription } from '@app/shared/edition/models/form-description';
-import { TransactionService } from '../../service/transaction.service';
 import { Failure } from '@app/core/api/models/failure';
+import { TransactionService } from '../../service/transaction.service';
 
 @Component({
   selector: 'assoc-transaction-create',
@@ -16,12 +14,6 @@ export class TransactionCreateComponent {
    * Loading flag.
    */
   public saving = false;
-
-  public fields: FormDescription[] = [
-    new FormDescription('Description', 'description', 'string', Validators.required),
-    new FormDescription('Date', 'date', 'string', Validators.required),
-    new FormDescription('Amount', 'amount', 'string', Validators.required)
-  ];
 
   public failures: Failure[] = [];
 

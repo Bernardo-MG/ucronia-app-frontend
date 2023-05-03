@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Member } from '@app/association/models/member';
-import { FormDescription } from '@app/shared/edition/models/form-description';
-import { MemberService } from '../../services/member.service';
 import { Failure } from '@app/core/api/models/failure';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-edit',
@@ -20,14 +18,6 @@ export class MemberEditComponent implements OnInit {
   public formValid = false;
 
   public member: Member = new Member();
-
-  public fields: FormDescription[] = [
-    new FormDescription('Name', 'name', 'string', Validators.required),
-    new FormDescription('Surname', 'surname', 'string'),
-    new FormDescription('Identifier', 'identifier', 'string'),
-    new FormDescription('Phone', 'phone', 'string'),
-    new FormDescription('Active', 'active', 'boolean', Validators.required)
-  ];
 
   public failures: Failure[] = [];
 
