@@ -1,5 +1,6 @@
 <layout-article title="Edit role">
   <div *ngIf="selectingPrivilege; then privilege_selection else role_edition"></div>
+  <!-- Role form -->
   <ng-template #role_edition>
     <edition-form-frame [saving]="waiting" [formValid]="formValid" (save)="onSave()">
       <access-role-form [role]="role" (save)="onSave()" (valueChange)="onFormChange($event)"
@@ -14,6 +15,7 @@
       </layout-waiting-wrapper>
     </edition-form-frame>
   </ng-template>
+  <!-- Edit privileges -->
   <ng-template #privilege_selection>
     <access-role-privilege-selection (selectPrivilege)="onAddPrivilege($event)" [pageInfo]="privilegesPageInfo"
       (goToPage)="onGoToPrivilegeSelectionPage($event)" [privileges]="privilegeSelection">

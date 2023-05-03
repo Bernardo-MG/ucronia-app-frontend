@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 import { AccessUserService } from '../../services/access-user.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'access-user-create-view',
@@ -15,6 +16,8 @@ export class AccessUserCreateViewComponent {
    * Loading flag.
    */
   public saving = false;
+
+  public failures: Failure[] = [];
 
   public fields: FormDescription[] = [
     new FormDescription('Username', 'username', 'string', Validators.required),
@@ -36,10 +39,12 @@ export class AccessUserCreateViewComponent {
     this.service.create(user).subscribe({
       next: d => {
         this.router.navigate([`/security/users/${d.id}`]);
+        this.failures = [];
         // Reactivate view
         this.saving = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
         this.saving = false;
       }
