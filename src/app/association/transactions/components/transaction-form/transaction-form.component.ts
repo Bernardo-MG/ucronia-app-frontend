@@ -21,7 +21,7 @@ export class TransactionFormComponent {
   public fields: FormDescription[] = [
     new FormDescription('Description', 'description', 'string', Validators.required),
     new FormDescription('Date', 'date', 'date', Validators.required),
-    new FormDescription('Amount', 'amount', 'string', Validators.required)
+    new FormDescription('Amount', 'amount', 'float', Validators.required)
   ];
 
   public onSave(data: any): void {
