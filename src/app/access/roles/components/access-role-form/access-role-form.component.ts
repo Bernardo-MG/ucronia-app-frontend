@@ -1,53 +1,28 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Role } from '@app/core/authentication/models/role';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
   selector: 'access-role-form',
   templateUrl: './access-role-form.component.html'
 })
-export class AccessRoleFormComponent implements OnInit, OnChanges {
+export class AccessRoleFormComponent {
 
-  @Input() public role = new Role();
+  @Input() public data: any;
 
-  @Output() public save = new EventEmitter<Role>();
+  @Input() public failures: Failure[] = [];
 
-  @Output() public valueChange = new EventEmitter<Role>();
+  @Input() public saving = false;
 
-  @Output() public validChange = new EventEmitter<boolean>();
+  @Output() public save = new EventEmitter<any>();
 
-  public form: FormGroup = this.fb.group({
-    id: [-1],
-    name: ['', Validators.required]
-  });
+  public fields: FormDescription[] = [
+    new FormDescription('Name', 'name', 'string', Validators.required)
+  ];
 
-  constructor(
-    private fb: FormBuilder
-  ) {
-    this.form.statusChanges.subscribe(status => {
-      if (status === "VALID") {
-        this.validChange.emit(true);
-      } else {
-        this.validChange.emit(false);
-      }
-    });
-    this.form.valueChanges.subscribe(value => {
-      this.valueChange.emit(value);
-    });
-  }
-
-  ngOnInit(): void {
-    this.form.patchValue(this.role);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['role'].firstChange) {
-      this.form.patchValue(this.role);
-    }
-  }
-
-  public onSave() {
-    this.save.emit(this.form.value);
+  public onSave(data: any): void {
+    this.save.emit(data);
   }
 
 }

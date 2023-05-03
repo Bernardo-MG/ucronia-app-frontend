@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Role } from '@app/core/authentication/models/role';
-import { FormDescription } from '@app/shared/edition/models/form-description';
-import { AccessRoleService } from '../../services/access-role.service';
 import { Failure } from '@app/core/api/models/failure';
+import { Role } from '@app/core/authentication/models/role';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-create-view',
@@ -18,10 +16,6 @@ export class AccessRoleCreateViewComponent {
   public saving = false;
 
   public failures: Failure[] = [];
-
-  public fields: FormDescription[] = [
-    new FormDescription('Name', 'name', 'string', Validators.required)
-  ];
 
   constructor(
     private service: AccessRoleService,

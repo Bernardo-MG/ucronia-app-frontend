@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Failure } from '@app/core/api/models/failure';
+import { PageInfo } from '@app/core/api/models/page-info';
 import { Privilege } from '@app/core/authentication/models/privilege';
 import { Role } from '@app/core/authentication/models/role';
-import { PageInfo } from '@app/core/api/models/page-info';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -18,6 +19,8 @@ export class AccessRoleEditViewComponent implements OnInit {
 
   public waitingPrivileges = false;
 
+  public waitingPrivilegesSelection = false;
+
   public role = new Role();
 
   public formValid = false;
@@ -32,6 +35,8 @@ export class AccessRoleEditViewComponent implements OnInit {
 
   public privilegesPageInfo = new PageInfo();
 
+  public failures: Failure[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private service: AccessRoleService
@@ -43,26 +48,20 @@ export class AccessRoleEditViewComponent implements OnInit {
     });
   }
 
-  public onSave(): void {
+  public onSave(data: Role): void {
     this.waiting = true;
-    this.service.create(this.role).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
+        this.failures = [];
         // Reactivate view
         this.waiting = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
         this.waiting = false;
       }
     });
-  }
-
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Role) {
-    this.role = value;
   }
 
   public onShowAddPrivilege(): void {
@@ -79,9 +78,11 @@ export class AccessRoleEditViewComponent implements OnInit {
   }
 
   public onGoToPrivilegeSelectionPage(page: number) {
+    this.waitingPrivilegesSelection = true;
     this.service.getPrivilegeSelection(page).subscribe(response => {
       this.privilegeSelection = response.content;
       this.privilegeSelectionPageInfo = response;
+      this.waitingPrivilegesSelection = false;
     });
   }
 
