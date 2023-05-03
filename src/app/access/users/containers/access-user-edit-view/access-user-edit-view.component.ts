@@ -4,6 +4,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { PageInfo } from '@app/core/api/models/page-info';
 import { AccessUserService } from '../../services/access-user.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'access-user-edit-view',
@@ -14,7 +15,9 @@ export class AccessUserEditViewComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public saving = false;
+
+  public failures: Failure[] = [];
 
   public waitingRoles = false;
 
@@ -34,8 +37,7 @@ export class AccessUserEditViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: AccessUserService,
-    private router: Router
+    private service: AccessUserService
   ) { }
 
   ngOnInit(): void {
@@ -44,16 +46,18 @@ export class AccessUserEditViewComponent implements OnInit {
     });
   }
 
-  public onSave(): void {
-    this.waiting = true;
-    this.service.create(this.user).subscribe({
+  public onSave(data: User): void {
+    this.saving = true;
+    this.service.create(data).subscribe({
       next: d => {
+        this.failures = [];
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       },
       error: error => {
+        this.failures = error.failures;
         // Reactivate view
-        this.waiting = false;
+        this.saving = false;
       }
     });
   }

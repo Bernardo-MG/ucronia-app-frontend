@@ -1,48 +1,34 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '@app/core/authentication/models/user';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Validators } from '@angular/forms';
+import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
   selector: 'access-user-form',
   templateUrl: './access-user-form.component.html'
 })
-export class AccessUserFormComponent implements OnInit, OnChanges {
+export class AccessUserFormComponent {
 
-  @Input() public user = new User();
+  @Input() public data: any;
 
-  @Output() public save = new EventEmitter<User>();
+  @Input() public failures: Failure[] = [];
 
-  @Output() public valueChange = new EventEmitter<User>();
+  @Input() public saving = false;
 
-  @Output() public validChange = new EventEmitter<boolean>();
+  @Output() public save = new EventEmitter<any>();
 
-  public form: FormGroup = this.fb.group({
-    id: [-1],
-    username: ['', Validators.required],
-    name: ['', Validators.required],
-    email: ['', Validators.required],
-    credentialsExpired: [false, Validators.required],
-    enabled: [false, Validators.required],
-    expired: [false, Validators.required],
-    locked: [false, Validators.required]
-  });
+  public fields: FormDescription[] = [
+    new FormDescription('Username', 'username', 'string', Validators.required),
+    new FormDescription('Name', 'name', 'string', Validators.required),
+    new FormDescription('Email', 'email', 'string', Validators.required),
+    new FormDescription('Credentials expired', 'credentialsExpired', 'boolean', Validators.required),
+    new FormDescription('Enabled', 'enabled', 'boolean', Validators.required),
+    new FormDescription('Expired', 'expired', 'boolean', Validators.required),
+    new FormDescription('Locked', 'locked', 'boolean', Validators.required)
+  ];
 
-  constructor(
-    private fb: FormBuilder
-  ) { }
-
-  ngOnInit(): void {
-    this.form.patchValue(this.user);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!changes['user'].firstChange) {
-      this.form.patchValue(this.user);
-    }
-  }
-
-  public onSave() {
-    this.save.emit(this.form.value);
+  public onSave(data: any): void {
+    this.save.emit(data);
   }
 
 }
