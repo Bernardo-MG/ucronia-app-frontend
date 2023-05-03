@@ -1,18 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { MemberSelectionInputComponent } from './member-selection-input.component';
 
-import { MemberSelectionFormComponent } from './member-selection-input.component';
-
-describe('MemberSelectionFormComponent', () => {
-  let component: MemberSelectionFormComponent;
-  let fixture: ComponentFixture<MemberSelectionFormComponent>;
+describe('MemberSelectionInputComponent', () => {
+  let component: MemberSelectionInputComponent;
+  let fixture: ComponentFixture<MemberSelectionInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MemberSelectionFormComponent ]
+      imports: [
+        IconsModule
+      ],
+      declarations: [
+        MemberSelectionInputComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
-    fixture = TestBed.createComponent(MemberSelectionFormComponent);
+    fixture = TestBed.createComponent(MemberSelectionInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

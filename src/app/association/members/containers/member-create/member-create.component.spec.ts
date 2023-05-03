@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
 import { MemberCreateComponent } from './member-create.component';
 
@@ -26,7 +27,8 @@ describe('MemberCreateComponent', () => {
         EditionModule
       ],
       declarations: [
-        MemberCreateComponent
+        MemberCreateComponent,
+        MemberFormComponent
       ]
     })
       .compileComponents();

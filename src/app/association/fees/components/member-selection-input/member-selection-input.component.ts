@@ -6,7 +6,7 @@ import { Member } from '@app/association/models/member';
   templateUrl: './member-selection-input.component.html',
   styleUrls: ['./member-selection-input.component.sass']
 })
-export class MemberSelectionFormComponent {
+export class MemberSelectionInputComponent {
 
   @Input() public saving = false;
   

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { FeeFormComponent } from './fee-form.component';
 
 describe('FeeFormComponent', () => {
@@ -8,7 +8,12 @@ describe('FeeFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FeeFormComponent ]
+      imports: [
+        EditionModule
+      ],
+      declarations: [
+         FeeFormComponent 
+        ]
     })
     .compileComponents();
 

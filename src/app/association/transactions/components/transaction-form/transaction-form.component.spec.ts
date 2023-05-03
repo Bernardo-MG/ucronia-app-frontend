@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { EditionModule } from '@app/shared/edition/edition.module';
 import { TransactionFormComponent } from './transaction-form.component';
 
 describe('TransactionFormComponent', () => {
@@ -8,9 +8,14 @@ describe('TransactionFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransactionFormComponent ]
+      imports: [
+        EditionModule
+      ],
+      declarations: [
+        TransactionFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(TransactionFormComponent);
     component = fixture.componentInstance;
