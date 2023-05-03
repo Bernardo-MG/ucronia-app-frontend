@@ -20,9 +20,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public members: Member[] = [];
 
-  public memberName = '';
-
-  public memberId = 0;
+  public member = new Member();
 
   public selectingMember = false;
 
@@ -44,7 +42,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSave(fee: Fee): void {
     this.saving = true;
-    fee.memberId = this.memberId;
+    fee.memberId = this.member.id;
     this.service.create(fee).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
@@ -65,8 +63,7 @@ export class FeeCreateComponent implements AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.memberName = member.name + ' ' + member.surname;
-    this.memberId = member.id;
+    this.member = member;
     this.selectingMember = false;
   }
 
@@ -82,10 +79,6 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
-  }
-
-  public isMissingMember(): boolean {
-    return this.memberId <= 0;
   }
 
 }

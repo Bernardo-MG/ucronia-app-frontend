@@ -20,9 +20,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public members: Member[] = [];
 
-  public memberName = '';
-
-  public memberId = 0;
+  public member = new Member();
 
   public fee = new Fee();
 
@@ -72,8 +70,7 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
   }
 
   public onSelectMember(member: Member) {
-    this.memberName = member.name + ' ' + member.surname;
-    this.memberId = member.id;
+    this.member = member;
     this.selectingMember = false;
   }
 
@@ -98,10 +95,6 @@ export class FeeEditComponent implements OnInit, AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
-  }
-
-  public isMissingMember(): boolean {
-    return this.memberId <= 0;
   }
 
 }
