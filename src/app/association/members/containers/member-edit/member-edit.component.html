@@ -1,5 +1,4 @@
 <layout-article title="Edit member">
-  <edition-dynamic-form [saving]="saving" [fields]="fields" [failures]="failures" [data]="member"
-    (save)="onSave($event)">
-  </edition-dynamic-form>
+  <assoc-member-form [saving]="saving" [failures]="failures" [data]="member" (save)="onSave($event)">
+  </assoc-member-form>
 </layout-article>

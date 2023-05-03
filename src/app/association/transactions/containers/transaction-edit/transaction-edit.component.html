@@ -1,4 +1,4 @@
 <layout-article title="Edit transaction">
-  <edition-dynamic-form [saving]="saving" [fields]="fields" [data]="transaction" (save)="onSave($event)">
-  </edition-dynamic-form>
+  <assoc-transaction-form [saving]="saving" [failures]="failures" [data]="transaction" (save)="onSave($event)">
+  </assoc-transaction-form>
 </layout-article>

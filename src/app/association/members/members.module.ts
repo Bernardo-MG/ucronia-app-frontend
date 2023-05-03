@@ -11,6 +11,7 @@ import { MemberListComponent } from './containers/member-list/member-list.compon
 import { MemberStatsComponent } from './containers/member-stats/member-stats.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
+import { MemberFormComponent } from './components/member-form/member-form.component';
 
 
 
@@ -19,7 +20,8 @@ import { MemberService } from './services/member.service';
     MemberListComponent,
     MemberEditComponent,
     MemberCreateComponent,
-    MemberStatsComponent
+    MemberStatsComponent,
+    MemberFormComponent
   ],
   imports: [
     CommonModule,
