@@ -13,8 +13,6 @@ export class MemberSelectionInputComponent {
   @Input() public member = new Member();
 
   @Output() public requestMember = new EventEmitter<void>();
-  
-  constructor() { }
 
   public isMissingMember(): boolean {
     return this.member.id <= 0;
