@@ -20,7 +20,7 @@ export class TransactionFormComponent {
 
   public fields: FormDescription[] = [
     new FormDescription('Description', 'description', 'string', Validators.required),
-    new FormDescription('Date', 'date', 'string', Validators.required),
+    new FormDescription('Date', 'date', 'date', Validators.required),
     new FormDescription('Amount', 'amount', 'string', Validators.required)
   ];
 
