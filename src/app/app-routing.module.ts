@@ -1,49 +1,58 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountLayoutComponent } from './account/layout/account-layout/account-layout.component';
-import { SideMenuLayoutComponent } from './layout/side-menu-layout/side-menu-layout.component';
-import { LoggedInGuard } from './security/authentication/guard/logged-in.guard';
-import { LoggedOutGuard } from './security/authentication/guard/logged-out.guard';
+import { LoginComponent } from './core/authentication/containers/login/login.component';
+import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
+import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
+import { MainLayoutComponent } from './core/views/components/main-layout/main-layout.component';
+import { AccountLayoutComponent } from './core/views/containers/account-layout/account-layout.component';
+import { CenteredLayoutComponent } from './core/views/containers/centered-layout/centered-layout.component';
+import { HeaderLayoutComponent } from './core/views/containers/header-layout/header-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
-
-const adminModule = () => import('@app/admin/admin.module').then(m => m.AdminModule);
-
+const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
-
-const loginModule = () => import('@app/security/login/login.module').then(m => m.LoginModule);
-const roleModule = () => import('@app/security/data/roles/roles.module').then(m => m.RolesModule);
-const userModule = () => import('@app/security/data/users/users.module').then(m => m.UsersModule);
-const registerModule = () => import('@app/security/register/register.module').then(m => m.RegisterModule);
+const accessModule = () => import('@app/access/access.module').then(m => m.AccessModule);
 
 const routes: Routes = [
   // Main app
   {
-    path: '', component: SideMenuLayoutComponent, children: [
-      // Front page
-      { path: '', loadChildren: frontpageModule, canActivate: [LoggedInGuard] },
-      // Admin
+    path: '',
+    component: HeaderLayoutComponent,
+    children: [
+      // Login
       {
-        path: '', children: [
-          { path: '', loadChildren: adminModule, canActivate: [LoggedInGuard] }
+        path: 'login',
+        component: CenteredLayoutComponent,
+        canActivate: [LoggedOutGuard],
+        children: [
+          {
+            path: '', component: LoginComponent
+          }
         ]
       },
-      // Security
+      // Association
       {
-        path: 'security', children: [
-          { path: 'roles', loadChildren: roleModule, canActivate: [LoggedInGuard] },
-          { path: 'users', loadChildren: userModule, canActivate: [LoggedInGuard] },
-          { path: 'register', loadChildren: registerModule, canActivate: [LoggedInGuard] }
+        path: '',
+        component: MainLayoutComponent,
+        canActivate: [LoggedInGuard],
+        children: [
+          // Front page
+          { path: '', loadChildren: frontpageModule },
+          // Association
+          { path: '', loadChildren: associationModule },
+          // Security
+          { path: 'security', loadChildren: accessModule }
+        ]
+      },
+      // Account
+      {
+        path: 'account',
+        component: AccountLayoutComponent,
+        canActivate: [LoggedInGuard],
+        children: [
+          { path: '', loadChildren: accountModule }
         ]
       }
-    ]
-  },
-  // Login
-  { path: 'login', loadChildren: loginModule, canActivate: [LoggedOutGuard] },
-  // Account
-  {
-    path: 'account', component: AccountLayoutComponent, children: [
-      { path: '', loadChildren: accountModule, canActivate: [LoggedInGuard] }
     ]
   }
 ];

@@ -1,0 +1,6 @@
+<layout-article title="Members">
+  <layout-waiting-wrapper [waiting]="waiting">
+    <layout-data-list [rows]="rows" [header]="header" route="/members" [totalPages]="totalPages" (delete)="onDelete($event)">
+    </layout-data-list>
+  </layout-waiting-wrapper>
+</layout-article>

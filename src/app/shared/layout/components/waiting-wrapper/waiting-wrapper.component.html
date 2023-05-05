@@ -1,0 +1,9 @@
+<div *ngIf="waiting; then wait else wrapped"></div>
+<ng-template #wait>
+  <div class="d-flex justify-content-center" aria-hidden="true">
+    <icon-waiting></icon-waiting>
+  </div>
+</ng-template>
+<ng-template #wrapped>
+  <ng-content></ng-content>
+</ng-template>

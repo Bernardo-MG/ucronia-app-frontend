@@ -1,0 +1,18 @@
+<pagination-navigation [current]="pageInfo.page" [pages]="pageInfo.totalPages" (goTo)="onGoToPage($event)">
+</pagination-navigation>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">
+        privilege
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-privilege [ngForOf]="privileges">
+      <tr (click)="onSelect(privilege)">
+        <td>{{privilege.name}}</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>

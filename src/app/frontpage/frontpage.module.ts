@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FrontpageRoutingModule } from './frontpage-routing.module';
 import { HighlightsComponent } from './highlights/highlights.component';
 

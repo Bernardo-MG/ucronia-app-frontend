@@ -8,13 +8,9 @@
       "files": [
         "*.ts"
       ],
-      "parserOptions": {
-        "project": [
-          "tsconfig.json"
-        ],
-        "createDefaultProgram": true
-      },
       "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
@@ -23,7 +19,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["app", "button", "cue", "calendar", "order", "pagination", "form", "navigation", "admin", "login", "logout", "security", "account", "layout"],
+            "prefix": ["account", "access", "assoc", "app", "authentication", "edition", "button", "icon", "layout", "pagination", "shared", "view"],
             "style": "camelCase"
           }
         ],
@@ -31,7 +27,7 @@
           "error",
           {
             "type": "element",
-            "prefix": ["app", "button", "cue", "calendar", "order", "pagination", "form", "navigation", "admin", "login", "logout", "security", "account", "layout"],
+            "prefix": ["account", "access", "assoc", "app", "authentication", "edition", "button", "icon", "layout", "pagination", "shared", "view"],
             "style": "kebab-case"
           }
         ]

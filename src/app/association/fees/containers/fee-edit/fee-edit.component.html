@@ -1,0 +1,21 @@
+<layout-article title="Edit fee">
+  <div *ngIf="selectingMember; then member_selection else fee_form"></div>
+
+  <!-- Fee form -->
+  <ng-template #fee_form>
+    <!-- Select member -->
+    <assoc-member-selection-input [saving]="saving" [member]="member" (requestMember)="onRequestMember()"></assoc-member-selection-input>
+    <!-- Form -->
+    <assoc-fee-form [saving]="saving" [failures]="failures" [data]="fee" (save)="onSave($event)">
+    </assoc-fee-form>
+  </ng-template>
+  <!-- Member selection -->
+  <ng-template #member_selection>
+    <layout-waiting-wrapper [waiting]="readingMembers">
+      <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
+        [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
+      </assoc-member-selection>
+      <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
+    </layout-waiting-wrapper>
+  </ng-template>
+</layout-article>

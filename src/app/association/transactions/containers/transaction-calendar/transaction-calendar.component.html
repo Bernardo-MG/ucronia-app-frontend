@@ -1,0 +1,13 @@
+<layout-article title="Transactions calendar">
+  <div *ngIf="waiting; then waiting_cue else calendar"></div>
+  <ng-template #waiting_cue>
+    <div class="d-flex justify-content-center">
+      <span class="spinner-border spinner-border-sm mr-1"></span>
+    </div>
+  </ng-template>
+  <ng-template #calendar>
+    <shared-calendar-month [date]="date" [notes]="notes" [startYear]="range.startYear" [startMonth]="range.startMonth"
+      [endYear]="range.endYear" [endMonth]="range.endMonth" (dateChange)="onDateChange($event)"
+      (pickDate)="onPickDate($event)"></shared-calendar-month>
+  </ng-template>
+</layout-article>

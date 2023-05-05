@@ -51,6 +51,6 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 
 The project has been released under the [MIT License][license].
 
-[issues]: https://github.com/Bernardo-MG/dnd5-api-angular-client/issues
+[issues]: https://github.com/Bernardo-MG/association-app-frontend/issues
 [license]: http://www.opensource.org/licenses/mit-license.php
-[scm]: https://github.com/Bernardo-MG/dnd5-api-angular-client
+[scm]: https://github.com/Bernardo-MG/association-app-frontend

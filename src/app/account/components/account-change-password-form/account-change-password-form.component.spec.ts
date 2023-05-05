@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AccountChangePasswordFormComponent } from './account-change-password-form.component';
 
 describe('AccountChangePasswordFormComponent', () => {
