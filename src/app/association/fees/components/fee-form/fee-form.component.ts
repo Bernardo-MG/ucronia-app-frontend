@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Fee } from '@app/association/models/fee';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 
@@ -10,20 +11,20 @@ import { FormDescription } from '@app/shared/edition/models/form-description';
 })
 export class FeeFormComponent {
 
-  @Input() public data: any;
+  @Input() public data: Fee | null = null;
 
   @Input() public failures: Failure[] = [];
 
   @Input() public saving = false;
 
-  @Output() public save = new EventEmitter<any>();
+  @Output() public save = new EventEmitter<Fee>();
 
   public fields: FormDescription[] = [
     new FormDescription('Date', 'date', 'month'),
     new FormDescription('Paid', 'paid', 'boolean', Validators.required)
   ];
 
-  public onSave(data: any): void {
+  public onSave(data: Fee): void {
     this.save.emit(data);
   }
 

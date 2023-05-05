@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 
@@ -10,13 +11,13 @@ import { FormDescription } from '@app/shared/edition/models/form-description';
 })
 export class TransactionFormComponent {
 
-  @Input() public data: any;
+  @Input() public data: Transaction | null = null;
 
   @Input() public failures: Failure[] = [];
 
   @Input() public saving = false;
 
-  @Output() public save = new EventEmitter<any>();
+  @Output() public save = new EventEmitter<Transaction>();
 
   public fields: FormDescription[] = [
     new FormDescription('Description', 'description', 'string', Validators.required),
@@ -24,7 +25,7 @@ export class TransactionFormComponent {
     new FormDescription('Amount', 'amount', 'float', Validators.required)
   ];
 
-  public onSave(data: any): void {
+  public onSave(data: Transaction): void {
     this.save.emit(data);
   }
 
