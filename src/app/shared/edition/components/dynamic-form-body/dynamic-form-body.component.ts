@@ -20,6 +20,8 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     }
   }
 
+  @Input() public editable = true;
+
   private _fields: FormDescription[] = [];
 
   @Input() public set fields(fields: FormDescription[]) {
