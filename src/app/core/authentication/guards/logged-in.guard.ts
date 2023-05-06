@@ -9,11 +9,10 @@ import { SecurityContainer } from '../services/security-container.service';
 export const LoggedInGuard = () => {
   const router = inject(Router);
   const securityContainer = inject(SecurityContainer)
-  const logged = securityContainer.getStatus().logged;
   const loginRoute = '/login';
   let active;
 
-  if (logged) {
+  if (securityContainer.getStatus().logged) {
     // Logged in
     active = true;
   } else {
