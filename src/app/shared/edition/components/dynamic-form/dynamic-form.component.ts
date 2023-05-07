@@ -29,15 +29,22 @@ export class DynamicFormComponent {
 
   @Output() public cancel = new EventEmitter<void>();
 
-  public onSave(): void {
+  public editing = false;
+
+  public onSave() {
     this.save.emit(this.data);
+    this.editing = false;
+  }
+
+  public onStartEditing() {
+    this.editing = true;
   }
 
   public isAbleToSave() {
     return ((this.formValid) && (!this.saving));
   }
 
-  public onFormValidChange(valid: boolean): void {
+  public onFormValidChange(valid: boolean) {
     this.formValid = valid;
   }
 
@@ -47,6 +54,10 @@ export class DynamicFormComponent {
 
   public isDisabled() {
     return this.disabled || this.saving;
+  }
+
+  public isEditable() {
+    return this.editable && this.editing;
   }
 
 }
