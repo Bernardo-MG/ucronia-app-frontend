@@ -84,7 +84,10 @@ export class LoginComponent implements OnInit {
               // Redirects to the return route
               this.router.navigate([this.returnRoute]);
             }
-  
+
+            // Save again
+            this.authService.setStatus(user, this.rememberMe);
+
             // Reactivate form
             this.loading = false;
           });
