@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <!-- Table -->
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <!-- Data headers -->
@@ -13,17 +13,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of rows">
+        <tr *ngFor="let row of rows" role="button" routerLink="{{route}}/{{row.id}}">
           <!-- Data cells -->
           <td *ngFor="let cell of row.cells">
             {{cell}}
           </td>
           <!-- Button cell -->
           <td>
-            <!-- Edit icon -->
-            <button type="button" routerLink="{{route}}/{{row.id}}" class="btn btn-link link-dark" aria-label="Edit">
-              <icon-edit></icon-edit>
-            </button>
             <!-- Delete icon -->
             <button type="button" (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal"
               class="btn btn-link link-dark" aria-label="Delete">
