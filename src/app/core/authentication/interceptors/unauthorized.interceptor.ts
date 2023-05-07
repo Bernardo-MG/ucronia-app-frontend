@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class UnauthorizedErrorInterceptor implements HttpInterceptor {
 
   constructor(
-    private securityContainer: AuthService
+    private authService: AuthService
   ) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -25,7 +25,7 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           // Unauthenticated
           // Logs out
-          this.securityContainer.logout();
+          this.authService.logout();
           location.reload();
         }
 

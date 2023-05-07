@@ -14,15 +14,14 @@ export class AccountMenuComponent {
   private loginUrl = '/login';
 
   constructor(
-    private securityContainer: AuthService,
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) {
-    this.securityContainer.getStatus().subscribe(u => { this.username = u.username });
+    this.authService.getStatus().subscribe(u => { this.username = u.username });
   }
 
   public onLogout() {
-    this.loginService.logout();
+    this.authService.logout();
     this.router.navigate([this.loginUrl]);
   }
 

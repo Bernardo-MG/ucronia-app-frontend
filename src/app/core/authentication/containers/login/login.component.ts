@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginFormUser } from '../../models/login-form-user';
 import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -48,7 +49,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -67,21 +69,26 @@ export class LoginComponent implements OnInit {
     // Mark the form as loading
     this.loading = true;
 
-    this.loginService.login(login, this.rememberMe)
+    this.loginService.login(login)
       .subscribe({
         next: user => {
           // Succesful request
 
-          // The failed flag may be set, if the user didn't log in succesfully
-          this.failed = !user.logged;
-          if (!this.failed) {
-            // No problem
-            // Redirects to the return route
-            this.router.navigate([this.returnRoute]);
-          }
+          // Store user
+          this.authService.setStatus(user, this.rememberMe);
+          this.authService.loadPermissions().subscribe(p => {
+            // The failed flag may be set, if the user didn't log in succesfully
+            this.failed = !user.logged;
+            if (!this.failed) {
+              // No problem
+              // Redirects to the return route
+              this.router.navigate([this.returnRoute]);
+            }
+  
+            // Reactivate form
+            this.loading = false;
+          });
 
-          // Reactivate form
-          this.loading = false;
         },
         error: error => {
           // Failed request

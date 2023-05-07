@@ -6,7 +6,6 @@ import { SecurityStatus } from '@app/core/authentication/models/security-status'
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
-import { PermissionsSet } from '../models/permissions.set';
 
 @Injectable()
 export class LoginService {
@@ -15,15 +14,9 @@ export class LoginService {
    * Login endpoint URL.
    */
   private loginUrl = environment.apiUrl + "/login";
-  
-  /**
-   * Permissions endpoint URL.
-   */
-  private permissionUrl = environment.apiUrl + "/security/permission";
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService
+    private http: HttpClient
   ) { }
 
   /**
@@ -33,49 +26,14 @@ export class LoginService {
    * If the 'remember me' flag is active, the user will be stored in the local storage.
    * 
    * @param request login request
-   * @param rememberMe remember me flag
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityStatus> {
+  public login(request: LoginRequest): Observable<SecurityStatus> {
     return this.http
       // Login request
       .post<ApiResponse<SecurityStatus>>(this.loginUrl, request)
       // Get content
-      .pipe(map(response => response.content))
-      // Store user
-      .pipe(tap(user => this.storeUser(user, rememberMe)))
-      // Loads permissions
-      .pipe(tap(user => this.loadPermissions()));
-  }
-
-  /**
-   * Logs out the current user.
-   */
-  public logout() {
-    this.authService.logout();
-  }
-
-  /**
-   * Stores the received login details. This takes two steps, first it is stored in the local
-   * subject. Then, if the 'remember me' flag is enabled, it will be stored in the local storage.
-   * 
-   * @param loginDetails login details to store
-   * @param rememberMe remember me flag
-   */
-  private storeUser(loginDetails: SecurityStatus, rememberMe: boolean) {
-    this.authService.setStatus(loginDetails, rememberMe);
-  }
-
-  private loadPermissions() {
-    this.http
-      // Request permissions
-      .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
-      // Get content
-      .pipe(map(response => response.content))
-      // Store in user
-      .subscribe(permissions => {
-        this.authService.setPermissions(permissions.permissions);
-      });
+      .pipe(map(response => response.content));
   }
 
 }

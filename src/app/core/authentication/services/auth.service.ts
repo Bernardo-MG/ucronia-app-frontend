@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { SecurityStatus } from '../models/security-status';
+import { HttpClient } from '@angular/common/http';
+import { ApiResponse } from '@app/core/api/models/api-response';
+import { PermissionsSet } from '../models/permissions.set';
+import { environment } from 'environments/environment';
 
 /**
  * Security details container.
@@ -20,7 +24,13 @@ export class AuthService {
    */
   private statusSubject: BehaviorSubject<SecurityStatus>;
 
+  /**
+   * Permissions endpoint URL.
+   */
+  private permissionUrl = environment.apiUrl + "/security/permission";
+
   constructor(
+    private http: HttpClient
   ) {
     this.statusSubject = this.readStatusFromLocal();
   }
@@ -87,6 +97,34 @@ export class AuthService {
       // Remove stored details
       localStorage.removeItem(this.userKey);
     }
+  }
+
+  public hasPermission(resource: string, action: string): boolean {
+    let hasPermission;
+
+    const permissions = this.getCurrentStatus().permissions;
+    if (permissions != undefined) {
+      const key = resource.toUpperCase();
+      if (key in permissions) {
+        hasPermission = permissions[key].includes(action.toUpperCase());
+      } else {
+        hasPermission = false;
+      }
+    } else {
+      hasPermission = false;
+    }
+
+    return hasPermission;
+  }
+
+  public loadPermissions(): Observable<PermissionsSet> {
+    return this.http
+      // Request permissions
+      .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
+      // Get content
+      .pipe(map(response => response.content))
+      // Store in user
+      .pipe(tap(permissions => this.setPermissions(permissions.permissions)));
   }
 
   /**

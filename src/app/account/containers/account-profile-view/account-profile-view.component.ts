@@ -11,9 +11,9 @@ export class AccountProfileViewComponent {
   public account = new SecurityStatus();
 
   constructor(
-    private securityContainer: AuthService
+    private authService: AuthService
   ) {
-    this.securityContainer.getStatus().subscribe(u => { this.account = u });
+    this.authService.getStatus().subscribe(u => { this.account = u });
   }
 
 }

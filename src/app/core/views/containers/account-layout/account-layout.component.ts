@@ -31,10 +31,10 @@ export class AccountLayoutComponent {
   ];
 
   constructor(
-    private securityContainer: AuthService,
+    private authService: AuthService,
     viewService: ViewService
   ) {
-    this.securityContainer.getStatus().subscribe(u => { this.loggedIn = u.logged });
+    this.authService.getStatus().subscribe(u => { this.loggedIn = u.logged });
     this.title = viewService.getTitle();
   }
 
