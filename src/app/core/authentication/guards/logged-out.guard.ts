@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { SecurityContainer } from '../services/security-container.service';
+import { AuthService } from '../services/auth.service';
 
 /**
  * Logged out guard. Allows access only if the user in session is logged out. Otherwise redirects
@@ -8,8 +8,8 @@ import { SecurityContainer } from '../services/security-container.service';
  */
 export const LoggedOutGuard = () => {
   const router = inject(Router);
-  const securityContainer = inject(SecurityContainer)
-  const logged = securityContainer.getStatus().logged;
+  const authService = inject(AuthService)
+  const logged = authService.isLogged();
   const homeRoute = '/';
   let active;
 

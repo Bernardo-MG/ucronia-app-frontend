@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { ViewService } from '../../services/view.service';
 
 @Component({
@@ -13,10 +13,10 @@ export class HeaderLayoutComponent {
   public loggedIn = false;
 
   constructor(
-    private securityContainer: SecurityContainer,
+    private securityContainer: AuthService,
     viewService: ViewService
   ) {
-    this.securityContainer.getStatusObservable().subscribe(u => { this.loggedIn = u.logged });
+    this.securityContainer.getStatus().subscribe(u => { this.loggedIn = u.logged });
     this.title = viewService.getTitle();
   }
 

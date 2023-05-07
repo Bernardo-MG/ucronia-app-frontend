@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { SecurityContainer } from '../services/security-container.service';
+import { AuthService } from '../services/auth.service';
 import { UnauthorizedErrorInterceptor } from './unauthorized.interceptor';
 
 describe('UnauthorizedErrorInterceptor', () => {
   beforeEach(() => TestBed.configureTestingModule({
     providers: [
       UnauthorizedErrorInterceptor,
-      SecurityContainer
+      AuthService
     ]
   }));
 

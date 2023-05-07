@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SecurityStatus } from '@app/core/authentication/models/security-status';
-import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'account-profile-view',
@@ -11,9 +11,9 @@ export class AccountProfileViewComponent {
   public account = new SecurityStatus();
 
   constructor(
-    private securityContainer: SecurityContainer
+    private securityContainer: AuthService
   ) {
-    this.securityContainer.getStatusObservable().subscribe(u => { this.account = u });
+    this.securityContainer.getStatus().subscribe(u => { this.account = u });
   }
 
 }

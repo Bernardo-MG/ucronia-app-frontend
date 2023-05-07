@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { LoginRequest } from '@app/core/authentication/models/login-request';
 import { SecurityStatus } from '@app/core/authentication/models/security-status';
-import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 import { PermissionsSet } from '../models/permissions.set';
@@ -23,7 +23,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private securityContainer: SecurityContainer
+    private authService: AuthService
   ) { }
 
   /**
@@ -52,7 +52,7 @@ export class LoginService {
    * Logs out the current user.
    */
   public logout() {
-    this.securityContainer.reset();
+    this.authService.logout();
   }
 
   /**
@@ -63,7 +63,7 @@ export class LoginService {
    * @param rememberMe remember me flag
    */
   private storeUser(loginDetails: SecurityStatus, rememberMe: boolean) {
-    this.securityContainer.setStatus(loginDetails, rememberMe);
+    this.authService.setStatus(loginDetails, rememberMe);
   }
 
   private loadPermissions() {
@@ -74,8 +74,7 @@ export class LoginService {
       .pipe(map(response => response.content))
       // Store in user
       .subscribe(permissions => {
-        const status = this.securityContainer.getStatus();
-        status.permissions = permissions.permissions;
+        this.authService.setPermissions(permissions.permissions);
       });
   }
 

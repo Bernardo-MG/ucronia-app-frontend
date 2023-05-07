@@ -8,7 +8,7 @@ import { SecurityStatus } from '../models/security-status';
 @Injectable({
   providedIn: 'root',
 })
-export class SecurityContainer {
+export class AuthService {
 
   /**
    * User key for storing user status into the local storage.
@@ -26,9 +26,9 @@ export class SecurityContainer {
   }
 
   /**
-   * Clears out the authentication status. In practice this will log out the user in session.
+   * Clears out the authentication status, logging out the user in session.
    */
-  public reset() {
+  public logout() {
     // Replace local data with empty user status
     this.statusSubject.next(new SecurityStatus());
 
@@ -37,11 +37,27 @@ export class SecurityContainer {
   }
 
   /**
-   * Returns the user status for the user currently in session.
-   * @returns the user currently in session
+   * Returns the security token for the user currently in session.
+   * @returns the user security token
    */
-  public getStatus(): SecurityStatus {
-    return this.statusSubject.value;
+  public getToken(): string | undefined {
+    return this.getCurrentStatus().token;
+  }
+
+  /**
+   * Sets the permissions for the user currently in session.
+   * @param permissions  permissions for the user
+   */
+  public setPermissions(permissions: { [key: string]: string }) {
+    this.getCurrentStatus().permissions = permissions;
+  }
+
+  /**
+   * Returns if the current user is logged in.
+   * @returns if the current user is logged in
+   */
+  public isLogged(): boolean {
+    return this.statusSubject.value.logged;
   }
 
   /**
@@ -49,7 +65,7 @@ export class SecurityContainer {
    * 
    * @returns the user status for the user currently in session as an observable
    */
-  public getStatusObservable(): Observable<SecurityStatus> {
+  public getStatus(): Observable<SecurityStatus> {
     return this.statusSubject.asObservable();
   }
 
@@ -95,6 +111,14 @@ export class SecurityContainer {
     }
 
     return subject;
+  }
+
+  /**
+   * Returns the user status for the user currently in session.
+   * @returns the user currently in session
+   */
+  private getCurrentStatus(): SecurityStatus {
+    return this.statusSubject.value;
   }
 
 }
