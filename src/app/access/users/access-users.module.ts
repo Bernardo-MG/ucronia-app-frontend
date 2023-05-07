@@ -12,7 +12,7 @@ import { AccessUserFormComponent } from './components/access-user-form/access-us
 import { AccessUserRoleFormComponent } from './components/access-user-role-form/access-user-role-form.component';
 import { AccessUserRoleSelectionComponent } from './components/access-user-role-selection/access-user-role-selection.component';
 import { AccessUserCreateComponent } from './containers/access-user-create/access-user-create.component';
-import { AccessUserEditComponent } from './containers/access-user-edit/access-user-edit.component';
+import { AccessUserEditComponent } from './containers/access-user-details/access-user-details.component';
 import { AccessUserListComponent } from './containers/access-user-list/access-user-list.component';
 import { AccessUserService } from './services/access-user.service';
 

@@ -9,7 +9,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-role-form/access-user-role-form.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserEditComponent } from './access-user-edit.component';
+import { AccessUserEditComponent } from './access-user-details.component';
 
 describe('AccessUserEditComponent', () => {
   let component: AccessUserEditComponent;

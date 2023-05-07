@@ -7,8 +7,8 @@ import { User } from '@app/core/authentication/models/user';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-user-view',
-  templateUrl: './access-user-view.component.html'
+  selector: 'access-user-details',
+  templateUrl: './access-user-details.component.html'
 })
 export class AccessUserEditComponent implements OnInit {
 

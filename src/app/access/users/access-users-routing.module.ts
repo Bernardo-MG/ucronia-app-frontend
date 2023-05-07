@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccessUserCreateComponent } from './containers/access-user-create/access-user-create.component';
-import { AccessUserEditComponent } from './containers/access-user-edit/access-user-edit.component';
+import { AccessUserEditComponent } from './containers/access-user-details/access-user-details.component';
 import { AccessUserListComponent } from './containers/access-user-list/access-user-list.component';
 
 
