@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
+import { User } from '@app/core/authentication/models/user';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-role-create-view',
-  templateUrl: './access-role-create-view.component.html'
+  selector: 'access-user-create',
+  templateUrl: './access-user-create.component.html'
 })
-export class AccessRoleCreateViewComponent {
+export class AccessUserCreateComponent {
 
   /**
    * Loading flag.
@@ -18,15 +18,15 @@ export class AccessRoleCreateViewComponent {
   public failures: Failure[] = [];
 
   constructor(
-    private service: AccessRoleService,
+    private service: AccessUserService,
     private router: Router
   ) { }
 
-  public onSave(role: Role): void {
+  public onSave(user: User): void {
     this.saving = true;
-    this.service.create(role).subscribe({
+    this.service.create(user).subscribe({
       next: d => {
-        this.router.navigate([`/security/roles/${d.id}`]);
+        this.router.navigate([`/security/users/${d.id}`]);
         this.failures = [];
         // Reactivate view
         this.saving = false;

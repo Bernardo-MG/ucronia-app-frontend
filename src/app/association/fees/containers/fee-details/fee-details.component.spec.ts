@@ -9,11 +9,11 @@ import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
-import { FeeEditComponent } from './fee-edit.component';
+import { FeeDetailsComponent } from './fee-details.component';
 
-describe('FeeEditComponent', () => {
-  let component: FeeEditComponent;
-  let fixture: ComponentFixture<FeeEditComponent>;
+describe('FeeDetailsComponent', () => {
+  let component: FeeDetailsComponent;
+  let fixture: ComponentFixture<FeeDetailsComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -30,7 +30,7 @@ describe('FeeEditComponent', () => {
         EditionModule
       ],
       declarations: [
-        FeeEditComponent,
+        FeeDetailsComponent,
         MemberSelectionComponent,
         FeeFormComponent,
         MemberSelectionInputComponent
@@ -41,7 +41,7 @@ describe('FeeEditComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeEditComponent);
+    fixture = TestBed.createComponent(FeeDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,10 +6,10 @@ import { Failure } from '@app/core/api/models/failure';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'assoc-fee-edit',
-  templateUrl: './fee-edit.component.html'
+  selector: 'assoc-fee-details',
+  templateUrl: './fee-details.component.html'
 })
-export class FeeEditComponent implements OnInit, AfterContentInit {
+export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   /**
    * Saving flag.

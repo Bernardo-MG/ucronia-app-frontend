@@ -2,40 +2,38 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CoreModule } from '@app/core/core.module';
 import { EditionModule } from '@app/shared/edition/edition.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserCreateViewComponent } from './access-user-create-view.component';
+import { MemberFormComponent } from '../../components/member-form/member-form.component';
+import { MemberService } from '../../services/member.service';
+import { MemberDetailsComponent } from './member-details.component';
 
-describe('AccessUserCreateViewComponent', () => {
-  let component: AccessUserCreateViewComponent;
-  let fixture: ComponentFixture<AccessUserCreateViewComponent>;
+describe('MemberDetailsComponent', () => {
+  let component: MemberDetailsComponent;
+  let fixture: ComponentFixture<MemberDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         RouterTestingModule,
-        FontAwesomeModule,
+        HttpClientTestingModule,
+        CoreModule,
         ReactiveFormsModule,
-        IconsModule,
         LayoutModule,
         EditionModule
       ],
       declarations: [
-        AccessUserCreateViewComponent,
-        AccessUserFormComponent
+        MemberDetailsComponent,
+        MemberFormComponent
       ],
       providers: [
-        AccessUserService
+        MemberService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserCreateViewComponent);
+    fixture = TestBed.createComponent(MemberDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,11 +5,11 @@ import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserListViewComponent } from './access-user-list-view.component';
+import { AccessUserListComponent } from './access-user-list.component';
 
-describe('AccessUserListViewComponent', () => {
-  let component: AccessUserListViewComponent;
-  let fixture: ComponentFixture<AccessUserListViewComponent>;
+describe('AccessUserListComponent', () => {
+  let component: AccessUserListComponent;
+  let fixture: ComponentFixture<AccessUserListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('AccessUserListViewComponent', () => {
         LayoutModule
       ],
       declarations: [
-        AccessUserListViewComponent
+        AccessUserListComponent
       ],
       providers: [
         AccessUserService
@@ -29,7 +29,7 @@ describe('AccessUserListViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserListViewComponent);
+    fixture = TestBed.createComponent(AccessUserListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

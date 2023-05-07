@@ -7,10 +7,10 @@ import { Role } from '@app/core/authentication/models/role';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-edit-view',
-  templateUrl: './access-role-edit-view.component.html'
+  selector: 'access-role-details',
+  templateUrl: './access-role-details.component.html'
 })
-export class AccessRoleEditViewComponent implements OnInit {
+export class AccessRoleDetailsComponent implements OnInit {
 
   /**
    * Loading flag.

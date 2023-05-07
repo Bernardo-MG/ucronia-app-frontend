@@ -6,10 +6,10 @@ import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/obse
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-list-view',
-  templateUrl: './access-role-list-view.component.html'
+  selector: 'access-role-list',
+  templateUrl: './access-role-list.component.html'
 })
-export class AccessRoleListViewComponent implements OnInit {
+export class AccessRoleListComponent implements OnInit {
 
   /**
    * Loading flag.

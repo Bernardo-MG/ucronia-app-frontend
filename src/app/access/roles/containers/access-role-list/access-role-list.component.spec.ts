@@ -5,11 +5,11 @@ import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessRoleService } from '../../services/access-role.service';
-import { AccessRoleListViewComponent } from './access-role-list-view.component';
+import { AccessRoleListComponent } from './access-role-list.component';
 
-describe('AccessRoleListViewComponent', () => {
-  let component: AccessRoleListViewComponent;
-  let fixture: ComponentFixture<AccessRoleListViewComponent>;
+describe('AccessRoleListComponent', () => {
+  let component: AccessRoleListComponent;
+  let fixture: ComponentFixture<AccessRoleListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('AccessRoleListViewComponent', () => {
         LayoutModule
       ],
       declarations: [
-        AccessRoleListViewComponent
+        AccessRoleListComponent
       ],
       providers: [
         AccessRoleService
@@ -29,7 +29,7 @@ describe('AccessRoleListViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleListViewComponent);
+    fixture = TestBed.createComponent(AccessRoleListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

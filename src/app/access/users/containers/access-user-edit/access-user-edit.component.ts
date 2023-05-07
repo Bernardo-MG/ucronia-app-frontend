@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Failure } from '@app/core/api/models/failure';
+import { PageInfo } from '@app/core/api/models/page-info';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
-import { PageInfo } from '@app/core/api/models/page-info';
 import { AccessUserService } from '../../services/access-user.service';
-import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'access-user-edit-view',
-  templateUrl: './access-user-edit-view.component.html'
+  selector: 'access-user-view',
+  templateUrl: './access-user-view.component.html'
 })
-export class AccessUserEditViewComponent implements OnInit {
+export class AccessUserEditComponent implements OnInit {
 
   /**
    * Loading flag.

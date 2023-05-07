@@ -5,37 +5,35 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
-import { AccessRoleService } from '../../services/access-role.service';
-import { AccessRoleCreateViewComponent } from './access-role-create-view.component';
+import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
+import { TransactionService } from '../../service/transaction.service';
+import { TransactionDetailsComponent } from './transaction-details.component';
 
-describe('AccessRoleCreateViewComponent', () => {
-  let component: AccessRoleCreateViewComponent;
-  let fixture: ComponentFixture<AccessRoleCreateViewComponent>;
+describe('TransactionDetailsComponent', () => {
+  let component: TransactionDetailsComponent;
+  let fixture: ComponentFixture<TransactionDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         RouterTestingModule,
-        FontAwesomeModule,
+        HttpClientTestingModule,
         ReactiveFormsModule,
         IconsModule,
         LayoutModule,
         EditionModule
       ],
       declarations: [
-        AccessRoleCreateViewComponent,
-        AccessRoleFormComponent
+        TransactionDetailsComponent,
+        TransactionFormComponent
       ],
       providers: [
-        AccessRoleService
+        TransactionService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleCreateViewComponent);
+    fixture = TestBed.createComponent(TransactionDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

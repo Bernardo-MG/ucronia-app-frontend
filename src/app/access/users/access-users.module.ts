@@ -11,9 +11,9 @@ import { AccessUserRoutingModule } from './access-users-routing.module';
 import { AccessUserFormComponent } from './components/access-user-form/access-user-form.component';
 import { AccessUserRoleFormComponent } from './components/access-user-role-form/access-user-role-form.component';
 import { AccessUserRoleSelectionComponent } from './components/access-user-role-selection/access-user-role-selection.component';
-import { AccessUserCreateViewComponent } from './containers/access-user-create-view/access-user-create-view.component';
-import { AccessUserEditViewComponent } from './containers/access-user-edit-view/access-user-edit-view.component';
-import { AccessUserListViewComponent } from './containers/access-user-list-view/access-user-list-view.component';
+import { AccessUserCreateComponent } from './containers/access-user-create/access-user-create.component';
+import { AccessUserEditComponent } from './containers/access-user-edit/access-user-edit.component';
+import { AccessUserListComponent } from './containers/access-user-list/access-user-list.component';
 import { AccessUserService } from './services/access-user.service';
 
 
@@ -21,9 +21,9 @@ import { AccessUserService } from './services/access-user.service';
 @NgModule({
   declarations: [
     AccessUserFormComponent,
-    AccessUserCreateViewComponent,
-    AccessUserEditViewComponent,
-    AccessUserListViewComponent,
+    AccessUserCreateComponent,
+    AccessUserEditComponent,
+    AccessUserListComponent,
     AccessUserRoleFormComponent,
     AccessUserRoleSelectionComponent
   ],

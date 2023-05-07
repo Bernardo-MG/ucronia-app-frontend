@@ -5,10 +5,10 @@ import { Failure } from '@app/core/api/models/failure';
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'assoc-member-edit',
-  templateUrl: './member-edit.component.html'
+  selector: 'assoc-member-details',
+  templateUrl: './member-details.component.html'
 })
-export class MemberEditComponent implements OnInit {
+export class MemberDetailsComponent implements OnInit {
 
   /**
    * Saving flag.

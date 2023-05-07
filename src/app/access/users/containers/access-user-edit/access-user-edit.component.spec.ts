@@ -5,35 +5,39 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberFormComponent } from '../../components/member-form/member-form.component';
-import { MemberService } from '../../services/member.service';
-import { MemberEditComponent } from './member-edit.component';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
+import { AccessUserRoleFormComponent } from '../../components/access-user-role-form/access-user-role-form.component';
+import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserEditComponent } from './access-user-edit.component';
 
-describe('MemberEditComponent', () => {
-  let component: MemberEditComponent;
-  let fixture: ComponentFixture<MemberEditComponent>;
+describe('AccessUserEditComponent', () => {
+  let component: AccessUserEditComponent;
+  let fixture: ComponentFixture<AccessUserEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        CoreModule,
+        RouterTestingModule,
         ReactiveFormsModule,
+        CoreModule,
+        PaginationModule,
         LayoutModule,
         EditionModule
       ],
       declarations: [
-        MemberEditComponent,
-        MemberFormComponent
+        AccessUserEditComponent,
+        AccessUserFormComponent,
+        AccessUserRoleFormComponent
       ],
       providers: [
-        MemberService
+        AccessUserService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberEditComponent);
+    fixture = TestBed.createComponent(AccessUserEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

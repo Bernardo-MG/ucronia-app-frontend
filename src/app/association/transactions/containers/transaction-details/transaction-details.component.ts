@@ -5,10 +5,10 @@ import { Failure } from '@app/core/api/models/failure';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'assoc-transaction-edit',
-  templateUrl: './transaction-edit.component.html'
+  selector: 'assoc-transaction-details',
+  templateUrl: './transaction-details.component.html'
 })
-export class TransactionEditComponent implements OnInit {
+export class TransactionDetailsComponent implements OnInit {
 
   /**
    * Loading flag.

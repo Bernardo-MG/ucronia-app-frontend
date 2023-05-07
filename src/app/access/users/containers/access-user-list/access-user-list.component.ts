@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-user-list-view',
-  templateUrl: './access-user-list-view.component.html'
+  selector: 'access-user-list',
+  templateUrl: './access-user-list.component.html'
 })
-export class AccessUserListViewComponent implements OnInit {
+export class AccessUserListComponent implements OnInit {
 
   /**
    * Loading flag.

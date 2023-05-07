@@ -10,11 +10,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
 import { AccessRolePrivilegeFormComponent } from '../../components/access-role-privilege-form/access-role-privilege-form.component';
 import { AccessRoleService } from '../../services/access-role.service';
-import { AccessRoleEditViewComponent } from './access-role-edit-view.component';
+import { AccessRoleDetailsComponent } from './access-role-details.component';
 
-describe('AccessRoleEditViewComponent', () => {
-  let component: AccessRoleEditViewComponent;
-  let fixture: ComponentFixture<AccessRoleEditViewComponent>;
+describe('AccessRoleEditComponent', () => {
+  let component: AccessRoleDetailsComponent;
+  let fixture: ComponentFixture<AccessRoleDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,7 +30,7 @@ describe('AccessRoleEditViewComponent', () => {
         EditionModule
       ],
       declarations: [
-        AccessRoleEditViewComponent,
+        AccessRoleDetailsComponent,
         AccessRoleFormComponent,
         AccessRolePrivilegeFormComponent
       ],
@@ -40,7 +40,7 @@ describe('AccessRoleEditViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleEditViewComponent);
+    fixture = TestBed.createComponent(AccessRoleDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
