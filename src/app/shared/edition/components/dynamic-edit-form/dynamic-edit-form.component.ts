@@ -3,10 +3,10 @@ import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '../../models/form-description';
 
 @Component({
-  selector: 'edition-dynamic-form',
-  templateUrl: './dynamic-form.component.html'
+  selector: 'edition-dynamic-edit-form',
+  templateUrl: './dynamic-edit-form.component.html'
 })
-export class DynamicFormComponent {
+export class DynamicEditFormComponent {
 
   /**
    * Saving flag.
@@ -29,15 +29,28 @@ export class DynamicFormComponent {
 
   @Output() public cancel = new EventEmitter<void>();
 
-  public onSave(): void {
+  @Output() public delete = new EventEmitter<any>();
+
+  public editing = false;
+
+  public onSave() {
     this.save.emit(this.data);
+    this.editing = false;
+  }
+
+  public onStartEditing() {
+    this.editing = true;
+  }
+
+  public onDelete() {
+    this.delete.emit(this.data);
   }
 
   public isAbleToSave() {
     return ((this.formValid) && (!this.saving));
   }
 
-  public onFormValidChange(valid: boolean): void {
+  public onFormValidChange(valid: boolean) {
     this.formValid = valid;
   }
 
@@ -47,6 +60,10 @@ export class DynamicFormComponent {
 
   public isDisabled() {
     return this.disabled || this.saving;
+  }
+
+  public isEditable() {
+    return this.editable && this.editing;
   }
 
 }
