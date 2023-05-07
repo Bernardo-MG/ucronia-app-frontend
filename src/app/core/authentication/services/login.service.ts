@@ -6,6 +6,7 @@ import { SecurityStatus } from '@app/core/authentication/models/security-status'
 import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
+import { PermissionsSet } from '../models/permissions.set';
 
 @Injectable()
 export class LoginService {
@@ -14,6 +15,11 @@ export class LoginService {
    * Login endpoint URL.
    */
   private loginUrl = environment.apiUrl + "/login";
+  
+  /**
+   * Permissions endpoint URL.
+   */
+  private permissionUrl = environment.apiUrl + "/security/permission";
 
   constructor(
     private http: HttpClient,
@@ -36,8 +42,10 @@ export class LoginService {
       .post<ApiResponse<SecurityStatus>>(this.loginUrl, request)
       // Get content
       .pipe(map(response => response.content))
-      // Store use
-      .pipe(tap(user => this.storeUser(user, rememberMe)));
+      // Store user
+      .pipe(tap(user => this.storeUser(user, rememberMe)))
+      // Loads permissions
+      .pipe(tap(user => this.loadPermissions()));
   }
 
   /**
@@ -56,6 +64,19 @@ export class LoginService {
    */
   private storeUser(loginDetails: SecurityStatus, rememberMe: boolean) {
     this.securityContainer.setStatus(loginDetails, rememberMe);
+  }
+
+  private loadPermissions() {
+    this.http
+      // Request permissions
+      .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
+      // Get content
+      .pipe(map(response => response.content))
+      // Store in user
+      .subscribe(permissions => {
+        const status = this.securityContainer.getStatus();
+        status.permissions = permissions.permissions;
+      });
   }
 
 }
