@@ -6,8 +6,6 @@ import { Menu } from '@app/shared/menu/models/menu';
 })
 export class ViewService {
 
-  constructor() { }
-
   public getTitle() : string {
     return 'Association App Frontend';
   }
