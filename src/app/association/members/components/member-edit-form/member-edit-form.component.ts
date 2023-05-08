@@ -19,6 +19,8 @@ export class MemberEditFormComponent {
 
   @Output() public save = new EventEmitter<Member>();
 
+  @Output() public delete = new EventEmitter<Member>();
+
   public fields: FormDescription[] = [
     new FormDescription('Name', 'name', 'string', Validators.required),
     new FormDescription('Surname', 'surname', 'string'),
@@ -29,6 +31,10 @@ export class MemberEditFormComponent {
 
   public onSave(data: Member): void {
     this.save.emit(data);
+  }
+
+  public onDelete(data: Member): void {
+    this.delete.emit(data);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { MemberService } from '../../services/member.service';
@@ -25,6 +25,7 @@ export class MemberDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private service: MemberService
   ) { }
 
@@ -47,6 +48,12 @@ export class MemberDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
       }
+    });
+  }
+
+  public onDelete(data: Member): void {
+    this.service.delete(data.id).subscribe(r => {
+      this.router.navigate([`/members/list`]);
     });
   }
 
