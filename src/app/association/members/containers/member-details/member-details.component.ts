@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
-import { MemberService } from '../../services/member.service';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { FormDescription } from '@app/shared/edition/models/form-description';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-details',
@@ -26,12 +27,16 @@ export class MemberDetailsComponent implements OnInit {
 
   public failures: Failure[] = [];
 
+  public fields: FormDescription[];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
     private authService: AuthService
-  ) {}
+  ) {
+    this.fields = service.getFields();
+  }
 
   public ngOnInit(): void {
     this.editable = this.authService.hasPermission("member", "update");
