@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
-import { SecurityStatus } from '../models/security-status';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { PermissionsSet } from '../models/permissions.set';
 import { environment } from 'environments/environment';
+import { BehaviorSubject, Observable, ReplaySubject, map, tap } from 'rxjs';
+import { PermissionsSet } from '../models/permissions.set';
+import { SecurityStatus } from '../models/security-status';
 
 /**
  * Security details container.
@@ -22,17 +22,22 @@ export class AuthService {
   /**
    * Subject with the user status.
    */
-  private statusSubject: BehaviorSubject<SecurityStatus>;
+  private statusSubject: ReplaySubject<SecurityStatus> = new ReplaySubject<SecurityStatus>(1);
 
   /**
    * Permissions endpoint URL.
    */
   private permissionUrl = environment.apiUrl + "/security/permission";
 
+  private status: SecurityStatus = new SecurityStatus();
+
   constructor(
     private http: HttpClient
   ) {
-    this.statusSubject = this.readStatusFromLocal();
+    this.statusSubject.subscribe((s) => {
+      this.status = s;
+    });
+    this.loadStatusFromLocal();
   }
 
   /**
@@ -51,7 +56,7 @@ export class AuthService {
    * @returns the user security token
    */
   public getToken(): string | undefined {
-    return this.getCurrentStatus().token;
+    return this.status.token;
   }
 
   /**
@@ -59,7 +64,7 @@ export class AuthService {
    * @param permissions  permissions for the user
    */
   public setPermissions(permissions: { [key: string]: string }) {
-    this.getCurrentStatus().permissions = permissions;
+    this.status.permissions = permissions;
   }
 
   /**
@@ -67,7 +72,7 @@ export class AuthService {
    * @returns if the current user is logged in
    */
   public isLogged(): boolean {
-    return this.statusSubject.value.logged;
+    return this.status.logged;
   }
 
   /**
@@ -102,7 +107,7 @@ export class AuthService {
   public hasPermission(resource: string, action: string): boolean {
     let hasPermission;
 
-    const permissions = this.getCurrentStatus().permissions;
+    const permissions = this.status.permissions;
     if (permissions != undefined) {
       const key = resource.toUpperCase();
       if (key in permissions) {
@@ -133,7 +138,7 @@ export class AuthService {
    * 
    * @returns the user stored in the local storage as part of the 'remember me'
    */
-  private readStatusFromLocal(): BehaviorSubject<SecurityStatus> {
+  private loadStatusFromLocal() {
     let subject: BehaviorSubject<SecurityStatus>;
 
     // If the user was stored, load it
@@ -141,22 +146,13 @@ export class AuthService {
     if (localUser) {
       // User found in local storage
       const readUser = JSON.parse(localUser);
-      subject = new BehaviorSubject<SecurityStatus>(readUser);
+      this.statusSubject.next(readUser);
     } else {
       // User not found
       // Use default user
+      this.statusSubject.next(new SecurityStatus());
       subject = new BehaviorSubject<SecurityStatus>(new SecurityStatus());
     }
-
-    return subject;
-  }
-
-  /**
-   * Returns the user status for the user currently in session.
-   * @returns the user currently in session
-   */
-  private getCurrentStatus(): SecurityStatus {
-    return this.statusSubject.value;
   }
 
 }

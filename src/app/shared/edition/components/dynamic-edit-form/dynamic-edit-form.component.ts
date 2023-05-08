@@ -17,7 +17,9 @@ export class DynamicEditFormComponent {
 
   @Input() public disabled = false;
 
-  @Input() public editable = true;
+  @Input() public editable = false;
+
+  @Input() public deletable = false;
 
   @Input() public fields: FormDescription[] = [];
 

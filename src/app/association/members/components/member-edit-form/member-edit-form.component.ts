@@ -17,6 +17,10 @@ export class MemberEditFormComponent {
 
   @Input() public saving = false;
 
+  @Input() public editable = false;
+
+  @Input() public deletable = false;
+
   @Output() public save = new EventEmitter<Member>();
 
   @Output() public delete = new EventEmitter<Member>();

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { MemberService } from '../../services/member.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-member-details',
@@ -14,8 +15,10 @@ export class MemberDetailsComponent implements OnInit {
    * Saving flag.
    */
   public saving = false;
-  
-  public editable = true;
+
+  public editable = false;
+
+  public deletable = false;
 
   public formValid = false;
 
@@ -26,10 +29,14 @@ export class MemberDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: MemberService
-  ) { }
+    private service: MemberService,
+    private authService: AuthService
+  ) {}
 
   public ngOnInit(): void {
+    this.editable = this.authService.hasPermission("member", "update");
+    this.deletable = this.authService.hasPermission("member", "delete");
+
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
