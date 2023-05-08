@@ -6,7 +6,6 @@ import { EditionModule } from '@app/shared/edition/edition.module';
 import { LoginComponent } from './containers/login/login.component';
 import { JwtAuthenticationInterceptor } from './interceptors/jwt-authentication.interceptor';
 import { UnauthorizedErrorInterceptor } from './interceptors/unauthorized.interceptor';
-import { AuthService } from './services/auth.service';
 import { LoginService } from './services/login.service';
 
 
@@ -22,7 +21,6 @@ import { LoginService } from './services/login.service';
     EditionModule
   ],
   providers: [
-    AuthService,
     LoginService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtAuthenticationInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedErrorInterceptor, multi: true }
