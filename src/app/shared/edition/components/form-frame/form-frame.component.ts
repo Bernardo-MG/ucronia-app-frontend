@@ -29,7 +29,7 @@ export class FormFrameComponent {
   }
 
   public isDisabled() {
-    return this.disabled || !this.isAbleToSave();
+    return this.disabled || !this.editable || !this.isAbleToSave();
   }
 
   private isAbleToSave() {

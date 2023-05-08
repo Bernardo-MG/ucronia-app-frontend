@@ -14,6 +14,8 @@ export class MemberDetailsComponent implements OnInit {
    * Saving flag.
    */
   public saving = false;
+  
+  public editable = true;
 
   public formValid = false;
 

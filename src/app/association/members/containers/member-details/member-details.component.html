@@ -1,4 +1,11 @@
 <layout-article title="Edit member">
-  <assoc-member-edit-form [saving]="saving" [failures]="failures" [data]="member" (save)="onSave($event)">
-  </assoc-member-edit-form>
+  <div *ngIf="editable; then editForm else infoForm"></div>
+  <ng-template #editForm>
+    <assoc-member-edit-form [saving]="saving" [failures]="failures" [data]="member" (save)="onSave($event)">
+    </assoc-member-edit-form>
+  </ng-template>
+  <ng-template #infoForm>
+    <edition-dynamic-info-form [data]="member">
+    </edition-dynamic-info-form>
+  </ng-template>
 </layout-article>
