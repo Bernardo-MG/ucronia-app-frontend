@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionDetailsComponent } from './transaction-details.component';
 
@@ -24,8 +23,7 @@ describe('TransactionDetailsComponent', () => {
         EditionModule
       ],
       declarations: [
-        TransactionDetailsComponent,
-        TransactionFormComponent
+        TransactionDetailsComponent
       ],
       providers: [
         TransactionService

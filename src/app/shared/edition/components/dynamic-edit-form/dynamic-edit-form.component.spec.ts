@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '../../../layout/layout.module';
 import { DynamicFormBodyComponent } from '../dynamic-form-body/dynamic-form-body.component';
 import { FormFrameComponent } from '../form-frame/form-frame.component';
@@ -13,7 +14,8 @@ describe('DynamicEditFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         LayoutModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        IconsModule
       ],
       declarations: [
         DynamicEditFormComponent,

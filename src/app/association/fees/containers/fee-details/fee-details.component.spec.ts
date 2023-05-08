@@ -5,11 +5,11 @@ import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { EMPTY } from 'rxjs';
-import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeDetailsComponent } from './fee-details.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('FeeDetailsComponent', () => {
   let component: FeeDetailsComponent;
@@ -17,8 +17,9 @@ describe('FeeDetailsComponent', () => {
   let service: FeeService;
 
   beforeEach(async () => {
-    service = jasmine.createSpyObj('FeeService', ['getMembers']);
+    service = jasmine.createSpyObj('FeeService', ['getMembers', 'getFields']);
     (service as any).getMembers.and.returnValue(EMPTY);
+    (service as any).getFields.and.returnValue([]);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -27,12 +28,12 @@ describe('FeeDetailsComponent', () => {
         ReactiveFormsModule,
         IconsModule,
         LayoutModule,
-        EditionModule
+        EditionModule,
+        HttpClientTestingModule
       ],
       declarations: [
         FeeDetailsComponent,
         MemberSelectionComponent,
-        FeeFormComponent,
         MemberSelectionInputComponent
       ],
       providers: [
