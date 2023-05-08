@@ -31,7 +31,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.form.setControl('id', new FormControl(-1));
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      this.form.setControl(definition.property, new FormControl(undefined, definition.validator));
+      this.form.setControl(definition.property, new FormControl({value: undefined, disabled: true}, definition.validator));
     }
   }
 
