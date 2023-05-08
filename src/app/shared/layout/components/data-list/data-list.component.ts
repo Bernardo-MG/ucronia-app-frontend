@@ -18,16 +18,4 @@ export class DataListComponent {
 
   @Input() public route = '';
 
-  @Output() public delete = new EventEmitter<number>();
-
-  private selected = 0;
-
-  public onSelect(id: number) {
-    this.selected = id;
-  }
-
-  public onDelete() {
-    this.delete.emit(this.selected);
-  }
-
 }

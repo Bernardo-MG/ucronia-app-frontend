@@ -4,6 +4,7 @@ import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { FeeService } from '../../services/fee.service';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
   selector: 'assoc-fee-create',
@@ -30,11 +31,15 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public failures: Failure[] = [];
 
+  public fields: FormDescription[];
+
   constructor(
     private service: FeeService,
     private router: Router,
     private cdRef: ChangeDetectorRef
-  ) { }
+  ) {
+    this.fields = service.getFields();
+  }
 
   ngAfterContentInit(): void {
     this.cdRef.detectChanges();

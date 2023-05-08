@@ -16,6 +16,8 @@ export class FormFrameComponent {
 
   @Input() public disabled = false;
 
+  @Input() public editable = true;
+
   @Output() public save = new EventEmitter<void>();
 
   @Output() public cancel = new EventEmitter<void>();
@@ -27,7 +29,7 @@ export class FormFrameComponent {
   }
 
   public isDisabled() {
-    return this.disabled || !this.isAbleToSave();
+    return this.disabled || !this.editable || !this.isAbleToSave();
   }
 
   private isAbleToSave() {

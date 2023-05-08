@@ -1,0 +1,12 @@
+<layout-article title="Edit member">
+  <div *ngIf="editable; then editForm else infoForm"></div>
+  <ng-template #editForm>
+    <edition-dynamic-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving" [fields]="fields"
+      [failures]="failures" [data]="member" (save)="onSave($event)" (delete)="onDelete($event)">
+    </edition-dynamic-edit-form>
+  </ng-template>
+  <ng-template #infoForm>
+    <edition-dynamic-info-form [fields]="fields" [data]="member">
+    </edition-dynamic-info-form>
+  </ng-template>
+</layout-article>
