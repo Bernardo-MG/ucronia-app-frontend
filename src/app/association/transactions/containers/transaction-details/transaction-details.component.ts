@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
+import { AuthService } from '@app/core/authentication/services/auth.service';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -15,18 +17,31 @@ export class TransactionDetailsComponent implements OnInit {
    */
   public saving = false;
 
+  public editable = false;
+
+  public deletable = false;
+
   public transaction: Transaction = new Transaction();
 
   public failures: Failure[] = [];
 
   public formValid = false;
 
+  public fields: FormDescription[];
+
   constructor(
     private route: ActivatedRoute,
-    private service: TransactionService
-  ) { }
+    private router: Router,
+    private service: TransactionService,
+    private authService: AuthService
+  ) {
+    this.fields = service.getFields();
+  }
 
   ngOnInit(): void {
+    this.editable = this.authService.hasPermission("transaction", "update");
+    this.deletable = this.authService.hasPermission("transaction", "delete");
+
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
@@ -45,6 +60,12 @@ export class TransactionDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
       }
+    });
+  }
+
+  public onDelete(data: Transaction): void {
+    this.service.delete(data.id).subscribe(r => {
+      this.router.navigate([`/transactions/list`]);
     });
   }
 

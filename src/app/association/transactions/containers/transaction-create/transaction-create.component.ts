@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -17,10 +18,14 @@ export class TransactionCreateComponent {
 
   public failures: Failure[] = [];
 
+  public fields: FormDescription[];
+
   constructor(
     private service: TransactionService,
     private router: Router
-  ) { }
+  ) {
+    this.fields = service.getFields();
+  }
 
   public onSave(data: Transaction): void {
     this.saving = true;

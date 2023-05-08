@@ -1,8 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
+import { AuthService } from '@app/core/authentication/services/auth.service';
+import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -15,6 +17,10 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
    * Saving flag.
    */
   public saving = false;
+
+  public editable = false;
+
+  public deletable = false;
 
   public readingMembers = false;
 
@@ -32,17 +38,26 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public failures: Failure[] = [];
 
+  public fields: FormDescription[];
+
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private service: FeeService,
-    private cdRef: ChangeDetectorRef
-  ) { }
+    private cdRef: ChangeDetectorRef,
+    private authService: AuthService
+  ) {
+    this.fields = service.getFields();
+  }
 
   ngAfterContentInit(): void {
     this.cdRef.detectChanges();
   }
 
   public ngOnInit(): void {
+    this.editable = this.authService.hasPermission("fee", "update");
+    this.deletable = this.authService.hasPermission("fee", "delete");
+
     this.onGoToMembersPage(0);
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
@@ -62,6 +77,12 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         // Reactivate view
         this.saving = false;
       }
+    });
+  }
+
+  public onDelete(data: Member): void {
+    this.service.delete(data.id).subscribe(r => {
+      this.router.navigate([`/fees/list`]);
     });
   }
 

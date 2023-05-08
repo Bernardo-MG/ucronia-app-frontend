@@ -1,4 +1,12 @@
 <layout-article title="Edit transaction">
-  <assoc-transaction-form [saving]="saving" [failures]="failures" [data]="transaction" (save)="onSave($event)">
-  </assoc-transaction-form>
+  <div *ngIf="editable; then editForm else infoForm"></div>
+  <ng-template #editForm>
+    <edition-dynamic-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving" [fields]="fields"
+      [failures]="failures" [data]="transaction" (save)="onSave($event)" (delete)="onDelete($event)">
+    </edition-dynamic-edit-form>
+  </ng-template>
+  <ng-template #infoForm>
+    <edition-dynamic-info-form [fields]="fields" [data]="transaction">
+    </edition-dynamic-info-form>
+  </ng-template>
 </layout-article>
