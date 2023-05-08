@@ -13,10 +13,6 @@ export class DynamicEditFormComponent {
    */
   @Input() public saving = false;
 
-  @Input() public formValid = false;
-
-  @Input() public disabled = false;
-
   @Input() public editable = false;
 
   @Input() public deletable = false;
@@ -32,6 +28,8 @@ export class DynamicEditFormComponent {
   @Output() public cancel = new EventEmitter<void>();
 
   @Output() public delete = new EventEmitter<any>();
+
+  public formValid = false;
 
   public editing = false;
 
@@ -61,7 +59,7 @@ export class DynamicEditFormComponent {
   }
 
   public isDisabled() {
-    return this.disabled || this.saving;
+    return this.saving;
   }
 
   public isEditable() {

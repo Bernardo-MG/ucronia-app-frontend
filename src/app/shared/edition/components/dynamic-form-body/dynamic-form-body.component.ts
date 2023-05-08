@@ -10,7 +10,7 @@ import { FormDescription } from '../../models/form-description';
 export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
   /**
-   * Disabled flag.
+   * Disabled form flag.
    */
   @Input() set disabled(flag: boolean) {
     if (flag) {
@@ -20,6 +20,9 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * Editable inputs form.
+   */
   @Input() public editable = true;
 
   private _fields: FormDescription[] = [];
@@ -31,7 +34,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     this.form.setControl('id', new FormControl(-1));
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      this.form.setControl(definition.property, new FormControl({value: undefined, disabled: true}, definition.validator));
+      this.form.setControl(definition.property, new FormControl({value: undefined, disabled: !definition.editable}, definition.validator));
     }
   }
 
