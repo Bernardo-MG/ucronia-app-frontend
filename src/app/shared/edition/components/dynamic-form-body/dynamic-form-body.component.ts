@@ -36,17 +36,10 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     group['id'] = new FormControl(-1);
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      group[definition.property] = new FormControl(undefined);
+      group[definition.property] = new FormControl(undefined, definition.validator);
     }
 
     this.form = this.fb.group(group);
-
-    for (let i = 0; i < fields.length; i++) {
-      const definition = fields[i];
-      if (definition.validator != null) {
-        this.form.controls[definition.property].setValidators([definition.validator]);
-      }
-    }
   }
 
   public get fields(): FormDescription[] {
