@@ -28,7 +28,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   private _fields: FormDescription[] = [];
 
   @Input() public set fields(fields: FormDescription[]) {
-    const group:{ [key: string]: any } = {};
+    const group: { [key: string]: any } = {};
 
     this._fields = fields;
 
@@ -36,10 +36,17 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
     group['id'] = new FormControl(-1);
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      group[definition.property] = new FormControl({ value: undefined, disabled: !definition.editable }, definition.validator);
+      group[definition.property] = new FormControl(undefined);
     }
 
     this.form = this.fb.group(group);
+
+    for (let i = 0; i < fields.length; i++) {
+      const definition = fields[i];
+      if (definition.validator != null) {
+        this.form.controls[definition.property].setValidators([definition.validator]);
+      }
+    }
   }
 
   public get fields(): FormDescription[] {
