@@ -28,14 +28,18 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   private _fields: FormDescription[] = [];
 
   @Input() public set fields(fields: FormDescription[]) {
+    const group: { [key: string]: any } = {};
+
     this._fields = fields;
 
     // Id always exists
-    this.form.setControl('id', new FormControl(-1));
+    group['id'] = new FormControl(-1);
     for (let i = 0; i < fields.length; i++) {
       const definition = fields[i];
-      this.form.setControl(definition.property, new FormControl({value: undefined, disabled: !definition.editable}, definition.validator));
+      group[definition.property] = new FormControl(undefined, definition.validator);
     }
+
+    this.form = this.fb.group(group);
   }
 
   public get fields(): FormDescription[] {
