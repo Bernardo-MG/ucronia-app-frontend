@@ -66,4 +66,12 @@ export class DynamicEditFormComponent {
     return this.editable && this.editing;
   }
 
+  public isAbleToEdit() {
+    return !this.saving && this.editable && this.editing;
+  }
+
+  public isAbleToDelete() {
+    return !this.saving && !this.deletable && !this.editing;
+  }
+
 }
