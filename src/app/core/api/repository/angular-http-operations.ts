@@ -111,7 +111,8 @@ export class AngularHttpOperations implements HttpOperations {
 
       paged = false;
       if (pagination.page) {
-        params = params.set('page', pagination.page);
+        // Pages start at 0
+        params = params.set('page', pagination.page - 1);
         paged = true;
       }
       if (pagination.size) {

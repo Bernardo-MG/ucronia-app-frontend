@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ViewService } from '../../services/view.service';
 
 @Component({
   selector: 'view-centered-layout',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
 })
 export class CenteredLayoutComponent {
 
-  public title = 'Association App Frontend';
+  public title ;
+
+  constructor(
+    viewService: ViewService
+  ) {
+    this.title = viewService.getTitle();
+  }
 
 }

@@ -10,11 +10,10 @@ import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.com
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeeCalendarInfoComponent } from './containers/fee-calendar-info/fee-calendar-info.component';
 import { FeeCreateComponent } from './containers/fee-create/fee-create.component';
-import { FeeEditComponent } from './containers/fee-edit/fee-edit.component';
+import { FeeDetailsComponent } from './containers/fee-details/fee-details.component';
 import { FeeListComponent } from './containers/fee-list/fee-list.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
-import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { MemberSelectionInputComponent } from './components/member-selection-input/member-selection-input.component';
 
 
@@ -25,9 +24,8 @@ import { MemberSelectionInputComponent } from './components/member-selection-inp
     FeeCalendarInfoComponent,
     FeeCreateComponent,
     FeeListComponent,
-    FeeEditComponent,
+    FeeDetailsComponent,
     MemberSelectionComponent,
-    FeeFormComponent,
     MemberSelectionInputComponent
   ],
   imports: [

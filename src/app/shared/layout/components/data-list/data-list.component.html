@@ -1,34 +1,20 @@
 <div class="card">
   <div class="card-body">
     <!-- Table -->
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <!-- Data headers -->
           <th *ngFor="let cell of header" scope="col">
             <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
           </th>
-          <!-- Empty header for the buttons -->
-          <th> </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of rows">
+        <tr *ngFor="let row of rows" role="button" routerLink="{{route}}/{{row.id}}">
           <!-- Data cells -->
           <td *ngFor="let cell of row.cells">
             {{cell}}
-          </td>
-          <!-- Button cell -->
-          <td>
-            <!-- Edit icon -->
-            <button type="button" routerLink="{{route}}/{{row.id}}" class="btn btn-link link-dark" aria-label="Edit">
-              <icon-edit></icon-edit>
-            </button>
-            <!-- Delete icon -->
-            <button type="button" (click)="onSelect(row.id)" data-bs-toggle="modal" data-bs-target="#deleteModal"
-              class="btn btn-link link-dark" aria-label="Delete">
-              <icon-delete></icon-delete>
-            </button>
           </td>
         </tr>
       </tbody>
@@ -36,23 +22,6 @@
     <div class="d-flex justify-content-center mt-1">
       <pagination-route-navigation [totalPages]="totalPages" [disabled]="disabled">
       </pagination-route-navigation>
-    </div>
-
-    <!-- Modal cofirmation for delete -->
-    <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body">
-            <p>Are you sure you want to delete the data?</p>
-            <p class="text-warning"><small>This action cannot be undone.</small></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
-            <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">delete</button>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

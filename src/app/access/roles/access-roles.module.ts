@@ -11,9 +11,9 @@ import { AccessRoleRoutingModule } from './access-roles-routing.module';
 import { AccessRoleFormComponent } from './components/access-role-form/access-role-form.component';
 import { AccessRolePrivilegeFormComponent } from './components/access-role-privilege-form/access-role-privilege-form.component';
 import { AccessRolePrivilegeSelectionComponent } from './components/access-role-privilege-selection/access-role-privilege-selection.component';
-import { AccessRoleCreateViewComponent } from './containers/access-role-create-view/access-role-create-view.component';
-import { AccessRoleEditViewComponent } from './containers/access-role-edit-view/access-role-edit-view.component';
-import { AccessRoleListViewComponent } from './containers/access-role-list-view/access-role-list-view.component';
+import { AccessRoleCreateComponent } from './containers/access-role-create/access-role-create.component';
+import { AccessRoleDetailsComponent } from './containers/access-role-details/access-role-details.component';
+import { AccessRoleListComponent } from './containers/access-role-list/access-role-list.component';
 import { AccessRoleService } from './services/access-role.service';
 
 
@@ -21,9 +21,9 @@ import { AccessRoleService } from './services/access-role.service';
 @NgModule({
   declarations: [
     AccessRoleFormComponent,
-    AccessRoleCreateViewComponent,
-    AccessRoleEditViewComponent,
-    AccessRoleListViewComponent,
+    AccessRoleCreateComponent,
+    AccessRoleDetailsComponent,
+    AccessRoleListComponent,
     AccessRolePrivilegeFormComponent,
     AccessRolePrivilegeSelectionComponent,
   ],

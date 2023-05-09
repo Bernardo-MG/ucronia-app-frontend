@@ -1,3 +1,4 @@
+
 /**
  * Security status for a user.
  */
@@ -14,4 +15,8 @@ export class SecurityStatus {
    * Authentication token for the user.
    */
   token?: string;
+  /**
+   * User permissions.
+   */
+  permissions?: { [key: string]: string };
 }

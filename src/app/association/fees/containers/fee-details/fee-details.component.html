@@ -1,0 +1,31 @@
+<layout-article title="Edit fee">
+  <div *ngIf="editable; then editForm else infoForm"></div>
+  <ng-template #editForm>
+    <div *ngIf="selectingMember; then member_selection else fee_form"></div>
+
+    <!-- Fee form -->
+    <ng-template #fee_form>
+      <!-- Select member -->
+      <assoc-member-selection-input [saving]="saving" [member]="member"
+        (requestMember)="onRequestMember()"></assoc-member-selection-input>
+      <!-- Form -->
+      <edition-dynamic-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving" [fields]="fields"
+        [failures]="failures" [data]="fee" (save)="onSave($event)" (delete)="onDelete($event)">
+      </edition-dynamic-edit-form>
+    </ng-template>
+    <!-- Member selection -->
+    <ng-template #member_selection>
+      <layout-waiting-wrapper [waiting]="readingMembers">
+        <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
+          [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
+        </assoc-member-selection>
+        <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()"
+          aria-label="Cancel">Cancel</button>
+      </layout-waiting-wrapper>
+    </ng-template>
+  </ng-template>
+  <ng-template #infoForm>
+    <edition-dynamic-info-form [fields]="fields" [data]="fee">
+    </edition-dynamic-info-form>
+  </ng-template>
+</layout-article>

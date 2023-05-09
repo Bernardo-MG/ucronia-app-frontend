@@ -1,6 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SecurityContainer } from '@app/core/authentication/services/security-container.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { HeaderLayoutComponent } from './header-layout.component';
 
@@ -11,14 +12,15 @@ describe('HeaderLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [
         HeaderLayoutComponent,
         NavbarComponent
       ],
       providers: [
-        SecurityContainer
+        AuthService
       ]
     })
       .compileComponents();

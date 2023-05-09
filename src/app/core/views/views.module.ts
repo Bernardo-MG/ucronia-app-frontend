@@ -5,7 +5,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { MainLayoutComponent } from './containers/main-layout/main-layout.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AccountLayoutComponent } from './containers/account-layout/account-layout.component';
 import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
