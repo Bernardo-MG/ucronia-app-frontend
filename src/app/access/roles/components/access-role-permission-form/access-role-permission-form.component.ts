@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Permission } from '@app/core/authentication/models/permission';
 
 @Component({
-  selector: 'access-role-privilege-form',
+  selector: 'access-role-permission-form',
   templateUrl: './access-role-permission-form.component.html'
 })
 export class AccessRolePermissionFormComponent {

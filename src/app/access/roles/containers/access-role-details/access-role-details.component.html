@@ -4,9 +4,9 @@
   <ng-template #role_edition>
     <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form>
     <layout-waiting-wrapper [waiting]="waitingPermissions">
-      <access-role-privilege-form (addPermission)="onShowAddPermission()" (removePermission)="onRemovePermission($event)"
+      <access-role-permission-form (addPermission)="onShowAddPermission()" (removePermission)="onRemovePermission($event)"
         [permissions]="permissions">
-      </access-role-privilege-form>
+      </access-role-permission-form>
       <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
         (goTo)="onGoToPermissionPage($event)">
       </pagination-navigation>
