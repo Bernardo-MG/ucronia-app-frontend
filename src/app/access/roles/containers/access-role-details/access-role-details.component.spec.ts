@@ -8,7 +8,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
-import { AccessRolePrivilegeFormComponent } from '../../components/access-role-privilege-form/access-role-privilege-form.component';
+import { AccessRolePrivilegeFormComponent } from '../../components/access-role-permission-form/access-role-permission-form.component';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleDetailsComponent } from './access-role-details.component';
 

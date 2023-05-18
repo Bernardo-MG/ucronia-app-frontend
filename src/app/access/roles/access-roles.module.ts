@@ -9,8 +9,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleRoutingModule } from './access-roles-routing.module';
 import { AccessRoleFormComponent } from './components/access-role-form/access-role-form.component';
-import { AccessRolePrivilegeFormComponent } from './components/access-role-privilege-form/access-role-privilege-form.component';
-import { AccessRolePrivilegeSelectionComponent } from './components/access-role-privilege-selection/access-role-privilege-selection.component';
+import { AccessRolePermissionFormComponent } from './components/access-role-permission-form/access-role-permission-form.component';
 import { AccessRoleCreateComponent } from './containers/access-role-create/access-role-create.component';
 import { AccessRoleDetailsComponent } from './containers/access-role-details/access-role-details.component';
 import { AccessRoleListComponent } from './containers/access-role-list/access-role-list.component';
@@ -24,8 +23,7 @@ import { AccessRoleService } from './services/access-role.service';
     AccessRoleCreateComponent,
     AccessRoleDetailsComponent,
     AccessRoleListComponent,
-    AccessRolePrivilegeFormComponent,
-    AccessRolePrivilegeSelectionComponent,
+    AccessRolePermissionFormComponent,
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,4 @@
-export class Privilege {
+export class Action {
   id = -1;
   name = '';
 }
