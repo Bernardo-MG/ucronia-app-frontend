@@ -7,19 +7,23 @@
     <tr>
       <th scope="col"></th>
       <th scope="col">
-        <pagination-order-button property="name"></pagination-order-button>name
+        <pagination-order-button property="resource"></pagination-order-button>Resource
+      </th>
+      <th scope="col">
+        <pagination-order-button property="action"></pagination-order-button>Action
       </th>
     </tr>
   </thead>
   <tbody>
-    <ng-template ngFor let-privilege [ngForOf]="privileges">
+    <ng-template ngFor let-privilege [ngForOf]="permissions">
       <tr>
         <td>
           <button (click)="onRemove(privilege)" type="button" class="btn btn-default" role="button" aria-label="Back">
             <icon-delete></icon-delete>
           </button>
         </td>
-        <td>{{privilege.name}}</td>
+        <td>{{privilege.resource}}</td>
+        <td>{{privilege.action}}</td>
       </tr>
     </ng-template>
   </tbody>

@@ -3,11 +3,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { AccessRolePrivilegeFormComponent } from './access-role-privilege-form.component';
+import { AccessRolePermissionFormComponent } from './access-role-permission-form.component';
 
-describe('AccessRolePrivilegeFormComponent', () => {
-  let component: AccessRolePrivilegeFormComponent;
-  let fixture: ComponentFixture<AccessRolePrivilegeFormComponent>;
+describe('AccessRolePermissionFormComponent', () => {
+  let component: AccessRolePermissionFormComponent;
+  let fixture: ComponentFixture<AccessRolePermissionFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,12 +19,12 @@ describe('AccessRolePrivilegeFormComponent', () => {
         PaginationModule
       ],
       declarations: [
-        AccessRolePrivilegeFormComponent
+        AccessRolePermissionFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRolePrivilegeFormComponent);
+    fixture = TestBed.createComponent(AccessRolePermissionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
