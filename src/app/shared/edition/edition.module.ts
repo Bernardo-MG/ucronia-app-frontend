@@ -7,7 +7,6 @@ import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { DynamicInfoFormComponent } from './components/dynamic-info-form/dynamic-info-form.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
 
 
 
@@ -17,8 +16,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     DynamicEditFormComponent,
     DynamicInfoFormComponent,
     DynamicFormBodyComponent,
-    FormFrameComponent,
-    LoginFormComponent
+    FormFrameComponent
   ],
   imports: [
     CommonModule,
@@ -29,9 +27,7 @@ import { LoginFormComponent } from './components/login-form/login-form.component
     DynamicFormComponent,
     DynamicEditFormComponent,
     DynamicInfoFormComponent,
-    DynamicFormBodyComponent,
-    FormFrameComponent,
-    LoginFormComponent
+    FormFrameComponent
   ]
 })
 export class EditionModule { }
