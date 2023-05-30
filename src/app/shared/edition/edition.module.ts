@@ -5,8 +5,8 @@ import { IconsModule } from '../icons/icons.module';
 import { DynamicEditFormComponent } from './components/dynamic-edit-form/dynamic-edit-form.component';
 import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic-form-body.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
-import { DynamicInfoFormComponent } from './components/dynamic-info-form/dynamic-info-form.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
+import { InfoFormComponent } from './components/info-form/info-form.component';
 
 
 
@@ -14,7 +14,7 @@ import { FormFrameComponent } from './components/form-frame/form-frame.component
   declarations: [
     DynamicFormComponent,
     DynamicEditFormComponent,
-    DynamicInfoFormComponent,
+    InfoFormComponent,
     DynamicFormBodyComponent,
     FormFrameComponent
   ],
@@ -26,7 +26,7 @@ import { FormFrameComponent } from './components/form-frame/form-frame.component
   exports: [
     DynamicFormComponent,
     DynamicEditFormComponent,
-    DynamicInfoFormComponent,
+    InfoFormComponent,
     FormFrameComponent
   ]
 })

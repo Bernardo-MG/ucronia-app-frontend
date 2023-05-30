@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { FormDescription } from '../../models/form-description';
 
 @Component({
-  selector: 'edition-dynamic-info-form',
-  templateUrl: './dynamic-info-form.component.html'
+  selector: 'edition-info-form',
+  templateUrl: './info-form.component.html'
 })
-export class DynamicInfoFormComponent {
+export class InfoFormComponent {
 
   @Input() public fields: FormDescription[] = [];
 
