@@ -4,7 +4,7 @@
         <input type="text" id="{{property}}Input" formControlName="{{property}}" [readonly]="!editable"
             class="form-control" [ngClass]="{ 'is-invalid': invalid }" attr.aria-describedby="{{property}}Label">
         <div class="invalid-feedback" *ngFor="let failure of failures">
-            <span *ngIf="failure.field === property">{{failure.message}}</span>
+            {{failure.message}}
         </div>
     </div>
 </div>
