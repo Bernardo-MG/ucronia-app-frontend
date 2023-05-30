@@ -96,11 +96,11 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   }
 
   public getFailures(property: string): Failure[] {
-    const map = this.fieldFailures;
     let failures: Failure[];
 
-    if (map.get(property)) {
-      failures = (map.get(property) as Failure[]);
+    const found = this.fieldFailures.get(property);
+    if (found) {
+      failures = (found as Failure[]);
     } else {
       failures = [];
     }
