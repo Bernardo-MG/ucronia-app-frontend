@@ -92,7 +92,7 @@ export class DynamicFormBodyComponent implements OnInit, OnChanges {
   }
 
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.fieldFailures.get(property) !== undefined);
+    return (this.form.get(property)?.invalid) || (this.fieldFailures.has(property));
   }
 
   public getFailures(property: string): Failure[] {
