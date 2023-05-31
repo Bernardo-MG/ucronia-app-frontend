@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DecimalInputComponent } from './decimal-input.component';
+import { NumberInputComponent } from './number-input.component';
 
-describe('DecimalInputComponent', () => {
-  let component: DecimalInputComponent;
-  let fixture: ComponentFixture<DecimalInputComponent>;
+describe('NumberInputComponent', () => {
+  let component: NumberInputComponent;
+  let fixture: ComponentFixture<NumberInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DecimalInputComponent ]
+      declarations: [ NumberInputComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DecimalInputComponent);
+    fixture = TestBed.createComponent(NumberInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

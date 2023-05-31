@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BooleanInputComponent } from './components/boolean-input/boolean-input.component';
 import { DateInputComponent } from './components/date-input/date-input.component';
-import { DecimalInputComponent } from './components/decimal-input/decimal-input.component';
+import { NumberInputComponent } from './components/number-input/number-input.component';
 import { MonthInputComponent } from './components/month-input/month-input.component';
 import { StringInputComponent } from './components/string-input/string-input.component';
 
@@ -13,7 +13,7 @@ import { StringInputComponent } from './components/string-input/string-input.com
   declarations: [
     StringInputComponent,
     BooleanInputComponent,
-    DecimalInputComponent,
+    NumberInputComponent,
     DateInputComponent,
     MonthInputComponent
   ],
@@ -24,7 +24,7 @@ import { StringInputComponent } from './components/string-input/string-input.com
   exports: [
     StringInputComponent,
     BooleanInputComponent,
-    DecimalInputComponent,
+    NumberInputComponent,
     DateInputComponent,
     MonthInputComponent
   ]

@@ -2,27 +2,27 @@
   <!-- For each field definition -->
   <ng-template ngFor let-field [ngForOf]="fields">
     <!-- String input -->
-    <ng-template [ngIf]="field.type === 'string'">
+    <ng-template [ngIf]="field.type === FormType.string">
       <input-string [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
         [name]="field.name" [failures]="getFailures(field.property)"></input-string>
     </ng-template>
     <!-- Boolean input -->
-    <ng-template [ngIf]="field.type === 'boolean'">
+    <ng-template [ngIf]="field.type === FormType.boolean">
       <input-boolean [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
         [name]="field.name" [failures]="getFailures(field.property)"></input-boolean>
     </ng-template>
     <!-- Decimal input -->
-    <ng-template [ngIf]="field.type === 'float'">
-      <input-decimal [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
-        [name]="field.name" [failures]="getFailures(field.property)"></input-decimal>
+    <ng-template [ngIf]="field.type === FormType.number">
+      <input-number [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-number>
     </ng-template>
     <!-- Date input -->
-    <ng-template [ngIf]="field.type === 'date'">
+    <ng-template [ngIf]="field.type === FormType.date">
       <input-date [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
         [name]="field.name" [failures]="getFailures(field.property)"></input-date>
     </ng-template>
     <!-- Month input -->
-    <ng-template [ngIf]="field.type === 'month'">
+    <ng-template [ngIf]="field.type === FormType.month">
       <input-month [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
         [name]="field.name" [failures]="getFailures(field.property)"></input-month>
     </ng-template>

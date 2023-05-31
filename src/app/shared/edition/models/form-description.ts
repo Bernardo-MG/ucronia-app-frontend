@@ -9,7 +9,7 @@ export class FormDescription {
   constructor(
     name: string,
     property: string,
-    type: string,
+    type: FormType,
     validator: ValidatorFn | null = null
   ) {
     this.name = name;

@@ -9,6 +9,8 @@ import { FormDescription } from '../../models/form-description';
 })
 export class DynamicFormBodyComponent implements OnInit, OnChanges {
 
+  readonly FormType = FormType;
+
   /**
    * Disabled form flag.
    */
