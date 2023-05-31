@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
+import { FormType } from '@app/shared/edition/models/form-type';
 
 @Component({
   selector: 'access-user-form',
@@ -18,13 +19,13 @@ export class AccessUserFormComponent {
   @Output() public save = new EventEmitter<any>();
 
   public fields: FormDescription[] = [
-    new FormDescription('Username', 'username', 'string', Validators.required),
-    new FormDescription('Name', 'name', 'string', Validators.required),
-    new FormDescription('Email', 'email', 'string', Validators.required),
-    new FormDescription('Credentials expired', 'credentialsExpired', 'boolean', Validators.required),
-    new FormDescription('Enabled', 'enabled', 'boolean', Validators.required),
-    new FormDescription('Expired', 'expired', 'boolean', Validators.required),
-    new FormDescription('Locked', 'locked', 'boolean', Validators.required)
+    new FormDescription('Username', 'username', FormType.string, Validators.required),
+    new FormDescription('Name', 'name', FormType.string, Validators.required),
+    new FormDescription('Email', 'email', FormType.string, Validators.required),
+    new FormDescription('Credentials expired', 'credentialsExpired', FormType.boolean, Validators.required),
+    new FormDescription('Enabled', 'enabled', FormType.boolean, Validators.required),
+    new FormDescription('Expired', 'expired', FormType.boolean, Validators.required),
+    new FormDescription('Locked', 'locked', FormType.boolean, Validators.required)
   ];
 
   public onSave(data: any): void {

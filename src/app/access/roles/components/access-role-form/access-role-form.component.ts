@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '@app/shared/edition/models/form-description';
+import { FormType } from '@app/shared/edition/models/form-type';
 
 @Component({
   selector: 'access-role-form',
@@ -18,7 +19,7 @@ export class AccessRoleFormComponent {
   @Output() public save = new EventEmitter<any>();
 
   public fields: FormDescription[] = [
-    new FormDescription('Name', 'name', 'string', Validators.required)
+    new FormDescription('Name', 'name', FormType.string, Validators.required)
   ];
 
   public onSave(data: any): void {

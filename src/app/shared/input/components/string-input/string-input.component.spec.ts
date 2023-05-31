@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { StringInputComponent } from './string-input.component';
 
 describe('StringInputComponent', () => {
@@ -8,7 +8,12 @@ describe('StringInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StringInputComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [ 
+        StringInputComponent 
+      ]
     })
     .compileComponents();
 

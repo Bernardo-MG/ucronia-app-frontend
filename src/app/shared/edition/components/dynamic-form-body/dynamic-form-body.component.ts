@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 import { FormDescription } from '../../models/form-description';
+import { FormType } from '../../models/form-type';
 
 @Component({
   selector: 'edition-dynamic-form-body',

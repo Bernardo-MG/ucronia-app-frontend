@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { BooleanInputComponent } from './boolean-input.component';
 
 describe('BooleanInputComponent', () => {
@@ -8,7 +8,12 @@ describe('BooleanInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BooleanInputComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+         BooleanInputComponent 
+        ]
     })
     .compileComponents();
 

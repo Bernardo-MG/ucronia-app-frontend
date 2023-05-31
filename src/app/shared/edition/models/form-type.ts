@@ -1,4 +1,4 @@
-enum FormType {
+export enum FormType {
     string,
     boolean,
     number,

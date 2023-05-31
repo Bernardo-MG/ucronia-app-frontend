@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { MonthInputComponent } from './month-input.component';
 
 describe('MonthInputComponent', () => {
@@ -8,7 +8,12 @@ describe('MonthInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonthInputComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [ 
+        MonthInputComponent 
+      ]
     })
     .compileComponents();
 

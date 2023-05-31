@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { FormDescription } from '@app/shared/edition/models/form-description';
+import { FormType } from '@app/shared/edition/models/form-type';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
-import { Validators } from '@angular/forms';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Injectable()
 export class TransactionService {
@@ -48,9 +49,9 @@ export class TransactionService {
 
   public getFields(): FormDescription[] {
     return [
-      new FormDescription('Description', 'description', 'string', Validators.required),
-      new FormDescription('Date', 'date', 'date', Validators.required),
-      new FormDescription('Amount', 'amount', 'float', Validators.required)
+      new FormDescription('Description', 'description', FormType.string, Validators.required),
+      new FormDescription('Date', 'date', FormType.date, Validators.required),
+      new FormDescription('Amount', 'amount', FormType.number, Validators.required)
     ];
   }
 

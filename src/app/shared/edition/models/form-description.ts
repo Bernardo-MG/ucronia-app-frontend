@@ -1,4 +1,5 @@
 import { ValidatorFn } from "@angular/forms";
+import { FormType } from "./form-type";
 
 export class FormDescription {
   name;

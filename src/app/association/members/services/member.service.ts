@@ -5,6 +5,7 @@ import { AssociationApiClient } from '@app/core/api/client/association-api-clien
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { FormDescription } from '@app/shared/edition/models/form-description';
+import { FormType } from '@app/shared/edition/models/form-type';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
@@ -40,11 +41,11 @@ export class MemberService {
 
   public getFields(): FormDescription[] {
     return [
-      new FormDescription('Name', 'name', 'string', Validators.required),
-      new FormDescription('Surname', 'surname', 'string'),
-      new FormDescription('Identifier', 'identifier', 'string'),
-      new FormDescription('Phone', 'phone', 'string'),
-      new FormDescription('Active', 'active', 'boolean', Validators.required)
+      new FormDescription('Name', 'name', FormType.string, Validators.required),
+      new FormDescription('Surname', 'surname', FormType.string),
+      new FormDescription('Identifier', 'identifier', FormType.string),
+      new FormDescription('Phone', 'phone', FormType.string),
+      new FormDescription('Active', 'active', FormType.boolean, Validators.required)
     ];
   }
 
