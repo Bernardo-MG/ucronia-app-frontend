@@ -17,7 +17,8 @@ export class LoginFormComponent {
   private _waiting = false;
 
   @Input() public set waiting(flag: boolean) {
-    if (flag) {
+    this._waiting = flag;
+    if (this._waiting) {
       this.form.disable();
     } else {
       this.form.enable();
