@@ -1,0 +1,12 @@
+<div class="row mb-2">
+    <label for="{{property}}Input" id="{{property}}Label"
+        class="col-sm-2 col-form-label">{{name}}</label>
+    <div class="col-sm-10">
+        <input type="date" id="{{property}}Input" attr.aria-describedby="{{property}}Label"
+            formControlName="{{property}}" [readonly]="!editable" class="form-control"
+            [ngClass]="{ 'is-invalid': invalid }">
+        <div class="invalid-feedback" *ngFor="let failure of failures">
+            <span *ngIf="failure.field === property">{{failure.message}}</span>
+        </div>
+    </div>
+</div>

@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'input-string',
-  templateUrl: './string-input.component.html',
-  styleUrls: ['./string-input.component.sass']
+  selector: 'input-decimal',
+  templateUrl: './decimal-input.component.html',
+  styleUrls: ['./decimal-input.component.sass']
 })
-export class StringInputComponent {
+export class DecimalInputComponent {
 
   /**
    * Editable inputs form.

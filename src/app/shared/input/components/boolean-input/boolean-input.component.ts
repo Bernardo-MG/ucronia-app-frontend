@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'input-string',
-  templateUrl: './string-input.component.html',
-  styleUrls: ['./string-input.component.sass']
+  selector: 'input-boolean',
+  templateUrl: './boolean-input.component.html',
+  styleUrls: ['./boolean-input.component.sass']
 })
-export class StringInputComponent {
+export class BooleanInputComponent {
 
   /**
    * Editable inputs form.

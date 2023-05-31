@@ -1,0 +1,12 @@
+<div class="row mb-2">
+    <div class="col-sm-10 offset-sm-2">
+        <input type="checkbox" id="{{property}}Input" formControlName="{{property}}" [readonly]="!editable"
+            class="form-check-input" [ngClass]="{ 'is-invalid': invalid }"
+            attr.aria-describedby="{{property}}Label">
+        <label for="{{property}}Input" id="{{property}}Label"
+            class="form-check-label ps-1">{{name}}</label>
+        <div class="invalid-feedback" *ngFor="let failure of failures">
+            {{failure.message}}
+        </div>
+    </div>
+</div>

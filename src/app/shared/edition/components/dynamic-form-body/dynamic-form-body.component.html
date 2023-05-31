@@ -3,62 +3,28 @@
   <ng-template ngFor let-field [ngForOf]="fields">
     <!-- String input -->
     <ng-template [ngIf]="field.type === 'string'">
-      <edition-string-input [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
-        [name]="field.name" [failures]="getFailures(field.property)"></edition-string-input>
+      <input-string [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-string>
     </ng-template>
-    <div class="row mb-2">
-      <!-- Boolean input -->
-      <ng-template [ngIf]="field.type === 'boolean'">
-        <div class="col-sm-10 offset-sm-2">
-          <input type="checkbox" id="{{field.property}}Input" formControlName="{{field.property}}"
-            [readonly]="!editable" class="form-check-input" [ngClass]="{ 'is-invalid': isInvalid(field.property) }"
-            attr.aria-describedby="{{field.property}}Label">
-          <label for="{{field.property}}Input" id="{{field.property}}Label"
-            class="form-check-label ps-1">{{field.name}}</label>
-          <div class="invalid-feedback" *ngFor="let failure of getFailures(field.property)">
-            <span *ngIf="failure.field === field.property">{{failure.message}}</span>
-          </div>
-        </div>
-      </ng-template>
-      <!-- Float input -->
-      <ng-template [ngIf]="field.type === 'float'">
-        <label for="{{field.property}}Input" id="{{field.property}}Label"
-          class="col-sm-2 col-form-label">{{field.name}}</label>
-        <div class="col-sm-10">
-          <input type="number" step="any" id="{{field.property}}Input" formControlName="{{field.property}}"
-            [readonly]="!editable" class="form-control" [ngClass]="{ 'is-invalid': isInvalid(field.property) }"
-            attr.aria-describedby="{{field.property}}Label">
-          <div class="invalid-feedback" *ngFor="let failure of getFailures(field.property)">
-            <span *ngIf="failure.field === field.property">{{failure.message}}</span>
-          </div>
-        </div>
-      </ng-template>
-      <!-- Date input -->
-      <ng-template [ngIf]="field.type === 'date'">
-        <label for="{{field.property}}Input" id="{{field.property}}Label"
-          class="col-sm-2 col-form-label">{{field.name}}</label>
-        <div class="col-sm-10">
-          <input type="date" id="{{field.property}}Input" attr.aria-describedby="{{field.property}}Label"
-            formControlName="{{field.property}}" [readonly]="!editable" class="form-control"
-            [ngClass]="{ 'is-invalid': isInvalid(field.property) }">
-          <div class="invalid-feedback" *ngFor="let failure of getFailures(field.property)">
-            <span *ngIf="failure.field === field.property">{{failure.message}}</span>
-          </div>
-        </div>
-      </ng-template>
-      <!-- Month input -->
-      <ng-template [ngIf]="field.type === 'month'">
-        <label for="{{field.property}}Input" id="{{field.property}}Label"
-          class="col-sm-2 col-form-label">{{field.name}}</label>
-        <div class="col-sm-10">
-          <input type="month" id="{{field.property}}Input" attr.aria-describedby="{{field.property}}Label"
-            formControlName="{{field.property}}" [readonly]="!editable" class="form-control"
-            [ngClass]="{ 'is-invalid': isInvalid(field.property) }">
-          <div class="invalid-feedback" *ngFor="let failure of getFailures(field.property)">
-            <span *ngIf="failure.field === field.property">{{failure.message}}</span>
-          </div>
-        </div>
-      </ng-template>
-    </div>
+    <!-- Boolean input -->
+    <ng-template [ngIf]="field.type === 'boolean'">
+      <input-boolean [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-boolean>
+    </ng-template>
+    <!-- Decimal input -->
+    <ng-template [ngIf]="field.type === 'float'">
+      <input-decimal [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-decimal>
+    </ng-template>
+    <!-- Date input -->
+    <ng-template [ngIf]="field.type === 'date'">
+      <input-date [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-date>
+    </ng-template>
+    <!-- Month input -->
+    <ng-template [ngIf]="field.type === 'month'">
+      <input-month [editable]="editable" [invalid]="isInvalid(field.property)" [property]="field.property"
+        [name]="field.name" [failures]="getFailures(field.property)"></input-month>
+    </ng-template>
   </ng-template>
 </form>

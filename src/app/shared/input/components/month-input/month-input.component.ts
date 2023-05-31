@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'input-string',
-  templateUrl: './string-input.component.html',
-  styleUrls: ['./string-input.component.sass']
+  selector: 'input-month',
+  templateUrl: './month-input.component.html',
+  styleUrls: ['./month-input.component.sass']
 })
-export class StringInputComponent {
+export class MonthInputComponent {
 
   /**
    * Editable inputs form.
