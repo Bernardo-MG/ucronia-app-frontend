@@ -7,7 +7,7 @@ import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
 import { InfoFormComponent } from './components/info-form/info-form.component';
-import { StringInputComponent } from './components/string-input/string-input.component';
+import { InputModule } from '../input/input.module';
 
 
 
@@ -17,13 +17,13 @@ import { StringInputComponent } from './components/string-input/string-input.com
     DynamicEditFormComponent,
     InfoFormComponent,
     DynamicFormBodyComponent,
-    FormFrameComponent,
-    StringInputComponent
+    FormFrameComponent
   ],
   imports: [
     CommonModule,
     IconsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputModule
   ],
   exports: [
     DynamicFormComponent,
