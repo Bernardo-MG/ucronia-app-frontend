@@ -7,7 +7,6 @@ import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
 import { InfoFormComponent } from './components/info-form/info-form.component';
-import { InputModule } from '../input/input.module';
 
 
 
@@ -22,8 +21,7 @@ import { InputModule } from '../input/input.module';
   imports: [
     CommonModule,
     IconsModule,
-    ReactiveFormsModule,
-    InputModule
+    ReactiveFormsModule
   ],
   exports: [
     DynamicFormComponent,

@@ -6,7 +6,6 @@ import { IconsModule } from './icons/icons.module';
 import { LayoutModule } from './layout/layout.module';
 import { MenuModule } from './menu/menu.module';
 import { PaginationModule } from './pagination/pagination.module';
-import { AuthenticationModule } from './authentication/authentication.module';
 
 
 
@@ -18,8 +17,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     CalendarModule,
     MenuModule,
     LayoutModule,
-    EditionModule,
-    AuthenticationModule
+    EditionModule
   ],
   exports: [
     CommonModule,
@@ -28,8 +26,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
     CalendarModule,
     MenuModule,
     LayoutModule,
-    EditionModule,
-    AuthenticationModule
+    EditionModule
   ]
 })
 export class SharedModule { }
