@@ -49,4 +49,8 @@ export class DynamicFormComponent {
     return this.disabled || this.saving;
   }
 
+  public isSaveDisabled() {
+    return !this.editable || !this.isAbleToSave();
+  }
+
 }

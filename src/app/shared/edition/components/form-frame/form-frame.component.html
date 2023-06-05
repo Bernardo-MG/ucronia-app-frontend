@@ -13,8 +13,8 @@
         </ng-template>
         <ng-template #save>
           <!-- Save button-->
-          <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="isDisabled()"
-            [attr.aria-disabled]="isDisabled()" aria-label="Save">Save</button>
+          <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="saveDisabled"
+            [attr.aria-disabled]="saveDisabled" aria-label="Save">Save</button>
         </ng-template>
       </div>
     </div>

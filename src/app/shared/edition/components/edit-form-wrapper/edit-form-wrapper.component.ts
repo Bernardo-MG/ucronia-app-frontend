@@ -57,16 +57,16 @@ export class EditFormWrapperComponent {
     return this.saving;
   }
 
-  public isEditable() {
-    return this.editable && this.editing;
-  }
-
   public isAbleToEdit() {
     return !this.saving && this.editable && this.editing;
   }
 
   public isAbleToDelete() {
     return !this.saving && this.deletable && !this.editing;
+  }
+
+  public isSaveDisabled() {
+    return !this.editable || !this.isAbleToSave();
   }
 
 }

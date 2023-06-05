@@ -10,6 +10,11 @@ import { FormDescription } from '../../models/form-description';
 export class FormBaseComponent implements OnInit, OnChanges {
 
   /**
+   * Loading flag.
+   */
+  @Input() public saving = false;
+
+  /**
    * Disabled form flag.
    */
   @Input() set disabled(flag: boolean) {
@@ -71,7 +76,7 @@ export class FormBaseComponent implements OnInit, OnChanges {
 
   public form: FormGroup = this.fb.group({});
 
-  public formValid = false;
+  public valid = false;
 
   constructor(
     private fb: FormBuilder
@@ -91,30 +96,21 @@ export class FormBaseComponent implements OnInit, OnChanges {
     this.save.emit(this.form.value);
   }
 
-  public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.fieldFailures.has(property));
-  }
-
-  public getFailures(property: string): Failure[] {
-    let failures: Failure[];
-
-    const found = this.fieldFailures.get(property);
-    if (found) {
-      failures = (found as Failure[]);
-    } else {
-      failures = [];
-    }
-
-    return failures;
-  }
-
   private listenForChanges() {
     this.form.statusChanges.subscribe(status => {
-      this.formValid = (status === "VALID");
+      this.valid = (status === "VALID");
     });
     this.form.valueChanges.subscribe(value => {
       this.valueChange.emit(value);
     });
+  }
+
+  public isSaveDisabled() {
+    return !this.editable || !this.isAbleToSave();
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }

@@ -8,11 +8,6 @@ import { FormBaseComponent } from '@app/shared/edition/components/form-base/form
 })
 export class MemberEditFormComponent extends FormBaseComponent {
 
-  /**
-   * Loading flag.
-   */
-  @Input() public saving = false;
-
   @Input() public deletable = false;
 
   @Output() public delete = new EventEmitter<Member>();
@@ -24,7 +19,7 @@ export class MemberEditFormComponent extends FormBaseComponent {
   }
 
   public onValidChange(valid: boolean) {
-    this.formValid = valid;
+    this.valid = valid;
   }
 
   public onFormChange(value: any) {

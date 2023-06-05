@@ -1,5 +1,5 @@
 <div>
-  <edition-form-frame [editable]="isEditable()" [saving]="saving" [formValid]="valid" (save)="onSave()">
+  <edition-form-frame [saving]="saving" [saveDisabled]="isSaveDisabled()" (save)="onSave()">
     <div class="btn-group me-2" role="group">
       <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="isAbleToEdit()"
         aria-label="Edit">

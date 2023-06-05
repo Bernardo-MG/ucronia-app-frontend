@@ -74,4 +74,8 @@ export class DynamicEditFormComponent {
     return !this.saving && !this.deletable && !this.editing;
   }
 
+  public isSaveDisabled() {
+    return !this.editable || !this.isAbleToSave();
+  }
+
 }

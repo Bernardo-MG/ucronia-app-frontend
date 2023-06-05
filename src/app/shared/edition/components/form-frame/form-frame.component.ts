@@ -7,16 +7,9 @@ import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 })
 export class FormFrameComponent {
 
-  /**
-   * Saving flag.
-   */
   @Input() public saving = false;
 
-  @Input() public formValid = false;
-
-  @Input() public disabled = false;
-
-  @Input() public editable = true;
+  @Input() public saveDisabled = false;
 
   @Output() public save = new EventEmitter<void>();
 
@@ -26,14 +19,6 @@ export class FormFrameComponent {
 
   public onSave(): void {
     this.save.emit();
-  }
-
-  public isDisabled() {
-    return this.disabled || !this.editable || !this.isAbleToSave();
-  }
-
-  private isAbleToSave() {
-    return ((this.formValid) && (!this.saving));
   }
 
 }
