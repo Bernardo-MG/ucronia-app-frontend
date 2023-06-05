@@ -1,0 +1,6 @@
+<edition-edit-form-wrapper [saving]="saving" [editable]="editable" [deletable]="deletable" [valid]="formValid"
+  (save)="onSave()" (edit)="onEdit()">
+  <edition-dynamic-form-body [fields]="fields" [failures]="failures" [data]="data" [editable]="isEditable()"
+    [disabled]="isDisabled()" (save)="onSave()" (valueChange)="onFormChange($event)"
+    (validChange)="onFormValidChange($event)"></edition-dynamic-form-body>
+</edition-edit-form-wrapper>

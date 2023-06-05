@@ -5,6 +5,7 @@ import { IconsModule } from '../icons/icons.module';
 import { DynamicEditFormComponent } from './components/dynamic-edit-form/dynamic-edit-form.component';
 import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic-form-body.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { EditFormWrapperComponent } from './components/edit-form-wrapper/edit-form-wrapper.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
 import { InfoFormComponent } from './components/info-form/info-form.component';
 
@@ -16,7 +17,8 @@ import { InfoFormComponent } from './components/info-form/info-form.component';
     DynamicEditFormComponent,
     InfoFormComponent,
     DynamicFormBodyComponent,
-    FormFrameComponent
+    FormFrameComponent,
+    EditFormWrapperComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,9 @@ import { InfoFormComponent } from './components/info-form/info-form.component';
     DynamicFormComponent,
     DynamicEditFormComponent,
     InfoFormComponent,
-    FormFrameComponent
+    FormFrameComponent,
+    EditFormWrapperComponent,
+    DynamicFormBodyComponent
   ]
 })
 export class EditionModule { }
