@@ -8,6 +8,7 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { EditFormWrapperComponent } from './components/edit-form-wrapper/edit-form-wrapper.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
 import { InfoFormComponent } from './components/info-form/info-form.component';
+import { FormBaseComponent } from './components/form-base/form-base.component';
 
 
 
@@ -18,7 +19,8 @@ import { InfoFormComponent } from './components/info-form/info-form.component';
     InfoFormComponent,
     DynamicFormBodyComponent,
     FormFrameComponent,
-    EditFormWrapperComponent
+    EditFormWrapperComponent,
+    FormBaseComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { InfoFormComponent } from './components/info-form/info-form.component';
     InfoFormComponent,
     FormFrameComponent,
     EditFormWrapperComponent,
-    DynamicFormBodyComponent
+    DynamicFormBodyComponent,
+    FormBaseComponent
   ]
 })
 export class EditionModule { }

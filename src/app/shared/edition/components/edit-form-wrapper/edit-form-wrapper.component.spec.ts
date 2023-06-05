@@ -6,7 +6,7 @@ import { DynamicFormBodyComponent } from '../dynamic-form-body/dynamic-form-body
 import { FormFrameComponent } from '../form-frame/form-frame.component';
 import { EditFormWrapperComponent } from './edit-form-wrapper.component';
 
-describe('DynamicEditFormComponent', () => {
+describe('EditFormWrapperComponent', () => {
   let component: EditFormWrapperComponent;
   let fixture: ComponentFixture<EditFormWrapperComponent>;
 
