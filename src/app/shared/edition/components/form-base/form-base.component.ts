@@ -30,27 +30,6 @@ export class FormBaseComponent implements OnInit, OnChanges {
    */
   @Input() public editable = true;
 
-  private _fields: FormDescription[] = [];
-
-  @Input() public set fields(fields: FormDescription[]) {
-    const group: { [key: string]: any } = {};
-
-    this._fields = fields;
-
-    // Id always exists
-    group['id'] = new FormControl(-1);
-    for (let i = 0; i < fields.length; i++) {
-      const definition = fields[i];
-      group[definition.property] = new FormControl(undefined, definition.validator);
-    }
-
-    this.form = this.fb.group(group);
-  }
-
-  public get fields(): FormDescription[] {
-    return this._fields;
-  }
-
   @Input() public data: any;
 
   public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
@@ -74,12 +53,10 @@ export class FormBaseComponent implements OnInit, OnChanges {
 
   @Output() public valueChange = new EventEmitter<any>();
 
-  public form: FormGroup = this.fb.group({});
-
   public valid = false;
 
   constructor(
-    private fb: FormBuilder
+    public form: FormGroup
   ) { }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 <layout-article title="Edit member">
   <div *ngIf="editable; then editForm else infoForm"></div>
   <ng-template #editForm>
-    <assoc-member-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving" [fields]="fields"
+    <assoc-member-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving"
       [failures]="failures" [data]="member" (save)="onSave($event)" (delete)="onDelete($event)">
     </assoc-member-edit-form>
   </ng-template>

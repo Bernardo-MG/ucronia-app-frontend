@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Member } from '@app/association/models/member';
 import { FormBaseComponent } from '@app/shared/edition/components/form-base/form-base.component';
 
@@ -13,6 +14,18 @@ export class MemberEditFormComponent extends FormBaseComponent {
   @Output() public delete = new EventEmitter<Member>();
 
   public editing = false;
+
+  constructor(
+    fb: FormBuilder
+  ){
+    super(fb.group({
+      name: ['', Validators.required],
+      surname: [''],
+      identifier: [''],
+      phone: [''],
+      active: [true, Validators.required]
+    }))
+  }
 
   public onEdit(): void {
     this.editing = true;
