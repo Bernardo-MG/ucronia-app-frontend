@@ -1,5 +1,5 @@
 <edition-edit-form-wrapper [saving]="saving" [editable]="editable" [deletable]="deletable" [valid]="valid"
   (save)="onSave()" (edit)="onEdit()">
-  <assoc-member-form [form]="form" [editable]="isEditable()" [fieldFailures]="fieldFailures">
+  <assoc-member-form [form]="form" [readonly]="!isEditable()" [fieldFailures]="fieldFailures">
   </assoc-member-form>
 </edition-edit-form-wrapper>

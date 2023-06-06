@@ -1,4 +1,4 @@
 <edition-form-frame [saving]="saving" [saveDisabled]="isSaveDisabled()" (save)="onSave()">
-  <assoc-member-form [form]="form" [editable]="editable" [fieldFailures]="fieldFailures">
+  <assoc-member-form [form]="form" [readonly]="!editable" [fieldFailures]="fieldFailures">
   </assoc-member-form>
 </edition-form-frame>

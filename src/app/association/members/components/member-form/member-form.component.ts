@@ -8,7 +8,7 @@ import { Failure } from '@app/core/api/models/failure';
 })
 export class MemberFormComponent {
 
-  @Input() public editable = true;
+  @Input() public readonly = true;
 
   @Input() public form: FormGroup = this.fb.group({});
 
