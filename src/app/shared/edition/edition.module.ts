@@ -6,9 +6,10 @@ import { DynamicEditFormComponent } from './components/dynamic-edit-form/dynamic
 import { DynamicFormBodyComponent } from './components/dynamic-form-body/dynamic-form-body.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { EditFormWrapperComponent } from './components/edit-form-wrapper/edit-form-wrapper.component';
+import { FormBaseComponent } from './components/form-base/form-base.component';
 import { FormFrameComponent } from './components/form-frame/form-frame.component';
 import { InfoFormComponent } from './components/info-form/info-form.component';
-import { FormBaseComponent } from './components/form-base/form-base.component';
+import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
 
 
 
@@ -20,7 +21,8 @@ import { FormBaseComponent } from './components/form-base/form-base.component';
     DynamicFormBodyComponent,
     FormFrameComponent,
     EditFormWrapperComponent,
-    FormBaseComponent
+    FormBaseComponent,
+    WaitingButtonComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +36,8 @@ import { FormBaseComponent } from './components/form-base/form-base.component';
     FormFrameComponent,
     EditFormWrapperComponent,
     DynamicFormBodyComponent,
-    FormBaseComponent
+    FormBaseComponent,
+    WaitingButtonComponent
   ]
 })
 export class EditionModule { }

@@ -5,17 +5,7 @@
     <div class="row">
       <!-- Save button -->
       <div class="col-sm-2 d-grid gap-2">
-        <div *ngIf="saving; then saving_cue else save"></div>
-        <ng-template #saving_cue>
-          <!-- Saving cue on button-->
-          <button type="submit" class="btn btn-primary" aria-label="Save"
-            disabled><icon-waiting></icon-waiting></button>
-        </ng-template>
-        <ng-template #save>
-          <!-- Save button-->
-          <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="saveDisabled"
-            [attr.aria-disabled]="saveDisabled" aria-label="Save">Save</button>
-        </ng-template>
+        <edition-waiting-button [saving]="saving" [disabled]="saveDisabled" (click)="onSave()"></edition-waiting-button>
       </div>
     </div>
   </div>

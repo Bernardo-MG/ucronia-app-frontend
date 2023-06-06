@@ -1,0 +1,13 @@
+<ng-container>
+    <div *ngIf="saving; then saving_cue else save"></div>
+    <ng-template #saving_cue>
+      <!-- Saving cue on button-->
+      <button type="submit" class="btn btn-primary" aria-label="Save"
+        disabled><icon-waiting></icon-waiting></button>
+    </ng-template>
+    <ng-template #save>
+      <!-- Save button-->
+      <button type="submit" class="btn btn-primary" (click)="onSave()" [disabled]="disabled"
+        [attr.aria-disabled]="disabled" aria-label="Save">Save</button>
+    </ng-template>
+</ng-container>
