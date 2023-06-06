@@ -7,8 +7,4 @@ import { FormBaseComponent } from '@app/shared/edition/components/form-base/form
 })
 export class MemberCreateFormComponent extends FormBaseComponent {
 
-  public isEditable() {
-    return true;
-  }
-
 }
