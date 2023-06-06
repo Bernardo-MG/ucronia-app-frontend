@@ -7,14 +7,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class WaitingButtonComponent {
 
-  @Input() public saving = false;
+  @Input() public waiting = false;
 
   @Input() public disabled = false;
 
-  @Output() public save = new EventEmitter<void>();
+  @Input() public name = '';
 
-  public onSave(): void {
-    this.save.emit();
+  @Output() public click = new EventEmitter<void>();
+
+  public onClick(): void {
+    this.click.emit();
   }
 
 }
