@@ -55,7 +55,11 @@ export class MemberCreateComponent implements OnInit {
         this.saving = false;
       },
       error: error => {
-        this.failures = this.getFailures(error.failures);
+        if(error.failures){
+          this.failures = this.getFailures(error.failures);
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
