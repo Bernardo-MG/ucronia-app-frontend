@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '../../models/form-description';
 
 @Component({
   selector: 'edition-form-base',
@@ -32,22 +31,7 @@ export class FormBaseComponent implements OnInit, OnChanges {
 
   @Input() public data: any;
 
-  public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
-
-  @Input() set failures(values: Failure[]) {
-    this.fieldFailures = new Map<string, Failure[]>();
-    for (const failure of values) {
-      if (failure.field) {
-        if (this.fieldFailures.get(failure.field)) {
-          const values = (this.fieldFailures.get(failure.field) as Failure[]);
-          values.push(failure);
-          this.fieldFailures.set(failure.field, values);
-        } else {
-          this.fieldFailures.set(failure.field, [failure]);
-        }
-      }
-    }
-  }
+  @Input() public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   @Output() public save = new EventEmitter<any>();
 

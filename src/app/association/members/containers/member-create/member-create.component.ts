@@ -16,7 +16,7 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public failures: Failure[] = [];
+  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   public fields: FormDescription[];
 
@@ -32,16 +32,33 @@ export class MemberCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        this.failures = this.getFailures(error.failures);
         // Reactivate view
         this.saving = false;
       }
     });
+  }
+
+  private getFailures(values: Failure[]) {
+    const fieldFailures = new Map<string, Failure[]>();
+    for (const failure of values) {
+      if (failure.field) {
+        if (fieldFailures.get(failure.field)) {
+          const values = (fieldFailures.get(failure.field) as Failure[]);
+          values.push(failure);
+          fieldFailures.set(failure.field, values);
+        } else {
+          fieldFailures.set(failure.field, [failure]);
+        }
+      }
+    }
+
+    return fieldFailures;
   }
 
 }

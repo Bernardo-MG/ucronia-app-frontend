@@ -12,7 +12,7 @@ export class MemberFormComponent {
 
   @Input() public form: FormGroup = this.fb.group({});
 
-  @Input() public fieldFailures: Map<string, Failure[]> = new Map<string, Failure[]>();
+  @Input() public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
   
   @Output() public save = new EventEmitter<any>();
 
@@ -25,13 +25,13 @@ export class MemberFormComponent {
   }
   
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.fieldFailures.has(property));
+    return (this.form.get(property)?.invalid) || (this.failures.has(property));
   }
 
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.fieldFailures.get(property);
+    const found = this.failures.get(property);
     if (found) {
       failures = (found as Failure[]);
     } else {

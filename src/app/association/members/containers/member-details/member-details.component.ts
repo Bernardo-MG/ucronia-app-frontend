@@ -25,7 +25,7 @@ export class MemberDetailsComponent implements OnInit {
 
   public member: Member = new Member();
 
-  public failures: Failure[] = [];
+  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   public fields: FormDescription[];
 
@@ -51,12 +51,12 @@ export class MemberDetailsComponent implements OnInit {
     this.saving = true;
     this.service.update(data.id, data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        this.failures = this.getFailures(error.failures);
         // Reactivate view
         this.saving = false;
       }
@@ -77,6 +77,23 @@ export class MemberDetailsComponent implements OnInit {
           this.member = d;
         });
     }
+  }
+
+  private getFailures(values: Failure[]) {
+    const fieldFailures = new Map<string, Failure[]>();
+    for (const failure of values) {
+      if (failure.field) {
+        if (fieldFailures.get(failure.field)) {
+          const values = (fieldFailures.get(failure.field) as Failure[]);
+          values.push(failure);
+          fieldFailures.set(failure.field, values);
+        } else {
+          fieldFailures.set(failure.field, [failure]);
+        }
+      }
+    }
+
+    return fieldFailures;
   }
 
 }
