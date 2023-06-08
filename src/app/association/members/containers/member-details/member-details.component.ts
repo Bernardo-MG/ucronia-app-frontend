@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { FormDescription } from '@app/shared/edition/models/form-description';
 import { MemberService } from '../../services/member.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'assoc-member-details',
@@ -23,19 +24,34 @@ export class MemberDetailsComponent implements OnInit {
 
   public formValid = false;
 
-  public member: Member = new Member();
+  public data: Member = new Member();
 
   public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   public fields: FormDescription[];
 
+  public form: FormGroup;
+
+  public valid = false;
+
+  public editing = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
-    private authService: AuthService
+    private authService: AuthService,
+    fb: FormBuilder
   ) {
     this.fields = service.getFields();
+    this.form = fb.group({
+      id: [-1],
+      name: ['', Validators.required],
+      surname: [''],
+      identifier: [''],
+      phone: [''],
+      active: [true, Validators.required]
+    });
   }
 
   public ngOnInit(): void {
@@ -45,9 +61,11 @@ export class MemberDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
+    this.listenForChanges();
   }
 
-  public onSave(data: Member): void {
+  public onSave(): void {
+    const data: Member = this.form.value;
     this.saving = true;
     this.service.update(data.id, data).subscribe({
       next: d => {
@@ -56,7 +74,11 @@ export class MemberDetailsComponent implements OnInit {
         this.saving = false;
       },
       error: error => {
-        this.failures = this.getFailures(error.failures);
+        if(error.failures){
+          this.failures = this.getFailures(error.failures);
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
@@ -69,12 +91,17 @@ export class MemberDetailsComponent implements OnInit {
     });
   }
 
+  public onEdit(): void {
+    this.editing = true;
+  }
+
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.member = d;
+          this.data = d;
+          this.form.patchValue(this.data);
         });
     }
   }
@@ -94,6 +121,16 @@ export class MemberDetailsComponent implements OnInit {
     }
 
     return fieldFailures;
+  }
+
+  private listenForChanges() {
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
+  }
+
+  public isEditable() {
+    return this.editable && this.editing;
   }
 
 }

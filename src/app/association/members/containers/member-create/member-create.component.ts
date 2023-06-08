@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
@@ -10,7 +10,7 @@ import { MemberService } from '../../services/member.service';
   selector: 'assoc-member-create',
   templateUrl: './member-create.component.html'
 })
-export class MemberCreateComponent {
+export class MemberCreateComponent implements OnInit {
 
   /**
    * Loading flag.
@@ -38,6 +38,9 @@ export class MemberCreateComponent {
       phone: [''],
       active: [true, Validators.required]
     });
+  }
+
+  public ngOnInit(): void {
     this.listenForChanges();
   }
 

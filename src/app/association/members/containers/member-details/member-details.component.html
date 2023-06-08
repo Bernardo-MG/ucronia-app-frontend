@@ -1,14 +1,17 @@
 <layout-article title="Edit member">
   <div *ngIf="editable; then editForm else infoForm"></div>
   <ng-template #editForm>
-    <assoc-member-edit-form [editable]="editable" [deletable]="deletable" [saving]="saving"
-      [failures]="failures" [data]="member" (save)="onSave($event)" (delete)="onDelete($event)">
-    </assoc-member-edit-form>
+    <edition-edit-form-wrapper [editable]="true" [deletable]="deletable" [saving]="saving" [valid]="valid"
+      (save)="onSave()" (edit)="onEdit()">
+      <!-- Form -->
+      <assoc-member-form [form]="form" [readonly]="!isEditable()" [failures]="failures">
+      </assoc-member-form>
+    </edition-edit-form-wrapper>
   </ng-template>
   <ng-template #infoForm>
     <div class="card">
       <div class="card-body">
-        <assoc-member-info [data]="member"></assoc-member-info>
+        <assoc-member-info [data]="data"></assoc-member-info>
       </div>
     </div>
   </ng-template>
