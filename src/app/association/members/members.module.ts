@@ -5,7 +5,6 @@ import { CoreModule } from '@app/core/core.module';
 import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { MemberCreateFormComponent } from './components/member-create-form/member-create-form.component';
 import { MemberEditFormComponent } from './components/member-edit-form/member-edit-form.component';
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberCreateComponent } from './containers/member-create/member-create.component';
@@ -23,7 +22,6 @@ import { MemberService } from './services/member.service';
     MemberDetailsComponent,
     MemberCreateComponent,
     MemberStatsComponent,
-    MemberCreateFormComponent,
     MemberFormComponent,
     MemberEditFormComponent
   ],
