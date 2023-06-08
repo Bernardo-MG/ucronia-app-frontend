@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
@@ -20,14 +21,28 @@ export class MemberCreateComponent {
 
   public fields: FormDescription[];
 
+  public form: FormGroup;
+
+  public valid = false;
+
   constructor(
     private service: MemberService,
-    private router: Router
+    private router: Router,
+    fb: FormBuilder
   ) {
     this.fields = service.getFields();
+    this.form = fb.group({
+      name: ['', Validators.required],
+      surname: [''],
+      identifier: [''],
+      phone: [''],
+      active: [true, Validators.required]
+    });
+    this.listenForChanges();
   }
 
-  public onSave(data: Member): void {
+  public onSave(): void {
+    const data: Member = this.form.value;
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
@@ -42,6 +57,10 @@ export class MemberCreateComponent {
         this.saving = false;
       }
     });
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
   private getFailures(values: Failure[]) {
@@ -59,6 +78,12 @@ export class MemberCreateComponent {
     }
 
     return fieldFailures;
+  }
+
+  private listenForChanges() {
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
   }
 
 }

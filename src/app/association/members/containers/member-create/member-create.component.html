@@ -1,4 +1,16 @@
 <layout-article title="Create member">
-  <assoc-member-create-form [saving]="saving" [failures]="failures" (save)="onSave($event)">
-  </assoc-member-create-form>
+  <div class="card">
+    <div class="card-body">
+      <!-- Form -->
+      <assoc-member-form [form]="form" [failures]="failures">
+      </assoc-member-form>
+      <div class="row">
+        <!-- Save button -->
+        <div class="col-sm-2 d-grid gap-2">
+          <edition-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
+            (action)="onSave()"></edition-waiting-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </layout-article>

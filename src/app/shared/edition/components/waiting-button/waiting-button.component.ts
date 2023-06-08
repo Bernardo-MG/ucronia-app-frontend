@@ -13,10 +13,10 @@ export class WaitingButtonComponent {
 
   @Input() public name = '';
 
-  @Output() public click = new EventEmitter<void>();
+  @Output() public action = new EventEmitter<void>();
 
   public onClick(): void {
-    this.click.emit();
+    this.action.emit();
   }
 
 }
