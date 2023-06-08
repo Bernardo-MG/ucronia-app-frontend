@@ -6,7 +6,10 @@
     </assoc-member-edit-form>
   </ng-template>
   <ng-template #infoForm>
-    <edition-info-form [fields]="fields" [data]="member">
-    </edition-info-form>
+    <div class="card">
+      <div class="card-body">
+        <assoc-member-info [data]="member"></assoc-member-info>
+      </div>
+    </div>
   </ng-template>
 </layout-article>

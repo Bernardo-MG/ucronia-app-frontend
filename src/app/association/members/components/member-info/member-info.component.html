@@ -1,0 +1,40 @@
+<form class="needs-validation" novalidate>
+  <!-- Name -->
+  <div class="row mb-2">
+    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.name" id="nameInput" [readonly]="true" class="form-control"
+        aria-describedby="nameLabel">
+    </div>
+  </div>
+  <!-- Surname -->
+  <div class="row mb-2">
+    <label for="surnameInput" id="surnameLabel" class="col-sm-2 col-form-label">Surname</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.surname" id="surnameInput" [readonly]="true" class="form-control"
+        aria-describedby="surnameLabel">
+    </div>
+  </div>
+  <!-- Identifier -->
+  <div class="row mb-2">
+    <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">Identifier</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.identifier" id="identifierInput" [readonly]="true" class="form-control"
+        aria-describedby="identifierLabel">
+    </div>
+  </div>
+  <!-- Phone -->
+  <div class="row mb-2">
+    <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Phone</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.phone" id="phoneInput" class="form-control" [readonly]="true"
+        aria-describedby="phoneLabel">
+    </div>
+  </div>
+  <!-- Active -->
+  <div class="col-sm-10 offset-sm-2">
+    <input type="checkbox" [value]="data.active" id="activeInput" [readonly]="true" class="form-check-input"
+      aria-describedby="activeLabel">
+    <label for="activeInput" id="activeLabel" class="form-check-label ps-1">Active</label>
+  </div>
+</form>
