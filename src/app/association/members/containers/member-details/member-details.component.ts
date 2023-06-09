@@ -55,13 +55,19 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // Check permissions
     this.editable = this.authService.hasPermission("member", "update");
     this.deletable = this.authService.hasPermission("member", "delete");
 
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-    this.listenForChanges();
+
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
   }
 
   public onSave(): void {
@@ -74,8 +80,8 @@ export class MemberDetailsComponent implements OnInit {
         this.saving = false;
       },
       error: error => {
-        if(error.failures){
-          this.failures = this.getFailures(error.failures);
+        if (error.failures) {
+          this.failures = error.failures;
         } else {
           this.failures = new Map<string, Failure[]>();
         }
@@ -104,29 +110,6 @@ export class MemberDetailsComponent implements OnInit {
           this.form.patchValue(this.data);
         });
     }
-  }
-
-  private getFailures(values: Failure[]) {
-    const fieldFailures = new Map<string, Failure[]>();
-    for (const failure of values) {
-      if (failure.field) {
-        if (fieldFailures.get(failure.field)) {
-          const values = (fieldFailures.get(failure.field) as Failure[]);
-          values.push(failure);
-          fieldFailures.set(failure.field, values);
-        } else {
-          fieldFailures.set(failure.field, [failure]);
-        }
-      }
-    }
-
-    return fieldFailures;
-  }
-
-  private listenForChanges() {
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
   }
 
   public isEditable() {

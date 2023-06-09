@@ -41,7 +41,10 @@ export class MemberCreateComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.listenForChanges();
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
   }
 
   public onSave(): void {
@@ -56,7 +59,7 @@ export class MemberCreateComponent implements OnInit {
       },
       error: error => {
         if(error.failures){
-          this.failures = this.getFailures(error.failures);
+          this.failures = error.failures;
         } else {
           this.failures = new Map<string, Failure[]>();
         }
@@ -68,29 +71,6 @@ export class MemberCreateComponent implements OnInit {
 
   public isAbleToSave() {
     return ((this.valid) && (!this.saving));
-  }
-
-  private getFailures(values: Failure[]) {
-    const fieldFailures = new Map<string, Failure[]>();
-    for (const failure of values) {
-      if (failure.field) {
-        if (fieldFailures.get(failure.field)) {
-          const values = (fieldFailures.get(failure.field) as Failure[]);
-          values.push(failure);
-          fieldFailures.set(failure.field, values);
-        } else {
-          fieldFailures.set(failure.field, [failure]);
-        }
-      }
-    }
-
-    return fieldFailures;
-  }
-
-  private listenForChanges() {
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
   }
 
 }
