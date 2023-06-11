@@ -2,7 +2,7 @@
   <div *ngIf="selectingPermission; then permission_selection else role_edition"></div>
   <!-- Role form -->
   <ng-template #role_edition>
-    <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form>
+    <!-- <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form> -->
     <layout-waiting-wrapper [waiting]="waitingPermissions">
       <access-role-permission-form (addPermission)="onShowAddPermission()" (removePermission)="onRemovePermission($event)"
         [permissions]="permissions">

@@ -32,7 +32,8 @@ import { WaitingButtonComponent } from './components/waiting-button/waiting-butt
     WaitingWrapperComponent,
     ArticleComponent,
     ButtonListComponent,
-    EditionWrapperComponent
+    EditionWrapperComponent,
+    WaitingButtonComponent
   ]
 })
 export class LayoutModule { }

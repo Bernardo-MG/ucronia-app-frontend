@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'edition-waiting-button',
+  selector: 'layout-waiting-button',
   templateUrl: './waiting-button.component.html'
 })
 export class WaitingButtonComponent {
