@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -19,8 +18,6 @@ export class TransactionCreateComponent {
 
   public failures = new Map<string, Failure[]>();
 
-  public fields: FormDescription[];
-
   public form: FormGroup;
 
   public valid = false;
@@ -30,7 +27,6 @@ export class TransactionCreateComponent {
     private router: Router,
     fb: FormBuilder
   ) {
-    this.fields = service.getFields();
     this.form = fb.group({
       description: ['', Validators.required],
       date: [null, Validators.required],
