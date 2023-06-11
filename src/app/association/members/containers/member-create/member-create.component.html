@@ -4,8 +4,8 @@
       <!-- Form -->
       <assoc-member-form [form]="form" [failures]="failures">
       </assoc-member-form>
+      <!-- Save button -->
       <div class="row">
-        <!-- Save button -->
         <div class="col-sm-2 d-grid gap-2">
           <edition-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
             (action)="onSave()"></edition-waiting-button>

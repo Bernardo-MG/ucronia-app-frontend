@@ -91,13 +91,14 @@ export class MemberDetailsComponent implements OnInit {
     });
   }
 
-  public onDelete(data: Member): void {
+  public onDelete(): void {
+    const data: Member = this.form.value;
     this.service.delete(data.id).subscribe(r => {
       this.router.navigate([`/members/list`]);
     });
   }
 
-  public onEdit(): void {
+  public onStartEditing(): void {
     this.editing = true;
   }
 
@@ -114,6 +115,22 @@ export class MemberDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editable && this.editing;
+  }
+
+  public isSaveDisabled() {
+    return !this.editable || !this.editing || !this.isAbleToSave();
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
+  }
+
+  public isAbleToEdit() {
+    return !this.saving && this.editable && this.editing;
+  }
+
+  public isAbleToDelete() {
+    return !this.saving && this.deletable && !this.editing;
   }
 
 }
