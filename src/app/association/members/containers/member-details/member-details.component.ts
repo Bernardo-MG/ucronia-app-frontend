@@ -78,6 +78,7 @@ export class MemberDetailsComponent implements OnInit {
         this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
         if (error.failures) {
@@ -87,6 +88,7 @@ export class MemberDetailsComponent implements OnInit {
         }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
   }
