@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
@@ -9,18 +9,18 @@ import { TransactionService } from '../../service/transaction.service';
   selector: 'assoc-transaction-create',
   templateUrl: './transaction-create.component.html'
 })
-export class TransactionCreateComponent {
+export class TransactionCreateComponent implements OnInit {
 
   /**
    * Loading flag.
    */
   public saving = false;
 
+  public valid = false;
+
   public failures = new Map<string, Failure[]>();
 
   public form: FormGroup;
-
-  public valid = false;
 
   constructor(
     private service: TransactionService,

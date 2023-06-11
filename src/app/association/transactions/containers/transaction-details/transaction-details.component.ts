@@ -21,17 +21,15 @@ export class TransactionDetailsComponent implements OnInit {
 
   public deletable = false;
 
-  public formValid = false;
+  public valid = false;
 
-  public data: Transaction = new Transaction();
+  public editing = false;
+
+  public data = new Transaction();
 
   public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
   public form: FormGroup;
-
-  public valid = false;
-
-  public editing = false;
 
   constructor(
     private route: ActivatedRoute,

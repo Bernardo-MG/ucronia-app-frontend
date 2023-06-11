@@ -1,10 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -24,11 +24,15 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public readingMembers = false;
 
+  public valid = false;
+
+  public editing = false;
+
   public members: Member[] = [];
 
   public member = new Member();
 
-  public fee = new Fee();
+  public data = new Fee();
 
   public selectingMember = false;
 
@@ -36,18 +40,24 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public membersTotalPages = 0;
 
-  public failures: Failure[] = [];
+  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
-  public fields: FormDescription[];
+  public form: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    fb: FormBuilder
   ) {
-    this.fields = service.getFields();
+    this.form = fb.group({
+      id: [-1],
+      memberId: [null, Validators.required],
+      date: [null, Validators.required],
+      paid: [false, Validators.required]
+    });
   }
 
   ngAfterContentInit(): void {
@@ -55,32 +65,49 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public ngOnInit(): void {
+    // Check permissions
     this.editable = this.authService.hasPermission("fee", "update");
     this.deletable = this.authService.hasPermission("fee", "delete");
 
-    this.onGoToMembersPage(0);
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
+
+    // Get members
+    this.onGoToMembersPage(0);
+
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
   }
 
-  public onSave(fee: Fee): void {
+  public onSave(): void {
+    const data: Fee = this.form.value;
     this.saving = true;
-    this.service.update(fee.id, fee).subscribe({
+    this.service.update(data.id, data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>()
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
   }
 
-  public onDelete(data: Member): void {
+  public onDelete(): void {
+    const data: Fee = this.form.value;
     this.service.delete(data.id).subscribe(r => {
       this.router.navigate([`/fees/list`]);
     });
@@ -93,6 +120,10 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   public onSelectMember(member: Member) {
     this.member = member;
     this.selectingMember = false;
+  }
+
+  public onStartEditing(): void {
+    this.editing = true;
   }
 
   public onGoToMembersPage(page: number) {
@@ -108,14 +139,19 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.fee = d;
-          this.service.getOneMember(this.fee.memberId).subscribe(d => this.onSelectMember(d));
+          this.data = d;
+          this.form.patchValue(this.data);
+          this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
         });
     }
   }
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isEditable() {
+    return this.editable && this.editing;
   }
 
 }

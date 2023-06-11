@@ -1,16 +1,16 @@
-import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { FeeService } from '../../services/fee.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
   selector: 'assoc-fee-create',
   templateUrl: './fee-create.component.html'
 })
-export class FeeCreateComponent implements AfterContentInit {
+export class FeeCreateComponent implements AfterContentInit, OnInit {
 
   /**
    * Saving flag.
@@ -18,6 +18,8 @@ export class FeeCreateComponent implements AfterContentInit {
   public saving = false;
 
   public readingMembers = false;
+
+  public valid = false;
 
   public members: Member[] = [];
 
@@ -29,34 +31,51 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public membersTotalPages = 0;
 
-  public failures: Failure[] = [];
+  public failures = new Map<string, Failure[]>();
 
-  public fields: FormDescription[];
+  public form: FormGroup;
 
   constructor(
     private service: FeeService,
     private router: Router,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    fb: FormBuilder
   ) {
-    this.fields = service.getFields();
+    this.form = fb.group({
+      memberId: [null, Validators.required],
+      date: [null, Validators.required],
+      paid: [false, Validators.required]
+    });
   }
 
-  ngAfterContentInit(): void {
+  public ngAfterContentInit(): void {
     this.cdRef.detectChanges();
   }
 
-  public onSave(fee: Fee): void {
+  public ngOnInit(): void {
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
+  }
+
+  public onSave(): void {
+    const data: Fee = this.form.value;
     this.saving = true;
-    fee.memberId = this.member.id;
-    this.service.create(fee).subscribe({
+    data.memberId = this.member.id;
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if(error.failures){
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
@@ -69,6 +88,9 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSelectMember(member: Member) {
     this.member = member;
+    this.form.patchValue({
+      memberId:member.id
+    });
     this.selectingMember = false;
   }
 
@@ -84,6 +106,10 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }
