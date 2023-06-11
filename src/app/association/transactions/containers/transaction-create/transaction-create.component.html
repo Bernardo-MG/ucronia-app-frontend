@@ -1,4 +1,16 @@
-<layout-article title="Create member">
-  <edition-dynamic-form [saving]="saving" [fields]="fields" [failures]="failures" (save)="onSave($event)">
-  </edition-dynamic-form>
+<layout-article title="Create transaction">
+  <div class="card">
+    <div class="card-body">
+      <!-- Form -->
+      <assoc-transaction-form [form]="form" [failures]="failures">
+      </assoc-transaction-form>
+      <!-- Save button -->
+      <div class="row">
+        <div class="col-sm-2 d-grid gap-2">
+          <edition-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
+            (action)="onSave()"></edition-waiting-button>
+        </div>
+      </div>
+    </div>
+  </div>
 </layout-article>

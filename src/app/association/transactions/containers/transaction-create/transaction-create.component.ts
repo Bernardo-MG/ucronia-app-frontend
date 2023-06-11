@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
@@ -16,32 +17,58 @@ export class TransactionCreateComponent {
    */
   public saving = false;
 
-  public failures: Failure[] = [];
+  public failures = new Map<string, Failure[]>();
 
   public fields: FormDescription[];
 
+  public form: FormGroup;
+
+  public valid = false;
+
   constructor(
     private service: TransactionService,
-    private router: Router
+    private router: Router,
+    fb: FormBuilder
   ) {
     this.fields = service.getFields();
+    this.form = fb.group({
+      description: ['', Validators.required],
+      date: [null, Validators.required],
+      amount: [0, Validators.required]
+    });
   }
 
-  public onSave(data: Transaction): void {
+  public ngOnInit(): void {
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      this.valid = (status === "VALID");
+    });
+  }
+
+  public onSave(): void {
+    const data: Transaction = this.form.value;
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/transactions/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if(error.failures){
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
     });
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }

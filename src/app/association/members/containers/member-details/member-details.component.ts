@@ -1,11 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { MemberService } from '../../services/member.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'assoc-member-details',

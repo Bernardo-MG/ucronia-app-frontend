@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { MemberService } from '../../services/member.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class MemberCreateComponent implements OnInit {
    */
   public saving = false;
 
-  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
+  public failures = new Map<string, Failure[]>();
 
   public form: FormGroup;
 
