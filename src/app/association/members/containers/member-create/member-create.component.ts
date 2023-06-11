@@ -19,8 +19,6 @@ export class MemberCreateComponent implements OnInit {
 
   public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
-  public fields: FormDescription[];
-
   public form: FormGroup;
 
   public valid = false;
@@ -30,7 +28,6 @@ export class MemberCreateComponent implements OnInit {
     private router: Router,
     fb: FormBuilder
   ) {
-    this.fields = service.getFields();
     this.form = fb.group({
       name: ['', Validators.required],
       surname: [''],
