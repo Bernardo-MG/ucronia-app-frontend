@@ -105,20 +105,4 @@ export class MemberDetailsComponent implements OnInit {
     return this.editPermission && this.editing;
   }
 
-  public isSaveDisabled() {
-    return !this.editPermission || !this.editing || !this.isAbleToSave();
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
-  }
-
-  public isAbleToEdit() {
-    return !this.saving && this.editPermission && this.editing;
-  }
-
-  public isAbleToDelete() {
-    return !this.saving && this.deletePermission && !this.editing;
-  }
-
 }
