@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
@@ -23,11 +22,9 @@ export class MemberDetailsComponent implements OnInit {
 
   public formValid = false;
 
-  public data: Member = new Member();
+  public data = new Member();
 
-  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
-
-  public form: FormGroup;
+  public failures = new Map<string, Failure[]>();
 
   public valid = false;
 
@@ -37,18 +34,8 @@ export class MemberDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
-    private authService: AuthService,
-    fb: FormBuilder
-  ) {
-    this.form = fb.group({
-      id: [-1],
-      name: ['', Validators.required],
-      surname: [''],
-      identifier: [''],
-      phone: [''],
-      active: [true, Validators.required]
-    });
-  }
+    private authService: AuthService
+  ) { }
 
   public ngOnInit(): void {
     // Check permissions
@@ -59,17 +46,16 @@ export class MemberDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
   }
 
-  public onSave(): void {
-    const data: Member = this.form.value;
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
+  public onSave(toSave: Member): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(this.data.id, this.data).subscribe({
       next: d => {
         this.failures = new Map<string, Failure[]>();
         // Reactivate view
@@ -90,8 +76,7 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    const data: Member = this.form.value;
-    this.service.delete(data.id).subscribe(r => {
+    this.service.delete(this.data.id).subscribe(r => {
       this.router.navigate([`/members/list`]);
     });
   }
@@ -100,13 +85,20 @@ export class MemberDetailsComponent implements OnInit {
     this.editing = true;
   }
 
+  public onChange(changed: Member) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
+  }
+
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.data = d;
-          this.form.patchValue(this.data);
         });
     }
   }

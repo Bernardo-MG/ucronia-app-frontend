@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
@@ -9,7 +8,7 @@ import { MemberService } from '../../services/member.service';
   selector: 'assoc-member-create',
   templateUrl: './member-create.component.html'
 })
-export class MemberCreateComponent implements OnInit {
+export class MemberCreateComponent {
 
   /**
    * Loading flag.
@@ -18,35 +17,23 @@ export class MemberCreateComponent implements OnInit {
 
   public failures = new Map<string, Failure[]>();
 
-  public form: FormGroup;
-
   public valid = false;
+
+  public data = new Member();
 
   constructor(
     private service: MemberService,
-    private router: Router,
-    fb: FormBuilder
-  ) {
-    this.form = fb.group({
-      name: ['', Validators.required],
-      surname: [''],
-      identifier: [''],
-      phone: [''],
-      active: [true, Validators.required]
-    });
+    private router: Router
+  ) { }
+
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
-  }
-
-  public onSave(): void {
-    const data: Member = this.form.value;
+  public onSave(toSave: Member): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.create(data).subscribe({
+    this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
         this.failures = new Map<string, Failure[]>();
@@ -54,7 +41,7 @@ export class MemberCreateComponent implements OnInit {
         this.saving = false;
       },
       error: error => {
-        if(error.failures){
+        if (error.failures) {
           this.failures = error.failures;
         } else {
           this.failures = new Map<string, Failure[]>();
@@ -63,6 +50,14 @@ export class MemberCreateComponent implements OnInit {
         this.saving = false;
       }
     });
+  }
+
+  public onChange(changed: Member) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   public isAbleToSave() {

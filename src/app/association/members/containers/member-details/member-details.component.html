@@ -1,8 +1,9 @@
 <layout-article title="Edit member">
   <layout-edition-wrapper [editable]="editable" [saving]="saving" [editing]="editing" [deletable]="deletable"
-    [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()" (save)="onSave()">
+    [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()" (save)="onSaveCurrent()">
     <!-- Form -->
-    <assoc-member-form id="edit" [form]="form" [readonly]="!isEditable()" [failures]="failures">
+    <assoc-member-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
+      (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
     </assoc-member-form>
     <!-- Info -->
     <assoc-member-info id="info" [data]="data"></assoc-member-info>
