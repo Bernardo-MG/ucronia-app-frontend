@@ -16,19 +16,17 @@ export class MemberDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public editable = false;
+  public editing = false;
 
-  public deletable = false;
+  public valid = false;
 
-  public formValid = false;
+  public editPermission = false;
+
+  public deletePermission = false;
 
   public data = new Member();
 
   public failures = new Map<string, Failure[]>();
-
-  public valid = false;
-
-  public editing = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,8 +37,8 @@ export class MemberDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("member", "update");
-    this.deletable = this.authService.hasPermission("member", "delete");
+    this.editPermission = this.authService.hasPermission("member", "update");
+    this.deletePermission = this.authService.hasPermission("member", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -104,11 +102,11 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public isEditable() {
-    return this.editable && this.editing;
+    return this.editPermission && this.editing;
   }
 
   public isSaveDisabled() {
-    return !this.editable || !this.editing || !this.isAbleToSave();
+    return !this.editPermission || !this.editing || !this.isAbleToSave();
   }
 
   public isAbleToSave() {
@@ -116,11 +114,11 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public isAbleToEdit() {
-    return !this.saving && this.editable && this.editing;
+    return !this.saving && this.editPermission && this.editing;
   }
 
   public isAbleToDelete() {
-    return !this.saving && this.deletable && !this.editing;
+    return !this.saving && this.deletePermission && !this.editing;
   }
 
 }

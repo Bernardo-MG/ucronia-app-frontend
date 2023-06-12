@@ -15,9 +15,9 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public failures = new Map<string, Failure[]>();
-
   public valid = false;
+
+  public failures = new Map<string, Failure[]>();
 
   public data = new Member();
 
