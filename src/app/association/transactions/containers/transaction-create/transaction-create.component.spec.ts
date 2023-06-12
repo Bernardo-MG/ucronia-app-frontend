@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCreateComponent } from './transaction-create.component';
 
@@ -21,7 +22,8 @@ describe('TransactionCreateComponent', () => {
         LayoutModule
       ],
       declarations: [
-        TransactionCreateComponent
+        TransactionCreateComponent,
+        TransactionFormComponent
       ],
       providers: [
         TransactionService

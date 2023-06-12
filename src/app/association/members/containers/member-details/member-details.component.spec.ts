@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { MemberFormComponent } from '../../components/member-form/member-form.component';
+import { MemberInfoComponent } from '../../components/member-info/member-info.component';
 import { MemberService } from '../../services/member.service';
 import { MemberDetailsComponent } from './member-details.component';
 
@@ -21,7 +23,9 @@ describe('MemberDetailsComponent', () => {
         LayoutModule
       ],
       declarations: [
-        MemberDetailsComponent
+        MemberDetailsComponent,
+        MemberFormComponent,
+        MemberInfoComponent
       ],
       providers: [
         MemberService

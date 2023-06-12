@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { MemberFormComponent } from './member-form.component';
 
 describe('MemberFormComponent', () => {
@@ -8,9 +8,14 @@ describe('MemberFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MemberFormComponent ]
+      imports: [
+        ReactiveFormsModule
+      ],
+      declarations: [
+        MemberFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MemberFormComponent);
     component = fixture.componentInstance;

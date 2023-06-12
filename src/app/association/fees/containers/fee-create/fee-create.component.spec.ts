@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { EMPTY } from 'rxjs';
+import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
@@ -30,7 +31,8 @@ describe('FeeCreateComponent', () => {
       declarations: [
         FeeCreateComponent,
         MemberSelectionComponent,
-        MemberSelectionInputComponent
+        MemberSelectionInputComponent,
+        FeeFormComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }
