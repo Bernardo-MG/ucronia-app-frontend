@@ -11,7 +11,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   @Input() public readonly = false;
 
-  @Input() public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
+  @Input() public failures = new Map<string, Failure[]>();
 
   @Input() public data = new Member();
 
@@ -21,10 +21,10 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   @Output() public validityChange = new EventEmitter<boolean>();
 
-  public form: FormGroup = this.fb.group({});
+  public form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
+    fb: FormBuilder
   ) {
     this.form = fb.group({
       id: [null],
@@ -48,6 +48,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
       const valid = (status === "VALID");
       this.validityChange.emit(valid);
     });
+
     // Listen for value changes
     this.form.valueChanges.subscribe(data => {
       this.valueChange.emit(data);
