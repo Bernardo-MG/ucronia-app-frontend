@@ -5,6 +5,7 @@ import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
 import { FeeFormComponent } from './components/fee-form/fee-form.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
@@ -39,7 +40,8 @@ import { FeeService } from './services/fee.service';
     CoreModule,
     IconsModule,
     PaginationModule,
-    LayoutModule
+    LayoutModule,
+    FontAwesomeModule
   ],
   providers: [
     FeeService
