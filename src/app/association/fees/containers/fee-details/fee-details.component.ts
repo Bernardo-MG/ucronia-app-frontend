@@ -47,7 +47,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
     private authService: AuthService
-  ) {}
+  ) { }
 
   ngAfterContentInit(): void {
     this.cdRef.detectChanges();

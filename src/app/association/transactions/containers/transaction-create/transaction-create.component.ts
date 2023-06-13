@@ -40,7 +40,7 @@ export class TransactionCreateComponent {
         this.saving = false;
       },
       error: error => {
-        if(error.failures){
+        if (error.failures) {
           this.failures = error.failures;
         } else {
           this.failures = new Map<string, Failure[]>();
