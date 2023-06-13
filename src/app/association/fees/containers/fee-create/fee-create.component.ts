@@ -54,7 +54,6 @@ export class FeeCreateComponent {
   public onSave(toSave: Fee): void {
     this.data = toSave;
     this.saving = true;
-    this.data.memberId = this.member.id;
     this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
@@ -88,6 +87,7 @@ export class FeeCreateComponent {
 
   public onSelectMember(member: Member) {
     this.member = member;
+    this.data = { ...this.data, memberId: member.id };
     this.selectingMember = false;
   }
 
@@ -106,7 +106,7 @@ export class FeeCreateComponent {
   }
 
   public isAbleToSave() {
-    return ((this.valid) && (!this.saving)) && (this.member.id > 0);
+    return ((this.valid) && (!this.saving));
   }
 
 }

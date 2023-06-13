@@ -29,6 +29,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
   ) {
     this.form = fb.group({
       id: [-1],
+      memberId: [null, Validators.required],
       date: [new Date(), Validators.required],
       paid: [false, Validators.required]
     });
