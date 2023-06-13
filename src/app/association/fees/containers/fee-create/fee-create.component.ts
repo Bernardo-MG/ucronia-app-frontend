@@ -88,7 +88,6 @@ export class FeeCreateComponent {
 
   public onSelectMember(member: Member) {
     this.member = member;
-    this.data = { ...this.data, memberId: member.id };
     this.selectingMember = false;
   }
 
@@ -107,7 +106,7 @@ export class FeeCreateComponent {
   }
 
   public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
+    return ((this.valid) && (!this.saving)) && (this.member.id > 0);
   }
 
 }
