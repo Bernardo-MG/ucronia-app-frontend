@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Fee } from '@app/association/models/fee';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
@@ -7,24 +8,56 @@ import { Failure } from '@app/core/api/models/failure';
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })
-export class FeeFormComponent {
+export class FeeFormComponent implements OnInit, OnChanges {
 
   @Input() public readonly = false;
 
-  @Input() public form: FormGroup = this.fb.group({});
+  @Input() public failures = new Map<string, Failure[]>();
 
-  @Input() public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
-  
-  @Output() public save = new EventEmitter<any>();
+  @Input() public data = new Fee();
+
+  @Output() public save = new EventEmitter<Fee>();
+
+  @Output() public valueChange = new EventEmitter<Fee>();
+
+  @Output() public validityChange = new EventEmitter<boolean>();
+
+  public form: FormGroup;
 
   constructor(
-    private fb: FormBuilder
-  ) { }
+    fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      id: [-1],
+      memberId: [null, Validators.required],
+      date: [new Date(), Validators.required],
+      paid: [false, Validators.required]
+    });
+  }
 
-  public onSave(){
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['data']) && (!changes['data'].firstChange)) {
+      this.form.patchValue(this.data);
+    }
+  }
+
+  public ngOnInit(): void {
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      const valid = (status === "VALID");
+      this.validityChange.emit(valid);
+    });
+
+    // Listen for value changes
+    this.form.valueChanges.subscribe(data => {
+      this.valueChange.emit(data);
+    });
+  }
+
+  public onSave() {
     this.save.emit();
   }
-  
+
   public isInvalid(property: string): boolean {
     return (this.form.get(property)?.invalid) || (this.failures.has(property));
   }

@@ -10,7 +10,7 @@ import { FeeService } from '../../services/fee.service';
   selector: 'assoc-fee-create',
   templateUrl: './fee-create.component.html'
 })
-export class FeeCreateComponent implements AfterContentInit, OnInit {
+export class FeeCreateComponent {
 
   /**
    * Saving flag.
@@ -33,37 +33,29 @@ export class FeeCreateComponent implements AfterContentInit, OnInit {
 
   public failures = new Map<string, Failure[]>();
 
-  public form: FormGroup;
+  public data = new Fee();
+
+  public memberId = 0;
 
   constructor(
     private service: FeeService,
     private router: Router,
-    private cdRef: ChangeDetectorRef,
-    fb: FormBuilder
-  ) {
-    this.form = fb.group({
-      memberId: [null, Validators.required],
-      date: [null, Validators.required],
-      paid: [false, Validators.required]
-    });
-  }
+    private cdRef: ChangeDetectorRef
+  ) { }
 
   public ngAfterContentInit(): void {
     this.cdRef.detectChanges();
   }
 
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
-  public onSave(): void {
-    const data: Fee = this.form.value;
+  public onSave(toSave: Fee): void {
+    this.data = toSave;
     this.saving = true;
-    data.memberId = this.member.id;
-    this.service.create(data).subscribe({
+    this.data.memberId = this.member.id;
+    this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
         this.failures = new Map<string, Failure[]>();
@@ -71,7 +63,7 @@ export class FeeCreateComponent implements AfterContentInit, OnInit {
         this.saving = false;
       },
       error: error => {
-        if(error.failures){
+        if (error.failures) {
           this.failures = error.failures;
         } else {
           this.failures = new Map<string, Failure[]>();
@@ -82,15 +74,21 @@ export class FeeCreateComponent implements AfterContentInit, OnInit {
     });
   }
 
+  public onChange(changed: Fee) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
+  }
+
   public onRequestMember() {
     this.selectingMember = true;
   }
 
   public onSelectMember(member: Member) {
     this.member = member;
-    this.form.patchValue({
-      memberId:member.id
-    });
+    this.data = { ...this.data, memberId: member.id };
     this.selectingMember = false;
   }
 

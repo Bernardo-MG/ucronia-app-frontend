@@ -42,23 +42,13 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
 
-  public form: FormGroup;
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuthService,
-    fb: FormBuilder
-  ) {
-    this.form = fb.group({
-      id: [-1],
-      memberId: [null, Validators.required],
-      date: [null, Validators.required],
-      paid: [false, Validators.required]
-    });
-  }
+    private authService: AuthService
+  ) {}
 
   ngAfterContentInit(): void {
     this.cdRef.detectChanges();
@@ -76,17 +66,16 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
     // Get members
     this.onGoToMembersPage(0);
-
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
   }
 
-  public onSave(): void {
-    const data: Fee = this.form.value;
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
+  public onSave(toSave: Fee): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(this.data.id, this.data).subscribe({
       next: d => {
         this.failures = new Map<string, Failure[]>()
         // Reactivate view
@@ -107,8 +96,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public onDelete(): void {
-    const data: Fee = this.form.value;
-    this.service.delete(data.id).subscribe(r => {
+    this.service.delete(this.data.id).subscribe(r => {
       this.router.navigate([`/fees/list`]);
     });
   }
@@ -126,6 +114,14 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.editing = true;
   }
 
+  public onChange(changed: Fee) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
+  }
+
   public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
@@ -140,7 +136,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.data = d;
-          this.form.patchValue(this.data);
           this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
         });
     }

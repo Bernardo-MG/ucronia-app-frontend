@@ -11,13 +11,13 @@
     <div class="card">
       <div class="card-body">
         <!-- Form -->
-        <assoc-fee-form [form]="form" [failures]="failures">
+        <assoc-fee-form [failures]="failures" (save)="onSave($event)" (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
         </assoc-fee-form>
         <!-- Save button -->
         <div class="row">
           <div class="col-sm-2 d-grid gap-2">
             <layout-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
-              (action)="onSave()"></layout-waiting-button>
+              (action)="onSaveCurrent()"></layout-waiting-button>
           </div>
         </div>
       </div>
