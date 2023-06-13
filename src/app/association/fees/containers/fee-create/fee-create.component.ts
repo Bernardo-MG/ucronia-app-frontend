@@ -17,15 +17,15 @@ export class FeeCreateComponent {
    */
   public saving = false;
 
+  public valid = false;
+
   public readingMembers = false;
 
-  public valid = false;
+  public selectingMember = false;
 
   public members: Member[] = [];
 
   public member = new Member();
-
-  public selectingMember = false;
 
   public membersPage = 0;
 
@@ -39,13 +39,8 @@ export class FeeCreateComponent {
 
   constructor(
     private service: FeeService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef
+    private router: Router
   ) { }
-
-  public ngAfterContentInit(): void {
-    this.cdRef.detectChanges();
-  }
 
   public onSaveCurrent(): void {
     this.onSave(this.data);
