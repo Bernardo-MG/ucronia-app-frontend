@@ -18,15 +18,15 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
    */
   public saving = false;
 
-  public editable = false;
-
-  public deletable = false;
-
   public readingMembers = false;
 
   public valid = false;
 
   public editing = false;
+
+  public editPermission = false;
+
+  public deletePermission = false;
 
   public members: Member[] = [];
 
@@ -40,7 +40,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public membersTotalPages = 0;
 
-  public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
+  public failures = new Map<string, Failure[]>();
 
   constructor(
     private route: ActivatedRoute,
@@ -56,8 +56,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("fee", "update");
-    this.deletable = this.authService.hasPermission("fee", "delete");
+    this.editPermission = this.authService.hasPermission("fee", "update");
+    this.deletePermission = this.authService.hasPermission("fee", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -146,7 +146,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public isEditable() {
-    return this.editable && this.editing;
+    return this.editPermission && this.editing;
   }
 
 }

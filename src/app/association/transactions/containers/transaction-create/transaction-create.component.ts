@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
@@ -9,7 +8,7 @@ import { TransactionService } from '../../service/transaction.service';
   selector: 'assoc-transaction-create',
   templateUrl: './transaction-create.component.html'
 })
-export class TransactionCreateComponent implements OnInit {
+export class TransactionCreateComponent {
 
   /**
    * Loading flag.
@@ -20,29 +19,18 @@ export class TransactionCreateComponent implements OnInit {
 
   public failures = new Map<string, Failure[]>();
 
-  public form: FormGroup;
+  public data = new Transaction();
 
   constructor(
     private service: TransactionService,
-    private router: Router,
-    fb: FormBuilder
-  ) {
-    this.form = fb.group({
-      description: ['', Validators.required],
-      date: [null, Validators.required],
-      amount: [0, Validators.required]
-    });
+    private router: Router
+  ) { }
+
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      this.valid = (status === "VALID");
-    });
-  }
-
-  public onSave(): void {
-    const data: Transaction = this.form.value;
+  public onSave(data: Transaction): void {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
@@ -61,6 +49,14 @@ export class TransactionCreateComponent implements OnInit {
         this.saving = false;
       }
     });
+  }
+
+  public onChange(changed: Transaction) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   public isAbleToSave() {

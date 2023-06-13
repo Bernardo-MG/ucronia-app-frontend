@@ -1,5 +1,5 @@
 <layout-article title="Edit fee">
-  <layout-edition-wrapper [editable]="editable" [saving]="saving" [editing]="editing" [deletable]="deletable"
+  <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing" [deletable]="deletePermission"
     [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()" (save)="onSaveCurrent()">
     <!-- Form -->
     <div id="edit">

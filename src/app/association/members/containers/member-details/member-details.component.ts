@@ -16,9 +16,9 @@ export class MemberDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public editing = false;
-
   public valid = false;
+
+  public editing = false;
 
   public editPermission = false;
 
