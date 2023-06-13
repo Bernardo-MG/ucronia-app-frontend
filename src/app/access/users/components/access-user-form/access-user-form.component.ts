@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
@@ -10,15 +10,25 @@ export class AccessUserFormComponent {
 
   @Input() public readonly = false;
 
-  @Input() public form: FormGroup = this.fb.group({});
-
   @Input() public failures: Map<string, Failure[]> = new Map<string, Failure[]>();
   
   @Output() public save = new EventEmitter<any>();
 
+  public form;
+
   constructor(
-    private fb: FormBuilder
-  ) { }
+    fb: FormBuilder
+  ) {
+    this.form = fb.group({
+      username: ['', Validators.required],
+      name: [''],
+      email: [''],
+      credentialsExpired: [true, Validators.required],
+      enabled: [true, Validators.required],
+      expired: [true, Validators.required],
+      locked: [true, Validators.required]
+    });
+  }
 
   public onSave(){
     this.save.emit();

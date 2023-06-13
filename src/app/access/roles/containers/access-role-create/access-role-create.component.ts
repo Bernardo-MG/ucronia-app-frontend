@@ -18,17 +18,10 @@ export class AccessRoleCreateComponent {
 
   public failures = new Map<string, Failure[]>();
 
-  public form: FormGroup;
-
   constructor(
     private service: AccessRoleService,
-    private router: Router,
-    fb: FormBuilder
-    ) {
-      this.form = fb.group({
-        name: ['', Validators.required]
-      });
-    }
+    private router: Router
+    ) { }
 
   public onSave(role: Role): void {
     this.saving = true;

@@ -18,23 +18,12 @@ export class AccessUserCreateComponent {
 
   public failures = new Map<string, Failure[]>();
 
-  public form: FormGroup;
-
   public valid = false;
 
   constructor(
     private service: AccessUserService,
-    private router: Router,
-    fb: FormBuilder
-    ) {
-      this.form = fb.group({
-        name: ['', Validators.required],
-        surname: [''],
-        identifier: [''],
-        phone: [''],
-        active: [true, Validators.required]
-      });
-    }
+    private router: Router
+    ) { }
 
   public onSave(user: User): void {
     this.saving = true;
