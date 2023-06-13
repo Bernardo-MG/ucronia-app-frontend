@@ -1,23 +1,23 @@
 <layout-article title="Edit role">
-  <div *ngIf="selectingPrivilege; then privilege_selection else role_edition"></div>
+  <div *ngIf="selectingPermission; then permission_selection else role_edition"></div>
   <!-- Role form -->
   <ng-template #role_edition>
-    <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form>
-    <layout-waiting-wrapper [waiting]="waitingPrivileges">
-      <access-role-privilege-form (addPrivilege)="onShowAddPrivilege()" (removePrivilege)="onRemovePrivilege($event)"
-        [privileges]="privileges">
-      </access-role-privilege-form>
-      <pagination-navigation [current]="privilegesPageInfo.page" [pages]="privilegesPageInfo.totalPages"
-        (goTo)="onGoToPrivilegePage($event)">
+    <!-- <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form> -->
+    <layout-waiting-wrapper [waiting]="waitingPermissions">
+      <access-role-permission-form (addPermission)="onShowAddPermission()" (removePermission)="onRemovePermission($event)"
+        [permissions]="permissions">
+      </access-role-permission-form>
+      <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
+        (goTo)="onGoToPermissionPage($event)">
       </pagination-navigation>
     </layout-waiting-wrapper>
   </ng-template>
   <!-- Edit privileges -->
-  <ng-template #privilege_selection>
-    <layout-waiting-wrapper [waiting]="waitingPrivilegesSelection">
-      <access-role-privilege-selection (selectPrivilege)="onAddPrivilege($event)" [pageInfo]="privilegesPageInfo"
-        (goToPage)="onGoToPrivilegeSelectionPage($event)" [privileges]="privilegeSelection">
+  <ng-template #permission_selection>
+    <!-- <layout-waiting-wrapper [waiting]="waitingPermissionsSelection">
+      <access-role-privilege-selection (selectPermission)="onAddPermission($event)" [pageInfo]="privilegesPageInfo"
+        (goToPage)="onGoToPermissionSelectionPage($event)" [privileges]="privilegeSelection">
       </access-role-privilege-selection>
-    </layout-waiting-wrapper>
+    </layout-waiting-wrapper> -->
   </ng-template>
 </layout-article>

@@ -1,15 +1,16 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { EMPTY } from 'rxjs';
+import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
+import { FeeInfoComponent } from '../../components/fee-info/fee-info.component';
 import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeDetailsComponent } from './fee-details.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('FeeDetailsComponent', () => {
   let component: FeeDetailsComponent;
@@ -28,13 +29,14 @@ describe('FeeDetailsComponent', () => {
         ReactiveFormsModule,
         IconsModule,
         LayoutModule,
-        EditionModule,
         HttpClientTestingModule
       ],
       declarations: [
         FeeDetailsComponent,
         MemberSelectionComponent,
-        MemberSelectionInputComponent
+        MemberSelectionInputComponent,
+        FeeFormComponent,
+        FeeInfoComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }

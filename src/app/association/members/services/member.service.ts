@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Member } from '@app/association/models/member';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
@@ -36,16 +34,6 @@ export class MemberService {
 
   public countActive(): Observable<number> {
     return this.client.member().parameter("active", true).readAll().pipe(map(r => r.totalElements));
-  }
-
-  public getFields(): FormDescription[] {
-    return [
-      new FormDescription('Name', 'name', 'string', Validators.required),
-      new FormDescription('Surname', 'surname', 'string'),
-      new FormDescription('Identifier', 'identifier', 'string'),
-      new FormDescription('Phone', 'phone', 'string'),
-      new FormDescription('Active', 'active', 'boolean', Validators.required)
-    ];
   }
 
 }

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { PageInfo } from '@app/core/api/models/page-info';
-import { Privilege } from '@app/core/authentication/models/privilege';
+import { Action } from '@app/core/authentication/models/action';
+import { Resource } from '@app/core/authentication/models/resource';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Permission } from '@app/core/authentication/models/permission';
 
 @Component({
   selector: 'access-role-details',
@@ -17,23 +19,29 @@ export class AccessRoleDetailsComponent implements OnInit {
    */
   public waiting = false;
 
-  public waitingPrivileges = false;
+  public waitingPermissions = false;
 
-  public waitingPrivilegesSelection = false;
+  public waitingActionsSelection = false;
+
+  public waitingResourcesSelection = false;
 
   public role = new Role();
 
   public formValid = false;
 
-  public privileges: Privilege[] = [];
+  public permissions: Permission[] = [];
 
-  public privilegeSelection: Privilege[] = [];
+  public actionSelection: Action[] = [];
 
-  public selectingPrivilege = false;
+  public resourceSelection: Resource[] = [];
 
-  public privilegeSelectionPageInfo = new PageInfo();
+  public selectingPermission = false;
 
-  public privilegesPageInfo = new PageInfo();
+  public actionSelectionPageInfo = new PageInfo();
+
+  public resourceSelectionPageInfo = new PageInfo();
+
+  public permissionsPageInfo = new PageInfo();
 
   public failures: Failure[] = [];
 
@@ -64,34 +72,40 @@ export class AccessRoleDetailsComponent implements OnInit {
     });
   }
 
-  public onShowAddPrivilege(): void {
-    this.selectingPrivilege = true;
+  public onShowAddPermission(): void {
+    this.selectingPermission = true;
   }
 
-  public onAddPrivilege(data: Privilege): void {
-    this.service.addPrivilege(this.role.id, data.id).subscribe(p => this.onGoToPrivilegePage(0));
-    this.selectingPrivilege = false;
+  public onAddPermission(data: Permission): void {
+    this.service.addPermission(this.role.id, data.resourceId, data.actionId).subscribe(p => this.onGoToPermissionPage(0));
+    this.selectingPermission = false;
   }
 
-  public onRemovePrivilege(data: Privilege): void {
-    this.service.removePrivilege(this.role.id, data.id).subscribe(p => this.onGoToPrivilegePage(0));
+  public onRemovePermission(data: Permission): void {
+    this.service.removePermission(this.role.id, data.resourceId, data.actionId).subscribe(p => this.onGoToPermissionPage(0));
   }
 
-  public onGoToPrivilegeSelectionPage(page: number) {
-    this.waitingPrivilegesSelection = true;
-    this.service.getPrivilegeSelection(page).subscribe(response => {
-      this.privilegeSelection = response.content;
-      this.privilegeSelectionPageInfo = response;
-      this.waitingPrivilegesSelection = false;
+  public onGoToPermissionSelectionPage(page: number) {
+    this.waitingActionsSelection = true;
+    this.service.getActionSelection(page).subscribe(response => {
+      this.actionSelection = response.content;
+      this.actionSelectionPageInfo = response;
+      this.waitingActionsSelection = false;
+    });
+    this.waitingResourcesSelection = true;
+    this.service.getResourceSelection(page).subscribe(response => {
+      this.resourceSelection = response.content;
+      this.resourceSelectionPageInfo = response;
+      this.waitingResourcesSelection = false;
     });
   }
 
-  public onGoToPrivilegePage(page: number) {
-    this.waitingPrivileges = true;
-    this.service.getPrivileges(this.role.id, page).subscribe(response => {
-      this.privileges = response.content;
-      this.privilegesPageInfo = response;
-      this.waitingPrivileges = false;
+  public onGoToPermissionPage(page: number) {
+    this.waitingPermissions = true;
+    this.service.getPermissions(this.role.id, page).subscribe(response => {
+      this.permissions = response.content;
+      this.permissionsPageInfo = response;
+      this.waitingPermissions = false;
     });
   }
 
@@ -101,7 +115,7 @@ export class AccessRoleDetailsComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe(d => {
           this.role = d;
-          this.onGoToPrivilegePage(0);
+          this.onGoToPermissionPage(0);
         });
     }
   }

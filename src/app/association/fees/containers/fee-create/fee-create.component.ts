@@ -1,66 +1,78 @@
-import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { FeeService } from '../../services/fee.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Component({
   selector: 'assoc-fee-create',
   templateUrl: './fee-create.component.html'
 })
-export class FeeCreateComponent implements AfterContentInit {
+export class FeeCreateComponent {
 
   /**
    * Saving flag.
    */
   public saving = false;
 
+  public valid = false;
+
   public readingMembers = false;
+
+  public selectingMember = false;
 
   public members: Member[] = [];
 
   public member = new Member();
 
-  public selectingMember = false;
-
   public membersPage = 0;
 
   public membersTotalPages = 0;
 
-  public failures: Failure[] = [];
+  public failures = new Map<string, Failure[]>();
 
-  public fields: FormDescription[];
+  public data = new Fee();
+
+  public memberId = 0;
 
   constructor(
     private service: FeeService,
-    private router: Router,
-    private cdRef: ChangeDetectorRef
-  ) {
-    this.fields = service.getFields();
+    private router: Router
+  ) { }
+
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
-  ngAfterContentInit(): void {
-    this.cdRef.detectChanges();
-  }
-
-  public onSave(fee: Fee): void {
+  public onSave(toSave: Fee): void {
+    this.data = toSave;
     this.saving = true;
-    fee.memberId = this.member.id;
-    this.service.create(fee).subscribe({
+    this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
     });
+  }
+
+  public onChange(changed: Fee) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   public onRequestMember() {
@@ -69,6 +81,7 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onSelectMember(member: Member) {
     this.member = member;
+    this.data = { ...this.data, memberId: member.id };
     this.selectingMember = false;
   }
 
@@ -84,6 +97,10 @@ export class FeeCreateComponent implements AfterContentInit {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }

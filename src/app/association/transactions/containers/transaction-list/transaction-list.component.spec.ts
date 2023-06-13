@@ -6,6 +6,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionListComponent } from './transaction-list.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('TransactionListComponent', () => {
   let component: TransactionListComponent;
@@ -19,7 +20,8 @@ describe('TransactionListComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         PaginationModule,
-        LayoutModule
+        LayoutModule,
+        FontAwesomeModule
       ],
       declarations: [
         TransactionListComponent

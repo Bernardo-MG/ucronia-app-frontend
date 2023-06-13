@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
@@ -36,6 +37,8 @@ export class TransactionListComponent implements OnInit {
   private routePaginationObserver: PaginationRequestRouteObserver;
 
   private filterObserver: TransactionFilterRouteObserver;
+  
+  public addIcon = faPlus;
 
   constructor(
     private service: TransactionService,

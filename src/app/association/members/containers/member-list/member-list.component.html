@@ -1,4 +1,13 @@
 <layout-article title="Members">
+  <!-- Add -->
+  <div class="row">
+    <!-- Add button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <a routerLink="/members/create" type="button" class="btn btn-link link-dark" role="button">
+        <fa-icon [icon]="addIcon"></fa-icon>
+      </a>
+    </div>
+  </div>
   <layout-waiting-wrapper [waiting]="waiting">
     <layout-data-list [rows]="rows" [header]="header" route="/members" [totalPages]="totalPages">
     </layout-data-list>

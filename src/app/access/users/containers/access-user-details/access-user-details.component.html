@@ -1,8 +1,8 @@
 <layout-article title="Edit user">
   <div *ngIf="selectingRole; then role_selection else user_edition"></div>
   <ng-template #user_edition>
-    <access-user-form [saving]="saving" [failures]="failures" [data]="user" (save)="onSave($event)">
-    </access-user-form>
+    <!-- <access-user-form [saving]="saving" [failures]="failures" [data]="user" (save)="onSave($event)">
+    </access-user-form> -->
     <layout-waiting-wrapper [waiting]="waitingRoles">
       <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
       </access-user-role-form>

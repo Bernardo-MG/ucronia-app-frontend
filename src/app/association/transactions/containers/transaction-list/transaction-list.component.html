@@ -1,4 +1,13 @@
 <layout-article title="Transactions">
+  <!-- Add -->
+  <div class="row">
+    <!-- Add button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <a routerLink="/transactions/create" type="button" class="btn btn-link link-dark" role="button">
+        <fa-icon [icon]="addIcon"></fa-icon>
+      </a>
+    </div>
+  </div>
   <layout-waiting-wrapper [waiting]="waiting">
     <div class="my-1">
       <!-- Filter -->

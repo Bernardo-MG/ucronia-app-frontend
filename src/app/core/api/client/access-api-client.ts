@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Privilege } from "@app/core/authentication/models/privilege";
+import { Action } from "@app/core/authentication/models/action";
+import { Permission } from "@app/core/authentication/models/permission";
+import { Resource } from "@app/core/authentication/models/resource";
 import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
@@ -23,12 +25,20 @@ export class AccessApiClient {
     return new CrudRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + '/role'));
   }
 
-  public rolePrivileges(id: number): RelationshipRepository<Privilege> {
-    return new RelationshipRepository<Role>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/privilege`));
+  public rolePermissions(id: number): CrudRepository<Permission> {
+    return new CrudRepository<Permission>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/permission`));
   }
 
-  public privilege(): CrudRepository<Privilege> {
-    return new CrudRepository<Privilege>(new AngularHttpOperations(this.http, this.rootUrl + '/privilege'));
+  public rolePermission(role: number, resource: number, action: number): CrudRepository<Permission> {
+    return new CrudRepository<Permission>(new AngularHttpOperations(this.http, this.rootUrl + `/role/${role}/permission/${resource}/${action}`));
+  }
+
+  public action(): CrudRepository<Action> {
+    return new CrudRepository<Action>(new AngularHttpOperations(this.http, this.rootUrl + '/action'));
+  }
+
+  public resource(): CrudRepository<Resource> {
+    return new CrudRepository<Resource>(new AngularHttpOperations(this.http, this.rootUrl + '/resource'));
   }
 
   public user(): CrudRepository<User> {

@@ -3,17 +3,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-role-form/access-user-role-form.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserEditComponent } from './access-user-details.component';
+import { AccessUserDetailsComponent } from './access-user-details.component';
 
-describe('AccessUserEditComponent', () => {
-  let component: AccessUserEditComponent;
-  let fixture: ComponentFixture<AccessUserEditComponent>;
+describe('AccessUserDetailsComponent', () => {
+  let component: AccessUserDetailsComponent;
+  let fixture: ComponentFixture<AccessUserDetailsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,11 +22,10 @@ describe('AccessUserEditComponent', () => {
         ReactiveFormsModule,
         CoreModule,
         PaginationModule,
-        LayoutModule,
-        EditionModule
+        LayoutModule
       ],
       declarations: [
-        AccessUserEditComponent,
+        AccessUserDetailsComponent,
         AccessUserFormComponent,
         AccessUserRoleFormComponent
       ],
@@ -37,7 +35,7 @@ describe('AccessUserEditComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserEditComponent);
+    fixture = TestBed.createComponent(AccessUserDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

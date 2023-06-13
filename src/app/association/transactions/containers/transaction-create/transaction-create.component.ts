@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -16,15 +15,19 @@ export class TransactionCreateComponent {
    */
   public saving = false;
 
-  public failures: Failure[] = [];
+  public valid = false;
 
-  public fields: FormDescription[];
+  public failures = new Map<string, Failure[]>();
+
+  public data = new Transaction();
 
   constructor(
     private service: TransactionService,
     private router: Router
-  ) {
-    this.fields = service.getFields();
+  ) { }
+
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
   public onSave(data: Transaction): void {
@@ -32,16 +35,32 @@ export class TransactionCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/transactions/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }
     });
+  }
+
+  public onChange(changed: Transaction) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }

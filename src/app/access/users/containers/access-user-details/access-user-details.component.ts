@@ -10,7 +10,7 @@ import { AccessUserService } from '../../services/access-user.service';
   selector: 'access-user-details',
   templateUrl: './access-user-details.component.html'
 })
-export class AccessUserEditComponent implements OnInit {
+export class AccessUserDetailsComponent implements OnInit {
 
   /**
    * Loading flag.

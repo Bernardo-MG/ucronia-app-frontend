@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
@@ -46,13 +44,6 @@ export class FeeService {
 
   public getOneMember(id: number): Observable<Member> {
     return this.client.member().id(id).readOne().pipe(map(r => r.content));
-  }
-
-  public getFields(): FormDescription[] {
-    return [
-      new FormDescription('Date', 'date', 'month'),
-      new FormDescription('Paid', 'paid', 'boolean', Validators.required)
-    ];
   }
 
 }
