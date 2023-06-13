@@ -35,7 +35,7 @@ export class FeeFormComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['data']) && (!changes['data'].firstChange)) {
+    if (changes['data']) {
       this.form.patchValue(this.data);
     }
   }
