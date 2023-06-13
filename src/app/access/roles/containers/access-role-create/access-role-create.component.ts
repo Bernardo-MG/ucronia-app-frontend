@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { Role } from '@app/core/authentication/models/role';
@@ -15,24 +16,28 @@ export class AccessRoleCreateComponent {
    */
   public saving = false;
 
-  public failures: Failure[] = [];
+  public failures = new Map<string, Failure[]>();
 
   constructor(
     private service: AccessRoleService,
     private router: Router
-  ) { }
+    ) { }
 
   public onSave(role: Role): void {
     this.saving = true;
     this.service.create(role).subscribe({
       next: d => {
         this.router.navigate([`/security/roles/${d.id}`]);
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if(error.failures){
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
       }

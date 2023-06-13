@@ -7,8 +7,6 @@ import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
-import { Validators } from '@angular/forms';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 
 @Injectable()
 export class TransactionService {
@@ -44,14 +42,6 @@ export class TransactionService {
 
   public getRange(): Observable<TransactionCalendarRange> {
     return this.client.transactionRange().readOne().pipe(map(r => r.content));
-  }
-
-  public getFields(): FormDescription[] {
-    return [
-      new FormDescription('Description', 'description', 'string', Validators.required),
-      new FormDescription('Date', 'date', 'date', Validators.required),
-      new FormDescription('Amount', 'amount', 'float', Validators.required)
-    ];
   }
 
 }

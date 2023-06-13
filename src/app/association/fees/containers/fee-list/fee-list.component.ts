@@ -5,6 +5,7 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { FeeService } from '../../services/fee.service';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -28,6 +29,8 @@ export class FeeListComponent implements OnInit {
   public rows: TableRow[] = [];
 
   private routePaginationObserver: PaginationRequestRouteObserver;
+  
+  public addIcon = faPlus;
 
   constructor(
     private service: FeeService,

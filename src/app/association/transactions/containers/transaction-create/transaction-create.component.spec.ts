@@ -2,9 +2,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { EditionModule } from '@app/shared/edition/edition.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCreateComponent } from './transaction-create.component';
 
@@ -19,11 +19,11 @@ describe('TransactionCreateComponent', () => {
         HttpClientTestingModule,
         ReactiveFormsModule,
         IconsModule,
-        LayoutModule,
-        EditionModule
+        LayoutModule
       ],
       declarations: [
-        TransactionCreateComponent
+        TransactionCreateComponent,
+        TransactionFormComponent
       ],
       providers: [
         TransactionService

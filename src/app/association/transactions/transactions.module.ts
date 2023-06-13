@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
-import { EditionModule } from '@app/shared/edition/edition.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { TransactionCalendarComponent } from './containers/transaction-calendar/transaction-calendar.component';
 import { TransactionCreateComponent } from './containers/transaction-create/transaction-create.component';
 import { TransactionDetailsComponent } from './containers/transaction-details/transaction-details.component';
@@ -20,7 +22,9 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     TransactionCreateComponent,
     TransactionListComponent,
     TransactionDetailsComponent,
-    TransactionCalendarComponent
+    TransactionCalendarComponent,
+    TransactionFormComponent,
+    TransactionInfoComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +35,7 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     CalendarModule,
     PaginationModule,
     LayoutModule,
-    EditionModule
+    FontAwesomeModule
   ],
   providers: [
     TransactionService

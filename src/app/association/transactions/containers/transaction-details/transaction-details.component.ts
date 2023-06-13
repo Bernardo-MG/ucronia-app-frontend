@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
@@ -13,60 +12,82 @@ import { TransactionService } from '../../service/transaction.service';
 export class TransactionDetailsComponent implements OnInit {
 
   /**
-   * Loading flag.
+   * Saving flag.
    */
   public saving = false;
 
-  public editable = false;
+  public valid = false;
 
-  public deletable = false;
+  public editing = false;
 
-  public transaction: Transaction = new Transaction();
+  public editPermission = false;
 
-  public failures: Failure[] = [];
+  public deletePermission = false;
 
-  public formValid = false;
+  public data = new Transaction();
 
-  public fields: FormDescription[];
+  public failures = new Map<string, Failure[]>();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: TransactionService,
     private authService: AuthService
-  ) {
-    this.fields = service.getFields();
-  }
+  ) { }
 
-  ngOnInit(): void {
-    this.editable = this.authService.hasPermission("transaction", "update");
-    this.deletable = this.authService.hasPermission("transaction", "delete");
+  public ngOnInit(): void {
+    // Check permissions
+    this.editPermission = this.authService.hasPermission("transaction", "update");
+    this.deletePermission = this.authService.hasPermission("transaction", "delete");
 
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
   }
 
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
   public onSave(data: Transaction): void {
     this.saving = true;
-    this.service.update(this.transaction.id, data).subscribe({
+    this.service.update(data.id, data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
   }
 
-  public onDelete(data: Transaction): void {
-    this.service.delete(data.id).subscribe(r => {
-      this.router.navigate([`/transactions/list`]);
+  public onDelete(): void {
+    this.service.delete(this.data.id).subscribe(r => {
+      this.router.navigate([`/members/list`]);
     });
+  }
+
+  public onStartEditing(): void {
+    this.editing = true;
+  }
+
+  public onChange(changed: Transaction) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   private load(id: string | null): void {
@@ -74,9 +95,13 @@ export class TransactionDetailsComponent implements OnInit {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.transaction = d;
+          this.data = d;
         });
     }
+  }
+
+  public isEditable() {
+    return this.editPermission && this.editing;
   }
 
 }

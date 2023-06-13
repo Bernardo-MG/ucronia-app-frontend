@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { MemberService } from '../../services/member.service';
 
 @Component({
@@ -17,56 +16,79 @@ export class MemberDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public editable = false;
+  public valid = false;
 
-  public deletable = false;
+  public editing = false;
 
-  public formValid = false;
+  public editPermission = false;
 
-  public member: Member = new Member();
+  public deletePermission = false;
 
-  public failures: Failure[] = [];
+  public data = new Member();
 
-  public fields: FormDescription[];
+  public failures = new Map<string, Failure[]>();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
     private authService: AuthService
-  ) {
-    this.fields = service.getFields();
-  }
+  ) { }
 
   public ngOnInit(): void {
-    this.editable = this.authService.hasPermission("member", "update");
-    this.deletable = this.authService.hasPermission("member", "delete");
+    // Check permissions
+    this.editPermission = this.authService.hasPermission("member", "update");
+    this.deletePermission = this.authService.hasPermission("member", "delete");
 
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
   }
 
-  public onSave(data: Member): void {
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
+  public onSave(toSave: Member): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(this.data.id, this.data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>();
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
   }
 
-  public onDelete(data: Member): void {
-    this.service.delete(data.id).subscribe(r => {
+  public onDelete(): void {
+    this.service.delete(this.data.id).subscribe(r => {
       this.router.navigate([`/members/list`]);
     });
+  }
+
+  public onStartEditing(): void {
+    this.editing = true;
+  }
+
+  public onChange(changed: Member) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   private load(id: string | null): void {
@@ -74,9 +96,13 @@ export class MemberDetailsComponent implements OnInit {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.member = d;
+          this.data = d;
         });
     }
+  }
+
+  public isEditable() {
+    return this.editPermission && this.editing;
   }
 
 }

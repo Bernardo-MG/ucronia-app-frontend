@@ -25,8 +25,7 @@ export class ViewService {
           {
             title: 'Fees', links: this.filterNodes([
               { title: 'Calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
-              { title: 'List', path: '/fees/list', resource: 'fee', action: 'read' },
-              { title: 'Create', path: '/fees/create', resource: 'fee', action: 'create' }
+              { title: 'List', path: '/fees/list', resource: 'fee', action: 'read' }
             ])
           },
           {
@@ -37,15 +36,13 @@ export class ViewService {
           {
             title: 'Members', links: this.filterNodes([
               { title: 'Stats', path: '/members/stats', resource: 'member', action: 'read' },
-              { title: 'List', path: '/members/list', resource: 'member', action: 'read' },
-              { title: 'Create', path: '/members/create', resource: 'member', action: 'create' }
+              { title: 'List', path: '/members/list', resource: 'member', action: 'read' }
             ])
           },
           {
             title: 'Transactions', links: this.filterNodes([
               { title: 'Calendar', path: '/transactions/calendar', resource: 'transaction', action: 'read' },
-              { title: 'List', path: '/transactions/list', resource: 'transaction', action: 'read' },
-              { title: 'Create', path: '/transactions/create', resource: 'transaction', action: 'create' }
+              { title: 'List', path: '/transactions/list', resource: 'transaction', action: 'read' }
             ])
           }
         ]

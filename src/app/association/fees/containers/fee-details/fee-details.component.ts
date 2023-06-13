@@ -4,7 +4,6 @@ import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { FormDescription } from '@app/shared/edition/models/form-description';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -18,17 +17,21 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
    */
   public saving = false;
 
-  public editable = false;
-
-  public deletable = false;
-
   public readingMembers = false;
+
+  public valid = false;
+
+  public editing = false;
+
+  public editPermission = false;
+
+  public deletePermission = false;
 
   public members: Member[] = [];
 
   public member = new Member();
 
-  public fee = new Fee();
+  public data = new Fee();
 
   public selectingMember = false;
 
@@ -36,9 +39,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public membersTotalPages = 0;
 
-  public failures: Failure[] = [];
-
-  public fields: FormDescription[];
+  public failures = new Map<string, Failure[]>();
 
   constructor(
     private route: ActivatedRoute,
@@ -46,42 +47,55 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
     private authService: AuthService
-  ) {
-    this.fields = service.getFields();
-  }
+  ) { }
 
   ngAfterContentInit(): void {
     this.cdRef.detectChanges();
   }
 
   public ngOnInit(): void {
-    this.editable = this.authService.hasPermission("fee", "update");
-    this.deletable = this.authService.hasPermission("fee", "delete");
+    // Check permissions
+    this.editPermission = this.authService.hasPermission("fee", "update");
+    this.deletePermission = this.authService.hasPermission("fee", "delete");
 
-    this.onGoToMembersPage(0);
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
+
+    // Get members
+    this.onGoToMembersPage(0);
   }
 
-  public onSave(fee: Fee): void {
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
+  public onSave(toSave: Fee): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(fee.id, fee).subscribe({
+    this.service.update(this.data.id, this.data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = new Map<string, Failure[]>()
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = new Map<string, Failure[]>();
+        }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
   }
 
-  public onDelete(data: Member): void {
-    this.service.delete(data.id).subscribe(r => {
+  public onDelete(): void {
+    this.service.delete(this.data.id).subscribe(r => {
       this.router.navigate([`/fees/list`]);
     });
   }
@@ -93,6 +107,18 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   public onSelectMember(member: Member) {
     this.member = member;
     this.selectingMember = false;
+  }
+
+  public onStartEditing(): void {
+    this.editing = true;
+  }
+
+  public onChange(changed: Fee) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   public onGoToMembersPage(page: number) {
@@ -108,14 +134,18 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.fee = d;
-          this.service.getOneMember(this.fee.memberId).subscribe(d => this.onSelectMember(d));
+          this.data = d;
+          this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
         });
     }
   }
 
   public onCancelSelectMember() {
     this.selectingMember = false;
+  }
+
+  public isEditable() {
+    return this.editPermission && this.editing;
   }
 
 }
