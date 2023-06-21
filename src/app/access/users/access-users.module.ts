@@ -14,6 +14,7 @@ import { AccessUserCreateComponent } from './containers/access-user-create/acces
 import { AccessUserDetailsComponent } from './containers/access-user-details/access-user-details.component';
 import { AccessUserListComponent } from './containers/access-user-list/access-user-list.component';
 import { AccessUserService } from './services/access-user.service';
+import { AccessUserInfoComponent } from './components/access-user-info/access-user-info.component';
 
 
 
@@ -24,7 +25,8 @@ import { AccessUserService } from './services/access-user.service';
     AccessUserDetailsComponent,
     AccessUserListComponent,
     AccessUserRoleFormComponent,
-    AccessUserRoleSelectionComponent
+    AccessUserRoleSelectionComponent,
+    AccessUserInfoComponent
   ],
   imports: [
     CommonModule,
