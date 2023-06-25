@@ -17,7 +17,7 @@ export class TransactionCreateComponent {
 
   public valid = false;
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   public data = new Transaction();
 
@@ -35,7 +35,7 @@ export class TransactionCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/transactions/${d.id}`]);
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
       },
@@ -43,7 +43,7 @@ export class TransactionCreateComponent {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

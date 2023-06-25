@@ -43,7 +43,7 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public permissionsPageInfo = new PageInfo();
 
-  public failures: Failure[] = [];
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -60,7 +60,7 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.waiting = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = {};
         // Reactivate view
         this.waiting = false;
       },

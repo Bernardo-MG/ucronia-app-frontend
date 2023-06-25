@@ -16,7 +16,7 @@ export class AccessRoleCreateComponent {
    */
   public saving = false;
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private service: AccessRoleService,
@@ -28,7 +28,7 @@ export class AccessRoleCreateComponent {
     this.service.create(role).subscribe({
       next: d => {
         this.router.navigate([`/security/roles/${d.id}`]);
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
       },
@@ -36,7 +36,7 @@ export class AccessRoleCreateComponent {
         if(error.failures){
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

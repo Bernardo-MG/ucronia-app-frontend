@@ -5,7 +5,7 @@
     <div class="col-sm-10">
       <input type="text" id="usernameInput" formControlName="username" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isInvalid('username') }" aria-describedby="usernameLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('username')">
         <span *ngIf="failure.field === 'username'">{{failure.message}}</span>
       </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="col-sm-10">
       <input type="text" id="emailInput" formControlName="email" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isInvalid('email') }" aria-describedby="emailLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('email')">
         <span *ngIf="failure.field === 'email'">{{failure.message}}</span>
       </div>
     </div>

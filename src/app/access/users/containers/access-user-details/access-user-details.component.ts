@@ -26,7 +26,7 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public deletePermission = false;
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   public waitingRoles = false;
 
@@ -70,7 +70,7 @@ export class AccessUserDetailsComponent implements OnInit {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -79,7 +79,7 @@ export class AccessUserDetailsComponent implements OnInit {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

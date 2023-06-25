@@ -18,7 +18,7 @@ export class AccessUserCreateComponent {
 
   public valid = false;
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   public data = new User();
 
@@ -37,7 +37,7 @@ export class AccessUserCreateComponent {
     this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
       },
@@ -45,7 +45,7 @@ export class AccessUserCreateComponent {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

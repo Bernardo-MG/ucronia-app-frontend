@@ -11,7 +11,7 @@ export class MemberFormComponent implements OnInit, OnChanges {
 
   @Input() public readonly = false;
 
-  @Input() public failures = new Map<string, Failure[]>();
+  @Input() public failures: { [key: string]: Failure[] } = {};
 
   @Input() public data = new Member();
 
@@ -60,13 +60,13 @@ export class MemberFormComponent implements OnInit, OnChanges {
   }
 
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.failures.has(property));
+    return (this.form.get(property)?.invalid) || (this.failures.hasOwnProperty(property));
   }
 
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.failures.get(property);
+    const found = this.failures[property];
     if (found) {
       failures = (found as Failure[]);
     } else {

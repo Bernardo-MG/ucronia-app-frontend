@@ -39,7 +39,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public membersTotalPages = 0;
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -76,7 +76,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.saving = true;
     this.service.update(this.data.id, this.data).subscribe({
       next: d => {
-        this.failures = new Map<string, Failure[]>()
+        this.failures = {};
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -85,7 +85,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

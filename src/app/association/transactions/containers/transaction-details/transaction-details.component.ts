@@ -26,7 +26,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   public data = new Transaction();
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -54,7 +54,7 @@ export class TransactionDetailsComponent implements OnInit {
     this.saving = true;
     this.service.update(data.id, data).subscribe({
       next: d => {
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -63,7 +63,7 @@ export class TransactionDetailsComponent implements OnInit {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

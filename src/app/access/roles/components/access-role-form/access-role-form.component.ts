@@ -10,7 +10,7 @@ export class AccessRoleFormComponent {
 
   @Input() public readonly = false;
 
-  @Input() public failures = new Map<string, Failure[]>();
+  @Input() public failures: { [key: string]: Failure[] } = {};
   
   @Output() public save = new EventEmitter<any>();
 
@@ -29,13 +29,13 @@ export class AccessRoleFormComponent {
   }
   
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.failures.has(property));
+    return (this.form.get(property)?.invalid) || (this.failures.hasOwnProperty(property));
   }
 
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.failures.get(property);
+    const found = this.failures[property];
     if (found) {
       failures = (found as Failure[]);
     } else {
