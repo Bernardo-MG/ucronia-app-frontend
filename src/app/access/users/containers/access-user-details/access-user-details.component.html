@@ -1,18 +1,16 @@
 <layout-article title="Edit user">
   <div *ngIf="selectingRole; then role_selection else user_edition"></div>
   <ng-template #user_edition>
-    <layout-article title="Edit member">
-      <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-        [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
-        (save)="onSaveCurrent()">
-        <!-- Form -->
-        <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-          (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
-        </access-user-form>
-        <!-- Info -->
-        <access-user-info id="info" [data]="data"></access-user-info>
-      </layout-edition-wrapper>
-    </layout-article>
+    <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
+      [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
+      (save)="onSaveCurrent()">
+      <!-- Form -->
+      <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
+        (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+      </access-user-form>
+      <!-- Info -->
+      <access-user-info id="info" [data]="data"></access-user-info>
+    </layout-edition-wrapper>
     <layout-waiting-wrapper [waiting]="waitingRoles">
       <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
       </access-user-role-form>
