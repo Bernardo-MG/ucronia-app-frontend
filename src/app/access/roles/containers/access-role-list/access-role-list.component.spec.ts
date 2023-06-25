@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleListComponent } from './access-role-list.component';
 
@@ -18,7 +19,8 @@ describe('AccessRoleListComponent', () => {
         RouterTestingModule,
         PaginationModule,
         CoreModule,
-        LayoutModule
+        LayoutModule,
+        FontAwesomeModule
       ],
       declarations: [
         AccessRoleListComponent
