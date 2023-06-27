@@ -12,15 +12,21 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 })
 export class AccessRoleAddPermissionComponent {
 
-  @Input() set resources(value: Resource[]) {
-  }
-
-  @Input() public totalResourcePages = 0;
-
   @Input() set actions(value: Action[]) {
+    this.actionRows = value.map((a, i) => {
+      return {id:i, cells:[a]};
+    });
   }
 
   @Input() public totalActionPages = 0;
+
+  @Input() set resources(value: Resource[]) {
+    this.resourceRows = value.map((r, i) => {
+      return {id:i, cells:[r]};
+    });
+  }
+
+  @Input() public totalResourcePages = 0;
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
@@ -28,13 +34,13 @@ export class AccessRoleAddPermissionComponent {
 
   @Output() public selectAction = new EventEmitter<Permission>();
 
-  public permissionHeader: TableHeaderCell[] = [];
-
-  public permissionRows: TableRow[] = [];
-
-  public actionHeader: TableHeaderCell[] = [];
+  public actionHeader: TableHeaderCell[] = [{name:'Action',property:'action'}];
 
   public actionRows: TableRow[] = [];
+
+  public resourceHeader: TableHeaderCell[] = [{name:'Resource',property:'resource'}];
+
+  public resourceRows: TableRow[] = [];
 
   public data = new Permission();
 

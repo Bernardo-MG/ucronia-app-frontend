@@ -34,9 +34,9 @@
       </div>
     </div>
   </span>
-  <span *ngSwitchCase="'resource'">
-    <layout-data-list [header]="permissionHeader" [rows]="permissionRows" route="/security/roles"
-      [totalPages]="totalResourcePages">
+  <span *ngSwitchCase="'action'">
+    <layout-data-list [header]="actionHeader" [rows]="actionRows" route="/security/roles"
+      [totalPages]="totalActionPages">
     </layout-data-list>
     <!-- Cancel button -->
     <div class="col-sm-1">
@@ -45,9 +45,9 @@
       </button>
     </div>
   </span>
-  <span *ngSwitchCase="'action'">
-    <layout-data-list [header]="actionHeader" [rows]="actionRows" route="/security/roles"
-      [totalPages]="totalActionPages">
+  <span *ngSwitchCase="'resource'">
+    <layout-data-list [header]="resourceHeader" [rows]="resourceRows" route="/security/roles"
+      [totalPages]="totalResourcePages">
     </layout-data-list>
     <!-- Cancel button -->
     <div class="col-sm-1">
