@@ -32,15 +32,6 @@
       </div>
     </div>
   </div>
-  <!-- Credentials Expired -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" id="credentialsExpiredInput" formControlName="credentialsExpired" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isInvalid('credentialsExpired') }" aria-describedby="credentialsExpiredLabel">
-    <label for="credentialsExpiredInput" id="credentialsExpiredLabel" class="form-check-label ps-1">Credentials Expired</label>
-    <div class="invalid-feedback" *ngFor="let failure of getFailures('credentialsExpired')">
-      <span *ngIf="failure.field === 'credentialsExpired'">{{failure.message}}</span>
-    </div>
-  </div>
   <!-- Enabled -->
   <div class="col-sm-10 offset-sm-2">
     <input type="checkbox" id="enabledInput" formControlName="enabled" [readonly]="readonly" class="form-check-input"
@@ -48,24 +39,6 @@
     <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('enabled')">
       <span *ngIf="failure.field === 'enabled'">{{failure.message}}</span>
-    </div>
-  </div>
-  <!-- Expired -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" id="expiredInput" formControlName="expired" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isInvalid('expired') }" aria-describedby="expiredLabel">
-    <label for="expiredInput" id="expiredLabel" class="form-check-label ps-1">Expired</label>
-    <div class="invalid-feedback" *ngFor="let failure of getFailures('expired')">
-      <span *ngIf="failure.field === 'expired'">{{failure.message}}</span>
-    </div>
-  </div>
-  <!-- Locked -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" id="lockedInput" formControlName="locked" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isInvalid('locked') }" aria-describedby="lockedLabel">
-    <label for="lockedInput" id="lockedLabel" class="form-check-label ps-1">Paid</label>
-    <div class="invalid-feedback" *ngFor="let failure of getFailures('locked')">
-      <span *ngIf="failure.field === 'locked'">{{failure.message}}</span>
     </div>
   </div>
 </form>
