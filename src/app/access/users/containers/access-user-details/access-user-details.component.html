@@ -1,25 +1,24 @@
 <layout-article title="Edit user">
-  <div *ngIf="selectingRole; then role_selection else user_edition"></div>
   <!-- User edition -->
-  <ng-template #user_edition>
-    <!-- User -->
-    <div class="mb-1">
-      <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-        [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
-        (save)="onSaveCurrent()">
-        <!-- Form -->
-        <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-          (save)="onSave($event)" (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
-        </access-user-form>
-        <!-- Info -->
-        <access-user-info id="info" [data]="data"></access-user-info>
-      </layout-edition-wrapper>
-    </div>
-    <!-- Roles -->
+  <!-- User -->
+  <div class="mb-1">
+    <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
+      [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
+      (save)="onSaveCurrent()">
+      <!-- Form -->
+      <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
+        (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+      </access-user-form>
+      <!-- Info -->
+      <access-user-info id="info" [data]="data"></access-user-info>
+    </layout-edition-wrapper>
+  </div>
+  <!-- Roles -->
+  <div class="mb-1">
     <layout-waiting-wrapper [waiting]="waitingRoles">
       <div class="card">
         <div class="card-body">
-          <access-user-roles (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+          <access-user-roles (removeRole)="onRemoveRole($event)" [roles]="roles">
           </access-user-roles>
           <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
             (goTo)="onGoToRolePage($event)">
@@ -27,15 +26,13 @@
         </div>
       </div>
     </layout-waiting-wrapper>
-  </ng-template>
+  </div>
   <!-- Role selection -->
-  <ng-template #role_selection>
-    <div class="card">
-      <div class="card-body">
-        <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
-          (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">
-        </access-user-role-selection>
-      </div>
+  <div class="card">
+    <div class="card-body">
+      <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
+        (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">
+      </access-user-role-selection>
     </div>
-  </ng-template>
+  </div>
 </layout-article>

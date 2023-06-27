@@ -10,8 +10,6 @@ export class AccessUserRoleFormComponent {
 
   @Input() public roles: Role[] = [];
 
-  @Output() public addRole = new EventEmitter<void>();
-
   @Output() public removeRole = new EventEmitter<Role>();
 
   public form: FormGroup = this.fb.group({
@@ -21,10 +19,6 @@ export class AccessUserRoleFormComponent {
   constructor(
     private fb: FormBuilder
   ) { }
-
-  public onAdd() {
-    this.addRole.emit();
-  }
 
   public onRemove(privilege: Role) {
     this.removeRole.emit(privilege);

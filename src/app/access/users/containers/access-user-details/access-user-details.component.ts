@@ -38,8 +38,6 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public roleSelection: Role[] = [];
 
-  public selectingRole = false;
-
   public roleSelectionPageInfo = new PageInfo();
 
   public rolesPageInfo = new PageInfo();
@@ -114,13 +112,8 @@ export class AccessUserDetailsComponent implements OnInit {
     this.data = value;
   }
 
-  public onShowAddRole(): void {
-    this.selectingRole = true;
-  }
-
   public onAddRole(data: Role): void {
     this.service.addRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
-    this.selectingRole = false;
   }
 
   public onRemoveRole(data: Role): void {
