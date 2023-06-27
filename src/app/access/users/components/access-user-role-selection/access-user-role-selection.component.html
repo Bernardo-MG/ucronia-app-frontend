@@ -8,7 +8,7 @@
   </thead>
   <tbody>
     <ng-template ngFor let-role [ngForOf]="roles">
-      <tr (click)="onSelect(role)">
+      <tr role="button" (click)="onSelect(role)">
         <td>{{role.name}}</td>
       </tr>
     </ng-template>
