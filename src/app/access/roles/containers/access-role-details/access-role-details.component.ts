@@ -47,11 +47,11 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public actionSelection: Action[] = [];
 
+  public totalActionPages = 0;
+
   public resourceSelection: Resource[] = [];
 
-  public actionSelectionPageInfo = new PageInfo();
-
-  public resourceSelectionPageInfo = new PageInfo();
+  public totalResourcePages = 0;
 
   public permissionsPageInfo = new PageInfo();
 
@@ -142,13 +142,13 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.waitingActionsSelection = true;
     this.service.getActionSelection(page).subscribe(response => {
       this.actionSelection = response.content;
-      this.actionSelectionPageInfo = response;
+      this.totalActionPages = response.totalPages;
       this.waitingActionsSelection = false;
     });
     this.waitingResourcesSelection = true;
     this.service.getResourceSelection(page).subscribe(response => {
       this.resourceSelection = response.content;
-      this.resourceSelectionPageInfo = response;
+      this.totalResourcePages = response.totalPages;
       this.waitingResourcesSelection = false;
     });
   }

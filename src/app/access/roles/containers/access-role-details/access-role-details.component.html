@@ -33,7 +33,8 @@
   <layout-waiting-wrapper [waiting]="waitingActionsSelection || waitingResourcesSelection">
     <div class="card">
       <div class="card-body">
-        <access-role-add-permission [actions]="actionSelection" [resources]="resourceSelection"
+        <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
+          [resources]="resourceSelection" [totalResourcePages]="totalResourcePages"
           (addPermission)="onAddPermission($event)" (selectAction)="onSelectPermission()"
           (selectPermission)="onSelectAction()"></access-role-add-permission>
       </div>
