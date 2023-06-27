@@ -7,9 +7,10 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
+import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
+import { AccessRolePermissionsComponent } from '../../components/access-role-permissions/access-role-permissions.component';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleDetailsComponent } from './access-role-details.component';
-import { AccessRolePermissionFormComponent } from '../../components/access-role-permissions/access-role-permissions.component';
 
 describe('AccessRoleDetailsComponent', () => {
   let component: AccessRoleDetailsComponent;
@@ -30,7 +31,8 @@ describe('AccessRoleDetailsComponent', () => {
       declarations: [
         AccessRoleDetailsComponent,
         AccessRoleFormComponent,
-        AccessRolePermissionFormComponent
+        AccessRolePermissionsComponent,
+        AccessRoleInfoComponent
       ],
       providers: [
         AccessRoleService
