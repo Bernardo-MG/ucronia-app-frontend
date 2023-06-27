@@ -2,22 +2,48 @@
   <div *ngIf="selectingPermission; then permission_selection else role_edition"></div>
   <!-- Role form -->
   <ng-template #role_edition>
-    <!-- <access-role-form [saving]="waiting" [failures]="failures" [data]="role" (save)="onSave($event)"></access-role-form> -->
+    <!-- Role -->
+    <div class="mb-1">
+      <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
+        [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
+        (save)="onSaveCurrent()">
+        <!-- Form -->
+        <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
+          (save)="onSave($event)" (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+        </access-role-form>
+        <!-- Info -->
+        <access-role-info id="info" [data]="data"></access-role-info>
+      </layout-edition-wrapper>
+    </div>
+    <!-- Permissions -->
     <layout-waiting-wrapper [waiting]="waitingPermissions">
-      <access-role-permission-form (addPermission)="onShowAddPermission()" (removePermission)="onRemovePermission($event)"
-        [permissions]="permissions">
-      </access-role-permission-form>
-      <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
-        (goTo)="onGoToPermissionPage($event)">
-      </pagination-navigation>
+      <div class="card">
+        <div class="card-body">
+          <!-- Add permission -->
+          <div class="col-sm-2 d-grid gap-2">
+            <button type="submit" class="btn btn-primary" (click)="onShowAddPermission()" aria-label="Save">Add</button>
+          </div>
+          <!-- Permissions list -->
+          <access-role-permissions (addPermission)="onShowAddPermission()"
+            (removePermission)="onRemovePermission($event)" [permissions]="permissions">
+          </access-role-permissions>
+          <!-- Permissions navigation -->
+          <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
+            (goTo)="onGoToPermissionPage($event)">
+          </pagination-navigation>
+        </div>
+      </div>
     </layout-waiting-wrapper>
   </ng-template>
   <!-- Edit privileges -->
   <ng-template #permission_selection>
-    <!-- <layout-waiting-wrapper [waiting]="waitingPermissionsSelection">
-      <access-role-privilege-selection (selectPermission)="onAddPermission($event)" [pageInfo]="privilegesPageInfo"
-        (goToPage)="onGoToPermissionSelectionPage($event)" [privileges]="privilegeSelection">
-      </access-role-privilege-selection>
-    </layout-waiting-wrapper> -->
+    <layout-waiting-wrapper [waiting]="waitingActionsSelection || waitingResourcesSelection">
+      <div class="card">
+        <div class="card-body">
+          <access-role-add-permission [actions]="actionSelection" [resources]="resourceSelection"
+            (addPermission)="onAddPermission($event)"></access-role-add-permission>
+        </div>
+      </div>
+    </layout-waiting-wrapper>
   </ng-template>
 </layout-article>

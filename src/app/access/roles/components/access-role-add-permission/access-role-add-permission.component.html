@@ -1,0 +1,27 @@
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Action
+  </button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let action of actions" role="button">
+      <a class="dropdown-item" href="#">{{action.name}}</a>
+    </li>
+  </ul>
+</div>
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Resource
+  </button>
+  <ul class="dropdown-menu">
+    <li *ngFor="let resource of resources" role="button">
+      <a class="dropdown-item" href="#">{{resource.name}}</a>
+    </li>
+  </ul>
+</div>
+<!-- Save button -->
+<div class="row">
+  <div class="col-sm-2 d-grid gap-2">
+    <button type="submit" class="btn btn-primary" (click)="onAddPermission()" [disabled]="!isAbleToAdd()"
+      [attr.aria-disabled]="!isAbleToAdd()" aria-label="Add">Add</button>
+  </div>
+</div>

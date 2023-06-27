@@ -30,7 +30,7 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public waitingRoles = false;
 
-  public data: User = new User();
+  public data = new User();
 
   public formValid = false;
 

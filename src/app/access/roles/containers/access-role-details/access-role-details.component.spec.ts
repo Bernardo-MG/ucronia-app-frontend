@@ -9,7 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleDetailsComponent } from './access-role-details.component';
-import { AccessRolePermissionFormComponent } from '../../components/access-role-permission-form/access-role-permission-form.component';
+import { AccessRolePermissionFormComponent } from '../../components/access-role-permissions/access-role-permissions.component';
 
 describe('AccessRoleDetailsComponent', () => {
   let component: AccessRoleDetailsComponent;
