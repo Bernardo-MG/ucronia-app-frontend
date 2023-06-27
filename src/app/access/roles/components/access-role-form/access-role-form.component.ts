@@ -1,20 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
+import { Role } from '@app/core/authentication/models/role';
 
 @Component({
   selector: 'access-role-form',
   templateUrl: './access-role-form.component.html'
 })
-export class AccessRoleFormComponent {
+export class AccessRoleFormComponent implements OnInit, OnChanges {
 
   @Input() public readonly = false;
 
   @Input() public failures: { [key: string]: Failure[] } = {};
-  
-  @Output() public save = new EventEmitter<any>();
 
-  public form;
+  @Input() public data = new Role();
+
+  @Output() public save = new EventEmitter<Role>();
+
+  @Output() public valueChange = new EventEmitter<Role>();
+
+  @Output() public validityChange = new EventEmitter<boolean>();
+
+  public form: FormGroup;
 
   constructor(
     fb: FormBuilder
@@ -24,10 +31,29 @@ export class AccessRoleFormComponent {
     });
   }
 
-  public onSave(){
-    this.save.emit();
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['data']) && (!changes['data'].firstChange)) {
+      this.form.patchValue(this.data);
+    }
   }
-  
+
+  public ngOnInit(): void {
+    // Listen for status changes
+    this.form.statusChanges.subscribe(status => {
+      const valid = (status === "VALID");
+      this.validityChange.emit(valid);
+    });
+
+    // Listen for value changes
+    this.form.valueChanges.subscribe(data => {
+      this.valueChange.emit(data);
+    });
+  }
+
+  public onSave() {
+    this.save.emit(this.form.value);
+  }
+
   public isInvalid(property: string): boolean {
     return (this.form.get(property)?.invalid) || (this.failures.hasOwnProperty(property));
   }
