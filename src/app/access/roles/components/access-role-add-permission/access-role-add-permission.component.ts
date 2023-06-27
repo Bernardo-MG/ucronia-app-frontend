@@ -16,11 +16,25 @@ export class AccessRoleAddPermissionComponent {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
+  @Output() public selectPermission = new EventEmitter<Permission>();
+
+  @Output() public selectAction = new EventEmitter<Permission>();
+
+  public data = new Permission();
+
   public isAbleToAdd() {
     return true;
   }
 
   public onAddPermission(): void {
+  }
+
+  public onSelectPermission(): void {
+    this.selectPermission.emit();
+  }
+
+  public onSelectAction(): void {
+    this.selectAction.emit();
   }
 
 }

@@ -49,8 +49,6 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public resourceSelection: Resource[] = [];
 
-  public selectingPermission = false;
-
   public actionSelectionPageInfo = new PageInfo();
 
   public resourceSelectionPageInfo = new PageInfo();
@@ -129,16 +127,11 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.data = value;
   }
 
-  public onShowAddPermission(): void {
-    this.selectingPermission = true;
-  }
-
   public onAddSelectedPermission(): void {
   }
 
   public onAddPermission(permission: Permission): void {
     this.service.addPermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
-    this.selectingPermission = false;
   }
 
   public onRemovePermission(permission: Permission): void {
@@ -167,6 +160,12 @@ export class AccessRoleDetailsComponent implements OnInit {
       this.permissionsPageInfo = response;
       this.waitingPermissions = false;
     });
+  }
+
+  public onSelectPermission(): void {
+  }
+
+  public onSelectAction(): void {
   }
 
   private load(id: string | null): void {

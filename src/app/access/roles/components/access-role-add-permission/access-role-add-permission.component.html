@@ -1,22 +1,28 @@
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Action
-  </button>
-  <ul class="dropdown-menu">
-    <li *ngFor="let action of actions" role="button">
-      <a class="dropdown-item" href="#">{{action.name}}</a>
-    </li>
-  </ul>
+<div class="row mb-2">
+  <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
+  <div class="col-sm-10">
+    <input type="text" [value]="data.resource" id="resourceInput" [readonly]="true" class="form-control"
+      aria-describedby="resourceLabel">
+  </div>
 </div>
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Resource
+<!-- Select button -->
+<div class="col-sm-1">
+  <button type="button" class="btn" aria-label="Search" (click)="onSelectPermission()">
+    <icon-search></icon-search>
   </button>
-  <ul class="dropdown-menu">
-    <li *ngFor="let resource of resources" role="button">
-      <a class="dropdown-item" href="#">{{resource.name}}</a>
-    </li>
-  </ul>
+</div>
+<div class="row mb-2">
+  <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
+  <div class="col-sm-10">
+    <input type="text" [value]="data.action" id="actionInput" [readonly]="true" class="form-control"
+      aria-describedby="actionLabel">
+  </div>
+</div>
+<!-- Select button -->
+<div class="col-sm-1">
+  <button type="button" class="btn" aria-label="Search" (click)="onSelectAction()">
+    <icon-search></icon-search>
+  </button>
 </div>
 <!-- Save button -->
 <div class="row">
