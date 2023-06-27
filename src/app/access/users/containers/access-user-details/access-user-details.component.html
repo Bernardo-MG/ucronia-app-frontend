@@ -1,6 +1,8 @@
 <layout-article title="Edit user">
   <div *ngIf="selectingRole; then role_selection else user_edition"></div>
+  <!-- User edition -->
   <ng-template #user_edition>
+    <!-- User -->
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
       [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
       (save)="onSaveCurrent()">
@@ -11,6 +13,7 @@
       <!-- Info -->
       <access-user-info id="info" [data]="data"></access-user-info>
     </layout-edition-wrapper>
+    <!-- Roles -->
     <layout-waiting-wrapper [waiting]="waitingRoles">
       <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
       </access-user-role-form>
@@ -19,6 +22,7 @@
       </pagination-navigation>
     </layout-waiting-wrapper>
   </ng-template>
+  <!-- Role selection -->
   <ng-template #role_selection>
     <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
       (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">

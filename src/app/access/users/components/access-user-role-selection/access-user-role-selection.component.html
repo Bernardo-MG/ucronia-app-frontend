@@ -1,5 +1,3 @@
-<pagination-navigation [current]="pageInfo.page" [pages]="pageInfo.totalPages" (goTo)="onGoToPage($event)">
-</pagination-navigation>
 <table class="table table-hover">
   <thead>
     <tr>
@@ -16,3 +14,5 @@
     </ng-template>
   </tbody>
 </table>
+<pagination-navigation [current]="pageInfo.page" [pages]="pageInfo.totalPages" (goTo)="onGoToPage($event)">
+</pagination-navigation>
