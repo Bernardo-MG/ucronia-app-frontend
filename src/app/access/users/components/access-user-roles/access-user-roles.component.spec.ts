@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { AccessUserRoleFormComponent } from './access-user-role-form.component';
+import { AccessUserRoleFormComponent } from './access-user-roles.component';
 
 describe('AccessUserRoleFormComponent', () => {
   let component: AccessUserRoleFormComponent;

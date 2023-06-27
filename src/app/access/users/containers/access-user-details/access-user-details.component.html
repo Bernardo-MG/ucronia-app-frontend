@@ -19,8 +19,8 @@
     <layout-waiting-wrapper [waiting]="waitingRoles">
       <div class="card">
         <div class="card-body">
-          <access-user-role-form (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
-          </access-user-role-form>
+          <access-user-roles (addRole)="onShowAddRole()" (removeRole)="onRemoveRole($event)" [roles]="roles">
+          </access-user-roles>
           <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
             (goTo)="onGoToRolePage($event)">
           </pagination-navigation>
