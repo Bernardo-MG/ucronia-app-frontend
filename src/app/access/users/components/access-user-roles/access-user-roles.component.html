@@ -1,7 +1,3 @@
-<!-- Save button -->
-<div class="col-sm-2 d-grid gap-2">
-  <button type="submit" class="btn btn-primary" (click)="onAdd()" aria-label="Save">Add</button>
-</div>
 <table class="table">
   <thead>
     <tr>
@@ -15,7 +11,7 @@
     <ng-template ngFor let-role [ngForOf]="roles">
       <tr>
         <td>
-          <button (click)="onRemove(role)" type="button" class="btn btn-default" role="button" aria-label="Back">
+          <button (click)="onRemove(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
             <icon-delete></icon-delete>
           </button>
         </td>

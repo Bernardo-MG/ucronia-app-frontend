@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { MemberSelectionInputComponent } from './member-selection-input.component';
 
-describe('MemberSelectionInputComponent', () => {
-  let component: MemberSelectionInputComponent;
-  let fixture: ComponentFixture<MemberSelectionInputComponent>;
+import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+describe('AccessRoleAddPermissionComponent', () => {
+  let component: AccessRoleAddPermissionComponent;
+  let fixture: ComponentFixture<AccessRoleAddPermissionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,12 +13,12 @@ describe('MemberSelectionInputComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        MemberSelectionInputComponent
+        AccessRoleAddPermissionComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberSelectionInputComponent);
+    fixture = TestBed.createComponent(AccessRoleAddPermissionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

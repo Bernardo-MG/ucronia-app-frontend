@@ -26,7 +26,7 @@ export class MemberDetailsComponent implements OnInit {
 
   public data = new Member();
 
-  public failures = new Map<string, Failure[]>();
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -55,7 +55,7 @@ export class MemberDetailsComponent implements OnInit {
     this.saving = true;
     this.service.update(this.data.id, this.data).subscribe({
       next: d => {
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -64,7 +64,7 @@ export class MemberDetailsComponent implements OnInit {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;

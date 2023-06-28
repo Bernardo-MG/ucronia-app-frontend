@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { PageInfo } from '@app/core/api/models/page-info';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AccessUserService } from '../../services/access-user.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'access-user-details',
@@ -13,15 +14,23 @@ import { AccessUserService } from '../../services/access-user.service';
 export class AccessUserDetailsComponent implements OnInit {
 
   /**
-   * Loading flag.
+   * Saving flag.
    */
   public saving = false;
 
-  public failures: Failure[] = [];
+  public valid = false;
+
+  public editing = false;
+
+  public editPermission = false;
+
+  public deletePermission = false;
+
+  public failures: { [key: string]: Failure[] } = {};
 
   public waitingRoles = false;
 
-  public user: User = new User();
+  public data = new User();
 
   public formValid = false;
 
@@ -29,37 +38,70 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public roleSelection: Role[] = [];
 
-  public selectingRole = false;
-
   public roleSelectionPageInfo = new PageInfo();
 
   public rolesPageInfo = new PageInfo();
 
   constructor(
     private route: ActivatedRoute,
-    private service: AccessUserService
+    private router: Router,
+    private service: AccessUserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    // Check permissions
+    this.editPermission = this.authService.hasPermission("user", "update");
+    this.deletePermission = this.authService.hasPermission("user", "delete");
+
+    // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
+  }
+
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
   }
 
   public onSave(data: User): void {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.failures = [];
+        this.failures = {};
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       },
       error: error => {
-        this.failures = error.failures;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = {};
+        }
         // Reactivate view
         this.saving = false;
+        this.editing = false;
       }
     });
+  }
+
+  public onDelete(): void {
+    this.service.delete(this.data.id).subscribe(r => {
+      this.router.navigate([`/security/users/list`]);
+    });
+  }
+
+  public onStartEditing(): void {
+    this.editing = true;
+  }
+
+  public onChange(changed: User) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
   }
 
   public onFormValidChange(valid: boolean): void {
@@ -67,20 +109,15 @@ export class AccessUserDetailsComponent implements OnInit {
   }
 
   public onFormChange(value: User) {
-    this.user = value;
-  }
-
-  public onShowAddRole(): void {
-    this.selectingRole = true;
+    this.data = value;
   }
 
   public onAddRole(data: Role): void {
-    this.service.addRole(this.user.id, data.id).subscribe(p => this.onGoToRolePage(0));
-    this.selectingRole = false;
+    this.service.addRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.user.id, data.id).subscribe(p => this.onGoToRolePage(0));
+    this.service.removeRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
   }
 
   public onGoToRoleSelectionPage(page: number) {
@@ -92,7 +129,7 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public onGoToRolePage(page: number) {
     this.waitingRoles = true;
-    this.service.getRoles(this.user.id, page).subscribe(response => {
+    this.service.getRoles(this.data.id, page).subscribe(response => {
       this.roles = response.content;
       this.rolesPageInfo = response;
       this.waitingRoles = false;
@@ -104,10 +141,14 @@ export class AccessUserDetailsComponent implements OnInit {
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
-          this.user = d;
+          this.data = d;
           this.onGoToRolePage(0);
         });
     }
+  }
+
+  public isEditable() {
+    return this.editPermission && this.editing;
   }
 
 }

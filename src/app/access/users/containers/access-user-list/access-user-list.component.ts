@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
@@ -25,6 +26,8 @@ export class AccessUserListComponent implements OnInit {
   private selected: { id: number } = { id: -1 };
 
   private routePaginationObserver: PaginationRequestRouteObserver;
+  
+  public addIcon = faPlus;
 
   constructor(
     private service: AccessUserService,

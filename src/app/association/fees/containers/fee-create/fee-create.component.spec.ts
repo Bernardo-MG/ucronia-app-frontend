@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
@@ -25,8 +25,8 @@ describe('FeeCreateComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        IconsModule,
-        LayoutModule
+        LayoutModule,
+        FontAwesomeModule
       ],
       declarations: [
         FeeCreateComponent,

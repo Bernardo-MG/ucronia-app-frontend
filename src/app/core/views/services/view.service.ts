@@ -51,14 +51,12 @@ export class ViewService {
         title: 'security', links: [
           {
             title: 'Users', links: this.filterNodes([
-              { title: 'List', path: '/security/users', resource: 'user', action: 'read' },
-              { title: 'Create', path: '/security/users/create', resource: 'user', action: 'create' }
+              { title: 'List', path: '/security/users', resource: 'user', action: 'read' }
             ])
           },
           {
             title: 'Roles', links: this.filterNodes([
-              { title: 'List', path: '/security/roles', resource: 'role', action: 'read' },
-              { title: 'Create', path: '/security/roles/create', resource: 'role', action: 'create' }
+              { title: 'List', path: '/security/roles', resource: 'role', action: 'read' }
             ])
           }
         ]

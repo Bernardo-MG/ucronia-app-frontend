@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '../../models/table-row';
 

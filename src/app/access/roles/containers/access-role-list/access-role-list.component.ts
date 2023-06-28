@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -23,6 +24,8 @@ export class AccessRoleListComponent implements OnInit {
   public totalPages = 0;
 
   private routePaginationObserver: PaginationRequestRouteObserver;
+  
+  public addIcon = faPlus;
 
   constructor(
     private service: AccessRoleService,

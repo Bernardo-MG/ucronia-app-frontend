@@ -3,8 +3,5 @@ export class User {
   username = '';
   name = '';
   email = '';
-  credentialsExpired = false;
   enabled = false;
-  expired = false;
-  locked = false;
 }

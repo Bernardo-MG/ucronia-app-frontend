@@ -16,34 +16,53 @@ export class AccessUserCreateComponent {
    */
   public saving = false;
 
-  public failures = new Map<string, Failure[]>();
-
   public valid = false;
+
+  public failures: { [key: string]: Failure[] } = {};
+
+  public data = new User();
 
   constructor(
     private service: AccessUserService,
     private router: Router
-    ) { }
+  ) { }
 
-  public onSave(user: User): void {
+  public onSaveCurrent(): void {
+    this.onSave(this.data);
+  }
+
+  public onSave(toSave: User): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.create(user).subscribe({
+    this.service.create(this.data).subscribe({
       next: d => {
         this.router.navigate([`/security/users/${d.id}`]);
-        this.failures = new Map<string, Failure[]>();
+        this.failures = {};
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        if(error.failures){
+        if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = new Map<string, Failure[]>();
+          this.failures = {};
         }
         // Reactivate view
         this.saving = false;
       }
     });
+  }
+
+  public onChange(changed: User) {
+    this.data = changed;
+  }
+
+  public onValidityChange(valid: boolean) {
+    this.valid = valid;
+  }
+
+  public isAbleToSave() {
+    return ((this.valid) && (!this.saving));
   }
 
 }
