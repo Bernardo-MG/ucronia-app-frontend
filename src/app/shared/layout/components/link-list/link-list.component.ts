@@ -13,10 +13,10 @@ export class LinkListComponent {
 
   @Input() public rows: TableRow[] = [];
 
-  @Output() public select = new EventEmitter<number>();
+  @Output() public selectRow = new EventEmitter<number>();
 
   public onClick(index: number){
-    this.select.emit(index);
+    this.selectRow.emit(index);
   }
 
 }

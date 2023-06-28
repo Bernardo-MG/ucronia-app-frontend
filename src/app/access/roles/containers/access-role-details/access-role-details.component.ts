@@ -127,9 +127,6 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.data = value;
   }
 
-  public onAddSelectedPermission(): void {
-  }
-
   public onAddPermission(permission: Permission): void {
     this.service.addPermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
   }
@@ -178,12 +175,6 @@ export class AccessRoleDetailsComponent implements OnInit {
       this.permissionsPageInfo = response;
       this.waitingPermissions = false;
     });
-  }
-
-  public onSelectPermission(): void {
-  }
-
-  public onSelectAction(): void {
   }
 
   private load(id: string | null): void {

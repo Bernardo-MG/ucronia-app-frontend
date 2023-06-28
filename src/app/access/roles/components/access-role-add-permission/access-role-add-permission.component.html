@@ -43,7 +43,7 @@
   <!-- Select action view -->
   <span *ngSwitchCase="'action'">
     <!-- Action list -->
-    <layout-link-list [header]="actionHeader" [rows]="actionRows" (select)="onSelectAction($event)">
+    <layout-link-list [header]="actionHeader" [rows]="actionRows" (selectRow)="onSelectAction($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
       <pagination-route-navigation [totalPages]="totalActionPages">
@@ -59,7 +59,7 @@
   <!-- Select resource view -->
   <span *ngSwitchCase="'resource'">
     <!-- Resource list -->
-    <layout-link-list [header]="resourceHeader" [rows]="resourceRows" (select)="onSelectResource($event)">
+    <layout-link-list [header]="resourceHeader" [rows]="resourceRows" (selectRow)="onSelectResource($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
       <pagination-route-navigation [totalPages]="totalResourcePages">

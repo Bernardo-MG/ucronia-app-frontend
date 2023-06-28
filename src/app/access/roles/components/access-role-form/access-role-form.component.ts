@@ -56,7 +56,7 @@ export class AccessRoleFormComponent implements OnInit, OnChanges {
   }
 
   public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (this.failures.hasOwnProperty(property));
+    return (this.form.get(property)?.invalid) || (property in this.failures);
   }
 
   public getFailures(property: string): Failure[] {
