@@ -20,45 +20,22 @@ export class LayoutService {
   public getMenu(): Menu[] {
     return [
       {
-        title: 'Association', links: [
-          {
-            title: 'Fees', links: this.filterNodes([
-              { title: 'Calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
-              { title: 'List', path: '/fees/list', resource: 'fee', action: 'read' }
-            ])
-          },
-          {
-            title: 'Balance', links: this.filterNodes([
-              { title: 'Info', path: '/balance', resource: 'balance', action: 'read' }
-            ])
-          },
-          {
-            title: 'Members', links: this.filterNodes([
-              { title: 'Stats', path: '/members/stats', resource: 'member', action: 'read' },
-              { title: 'List', path: '/members/list', resource: 'member', action: 'read' }
-            ])
-          },
-          {
-            title: 'Transactions', links: this.filterNodes([
-              { title: 'Calendar', path: '/transactions/calendar', resource: 'transaction', action: 'read' },
-              { title: 'List', path: '/transactions/list', resource: 'transaction', action: 'read' }
-            ])
-          }
-        ]
+        title: 'Association', links:
+          this.filterNodes([
+            { title: 'Fees calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
+            { title: 'Member stats', path: '/members/stats', resource: 'member', action: 'read' },
+            { title: 'Balance', path: '/balance', resource: 'balance', action: 'read' },
+            { title: 'Fees', path: '/fees/list', resource: 'fee', action: 'read' },
+            { title: 'Members', path: '/members/list', resource: 'member', action: 'read' },
+            { title: 'Transaction calendar', path: '/transactions/calendar', resource: 'transaction', action: 'read' },
+            { title: 'Transactions', path: '/transactions/list', resource: 'transaction', action: 'read' }
+          ])
       },
       {
-        title: 'security', links: [
-          {
-            title: 'Users', links: this.filterNodes([
-              { title: 'List', path: '/security/users', resource: 'user', action: 'read' }
-            ])
-          },
-          {
-            title: 'Roles', links: this.filterNodes([
-              { title: 'List', path: '/security/roles', resource: 'role', action: 'read' }
-            ])
-          }
-        ]
+        title: 'security', links: this.filterNodes([
+          { title: 'List', path: '/security/users', resource: 'user', action: 'read' },
+          { title: 'List', path: '/security/roles', resource: 'role', action: 'read' }
+        ])
       }
     ];
   }

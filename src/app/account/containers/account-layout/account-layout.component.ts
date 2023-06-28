@@ -16,16 +16,8 @@ export class AccountLayoutComponent {
   public menus: Menu[] = [
     {
       title: 'Account', links: [
-        {
-          title: 'Profile', links: [
-            { title: 'Info', path: '/account/settings/profile' }
-          ]
-        },
-        {
-          title: 'Password', links: [
-            { title: 'Change', path: '/account/settings/password' }
-          ]
-        }
+        { title: 'Profile', path: '/account/settings/profile' },
+        { title: 'Change password', path: '/account/settings/password' }
       ]
     }
   ];
