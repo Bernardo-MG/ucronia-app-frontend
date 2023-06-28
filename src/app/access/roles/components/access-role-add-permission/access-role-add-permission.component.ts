@@ -37,10 +37,6 @@ export class AccessRoleAddPermissionComponent {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
-  @Output() public selectPermission = new EventEmitter<Permission>();
-
-  @Output() public selectAction = new EventEmitter<Permission>();
-
   @Output() public goToActionPage = new EventEmitter<number>();
 
   @Output() public goToResourcePage = new EventEmitter<number>();

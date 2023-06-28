@@ -35,8 +35,7 @@
       <div class="card-body">
         <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
           [resources]="resourceSelection" [totalResourcePages]="totalResourcePages"
-          (addPermission)="onAddPermission($event)" (selectAction)="onSelectPermission()"
-          (selectPermission)="onSelectAction()" (goToActionPage)="onGoToActionSelectionPage($event)"
+          (addPermission)="onAddPermission($event)" (goToActionPage)="onGoToActionSelectionPage($event)"
           (goToResourcePage)="onGoToResourceSelectionPage($event)"></access-role-add-permission>
       </div>
     </div>
