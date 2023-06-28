@@ -36,7 +36,8 @@
         <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
           [resources]="resourceSelection" [totalResourcePages]="totalResourcePages"
           (addPermission)="onAddPermission($event)" (selectAction)="onSelectPermission()"
-          (selectPermission)="onSelectAction()"></access-role-add-permission>
+          (selectPermission)="onSelectAction()" (goToActionPage)="onGoToActionSelectionPage($event)"
+          (goToResourcePage)="onGoToResourceSelectionPage($event)"></access-role-add-permission>
       </div>
     </div>
   </layout-waiting-wrapper>

@@ -14,7 +14,7 @@ export class AccessRoleAddPermissionComponent {
 
   @Input() set actions(value: Action[]) {
     this.actionRows = value.map((a, i) => {
-      return {id:i, cells:[a]};
+      return {id:i, cells:[a.name]};
     });
   }
 
@@ -22,7 +22,7 @@ export class AccessRoleAddPermissionComponent {
 
   @Input() set resources(value: Resource[]) {
     this.resourceRows = value.map((r, i) => {
-      return {id:i, cells:[r]};
+      return {id:i, cells:[r.name]};
     });
   }
 
@@ -33,6 +33,10 @@ export class AccessRoleAddPermissionComponent {
   @Output() public selectPermission = new EventEmitter<Permission>();
 
   @Output() public selectAction = new EventEmitter<Permission>();
+
+  @Output() public goToActionPage = new EventEmitter<number>();
+
+  @Output() public goToResourcePage = new EventEmitter<number>();
 
   public actionHeader: TableHeaderCell[] = [{name:'Action',property:'action'}];
 
@@ -53,12 +57,14 @@ export class AccessRoleAddPermissionComponent {
   public onAddPermission(): void {
   }
 
-  public onSelectResource(): void {
-    this.view = 'resource';
+  public onSelectAction(): void {
+    this.goToActionPage.emit(0);
+    this.view = 'action';
   }
 
-  public onSelectAction(): void {
-    this.view = 'action';
+  public onSelectResource(): void {
+    this.goToResourcePage.emit(0);
+    this.view = 'resource';
   }
 
   public onCancelSelect() {

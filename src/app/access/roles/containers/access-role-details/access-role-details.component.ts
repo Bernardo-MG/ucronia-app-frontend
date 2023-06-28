@@ -153,6 +153,24 @@ export class AccessRoleDetailsComponent implements OnInit {
     });
   }
 
+  public onGoToActionSelectionPage(page: number) {
+    this.waitingActionsSelection = true;
+    this.service.getActionSelection(page).subscribe(response => {
+      this.actionSelection = response.content;
+      this.totalActionPages = response.totalPages;
+      this.waitingActionsSelection = false;
+    });
+  }
+
+  public onGoToResourceSelectionPage(page: number) {
+    this.waitingResourcesSelection = true;
+    this.service.getResourceSelection(page).subscribe(response => {
+      this.resourceSelection = response.content;
+      this.totalResourcePages = response.totalPages;
+      this.waitingResourcesSelection = false;
+    });
+  }
+
   public onGoToPermissionPage(page: number) {
     this.waitingPermissions = true;
     this.service.getPermissions(this.data.id, page).subscribe(response => {

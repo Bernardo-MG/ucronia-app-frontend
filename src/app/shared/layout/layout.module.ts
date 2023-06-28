@@ -9,6 +9,7 @@ import { DataListComponent } from './components/data-list/data-list.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { EditionWrapperComponent } from './components/edition-wrapper/edition-wrapper.component';
 import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
+import { LinkListComponent } from './components/link-list/link-list.component';
 
 
 
@@ -19,7 +20,8 @@ import { WaitingButtonComponent } from './components/waiting-button/waiting-butt
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent
+    WaitingButtonComponent,
+    LinkListComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { WaitingButtonComponent } from './components/waiting-button/waiting-butt
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent
+    WaitingButtonComponent,
+    LinkListComponent
   ]
 })
 export class LayoutModule { }

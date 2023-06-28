@@ -34,10 +34,14 @@
       </div>
     </div>
   </span>
+  <!-- Select action -->
   <span *ngSwitchCase="'action'">
-    <layout-data-list [header]="actionHeader" [rows]="actionRows" route="/security/roles"
-      [totalPages]="totalActionPages">
-    </layout-data-list>
+    <layout-link-list [header]="actionHeader" [rows]="actionRows" route="/security/roles">
+    </layout-link-list>
+    <div class="d-flex justify-content-center mt-1">
+      <pagination-route-navigation [totalPages]="totalActionPages">
+      </pagination-route-navigation>
+    </div>
     <!-- Cancel button -->
     <div class="col-sm-1">
       <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
@@ -45,10 +49,14 @@
       </button>
     </div>
   </span>
+  <!-- Select resource -->
   <span *ngSwitchCase="'resource'">
-    <layout-data-list [header]="resourceHeader" [rows]="resourceRows" route="/security/roles"
-      [totalPages]="totalResourcePages">
-    </layout-data-list>
+    <layout-link-list [header]="resourceHeader" [rows]="resourceRows" route="/security/roles">
+    </layout-link-list>
+    <div class="d-flex justify-content-center mt-1">
+      <pagination-route-navigation [totalPages]="totalResourcePages">
+      </pagination-route-navigation>
+    </div>
     <!-- Cancel button -->
     <div class="col-sm-1">
       <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
