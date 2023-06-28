@@ -65,6 +65,10 @@ export class AccessRoleAddPermissionComponent {
   }
 
   public onAddPermission(): void {
+    const permission = new Permission();
+    permission.actionId = this.action.id;
+    permission.resourceId = this.resource.id;
+    this.addPermission.emit(permission);
   }
 
   public onShowActionSelection(): void {
