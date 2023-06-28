@@ -32,7 +32,7 @@ export class LayoutService {
           ])
       },
       {
-        title: 'security', links: this.filterNodes([
+        title: 'Security', links: this.filterNodes([
           { title: 'Users', path: '/security/users', resource: 'user', action: 'read' },
           { title: 'Roles', path: '/security/roles', resource: 'role', action: 'read' }
         ])
