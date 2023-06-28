@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { Menu } from '@app/shared/menu/models/menu';
-import { MenuCollapseLinks } from '@app/shared/menu/models/menu-collapse-links';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ViewService {
+export class LayoutService {
 
   constructor(
     private authService: AuthService

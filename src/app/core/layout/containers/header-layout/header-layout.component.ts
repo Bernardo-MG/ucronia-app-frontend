@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { ViewService } from '../../services/view.service';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'view-header-layout',
@@ -14,10 +14,10 @@ export class HeaderLayoutComponent {
 
   constructor(
     private authService: AuthService,
-    viewService: ViewService
+    layoutService: LayoutService
   ) {
     this.authService.getStatus().subscribe(u => { this.loggedIn = u.logged });
-    this.title = viewService.getTitle();
+    this.title = layoutService.getTitle();
   }
 
 }

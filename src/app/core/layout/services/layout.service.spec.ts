@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ViewService } from './view.service';
+import { LayoutService } from './layout.service';
 
 describe('ViewService', () => {
-  let service: ViewService;
+  let service: LayoutService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,7 +11,7 @@ describe('ViewService', () => {
         HttpClientTestingModule
       ]
     });
-    service = TestBed.inject(ViewService);
+    service = TestBed.inject(LayoutService);
   });
 
   it('should be created', () => {

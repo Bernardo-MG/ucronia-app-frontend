@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewService } from '../../services/view.service';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'view-main-layout',
@@ -12,10 +12,10 @@ export class MainLayoutComponent {
   public menus;
 
   constructor(
-    viewService: ViewService
+    layoutService: LayoutService
   ) {
-    this.menus = viewService.getMenu();
-    this.title = viewService.getTitle();
+    this.menus = layoutService.getMenu();
+    this.title = layoutService.getTitle();
   }
 
 }

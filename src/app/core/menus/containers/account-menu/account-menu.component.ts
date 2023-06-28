@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { LoginService } from '@app/core/authentication/services/login.service';
 
 @Component({
-  selector: 'view-account-menu',
+  selector: 'menu-account-menu',
   templateUrl: './account-menu.component.html'
 })
 export class AccountMenuComponent {

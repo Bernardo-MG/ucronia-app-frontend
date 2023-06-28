@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { Menu } from '@app/shared/menu/models/menu';
-import { ViewService } from '../../services/view.service';
+import { LayoutService } from '../../../core/layout/services/layout.service';
 
 @Component({
   selector: 'view-account-layout',
@@ -32,7 +32,7 @@ export class AccountLayoutComponent {
 
   constructor(
     private authService: AuthService,
-    viewService: ViewService
+    viewService: LayoutService
   ) {
     this.authService.getStatus().subscribe(u => { this.loggedIn = u.logged });
     this.title = viewService.getTitle();

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewService } from '../../services/view.service';
+import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'view-centered-layout',
@@ -10,9 +10,9 @@ export class CenteredLayoutComponent {
   public title ;
 
   constructor(
-    viewService: ViewService
+    layoutService: LayoutService
   ) {
-    this.title = viewService.getTitle();
+    this.title = layoutService.getTitle();
   }
 
 }
