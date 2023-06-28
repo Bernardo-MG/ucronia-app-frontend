@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 describe('AccessRoleAddPermissionComponent', () => {
   let component: AccessRoleAddPermissionComponent;
@@ -8,9 +9,14 @@ describe('AccessRoleAddPermissionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessRoleAddPermissionComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [
+        AccessRoleAddPermissionComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccessRoleAddPermissionComponent);
     component = fixture.componentInstance;

@@ -4,6 +4,7 @@ import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
 import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '@app/shared/layout/models/table-row';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'access-role-add-permission',
@@ -59,6 +60,8 @@ export class AccessRoleAddPermissionComponent {
   public action = new Action();
 
   public resource = new Resource();
+
+  public searchIcon = faMagnifyingGlass;
 
   public isAbleToAdd() {
     return (this.action.id > 0) && (this.resource.id > 0);

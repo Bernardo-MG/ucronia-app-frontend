@@ -6,6 +6,7 @@ import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../../components/access-role-permissions/access-role-permissions.component';
@@ -32,7 +33,8 @@ describe('AccessRoleDetailsComponent', () => {
         AccessRoleDetailsComponent,
         AccessRoleFormComponent,
         AccessRolePermissionsComponent,
-        AccessRoleInfoComponent
+        AccessRoleInfoComponent,
+        AccessRoleAddPermissionComponent
       ],
       providers: [
         AccessRoleService
