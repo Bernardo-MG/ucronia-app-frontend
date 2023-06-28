@@ -61,7 +61,7 @@ export class AccessRoleAddPermissionComponent {
   public resource = new Resource();
 
   public isAbleToAdd() {
-    return true;
+    return (this.action.id > 0) && (this.resource.id > 0);
   }
 
   public onAddPermission(): void {

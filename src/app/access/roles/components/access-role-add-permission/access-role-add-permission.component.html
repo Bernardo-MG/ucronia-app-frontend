@@ -1,30 +1,36 @@
 <span [ngSwitch]="view">
   <span *ngSwitchCase="'main'">
     <div class="row mb-2">
-      <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
-      <div class="col-sm-10">
-        <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
-          aria-describedby="resourceLabel">
+      <!-- Select resource button -->
+      <div class="col-sm-1">
+        <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
+          <icon-search></icon-search>
+        </button>
       </div>
-    </div>
-    <!-- Select button -->
-    <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
-        <icon-search></icon-search>
-      </button>
+      <!-- Selected resource -->
+      <div class="row col-sm-11">
+        <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
+        <div class="col-sm-10">
+          <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
+            aria-describedby="resourceLabel">
+        </div>
+      </div>
     </div>
     <div class="row mb-2">
-      <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
-      <div class="col-sm-10">
-        <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
-          aria-describedby="actionLabel">
+      <!-- Select action button -->
+      <div class="col-sm-1">
+        <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
+          <icon-search></icon-search>
+        </button>
       </div>
-    </div>
-    <!-- Select button -->
-    <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
-        <icon-search></icon-search>
-      </button>
+      <!-- Selected action -->
+      <div class="row col-sm-11">
+        <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
+        <div class="col-sm-10">
+          <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
+            aria-describedby="actionLabel">
+        </div>
+      </div>
     </div>
     <!-- Save button -->
     <div class="row">
@@ -34,8 +40,9 @@
       </div>
     </div>
   </span>
-  <!-- Select action -->
+  <!-- Select action view -->
   <span *ngSwitchCase="'action'">
+    <!-- Action list -->
     <layout-link-list [header]="actionHeader" [rows]="actionRows" (select)="onSelectAction($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
@@ -49,8 +56,9 @@
       </button>
     </div>
   </span>
-  <!-- Select resource -->
+  <!-- Select resource view -->
   <span *ngSwitchCase="'resource'">
+    <!-- Resource list -->
     <layout-link-list [header]="resourceHeader" [rows]="resourceRows" (select)="onSelectResource($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
