@@ -33,8 +33,8 @@ export class LayoutService {
       },
       {
         title: 'security', links: this.filterNodes([
-          { title: 'List', path: '/security/users', resource: 'user', action: 'read' },
-          { title: 'List', path: '/security/roles', resource: 'role', action: 'read' }
+          { title: 'Users', path: '/security/users', resource: 'user', action: 'read' },
+          { title: 'Roles', path: '/security/roles', resource: 'role', action: 'read' }
         ])
       }
     ];
