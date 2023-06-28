@@ -2,8 +2,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { ViewsModule } from '../../../views/views.module';
 import { MainLayoutComponent } from './main-layout.component';
+import { MenusModule } from '@app/core/menus/menus.module';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -14,7 +14,7 @@ describe('MainLayoutComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
-        ViewsModule,
+        MenusModule,
         HttpClientTestingModule
       ],
       declarations: [
