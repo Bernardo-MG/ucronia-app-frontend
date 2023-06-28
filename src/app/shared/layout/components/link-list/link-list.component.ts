@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableHeaderCell } from '../../models/table-header-cell';
 import { TableRow } from '../../models/table-row';
 
@@ -12,5 +12,11 @@ export class LinkListComponent {
   @Input() public header: TableHeaderCell[] = [];
 
   @Input() public rows: TableRow[] = [];
+
+  @Output() public select = new EventEmitter<number>();
+
+  public onClick(index: number){
+    this.select.emit(index);
+  }
 
 }

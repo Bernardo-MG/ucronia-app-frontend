@@ -3,26 +3,26 @@
     <div class="row mb-2">
       <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
       <div class="col-sm-10">
-        <input type="text" [value]="data.resource" id="resourceInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
           aria-describedby="resourceLabel">
       </div>
     </div>
     <!-- Select button -->
     <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onSelectResource()">
+      <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
         <icon-search></icon-search>
       </button>
     </div>
     <div class="row mb-2">
       <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
       <div class="col-sm-10">
-        <input type="text" [value]="data.action" id="actionInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
           aria-describedby="actionLabel">
       </div>
     </div>
     <!-- Select button -->
     <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onSelectAction()">
+      <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
         <icon-search></icon-search>
       </button>
     </div>
@@ -36,7 +36,7 @@
   </span>
   <!-- Select action -->
   <span *ngSwitchCase="'action'">
-    <layout-link-list [header]="actionHeader" [rows]="actionRows" route="/security/roles">
+    <layout-link-list [header]="actionHeader" [rows]="actionRows" (select)="onSelectAction($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
       <pagination-route-navigation [totalPages]="totalActionPages">
@@ -51,7 +51,7 @@
   </span>
   <!-- Select resource -->
   <span *ngSwitchCase="'resource'">
-    <layout-link-list [header]="resourceHeader" [rows]="resourceRows" route="/security/roles">
+    <layout-link-list [header]="resourceHeader" [rows]="resourceRows" (select)="onSelectResource($event)">
     </layout-link-list>
     <div class="d-flex justify-content-center mt-1">
       <pagination-route-navigation [totalPages]="totalResourcePages">

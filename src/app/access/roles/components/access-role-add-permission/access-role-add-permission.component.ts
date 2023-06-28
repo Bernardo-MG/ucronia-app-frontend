@@ -12,17 +12,23 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 })
 export class AccessRoleAddPermissionComponent {
 
+  private _actions: Action[] = [];
+
   @Input() set actions(value: Action[]) {
+    this._actions = value;
     this.actionRows = value.map((a, i) => {
-      return {id:i, cells:[a.name]};
+      return { id: i, cells: [a.name] };
     });
   }
 
   @Input() public totalActionPages = 0;
 
+  private _resources: Resource[] = [];
+
   @Input() set resources(value: Resource[]) {
+    this._resources = value;
     this.resourceRows = value.map((r, i) => {
-      return {id:i, cells:[r.name]};
+      return { id: i, cells: [r.name] };
     });
   }
 
@@ -38,17 +44,21 @@ export class AccessRoleAddPermissionComponent {
 
   @Output() public goToResourcePage = new EventEmitter<number>();
 
-  public actionHeader: TableHeaderCell[] = [{name:'Action',property:'action'}];
+  public actionHeader: TableHeaderCell[] = [{ name: 'Action', property: 'action' }];
 
   public actionRows: TableRow[] = [];
 
-  public resourceHeader: TableHeaderCell[] = [{name:'Resource',property:'resource'}];
+  public resourceHeader: TableHeaderCell[] = [{ name: 'Resource', property: 'resource' }];
 
   public resourceRows: TableRow[] = [];
 
   public data = new Permission();
 
   public view = 'main';
+
+  public action = new Action();
+
+  public resource = new Resource();
 
   public isAbleToAdd() {
     return true;
@@ -57,14 +67,24 @@ export class AccessRoleAddPermissionComponent {
   public onAddPermission(): void {
   }
 
-  public onSelectAction(): void {
+  public onShowActionSelection(): void {
     this.goToActionPage.emit(0);
     this.view = 'action';
   }
 
-  public onSelectResource(): void {
+  public onShowResourceSelection(): void {
     this.goToResourcePage.emit(0);
     this.view = 'resource';
+  }
+
+  public onSelectAction(index: number): void {
+    this.action = this._actions[index];
+    this.view = 'main';
+  }
+
+  public onSelectResource(index: number): void {
+    this.resource = this._resources[index];
+    this.view = 'main';
   }
 
   public onCancelSelect() {

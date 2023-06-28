@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of rows" role="button">
+    <tr *ngFor="let row of rows" role="button" (click)="onClick(row.id)">
       <!-- Data cells -->
       <td *ngFor="let cell of row.cells">
         {{cell}}
