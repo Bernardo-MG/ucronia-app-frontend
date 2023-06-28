@@ -4,7 +4,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { AccountMenuComponent } from './containers/account-menu/account-menu.component';
+import { AccountMenuComponent } from './components/account-menu/account-menu.component';
 
 
 @NgModule({

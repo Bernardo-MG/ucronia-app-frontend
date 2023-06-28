@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccessRegisterViewComponent } from './containers/access-register-view/access-register-view.component';
+import { AccessRegisterViewComponent } from './components/access-register-view/access-register-view.component';
 
 
 const routes: Routes = [

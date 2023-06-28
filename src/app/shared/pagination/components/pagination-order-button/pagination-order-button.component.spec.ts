@@ -3,7 +3,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
-import { PaginationOrderButtonTemplateComponent } from '../../components/pagination-order-button-template/pagination-order-button-template.component';
+import { PaginationOrderButtonTemplateComponent } from '../pagination-order-button-template/pagination-order-button-template.component';
 import { PaginationOrderButtonComponent } from './pagination-order-button.component';
 
 describe('PaginationOrderButtonComponent', () => {

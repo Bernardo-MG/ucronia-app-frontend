@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BalanceInfoComponent } from './containers/balance-info/balance-info.component';
+import { BalanceInfoComponent } from './components/balance-info/balance-info.component';
 
 
 const routes: Routes = [

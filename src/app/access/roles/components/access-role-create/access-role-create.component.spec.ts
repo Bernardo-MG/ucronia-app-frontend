@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
+import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleCreateComponent } from './access-role-create.component';
 

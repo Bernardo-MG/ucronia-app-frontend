@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberFormComponent } from '../../components/member-form/member-form.component';
+import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
 import { MemberCreateComponent } from './member-create.component';
 
