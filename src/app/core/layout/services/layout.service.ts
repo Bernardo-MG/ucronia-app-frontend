@@ -18,7 +18,7 @@ export class LayoutService {
     return 'Association App Frontend';
   }
 
-  public getMenu(): Menu[] {
+  public getMainMenu(): Menu[] {
     return [
       {
         title: 'Association', links:

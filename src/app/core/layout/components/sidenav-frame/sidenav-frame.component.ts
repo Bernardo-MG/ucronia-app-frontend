@@ -1,21 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
+import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'layout-sidenav-frame',
   templateUrl: './sidenav-frame.component.html'
 })
-export class SidenavFrameComponent {
+export class SidenavFrameComponent implements OnInit {
 
-  public title;
+  public title = '';
 
-  public menus;
+  public sideMenu: Menu[] = [];
 
   constructor(
-    layoutService: LayoutService
-  ) {
-    this.menus = layoutService.getMenu();
-    this.title = layoutService.getTitle();
+    private layoutService: LayoutService
+  ) { }
+
+  ngOnInit(): void {
+    this.sideMenu = this.layoutService.getMainMenu();
+    this.title = this.layoutService.getTitle();
   }
 
 }
