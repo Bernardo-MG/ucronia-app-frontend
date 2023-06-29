@@ -1,0 +1,17 @@
+<!-- List -->
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Data headers -->
+        <th>Member</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of members">
+        <!-- Data cells -->
+        <td>
+          {{member.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>

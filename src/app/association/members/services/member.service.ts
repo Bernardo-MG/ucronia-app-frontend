@@ -32,8 +32,4 @@ export class MemberService {
     return this.client.member().id(id).readOne().pipe(map(r => r.content));
   }
 
-  public countActive(): Observable<number> {
-    return this.client.member().parameter("active", true).readAll().pipe(map(r => r.totalElements));
-  }
-
 }

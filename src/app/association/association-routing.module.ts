@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+const statsModule = () => import('@app/association/stats/association-stats.module').then(m => m.AssociationStatsModule);
 const balanceModule = () => import('@app/association/balance/balance.module').then(m => m.BalanceModule);
 const memberModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const feeModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
@@ -10,6 +11,7 @@ const routes: Routes = [
     {
         path: '',
         children: [
+            { path: 'stats', loadChildren: statsModule },
             { path: 'balance', loadChildren: balanceModule },
             { path: 'transactions', loadChildren: transactionModule },
             { path: 'members', loadChildren: memberModule },

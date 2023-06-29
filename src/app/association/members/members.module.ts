@@ -11,7 +11,6 @@ import { MemberDetailsComponent } from './components/member-details/member-detai
 import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
-import { MemberStatsComponent } from './components/member-stats/member-stats.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
 
@@ -22,7 +21,6 @@ import { MemberService } from './services/member.service';
     MemberListComponent,
     MemberDetailsComponent,
     MemberCreateComponent,
-    MemberStatsComponent,
     MemberFormComponent,
     MemberInfoComponent
   ],

@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { DataListComponent } from './data-list.component';
+import { RouterLinkListComponent } from './router-link-list.component';
 
-describe('DataListComponent', () => {
-  let component: DataListComponent;
-  let fixture: ComponentFixture<DataListComponent>;
+describe('RouterLinkListComponent', () => {
+  let component: RouterLinkListComponent;
+  let fixture: ComponentFixture<RouterLinkListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,12 +16,12 @@ describe('DataListComponent', () => {
         IconsModule
       ],
       declarations: [
-        DataListComponent
+        RouterLinkListComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(DataListComponent);
+    fixture = TestBed.createComponent(RouterLinkListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
