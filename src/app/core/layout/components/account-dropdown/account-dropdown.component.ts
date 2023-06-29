@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 
@@ -6,7 +6,7 @@ import { AuthService } from '@app/core/authentication/services/auth.service';
   selector: 'layout-account-dropdown',
   templateUrl: './account-dropdown.component.html'
 })
-export class AccountMenuComponent {
+export class AccountMenuComponent implements OnInit {
 
   public username = '';
 
@@ -15,7 +15,9 @@ export class AccountMenuComponent {
   constructor(
     private authService: AuthService,
     private router: Router
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.authService.getStatus().subscribe(u => { this.username = u.username });
   }
 

@@ -50,6 +50,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   ) { }
 
   ngAfterContentInit(): void {
+    // TODO: What is this for?
     this.cdRef.detectChanges();
   }
 

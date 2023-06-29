@@ -25,11 +25,13 @@ export class FeeCalendarInfoComponent implements OnInit {
 
   constructor(
     private service: FeeCalendarService
-  ) {
-    this.load(this.year);
-  }
+  ) { }
 
   ngOnInit(): void {
+    // Load initial year
+    this.load(this.year);
+
+    // Load range
     this.service.getRange().subscribe(d => this.range = d);
   }
 
