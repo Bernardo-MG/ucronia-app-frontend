@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { AccountMenuComponent } from './components/account-dropdown/account-dropdown.component';
-import { CenteredLayoutComponent } from './components/centered-layout/centered-layout.component';
+import { CenteredFrameComponent } from './components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './components/navbar-body/navbar-body.component';
-import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { SidenavFrameComponent } from './components/sidenav-frame/sidenav-frame.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
@@ -15,8 +15,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
   declarations: [
     NavbarComponent,
     NavbarBodyComponent,
-    CenteredLayoutComponent,
-    MainLayoutComponent,
+    CenteredFrameComponent,
+    SidenavFrameComponent,
     AccountMenuComponent
   ],
   imports: [
@@ -27,8 +27,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
   ],
   exports: [
     NavbarBodyComponent,
-    CenteredLayoutComponent,
-    MainLayoutComponent
+    CenteredFrameComponent,
+    SidenavFrameComponent
   ]
 })
 export class LayoutModule { }

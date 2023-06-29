@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { MainLayoutComponent } from './main-layout.component';
+import { SidenavFrameComponent } from './sidenav-frame.component';
 
-describe('MainLayoutComponent', () => {
-  let component: MainLayoutComponent;
-  let fixture: ComponentFixture<MainLayoutComponent>;
+describe('SidenavFrameComponent', () => {
+  let component: SidenavFrameComponent;
+  let fixture: ComponentFixture<SidenavFrameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,12 +16,12 @@ describe('MainLayoutComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        MainLayoutComponent
+        SidenavFrameComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MainLayoutComponent);
+    fixture = TestBed.createComponent(SidenavFrameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

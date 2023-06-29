@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'layout-main-layout',
-  templateUrl: './main-layout.component.html'
+  selector: 'layout-sidenav-frame',
+  templateUrl: './sidenav-frame.component.html'
 })
-export class MainLayoutComponent {
+export class SidenavFrameComponent {
 
   public title;
 

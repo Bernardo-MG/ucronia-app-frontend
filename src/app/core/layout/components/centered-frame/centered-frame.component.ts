@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'layout-centered-layout',
-  templateUrl: './centered-layout.component.html'
+  selector: 'layout-centered-frame',
+  templateUrl: './centered-frame.component.html'
 })
-export class CenteredLayoutComponent {
+export class CenteredFrameComponent {
 
   public title ;
 
