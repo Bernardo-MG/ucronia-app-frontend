@@ -1,5 +1,6 @@
 <!-- List -->
-<table class="table table-hover">
+<layout-waiting-wrapper [waiting]="waiting">
+  <table class="table table-hover">
     <thead>
       <tr>
         <!-- Data headers -->
@@ -15,3 +16,8 @@
       </tr>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center mt-1">
+    <pagination-navigation [current]="page" [pages]="totalPages" (goTo)="onGoTo($event)">
+    </pagination-navigation>
+  </div>
+</layout-waiting-wrapper>

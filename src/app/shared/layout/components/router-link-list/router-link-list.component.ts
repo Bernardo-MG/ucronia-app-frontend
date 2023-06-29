@@ -8,10 +8,6 @@ import { TableRow } from '../../models/table-row';
 })
 export class RouterLinkListComponent {
 
-  @Input() public disabled = false;
-
-  @Input() public totalPages = 0;
-
   @Input() public header: TableHeaderCell[] = [];
 
   @Input() public rows: TableRow[] = [];
