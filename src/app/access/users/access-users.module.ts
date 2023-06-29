@@ -7,13 +7,13 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserRoutingModule } from './access-users-routing.module';
+import { AccessUserCreateComponent } from './components/access-user-create/access-user-create.component';
+import { AccessUserDetailsComponent } from './components/access-user-details/access-user-details.component';
 import { AccessUserFormComponent } from './components/access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from './components/access-user-info/access-user-info.component';
+import { AccessUserListComponent } from './components/access-user-list/access-user-list.component';
 import { AccessUserRoleSelectionComponent } from './components/access-user-role-selection/access-user-role-selection.component';
 import { AccessUserRoleFormComponent } from './components/access-user-roles/access-user-roles.component';
-import { AccessUserCreateComponent } from './containers/access-user-create/access-user-create.component';
-import { AccessUserDetailsComponent } from './containers/access-user-details/access-user-details.component';
-import { AccessUserListComponent } from './containers/access-user-list/access-user-list.component';
 import { AccessUserService } from './services/access-user.service';
 
 

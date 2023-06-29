@@ -5,7 +5,7 @@ import { CoreModule } from '@app/core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRegisterRoutingModule } from './access-register-routing.module';
 import { AcessRegisterFormComponent } from './components/access-register-form/access-register-form.component';
-import { AccessRegisterViewComponent } from './containers/access-register-view/access-register-view.component';
+import { AccessRegisterViewComponent } from './components/access-register-view/access-register-view.component';
 import { AccessRegisterService } from './services/access-register.service';
 
 
