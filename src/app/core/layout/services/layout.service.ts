@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthMenuLink } from '@app/shared/menu/models/auth-menu-link';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 
@@ -40,16 +41,10 @@ export class LayoutService {
     ];
   }
 
-  private filterNodes(links: MenuLink[]): MenuLink[] {
-    const result: MenuLink[] = [];
-
-    links.forEach(link => {
-      if ((link.resource) && (link.action) && (this.authService.hasPermission(link.resource, link.action))) {
-        result.push(link);
-      }
-    });
-
-    return result;
+  private filterNodes(links: AuthMenuLink[]): MenuLink[] {
+    return links
+      // Only links the user has permissions for
+      .filter(link => this.authService.hasPermission(link.resource, link.action));
   }
 
 }
