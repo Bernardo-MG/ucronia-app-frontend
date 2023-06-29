@@ -1,27 +1,19 @@
-<div class="card">
-  <div class="card-body">
-    <!-- Table -->
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <!-- Data headers -->
-          <th *ngFor="let cell of header" scope="col">
-            <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of rows" role="button" routerLink="{{route}}/{{row.id}}">
-          <!-- Data cells -->
-          <td *ngFor="let cell of row.cells">
-            {{cell}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-route-navigation [totalPages]="totalPages" [disabled]="disabled">
-      </pagination-route-navigation>
-    </div>
-  </div>
-</div>
+<!-- Table -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Data headers -->
+      <th *ngFor="let cell of header" scope="col">
+        <pagination-order-button property="{{cell.name}}"></pagination-order-button>{{cell.name}}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows" role="button" routerLink="{{route}}/{{row.id}}">
+      <!-- Data cells -->
+      <td *ngFor="let cell of row.cells">
+        {{cell}}
+      </td>
+    </tr>
+  </tbody>
+</table>
