@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { MenusModule } from '../menus/menus.module';
 import { CenteredLayoutComponent } from './components/centered-layout/centered-layout.component';
-import { HeaderLayoutComponent } from './components/header-layout/header-layout.component';
+import { HeaderBodyComponent } from './components/header-body/header-body.component';
 import { MainLayoutComponent } from './components/main-layout/main-layout.component';
 
 
 
 @NgModule({
   declarations: [
-    HeaderLayoutComponent,
+    HeaderBodyComponent,
     CenteredLayoutComponent,
     MainLayoutComponent
   ],
@@ -22,7 +22,7 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
     MenusModule
   ],
   exports: [
-    HeaderLayoutComponent,
+    HeaderBodyComponent,
     CenteredLayoutComponent,
     MainLayoutComponent
   ]

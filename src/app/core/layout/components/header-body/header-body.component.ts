@@ -3,10 +3,10 @@ import { AuthService } from '@app/core/authentication/services/auth.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'view-header-layout',
-  templateUrl: './header-layout.component.html'
+  selector: 'layout-header-body',
+  templateUrl: './header-body.component.html'
 })
-export class HeaderLayoutComponent {
+export class HeaderBodyComponent {
 
   public title;
 

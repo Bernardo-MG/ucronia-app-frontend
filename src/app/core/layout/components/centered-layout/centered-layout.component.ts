@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'view-centered-layout',
+  selector: 'layout-centered-layout',
   templateUrl: './centered-layout.component.html'
 })
 export class CenteredLayoutComponent {

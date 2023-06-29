@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
-  selector: 'view-main-layout',
+  selector: 'layout-main-layout',
   templateUrl: './main-layout.component.html'
 })
 export class MainLayoutComponent {
