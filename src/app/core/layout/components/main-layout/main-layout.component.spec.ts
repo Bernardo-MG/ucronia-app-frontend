@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { MainLayoutComponent } from './main-layout.component';
-import { MenusModule } from '@app/core/menus/menus.module';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -14,7 +13,6 @@ describe('MainLayoutComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
-        MenusModule,
         HttpClientTestingModule
       ],
       declarations: [
