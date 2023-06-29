@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
-  selector: 'menu-account-menu',
-  templateUrl: './account-menu.component.html'
+  selector: 'layout-account-dropdown',
+  templateUrl: './account-dropdown.component.html'
 })
 export class AccountMenuComponent {
 

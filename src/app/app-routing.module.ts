@@ -5,7 +5,7 @@ import { LoginComponent } from './core/authentication/components/login/login.com
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { CenteredLayoutComponent } from './core/layout/components/centered-layout/centered-layout.component';
-import { HeaderBodyComponent } from './core/layout/components/header-body/header-body.component';
+import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
@@ -17,7 +17,7 @@ const routes: Routes = [
   // Main app
   {
     path: '',
-    component: HeaderBodyComponent,
+    component: NavbarBodyComponent,
     children: [
       // Login
       {

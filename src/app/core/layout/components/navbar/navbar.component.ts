@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'menu-navbar',
+  selector: 'layout-navbar',
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {

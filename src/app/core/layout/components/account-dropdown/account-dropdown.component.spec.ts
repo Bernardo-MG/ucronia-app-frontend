@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationModule } from '@app/core/authentication/authentication.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccountMenuComponent } from './account-menu.component';
+import { AccountMenuComponent } from './account-dropdown.component';
 
 describe('AccountMenuComponent', () => {
   let component: AccountMenuComponent;
