@@ -23,8 +23,8 @@ export class LayoutService {
       {
         title: 'Association', links:
           this.filterNodes([
+            { title: 'Stats', path: '/', resource: 'member', action: 'read' },
             { title: 'Fees calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
-            { title: 'Member stats', path: '/members/stats', resource: 'member', action: 'read' },
             { title: 'Balance', path: '/balance', resource: 'balance', action: 'read' },
             { title: 'Fees', path: '/fees/list', resource: 'fee', action: 'read' },
             { title: 'Members', path: '/members/list', resource: 'member', action: 'read' },
