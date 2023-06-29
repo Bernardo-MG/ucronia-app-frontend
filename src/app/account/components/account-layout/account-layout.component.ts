@@ -4,7 +4,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { LayoutService } from '../../../core/layout/services/layout.service';
 
 @Component({
-  selector: 'view-account-layout',
+  selector: 'layout-account-layout',
   templateUrl: './account-layout.component.html'
 })
 export class AccountLayoutComponent {
