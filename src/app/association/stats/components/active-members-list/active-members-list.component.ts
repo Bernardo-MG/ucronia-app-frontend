@@ -12,7 +12,7 @@ export class ActiveMembersListComponent implements OnInit {
 
   @Input() public members: Member[] = [];
 
-  public page = 0;
+  public currentPage = 1;
 
   /**
    * Loading flag.
@@ -30,6 +30,7 @@ export class ActiveMembersListComponent implements OnInit {
   }
 
   public onGoTo(page: number) {
+    this.currentPage = page;
     const pagination = new PaginationRequest();
     pagination.page = page;
     this.load(pagination);
