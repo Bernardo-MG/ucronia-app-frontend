@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccessRoleCreateComponent } from './containers/access-role-create/access-role-create.component';
-import { AccessRoleDetailsComponent } from './containers/access-role-details/access-role-details.component';
-import { AccessRoleListComponent } from './containers/access-role-list/access-role-list.component';
-
+import { AccessRoleCreateComponent } from './components/access-role-create/access-role-create.component';
+import { AccessRoleDetailsComponent } from './components/access-role-details/access-role-details.component';
+import { AccessRoleListComponent } from './components/access-role-list/access-role-list.component';
 
 const routes: Routes = [
   { path: '', component: AccessRoleListComponent },

@@ -109,9 +109,9 @@ export class AuthService {
 
     const permissions = this.status.permissions;
     if (permissions != undefined) {
-      const key = resource.toUpperCase();
+      const key = resource;
       if (key in permissions) {
-        hasPermission = permissions[key].includes(action.toUpperCase());
+        hasPermission = permissions[key].includes(action);
       } else {
         hasPermission = false;
       }

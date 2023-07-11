@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberSelectionInputComponent } from './member-selection-input.component';
 
 describe('MemberSelectionInputComponent', () => {
@@ -9,7 +9,7 @@ describe('MemberSelectionInputComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
+        FontAwesomeModule
       ],
       declarations: [
         MemberSelectionInputComponent

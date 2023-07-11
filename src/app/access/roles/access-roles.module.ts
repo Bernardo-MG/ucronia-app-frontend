@@ -7,11 +7,13 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleRoutingModule } from './access-roles-routing.module';
+import { AccessRoleAddPermissionComponent } from './components/access-role-add-permission/access-role-add-permission.component';
+import { AccessRoleCreateComponent } from './components/access-role-create/access-role-create.component';
+import { AccessRoleDetailsComponent } from './components/access-role-details/access-role-details.component';
 import { AccessRoleFormComponent } from './components/access-role-form/access-role-form.component';
-import { AccessRolePermissionFormComponent } from './components/access-role-permission-form/access-role-permission-form.component';
-import { AccessRoleCreateComponent } from './containers/access-role-create/access-role-create.component';
-import { AccessRoleDetailsComponent } from './containers/access-role-details/access-role-details.component';
-import { AccessRoleListComponent } from './containers/access-role-list/access-role-list.component';
+import { AccessRoleInfoComponent } from './components/access-role-info/access-role-info.component';
+import { AccessRoleListComponent } from './components/access-role-list/access-role-list.component';
+import { AccessRolePermissionsComponent } from './components/access-role-permissions/access-role-permissions.component';
 import { AccessRoleService } from './services/access-role.service';
 
 
@@ -22,7 +24,9 @@ import { AccessRoleService } from './services/access-role.service';
     AccessRoleCreateComponent,
     AccessRoleDetailsComponent,
     AccessRoleListComponent,
-    AccessRolePermissionFormComponent,
+    AccessRolePermissionsComponent,
+    AccessRoleInfoComponent,
+    AccessRoleAddPermissionComponent,
   ],
   imports: [
     CommonModule,

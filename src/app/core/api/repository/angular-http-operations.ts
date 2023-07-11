@@ -153,15 +153,7 @@ export class AngularHttpOperations implements HttpOperations {
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
       response = new FailureResponse();
-      response.failures = error.error.failures.map((failure: any) => {
-        const result = new Failure();
-        result.code = failure.code;
-        result.field = failure.field;
-        result.message = failure.message;
-        result.value = failure.value;
-
-        return result;
-      });
+      response.failures = error.error.failures;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.

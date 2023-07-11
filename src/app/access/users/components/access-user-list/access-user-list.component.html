@@ -1,0 +1,16 @@
+<layout-article title="Users">
+  <!-- Add -->
+  <div class="row">
+    <!-- Add button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <a routerLink="/security/users/create" type="button" class="btn btn-link link-dark" role="button">
+        <fa-icon [icon]="addIcon"></fa-icon>
+      </a>
+    </div>
+  </div>
+  <!-- List -->
+  <layout-waiting-wrapper [waiting]="waiting">
+    <layout-data-list [header]="header" [rows]="rows" route="/security/users" [totalPages]="totalPages">
+    </layout-data-list>
+  </layout-waiting-wrapper>
+</layout-article>

@@ -33,7 +33,7 @@ export class AccessRoleService {
 
   public getResourceSelection(page: number): Observable<PaginatedResponse<Resource[]>> {
     const sort = new Sort<Resource>('name');
-    return this.client.action().page({ page }).sort([sort]).readAll();
+    return this.client.resource().page({ page }).sort([sort]).readAll();
   }
 
   public create(data: Role): Observable<Role> {

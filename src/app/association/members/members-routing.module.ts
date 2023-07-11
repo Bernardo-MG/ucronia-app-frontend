@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MemberCreateComponent } from './containers/member-create/member-create.component';
-import { MemberDetailsComponent } from './containers/member-details/member-details.component';
-import { MemberListComponent } from './containers/member-list/member-list.component';
-import { MemberStatsComponent } from './containers/member-stats/member-stats.component';
+import { MemberCreateComponent } from './components/member-create/member-create.component';
+import { MemberDetailsComponent } from './components/member-details/member-details.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
+import { MemberStatsComponent } from './components/member-stats/member-stats.component';
 
 
 const routes: Routes = [

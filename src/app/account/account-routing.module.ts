@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountChangePasswordViewComponent } from './containers/account-password-view/account-password-view.component';
-import { AccountProfileViewComponent } from './containers/account-profile-view/account-profile-view.component';
+import { AccountChangePasswordViewComponent } from './components/account-password-view/account-password-view.component';
+import { AccountProfileViewComponent } from './components/account-profile-view/account-profile-view.component';
 
 
 const routes: Routes = [

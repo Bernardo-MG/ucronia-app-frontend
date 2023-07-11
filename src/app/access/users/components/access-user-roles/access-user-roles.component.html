@@ -1,0 +1,22 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">
+        <pagination-order-button property="name"></pagination-order-button>name
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-role [ngForOf]="roles">
+      <tr>
+        <td>
+          <button (click)="onRemove(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
+            <icon-delete></icon-delete>
+          </button>
+        </td>
+        <td>{{role.name}}</td>
+      </tr>
+    </ng-template>
+  </tbody>
+</table>

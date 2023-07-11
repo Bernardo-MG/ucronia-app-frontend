@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './core/authentication/containers/login/login.component';
+import { AccountLayoutComponent } from './account/components/account-layout/account-layout.component';
+import { LoginComponent } from './core/authentication/components/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { MainLayoutComponent } from './core/views/containers/main-layout/main-layout.component';
-import { AccountLayoutComponent } from './core/views/containers/account-layout/account-layout.component';
-import { CenteredLayoutComponent } from './core/views/containers/centered-layout/centered-layout.component';
-import { HeaderLayoutComponent } from './core/views/containers/header-layout/header-layout.component';
+import { CenteredFrameComponent } from './core/layout/components/centered-frame/centered-frame.component';
+import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
+import { SidenavFrameComponent } from './core/layout/components/sidenav-frame/sidenav-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -17,12 +17,12 @@ const routes: Routes = [
   // Main app
   {
     path: '',
-    component: HeaderLayoutComponent,
+    component: NavbarBodyComponent,
     children: [
       // Login
       {
         path: 'login',
-        component: CenteredLayoutComponent,
+        component: CenteredFrameComponent,
         canActivate: [LoggedOutGuard],
         children: [
           {
@@ -33,7 +33,7 @@ const routes: Routes = [
       // Association
       {
         path: '',
-        component: MainLayoutComponent,
+        component: SidenavFrameComponent,
         canActivate: [LoggedInGuard],
         children: [
           // Front page
