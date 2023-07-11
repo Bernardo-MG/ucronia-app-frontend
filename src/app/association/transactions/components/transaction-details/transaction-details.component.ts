@@ -20,6 +20,8 @@ export class TransactionDetailsComponent implements OnInit {
 
   public editing = false;
 
+  public waiting = false;
+
   public editPermission = false;
 
   public deletePermission = false;
@@ -92,10 +94,12 @@ export class TransactionDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
+      this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.data = d;
+          this.waiting = false;
         });
     }
   }

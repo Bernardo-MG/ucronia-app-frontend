@@ -24,6 +24,8 @@ export class MemberDetailsComponent implements OnInit {
 
   public deletePermission = false;
 
+  public waiting = false;
+
   public data = new Member();
 
   public failures: { [key: string]: Failure[] } = {};
@@ -93,10 +95,12 @@ export class MemberDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
+      this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.data = d;
+          this.waiting = false;
         });
     }
   }
