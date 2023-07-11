@@ -27,6 +27,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public deletePermission = false;
 
+  public waiting = false;
+
   public members: Member[] = [];
 
   public member = new Member();
@@ -132,11 +134,13 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   private load(id: string | null): void {
     if (id) {
+      this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe(d => {
           this.data = d;
           this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
+          this.waiting = false;
         });
     }
   }
