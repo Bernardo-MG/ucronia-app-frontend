@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { AccountMenuComponent } from './components/account-dropdown/account-dropdown.component';
 import { CenteredFrameComponent } from './components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './components/navbar-body/navbar-body.component';
-import { SidenavFrameComponent } from './components/sidenav-frame/sidenav-frame.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { PaddedFrameComponent } from './components/padded-frame/padded-frame.component';
 
 
 
@@ -16,8 +16,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
     NavbarComponent,
     NavbarBodyComponent,
     CenteredFrameComponent,
-    SidenavFrameComponent,
-    AccountMenuComponent
+    AccountMenuComponent,
+    PaddedFrameComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +28,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
   exports: [
     NavbarBodyComponent,
     CenteredFrameComponent,
-    SidenavFrameComponent
+    PaddedFrameComponent
   ]
 })
 export class LayoutModule { }

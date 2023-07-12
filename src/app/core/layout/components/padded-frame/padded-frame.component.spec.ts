@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CenteredFrameComponent } from './centered-frame.component';
+import { PaddedFrameComponent } from './padded-frame.component';
 
-describe('CenteredFrameComponent', () => {
-  let component: CenteredFrameComponent;
-  let fixture: ComponentFixture<CenteredFrameComponent>;
+describe('PaddedFrameComponent', () => {
+  let component: PaddedFrameComponent;
+  let fixture: ComponentFixture<PaddedFrameComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule
       ],
-      declarations: [
-        CenteredFrameComponent
-      ]
+      declarations: [ 
+        PaddedFrameComponent
+       ]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(CenteredFrameComponent);
+    fixture = TestBed.createComponent(PaddedFrameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
