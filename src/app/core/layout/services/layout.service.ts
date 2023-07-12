@@ -25,7 +25,6 @@ export class LayoutService {
           this.filterNodes([
             { title: 'Stats', path: '/', resource: 'member', action: 'read' },
             { title: 'Fees calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
-            { title: 'Balance', path: '/balance', resource: 'balance', action: 'read' },
             { title: 'Fees', path: '/fees/list', resource: 'fee', action: 'read' },
             { title: 'Members', path: '/members/list', resource: 'member', action: 'read' },
             { title: 'Transaction calendar', path: '/transactions/calendar', resource: 'transaction', action: 'read' },
