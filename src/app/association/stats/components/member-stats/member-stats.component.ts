@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberService } from '../../services/member.service';
+import { AssociationStatsService } from '../../services/association-stats.service';
 
 @Component({
   selector: 'assoc-member-stats',
@@ -10,11 +10,11 @@ export class MemberStatsComponent implements OnInit {
   public activeCount = 0;
 
   constructor(
-    private service: MemberService
+    private service: AssociationStatsService
   ) { }
 
   ngOnInit(): void {
-    this.service.countActive().subscribe(r => this.activeCount = r);
+    this.service.countActiveMembers().subscribe(r => this.activeCount = r);
   }
 
 }

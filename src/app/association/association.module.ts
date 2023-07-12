@@ -5,7 +5,6 @@ import { AssociationRoutingModule } from './association-routing.module';
 
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     AssociationRoutingModule

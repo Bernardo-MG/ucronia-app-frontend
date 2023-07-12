@@ -3,14 +3,10 @@ import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '../../models/table-row';
 
 @Component({
-  selector: 'layout-data-list',
-  templateUrl: './data-list.component.html'
+  selector: 'layout-router-link-list',
+  templateUrl: './router-link-list.component.html'
 })
-export class DataListComponent {
-
-  @Input() public disabled = false;
-
-  @Input() public totalPages = 0;
+export class RouterLinkListComponent {
 
   @Input() public header: TableHeaderCell[] = [];
 

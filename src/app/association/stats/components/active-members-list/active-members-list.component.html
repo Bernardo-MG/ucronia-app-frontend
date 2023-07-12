@@ -1,0 +1,23 @@
+<!-- List -->
+<layout-waiting-wrapper [waiting]="waiting">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Data headers -->
+        <th>Member</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of members">
+        <!-- Data cells -->
+        <td>
+          {{member.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center mt-1">
+    <pagination-navigation [current]="currentPage" [pages]="totalPages" (goTo)="onGoTo($event)">
+    </pagination-navigation>
+  </div>
+</layout-waiting-wrapper>
