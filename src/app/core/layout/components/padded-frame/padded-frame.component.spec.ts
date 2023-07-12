@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { PaddedFrameComponent } from './padded-frame.component';
 
 describe('PaddedFrameComponent', () => {
@@ -8,7 +8,12 @@ describe('PaddedFrameComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PaddedFrameComponent ]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [ 
+        PaddedFrameComponent
+       ]
     })
     .compileComponents();
 
