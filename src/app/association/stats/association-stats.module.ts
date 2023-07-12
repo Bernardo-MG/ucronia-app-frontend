@@ -4,13 +4,15 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { ActiveMembersListComponent } from './components/active-members-list/active-members-list.component';
 import { MemberStatsComponent } from './components/member-stats/member-stats.component';
+import { BalanceInfoComponent } from './components/balance-info/balance-info.component';
 
 
 
 @NgModule({
   declarations: [
     MemberStatsComponent,
-    ActiveMembersListComponent
+    ActiveMembersListComponent,
+    BalanceInfoComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { MemberStatsComponent } from './components/member-stats/member-stats.com
   ],
   exports: [
     MemberStatsComponent,
-    ActiveMembersListComponent
+    ActiveMembersListComponent,
+    BalanceInfoComponent
   ]
 })
 export class AssociationStatsModule { }

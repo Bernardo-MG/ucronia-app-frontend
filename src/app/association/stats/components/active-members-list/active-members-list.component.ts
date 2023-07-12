@@ -4,7 +4,7 @@ import { AssociationStatsService } from '../../services/association-stats.servic
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
-  selector: 'app-active-members-list',
+  selector: 'assoc-active-members-list',
   templateUrl: './active-members-list.component.html',
   styleUrls: ['./active-members-list.component.sass']
 })
