@@ -40,6 +40,10 @@ export class LayoutService {
     ];
   }
 
+  public getMenus(): Menu[] {
+    return [];
+  }
+
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only links the user has permissions for
