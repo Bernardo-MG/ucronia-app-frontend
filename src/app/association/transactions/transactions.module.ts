@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
 import { CalendarModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TransactionCalendarComponent } from './components/transaction-calendar/transaction-calendar.component';
@@ -11,6 +12,7 @@ import { TransactionCreateComponent } from './components/transaction-create/tran
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
+import { TransactionLayoutComponent } from './components/transaction-layout/transaction-layout.component';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
@@ -24,7 +26,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     TransactionDetailsComponent,
     TransactionCalendarComponent,
     TransactionFormComponent,
-    TransactionInfoComponent
+    TransactionInfoComponent,
+    TransactionLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     CalendarModule,
     PaginationModule,
     LayoutModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MenuModule
   ],
   providers: [
     TransactionService

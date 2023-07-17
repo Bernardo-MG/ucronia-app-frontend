@@ -23,11 +23,9 @@ export class LayoutService {
 
     const associationLinks = this.filterNodes([
       { title: 'Stats', path: '/', resource: 'member', action: 'read' },
-      { title: 'Fees calendar', path: '/fees/calendar', resource: 'fee', action: 'read' },
-      { title: 'Fees', path: '/fees/list', resource: 'fee', action: 'read' },
+      { title: 'Fees', path: '/fees', resource: 'fee', action: 'read' },
       { title: 'Members', path: '/members/list', resource: 'member', action: 'read' },
-      { title: 'Transaction calendar', path: '/transactions/calendar', resource: 'transaction', action: 'read' },
-      { title: 'Transactions', path: '/transactions/list', resource: 'transaction', action: 'read' }
+      { title: 'Transactions', path: '/transactions', resource: 'transaction', action: 'read' }
     ]);
 
     if (associationLinks.length > 0) {
