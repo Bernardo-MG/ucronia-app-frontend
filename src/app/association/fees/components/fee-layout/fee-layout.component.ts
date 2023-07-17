@@ -9,12 +9,12 @@ import { Menu } from '@app/shared/menu/models/menu';
 export class FeeLayoutComponent {
 
   public menus: Menu[] = [
-    {
-      title: 'Account', links: [
+    new Menu(
+      [
         { title: 'Calendar', path: '/fees/calendar' },
         { title: 'List', path: '/fees/list' }
       ]
-    }
+    )
   ];
 
 }

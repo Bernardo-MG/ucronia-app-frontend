@@ -9,12 +9,12 @@ import { Menu } from '@app/shared/menu/models/menu';
 export class TransactionLayoutComponent {
 
   public menus: Menu[] = [
-    {
-      title: 'Account', links: [
+    new Menu(
+      [
         { title: 'Calendar', path: '/transactions/calendar' },
         { title: 'List', path: '/transactions/list' }
       ]
-    }
+    )
   ];
 
 }
