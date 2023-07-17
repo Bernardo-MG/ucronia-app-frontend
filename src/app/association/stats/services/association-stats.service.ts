@@ -20,7 +20,7 @@ export class AssociationStatsService {
   }
 
   public getActiveMembers(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    return this.client.member().page(pagination).sort(pagination?.sort).readAll();
+    return this.client.member().parameter("active", true).page(pagination).sort(pagination?.sort).readAll();
   }
 
   public getBalance(): Observable<Balance> {
