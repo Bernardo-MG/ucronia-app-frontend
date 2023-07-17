@@ -17,40 +17,51 @@ const routes: Routes = [
   // Main app
   {
     path: '',
-    component: NavbarBodyComponent,
     children: [
-      // Login
       {
         path: 'login',
-        component: CenteredFrameComponent,
-        canActivate: [LoggedOutGuard],
+        component: NavbarBodyComponent,
         children: [
+          // Login
           {
-            path: '', component: LoginComponent
+            path: '',
+            component: CenteredFrameComponent,
+            canActivate: [LoggedOutGuard],
+            children: [
+              {
+                path: '', component: LoginComponent
+              }
+            ]
           }
         ]
       },
-      // Association
       {
         path: '',
-        component: PaddedFrameComponent,
-        canActivate: [LoggedInGuard],
+        component: NavbarBodyComponent,
         children: [
-          // Front page
-          { path: '', loadChildren: frontpageModule },
           // Association
-          { path: '', loadChildren: associationModule },
-          // Security
-          { path: 'security', loadChildren: accessModule }
-        ]
-      },
-      // Account
-      {
-        path: 'account',
-        component: AccountLayoutComponent,
-        canActivate: [LoggedInGuard],
-        children: [
-          { path: '', loadChildren: accountModule }
+          {
+            path: '',
+            component: PaddedFrameComponent,
+            canActivate: [LoggedInGuard],
+            children: [
+              // Front page
+              { path: '', loadChildren: frontpageModule },
+              // Association
+              { path: '', loadChildren: associationModule },
+              // Security
+              { path: 'security', loadChildren: accessModule }
+            ]
+          },
+          // Account
+          {
+            path: 'account',
+            component: AccountLayoutComponent,
+            canActivate: [LoggedInGuard],
+            children: [
+              { path: '', loadChildren: accountModule }
+            ]
+          }
         ]
       }
     ]

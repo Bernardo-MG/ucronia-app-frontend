@@ -12,7 +12,7 @@ export class NavbarBodyComponent implements OnInit {
   public title = '';
 
   public loggedIn = false;
-  
+
   public menus: Menu[] = [];
 
   constructor(
