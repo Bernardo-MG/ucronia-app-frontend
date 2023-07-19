@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '@app/shared/layout/models/table-row';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
-import { MemberService } from '../../services/member.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-list',
@@ -41,15 +41,6 @@ export class MemberListComponent implements OnInit {
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
-  }
-
-  public onDelete(id: number) {
-    if (id > 0) {
-      this.service.delete(id).subscribe(r => {
-        const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination);
-      });
-    }
   }
 
   private load(pagination: PaginationRequest | undefined) {

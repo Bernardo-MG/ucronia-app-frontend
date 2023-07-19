@@ -75,15 +75,6 @@ export class TransactionListComponent implements OnInit {
     return this.waiting;
   }
 
-  public onDelete(id: number) {
-    if (id > 0) {
-      this.service.delete(id).subscribe(r => {
-        const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination, new TransactionFilter());
-      });
-    }
-  }
-
   private load(pagination: PaginationRequest | undefined, filter: TransactionFilter) {
     this.waiting = true;
     this.service.getAll(pagination, filter).subscribe({
@@ -109,7 +100,8 @@ export class TransactionListComponent implements OnInit {
 
   public reload(): void {
     this.routeActuator.setParameters({ date: this.date, startDate: this.startDate, endDate: this.endDate });
-    this.load(undefined, new TransactionFilter());
+    const pagination = this.routePaginationObserver.subject.value;
+    this.load(pagination, new TransactionFilter());
   }
 
 }

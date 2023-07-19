@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '@app/shared/layout/models/table-row';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
-import { FeeService } from '../../services/fee.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -47,15 +47,6 @@ export class FeeListComponent implements OnInit {
     });
   }
 
-  public onDelete(id: number) {
-    if (id > 0) {
-      this.service.delete(id).subscribe(r => {
-        const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination);
-      });
-    }
-  }
-
   private load(pagination: PaginationRequest | undefined) {
     this.waiting = true;
     this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
@@ -81,7 +72,8 @@ export class FeeListComponent implements OnInit {
   }
 
   public reload(): void {
-    this.load(undefined);
+    const pagination = this.routePaginationObserver.subject.value;
+    this.load(pagination);
   }
 
 }
