@@ -6,7 +6,6 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { CenteredFrameComponent } from './core/layout/components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
-import { PaddedFrameComponent } from './core/layout/components/padded-frame/padded-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -42,7 +41,6 @@ const routes: Routes = [
           // Association
           {
             path: '',
-            component: PaddedFrameComponent,
             canActivate: [LoggedInGuard],
             children: [
               // Front page

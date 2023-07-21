@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
 import { TableRow } from '@app/shared/layout/models/table-row';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
-import { MemberService } from '../../services/member.service';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { MemberService } from '../../services/member.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-member-list',
@@ -17,6 +18,8 @@ export class MemberListComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+
+  public createPermission = false;
 
   public totalPages = 0;
 
@@ -30,26 +33,21 @@ export class MemberListComponent implements OnInit {
 
   constructor(
     private service: MemberService,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("member", "create");
+
     this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Active', property: 'active' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
-  }
-
-  public onDelete(id: number) {
-    if (id > 0) {
-      this.service.delete(id).subscribe(r => {
-        const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination);
-      });
-    }
   }
 
   private load(pagination: PaginationRequest | undefined) {

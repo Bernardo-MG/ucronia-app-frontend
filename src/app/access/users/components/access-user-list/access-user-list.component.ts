@@ -5,6 +5,7 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessUserService } from '../../services/access-user.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'access-user-list',
@@ -16,6 +17,8 @@ export class AccessUserListComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+
+  public createPermission = false;
 
   public rows: TableRow[] = [];
 
@@ -31,12 +34,16 @@ export class AccessUserListComponent implements OnInit {
 
   constructor(
     private service: AccessUserService,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("user", "create");
+
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });

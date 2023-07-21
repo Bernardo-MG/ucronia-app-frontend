@@ -17,7 +17,7 @@ export class FeeCalendarInfoComponent implements OnInit {
 
   public range = new FeeCalendarRange();
 
-  public onlyActive = false;
+  public onlyActive = true;
 
   public rows: FeeCalendarRow[] = [];
 

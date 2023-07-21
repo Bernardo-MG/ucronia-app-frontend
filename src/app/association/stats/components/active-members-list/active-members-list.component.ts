@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from '@app/association/models/member';
-import { AssociationStatsService } from '../../services/association-stats.service';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
+import { AssociationStatsService } from '../../services/association-stats.service';
 
 @Component({
   selector: 'assoc-active-members-list',
@@ -26,13 +27,18 @@ export class ActiveMembersListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.load(new PaginationRequest());
+    const pagination = new PaginationRequest();
+    // TODO: Should be handled automatically
+    pagination.sort = [new Sort("name")];
+    this.load(pagination);
   }
 
   public onGoTo(page: number) {
     this.currentPage = page;
     const pagination = new PaginationRequest();
     pagination.page = page;
+    // TODO: Should be handled automatically
+    pagination.sort = [new Sort("name")];
     this.load(pagination);
   }
 

@@ -8,6 +8,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-transaction-list',
@@ -19,6 +20,8 @@ export class TransactionListComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+
+  public createPermission = false;
 
   public totalPages = 0;
 
@@ -43,7 +46,8 @@ export class TransactionListComponent implements OnInit {
   constructor(
     private service: TransactionService,
     router: Router,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.routeActuator = new RouteParametersActuator(router);
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
@@ -51,6 +55,9 @@ export class TransactionListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("transaction", "create");
+
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p, new TransactionFilter());
     });
@@ -73,15 +80,6 @@ export class TransactionListComponent implements OnInit {
 
   public isLoading(): boolean {
     return this.waiting;
-  }
-
-  public onDelete(id: number) {
-    if (id > 0) {
-      this.service.delete(id).subscribe(r => {
-        const pagination = this.routePaginationObserver.subject.value;
-        this.load(pagination, new TransactionFilter());
-      });
-    }
   }
 
   private load(pagination: PaginationRequest | undefined, filter: TransactionFilter) {
@@ -109,7 +107,8 @@ export class TransactionListComponent implements OnInit {
 
   public reload(): void {
     this.routeActuator.setParameters({ date: this.date, startDate: this.startDate, endDate: this.endDate });
-    this.load(undefined, new TransactionFilter());
+    const pagination = this.routePaginationObserver.subject.value;
+    this.load(pagination, new TransactionFilter());
   }
 
 }

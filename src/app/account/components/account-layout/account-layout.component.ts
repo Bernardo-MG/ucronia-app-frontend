@@ -9,10 +9,6 @@ import { LayoutService } from '../../../core/layout/services/layout.service';
 })
 export class AccountLayoutComponent {
 
-  public title;
-
-  public loggedIn = false;
-
   public menus: Menu[] = [
     {
       title: 'Account', links: [
@@ -21,13 +17,5 @@ export class AccountLayoutComponent {
       ]
     }
   ];
-
-  constructor(
-    private authService: AuthService,
-    viewService: LayoutService
-  ) {
-    this.authService.getStatus().subscribe(u => { this.loggedIn = u.logged });
-    this.title = viewService.getTitle();
-  }
 
 }
