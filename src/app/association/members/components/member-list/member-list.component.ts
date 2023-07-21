@@ -6,6 +6,7 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MemberService } from '../../services/member.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-member-list',
@@ -17,6 +18,8 @@ export class MemberListComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+
+  public createPermission = false;
 
   public totalPages = 0;
 
@@ -30,12 +33,16 @@ export class MemberListComponent implements OnInit {
 
   constructor(
     private service: MemberService,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("member", "create");
+
     this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Active', property: 'active' }];
 
     this.routePaginationObserver.subject.subscribe(p => {

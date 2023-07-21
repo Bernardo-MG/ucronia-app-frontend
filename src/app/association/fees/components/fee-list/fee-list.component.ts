@@ -6,6 +6,7 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FeeService } from '../../services/fee.service';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -17,6 +18,8 @@ export class FeeListComponent implements OnInit {
    * Waiting flag.
    */
   public waiting = false;
+
+  public createPermission = false;
 
   public totalPages = 0;
 
@@ -34,12 +37,16 @@ export class FeeListComponent implements OnInit {
 
   constructor(
     private service: FeeService,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("fee", "create");
+
     this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Pay date', property: 'date' }, { name: 'Paid', property: 'paid' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
