@@ -6,7 +6,6 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { CenteredFrameComponent } from './core/layout/components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
-import { SidenavFrameComponent } from './core/layout/components/sidenav-frame/sidenav-frame.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -17,40 +16,50 @@ const routes: Routes = [
   // Main app
   {
     path: '',
-    component: NavbarBodyComponent,
     children: [
-      // Login
       {
         path: 'login',
-        component: CenteredFrameComponent,
-        canActivate: [LoggedOutGuard],
+        component: NavbarBodyComponent,
         children: [
+          // Login
           {
-            path: '', component: LoginComponent
+            path: '',
+            component: CenteredFrameComponent,
+            canActivate: [LoggedOutGuard],
+            children: [
+              {
+                path: '', component: LoginComponent
+              }
+            ]
           }
         ]
       },
-      // Association
       {
         path: '',
-        component: SidenavFrameComponent,
-        canActivate: [LoggedInGuard],
+        component: NavbarBodyComponent,
         children: [
-          // Front page
-          { path: '', loadChildren: frontpageModule },
           // Association
-          { path: '', loadChildren: associationModule },
-          // Security
-          { path: 'security', loadChildren: accessModule }
-        ]
-      },
-      // Account
-      {
-        path: 'account',
-        component: AccountLayoutComponent,
-        canActivate: [LoggedInGuard],
-        children: [
-          { path: '', loadChildren: accountModule }
+          {
+            path: '',
+            canActivate: [LoggedInGuard],
+            children: [
+              // Front page
+              { path: '', loadChildren: frontpageModule },
+              // Association
+              { path: '', loadChildren: associationModule },
+              // Security
+              { path: 'security', loadChildren: accessModule }
+            ]
+          },
+          // Account
+          {
+            path: 'account',
+            component: AccountLayoutComponent,
+            canActivate: [LoggedInGuard],
+            children: [
+              { path: '', loadChildren: accountModule }
+            ]
+          }
         ]
       }
     ]

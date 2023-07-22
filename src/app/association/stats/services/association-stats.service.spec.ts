@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BalanceService } from './balance.service';
+import { AssociationStatsService } from './association-stats.service';
 
-describe('BalanceService', () => {
-  let service: BalanceService;
+describe('AssociationStatsService', () => {
+  let service: AssociationStatsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,7 +11,7 @@ describe('BalanceService', () => {
         HttpClientTestingModule
       ]
     });
-    service = TestBed.inject(BalanceService);
+    service = TestBed.inject(AssociationStatsService);
   });
 
   it('should be created', () => {

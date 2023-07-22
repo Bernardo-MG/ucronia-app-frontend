@@ -1,27 +1,31 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@app/core/core.module';
-import { SidenavFrameComponent } from './sidenav-frame.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { MemberService } from '../../../members/services/member.service';
+import { MemberStatsComponent } from './member-stats.component';
 
-describe('SidenavFrameComponent', () => {
-  let component: SidenavFrameComponent;
-  let fixture: ComponentFixture<SidenavFrameComponent>;
+describe('MemberStatsComponent', () => {
+  let component: MemberStatsComponent;
+  let fixture: ComponentFixture<MemberStatsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        CoreModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
-        SidenavFrameComponent
+        MemberStatsComponent
+      ],
+      providers: [
+        MemberService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SidenavFrameComponent);
+    fixture = TestBed.createComponent(MemberStatsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
