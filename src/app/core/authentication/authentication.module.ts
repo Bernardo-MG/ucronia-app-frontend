@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { LoginComponent } from './components/login/login.component';
@@ -20,7 +21,8 @@ import { LoginService } from './services/login.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IconsModule
+    IconsModule,
+    RouterModule
   ],
   providers: [
     LoginService,

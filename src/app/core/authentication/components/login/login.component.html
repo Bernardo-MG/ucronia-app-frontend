@@ -3,4 +3,7 @@
     <authentication-login-form [waiting]="loading" [failed]="failed" (login)="onLogin($event)"
       (rememberMe)="onRememberMe($event)"></authentication-login-form>
   </div>
+  <div class="card-footer text-muted">
+    <a routerLink="/login/password_reset">Lost password?</a>
+  </div>
 </div>
