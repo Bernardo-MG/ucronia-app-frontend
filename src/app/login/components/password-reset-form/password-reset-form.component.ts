@@ -13,7 +13,7 @@ export class PasswordResetFormComponent {
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
-    email: ['', Validators.required]
+    email: ['', [Validators.required, Validators.email]]
   });
 
   @Output() public passwordReset = new EventEmitter<PasswordResetForm>();
