@@ -20,12 +20,12 @@ const routes: Routes = [
       {
         path: 'login',
         component: NavbarBodyComponent,
+        canActivate: [LoggedOutGuard],
         children: [
           // Login
           {
             path: '',
             component: CenteredFrameComponent,
-            canActivate: [LoggedOutGuard],
             children: [
               {
                 path: '', component: LoginComponent
@@ -37,11 +37,11 @@ const routes: Routes = [
       {
         path: '',
         component: NavbarBodyComponent,
+        canActivate: [LoggedInGuard],
         children: [
           // Association
           {
             path: '',
-            canActivate: [LoggedInGuard],
             children: [
               // Front page
               { path: '', loadChildren: frontpageModule },
@@ -55,7 +55,6 @@ const routes: Routes = [
           {
             path: 'account',
             component: AccountLayoutComponent,
-            canActivate: [LoggedInGuard],
             children: [
               { path: '', loadChildren: accountModule }
             ]
