@@ -21,7 +21,7 @@ import { AuthService } from '@app/core/authentication/services/auth.service';
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'authentication-login',
+  selector: 'login-login',
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {

@@ -6,13 +6,17 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginComponent } from './components/login/login.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginService } from './services/login.service';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordResetFormComponent } from './components/password-reset-form/password-reset-form.component';
 
 
 
 @NgModule({
   declarations: [
     LoginFormComponent,
-    LoginComponent
+    LoginComponent,
+    PasswordResetComponent,
+    PasswordResetFormComponent
   ],
   imports: [
     CommonModule,
@@ -23,9 +27,6 @@ import { LoginService } from './services/login.service';
   ],
   providers: [
     LoginService
-  ],
-  exports: [
-    LoginComponent
   ]
 })
 export class LoginModule { }

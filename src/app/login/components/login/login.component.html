@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <authentication-login-form [waiting]="loading" [failed]="failed" (login)="onLogin($event)"
-      (rememberMe)="onRememberMe($event)"></authentication-login-form>
+    <login-login-form [waiting]="loading" [failed]="failed" (login)="onLogin($event)"
+      (rememberMe)="onRememberMe($event)"></login-login-form>
   </div>
   <div class="card-footer text-muted">
     <a routerLink="/login/password_reset">Lost password?</a>
