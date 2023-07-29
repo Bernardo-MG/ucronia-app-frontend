@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { LoginRequest } from '@app/core/authentication/models/login-request';
+import { LoginRequest } from '@app/login/models/login-request';
 import { SecurityStatus } from '@app/core/authentication/models/security-status';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
