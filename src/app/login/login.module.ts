@@ -8,6 +8,8 @@ import { PasswordResetRequestFormComponent } from './components/password-reset-r
 import { PasswordResetRequestComponent } from './components/password-reset-request/password-reset-request.component';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginService } from './services/login.service';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { PasswordResetFormComponent } from './components/password-reset-form/password-reset-form.component';
 
 
 
@@ -16,7 +18,9 @@ import { LoginService } from './services/login.service';
     LoginFormComponent,
     LoginComponent,
     PasswordResetRequestComponent,
-    PasswordResetRequestFormComponent
+    PasswordResetRequestFormComponent,
+    PasswordResetComponent,
+    PasswordResetFormComponent
   ],
   imports: [
     CommonModule,

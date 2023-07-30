@@ -17,7 +17,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'login',
+        path: '',
         component: NavbarBodyComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
