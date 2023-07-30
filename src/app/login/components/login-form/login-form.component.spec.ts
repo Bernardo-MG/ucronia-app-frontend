@@ -1,8 +1,6 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@app/core/core.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginFormComponent } from './login-form.component';
 
 describe('LoginFormComponent', () => {
@@ -14,9 +12,7 @@ describe('LoginFormComponent', () => {
       imports: [
         ReactiveFormsModule,
         FormsModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
-        CoreModule
+        IconsModule
       ],
       declarations: [
         LoginFormComponent
