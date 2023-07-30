@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PasswordResetFormComponent } from './password-reset-form.component';
+import { PasswordResetRequestFormComponent } from './password-reset-request-form.component';
 
-describe('PasswordResetFormComponent', () => {
-  let component: PasswordResetFormComponent;
-  let fixture: ComponentFixture<PasswordResetFormComponent>;
+describe('PasswordResetRequestFormComponent', () => {
+  let component: PasswordResetRequestFormComponent;
+  let fixture: ComponentFixture<PasswordResetRequestFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +13,12 @@ describe('PasswordResetFormComponent', () => {
         FormsModule
       ],
       declarations: [ 
-        PasswordResetFormComponent 
+        PasswordResetRequestFormComponent 
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetFormComponent);
+    fixture = TestBed.createComponent(PasswordResetRequestFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

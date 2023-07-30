@@ -3,11 +3,10 @@ import { PasswordResetForm } from '@app/login/models/password-reset';
 import { LoginService } from '@app/login/services/login.service';
 
 @Component({
-  selector: 'login-password-reset',
-  templateUrl: './password-reset.component.html',
-  styleUrls: ['./password-reset.component.sass']
+  selector: 'login-password-reset-request',
+  templateUrl: './password-reset-request.component.html'
 })
-export class PasswordResetComponent {
+export class PasswordResetRequestComponent {
 
   public finished = false;
 

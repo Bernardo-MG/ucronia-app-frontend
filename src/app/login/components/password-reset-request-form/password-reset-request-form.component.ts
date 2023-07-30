@@ -3,11 +3,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { PasswordResetForm } from '@app/login/models/password-reset';
 
 @Component({
-  selector: 'login-password-reset-form',
-  templateUrl: './password-reset-form.component.html',
-  styleUrls: ['./password-reset-form.component.sass']
+  selector: 'login-password-reset-request-form',
+  templateUrl: './password-reset-request-form.component.html'
 })
-export class PasswordResetFormComponent {
+export class PasswordResetRequestFormComponent {
 
   /**
    * Form structure.
