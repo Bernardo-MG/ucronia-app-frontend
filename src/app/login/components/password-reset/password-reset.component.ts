@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '@app/login/services/login.service';
 
 @Component({
-  selector: 'app-password-reset',
+  selector: 'login-password-reset',
   templateUrl: './password-reset.component.html',
   styleUrls: ['./password-reset.component.sass']
 })
