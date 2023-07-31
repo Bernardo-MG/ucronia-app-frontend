@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LoginService } from '@app/login/services/login.service';
+import { PasswordRestService } from '@app/login/services/password-reset.service';
 
 @Component({
   selector: 'login-password-reset',
@@ -13,7 +13,7 @@ export class PasswordResetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private loginService: LoginService
+    private service: PasswordRestService
   ) { }
 
   public ngOnInit(): void {
@@ -27,7 +27,7 @@ export class PasswordResetComponent implements OnInit {
 
   private load(token: string | null): void {
     if (token) {
-      this.loginService.validateResetPasswordToken(token).subscribe(r => this.token = token);
+      this.service.validateResetPasswordToken(token).subscribe(r => this.token = token);
     }
   }
 

@@ -5,7 +5,6 @@ import { SecurityStatus } from '@app/core/authentication/models/security-status'
 import { LoginRequest } from '@app/login/models/login-request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { PasswordResetRequest } from '../models/password-reset-request';
 
 @Injectable()
 export class LoginService {
@@ -14,10 +13,6 @@ export class LoginService {
    * Login endpoint URL.
    */
   private loginUrl = environment.apiUrl + "/login";
-
-  private passwordResetUrl = environment.apiUrl + "/password/reset";
-
-  private passwordResetValidationUrl = environment.apiUrl + "/password/reset/token";
 
   constructor(
     private http: HttpClient
@@ -38,18 +33,6 @@ export class LoginService {
       .post<ApiResponse<SecurityStatus>>(this.loginUrl, request)
       // Get content
       .pipe(map(response => response.content));
-  }
-
-  public resetPassword(request: PasswordResetRequest) {
-    return this.http
-      // Reset password request
-      .post<ApiResponse<void>>(this.passwordResetUrl, request);
-  }
-
-  public validateResetPasswordToken(token: string) {
-    return this.http
-      // Validate token request
-      .get<ApiResponse<void>>(`${this.passwordResetValidationUrl}/${token}`);
   }
 
 }

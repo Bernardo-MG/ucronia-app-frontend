@@ -1,5 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { PasswordRestService } from '@app/login/services/password-reset.service';
+import { PasswordResetFormComponent } from '../password-reset-form/password-reset-form.component';
 import { PasswordResetComponent } from './password-reset.component';
 
 describe('PasswordResetComponent', () => {
@@ -8,9 +11,19 @@ describe('PasswordResetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PasswordResetComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+      declarations: [
+        PasswordResetComponent,
+        PasswordResetFormComponent
+      ],
+      providers: [
+        PasswordRestService
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PasswordResetComponent);
     component = fixture.componentInstance;

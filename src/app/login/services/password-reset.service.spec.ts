@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { LoginService } from './login.service';
+import { PasswordRestService } from './password-reset.service';
 
-describe('LoginService', () => {
-  let service: LoginService;
+describe('PasswordRestService', () => {
+  let service: PasswordRestService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,10 +11,10 @@ describe('LoginService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        LoginService
+        PasswordRestService
       ]
     });
-    service = TestBed.inject(LoginService);
+    service = TestBed.inject(PasswordRestService);
   });
 
   it('should be created', () => {
