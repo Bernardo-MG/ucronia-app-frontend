@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { PasswordResetForm } from '@app/login/models/password-reset';
-import { PasswordRestService } from '@app/login/services/password-reset.service';
+import { PasswordResetForm } from '@app/password-reset/models/password-reset';
+import { PasswordRestService } from '@app/password-reset/services/password-reset.service';
 
 @Component({
   selector: 'login-password-reset-request',
