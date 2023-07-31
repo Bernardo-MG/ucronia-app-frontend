@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PasswordResetForm } from '@app/password-reset/models/password-reset';
+import { PasswordReset } from '@app/password-reset/models/password-reset';
+import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
 
 @Component({
   selector: 'login-password-reset-request-form',
@@ -15,7 +16,7 @@ export class PasswordResetRequestFormComponent {
     email: ['', [Validators.required, Validators.email]]
   });
 
-  @Output() public passwordReset = new EventEmitter<PasswordResetForm>();
+  @Output() public passwordReset = new EventEmitter<PasswordResetRequest>();
 
   constructor(
     private formBuilder: FormBuilder
@@ -24,7 +25,7 @@ export class PasswordResetRequestFormComponent {
   public onResetEmail() {
     if (this.form.valid) {
       // Valid form, can send data
-      const form = new PasswordResetForm();
+      const form = new PasswordResetRequest();
       if (this.form.value.email) {
         form.email = this.form.value.email;
       }

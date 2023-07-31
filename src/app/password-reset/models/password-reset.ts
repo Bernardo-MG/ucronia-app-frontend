@@ -1,4 +1,5 @@
 
-export class PasswordResetForm {
-  email = '';
+export class PasswordReset {
+  token = '';
+  password = '';
 }

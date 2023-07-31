@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { PasswordResetForm } from '@app/password-reset/models/password-reset';
-import { PasswordRestService } from '@app/password-reset/services/password-reset.service';
+import { PasswordReset } from '@app/password-reset/models/password-reset';
+import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
+import { PasswordResetService } from '@app/password-reset/services/password-reset.service';
 
 @Component({
   selector: 'login-password-reset-request',
@@ -11,11 +12,11 @@ export class PasswordResetRequestComponent {
   public finished = false;
 
   constructor(
-    private service: PasswordRestService
+    private service: PasswordResetService
   ) { }
 
-  public onPasswordReset(resetPassword: PasswordResetForm) {
-    this.service.resetPassword(resetPassword).subscribe(r => this.finished = true);
+  public onPasswordReset(resetPassword: PasswordResetRequest) {
+    this.service.requestResetPassword(resetPassword).subscribe(r => this.finished = true);
   }
 
 }
