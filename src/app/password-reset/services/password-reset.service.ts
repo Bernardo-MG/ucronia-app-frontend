@@ -10,10 +10,6 @@ export class PasswordResetService {
 
   private passwordResetRequestUrl = environment.apiUrl + "/password/reset";
 
-  private passwordResetTokenValidationUrl = environment.apiUrl + "/password/reset";
-
-  private passwordResetUrl = environment.apiUrl + "/password/reset/change";
-
   constructor(
     private http: HttpClient
   ) { }
@@ -27,13 +23,13 @@ export class PasswordResetService {
   public resetPassword(reset: PasswordReset) {
     return this.http
       // Validate token request
-      .post<ApiResponse<void>>(this.passwordResetUrl, reset);
+      .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${reset.token}`, reset);
   }
 
   public validateResetPasswordToken(token: string) {
     return this.http
       // Validate token request
-      .get<ApiResponse<boolean>>(`${this.passwordResetTokenValidationUrl}/${token}`);
+      .get<ApiResponse<boolean>>(`${this.passwordResetRequestUrl}/${token}`);
   }
 
 }
