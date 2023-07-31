@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PasswordReset } from '@app/password-reset/models/password-reset';
 import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
@@ -8,6 +8,24 @@ import { PasswordResetRequest } from '@app/password-reset/models/password-reset-
   templateUrl: './password-reset-request-form.component.html'
 })
 export class PasswordResetRequestFormComponent {
+
+  /**
+   * Waiting flag. Shows the waiting visual cue and disables the form.
+   */
+  private _waiting = false;
+
+  @Input() public set waiting(flag: boolean) {
+    this._waiting = flag;
+    if (this._waiting) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+  public get waiting() {
+    return this._waiting;
+  }
 
   /**
    * Form structure.
