@@ -6,6 +6,7 @@ import { PasswordResetRequestFormComponent } from './components/password-reset-r
 import { PasswordResetRequestComponent } from './components/password-reset-request/password-reset-request.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { PasswordResetRoutingModule } from './password-reset-routing.module';
+import { PasswordRestService } from './services/password-reset.service';
 
 
 
@@ -21,6 +22,9 @@ import { PasswordResetRoutingModule } from './password-reset-routing.module';
     PasswordResetRoutingModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    PasswordRestService
   ]
 })
 export class PasswordResetModule { }
