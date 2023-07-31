@@ -22,7 +22,7 @@ export class PasswordResetRequestFormComponent {
     private formBuilder: FormBuilder
   ) { }
 
-  public onResetEmail() {
+  public onResetPassword() {
     if (this.form.valid) {
       // Valid form, can send data
       const form = new PasswordResetRequest();
