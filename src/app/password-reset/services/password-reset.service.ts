@@ -33,7 +33,7 @@ export class PasswordResetService {
   public validateResetPasswordToken(token: string) {
     return this.http
       // Validate token request
-      .get<ApiResponse<void>>(`${this.passwordResetTokenValidationUrl}/${token}`);
+      .get<ApiResponse<boolean>>(`${this.passwordResetTokenValidationUrl}/${token}`);
   }
 
 }

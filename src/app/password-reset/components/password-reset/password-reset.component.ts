@@ -5,12 +5,15 @@ import { PasswordResetService } from '@app/password-reset/services/password-rese
 
 @Component({
   selector: 'login-password-reset',
-  templateUrl: './password-reset.component.html',
-  styleUrls: ['./password-reset.component.sass']
+  templateUrl: './password-reset.component.html'
 })
 export class PasswordResetComponent implements OnInit {
 
   private token = '';
+
+  public valid = false;
+
+  public changed = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -18,7 +21,7 @@ export class PasswordResetComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    // Get token
+    // Validate token
     this.route.paramMap.subscribe(params => {
       if (params.has('token')) {
         this.load(params.get('token'));
@@ -26,19 +29,16 @@ export class PasswordResetComponent implements OnInit {
     });
   }
 
+  public passwordReset(password: string): void {
+    const reset = new PasswordReset();
+    reset.token = this.token;
+    reset.password = password;
+    this.service.resetPassword(reset).subscribe(r => this.changed = true);
+  }
+
   private load(token: string | null): void {
     if (token) {
-      this.service.validateResetPasswordToken(token).subscribe(r => this.token = token);
-    }
-  }
-  
-
-  private change(token: string | null): void {
-    if (token) {
-      const reset = new PasswordReset();
-      reset.password = '';
-      reset.password = '';
-      this.service.resetPassword(reset).subscribe(r => this.token = token);
+      this.service.validateResetPasswordToken(token).subscribe(r => this.valid = r.content);
     }
   }
 
