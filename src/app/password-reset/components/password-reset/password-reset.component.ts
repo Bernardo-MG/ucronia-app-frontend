@@ -34,7 +34,7 @@ export class PasswordResetComponent implements OnInit {
     });
   }
 
-  public passwordReset(password: string): void {
+  public onPasswordReset(password: string): void {
     const reset = new PasswordReset();
     reset.token = this.token;
     reset.password = password;

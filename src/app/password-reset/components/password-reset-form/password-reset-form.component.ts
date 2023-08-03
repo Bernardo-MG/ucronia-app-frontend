@@ -41,37 +41,8 @@ export class PasswordResetFormComponent {
   public onResetPassword() {
     if (this.form.valid) {
       // Valid form, can send data
-      if (this.form.value.password) {
-        this.passwordReset.emit(this.form.value.password);
-      }
-
+      this.passwordReset.emit(this.form.value.password);
     }
-  }
-
-  private passwordMatch(password: string, confirmPassword: string): ValidatorFn {
-    return (formGroup: AbstractControl): { [key: string]: any } | null => {
-      const passwordControl = formGroup.get(password);
-      const confirmPasswordControl = formGroup.get(confirmPassword);
-
-      if (!passwordControl || !confirmPasswordControl) {
-        return null;
-      }
-
-      if (
-        confirmPasswordControl.errors &&
-        !confirmPasswordControl.errors['passwordMismatch']
-      ) {
-        return null;
-      }
-
-      if (passwordControl.value !== confirmPasswordControl.value) {
-        confirmPasswordControl.setErrors({ passwordMismatch: true });
-        return { passwordMismatch: true };
-      } else {
-        confirmPasswordControl.setErrors(null);
-        return null;
-      }
-    };
   }
 
   /**
