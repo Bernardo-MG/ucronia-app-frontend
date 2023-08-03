@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordResetFormComponent } from './password-reset-form.component';
 
 describe('PasswordResetFormComponent', () => {
@@ -8,9 +8,15 @@ describe('PasswordResetFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PasswordResetFormComponent ]
+      imports: [
+        ReactiveFormsModule,
+        FormsModule
+      ],
+      declarations: [
+        PasswordResetFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PasswordResetFormComponent);
     component = fixture.componentInstance;

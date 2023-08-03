@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PasswordRestService } from '@app/login/services/password-reset.service';
+import { PasswordResetService } from '@app/password-reset/services/password-reset.service';
 import { PasswordResetRequestFormComponent } from '../password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequestComponent } from './password-reset-request.component';
 
@@ -21,7 +21,7 @@ describe('PasswordResetRequestComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        PasswordRestService
+        PasswordResetService
       ]
     })
       .compileComponents();
