@@ -28,9 +28,7 @@ export class PasswordResetComponent implements OnInit {
   public ngOnInit(): void {
     // Validate token
     this.route.paramMap.subscribe(params => {
-      if (params.has('token')) {
-        this.load(params.get('token'));
-      }
+      this.load(params.get('token'));
     });
   }
 
