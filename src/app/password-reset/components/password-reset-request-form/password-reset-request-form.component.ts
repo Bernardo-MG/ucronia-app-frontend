@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PasswordReset } from '@app/password-reset/models/password-reset';
 import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
 
 @Component({
