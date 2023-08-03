@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { confirmPasswordValidator } from '@app/password-reset/validators/confirm-password-validator';
 
 @Component({
   selector: 'login-password-reset-form',
@@ -11,7 +12,8 @@ export class PasswordResetFormComponent {
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
-    password: ['', Validators.required]
+    password: ['', Validators.required],
+    confirmPassword: ['', [Validators.required, this.passwordsMatch()]]
   });
 
   @Output() public passwordReset = new EventEmitter<string>();
@@ -28,6 +30,32 @@ export class PasswordResetFormComponent {
       }
 
     }
+  }
+
+  private passwordMatch(password: string, confirmPassword: string): ValidatorFn {
+    return (formGroup: AbstractControl): { [key: string]: any } | null => {
+      const passwordControl = formGroup.get(password);
+      const confirmPasswordControl = formGroup.get(confirmPassword);
+
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
+      }
+
+      if (
+        confirmPasswordControl.errors &&
+        !confirmPasswordControl.errors['passwordMismatch']
+      ) {
+        return null;
+      }
+
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordMismatch: true });
+        return { passwordMismatch: true };
+      } else {
+        confirmPasswordControl.setErrors(null);
+        return null;
+      }
+    };
   }
 
   /**
@@ -53,4 +81,22 @@ export class PasswordResetFormComponent {
     return invalid;
   }
 
+  public isAbleToSubmit() {
+    return (this.form.valid);
+  }
+
+  private passwordsMatch(): ValidatorFn {
+    return (c: AbstractControl): ValidationErrors | null => {
+      if (c.parent) {
+
+        let password: any = c.parent.get('password');
+        let confirmPassword: any = c.parent.get('confirmPassword');
+
+        return password.value !== confirmPassword.value ? { passwordMismatch: true } : null;
+      }
+      return null;
+    };
+  }
+
 }
+

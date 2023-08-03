@@ -75,4 +75,8 @@ export class PasswordResetRequestFormComponent {
     return invalid;
   }
 
+  public isAbleToSubmit() {
+    return ((this.form.valid) && (!this.waiting));
+  }
+
 }
