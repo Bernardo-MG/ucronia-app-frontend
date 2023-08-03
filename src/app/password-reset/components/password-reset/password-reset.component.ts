@@ -11,7 +11,7 @@ export class PasswordResetComponent implements OnInit {
 
   private token = '';
 
-  public valid = false;
+  public validToken = false;
 
   public changed = false;
 
@@ -47,7 +47,7 @@ export class PasswordResetComponent implements OnInit {
 
   private load(token: string | null): void {
     if (token) {
-      this.service.validateResetPasswordToken(token).subscribe(r => this.valid = r.content);
+      this.service.validateResetPasswordToken(token).subscribe(r => this.validToken = r.content);
     }
   }
 
