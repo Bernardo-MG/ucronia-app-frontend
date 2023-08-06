@@ -4,7 +4,7 @@ import { FeePayment } from '@app/association/models/fee-payment';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'assoc-fee-form',
+  selector: 'assoc-fee-creation-form',
   templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent implements OnInit, OnChanges {
