@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Failure } from '@app/core/api/models/failure';
 import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
 
 @Component({
@@ -26,14 +27,16 @@ export class PasswordResetRequestFormComponent {
     return this._waiting;
   }
 
+  @Input() public failures: { [key: string]: Failure[] } = {};
+
+  @Output() public passwordReset = new EventEmitter<PasswordResetRequest>();
+
   /**
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]]
   });
-
-  @Output() public passwordReset = new EventEmitter<PasswordResetRequest>();
 
   constructor(
     private formBuilder: FormBuilder
@@ -51,31 +54,25 @@ export class PasswordResetRequestFormComponent {
     }
   }
 
-  /**
-   * Checks if the form field is invalid.
-   * 
-   * @param field field to check
-   * @returns true if the form is invalid, false otherwise
-   */
-  public isInvalid(field: string): boolean {
-    let invalid: boolean;
-
-    if (this.form.invalid) {
-      const formField = this.form.get(field);
-      if (formField) {
-        invalid = (formField?.dirty || formField?.touched) && (formField?.errors != null);
-      } else {
-        invalid = false;
-      }
-    } else {
-      invalid = false;
-    }
-
-    return invalid;
+  public isInvalid(property: string): boolean {
+    return (this.form.get(property)?.invalid) || (property in this.failures);
   }
 
   public isAbleToSubmit() {
     return ((this.form.valid) && (!this.waiting));
+  }
+
+  public getFailures(property: string): Failure[] {
+    let propertyFailures: Failure[];
+
+    const found = this.failures[property];
+    if (found) {
+      propertyFailures = (found as Failure[]);
+    } else {
+      propertyFailures = [];
+    }
+
+    return propertyFailures;
   }
 
 }
