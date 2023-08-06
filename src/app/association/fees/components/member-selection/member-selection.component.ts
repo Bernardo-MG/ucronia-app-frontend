@@ -22,6 +22,8 @@ export class MemberSelectionComponent implements OnInit {
 
   @Output() public selectMember = new EventEmitter<Member>();
 
+  @Output() public cancelSelectMember = new EventEmitter<void>();
+
   @Output() public goToPage = new EventEmitter<number>();
 
   public ngOnInit(): void {
@@ -34,6 +36,10 @@ export class MemberSelectionComponent implements OnInit {
 
   public onGoToPage(page: number) {
     this.goToPage.emit(page);
+  }
+
+  public onCancelSelectMember() {
+    this.cancelSelectMember.emit();
   }
 
   public nameRenderer(member: Member) {
