@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountLayoutComponent } from './account/components/account-layout/account-layout.component';
-import { LoginComponent } from './core/authentication/components/login/login.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { CenteredFrameComponent } from './core/layout/components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 
+const loginModule = () => import('@app/login/login.module').then(m => m.LoginModule);
+const resetPasswordModule = () => import('@app/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
@@ -20,28 +20,23 @@ const routes: Routes = [
       {
         path: 'login',
         component: NavbarBodyComponent,
-        children: [
-          // Login
-          {
-            path: '',
-            component: CenteredFrameComponent,
-            canActivate: [LoggedOutGuard],
-            children: [
-              {
-                path: '', component: LoginComponent
-              }
-            ]
-          }
-        ]
+        canActivate: [LoggedOutGuard],
+        loadChildren: loginModule
+      },
+      {
+        path: 'password_reset',
+        component: NavbarBodyComponent,
+        canActivate: [LoggedOutGuard],
+        loadChildren: resetPasswordModule
       },
       {
         path: '',
         component: NavbarBodyComponent,
+        canActivate: [LoggedInGuard],
         children: [
           // Association
           {
             path: '',
-            canActivate: [LoggedInGuard],
             children: [
               // Front page
               { path: '', loadChildren: frontpageModule },
@@ -55,7 +50,6 @@ const routes: Routes = [
           {
             path: 'account',
             component: AccountLayoutComponent,
-            canActivate: [LoggedInGuard],
             children: [
               { path: '', loadChildren: accountModule }
             ]
