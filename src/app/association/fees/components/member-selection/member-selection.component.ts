@@ -8,6 +8,8 @@ import { Member } from '@app/association/models/member';
 })
 export class MemberSelectionComponent implements OnInit {
 
+  @Input() public waiting = false;
+
   @Input() public members: Member[] = [];
 
   /**
