@@ -27,8 +27,8 @@
   <!-- Member selection -->
   <ng-template #member_selection>
     <assoc-member-selection [waiting]="readingMembers" [members]="members" (selectMember)="onSelectMember($event)"
-      [current]="membersPage" [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)"
-      (cancelSelectMember)="onCancelSelectMember()">
+      (cancelSelectMember)="onCancelSelectMember()" [current]="membersPage" [pages]="membersTotalPages"
+      (goToPage)="onGoToMembersPage($event)">
     </assoc-member-selection>
   </ng-template>
 </layout-article>
