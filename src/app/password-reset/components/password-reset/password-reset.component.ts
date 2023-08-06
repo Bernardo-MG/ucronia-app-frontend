@@ -9,8 +9,6 @@ import { PasswordResetService } from '@app/password-reset/services/password-rese
 })
 export class PasswordResetComponent implements OnInit {
 
-  private token = '';
-
   public validToken = false;
 
   public changed = false;
@@ -19,6 +17,10 @@ export class PasswordResetComponent implements OnInit {
    * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
    */
   public loading = false;
+
+  public finished = false;
+
+  private token = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -34,18 +36,22 @@ export class PasswordResetComponent implements OnInit {
 
   public onPasswordReset(password: string): void {
     const reset = new PasswordReset();
-    reset.token = this.token;
     reset.password = password;
     this.loading = true;
-    this.service.resetPassword(reset).subscribe(r => {
+    this.finished = false;
+    this.service.resetPassword(this.token, reset).subscribe(r => {
       this.changed = true;
       this.loading = false;
+      this.finished = true;
     });
   }
 
   private load(token: string | null): void {
     if (token) {
-      this.service.validateResetPasswordToken(token).subscribe(r => this.validToken = r.content);
+      this.service.validateResetPasswordToken(token).subscribe(r => {
+        this.token = token;
+        this.validToken = r.content;
+      });
     }
   }
 

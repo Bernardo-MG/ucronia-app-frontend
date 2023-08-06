@@ -21,10 +21,10 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(this.passwordResetRequestUrl, request);
   }
 
-  public resetPassword(reset: PasswordReset): Observable<ApiResponse<void>> {
+  public resetPassword(token: string, reset: PasswordReset): Observable<ApiResponse<void>> {
     return this.http
       // Validate token request
-      .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${reset.token}`, reset);
+      .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset);
   }
 
   public validateResetPasswordToken(token: string): Observable<ApiResponse<boolean>> {
