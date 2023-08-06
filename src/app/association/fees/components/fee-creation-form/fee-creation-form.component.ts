@@ -1,23 +1,23 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Fee } from '@app/association/models/fee';
+import { FeePayment } from '@app/association/models/fee-payment';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'assoc-fee-form',
-  templateUrl: './fee-form.component.html'
+  templateUrl: './fee-creation-form.component.html'
 })
-export class FeeFormComponent implements OnInit, OnChanges {
+export class FeeCreationFormComponent implements OnInit, OnChanges {
 
   @Input() public readonly = false;
 
   @Input() public failures: { [key: string]: Failure[] } = {};
 
-  @Input() public data = new Fee();
+  @Input() public data = new FeePayment();
 
-  @Output() public save = new EventEmitter<Fee>();
+  @Output() public save = new EventEmitter<FeePayment>();
 
-  @Output() public valueChange = new EventEmitter<Fee>();
+  @Output() public valueChange = new EventEmitter<FeePayment>();
 
   @Output() public validityChange = new EventEmitter<boolean>();
 
@@ -29,8 +29,10 @@ export class FeeFormComponent implements OnInit, OnChanges {
     this.form = fb.group({
       id: [-1],
       memberId: [null, Validators.required],
-      date: [new Date(), Validators.required],
-      paid: [false, Validators.required]
+      paymentDate: [new Date(), Validators.required],
+      amount: [0, Validators.required],
+      description: ['', Validators.required],
+      feeDates: [[], Validators.required]
     });
   }
 

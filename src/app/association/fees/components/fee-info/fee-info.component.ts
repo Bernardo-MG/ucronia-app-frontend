@@ -3,8 +3,7 @@ import { Fee } from '@app/association/models/fee';
 
 @Component({
   selector: 'assoc-fee-info',
-  templateUrl: './fee-info.component.html',
-  styleUrls: ['./fee-info.component.sass']
+  templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {
 

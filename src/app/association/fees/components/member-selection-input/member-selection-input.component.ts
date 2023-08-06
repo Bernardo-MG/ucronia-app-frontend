@@ -4,8 +4,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-member-selection-input',
-  templateUrl: './member-selection-input.component.html',
-  styleUrls: ['./member-selection-input.component.sass']
+  templateUrl: './member-selection-input.component.html'
 })
 export class MemberSelectionInputComponent {
 
