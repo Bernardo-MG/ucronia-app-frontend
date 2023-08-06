@@ -76,8 +76,8 @@ export class PasswordResetFormComponent {
     return (c: AbstractControl): ValidationErrors | null => {
       if (c.parent) {
 
-        let password: any = c.parent.get('password');
-        let confirmPassword: any = c.parent.get('confirmPassword');
+        const password: any = c.parent.get('password');
+        const confirmPassword: any = c.parent.get('confirmPassword');
 
         return password.value !== confirmPassword.value ? { passwordMismatch: true } : null;
       }
