@@ -10,6 +10,24 @@ export class FormComponent<Data> implements OnInit {
 
   @Input() public readonly = false;
 
+  /**
+   * Waiting flag. Shows the waiting visual cue and disables the form.
+   */
+  private _waiting = false;
+
+  @Input() public set waiting(flag: boolean) {
+    this._waiting = flag;
+    if (this._waiting) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
+  }
+
+  public get waiting() {
+    return this._waiting;
+  }
+
   @Input() public failures: { [key: string]: Failure[] } = {};
 
   @Input() public set data(value: Data) {
@@ -40,7 +58,7 @@ export class FormComponent<Data> implements OnInit {
   }
 
   public onSave() {
-    this.save.emit();
+    this.save.emit(this.form.value);
   }
 
   /**
@@ -64,6 +82,10 @@ export class FormComponent<Data> implements OnInit {
     }
 
     return failures;
+  }
+
+  public isSaveDisabled() {
+    return ((!this.form.valid) || (this.waiting));
   }
 
   /**

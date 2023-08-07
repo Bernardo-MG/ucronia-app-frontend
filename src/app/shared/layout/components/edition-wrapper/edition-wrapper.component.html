@@ -18,15 +18,6 @@
 
       <!-- Content -->
       <ng-content select="#edit"></ng-content>
-
-      <!-- Save -->
-      <div class="row">
-        <!-- Save button -->
-        <div class="col-sm-2 d-grid gap-2">
-          <layout-waiting-button [waiting]="saving" [disabled]="isSaveDisabled()" name="Save"
-            (action)="onSave()"></layout-waiting-button>
-        </div>
-      </div>
     </div>
   </div>
 

@@ -26,10 +26,6 @@ export class MemberCreateComponent {
     private router: Router
   ) { }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(toSave: Member): void {
     this.data = toSave;
     this.saving = true;
