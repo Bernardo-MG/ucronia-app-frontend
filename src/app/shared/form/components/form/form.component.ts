@@ -24,7 +24,7 @@ export class FormComponent<Data> implements OnInit {
 
   constructor(
     public form: FormGroup<any>
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     // Listen for status changes
@@ -43,8 +43,14 @@ export class FormComponent<Data> implements OnInit {
     this.save.emit();
   }
 
+  /**
+   * Checks if the form field is invalid.
+   * 
+   * @param property property to check
+   * @returns true if the form is invalid, false otherwise
+   */
   public isFieldInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (property in this.failures);
+    return this.isFormFieldInvalid(property) || (property in this.failures);
   }
 
   public getFailures(property: string): Failure[] {
@@ -58,6 +64,37 @@ export class FormComponent<Data> implements OnInit {
     }
 
     return failures;
+  }
+
+  /**
+   * Checks if the form field is invalid.
+   * 
+   * @param property property to check
+   * @returns true if the form is invalid, false otherwise
+   */
+  private isFormFieldInvalid(property: string): boolean {
+    let invalid: boolean;
+
+    if (this.form.invalid) {
+      // Form invalid
+      // So this field may be invalid
+
+      const formField = this.form.get(property);
+      if (formField) {
+        // Check the field status
+        invalid = (formField?.dirty || formField?.touched) && (formField?.errors != null);
+      } else {
+        // Invalid property
+        // Can't be invalid
+        invalid = false;
+      }
+    } else {
+      // Form valid
+      // No field is invalid
+      invalid = false;
+    }
+
+    return invalid;
   }
 
 }
