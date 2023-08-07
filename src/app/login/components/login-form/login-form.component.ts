@@ -100,7 +100,7 @@ export class LoginFormComponent {
    * @param field field to check
    * @returns true if the form is invalid, false otherwise
    */
-  public isInvalid(field: string): boolean {
+  public isFieldInvalid(field: string): boolean {
     let invalid: boolean;
 
     if (this.form.invalid) {

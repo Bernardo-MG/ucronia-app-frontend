@@ -43,7 +43,7 @@ export class FormComponent<Data> implements OnInit {
     this.save.emit();
   }
 
-  public isInvalid(property: string): boolean {
+  public isFieldInvalid(property: string): boolean {
     return (this.form.get(property)?.invalid) || (property in this.failures);
   }
 

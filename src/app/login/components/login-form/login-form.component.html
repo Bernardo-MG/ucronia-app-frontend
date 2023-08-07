@@ -3,12 +3,12 @@
   <!-- Username -->
   <div class="mb-2">
     <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"
-      [ngClass]="{ 'is-invalid': isInvalid('username') }" />
+      [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" />
   </div>
   <!-- Password -->
   <div class="mb-2">
     <input placeholder="Password" type="password" id="passwordInput" formControlName="password" class="form-control"
-      [ngClass]="{ 'is-invalid': isInvalid('password') }" />
+      [ngClass]="{ 'is-invalid': isFieldInvalid('password') }" />
   </div>
   <!-- Remember me check -->
   <div class="row mb-2">

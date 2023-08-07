@@ -54,7 +54,7 @@ export class PasswordResetRequestFormComponent {
     }
   }
 
-  public isInvalid(property: string): boolean {
+  public isFieldInvalid(property: string): boolean {
     return (this.form.get(property)?.invalid) || (property in this.failures);
   }
 

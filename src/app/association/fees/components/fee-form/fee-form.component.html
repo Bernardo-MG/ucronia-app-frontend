@@ -4,7 +4,7 @@
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
       <input type="month" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('date') }" aria-describedby="dateLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
         {{failure.message}}
       </div>
@@ -13,7 +13,7 @@
   <!-- Paid -->
   <div class="col-sm-10 offset-sm-2">
     <input type="checkbox" id="paidInput" formControlName="paid" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isInvalid('paid') }" aria-describedby="paidLabel">
+      [ngClass]="{ 'is-invalid': isFieldInvalid('paid') }" aria-describedby="paidLabel">
     <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('paid')">
       {{failure.message}}

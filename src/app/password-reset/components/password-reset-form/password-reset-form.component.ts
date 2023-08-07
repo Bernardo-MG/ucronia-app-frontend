@@ -51,7 +51,7 @@ export class PasswordResetFormComponent {
    * @param field field to check
    * @returns true if the form is invalid, false otherwise
    */
-  public isInvalid(field: string): boolean {
+  public isFieldInvalid(field: string): boolean {
     let invalid: boolean;
 
     if (this.form.invalid) {
@@ -65,7 +65,7 @@ export class PasswordResetFormComponent {
       invalid = false;
     }
 
-    return invalid;
+    return this.form.get(property)?.invalid;
   }
 
   public isAbleToSubmit() {
