@@ -6,7 +6,7 @@
       <input type="month" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isInvalid('date') }" aria-describedby="dateLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
-        <span *ngIf="failure.field === 'date'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -16,7 +16,7 @@
       [ngClass]="{ 'is-invalid': isInvalid('paid') }" aria-describedby="paidLabel">
     <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('paid')">
-      <span *ngIf="failure.field === 'paid'">{{failure.message}}</span>
+      {{failure.message}}
     </div>
   </div>
 </form>
