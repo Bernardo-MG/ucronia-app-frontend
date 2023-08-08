@@ -25,8 +25,8 @@
   <div class="row mb-2">
     <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">Identifier</label>
     <div class="col-sm-10">
-      <input type="text" id="identifierInput" formControlName="identifier" [readonly]="readonly"
-        class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('identifier') }" aria-describedby="identifierLabel">
+      <input type="text" id="identifierInput" formControlName="identifier" [readonly]="readonly" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('identifier') }" aria-describedby="identifierLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('identifier')">
         {{failure.message}}
       </div>

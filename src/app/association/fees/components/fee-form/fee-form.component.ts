@@ -1,11 +1,9 @@
-import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { Dates } from './dates';
 
 @Component({
   selector: 'assoc-fee-form',
