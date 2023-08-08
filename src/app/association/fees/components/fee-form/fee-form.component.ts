@@ -58,4 +58,8 @@ export class FeeFormComponent extends FormComponent<Fee> {
     this.goToMembersPage.emit(page);
   }
 
+  public getMemberName() {
+    return this.member.name + ' ' + this.member.surname;
+  }
+
 }

@@ -15,7 +15,7 @@
         <label for="memberIdInput" id="memberIdLabel" class="col-sm-2 col-form-label">Member</label>
       </div>
       <div class="col-sm-7">
-        <input type="text" id="memberIdInput" formControlName="memberId" [readonly]="readonly" class="form-control"
+        <input type="text" id="memberIdInput" [value]="getMemberName()" [readonly]="readonly" class="form-control"
           [ngClass]="{ 'is-invalid': isFieldInvalid('memberId') }" aria-describedby="memberIdLabel">
       </div>
     </div>
