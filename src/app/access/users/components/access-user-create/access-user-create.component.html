@@ -4,13 +4,6 @@
       <!-- Form -->
       <access-user-form [failures]="failures" (save)="onSave($event)" (validityChange)="onValidityChange($event)">
       </access-user-form>
-      <!-- Save button -->
-      <div class="row">
-        <div class="col-sm-2 d-grid gap-2">
-          <layout-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
-            (action)="onSaveCurrent()"></layout-waiting-button>
-        </div>
-      </div>
     </div>
   </div>
 </layout-article>
