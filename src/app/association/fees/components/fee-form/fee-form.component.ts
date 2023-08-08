@@ -33,7 +33,7 @@ export class FeeFormComponent extends FormComponent<Fee> {
   ) {
     super(fb.group({
       id: [-1],
-      memberId: [null, Validators.required],
+      memberId: [null, [Validators.required, Validators.min(0)]],
       date: [new Date(), Validators.required],
       paid: [false, Validators.required]
     }));
