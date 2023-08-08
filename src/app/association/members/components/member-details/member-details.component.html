@@ -4,7 +4,7 @@
       [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
       <assoc-member-form id="edit" [waiting]="waiting" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-        (save)="onSave($event)" (validityChange)="onValidityChange($event)">
+        (save)="onSave($event)">
       </assoc-member-form>
       <!-- Info -->
       <assoc-member-info id="info" [data]="data"></assoc-member-info>

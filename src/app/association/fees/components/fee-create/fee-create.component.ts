@@ -16,8 +16,6 @@ export class FeeCreateComponent {
    */
   public saving = false;
 
-  public valid = false;
-
   public readingMembers = false;
 
   public selectingMember = false;
@@ -63,10 +61,6 @@ export class FeeCreateComponent {
     });
   }
 
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
   public onRequestMember() {
     this.selectingMember = true;
   }
@@ -89,10 +83,6 @@ export class FeeCreateComponent {
 
   public onCancelSelectMember() {
     this.selectingMember = false;
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }

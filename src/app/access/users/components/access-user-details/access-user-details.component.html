@@ -5,8 +5,7 @@
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
       [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
-      <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-        (validityChange)="onValidityChange($event)">
+      <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
       </access-user-form>
       <!-- Info -->
       <access-user-info id="info" [data]="data"></access-user-info>

@@ -39,12 +39,4 @@ export class EditionWrapperComponent {
     return !this.saving && this.deletable && !this.editing;
   }
 
-  public isSaveDisabled() {
-    return !this.editable || !this.editing || !this.isAbleToSave();
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
-  }
-
 }

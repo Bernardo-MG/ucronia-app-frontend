@@ -7,8 +7,7 @@
         <!-- Select member -->
         <assoc-member-selection-input [saving]="saving" [member]="member"
           (requestMember)="onRequestMember()"></assoc-member-selection-input>
-        <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-          (validityChange)="onValidityChange($event)">
+        <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
         </assoc-fee-form>
       </div>
       <!-- Info -->

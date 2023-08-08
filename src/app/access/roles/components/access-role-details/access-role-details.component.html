@@ -5,8 +5,7 @@
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
       [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
-      <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-        (validityChange)="onValidityChange($event)">
+      <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
       </access-role-form>
       <!-- Info -->
       <access-role-info id="info" [data]="data"></access-role-info>

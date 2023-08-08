@@ -6,7 +6,7 @@ import { Failure } from '@app/core/api/models/failure';
   selector: 'app-form',
   templateUrl: './form.component.html'
 })
-export class FormComponent<Data> implements OnInit {
+export class FormComponent<Data> {
 
   @Input() public readonly = false;
 
@@ -36,19 +36,9 @@ export class FormComponent<Data> implements OnInit {
 
   @Output() public save = new EventEmitter<Data>();
 
-  @Output() public validityChange = new EventEmitter<boolean>();
-
   constructor(
     public form: FormGroup<any>
   ) { }
-
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      const valid = (status === "VALID");
-      this.validityChange.emit(valid);
-    });
-  }
 
   public onSave() {
     this.save.emit(this.form.value);

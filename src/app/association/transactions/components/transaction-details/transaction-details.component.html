@@ -1,10 +1,10 @@
 <layout-article title="Edit transaction">
   <layout-waiting-wrapper [waiting]="waiting">
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-      [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
+      [deletable]="deletePermission" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
       <assoc-transaction-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-        (save)="onSave($event)" (validityChange)="onValidityChange($event)">
+        (save)="onSave($event)">
       </assoc-transaction-form>
       <!-- Info -->
       <assoc-transaction-info id="info" [data]="data"></assoc-transaction-info>
