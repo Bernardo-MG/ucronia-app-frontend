@@ -70,10 +70,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.onGoToMembersPage(0);
   }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(toSave: Fee): void {
     this.data = toSave;
     this.saving = true;

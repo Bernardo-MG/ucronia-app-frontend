@@ -48,10 +48,6 @@ export class TransactionDetailsComponent implements OnInit {
     });
   }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(data: Transaction): void {
     this.saving = true;
     this.service.update(data.id, data).subscribe({

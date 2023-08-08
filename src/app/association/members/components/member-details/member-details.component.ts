@@ -81,10 +81,6 @@ export class MemberDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onChange(changed: Member) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

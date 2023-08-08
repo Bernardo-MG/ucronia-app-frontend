@@ -60,10 +60,6 @@ export class AccessUserDetailsComponent implements OnInit {
     });
   }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(data: User): void {
     this.saving = true;
     this.service.create(data).subscribe({
