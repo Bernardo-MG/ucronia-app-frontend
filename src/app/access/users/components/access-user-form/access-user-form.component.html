@@ -6,7 +6,7 @@
       <input type="text" id="usernameInput" formControlName="username" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" aria-describedby="usernameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('username')">
-        <span *ngIf="failure.field === 'username'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
       <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
-        <span *ngIf="failure.field === 'name'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
       <input type="text" id="emailInput" formControlName="email" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('email') }" aria-describedby="emailLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('email')">
-        <span *ngIf="failure.field === 'email'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
       [ngClass]="{ 'is-invalid': isFieldInvalid('enabled') }" aria-describedby="enabledLabel">
     <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('enabled')">
-      <span *ngIf="failure.field === 'enabled'">{{failure.message}}</span>
+      {{failure.message}}
     </div>
   </div>
 </form>

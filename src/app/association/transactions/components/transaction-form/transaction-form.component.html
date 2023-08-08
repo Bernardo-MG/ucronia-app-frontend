@@ -6,7 +6,7 @@
         <input type="text" id="descriptionInput" formControlName="description" [readonly]="readonly" class="form-control"
           [ngClass]="{ 'is-invalid': isFieldInvalid('description') }" aria-describedby="descriptionLabel">
         <div class="invalid-feedback" *ngFor="let failure of getFailures('description')">
-          <span *ngIf="failure.field === 'description'">{{failure.message}}</span>
+          {{failure.message}}
         </div>
       </div>
     </div>
@@ -17,7 +17,7 @@
         <input type="date" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
           [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
         <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
-          <span *ngIf="failure.field === 'date'">{{failure.message}}</span>
+          {{failure.message}}
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
         <input type="number" step="any" id="amountInput" formControlName="amount" [readonly]="readonly"
           class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }" aria-describedby="amountLabel">
         <div class="invalid-feedback" *ngFor="let failure of getFailures('amount')">
-          <span *ngIf="failure.field === 'amount'">{{failure.message}}</span>
+          {{failure.message}}
         </div>
       </div>
     </div>

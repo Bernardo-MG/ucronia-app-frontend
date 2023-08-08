@@ -6,7 +6,7 @@
       <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
-        <span *ngIf="failure.field === 'name'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -17,7 +17,7 @@
       <input type="text" id="surnameInput" formControlName="surname" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('surname') }" aria-describedby="surnameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('surname')">
-        <span *ngIf="failure.field === 'surname'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
       <input type="text" id="identifierInput" formControlName="identifier" [readonly]="readonly"
         class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('identifier') }" aria-describedby="identifierLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('identifier')">
-        <span *ngIf="failure.field === 'identifier'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
       <input type="text" id="phoneInput" formControlName="phone" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('phone') }" aria-describedby="phoneLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('phone')">
-        <span *ngIf="failure.field === 'phone'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@
       [ngClass]="{ 'is-invalid': isFieldInvalid('active') }" aria-describedby="activeLabel">
     <label for="activeInput" id="activeLabel" class="form-check-label ps-1">Active</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('active')">
-      <span *ngIf="failure.field === 'active'">{{failure.message}}</span>
+      {{failure.message}}
     </div>
   </div>
   <!-- Save button -->
