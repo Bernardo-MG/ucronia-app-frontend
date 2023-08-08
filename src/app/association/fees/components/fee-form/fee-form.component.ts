@@ -1,9 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { Dates } from './dates';
 
 @Component({
   selector: 'assoc-fee-form',
@@ -28,13 +30,20 @@ export class FeeFormComponent extends FormComponent<Fee> {
 
   public searchIcon = faMagnifyingGlass;
 
+  private getCurrentYearAndMonth(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    return `${year}-${month}`;
+  }
+
   constructor(
     fb: FormBuilder
   ) {
     super(fb.group({
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
-      date: [new Date(), Validators.required],
+      date: [null, Validators.required],
       paid: [false, Validators.required]
     }));
   }

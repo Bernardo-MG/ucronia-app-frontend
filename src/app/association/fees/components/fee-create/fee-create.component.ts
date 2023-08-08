@@ -30,8 +30,6 @@ export class FeeCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new Fee();
-
   public memberId = 0;
 
   constructor(
@@ -39,10 +37,9 @@ export class FeeCreateComponent {
     private router: Router
   ) { }
 
-  public onSave(toSave: Fee): void {
-    this.data = toSave;
+  public onSave(data: Fee): void {
     this.saving = true;
-    this.service.create(this.data).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/fees/${d.id}`]);
         this.failures = {};
@@ -61,16 +58,6 @@ export class FeeCreateComponent {
     });
   }
 
-  public onRequestMember() {
-    this.selectingMember = true;
-  }
-
-  public onSelectMember(member: Member) {
-    this.member = member;
-    this.data = { ...this.data, memberId: member.id };
-    this.selectingMember = false;
-  }
-
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
     this.service.getMembers(page).subscribe(response => {
@@ -79,10 +66,6 @@ export class FeeCreateComponent {
       this.membersTotalPages = response.totalPages;
       this.readingMembers = false;
     });
-  }
-
-  public onCancelSelectMember() {
-    this.selectingMember = false;
   }
 
 }

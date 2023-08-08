@@ -1,11 +1,11 @@
 <layout-article title="Create fee">
-    <div class="card">
-      <div class="card-body">
-        <!-- Form -->
-        <assoc-fee-form [members]="members" [waitingMembers]="readingMembers" [waiting]="saving" [data]="data"
-          [failures]="failures" [membersPage]="membersPage" [membersTotalPages]="membersTotalPages"
-          (save)="onSave($event)" (goToMembersPage)="onGoToMembersPage($event)">
-        </assoc-fee-form>
-      </div>
+  <div class="card">
+    <div class="card-body">
+      <!-- Form -->
+      <assoc-fee-form [members]="members" [waitingMembers]="readingMembers" [waiting]="saving" [failures]="failures"
+        [membersPage]="membersPage" [membersTotalPages]="membersTotalPages" (save)="onSave($event)"
+        (goToMembersPage)="onGoToMembersPage($event)">
+      </assoc-fee-form>
     </div>
+  </div>
 </layout-article>
