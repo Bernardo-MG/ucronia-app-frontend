@@ -19,17 +19,14 @@ export class MemberCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new Member();
-
   constructor(
     private service: MemberService,
     private router: Router
   ) { }
 
-  public onSave(toSave: Member): void {
-    this.data = toSave;
+  public onSave(data: Member): void {
     this.saving = true;
-    this.service.create(this.data).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
         this.failures = {};

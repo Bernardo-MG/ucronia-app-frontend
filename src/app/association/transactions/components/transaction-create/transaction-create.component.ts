@@ -19,16 +19,10 @@ export class TransactionCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new Transaction();
-
   constructor(
     private service: TransactionService,
     private router: Router
   ) { }
-
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
 
   public onSave(data: Transaction): void {
     this.saving = true;
