@@ -96,10 +96,6 @@ export class AccessUserDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onChange(changed: User) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

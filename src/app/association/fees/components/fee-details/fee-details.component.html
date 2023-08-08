@@ -9,7 +9,7 @@
         <assoc-member-selection-input [saving]="saving" [member]="member"
           (requestMember)="onRequestMember()"></assoc-member-selection-input>
         <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-          (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+          (validityChange)="onValidityChange($event)">
         </assoc-fee-form>
       </div>
       <!-- Info -->

@@ -48,10 +48,6 @@ export class MemberCreateComponent {
     });
   }
 
-  public onChange(changed: Member) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

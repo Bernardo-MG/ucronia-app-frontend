@@ -116,10 +116,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.editing = true;
   }
 
-  public onChange(changed: Fee) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

@@ -84,10 +84,6 @@ export class TransactionDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onChange(changed: Transaction) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

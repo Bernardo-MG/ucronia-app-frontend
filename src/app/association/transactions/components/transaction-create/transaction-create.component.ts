@@ -51,10 +51,6 @@ export class TransactionCreateComponent {
     });
   }
 
-  public onChange(changed: Transaction) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

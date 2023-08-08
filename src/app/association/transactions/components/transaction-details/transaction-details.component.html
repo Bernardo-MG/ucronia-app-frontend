@@ -5,7 +5,7 @@
       (save)="onSaveCurrent()">
       <!-- Form -->
       <assoc-transaction-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-        (save)="onSave($event)" (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+        (save)="onSave($event)" (validityChange)="onValidityChange($event)">
       </assoc-transaction-form>
       <!-- Info -->
       <assoc-transaction-info id="info" [data]="data"></assoc-transaction-info>

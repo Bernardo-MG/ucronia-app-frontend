@@ -7,7 +7,7 @@
       (save)="onSaveCurrent()">
       <!-- Form -->
       <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-        (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+        (validityChange)="onValidityChange($event)">
       </access-user-form>
       <!-- Info -->
       <access-user-info id="info" [data]="data"></access-user-info>

@@ -7,7 +7,7 @@
       (save)="onSaveCurrent()">
       <!-- Form -->
       <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-        (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+        (validityChange)="onValidityChange($event)">
       </access-role-form>
       <!-- Info -->
       <access-role-info id="info" [data]="data"></access-role-info>

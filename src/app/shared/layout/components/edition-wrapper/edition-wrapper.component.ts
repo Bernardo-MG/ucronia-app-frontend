@@ -23,18 +23,12 @@ export class EditionWrapperComponent {
 
   @Output() public delete = new EventEmitter<void>();
 
-  @Output() public save = new EventEmitter<void>();
-
   public onStartEditing(): void {
     this.edit.emit();
   }
 
   public onDelete(): void {
     this.delete.emit();
-  }
-
-  public onSave(): void {
-    this.save.emit();
   }
 
   public isAbleToEdit() {

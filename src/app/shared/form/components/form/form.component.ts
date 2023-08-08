@@ -36,8 +36,6 @@ export class FormComponent<Data> implements OnInit {
 
   @Output() public save = new EventEmitter<Data>();
 
-  @Output() public valueChange = new EventEmitter<Data>();
-
   @Output() public validityChange = new EventEmitter<boolean>();
 
   constructor(
@@ -49,11 +47,6 @@ export class FormComponent<Data> implements OnInit {
     this.form.statusChanges.subscribe(status => {
       const valid = (status === "VALID");
       this.validityChange.emit(valid);
-    });
-
-    // Listen for value changes
-    this.form.valueChanges.subscribe(data => {
-      this.valueChange.emit(data);
     });
   }
 
@@ -85,7 +78,7 @@ export class FormComponent<Data> implements OnInit {
   }
 
   public isSaveDisabled() {
-    return ((!this.form.valid) || (this.waiting));
+    return ((!this.form.valid) || (this.waiting) || (this.readonly));
   }
 
   /**

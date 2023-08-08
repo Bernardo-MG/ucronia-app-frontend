@@ -67,10 +67,6 @@ export class FeeCreateComponent {
     });
   }
 
-  public onChange(changed: Fee) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }
