@@ -6,7 +6,7 @@
       <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
-        <span *ngIf="failure.field === 'name'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
