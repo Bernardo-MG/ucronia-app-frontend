@@ -4,9 +4,6 @@
       [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
       <div id="edit">
-        <!-- Select member -->
-        <assoc-member-selection-input [saving]="saving" [member]="member"
-          (requestMember)="onRequestMember()"></assoc-member-selection-input>
         <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
         </assoc-fee-form>
       </div>
