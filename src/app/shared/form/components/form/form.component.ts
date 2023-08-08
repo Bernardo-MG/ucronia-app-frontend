@@ -34,6 +34,10 @@ export class FormComponent<Data> {
     this.form.patchValue(value as any);
   }
 
+  public get data() {
+    return this.form.value;
+  }
+
   @Output() public save = new EventEmitter<Data>();
 
   constructor(
