@@ -40,6 +40,9 @@ export class FormComponent<Data> {
     public form: FormGroup<any>
   ) { }
 
+  /**
+   * Handler for the save event.
+   */
   public onSave() {
     this.save.emit(this.form.value);
   }
@@ -54,6 +57,12 @@ export class FormComponent<Data> {
     return this.isFormFieldInvalid(property) || (property in this.failures);
   }
 
+  /**
+   * Returns the failures for a property.
+   * 
+   * @param property property to search for failures
+   * @returns failures for the property
+   */
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
@@ -67,6 +76,11 @@ export class FormComponent<Data> {
     return failures;
   }
 
+  /**
+   * Returns if the save action is disabled.
+   * 
+   * @returns true of the save action is disabled, false otherwise
+   */
   public isSaveDisabled() {
     return ((!this.form.valid) || (this.waiting) || (this.readonly));
   }
