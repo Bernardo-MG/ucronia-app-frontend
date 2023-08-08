@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './form.component';
 
 describe('FormComponent', () => {
@@ -14,9 +14,6 @@ describe('FormComponent', () => {
       ],
       declarations: [
         FormComponent
-      ],
-      providers: [
-        FormGroup
       ]
     })
       .compileComponents();
