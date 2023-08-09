@@ -75,10 +75,6 @@ export class AccessRoleDetailsComponent implements OnInit {
     });
   }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(data: Role): void {
     this.saving = true;
     this.service.create(data).subscribe({
@@ -109,10 +105,6 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
-  }
-
-  public onChange(changed: Role) {
-    this.data = changed;
   }
 
   public onValidityChange(valid: boolean) {

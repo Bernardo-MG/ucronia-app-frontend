@@ -16,8 +16,6 @@ export class TransactionDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public valid = false;
-
   public editing = false;
 
   public waiting = false;
@@ -46,10 +44,6 @@ export class TransactionDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-  }
-
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
   }
 
   public onSave(data: Transaction): void {
@@ -82,14 +76,6 @@ export class TransactionDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
-  }
-
-  public onChange(changed: Transaction) {
-    this.data = changed;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
   }
 
   private load(id: string | null): void {

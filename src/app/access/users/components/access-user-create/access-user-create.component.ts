@@ -53,10 +53,6 @@ export class AccessUserCreateComponent {
     });
   }
 
-  public onChange(changed: User) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

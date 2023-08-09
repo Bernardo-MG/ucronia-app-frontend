@@ -4,9 +4,9 @@
     <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Username</label>
     <div class="col-sm-10">
       <input type="text" id="usernameInput" formControlName="username" [readonly]="readonly" class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('username') }" aria-describedby="usernameLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('username') }" aria-describedby="usernameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('username')">
-        <span *ngIf="failure.field === 'username'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -15,9 +15,9 @@
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
       <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('name') }" aria-describedby="nameLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
-        <span *ngIf="failure.field === 'name'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
@@ -26,19 +26,26 @@
     <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
       <input type="text" id="emailInput" formControlName="email" [readonly]="readonly" class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('email') }" aria-describedby="emailLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('email') }" aria-describedby="emailLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('email')">
-        <span *ngIf="failure.field === 'email'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
     </div>
   </div>
   <!-- Enabled -->
   <div class="col-sm-10 offset-sm-2">
     <input type="checkbox" id="enabledInput" formControlName="enabled" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isInvalid('enabled') }" aria-describedby="enabledLabel">
+      [ngClass]="{ 'is-invalid': isFieldInvalid('enabled') }" aria-describedby="enabledLabel">
     <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('enabled')">
-      <span *ngIf="failure.field === 'enabled'">{{failure.message}}</span>
+      {{failure.message}}
+    </div>
+  </div>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
     </div>
   </div>
 </form>

@@ -52,10 +52,6 @@ export class AccessRoleCreateComponent {
     });
   }
 
-  public onChange(changed: Role) {
-    this.data = changed;
-  }
-
   public onValidityChange(valid: boolean) {
     this.valid = valid;
   }

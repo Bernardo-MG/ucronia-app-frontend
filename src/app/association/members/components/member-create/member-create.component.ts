@@ -19,21 +19,14 @@ export class MemberCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new Member();
-
   constructor(
     private service: MemberService,
     private router: Router
   ) { }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
-  public onSave(toSave: Member): void {
-    this.data = toSave;
+  public onSave(data: Member): void {
     this.saving = true;
-    this.service.create(this.data).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/members/${d.id}`]);
         this.failures = {};
@@ -50,10 +43,6 @@ export class MemberCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onChange(changed: Member) {
-    this.data = changed;
   }
 
   public onValidityChange(valid: boolean) {
