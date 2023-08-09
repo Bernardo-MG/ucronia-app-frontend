@@ -12,7 +12,9 @@ export class AccessUserFormComponent extends FormComponent<User> {
   constructor(
     fb: FormBuilder
   ) {
-    super(fb.group({
+    super();
+
+    this.form = fb.group({
       id: [null],
       username: ['', Validators.required],
       name: [''],
@@ -21,7 +23,7 @@ export class AccessUserFormComponent extends FormComponent<User> {
       enabled: [true, Validators.required],
       expired: [true, Validators.required],
       locked: [true, Validators.required]
-    }));
+    });
   }
 
 }

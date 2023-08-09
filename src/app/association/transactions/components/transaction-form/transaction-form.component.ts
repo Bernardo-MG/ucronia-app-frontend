@@ -12,12 +12,14 @@ export class TransactionFormComponent extends FormComponent<Transaction> {
   constructor(
     fb: FormBuilder
   ) {
-    super(fb.group({
+    super();
+
+    this.form = fb.group({
       id: [-1],
       description: ['', Validators.required],
       date: [null, Validators.required],
       amount: [0, Validators.required]
-    }));
+    });
   }
 
 }

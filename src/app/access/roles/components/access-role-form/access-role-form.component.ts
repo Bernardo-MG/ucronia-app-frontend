@@ -12,10 +12,12 @@ export class AccessRoleFormComponent extends FormComponent<Role> {
   constructor(
     fb: FormBuilder
   ) {
-    super(fb.group({
+    super();
+
+    this.form = fb.group({
       id: [null],
       name: ['', Validators.required]
-    }));
+    });
   }
 
 }

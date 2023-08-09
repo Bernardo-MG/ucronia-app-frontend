@@ -38,12 +38,14 @@ export class FeeFormComponent extends FormComponent<Fee> {
   constructor(
     fb: FormBuilder
   ) {
-    super(fb.group({
+    super();
+
+    this.form = fb.group({
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
       date: [null, Validators.required],
       paid: [false, Validators.required]
-    }));
+    });
   }
 
   public onSelectMember(member: Member) {

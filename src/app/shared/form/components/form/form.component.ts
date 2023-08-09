@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
@@ -39,10 +38,8 @@ export class FormComponent<Data> {
   }
 
   @Output() public save = new EventEmitter<Data>();
-
-  constructor(
-    public form: FormGroup<any>
-  ) { }
+  
+  public form: any;
 
   /**
    * Handler for the save event.

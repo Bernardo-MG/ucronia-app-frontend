@@ -12,14 +12,16 @@ export class MemberFormComponent extends FormComponent<Member> {
   constructor(
     fb: FormBuilder
   ) {
-    super(fb.group({
+    super();
+
+    this.form = fb.group({
       id: [null],
       name: ['', Validators.required],
       surname: [''],
       identifier: [''],
       phone: [''],
       active: [true, Validators.required]
-    }));
+    });
   }
 
 }
