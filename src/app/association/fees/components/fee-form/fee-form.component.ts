@@ -27,13 +27,6 @@ export class FeeFormComponent extends FormComponent<Fee> {
 
   public searchIcon = faMagnifyingGlass;
 
-  private getCurrentYearAndMonth(): string {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    return `${year}-${month}`;
-  }
-
   constructor(
     fb: FormBuilder
   ) {
@@ -42,8 +35,10 @@ export class FeeFormComponent extends FormComponent<Fee> {
     this.form = fb.group({
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
-      date: [null, Validators.required],
-      paid: [false, Validators.required]
+      paymentDate: [null, Validators.required],
+      dates: [[], Validators.required],
+      amount: [0, Validators.required],
+      description: ['', Validators.required]
     });
   }
 
