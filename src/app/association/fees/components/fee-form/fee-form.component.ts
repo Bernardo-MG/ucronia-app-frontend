@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
@@ -28,7 +28,7 @@ export class FeeFormComponent extends FormComponent<Fee> {
   public searchIcon = faMagnifyingGlass;
 
   constructor(
-    fb: FormBuilder
+    private fb: FormBuilder
   ) {
     super();
 
@@ -36,7 +36,7 @@ export class FeeFormComponent extends FormComponent<Fee> {
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
       paymentDate: [null, Validators.required],
-      dates: [[], Validators.required],
+      dates: fb.array([], Validators.required),
       amount: [0, Validators.required],
       description: ['', Validators.required]
     });
@@ -63,6 +63,11 @@ export class FeeFormComponent extends FormComponent<Fee> {
 
   public getMemberName() {
     return this.member.name + ' ' + this.member.surname;
+  }
+
+  public addDate() {
+    const dates = this.form.get('dates') as FormArray;
+    dates.push(this.fb.control('')); // Add an empty FormControl for the new date
   }
 
 }
