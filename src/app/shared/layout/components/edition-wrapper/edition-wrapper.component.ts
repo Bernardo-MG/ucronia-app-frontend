@@ -23,8 +23,6 @@ export class EditionWrapperComponent {
 
   @Output() public delete = new EventEmitter<void>();
 
-  @Output() public save = new EventEmitter<void>();
-
   public onStartEditing(): void {
     this.edit.emit();
   }
@@ -33,24 +31,12 @@ export class EditionWrapperComponent {
     this.delete.emit();
   }
 
-  public onSave(): void {
-    this.save.emit();
-  }
-
   public isAbleToEdit() {
     return !this.saving && this.editable && this.editing;
   }
 
   public isAbleToDelete() {
     return !this.saving && this.deletable && !this.editing;
-  }
-
-  public isSaveDisabled() {
-    return !this.editable || !this.editing || !this.isAbleToSave();
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }

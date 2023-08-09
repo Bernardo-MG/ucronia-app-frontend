@@ -48,10 +48,6 @@ export class MemberDetailsComponent implements OnInit {
     });
   }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
   public onSave(toSave: Member): void {
     this.data = toSave;
     this.saving = true;
@@ -83,10 +79,6 @@ export class MemberDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
-  }
-
-  public onChange(changed: Member) {
-    this.data = changed;
   }
 
   public onValidityChange(valid: boolean) {

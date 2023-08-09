@@ -1,78 +1,74 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
-import { Failure } from '@app/core/api/models/failure';
+import { Member } from '@app/association/models/member';
+import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-form',
   templateUrl: './fee-form.component.html',
   styleUrls: ['./fee-form.component.sass']
 })
-export class FeeFormComponent implements OnInit, OnChanges {
+export class FeeFormComponent extends FormComponent<Fee> {
 
-  @Input() public readonly = false;
+  @Input() public waitingMembers = false;
 
-  @Input() public failures: { [key: string]: Failure[] } = {};
+  @Input() public members: Member[] = [];
 
-  @Input() public data = new Fee();
+  @Input() public membersPage = 0;
 
-  @Output() public save = new EventEmitter<Fee>();
+  @Input() public membersTotalPages = 0;
 
-  @Output() public valueChange = new EventEmitter<Fee>();
+  @Output() public goToMembersPage = new EventEmitter<number>();
 
-  @Output() public validityChange = new EventEmitter<boolean>();
+  public selectingMember = false;
 
-  public form: FormGroup;
+  public member = new Member();
+
+  public searchIcon = faMagnifyingGlass;
+
+  private getCurrentYearAndMonth(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    return `${year}-${month}`;
+  }
 
   constructor(
     fb: FormBuilder
   ) {
+    super();
+
     this.form = fb.group({
       id: [-1],
-      memberId: [null, Validators.required],
-      date: [new Date(), Validators.required],
+      memberId: [null, [Validators.required, Validators.min(0)]],
+      date: [null, Validators.required],
       paid: [false, Validators.required]
     });
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      this.form.patchValue(this.data);
-    }
+  public onSelectMember(member: Member) {
+    this.member = member;
+    this.data = { ...this.data, memberId: member.id };
+    this.selectingMember = false;
   }
 
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      const valid = (status === "VALID");
-      this.validityChange.emit(valid);
-    });
-
-    // Listen for value changes
-    this.form.valueChanges.subscribe(data => {
-      this.valueChange.emit(data);
-    });
+  public onStartSelectingMember() {
+    this.onGoToMembersPage(0);
+    this.selectingMember = true;
   }
 
-  public onSave() {
-    this.save.emit();
+  public onCancelSelectMember() {
+    this.selectingMember = false;
   }
 
-  public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (property in this.failures);
+  public onGoToMembersPage(page: number) {
+    this.goToMembersPage.emit(page);
   }
 
-  public getFailures(property: string): Failure[] {
-    let failures: Failure[];
-
-    const found = this.failures[property];
-    if (found) {
-      failures = (found as Failure[]);
-    } else {
-      failures = [];
-    }
-
-    return failures;
+  public getMemberName() {
+    return this.member.name + ' ' + this.member.surname;
   }
 
 }
