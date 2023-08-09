@@ -15,7 +15,7 @@
         <label for="memberIdInput" class="col-form-label">Member</label>
       </div>
       <div class="col-sm-7">
-        <input type="text" id="memberIdInput" [value]="member.name + ' ' + member.surname" [readonly]="readonly"
+        <input type="text" id="memberIdInput" [value]="member.name + ' ' + member.surname" readonly="true"
           class="form-control" [class.is-invalid]="form.get('memberId').invalid" aria-describedby="memberIdLabel">
       </div>
     </div>
