@@ -70,4 +70,13 @@ export class FeeFormComponent extends FormComponent<Fee> {
     return this.member.name + ' ' + this.member.surname;
   }
 
+  /**
+   * Returns if the search action is disabled.
+   * 
+   * @returns true of the search action is disabled, false otherwise
+   */
+  public isSearchDisabled() {
+    return ((this.waiting) || (this.readonly));
+  }
+
 }

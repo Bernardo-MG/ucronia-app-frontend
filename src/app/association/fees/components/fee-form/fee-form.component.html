@@ -6,7 +6,7 @@
     <div class="row">
       <!-- Select member button -->
       <div class="col-sm-1">
-        <button type="button" class="btn" aria-label="Search" [disabled]="waiting" (click)="onStartSelectingMember()">
+        <button type="button" class="btn" aria-label="Search" [disabled]="isSearchDisabled()" (click)="onStartSelectingMember()">
           <fa-icon [icon]="searchIcon"></fa-icon>
         </button>
       </div>
