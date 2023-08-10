@@ -23,18 +23,18 @@
     <div class="row mb-2">
       <label class="col-sm-2 col-form-label">Months and Years</label>
       <div class="col-sm-10">
-        <div *ngFor="let date of form.get('dates').controls; let i = index" class="row">
-          <div class="col-md-12 mb-2">
-            <input type="month" [id]="'monthYearInput_' + i" formControlName="{{ i }}" class="form-control"
+        <div *ngFor="let date of form.get('feeDates').controls; let i = index" class="row">
+          <div class="col-md-6 mb-2">
+            <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
                    [readonly]="readonly">
           </div>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <button type="button" class="btn btn-secondary" (click)="addDate()">Add date</button>
+            <button type="button" class="btn btn-secondary" (click)="addDate()">Add Date</button>
           </div>
         </div>
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('dates')">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('feeDates')">
           {{failure.message}}
         </div>
       </div>

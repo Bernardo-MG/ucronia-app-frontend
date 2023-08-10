@@ -36,7 +36,7 @@ export class FeeFormComponent extends FormComponent<Fee> {
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
       paymentDate: [null, Validators.required],
-      dates: fb.array([], Validators.required),
+      feeDates: fb.array([], Validators.required),
       amount: [0, Validators.required],
       description: ['', Validators.required]
     });
@@ -66,8 +66,8 @@ export class FeeFormComponent extends FormComponent<Fee> {
   }
 
   public addDate() {
-    const dates = this.form.get('dates') as FormArray;
-    dates.push(this.fb.control('')); // Add an empty FormControl for the new date
+    const dates = this.form.get('feeDates') as FormArray;
+    dates.push(this.fb.control(''));
   }
 
 }
