@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCreationFormComponent } from './fee-creation-form.component';
 
 describe('FeeCreationFormComponent', () => {
@@ -9,7 +11,9 @@ describe('FeeCreationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FontAwesomeModule,
+        LayoutModule
       ],
       declarations: [
         FeeCreationFormComponent
