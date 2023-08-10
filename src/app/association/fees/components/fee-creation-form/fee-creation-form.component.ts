@@ -1,79 +1,73 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FeePayment } from '@app/association/models/fee-payment';
-import { Failure } from '@app/core/api/models/failure';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Fee } from '@app/association/models/fee';
+import { Member } from '@app/association/models/member';
+import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-creation-form',
   templateUrl: './fee-creation-form.component.html'
 })
-export class FeeCreationFormComponent implements OnInit, OnChanges {
+export class FeeCreationFormComponent extends FormComponent<Fee> {
 
-  @Input() public readonly = false;
+  @Input() public waitingMembers = false;
 
-  @Input() public failures: { [key: string]: Failure[] } = {};
+  @Input() public members: Member[] = [];
 
-  @Input() public data = new FeePayment();
+  @Input() public membersPage = 0;
 
-  @Output() public save = new EventEmitter<FeePayment>();
+  @Input() public membersTotalPages = 0;
 
-  @Output() public valueChange = new EventEmitter<FeePayment>();
+  @Output() public goToMembersPage = new EventEmitter<number>();
 
-  @Output() public validityChange = new EventEmitter<boolean>();
+  public selectingMember = false;
 
-  public form: FormGroup;
+  public member = new Member();
+
+  public searchIcon = faMagnifyingGlass;
 
   constructor(
-    fb: FormBuilder
+    private fb: FormBuilder
   ) {
+    super();
+
     this.form = fb.group({
       id: [-1],
-      memberId: [null, Validators.required],
-      paymentDate: [new Date(), Validators.required],
+      memberId: [null, [Validators.required, Validators.min(0)]],
+      paymentDate: [null, Validators.required],
+      feeDates: fb.array([], Validators.required),
       amount: [0, Validators.required],
-      description: ['', Validators.required],
-      feeDates: [[], Validators.required]
+      description: ['', Validators.required]
     });
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      this.form.patchValue(this.data);
-    }
+  public onSelectMember(member: Member) {
+    this.member = member;
+    this.data = { ...this.data, memberId: member.id };
+    this.selectingMember = false;
   }
 
-  public ngOnInit(): void {
-    // Listen for status changes
-    this.form.statusChanges.subscribe(status => {
-      const valid = (status === "VALID");
-      this.validityChange.emit(valid);
-    });
-
-    // Listen for value changes
-    this.form.valueChanges.subscribe(data => {
-      this.valueChange.emit(data);
-    });
+  public onStartSelectingMember() {
+    this.onGoToMembersPage(0);
+    this.selectingMember = true;
   }
 
-  public onSave() {
-    this.save.emit();
+  public onCancelSelectMember() {
+    this.selectingMember = false;
   }
 
-  public isInvalid(property: string): boolean {
-    return (this.form.get(property)?.invalid) || (property in this.failures);
+  public onGoToMembersPage(page: number) {
+    this.goToMembersPage.emit(page);
   }
 
-  public getFailures(property: string): Failure[] {
-    let failures: Failure[];
+  public getMemberName() {
+    return this.member.name + ' ' + this.member.surname;
+  }
 
-    const found = this.failures[property];
-    if (found) {
-      failures = (found as Failure[]);
-    } else {
-      failures = [];
-    }
-
-    return failures;
+  public addDate() {
+    const dates = this.form.get('feeDates') as FormArray;
+    dates.push(this.fb.control(''));
   }
 
 }

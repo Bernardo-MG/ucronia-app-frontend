@@ -1,5 +1,5 @@
 <div *ngIf="selectingMember; then member_selection else fee_form"></div>
-
+<!-- Fee form -->
 <ng-template #fee_form>
   <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
     <!-- Select member -->
@@ -12,84 +12,50 @@
       </div>
       <!-- Selected member -->
       <div class="col-sm-4">
-        <label for="memberIdInput" class="col-form-label">Member</label>
+        <label for="memberIdInput" id="memberIdLabel" class="col-sm-2 col-form-label">Member</label>
       </div>
       <div class="col-sm-7">
-        <input type="text" id="memberIdInput" [value]="member.name + ' ' + member.surname" readonly="true"
-          class="form-control" [class.is-invalid]="form.get('memberId').invalid" aria-describedby="memberIdLabel">
+        <input type="text" id="memberIdInput" [value]="getMemberName()" [readonly]="readonly" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('memberId') }" aria-describedby="memberIdLabel">
       </div>
     </div>
-    <!-- Dates (Months and Years) -->
+    <!-- Date -->
     <div class="row mb-2">
-      <label class="col-sm-2 col-form-label">Months and Years</label>
+      <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
       <div class="col-sm-10">
-        <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
-          <div class="col-md-6 mb-2">
-            <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
-                   [readonly]="readonly">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <button type="button" class="btn btn-secondary" (click)="addDate()">Add Date</button>
-          </div>
-        </div>
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('feeDates')">
+        <input type="month" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
           {{failure.message}}
         </div>
       </div>
     </div>
-    <!-- Payment date -->
-    <div class="row mb-2">
-      <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Payment date</label>
-      <div class="col-sm-10">
-        <input type="date" id="paymentDateInput" formControlName="paymentDate" [readonly]="readonly"
-          class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('paymentDate') }"
-          aria-describedby="paymentDateLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('paymentDate')">
-          {{failure.message}}
-        </div>
-      </div>
-    </div>
-    <!-- Amount -->
-    <div class="row mb-2">
-      <label for="amountInput" class="col-sm-2 col-form-label">Amount</label>
-      <div class="col-sm-10">
-        <input type="number" id="amountInput" formControlName="amount" [readonly]="readonly" class="form-control"
-          [class.is-invalid]="form.get('amount').invalid" aria-describedby="amountLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('amount')">
-          {{failure.message}}
-        </div>
-      </div>
-    </div>
-    <!-- Description -->
+    <!-- Paid -->
     <div class="row">
-      <label for="descriptionInput" class="col-sm-2 col-form-label">Description</label>
-      <div class="col-sm-10">
-        <input type="text" id="descriptionInput" formControlName="description" [readonly]="readonly"
-          class="form-control" [class.is-invalid]="form.get('description').invalid" aria-describedby="descriptionLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('description')">
+      <div class="col-sm-10 offset-sm-2">
+        <input type="checkbox" id="paidInput" formControlName="paid" [readonly]="readonly" class="form-check-input"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('paid') }" aria-describedby="paidLabel">
+        <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('paid')">
           {{failure.message}}
         </div>
       </div>
     </div>
-
     <!-- Save button -->
     <div class="row">
       <div class="col-sm-2 d-grid gap-2">
-        <!-- Save button -->
         <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
           (action)="onSave()"></layout-waiting-button>
       </div>
     </div>
   </form>
 </ng-template>
-
+<!-- Member selection -->
 <ng-template #member_selection>
   <layout-waiting-wrapper [waiting]="waitingMembers">
-    <!-- Member selection component -->
     <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
-      [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)" (cancelSelectMember)="onCancelSelectMember()">
+      [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
     </assoc-member-selection>
+    <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
   </layout-waiting-wrapper>
 </ng-template>
