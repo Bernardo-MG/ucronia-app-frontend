@@ -23,7 +23,7 @@
     <div class="row mb-2">
       <label class="col-sm-2 col-form-label">Months and Years</label>
       <div class="col-sm-10">
-        <div *ngFor="let date of form.get('feeDates').controls; let i = index" class="row">
+        <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
           <div class="col-md-6 mb-2">
             <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
                    [readonly]="readonly">
