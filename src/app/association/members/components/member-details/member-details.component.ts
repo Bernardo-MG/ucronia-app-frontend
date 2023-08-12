@@ -16,8 +16,6 @@ export class MemberDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public valid = false;
-
   public editing = false;
 
   public editPermission = false;
@@ -79,10 +77,6 @@ export class MemberDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
   }
 
   private load(id: string | null): void {

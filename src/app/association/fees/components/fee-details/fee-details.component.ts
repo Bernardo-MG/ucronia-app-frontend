@@ -19,8 +19,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public readingMembers = false;
 
-  public valid = false;
-
   public editing = false;
 
   public editPermission = false;
@@ -110,10 +108,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public onStartEditing(): void {
     this.editing = true;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
   }
 
   public onGoToMembersPage(page: number) {
