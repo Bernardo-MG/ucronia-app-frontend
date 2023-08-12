@@ -129,10 +129,15 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
-          this.waiting = false;
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+          }
         });
     }
   }
