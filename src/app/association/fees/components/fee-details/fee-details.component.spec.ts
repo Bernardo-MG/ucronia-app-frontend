@@ -8,7 +8,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeFormComponent } from '../../components/fee-form/fee-form.component';
 import { FeeInfoComponent } from '../../components/fee-info/fee-info.component';
-import { MemberSelectionInputComponent } from '../../components/member-selection-input/member-selection-input.component';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeDetailsComponent } from './fee-details.component';
@@ -36,7 +35,6 @@ describe('FeeDetailsComponent', () => {
       declarations: [
         FeeDetailsComponent,
         MemberSelectionComponent,
-        MemberSelectionInputComponent,
         FeeFormComponent,
         FeeInfoComponent
       ],

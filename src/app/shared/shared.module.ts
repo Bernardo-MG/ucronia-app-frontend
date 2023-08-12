@@ -5,6 +5,7 @@ import { IconsModule } from './icons/icons.module';
 import { LayoutModule } from './layout/layout.module';
 import { MenuModule } from './menu/menu.module';
 import { PaginationModule } from './pagination/pagination.module';
+import { FormModule } from './form/form.module';
 
 
 
@@ -15,7 +16,8 @@ import { PaginationModule } from './pagination/pagination.module';
     PaginationModule,
     CalendarModule,
     MenuModule,
-    LayoutModule
+    LayoutModule,
+    FormModule
   ],
   exports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { PaginationModule } from './pagination/pagination.module';
     PaginationModule,
     CalendarModule,
     MenuModule,
-    LayoutModule
+    LayoutModule,
+    FormModule
   ]
 })
 export class SharedModule { }

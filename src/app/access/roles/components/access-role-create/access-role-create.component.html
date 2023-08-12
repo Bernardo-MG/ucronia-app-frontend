@@ -2,16 +2,8 @@
   <div class="card">
     <div class="card-body">
       <!-- Form -->
-      <access-role-form [failures]="failures" (save)="onSave($event)" (valueChange)="onChange($event)"
-        (validityChange)="onValidityChange($event)">
+      <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
       </access-role-form>
-      <!-- Save button -->
-      <div class="row">
-        <div class="col-sm-2 d-grid gap-2">
-          <layout-waiting-button [waiting]="saving" [disabled]="!isAbleToSave()" name="Save"
-            (action)="onSaveCurrent()"></layout-waiting-button>
-        </div>
-      </div>
     </div>
   </div>
 </layout-article>

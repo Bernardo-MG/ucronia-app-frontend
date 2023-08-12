@@ -47,7 +47,7 @@ export class FeeListComponent implements OnInit {
     // Check permissions
     this.createPermission = this.authService.hasPermission("fee", "create");
 
-    this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Pay date', property: 'date' }, { name: 'Paid', property: 'paid' }];
+    this.header = [{ name: 'Name', property: 'name' }, { name: 'Pay date', property: 'date' }, { name: 'Paid', property: 'paid' }];
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
@@ -63,7 +63,7 @@ export class FeeListComponent implements OnInit {
         this.rows = fees.map(f => {
           return {
             id: f.id,
-            cells: [f.name, f.surname, f.date, f.paid]
+            cells: [f.memberName, f.date, f.paid]
           };
         });
 

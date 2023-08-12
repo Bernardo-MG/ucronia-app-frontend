@@ -15,20 +15,12 @@ export class TransactionCreateComponent {
    */
   public saving = false;
 
-  public valid = false;
-
   public failures: { [key: string]: Failure[] } = {};
-
-  public data = new Transaction();
 
   constructor(
     private service: TransactionService,
     private router: Router
   ) { }
-
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
 
   public onSave(data: Transaction): void {
     this.saving = true;
@@ -49,18 +41,6 @@ export class TransactionCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onChange(changed: Transaction) {
-    this.data = changed;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }

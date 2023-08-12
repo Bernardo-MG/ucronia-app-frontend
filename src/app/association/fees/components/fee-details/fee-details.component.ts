@@ -19,8 +19,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public readingMembers = false;
 
-  public valid = false;
-
   public editing = false;
 
   public editPermission = false;
@@ -28,6 +26,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   public deletePermission = false;
 
   public waiting = false;
+
+  public error = false;
 
   public members: Member[] = [];
 
@@ -68,10 +68,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
     // Get members
     this.onGoToMembersPage(0);
-  }
-
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
   }
 
   public onSave(toSave: Fee): void {
@@ -116,14 +112,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.editing = true;
   }
 
-  public onChange(changed: Fee) {
-    this.data = changed;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
   public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
@@ -137,10 +125,16 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
-          this.waiting = false;
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+            this.error = true;
+          }
         });
     }
   }
@@ -150,7 +144,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

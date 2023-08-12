@@ -1,15 +1,10 @@
 <layout-article title="Edit fee">
   <layout-waiting-wrapper [waiting]="waiting">
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-      [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()"
-      (save)="onSaveCurrent()">
+      [deletable]="deletePermission" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
       <div id="edit">
-        <!-- Select member -->
-        <assoc-member-selection-input [saving]="saving" [member]="member"
-          (requestMember)="onRequestMember()"></assoc-member-selection-input>
-        <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)"
-          (valueChange)="onChange($event)" (validityChange)="onValidityChange($event)">
+        <assoc-fee-form [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
         </assoc-fee-form>
       </div>
       <!-- Info -->

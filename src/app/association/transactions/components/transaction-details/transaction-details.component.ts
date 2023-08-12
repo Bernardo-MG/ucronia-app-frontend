@@ -16,8 +16,6 @@ export class TransactionDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public valid = false;
-
   public editing = false;
 
   public waiting = false;
@@ -25,6 +23,8 @@ export class TransactionDetailsComponent implements OnInit {
   public editPermission = false;
 
   public deletePermission = false;
+
+  public error = false;
 
   public data = new Transaction();
 
@@ -46,10 +46,6 @@ export class TransactionDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-  }
-
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
   }
 
   public onSave(data: Transaction): void {
@@ -84,28 +80,26 @@ export class TransactionDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onChange(changed: Transaction) {
-    this.data = changed;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
   private load(id: string | null): void {
     if (id) {
       this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
+      .subscribe({
+        next: d => {
           this.data = d;
           this.waiting = false;
-        });
+        },
+        error: error => {
+          this.waiting = false;
+          this.error = true;
+        }
+      });
     }
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

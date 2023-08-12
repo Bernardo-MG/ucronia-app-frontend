@@ -4,10 +4,17 @@
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
       <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
-        [ngClass]="{ 'is-invalid': isInvalid('name') }" aria-describedby="nameLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
-        <span *ngIf="failure.field === 'name'">{{failure.message}}</span>
+        {{failure.message}}
       </div>
+    </div>
+  </div>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
     </div>
   </div>
 </form>

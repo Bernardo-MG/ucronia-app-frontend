@@ -15,8 +15,6 @@ export class AccessRoleCreateComponent {
    */
   public saving = false;
 
-  public valid = false;
-
   public failures: { [key: string]: Failure[] } = {};
 
   public data = new Role();
@@ -50,18 +48,6 @@ export class AccessRoleCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onChange(changed: Role) {
-    this.data = changed;
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }
