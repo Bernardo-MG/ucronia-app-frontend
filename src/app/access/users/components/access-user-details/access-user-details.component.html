@@ -4,7 +4,7 @@
   <div class="mb-1">
     <layout-waiting-wrapper [waiting]="waiting">
       <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-        [deletable]="deletePermission" [readonly]="!isEditable()" (delete)="onDelete()" (edit)="onStartEditing()">
+        [deletable]="deletePermission" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
         <!-- Form -->
         <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
           (save)="onSave($event)">
