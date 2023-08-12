@@ -24,6 +24,8 @@ export class TransactionDetailsComponent implements OnInit {
 
   public deletePermission = false;
 
+  public error = false;
+
   public data = new Transaction();
 
   public failures: { [key: string]: Failure[] } = {};
@@ -83,15 +85,21 @@ export class TransactionDetailsComponent implements OnInit {
       this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
+      .subscribe({
+        next: d => {
           this.data = d;
           this.waiting = false;
-        });
+        },
+        error: error => {
+          this.waiting = false;
+          this.error = true;
+        }
+      });
     }
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

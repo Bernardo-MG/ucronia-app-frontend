@@ -17,6 +17,8 @@ export class EditionWrapperComponent {
 
   @Input() public deletable = false;
 
+  @Input() public readonly = false;
+
   @Output() public edit = new EventEmitter<void>();
 
   @Output() public delete = new EventEmitter<void>();
@@ -30,11 +32,11 @@ export class EditionWrapperComponent {
   }
 
   public isAbleToEdit() {
-    return !this.saving && this.editable && this.editing;
+    return (!this.readonly) && !this.saving && this.editable && this.editing;
   }
 
   public isAbleToDelete() {
-    return !this.saving && this.deletable && !this.editing;
+    return (!this.readonly) && !this.saving && this.deletable && !this.editing;
   }
 
 }

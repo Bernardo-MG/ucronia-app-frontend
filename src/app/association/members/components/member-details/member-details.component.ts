@@ -24,6 +24,8 @@ export class MemberDetailsComponent implements OnInit {
 
   public waiting = false;
 
+  public error = false;
+
   public data = new Member();
 
   public failures: { [key: string]: Failure[] } = {};
@@ -84,15 +86,21 @@ export class MemberDetailsComponent implements OnInit {
       this.waiting = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.waiting = false;
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+            this.error = true;
+          }
         });
     }
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

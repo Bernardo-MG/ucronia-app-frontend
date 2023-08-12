@@ -31,6 +31,8 @@ export class AccessRoleDetailsComponent implements OnInit {
    */
   public waiting = false;
 
+  public error = false;
+
   public waitingPermissions = false;
 
   public waitingActionsSelection = false;
@@ -167,9 +169,16 @@ export class AccessRoleDetailsComponent implements OnInit {
     if (id) {
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.onGoToPermissionPage(0);
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.onGoToPermissionPage(0);
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+            this.error = true;
+          }
         });
     }
   }
@@ -179,7 +188,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

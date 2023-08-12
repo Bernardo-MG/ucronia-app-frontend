@@ -27,6 +27,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public waiting = false;
 
+  public error = false;
+
   public members: Member[] = [];
 
   public member = new Member();
@@ -131,6 +133,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
           },
           error: error => {
             this.waiting = false;
+            this.error = true;
           }
         });
     }
@@ -141,7 +144,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }
