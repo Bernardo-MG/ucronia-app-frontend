@@ -17,8 +17,6 @@ export class EditionWrapperComponent {
 
   @Input() public deletable = false;
 
-  @Input() public valid = false;
-
   @Output() public edit = new EventEmitter<void>();
 
   @Output() public delete = new EventEmitter<void>();

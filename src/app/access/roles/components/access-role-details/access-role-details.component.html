@@ -3,7 +3,7 @@
   <!-- Role -->
   <div class="mb-1">
     <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-      [deletable]="deletePermission" [valid]="valid" (delete)="onDelete()" (edit)="onStartEditing()">
+      [deletable]="deletePermission" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
       <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures" (save)="onSave($event)">
       </access-role-form>
