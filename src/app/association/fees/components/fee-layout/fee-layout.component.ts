@@ -3,8 +3,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'app-fee-layout',
-  templateUrl: './fee-layout.component.html',
-  styleUrls: ['./fee-layout.component.sass']
+  templateUrl: './fee-layout.component.html'
 })
 export class FeeLayoutComponent {
 

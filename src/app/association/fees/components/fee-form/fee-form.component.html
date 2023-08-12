@@ -1,61 +1,41 @@
-<div *ngIf="selectingMember; then member_selection else fee_form"></div>
-<!-- Fee form -->
-<ng-template #fee_form>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-    <!-- Select member -->
-    <div class="row">
-      <!-- Select member button -->
-      <div class="col-sm-1">
-        <button type="button" class="btn" aria-label="Search" [disabled]="waiting" (click)="onStartSelectingMember()">
-          <fa-icon [icon]="searchIcon"></fa-icon>
-        </button>
-      </div>
-      <!-- Selected member -->
-      <div class="col-sm-4">
-        <label for="memberIdInput" id="memberIdLabel" class="col-sm-2 col-form-label">Member</label>
-      </div>
-      <div class="col-sm-7">
-        <input type="text" id="memberIdInput" [value]="getMemberName()" [readonly]="readonly" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('memberId') }" aria-describedby="memberIdLabel">
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Member -->
+  <div class="row">
+    <div class="col-sm-4">
+      <label for="memberNameInput" id="memberNameLabel" class="col-sm-2 col-form-label">Member</label>
+    </div>
+    <div class="col-sm-7">
+      <input type="text" id="memberNameInput" formControlName="memberName" readonly="true" class="form-control"
+        aria-describedby="memberNameLabel">
+    </div>
+  </div>
+  <!-- Date -->
+  <div class="row mb-2">
+    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="month" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
+        {{failure.message}}
       </div>
     </div>
-    <!-- Date -->
-    <div class="row mb-2">
-      <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
-      <div class="col-sm-10">
-        <input type="month" id="dateInput" formControlName="date" [readonly]="readonly" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
-          {{failure.message}}
-        </div>
+  </div>
+  <!-- Paid -->
+  <div class="row">
+    <div class="col-sm-10 offset-sm-2">
+      <input type="checkbox" id="paidInput" formControlName="paid" [readonly]="readonly" class="form-check-input"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('paid') }" aria-describedby="paidLabel">
+      <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('paid')">
+        {{failure.message}}
       </div>
     </div>
-    <!-- Paid -->
-    <div class="row">
-      <div class="col-sm-10 offset-sm-2">
-        <input type="checkbox" id="paidInput" formControlName="paid" [readonly]="readonly" class="form-check-input"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('paid') }" aria-describedby="paidLabel">
-        <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('paid')">
-          {{failure.message}}
-        </div>
-      </div>
+  </div>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
     </div>
-    <!-- Save button -->
-    <div class="row">
-      <div class="col-sm-2 d-grid gap-2">
-        <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
-          (action)="onSave()"></layout-waiting-button>
-      </div>
-    </div>
-  </form>
-</ng-template>
-<!-- Member selection -->
-<ng-template #member_selection>
-  <layout-waiting-wrapper [waiting]="waitingMembers">
-    <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
-      [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
-    </assoc-member-selection>
-    <button type="button" class="btn btn-primary" (click)="onCancelSelectMember()" aria-label="Cancel">Cancel</button>
-  </layout-waiting-wrapper>
-</ng-template>
+  </div>
+</form>

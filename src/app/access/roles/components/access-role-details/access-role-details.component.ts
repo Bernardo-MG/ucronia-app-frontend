@@ -20,8 +20,6 @@ export class AccessRoleDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public valid = false;
-
   public editing = false;
 
   public editPermission = false;
@@ -32,6 +30,8 @@ export class AccessRoleDetailsComponent implements OnInit {
    * Loading flag.
    */
   public waiting = false;
+
+  public error = false;
 
   public waitingPermissions = false;
 
@@ -107,10 +107,6 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
   public onFormValidChange(valid: boolean): void {
     this.formValid = valid;
   }
@@ -173,9 +169,16 @@ export class AccessRoleDetailsComponent implements OnInit {
     if (id) {
       const identifier = Number(id);
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.onGoToPermissionPage(0);
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.onGoToPermissionPage(0);
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+            this.error = true;
+          }
         });
     }
   }
@@ -185,7 +188,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

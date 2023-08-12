@@ -18,13 +18,15 @@ export class AccessUserDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public valid = false;
-
   public editing = false;
 
   public editPermission = false;
 
   public deletePermission = false;
+
+  public waiting = false;
+
+  public error = false;
 
   public failures: { [key: string]: Failure[] } = {};
 
@@ -92,10 +94,6 @@ export class AccessUserDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
   public onFormValidChange(valid: boolean): void {
     this.formValid = valid;
   }
@@ -131,16 +129,24 @@ export class AccessUserDetailsComponent implements OnInit {
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
+      this.waiting = true;
       this.service.getOne(identifier)
-        .subscribe(d => {
-          this.data = d;
-          this.onGoToRolePage(0);
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.onGoToRolePage(0);
+            this.waiting = false;
+          },
+          error: error => {
+            this.waiting = false;
+            this.error = true;
+          }
         });
     }
   }
 
   public isEditable() {
-    return this.editPermission && this.editing;
+    return this.editPermission && this.editing && (!this.error);
   }
 
 }

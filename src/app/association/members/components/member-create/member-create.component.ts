@@ -15,8 +15,6 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public valid = false;
-
   public failures: { [key: string]: Failure[] } = {};
 
   constructor(
@@ -43,14 +41,6 @@ export class MemberCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }

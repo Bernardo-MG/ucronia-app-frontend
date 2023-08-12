@@ -16,8 +16,6 @@ export class AccessUserCreateComponent {
    */
   public saving = false;
 
-  public valid = false;
-
   public failures: { [key: string]: Failure[] } = {};
 
   public data = new User();
@@ -51,14 +49,6 @@ export class AccessUserCreateComponent {
         this.saving = false;
       }
     });
-  }
-
-  public onValidityChange(valid: boolean) {
-    this.valid = valid;
-  }
-
-  public isAbleToSave() {
-    return ((this.valid) && (!this.saving));
   }
 
 }
