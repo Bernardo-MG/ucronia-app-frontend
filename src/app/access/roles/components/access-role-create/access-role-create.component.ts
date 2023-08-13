@@ -17,21 +17,14 @@ export class AccessRoleCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new Role();
-
   constructor(
     private service: AccessRoleService,
     private router: Router
   ) { }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
-  public onSave(toSave: Role): void {
-    this.data = toSave;
+  public onSave(data: Role): void {
     this.saving = true;
-    this.service.create(this.data).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/security/roles/${d.id}`]);
         this.failures = {};

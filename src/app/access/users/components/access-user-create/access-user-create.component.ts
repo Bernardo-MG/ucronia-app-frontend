@@ -18,21 +18,14 @@ export class AccessUserCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public data = new User();
-
   constructor(
     private service: AccessUserService,
     private router: Router
   ) { }
 
-  public onSaveCurrent(): void {
-    this.onSave(this.data);
-  }
-
-  public onSave(toSave: User): void {
-    this.data = toSave;
+  public onSave(data: User): void {
     this.saving = true;
-    this.service.create(this.data).subscribe({
+    this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/security/users/${d.id}`]);
         this.failures = {};
