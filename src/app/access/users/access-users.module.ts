@@ -8,6 +8,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserRoutingModule } from './access-users-routing.module';
 import { AccessUserCreateComponent } from './components/access-user-create/access-user-create.component';
+import { AccessUserCreationFormComponent } from './components/access-user-creation-form/access-user-creation-form.component';
 import { AccessUserDetailsComponent } from './components/access-user-details/access-user-details.component';
 import { AccessUserFormComponent } from './components/access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from './components/access-user-info/access-user-info.component';
@@ -21,6 +22,7 @@ import { AccessUserService } from './services/access-user.service';
 @NgModule({
   declarations: [
     AccessUserFormComponent,
+    AccessUserCreationFormComponent,
     AccessUserCreateComponent,
     AccessUserDetailsComponent,
     AccessUserListComponent,

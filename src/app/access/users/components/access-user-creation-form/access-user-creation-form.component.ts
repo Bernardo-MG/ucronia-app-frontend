@@ -4,10 +4,10 @@ import { User } from '@app/core/authentication/models/user';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'access-user-form',
-  templateUrl: './access-user-form.component.html'
+  selector: 'access-user-creation-form',
+  templateUrl: './access-user-creation-form.component.html'
 })
-export class AccessUserFormComponent extends FormComponent<User> {
+export class AccessUserCreationFormComponent extends FormComponent<User> {
 
   constructor(
     fb: FormBuilder
@@ -15,14 +15,9 @@ export class AccessUserFormComponent extends FormComponent<User> {
     super();
 
     this.form = fb.group({
-      id: [null],
       username: ['', Validators.required],
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      credentialsExpired: [true, Validators.required],
-      enabled: [true, Validators.required],
-      expired: [true, Validators.required],
-      locked: [true, Validators.required]
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
