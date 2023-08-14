@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'login-password-reset-form',
-  templateUrl: './password-reset-form.component.html'
+  selector: 'access-user-activate-user-form',
+  templateUrl: './access-user-activate-user-form.component.html'
 })
-export class PasswordResetFormComponent extends FormComponent<string> {
+export class AccessUserActivateUserFormComponent extends FormComponent<string> {
 
   constructor(
     private formBuilder: FormBuilder
@@ -33,4 +33,3 @@ export class PasswordResetFormComponent extends FormComponent<string> {
   }
 
 }
-

@@ -24,7 +24,7 @@ const routes: Routes = [
         loadChildren: loginModule
       },
       {
-        path: 'password_reset',
+        path: 'password/reset',
         component: NavbarBodyComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule

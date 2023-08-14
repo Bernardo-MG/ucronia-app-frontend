@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PasswordReset } from '@app/password-reset/models/password-reset';
-import { PasswordResetService } from '@app/password-reset/services/password-reset.service';
+import { UserActivate } from '../../models/user-activate';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'login-password-reset',
-  templateUrl: './password-reset.component.html'
+  selector: 'access-user-activate-user',
+  templateUrl: './access-user-activate-user.component.html',
+  styleUrls: ['./access-user-activate-user.component.sass']
 })
-export class PasswordResetComponent implements OnInit {
+export class AccessUserActivateUserComponent implements OnInit {
 
   public validToken = false;
 
@@ -24,7 +25,7 @@ export class PasswordResetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: PasswordResetService
+    private service: AccessUserService
   ) { }
 
   public ngOnInit(): void {
@@ -34,12 +35,12 @@ export class PasswordResetComponent implements OnInit {
     });
   }
 
-  public onPasswordReset(password: string): void {
-    const reset = new PasswordReset();
+  public onUserActivate(password: string): void {
+    const reset = new UserActivate();
     reset.password = password;
     this.loading = true;
     this.finished = false;
-    this.service.resetPassword(this.token, reset).subscribe(r => {
+    this.service.activateUser(this.token, reset).subscribe(r => {
       this.changed = true;
       this.loading = false;
       this.finished = true;
@@ -49,7 +50,7 @@ export class PasswordResetComponent implements OnInit {
   private load(token: string | null): void {
     if (token) {
       this.token = token;
-      this.service.validateResetPasswordToken(token).subscribe(r => {
+      this.service.validateActivateUserToken(token).subscribe(r => {
         this.validToken = r.content;
       });
     }
