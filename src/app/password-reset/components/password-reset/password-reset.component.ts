@@ -11,13 +11,6 @@ export class PasswordResetComponent implements OnInit {
 
   public validToken = false;
 
-  public changed = false;
-
-  /**
-   * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
-   */
-  public loading = false;
-
   public finished = false;
 
   private token = '';
@@ -37,12 +30,13 @@ export class PasswordResetComponent implements OnInit {
   public onPasswordReset(password: string): void {
     const reset = new PasswordReset();
     reset.password = password;
-    this.loading = true;
     this.finished = false;
-    this.service.resetPassword(this.token, reset).subscribe(r => {
-      this.changed = true;
-      this.loading = false;
-      this.finished = true;
+    this.service.resetPassword(this.token, reset).subscribe({
+      next: d => {
+        this.finished = true;
+      },
+      error: error => {
+      }
     });
   }
 
