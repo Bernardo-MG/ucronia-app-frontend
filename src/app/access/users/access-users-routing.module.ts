@@ -8,7 +8,7 @@ import { AccessUserActivateUserComponent } from './components/access-user-activa
 
 const routes: Routes = [
     { path: '', component: AccessUserListComponent },
-    { path: 'activate:token', component: AccessUserActivateUserComponent },
+    { path: 'activate/:token', component: AccessUserActivateUserComponent },
     { path: 'create', component: AccessUserCreateComponent },
     { path: ':id', component: AccessUserDetailsComponent }
 ];
