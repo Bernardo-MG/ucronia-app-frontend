@@ -99,7 +99,7 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public onDelete(): void {
     this.service.delete(this.data.id).subscribe(r => {
-      this.router.navigate([`/security/roles`]);
+      this.router.navigate([`/roles`]);
     });
   }
 

@@ -26,7 +26,7 @@ export class AccessRoleCreateComponent {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.router.navigate([`/security/roles/${d.id}`]);
+        this.router.navigate([`/roles/${d.id}`]);
         this.failures = {};
         // Reactivate view
         this.saving = false;

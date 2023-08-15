@@ -33,8 +33,8 @@ export class LayoutService {
     }
 
     const securityLinks = this.filterNodes([
-      { title: 'Users', path: '/security/users', resource: 'user', action: 'read' },
-      { title: 'Roles', path: '/security/roles', resource: 'role', action: 'read' }
+      { title: 'Users', path: '/users', resource: 'user', action: 'read' },
+      { title: 'Roles', path: '/roles', resource: 'role', action: 'read' }
     ]);
 
     if (securityLinks.length > 0) {
