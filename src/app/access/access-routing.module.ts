@@ -4,7 +4,6 @@ import { PaddedFrameComponent } from '@app/core/layout/components/padded-frame/p
 
 const roleModule = () => import('./roles/access-roles.module').then(m => m.AccessRolesModule);
 const userModule = () => import('./users/access-users.module').then(m => m.AccessUsersModule);
-const registerModule = () => import('./register/access-register.module').then(m => m.AccessRegisterModule);
 
 const routes: Routes = [
   {
@@ -12,8 +11,7 @@ const routes: Routes = [
     component: PaddedFrameComponent,
     children: [
       { path: 'roles', loadChildren: roleModule },
-      { path: 'users', loadChildren: userModule },
-      { path: 'register', loadChildren: registerModule }
+      { path: 'users', loadChildren: userModule }
     ]
   }
 ];
