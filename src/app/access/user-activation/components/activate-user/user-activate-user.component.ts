@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserActivate } from '../../models/user-activate';
-import { AccessUserActivateService } from '../services/user-activate.service';
+import { AccessUserActivateService } from '../../services/user-activate.service';
 
 @Component({
   selector: 'access-user-activate-user',
