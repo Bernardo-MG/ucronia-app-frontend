@@ -6,13 +6,13 @@ import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 
 const loginModule = () => import('@app/login/login.module').then(m => m.LoginModule);
-const resetPasswordModule = () => import('@app/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
 const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
 const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
+const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 
 const routes: Routes = [
   // Main app

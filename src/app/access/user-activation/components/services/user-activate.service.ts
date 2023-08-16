@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PasswordReset } from '@app/access/password-reset/models/password-reset';
 import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { PasswordReset } from '@app/password-reset/models/password-reset';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 

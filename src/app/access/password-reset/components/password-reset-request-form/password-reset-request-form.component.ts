@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Failure } from '@app/core/api/models/failure';
-import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
+import { PasswordResetRequest } from '../../models/password-reset-request';
 
 @Component({
   selector: 'login-password-reset-request-form',

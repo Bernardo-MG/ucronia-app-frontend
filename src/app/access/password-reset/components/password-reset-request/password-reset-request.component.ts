@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
-import { PasswordResetRequest } from '@app/password-reset/models/password-reset-request';
-import { PasswordResetService } from '@app/password-reset/services/password-reset.service';
 import { Observable, catchError, of } from 'rxjs';
+import { PasswordResetRequest } from '../../models/password-reset-request';
+import { PasswordResetService } from '../../services/password-reset.service';
 
 @Component({
   selector: 'login-password-reset-request',

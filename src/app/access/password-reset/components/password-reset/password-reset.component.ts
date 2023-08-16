@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PasswordReset } from '@app/password-reset/models/password-reset';
-import { PasswordResetService } from '@app/password-reset/services/password-reset.service';
+import { PasswordReset } from '../../models/password-reset';
+import { PasswordResetService } from '../../services/password-reset.service';
 
 @Component({
   selector: 'login-password-reset',
