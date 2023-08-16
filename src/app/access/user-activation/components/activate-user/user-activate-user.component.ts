@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserActivate } from '../../models/user-activate';
-import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserActivateService } from '../services/user-activate.service';
 
 @Component({
   selector: 'access-user-activate-user',
-  templateUrl: './access-user-activate-user.component.html',
-  styleUrls: ['./access-user-activate-user.component.sass']
+  templateUrl: './user-activate-user.component.html'
 })
-export class AccessUserActivateUserComponent implements OnInit {
+export class UserActivateUserComponent implements OnInit {
 
   public validToken = false;
 
@@ -18,7 +17,7 @@ export class AccessUserActivateUserComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: AccessUserService
+    private service: AccessUserActivateService
   ) { }
 
   public ngOnInit(): void {

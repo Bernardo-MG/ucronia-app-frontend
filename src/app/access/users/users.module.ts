@@ -6,8 +6,6 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccessUserActivateUserFormComponent } from './components/access-user-activate-user-form/access-user-activate-user-form.component';
-import { AccessUserActivateUserComponent } from './components/access-user-activate-user/access-user-activate-user.component';
 import { AccessUserCreateComponent } from './components/access-user-create/access-user-create.component';
 import { AccessUserCreationFormComponent } from './components/access-user-creation-form/access-user-creation-form.component';
 import { AccessUserDetailsComponent } from './components/access-user-details/access-user-details.component';
@@ -30,9 +28,7 @@ import { UserRoutingModule } from './users-routing.module';
     AccessUserListComponent,
     AccessUserRoleFormComponent,
     AccessUserRoleSelectionComponent,
-    AccessUserInfoComponent,
-    AccessUserActivateUserComponent,
-    AccessUserActivateUserFormComponent
+    AccessUserInfoComponent
   ],
   imports: [
     CommonModule,

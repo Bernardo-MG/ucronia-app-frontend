@@ -12,7 +12,7 @@ const associationModule = () => import('@app/association/association.module').th
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
 const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
-const activateUserModule = () => import('@app/user-activation/user-activation.module').then(m => m.UserActivationModule);
+const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
 
 const routes: Routes = [
   // Main app

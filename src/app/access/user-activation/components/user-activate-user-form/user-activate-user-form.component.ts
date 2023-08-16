@@ -4,9 +4,9 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
   selector: 'access-user-activate-user-form',
-  templateUrl: './access-user-activate-user-form.component.html'
+  templateUrl: './user-activate-user-form.component.html'
 })
-export class AccessUserActivateUserFormComponent extends FormComponent<string> {
+export class UserActivateUserFormComponent extends FormComponent<string> {
 
   constructor(
     private formBuilder: FormBuilder
