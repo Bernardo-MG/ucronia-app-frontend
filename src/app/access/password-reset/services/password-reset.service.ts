@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { PasswordReset } from '../models/password-reset';
 import { PasswordResetRequest } from '../models/password-reset-request';
+import { TokenStatus } from '@app/access/models/token-status';
 
 @Injectable()
 export class PasswordResetService {
@@ -27,10 +28,10 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset);
   }
 
-  public validateResetPasswordToken(token: string): Observable<ApiResponse<boolean>> {
+  public validateResetPasswordToken(token: string): Observable<ApiResponse<TokenStatus>> {
     return this.http
       // Validate token request
-      .get<ApiResponse<boolean>>(`${this.passwordResetRequestUrl}/${token}`);
+      .get<ApiResponse<TokenStatus>>(`${this.passwordResetRequestUrl}/${token}`);
   }
 
 }

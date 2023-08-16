@@ -41,7 +41,7 @@ export class UserActivateUserComponent implements OnInit {
     if (token) {
       this.token = token;
       this.service.validateActivateUserToken(token).subscribe(r => {
-        if(!r.content){
+        if(!r.content.valid){
           this.status = 'invalid_token';
         }
       });

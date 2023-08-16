@@ -41,7 +41,7 @@ export class PasswordResetComponent implements OnInit {
     if (token) {
       this.token = token;
       this.service.validateResetPasswordToken(token).subscribe(r => {
-        if (!r.content) {
+        if (!r.content.valid) {
           this.status = 'invalid_token';
         }
       });
