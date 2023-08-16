@@ -9,9 +9,7 @@ import { AccessUserActivateService } from '../services/user-activate.service';
 })
 export class UserActivateUserComponent implements OnInit {
 
-  public validToken = false;
-
-  public finished = false;
+  public status = 'valid_token';
 
   private token = '';
 
@@ -30,10 +28,9 @@ export class UserActivateUserComponent implements OnInit {
   public onUserActivate(password: string): void {
     const reset = new UserActivate();
     reset.password = password;
-    this.finished = false;
     this.service.activateUser(this.token, reset).subscribe({
       next: d => {
-        this.finished = true;
+        this.status = 'finished';
       },
       error: error => {
       }
@@ -44,7 +41,9 @@ export class UserActivateUserComponent implements OnInit {
     if (token) {
       this.token = token;
       this.service.validateActivateUserToken(token).subscribe(r => {
-        this.validToken = r.content;
+        if(!r.content){
+          this.status = 'invalid_token';
+        }
       });
     }
   }

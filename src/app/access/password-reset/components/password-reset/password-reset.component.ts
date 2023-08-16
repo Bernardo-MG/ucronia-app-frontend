@@ -9,9 +9,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
 })
 export class PasswordResetComponent implements OnInit {
 
-  public validToken = false;
-
-  public finished = false;
+  public status = 'valid_token';
 
   private token = '';
 
@@ -30,10 +28,9 @@ export class PasswordResetComponent implements OnInit {
   public onPasswordReset(password: string): void {
     const reset = new PasswordReset();
     reset.password = password;
-    this.finished = false;
     this.service.resetPassword(this.token, reset).subscribe({
       next: d => {
-        this.finished = true;
+        this.status = 'finished';
       },
       error: error => {
       }
@@ -44,7 +41,9 @@ export class PasswordResetComponent implements OnInit {
     if (token) {
       this.token = token;
       this.service.validateResetPasswordToken(token).subscribe(r => {
-        this.validToken = r.content;
+        if (!r.content) {
+          this.status = 'invalid_token';
+        }
       });
     }
   }

@@ -1,18 +1,16 @@
-<div *ngIf="validToken; then change else invalid"></div>
-<ng-template #change>
-  <div *ngIf="finished; then finished_message else form"></div>
-  <ng-template #form>
+<div [ngSwitch]="status">
+  <div *ngSwitchCase="'valid_token'">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Activate new user</h5>
         <access-user-activate-user-form (save)="onUserActivate($event)"></access-user-activate-user-form>
       </div>
     </div>
-  </ng-template>
-  <ng-template #finished_message>
+  </div>
+  <div *ngSwitchCase="'invalid_token'">
+    Invalid token
+  </div>
+  <div *ngSwitchCase="'finished'">
     Activate user
-  </ng-template>
-</ng-template>
-<ng-template #invalid>
-  Invalid token
-</ng-template>
+  </div>
+</div>
