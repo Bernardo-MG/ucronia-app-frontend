@@ -14,7 +14,7 @@ import { map, Observable } from 'rxjs';
 @Injectable()
 export class AccessUserService {
 
-  private activateUserRequestUrl = environment.apiUrl + "/user/activate";
+  private activateUserRequestUrl = environment.apiUrl + "/security/user/activate";
 
   constructor(
     private client: AccessApiClient,
