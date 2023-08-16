@@ -10,7 +10,9 @@ const resetPasswordModule = () => import('@app/password-reset/password-reset.mod
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
-const accessModule = () => import('@app/access/access.module').then(m => m.AccessModule);
+const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
+const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
+const activateUserModule = () => import('@app/user-activation/user-activation.module').then(m => m.UserActivationModule);
 
 const routes: Routes = [
   // Main app
@@ -29,6 +31,27 @@ const routes: Routes = [
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
+      // Role
+      {
+        path: 'roles',
+        component: NavbarBodyComponent,
+        loadChildren: rolesModule,
+        canActivate: [LoggedInGuard]
+      },
+      // User
+      {
+        path: 'users',
+        component: NavbarBodyComponent,
+        loadChildren: userModule,
+        canActivate: [LoggedInGuard]
+      },
+      // Activate user
+      {
+        path: 'users/activate',
+        component: NavbarBodyComponent,
+        loadChildren: activateUserModule,
+        canActivate: [LoggedOutGuard]
+      },
       {
         path: '',
         component: NavbarBodyComponent,
@@ -41,9 +64,7 @@ const routes: Routes = [
               // Front page
               { path: '', loadChildren: frontpageModule },
               // Association
-              { path: '', loadChildren: associationModule },
-              // Security
-              { path: 'security', loadChildren: accessModule }
+              { path: '', loadChildren: associationModule }
             ]
           },
           // Account
