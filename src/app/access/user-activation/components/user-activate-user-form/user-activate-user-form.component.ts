@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
   selector: 'access-user-activate-user-form',
   templateUrl: './user-activate-user-form.component.html'
 })
-export class UserActivateUserFormComponent extends FormComponent<string> {
+export class UserActivateUserFormComponent extends FormComponent<ConfirmPassword> {
 
   constructor(
     private formBuilder: FormBuilder

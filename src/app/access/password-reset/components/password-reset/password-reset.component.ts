@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
+import { ConfirmPassword } from '@app/access/models/confirm-password';
 
 @Component({
   selector: 'login-password-reset',
@@ -25,9 +26,9 @@ export class PasswordResetComponent implements OnInit {
     });
   }
 
-  public onPasswordReset(password: string): void {
+  public onPasswordReset(confirm: ConfirmPassword): void {
     const reset = new PasswordReset();
-    reset.password = password;
+    reset.password = confirm.password;
     this.service.resetPassword(this.token, reset).subscribe({
       next: d => {
         this.status = 'finished';

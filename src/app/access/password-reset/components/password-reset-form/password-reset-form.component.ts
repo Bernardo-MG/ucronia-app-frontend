@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
   selector: 'login-password-reset-form',
   templateUrl: './password-reset-form.component.html'
 })
-export class PasswordResetFormComponent extends FormComponent<string> {
+export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
 
   constructor(
     private formBuilder: FormBuilder

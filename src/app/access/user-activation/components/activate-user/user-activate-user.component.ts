@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
+import { ConfirmPassword } from '@app/access/models/confirm-password';
 
 @Component({
   selector: 'access-user-activate-user',
@@ -27,9 +28,9 @@ export class UserActivateUserComponent implements OnInit {
     });
   }
 
-  public onUserActivate(password: string): void {
+  public onUserActivate(confirm: ConfirmPassword): void {
     const reset = new UserActivate();
-    reset.password = password;
+    reset.password = confirm.password;
     this.service.activateUser(this.token, reset).subscribe({
       next: d => {
         this.status = 'finished';
