@@ -11,6 +11,8 @@ export class UserActivateUserComponent implements OnInit {
 
   public status = 'valid_token';
 
+  public username = '';
+
   private token = '';
 
   constructor(
@@ -44,6 +46,7 @@ export class UserActivateUserComponent implements OnInit {
         if(!r.content.valid){
           this.status = 'invalid_token';
         }
+        this.username = r.content.username;
       });
     }
   }
