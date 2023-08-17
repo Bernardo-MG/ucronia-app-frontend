@@ -7,19 +7,19 @@ const feeModule = () => import('@app/association/fees/fees.module').then(m => m.
 const transactionModule = () => import('@app/association/transactions/transactions.module').then(m => m.TransactionsModule);
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: 'stats', loadChildren: statsModule },
-            { path: 'transactions', loadChildren: transactionModule },
-            { path: 'members', loadChildren: memberModule },
-            { path: 'fees', loadChildren: feeModule }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      { path: 'stats', loadChildren: statsModule },
+      { path: 'transactions', loadChildren: transactionModule },
+      { path: 'members', loadChildren: memberModule },
+      { path: 'fees', loadChildren: feeModule }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class AssociationRoutingModule { }
