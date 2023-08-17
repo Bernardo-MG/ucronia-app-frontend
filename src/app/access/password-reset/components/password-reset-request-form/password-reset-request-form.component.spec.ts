@@ -12,11 +12,11 @@ describe('PasswordResetRequestFormComponent', () => {
         ReactiveFormsModule,
         FormsModule
       ],
-      declarations: [ 
-        PasswordResetRequestFormComponent 
+      declarations: [
+        PasswordResetRequestFormComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PasswordResetRequestFormComponent);
     component = fixture.componentInstance;

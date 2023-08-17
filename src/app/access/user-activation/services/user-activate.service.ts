@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TokenStatus } from '@app/access/models/token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
-import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -13,7 +12,6 @@ export class AccessUserActivateService {
   private activateUserRequestUrl = environment.apiUrl + "/security/user/activate";
 
   constructor(
-    private client: AccessApiClient,
     private http: HttpClient
   ) { }
 

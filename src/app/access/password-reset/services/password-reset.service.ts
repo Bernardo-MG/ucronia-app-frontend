@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TokenStatus } from '@app/access/models/token-status';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { PasswordReset } from '../models/password-reset';
 import { PasswordResetRequest } from '../models/password-reset-request';
-import { TokenStatus } from '@app/access/models/token-status';
 
 @Injectable()
 export class PasswordResetService {

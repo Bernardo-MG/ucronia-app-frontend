@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -12,8 +11,7 @@ import { map, Observable } from 'rxjs';
 export class AccessUserService {
 
   constructor(
-    private client: AccessApiClient,
-    private http: HttpClient
+    private client: AccessApiClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {

@@ -8,8 +8,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'access-role-add-permission',
-  templateUrl: './access-role-add-permission.component.html',
-  styleUrls: ['./access-role-add-permission.component.sass']
+  templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent {
 

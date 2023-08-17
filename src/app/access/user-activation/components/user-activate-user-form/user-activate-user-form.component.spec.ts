@@ -12,11 +12,11 @@ describe('UserActivateUserFormComponent', () => {
         ReactiveFormsModule,
         FormsModule
       ],
-      declarations: [ 
-        UserActivateUserFormComponent 
+      declarations: [
+        UserActivateUserFormComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(UserActivateUserFormComponent);
     component = fixture.componentInstance;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
-import { ConfirmPassword } from '@app/access/models/confirm-password';
 
 @Component({
   selector: 'access-user-activate-user',
@@ -44,7 +44,7 @@ export class UserActivateUserComponent implements OnInit {
     if (token) {
       this.token = token;
       this.service.validateActivateUserToken(token).subscribe(r => {
-        if(!r.content.valid){
+        if (!r.content.valid) {
           this.status = 'invalid_token';
         }
         this.username = r.content.username;

@@ -3,11 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { PageInfo } from '@app/core/api/models/page-info';
 import { Action } from '@app/core/authentication/models/action';
+import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
-import { Permission } from '@app/core/authentication/models/permission';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-details',

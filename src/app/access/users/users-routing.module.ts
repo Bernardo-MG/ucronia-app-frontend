@@ -7,19 +7,19 @@ import { AccessUserListComponent } from './components/access-user-list/access-us
 
 
 const routes: Routes = [
-    {
-      path: '',
-      component: PaddedFrameComponent,
-      children: [
-        { path: '', component: AccessUserListComponent },
-        { path: 'create', component: AccessUserCreateComponent },
-        { path: ':id', component: AccessUserDetailsComponent }
-      ]
-    }
+  {
+    path: '',
+    component: PaddedFrameComponent,
+    children: [
+      { path: '', component: AccessUserListComponent },
+      { path: 'create', component: AccessUserCreateComponent },
+      { path: ':id', component: AccessUserDetailsComponent }
+    ]
+  }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class UserRoutingModule { }
