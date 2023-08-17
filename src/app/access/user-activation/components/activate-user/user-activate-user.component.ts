@@ -34,8 +34,6 @@ export class UserActivateUserComponent implements OnInit {
     this.service.activateUser(this.token, reset).subscribe({
       next: d => {
         this.status = 'finished';
-      },
-      error: error => {
       }
     });
   }

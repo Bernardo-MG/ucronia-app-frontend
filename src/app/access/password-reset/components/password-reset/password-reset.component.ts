@@ -32,8 +32,6 @@ export class PasswordResetComponent implements OnInit {
     this.service.resetPassword(this.token, reset).subscribe({
       next: d => {
         this.status = 'finished';
-      },
-      error: error => {
       }
     });
   }
