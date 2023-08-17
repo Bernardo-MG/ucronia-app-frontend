@@ -5,10 +5,10 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 
-const loginModule = () => import('@app/login/login.module').then(m => m.LoginModule);
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
+const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
 const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
 const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
 const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);

@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { SecurityStatus } from '@app/core/authentication/models/security-status';
-import { LoginRequest } from '@app/login/models/login-request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { LoginRequest } from '../models/login-request';
 
 @Injectable()
 export class LoginService {
