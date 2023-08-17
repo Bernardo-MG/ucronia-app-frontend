@@ -11,7 +11,7 @@ const routes: Routes = [
     component: CenteredFrameComponent,
     children: [
       { path: '', component: PasswordResetRequestComponent },
-      { path: '/:token', component: PasswordResetComponent }
+      { path: ':token', component: PasswordResetComponent }
     ]
   }
 ];
