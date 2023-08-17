@@ -5,8 +5,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserCreationFormComponent } from '../access-user-creation-form/access-user-creation-form.component';
 import { AccessUserCreateComponent } from './access-user-create.component';
 
 describe('AccessUserCreateComponent', () => {
@@ -25,7 +25,7 @@ describe('AccessUserCreateComponent', () => {
       ],
       declarations: [
         AccessUserCreateComponent,
-        AccessUserFormComponent
+        AccessUserCreationFormComponent
       ],
       providers: [
         AccessUserService
