@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { AuthMenuLink } from '@app/shared/menu/models/auth-menu-link';
+import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 
@@ -22,10 +22,10 @@ export class LayoutService {
     const menus = [];
 
     const associationLinks = this.filterNodes([
-      { title: 'Stats', path: '/', resource: 'member', action: 'read' },
-      { title: 'Fees', path: '/fees', resource: 'fee', action: 'read' },
-      { title: 'Members', path: '/members/list', resource: 'member', action: 'read' },
-      { title: 'Transactions', path: '/transactions', resource: 'transaction', action: 'read' }
+      { title: 'Stats', path: '/', resource: 'member' },
+      { title: 'Fees', path: '/fees', resource: 'fee' },
+      { title: 'Members', path: '/members/list', resource: 'member' },
+      { title: 'Transactions', path: '/transactions', resource: 'transaction' }
     ]);
 
     if (associationLinks.length > 0) {
@@ -33,8 +33,8 @@ export class LayoutService {
     }
 
     const securityLinks = this.filterNodes([
-      { title: 'Users', path: '/users', resource: 'user', action: 'read' },
-      { title: 'Roles', path: '/roles', resource: 'role', action: 'read' }
+      { title: 'Users', path: '/users', resource: 'user' },
+      { title: 'Roles', path: '/roles', resource: 'role' }
     ]);
 
     if (securityLinks.length > 0) {
@@ -47,7 +47,7 @@ export class LayoutService {
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only links the user has permissions for
-      .filter(link => this.authService.hasPermission(link.resource, link.action));
+      .filter(link => this.authService.hasPermission(link.resource, 'view'));
   }
 
 }
