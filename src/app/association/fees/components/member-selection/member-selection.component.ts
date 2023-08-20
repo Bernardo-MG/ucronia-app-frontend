@@ -45,7 +45,7 @@ export class MemberSelectionComponent implements OnInit {
   }
 
   public nameRenderer(member: Member) {
-    return member.name;
+    return member.name + ' ' + member.surname;
   }
 
 }
