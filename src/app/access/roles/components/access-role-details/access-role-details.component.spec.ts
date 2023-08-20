@@ -19,7 +19,7 @@ describe('AccessRoleDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ 
+      imports: [
         FormsModule,
         ReactiveFormsModule,
         HttpClientTestingModule,

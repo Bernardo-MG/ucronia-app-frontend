@@ -38,14 +38,17 @@ export class FormComponent<Data> {
   }
 
   @Output() public save = new EventEmitter<Data>();
-  
+
   public form: any;
 
   /**
    * Handler for the save event.
    */
   public onSave() {
-    this.save.emit(this.form.value);
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
   }
 
   /**

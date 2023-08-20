@@ -17,8 +17,8 @@ export class AccessUserFormComponent extends FormComponent<User> {
     this.form = fb.group({
       id: [null],
       username: ['', Validators.required],
-      name: [''],
-      email: [''],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       credentialsExpired: [true, Validators.required],
       enabled: [true, Validators.required],
       expired: [true, Validators.required],

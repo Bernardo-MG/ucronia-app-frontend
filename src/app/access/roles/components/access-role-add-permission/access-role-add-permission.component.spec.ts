@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
 
 describe('AccessRoleAddPermissionComponent', () => {
   let component: AccessRoleAddPermissionComponent;

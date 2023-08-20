@@ -15,10 +15,6 @@ export class AssociationStatsService {
     private client: AssociationApiClient
   ) { }
 
-  public countActiveMembers(): Observable<number> {
-    return this.client.member().parameter("active", true).readAll().pipe(map(r => r.totalElements));
-  }
-
   public getActiveMembers(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
     return this.client.member().parameter("active", true).page(pagination).sort(pagination?.sort).readAll();
   }
