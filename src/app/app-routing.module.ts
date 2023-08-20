@@ -4,6 +4,7 @@ import { AccountLayoutComponent } from './account/components/account-layout/acco
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
+import { ResourceGuard } from './core/authentication/guards/resource.guard';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -36,14 +37,14 @@ const routes: Routes = [
         path: 'roles',
         component: NavbarBodyComponent,
         loadChildren: rolesModule,
-        canActivate: [LoggedInGuard]
+        canActivate: [ResourceGuard("role")]
       },
       // User
       {
         path: 'users',
         component: NavbarBodyComponent,
         loadChildren: userModule,
-        canActivate: [LoggedInGuard]
+        canActivate: [ResourceGuard("user")]
       },
       // Activate user
       {
