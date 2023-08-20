@@ -43,15 +43,6 @@
       </div>
     </div>
   </div>
-  <!-- Active -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" id="activeInput" formControlName="active" [readonly]="readonly" class="form-check-input"
-      [ngClass]="{ 'is-invalid': isFieldInvalid('active') }" aria-describedby="activeLabel">
-    <label for="activeInput" id="activeLabel" class="form-check-label ps-1">Active</label>
-    <div class="invalid-feedback" *ngFor="let failure of getFailures('active')">
-      {{failure.message}}
-    </div>
-  </div>
   <!-- Save button -->
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
