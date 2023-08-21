@@ -1,27 +1,29 @@
 <nav id="navbar-main" class="navbar navbar-expand-md navbar-dark sticky-top bg-primary flex-md-nowrap p-0">
   <div class="container-fluid">
     <a class="navbar-brand" routerLink="/">{{title}}</a>
-    <div class="ms-auto">
-      <ng-template [ngIf]="loggedIn">
-        <div class="collapse navbar-collapse" id="navbar-main-menu">
-          <ul class="nav navbar-nav" *ngFor="let menu of menus">
-            <li class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" [id]="menu.title + 'Dropdown'" data-bs-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">{{menu.title}}</a>
-              <ul class="dropdown-menu dropdown-menu-end" [attr.aria-labelledby]="menu.title + 'Dropdown'">
-                <li *ngFor="let link of menu.links">
-                  <a routerLink="{{link.path}}" class="dropdown-item" title="{{link.title}}"
-                    [attr.aria-labelledby]="link.title">{{link.title}}</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav">
-            <!-- Account menu -->
-            <layout-account-dropdown></layout-account-dropdown>
-          </ul>
-        </div>
-      </ng-template>
-    </div>
+    <ng-template [ngIf]="loggedIn">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main-menu"
+        aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar-main-menu">
+        <ul class="nav navbar-nav ms-auto">
+          <li class="nav-item dropdown" *ngFor="let menu of menus">
+            <a href="#" class="nav-link dropdown-toggle" [id]="menu.title + 'Dropdown'" data-bs-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">{{menu.title}}</a>
+            <ul class="dropdown-menu dropdown-menu-end" [attr.aria-labelledby]="menu.title + 'Dropdown'">
+              <li *ngFor="let link of menu.links">
+                <a routerLink="{{link.path}}" class="dropdown-item" title="{{link.title}}"
+                  [attr.aria-labelledby]="link.title">{{link.title}}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav">
+          <!-- Account menu -->
+          <layout-account-dropdown></layout-account-dropdown>
+        </ul>
+      </div>
+    </ng-template>
   </div>
 </nav>

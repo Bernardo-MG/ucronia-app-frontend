@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccessRoleInfoComponent } from './access-role-info.component';
 
 describe('AccessRoleInfoComponent', () => {
@@ -8,9 +7,9 @@ describe('AccessRoleInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessRoleInfoComponent ]
+      declarations: [AccessRoleInfoComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccessRoleInfoComponent);
     component = fixture.componentInstance;

@@ -3,8 +3,7 @@ import { User } from '@app/core/authentication/models/user';
 
 @Component({
   selector: 'access-user-info',
-  templateUrl: './access-user-info.component.html',
-  styleUrls: ['./access-user-info.component.sass']
+  templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {
 

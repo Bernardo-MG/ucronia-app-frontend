@@ -4,13 +4,16 @@ import { AccountLayoutComponent } from './account/components/account-layout/acco
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
+import { ResourceGuard } from './core/authentication/guards/resource.guard';
 
-const loginModule = () => import('@app/login/login.module').then(m => m.LoginModule);
-const resetPasswordModule = () => import('@app/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
-const accessModule = () => import('@app/access/access.module').then(m => m.AccessModule);
+const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
+const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
+const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
+const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
+const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 
 const routes: Routes = [
   // Main app
@@ -29,6 +32,27 @@ const routes: Routes = [
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
+      // Role
+      {
+        path: 'roles',
+        component: NavbarBodyComponent,
+        loadChildren: rolesModule,
+        canActivate: [ResourceGuard("role")]
+      },
+      // User
+      {
+        path: 'users',
+        component: NavbarBodyComponent,
+        loadChildren: userModule,
+        canActivate: [ResourceGuard("user")]
+      },
+      // Activate user
+      {
+        path: 'users/activate',
+        component: NavbarBodyComponent,
+        loadChildren: activateUserModule,
+        canActivate: [LoggedOutGuard]
+      },
       {
         path: '',
         component: NavbarBodyComponent,
@@ -41,9 +65,7 @@ const routes: Routes = [
               // Front page
               { path: '', loadChildren: frontpageModule },
               // Association
-              { path: '', loadChildren: associationModule },
-              // Security
-              { path: 'security', loadChildren: accessModule }
+              { path: '', loadChildren: associationModule }
             ]
           },
           // Account

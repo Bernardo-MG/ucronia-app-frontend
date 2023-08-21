@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberService } from '../../../members/services/member.service';
 import { MemberStatsComponent } from './member-stats.component';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 
 describe('MemberStatsComponent', () => {
   let component: MemberStatsComponent;
@@ -14,7 +15,8 @@ describe('MemberStatsComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule
+        LayoutModule,
+        PaginationModule
       ],
       declarations: [
         MemberStatsComponent

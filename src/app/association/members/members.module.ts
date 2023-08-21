@@ -6,6 +6,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MemberCreateFormComponent } from './components/member-create-form/member-create-form.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { MemberFormComponent } from './components/member-form/member-form.component';
@@ -21,6 +22,7 @@ import { MemberService } from './services/member.service';
     MemberListComponent,
     MemberDetailsComponent,
     MemberCreateComponent,
+    MemberCreateFormComponent,
     MemberFormComponent,
     MemberInfoComponent
   ],
