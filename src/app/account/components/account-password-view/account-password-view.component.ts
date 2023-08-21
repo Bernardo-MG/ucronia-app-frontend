@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
+import { Failure } from '@app/core/api/models/failure';
 
 @Component({
   selector: 'account-password-view',
@@ -8,12 +9,9 @@ import { AccountService } from '@app/account/services/account.service';
 })
 export class AccountChangePasswordViewComponent {
 
-  /**
-   * Failed update flag.
-   */
-  public failed = false;
-
   public saving = false;
+
+  public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private service: AccountService
@@ -26,15 +24,15 @@ export class AccountChangePasswordViewComponent {
       next: status => {
         // Succesful request
 
-        // The failed flag may be set, if the user didn't log in succesfully
-        this.failed = !status.successful;
-
         // Reactivate form
         this.saving = false;
       },
       error: error => {
-        // Failed request
-        this.failed = true;
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = {};
+        }
         // Reactivate form
         this.saving = false;
       }
