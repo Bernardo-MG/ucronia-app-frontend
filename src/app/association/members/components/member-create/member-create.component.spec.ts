@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberService } from '../../services/member.service';
+import { MemberCreateFormComponent } from '../member-create-form/member-create-form.component';
 import { MemberCreateComponent } from './member-create.component';
 
 describe('MemberCreateComponent', () => {
@@ -26,7 +26,7 @@ describe('MemberCreateComponent', () => {
       ],
       declarations: [
         MemberCreateComponent,
-        MemberFormComponent
+        MemberCreateFormComponent
       ]
     })
       .compileComponents();
