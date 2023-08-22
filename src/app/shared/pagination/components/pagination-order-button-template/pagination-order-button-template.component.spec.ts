@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
 
 describe('PaginationOrderButtonTemplateComponent', () => {
@@ -25,9 +26,17 @@ describe('PaginationOrderButtonTemplateComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // **************************************************************************
+  // Change direction
+  // **************************************************************************
 
   it('should send an event to change to ascending direction when clicking for the first time', () => {
     spyOn(component.ascending, 'emit');
@@ -91,6 +100,75 @@ describe('PaginationOrderButtonTemplateComponent', () => {
 
     expect(component.ascending.emit).toHaveBeenCalledTimes(2);
   });
+
+  // **************************************************************************
+  // Change direction and icon
+  // **************************************************************************
+
+  it('should have the unsorted icon by default', () => {
+    spyOn(component.ascending, 'emit');
+
+    expect(component.directionIcon).toEqual(faSort);
+  });
+
+  it('should change to sort up icon when clicking once', () => {
+    spyOn(component.ascending, 'emit');
+
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+
+    expect(component.directionIcon).toEqual(faSortUp);
+  });
+
+  it('should change to sort down icon when clicking twice', () => {
+    spyOn(component.ascending, 'emit');
+
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+
+    expect(component.directionIcon).toEqual(faSortDown);
+  });
+
+  it('should rever to unsorted icon when clicking three times', () => {
+    spyOn(component.ascending, 'emit');
+
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+    button.triggerEventHandler('click');
+
+    expect(component.directionIcon).toEqual(faSort);
+  });
+
+  // **************************************************************************
+  // Direction
+  // **************************************************************************
+
+  it('should change to unsorted icon when receiving the unsorted direction', () => {
+    component.direction = 'unsorted';
+    fixture.detectChanges();
+
+    expect(component.directionIcon).toEqual(faSort);
+  });
+
+  it('should change to sort up icon when receiving the ascending direction', () => {
+    component.direction = 'asc';
+    fixture.detectChanges();
+
+    expect(component.directionIcon).toEqual(faSortUp);
+  });
+
+  it('should change to sort down icon when receiving the descending direction', () => {
+    component.direction = 'desc';
+    fixture.detectChanges();
+
+    expect(component.directionIcon).toEqual(faSortDown);
+  });
+
+  // **************************************************************************
+  // Disabled
+  // **************************************************************************
 
   it('should disable the button when the component is disabled', () => {
     component.disabled = true;
