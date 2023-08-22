@@ -2,9 +2,9 @@
   <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
     [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
     <!-- Form -->
-    <assoc-fee-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+    <assoc-fee-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
       (save)="onSave($event)">
-    </assoc-fee-form>
+    </assoc-fee-edit-form>
     <!-- Info -->
     <assoc-fee-info id="info" [data]="data"></assoc-fee-info>
   </layout-edition-wrapper>

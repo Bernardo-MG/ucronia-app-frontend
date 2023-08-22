@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FeeFormComponent } from './fee-form.component';
+import { FeeEditFormComponent } from './fee-edit-form.component';
 
-describe('FeeFormComponent', () => {
-  let component: FeeFormComponent;
-  let fixture: ComponentFixture<FeeFormComponent>;
+describe('FeeEditFormComponent', () => {
+  let component: FeeEditFormComponent;
+  let fixture: ComponentFixture<FeeEditFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,12 +16,12 @@ describe('FeeFormComponent', () => {
         LayoutModule
       ],
       declarations: [
-        FeeFormComponent
+        FeeEditFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeFormComponent);
+    fixture = TestBed.createComponent(FeeEditFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

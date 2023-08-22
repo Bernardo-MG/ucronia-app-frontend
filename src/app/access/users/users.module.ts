@@ -7,9 +7,9 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserCreateComponent } from './components/access-user-create/access-user-create.component';
-import { AccessUserCreationFormComponent } from './components/access-user-creation-form/access-user-creation-form.component';
+import { AccessUserCreateFormComponent } from './components/access-user-create-form/access-user-create-form.component';
 import { AccessUserDetailsComponent } from './components/access-user-details/access-user-details.component';
-import { AccessUserEditionFormComponent } from './components/access-user-edition-form/access-user-edition-form.component';
+import { AccessUserEditFormComponent } from './components/access-user-edit-form/access-user-edit-form.component';
 import { AccessUserInfoComponent } from './components/access-user-info/access-user-info.component';
 import { AccessUserListComponent } from './components/access-user-list/access-user-list.component';
 import { AccessUserRoleSelectionComponent } from './components/access-user-role-selection/access-user-role-selection.component';
@@ -21,8 +21,8 @@ import { UserRoutingModule } from './users-routing.module';
 
 @NgModule({
   declarations: [
-    AccessUserEditionFormComponent,
-    AccessUserCreationFormComponent,
+    AccessUserEditFormComponent,
+    AccessUserCreateFormComponent,
     AccessUserCreateComponent,
     AccessUserDetailsComponent,
     AccessUserListComponent,

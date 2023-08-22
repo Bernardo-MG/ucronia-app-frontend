@@ -4,10 +4,10 @@ import { User } from '@app/core/authentication/models/user';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'access-user-edition-form',
-  templateUrl: './access-user-edition-form.component.html'
+  selector: 'access-user-edit-form',
+  templateUrl: './access-user-edit-form.component.html'
 })
-export class AccessUserEditionFormComponent extends FormComponent<User> {
+export class AccessUserEditFormComponent extends FormComponent<User> {
 
   @Input() public username = '';
 

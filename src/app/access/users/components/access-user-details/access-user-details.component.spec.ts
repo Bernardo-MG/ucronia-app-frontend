@@ -10,7 +10,7 @@ import { AccessUserInfoComponent } from '../../components/access-user-info/acces
 import { AccessUserRoleSelectionComponent } from '../../components/access-user-role-selection/access-user-role-selection.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserEditionFormComponent } from '../access-user-edition-form/access-user-edition-form.component';
+import { AccessUserEditFormComponent } from '../access-user-edit-form/access-user-edit-form.component';
 import { AccessUserDetailsComponent } from './access-user-details.component';
 
 describe('AccessUserDetailsComponent', () => {
@@ -30,7 +30,7 @@ describe('AccessUserDetailsComponent', () => {
       ],
       declarations: [
         AccessUserDetailsComponent,
-        AccessUserEditionFormComponent,
+        AccessUserEditFormComponent,
         AccessUserRoleFormComponent,
         AccessUserInfoComponent,
         AccessUserRoleSelectionComponent
