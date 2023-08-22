@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Direction } from '../../models/direction';
 import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
 
 describe('PaginationOrderButtonTemplateComponent', () => {
@@ -146,21 +147,21 @@ describe('PaginationOrderButtonTemplateComponent', () => {
   // **************************************************************************
 
   it('should change to unsorted icon when receiving the unsorted direction', () => {
-    component.direction = 'unsorted';
+    component.direction = Direction.Unsorted;
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSort);
   });
 
   it('should change to sort up icon when receiving the ascending direction', () => {
-    component.direction = 'asc';
+    component.direction = Direction.Ascending;
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortUp);
   });
 
   it('should change to sort down icon when receiving the descending direction', () => {
-    component.direction = 'desc';
+    component.direction = Direction.Descending;
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortDown);

@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Direction } from '../../models/direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted
@@ -10,9 +11,9 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
 })
 export class PaginationOrderButtonTemplateComponent {
 
-  public _direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
+  public _direction = Direction.Unsorted;
 
-  @Input() public set direction(direction: 'asc' | 'desc' | 'unsorted') {
+  @Input() public set direction(direction: Direction) {
     this._direction = direction;
     this.updateDirection();
   }
@@ -41,19 +42,19 @@ export class PaginationOrderButtonTemplateComponent {
 
   public onChangeOrder() {
     switch (this.direction) {
-      case 'asc': {
+      case Direction.Ascending: {
         // Currently it is in ascending order
         // Switching to descending order
-        this.direction = 'desc';
+        this.direction = Direction.Descending;
 
         this.directionIcon = this.descendingIcon;
         this.descending.emit();
         break;
       }
-      case 'desc': {
+      case Direction.Descending: {
         // Currently it is in descending order
         // Switching to unsorted order
-        this.direction = 'unsorted';
+        this.direction = Direction.Unsorted;
 
         this.directionIcon = this.defaultIcon;
         this.unsorted.emit();
@@ -62,7 +63,7 @@ export class PaginationOrderButtonTemplateComponent {
       default: {
         // Any other case
         // Switching to ascending order
-        this.direction = 'asc';
+        this.direction = Direction.Ascending;
 
         this.directionIcon = this.ascendingIcon;
         this.ascending.emit();
@@ -74,12 +75,12 @@ export class PaginationOrderButtonTemplateComponent {
   private updateDirection() {
     // Pick icon based on direction
     switch (this.direction) {
-      case 'asc': {
+      case Direction.Ascending: {
         // Ascending
         this.directionIcon = this.ascendingIcon;
         break;
       }
-      case 'desc': {
+      case Direction.Descending: {
         // Descending
         this.directionIcon = this.descendingIcon;
         break;
