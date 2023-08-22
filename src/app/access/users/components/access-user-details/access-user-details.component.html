@@ -19,7 +19,7 @@
         <div class="card-body">
           <access-user-roles (removeRole)="onRemoveRole($event)" [roles]="roles">
           </access-user-roles>
-          <pagination-navigation [current]="rolesPageInfo.page + 1" [pages]="rolesPageInfo.totalPages"
+          <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
             (goTo)="onGoToRolePage($event)">
           </pagination-navigation>
         </div>
