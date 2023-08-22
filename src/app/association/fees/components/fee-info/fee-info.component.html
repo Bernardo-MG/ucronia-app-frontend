@@ -9,7 +9,7 @@
     </div>
     <!-- Paid -->
     <div class="col-sm-10 offset-sm-2">
-      <input type="checkbox" [value]="data.paid" id="paidInput" [readonly]="true" class="form-check-input"
+      <input type="checkbox" [value]="data.paid" id="paidInput" [attr.disabled]="true" class="form-check-input"
         aria-describedby="paidLabel">
       <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
     </div>

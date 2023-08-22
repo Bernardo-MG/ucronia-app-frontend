@@ -25,7 +25,7 @@
   </div>
   <!-- Enabled -->
   <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" [value]="data.enabled" id="enabledInput" [readonly]="true" class="form-check-input"
+    <input type="checkbox" [value]="data.enabled" id="enabledInput" [attr.disabled]="true" class="form-check-input"
       aria-describedby="enabledLabel">
     <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
   </div>

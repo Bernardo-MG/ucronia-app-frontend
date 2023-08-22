@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
-      <input type="text" id="nameInput" formControlName="name" [readonly]="readonly" class="form-control"
+      <input type="text" id="nameInput" formControlName="name" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
         {{failure.message}}
@@ -22,7 +22,7 @@
   <div class="row mb-2">
     <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">Email</label>
     <div class="col-sm-10">
-      <input type="text" id="emailInput" formControlName="email" [readonly]="readonly" class="form-control"
+      <input type="text" id="emailInput" formControlName="email" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('email') }" aria-describedby="emailLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('email')">
         {{failure.message}}
@@ -31,7 +31,7 @@
   </div>
   <!-- Enabled -->
   <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" id="enabledInput" formControlName="enabled" [readonly]="readonly" class="form-check-input"
+    <input type="checkbox" id="enabledInput" formControlName="enabled" class="form-check-input"
       [ngClass]="{ 'is-invalid': isFieldInvalid('enabled') }" aria-describedby="enabledLabel">
     <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
     <div class="invalid-feedback" *ngFor="let failure of getFailures('enabled')">
