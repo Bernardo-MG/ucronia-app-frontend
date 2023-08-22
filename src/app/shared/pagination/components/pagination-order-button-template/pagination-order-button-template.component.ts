@@ -8,9 +8,18 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
   selector: 'pagination-order-button-template',
   templateUrl: './pagination-order-button-template.component.html'
 })
-export class PaginationOrderButtonTemplateComponent implements OnChanges {
+export class PaginationOrderButtonTemplateComponent {
 
-  @Input() public direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
+  public _direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
+
+  @Input() public set direction(direction: 'asc' | 'desc' | 'unsorted') {
+    this._direction = direction;
+    this.updateDirection();
+  }
+
+  public get direction() {
+    return this._direction;
+  }
 
   @Input() public disabled = false;
 
@@ -28,26 +37,6 @@ export class PaginationOrderButtonTemplateComponent implements OnChanges {
 
   constructor() {
     this.directionIcon = this.defaultIcon;
-  }
-
-  ngOnChanges(): void {
-    // Pick icon based on direction
-    switch (this.direction) {
-      case 'asc': {
-        // Ascending
-        this.directionIcon = this.ascendingIcon;
-        break;
-      }
-      case 'desc': {
-        // Descending
-        this.directionIcon = this.descendingIcon;
-        break;
-      }
-      default: {
-        // Unsorted
-        this.directionIcon = this.defaultIcon;
-      }
-    }
   }
 
   public onChangeOrder() {
@@ -78,6 +67,26 @@ export class PaginationOrderButtonTemplateComponent implements OnChanges {
         this.directionIcon = this.ascendingIcon;
         this.ascending.emit();
         break;
+      }
+    }
+  }
+
+  private updateDirection() {
+    // Pick icon based on direction
+    switch (this.direction) {
+      case 'asc': {
+        // Ascending
+        this.directionIcon = this.ascendingIcon;
+        break;
+      }
+      case 'desc': {
+        // Descending
+        this.directionIcon = this.descendingIcon;
+        break;
+      }
+      default: {
+        // Unsorted
+        this.directionIcon = this.defaultIcon;
       }
     }
   }
