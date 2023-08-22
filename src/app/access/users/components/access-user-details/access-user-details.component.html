@@ -2,17 +2,15 @@
   <!-- User edition -->
   <!-- User -->
   <div class="mb-1">
-    <layout-waiting-wrapper [waiting]="waiting">
-      <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-        [deletable]="deletePermission" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
-        <!-- Form -->
-        <access-user-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-          (save)="onSave($event)">
-        </access-user-form>
-        <!-- Info -->
-        <access-user-info id="info" [data]="data"></access-user-info>
-      </layout-edition-wrapper>
-    </layout-waiting-wrapper>
+    <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
+      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+      <!-- Form -->
+      <access-user-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+        (save)="onSave($event)">
+      </access-user-form>
+      <!-- Info -->
+      <access-user-info id="info" [data]="data"></access-user-info>
+    </layout-edition-wrapper>
   </div>
   <!-- Roles -->
   <div class="mb-1">

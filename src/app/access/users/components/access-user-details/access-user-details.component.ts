@@ -14,6 +14,11 @@ import { AccessUserService } from '../../services/access-user.service';
 export class AccessUserDetailsComponent implements OnInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
@@ -23,8 +28,6 @@ export class AccessUserDetailsComponent implements OnInit {
   public editPermission = false;
 
   public deletePermission = false;
-
-  public waiting = false;
 
   public error = false;
 
@@ -129,16 +132,16 @@ export class AccessUserDetailsComponent implements OnInit {
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
-      this.waiting = true;
+      this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
             this.data = d;
             this.onGoToRolePage(0);
-            this.waiting = false;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
+            this.reading = false;
             this.error = true;
           }
         });
@@ -147,6 +150,10 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }

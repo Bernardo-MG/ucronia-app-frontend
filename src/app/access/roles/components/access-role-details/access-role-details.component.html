@@ -2,17 +2,15 @@
   <!-- Role form -->
   <!-- Role -->
   <div class="mb-1">
-    <layout-waiting-wrapper [waiting]="waiting">
-      <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-        [deletable]="deletePermission" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
-        <!-- Form -->
-        <access-role-form id="edit" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-          (save)="onSave($event)">
-        </access-role-form>
-        <!-- Info -->
-        <access-role-info id="info" [data]="data"></access-role-info>
-      </layout-edition-wrapper>
-    </layout-waiting-wrapper>
+    <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
+      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+      <!-- Form -->
+      <access-role-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+        (save)="onSave($event)">
+      </access-role-form>
+      <!-- Info -->
+      <access-role-info id="info" [data]="data"></access-role-info>
+    </layout-edition-wrapper>
   </div>
   <!-- Permissions -->
   <div class="mb-1">

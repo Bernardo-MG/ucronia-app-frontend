@@ -1,13 +1,11 @@
 <layout-article title="Edit member">
-  <layout-waiting-wrapper [waiting]="waiting">
-    <layout-edition-wrapper [editable]="editPermission" [saving]="saving" [editing]="editing"
-      [deletable]="deletePermission" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
-      <!-- Form -->
-      <assoc-member-form id="edit" [waiting]="waiting" [data]="data" [readonly]="!isEditable()" [failures]="failures"
-        (save)="onSave($event)">
-      </assoc-member-form>
-      <!-- Info -->
-      <assoc-member-info id="info" [data]="data"></assoc-member-info>
-    </layout-edition-wrapper>
-  </layout-waiting-wrapper>
+  <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
+    [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+    <!-- Form -->
+    <assoc-member-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+      (save)="onSave($event)">
+    </assoc-member-form>
+    <!-- Info -->
+    <assoc-member-info id="info" [data]="data"></assoc-member-info>
+  </layout-edition-wrapper>
 </layout-article>

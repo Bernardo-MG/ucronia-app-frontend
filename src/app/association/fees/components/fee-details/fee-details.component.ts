@@ -13,6 +13,11 @@ import { FeeService } from '../../services/fee.service';
 export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
@@ -24,8 +29,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   public editPermission = false;
 
   public deletePermission = false;
-
-  public waiting = false;
 
   public error = false;
 
@@ -122,17 +125,17 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   private load(id: string | null): void {
     if (id) {
-      this.waiting = true;
+      this.reading = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
             this.data = d;
             this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
-            this.waiting = false;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
+            this.reading = false;
             this.error = true;
           }
         });
@@ -145,6 +148,10 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }

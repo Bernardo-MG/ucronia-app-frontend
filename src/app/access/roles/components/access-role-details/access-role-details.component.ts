@@ -16,6 +16,11 @@ import { AccessRoleService } from '../../services/access-role.service';
 export class AccessRoleDetailsComponent implements OnInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
@@ -25,11 +30,6 @@ export class AccessRoleDetailsComponent implements OnInit {
   public editPermission = false;
 
   public deletePermission = false;
-
-  /**
-   * Loading flag.
-   */
-  public waiting = false;
 
   public error = false;
 
@@ -168,16 +168,17 @@ export class AccessRoleDetailsComponent implements OnInit {
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
+      this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
             this.data = d;
             this.onGoToPermissionPage(0);
-            this.waiting = false;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
             this.error = true;
+            this.reading = false;
           }
         });
     }
@@ -189,6 +190,10 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }
