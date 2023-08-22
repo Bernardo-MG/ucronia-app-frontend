@@ -5,9 +5,9 @@
     <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
       [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
-      <access-user-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+      <access-user-edition-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username" [data]="data" [failures]="failures"
         (save)="onSave($event)">
-      </access-user-form>
+      </access-user-edition-form>
       <!-- Info -->
       <access-user-info id="info" [data]="data"></access-user-info>
     </layout-edition-wrapper>

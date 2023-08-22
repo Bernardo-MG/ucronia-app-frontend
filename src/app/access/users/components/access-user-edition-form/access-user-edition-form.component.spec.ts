@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { AccessUserFormComponent } from './access-user-form.component';
+import { AccessUserEditionFormComponent } from './access-user-edition-form.component';
 
 describe('AccessUserFormComponent', () => {
-  let component: AccessUserFormComponent;
-  let fixture: ComponentFixture<AccessUserFormComponent>;
+  let component: AccessUserEditionFormComponent;
+  let fixture: ComponentFixture<AccessUserEditionFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,12 +14,12 @@ describe('AccessUserFormComponent', () => {
         LayoutModule
       ],
       declarations: [
-        AccessUserFormComponent
+        AccessUserEditionFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserFormComponent);
+    fixture = TestBed.createComponent(AccessUserEditionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
