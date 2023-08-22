@@ -161,6 +161,7 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.service.getPermissions(this.data.id, page).subscribe(response => {
       this.permissions = response.content;
       this.permissionsPageInfo = response;
+      this.permissionsPageInfo.page = this.permissionsPageInfo.page + 1;
       this.readingPermissions = false;
     });
   }

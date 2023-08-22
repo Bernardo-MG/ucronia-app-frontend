@@ -125,6 +125,7 @@ export class AccessUserDetailsComponent implements OnInit {
     this.service.getRoles(this.data.id, page).subscribe(response => {
       this.roles = response.content;
       this.rolesPageInfo = response;
+      this.rolesPageInfo.page = this.rolesPageInfo.page + 1;
       this.waitingRoles = false;
     });
   }
