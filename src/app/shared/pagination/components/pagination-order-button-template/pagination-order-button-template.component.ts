@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Direction } from '../../models/direction';
+import { Direction } from '../../../../core/api/models/direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted
@@ -24,11 +24,7 @@ export class PaginationOrderButtonTemplateComponent {
 
   @Input() public disabled = false;
 
-  @Output() public ascending = new EventEmitter<void>();
-
-  @Output() public descending = new EventEmitter<void>();
-
-  @Output() public unsorted = new EventEmitter<void>();
+  @Output() public directionChange = new EventEmitter<Direction>();
 
   public directionIcon;
 
@@ -40,7 +36,7 @@ export class PaginationOrderButtonTemplateComponent {
     this.directionIcon = this.defaultIcon;
   }
 
-  public onChangeOrder() {
+  public onChangeDirection() {
     switch (this.direction) {
       case Direction.Ascending: {
         // Currently it is in ascending order
@@ -48,7 +44,7 @@ export class PaginationOrderButtonTemplateComponent {
         this.direction = Direction.Descending;
 
         this.directionIcon = this.descendingIcon;
-        this.descending.emit();
+        this.directionChange.emit(this.direction);
         break;
       }
       case Direction.Descending: {
@@ -57,7 +53,7 @@ export class PaginationOrderButtonTemplateComponent {
         this.direction = Direction.Unsorted;
 
         this.directionIcon = this.defaultIcon;
-        this.unsorted.emit();
+        this.directionChange.emit(this.direction);
         break;
       }
       default: {
@@ -66,7 +62,7 @@ export class PaginationOrderButtonTemplateComponent {
         this.direction = Direction.Ascending;
 
         this.directionIcon = this.ascendingIcon;
-        this.ascending.emit();
+        this.directionChange.emit(this.direction);
         break;
       }
     }

@@ -1,1 +1,1 @@
-<pagination-order-button-template [direction]="direction" [disabled]="disabled" (ascending)="onSortAscending()" (descending)="onSortDescending()" (unsorted)="onSortUnsorted()"></pagination-order-button-template>
+<pagination-order-button-template [direction]="direction" [disabled]="disabled" (directionChange)="onChangeDirection($event)"></pagination-order-button-template>

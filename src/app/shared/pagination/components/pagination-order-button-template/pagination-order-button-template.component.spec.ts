@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Direction } from '../../models/direction';
+import { Direction } from '../../../../core/api/models/direction';
 import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
 
 describe('PaginationOrderButtonTemplateComponent', () => {
@@ -40,58 +40,40 @@ describe('PaginationOrderButtonTemplateComponent', () => {
   // **************************************************************************
 
   it('should send an event to change to ascending direction when clicking for the first time', () => {
-    spyOn(component.ascending, 'emit');
+    spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
 
-    expect(component.ascending.emit).toHaveBeenCalledTimes(1);
-  });
-
-  it('should not send an event to change to descending direction when clicking for the first time', () => {
-    spyOn(component.descending, 'emit');
-
-    const button = fixture.debugElement.query(By.css('button'));
-    button.triggerEventHandler('click');
-
-    expect(component.descending.emit).toHaveBeenCalledTimes(0);
+    expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
+    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Ascending);
   });
 
   it('should send an event to change to descending direction when clicking for the second time', () => {
-    spyOn(component.descending, 'emit');
+    spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');
 
-    expect(component.descending.emit).toHaveBeenCalledTimes(1);
-  });
-
-  it('should not send an additional event to change to ascending direction when clicking for the second time', () => {
-    spyOn(component.ascending, 'emit');
-
-    const button = fixture.debugElement.query(By.css('button'));
-    button.triggerEventHandler('click');
-    button.triggerEventHandler('click');
-
-    expect(component.ascending.emit).toHaveBeenCalledTimes(1);
+    expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
+    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Descending);
   });
 
   it('should go back to unsorted when clicking for the third time', () => {
-    spyOn(component.ascending, 'emit');
-    spyOn(component.descending, 'emit');
+    spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');
 
-    expect(component.ascending.emit).toHaveBeenCalledTimes(1);
-    expect(component.descending.emit).toHaveBeenCalledTimes(1);
+    expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
+    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Unsorted);
   });
 
   it('should send an event to loop back to ascending direction when clicking for the fourth time', () => {
-    spyOn(component.ascending, 'emit');
+    spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
@@ -99,7 +81,8 @@ describe('PaginationOrderButtonTemplateComponent', () => {
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');
 
-    expect(component.ascending.emit).toHaveBeenCalledTimes(2);
+    expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
+    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Ascending);
   });
 
   // **************************************************************************
@@ -107,14 +90,10 @@ describe('PaginationOrderButtonTemplateComponent', () => {
   // **************************************************************************
 
   it('should have the unsorted icon by default', () => {
-    spyOn(component.ascending, 'emit');
-
     expect(component.directionIcon).toEqual(faSort);
   });
 
   it('should change to sort up icon when clicking once', () => {
-    spyOn(component.ascending, 'emit');
-
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
 
@@ -122,8 +101,6 @@ describe('PaginationOrderButtonTemplateComponent', () => {
   });
 
   it('should change to sort down icon when clicking twice', () => {
-    spyOn(component.ascending, 'emit');
-
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');
@@ -132,8 +109,6 @@ describe('PaginationOrderButtonTemplateComponent', () => {
   });
 
   it('should rever to unsorted icon when clicking three times', () => {
-    spyOn(component.ascending, 'emit');
-
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
     button.triggerEventHandler('click');

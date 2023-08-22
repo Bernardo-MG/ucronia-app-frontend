@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationOrderButtonTemplateComponent } from '../pagination-order-button-template/pagination-order-button-template.component';
 import { PaginationOrderButtonComponent } from './pagination-order-button.component';
+import { Direction } from '@app/core/api/models/direction';
 
 describe('PaginationOrderButtonComponent', () => {
   let component: PaginationOrderButtonComponent;
@@ -48,7 +49,7 @@ describe('PaginationOrderButtonComponent', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('unsorted');
+    expect(component.direction).toBe(Direction.Unsorted);
   });
 
   it('should set disabled direction when an empty property is received', () => {
@@ -57,7 +58,7 @@ describe('PaginationOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('unsorted');
+    expect(component.direction).toBe(Direction.Unsorted);
   });
 
   it('should set ascending icon when receiving an ascending property', () => {
@@ -66,7 +67,7 @@ describe('PaginationOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('asc');
+    expect(component.direction).toBe(Direction.Ascending);
   });
 
   it('should set descending icon when receiving a descending property', () => {
@@ -75,7 +76,7 @@ describe('PaginationOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe('desc');
+    expect(component.direction).toBe(Direction.Descending);
   });
 
 });

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Sort } from '@app/core/api/models/sort';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
+import { Direction } from '../../../../core/api/models/direction';
 
 @Component({
   selector: 'pagination-order-button',
@@ -12,7 +13,7 @@ export class PaginationOrderButtonComponent implements OnInit {
 
   @Input() property = '';
 
-  @Input() direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
+  @Input() direction = Direction.Unsorted;
 
   @Input() public disabled = false;
 
@@ -33,32 +34,32 @@ export class PaginationOrderButtonComponent implements OnInit {
       if (p) {
         const propertySort = p.find(s => s.property === this.property);
         if (propertySort) {
-          this.direction = propertySort.order;
+          this.direction = propertySort.order as Direction;
         } else {
-          this.direction = 'unsorted';
+          this.direction = Direction.Unsorted;
         }
       } else {
-        this.direction = 'unsorted';
+        this.direction = Direction.Unsorted;
       }
     });
   }
 
-  public onSortAscending() {
-    this.sort('asc');
-  }
-
-  public onSortDescending() {
-    this.sort('desc');
-  }
-
-  public onSortUnsorted() {
-    this.apiActuator.removeOrder(this.property);
-  }
-
-  private sort(direction: 'asc' | 'desc') {
+  public onChangeDirection(direction: Direction) {
+    let order: 'asc' | 'desc';
+    switch (direction) {
+      case Direction.Ascending:
+        order = 'asc';
+        break;
+      case Direction.Ascending:
+        order = 'desc';
+        break;
+      default:
+        order = 'asc';
+        break;
+    }
     const sort: Sort<any> = {
       property: this.property,
-      order: direction
+      order
     };
 
     this.apiActuator.setOrder(sort);
