@@ -33,11 +33,11 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public error = false;
 
-  public waitingPermissions = false;
+  public readingPermissions = false;
 
-  public waitingActionsSelection = false;
+  public readingActionsSelection = false;
 
-  public waitingResourcesSelection = false;
+  public readingResourcesSelection = false;
 
   public data = new Role();
 
@@ -124,44 +124,44 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onGoToPermissionSelectionPage(page: number) {
-    this.waitingActionsSelection = true;
+    this.readingActionsSelection = true;
     this.service.getActionSelection(page).subscribe(response => {
       this.actionSelection = response.content;
       this.totalActionPages = response.totalPages;
-      this.waitingActionsSelection = false;
+      this.readingActionsSelection = false;
     });
-    this.waitingResourcesSelection = true;
+    this.readingResourcesSelection = true;
     this.service.getResourceSelection(page).subscribe(response => {
       this.resourceSelection = response.content;
       this.totalResourcePages = response.totalPages;
-      this.waitingResourcesSelection = false;
+      this.readingResourcesSelection = false;
     });
   }
 
   public onGoToActionSelectionPage(page: number) {
-    this.waitingActionsSelection = true;
+    this.readingActionsSelection = true;
     this.service.getActionSelection(page).subscribe(response => {
       this.actionSelection = response.content;
       this.totalActionPages = response.totalPages;
-      this.waitingActionsSelection = false;
+      this.readingActionsSelection = false;
     });
   }
 
   public onGoToResourceSelectionPage(page: number) {
-    this.waitingResourcesSelection = true;
+    this.readingResourcesSelection = true;
     this.service.getResourceSelection(page).subscribe(response => {
       this.resourceSelection = response.content;
       this.totalResourcePages = response.totalPages;
-      this.waitingResourcesSelection = false;
+      this.readingResourcesSelection = false;
     });
   }
 
   public onGoToPermissionPage(page: number) {
-    this.waitingPermissions = true;
+    this.readingPermissions = true;
     this.service.getPermissions(this.data.id, page).subscribe(response => {
       this.permissions = response.content;
       this.permissionsPageInfo = response;
-      this.waitingPermissions = false;
+      this.readingPermissions = false;
     });
   }
 

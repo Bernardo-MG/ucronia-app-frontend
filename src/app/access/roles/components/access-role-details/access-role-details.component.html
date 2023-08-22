@@ -14,11 +14,11 @@
   </div>
   <!-- Permissions -->
   <div class="mb-1">
-    <layout-waiting-wrapper [waiting]="waitingPermissions">
+    <layout-waiting-wrapper [waiting]="readingPermissions">
       <div class="card">
         <div class="card-body">
           <!-- Permissions list -->
-          <access-role-permissions (removePermission)="onRemovePermission($event)" [permissions]="permissions">
+          <access-role-permissions [permissions]="permissions" (removePermission)="onRemovePermission($event)">
           </access-role-permissions>
           <!-- Permissions navigation -->
           <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
@@ -29,7 +29,7 @@
     </layout-waiting-wrapper>
   </div>
   <!-- Edit privileges -->
-  <layout-waiting-wrapper [waiting]="waitingActionsSelection || waitingResourcesSelection">
+  <layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
     <div class="card">
       <div class="card-body">
         <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
