@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
 
@@ -9,22 +9,13 @@ import { Direction } from '../../../../core/api/models/direction';
   selector: 'pagination-order-button-template',
   templateUrl: './pagination-order-button-template.component.html'
 })
-export class PaginationOrderButtonTemplateComponent {
+export class PaginationOrderButtonTemplateComponent implements OnChanges {
 
-  private _direction = Direction.Unsorted;
+  @Input() public direction = Direction.Unsorted;
 
-  @Input() set direction(direction: Direction) {
-    this._direction = direction;
-    this.updateDirection();
-  }
+  @Input() public disabled = false;
 
-  get direction() {
-    return this._direction;
-  }
-
-  @Input() disabled = false;
-
-  @Output() directionChange = new EventEmitter<Direction>();
+  @Output() public directionChange = new EventEmitter<Direction>();
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
@@ -32,8 +23,10 @@ export class PaginationOrderButtonTemplateComponent {
 
   public directionIcon = this.defaultIcon;
 
-  constructor() {
-    this.updateDirection();
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['direction']) {
+      this.updateDirection();
+    }
   }
 
   public onChangeDirection() {

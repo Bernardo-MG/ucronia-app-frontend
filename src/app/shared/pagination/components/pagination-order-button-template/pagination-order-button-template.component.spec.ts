@@ -4,6 +4,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
 import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
+import { SimpleChange } from '@angular/core';
 
 describe('PaginationOrderButtonTemplateComponent', () => {
   let component: PaginationOrderButtonTemplateComponent;
@@ -123,6 +124,9 @@ describe('PaginationOrderButtonTemplateComponent', () => {
 
   it('should change to unsorted icon when receiving the unsorted direction', () => {
     component.direction = Direction.Unsorted;
+    component.ngOnChanges({
+      direction: new SimpleChange(null, component.direction, true)
+    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSort);
@@ -130,6 +134,9 @@ describe('PaginationOrderButtonTemplateComponent', () => {
 
   it('should change to sort up icon when receiving the ascending direction', () => {
     component.direction = Direction.Ascending;
+    component.ngOnChanges({
+      direction: new SimpleChange(null, component.direction, true)
+    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortUp);
@@ -137,6 +144,9 @@ describe('PaginationOrderButtonTemplateComponent', () => {
 
   it('should change to sort down icon when receiving the descending direction', () => {
     component.direction = Direction.Descending;
+    component.ngOnChanges({
+      direction: new SimpleChange(null, component.direction, true)
+    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortDown);
