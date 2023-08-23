@@ -72,16 +72,26 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public onGoToPermissionSelectionPage(page: number) {
     this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actionSelection = response.content;
-      this.totalActionPages = response.totalPages;
-      this.readingActionsSelection = false;
+    this.service.getActionSelection(page).subscribe({
+      next: response => {
+        this.actionSelection = response.content;
+        this.totalActionPages = response.totalPages;
+        this.readingActionsSelection = false;
+      },
+      error: error => {
+        this.readingActionsSelection = false;
+      }
     });
     this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resourceSelection = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.readingResourcesSelection = false;
+    this.service.getResourceSelection(page).subscribe({
+      next: response => {
+        this.resourceSelection = response.content;
+        this.totalResourcePages = response.totalPages;
+        this.readingResourcesSelection = false;
+      },
+      error: error => {
+        this.readingResourcesSelection = false;
+      }
     });
   }
 
