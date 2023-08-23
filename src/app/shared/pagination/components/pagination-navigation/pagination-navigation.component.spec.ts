@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
 import { PaginationNavigationComponent } from './pagination-navigation.component';
+import { SimpleChange } from '@angular/core';
 
 describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;
@@ -38,6 +39,10 @@ describe('PaginationNavigationComponent', () => {
 
   it('should not change the current page when going to a page', () => {
     component.current = 1;
+    component.ngOnChanges({
+      current: new SimpleChange(null, component.current, true)
+    });
+    fixture.detectChanges();
 
     component.onGoTo(5);
     expect(component.current).toEqual(1);
@@ -73,6 +78,23 @@ describe('PaginationNavigationComponent', () => {
     component.pages = 10;
 
     expect(component.isForwardDisabled()).toEqual(false);
+  });
+
+  // **************************************************************************
+  // Ranges
+  // **************************************************************************
+
+  it('should change the ranges when setting current pages and total pages', () => {
+    component.current = 1;
+    component.pages = 10;
+    component.ngOnChanges({
+      current: new SimpleChange(null, component.current, true)
+    });
+    fixture.detectChanges();
+
+    expect(component.left).toEqual([1, 2, 3]);
+    expect(component.center).toEqual([]);
+    expect(component.right).toEqual([8, 9, 10]);
   });
 
 });

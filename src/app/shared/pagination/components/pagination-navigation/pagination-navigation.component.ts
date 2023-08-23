@@ -46,10 +46,12 @@ export class PaginationNavigationComponent implements OnChanges {
   public right: number[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    const ranges = new PaginationRanges(this.current, this.pages);
-    this.left = ranges.left;
-    this.center = ranges.center;
-    this.right = ranges.right;
+    if ((changes['current']) || (changes['pages'])) {
+      const ranges = new PaginationRanges(this.current, this.pages);
+      this.left = ranges.left;
+      this.center = ranges.center;
+      this.right = ranges.right;
+    }
   }
 
   /**
