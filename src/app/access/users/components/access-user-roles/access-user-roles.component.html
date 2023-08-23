@@ -1,4 +1,4 @@
-<layout-waiting-wrapper [waiting]="waitingRoles">
+<layout-waiting-wrapper [waiting]="readingRoles">
   <!-- Roles -->
   <table class="table">
     <thead>
@@ -25,8 +25,10 @@
   </table>
   <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages" (goTo)="loadRoles($event)">
   </pagination-navigation>
-  <!-- Add rol -->
-  <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo" (goTo)="loadRoleSelectionPage($event)"
-    [roles]="roleSelection">
+</layout-waiting-wrapper>
+<layout-waiting-wrapper [waiting]="readingSelection">
+  <!-- Add role -->
+  <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
+    (goTo)="loadRoleSelectionPage($event)" [roles]="roleSelection">
   </access-user-role-selection>
 </layout-waiting-wrapper>

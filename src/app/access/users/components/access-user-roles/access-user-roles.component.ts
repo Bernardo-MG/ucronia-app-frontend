@@ -16,11 +16,13 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public roles: Role[] = [];
 
-  public waitingRoles = false;
+  public roleSelection: Role[] = [];
+
+  public readingRoles = false;
+
+  public readingSelection = false;
 
   public rolesPageInfo = new PageInfo();
-
-  public roleSelection: Role[] = [];
 
   public roleSelectionPageInfo = new PageInfo();
 
@@ -48,19 +50,31 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public loadRoleSelectionPage(page: number) {
-    this.service.getRoleSelection(page).subscribe(response => {
-      this.roleSelection = response.content;
-      this.roleSelectionPageInfo = response;
+    this.readingSelection = true;
+    this.service.getRoleSelection(page).subscribe({
+      next: response => {
+        this.roleSelection = response.content;
+        this.roleSelectionPageInfo = response;
+        this.readingSelection = false;
+      },
+      error: error => {
+        this.readingSelection = false;
+      }
     });
   }
 
   public loadRoles(page: number) {
-    this.waitingRoles = true;
-    this.service.getRoles(this.userId, page).subscribe(response => {
-      this.roles = response.content;
-      this.rolesPageInfo = response;
-      this.rolesPageInfo.page = this.rolesPageInfo.page + 1;
-      this.waitingRoles = false;
+    this.readingRoles = true;
+    this.service.getRoles(this.userId, page).subscribe({
+      next: response => {
+        this.roles = response.content;
+        this.rolesPageInfo = response;
+        this.rolesPageInfo.page = this.rolesPageInfo.page + 1;
+        this.readingRoles = false;
+      },
+      error: error => {
+        this.readingRoles = false;
+      }
     });
   }
 
