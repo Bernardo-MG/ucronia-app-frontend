@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageInfo } from '@app/core/api/models/page-info';
 import { Role } from '@app/core/authentication/models/role';
 
@@ -6,7 +6,7 @@ import { Role } from '@app/core/authentication/models/role';
   selector: 'access-user-role-selection',
   templateUrl: './access-user-role-selection.component.html'
 })
-export class AccessUserRoleSelectionComponent implements OnInit {
+export class AccessUserRoleSelectionComponent {
 
   @Input() public roles: Role[] = [];
 
@@ -15,10 +15,6 @@ export class AccessUserRoleSelectionComponent implements OnInit {
   @Output() public selectRole = new EventEmitter<Role>();
 
   @Output() public goTo = new EventEmitter<number>();
-
-  public ngOnInit(): void {
-    this.goTo.emit(0);
-  }
 
   public onSelect(role: Role) {
     this.selectRole.emit(role);

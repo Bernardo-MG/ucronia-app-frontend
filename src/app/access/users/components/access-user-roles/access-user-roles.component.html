@@ -28,7 +28,7 @@
 </layout-waiting-wrapper>
 <layout-waiting-wrapper [waiting]="readingSelection">
   <!-- Add role -->
-  <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
-    (goTo)="loadRoleSelectionPage($event)" [roles]="roleSelection">
+  <access-user-role-selection [roles]="roleSelection" [pageInfo]="rolesPageInfo" (selectRole)="onAddRole($event)"
+    (goTo)="loadRoleSelectionPage($event)">
   </access-user-role-selection>
 </layout-waiting-wrapper>
