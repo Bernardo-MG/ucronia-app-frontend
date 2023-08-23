@@ -6,10 +6,10 @@ import { Direction } from '../../../../core/api/models/direction';
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-  selector: 'pagination-order-button-template',
-  templateUrl: './pagination-order-button-template.component.html'
+  selector: 'pagination-order-button',
+  templateUrl: './pagination-order-button.component.html'
 })
-export class PaginationOrderButtonTemplateComponent implements OnChanges {
+export class PaginationOrderButtonComponent implements OnChanges {
 
   @Input() public direction = Direction.Unsorted;
 
@@ -58,4 +58,5 @@ export class PaginationOrderButtonTemplateComponent implements OnChanges {
         break;
     }
   }
+
 }

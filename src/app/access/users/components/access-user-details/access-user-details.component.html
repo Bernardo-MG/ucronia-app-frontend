@@ -5,8 +5,8 @@
     <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
       [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
       <!-- Form -->
-      <access-user-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username" [data]="data" [failures]="failures"
-        (save)="onSave($event)">
+      <access-user-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username"
+        [data]="data" [failures]="failures" (save)="onSave($event)">
       </access-user-edit-form>
       <!-- Info -->
       <access-user-info id="info" [data]="data"></access-user-info>
@@ -14,24 +14,11 @@
   </div>
   <!-- Roles -->
   <div class="mb-1">
-    <layout-waiting-wrapper [waiting]="waitingRoles">
-      <div class="card">
-        <div class="card-body">
-          <access-user-roles (removeRole)="onRemoveRole($event)" [roles]="roles">
-          </access-user-roles>
-          <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages"
-            (goTo)="onGoToRolePage($event)">
-          </pagination-navigation>
-        </div>
+    <div class="card">
+      <div class="card-body">
+        <access-user-roles [userId]="data.id">
+        </access-user-roles>
       </div>
-    </layout-waiting-wrapper>
-  </div>
-  <!-- Role selection -->
-  <div class="card">
-    <div class="card-body">
-      <access-user-role-selection (selectRole)="onAddRole($event)" [pageInfo]="rolesPageInfo"
-        (goToPage)="onGoToRoleSelectionPage($event)" [roles]="roleSelection">
-      </access-user-role-selection>
     </div>
   </div>
 </layout-article>

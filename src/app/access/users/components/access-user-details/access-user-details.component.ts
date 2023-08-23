@@ -33,19 +33,7 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public waitingRoles = false;
-
   public data = new User();
-
-  public formValid = false;
-
-  public roles: Role[] = [];
-
-  public roleSelection: Role[] = [];
-
-  public roleSelectionPageInfo = new PageInfo();
-
-  public rolesPageInfo = new PageInfo();
 
   constructor(
     private route: ActivatedRoute,
@@ -97,37 +85,8 @@ export class AccessUserDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
   public onFormChange(value: User) {
     this.data = value;
-  }
-
-  public onAddRole(data: Role): void {
-    this.service.addRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
-  }
-
-  public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
-  }
-
-  public onGoToRoleSelectionPage(page: number) {
-    this.service.getRoleSelection(page).subscribe(response => {
-      this.roleSelection = response.content;
-      this.roleSelectionPageInfo = response;
-    });
-  }
-
-  public onGoToRolePage(page: number) {
-    this.waitingRoles = true;
-    this.service.getRoles(this.data.id, page).subscribe(response => {
-      this.roles = response.content;
-      this.rolesPageInfo = response;
-      this.rolesPageInfo.page = this.rolesPageInfo.page + 1;
-      this.waitingRoles = false;
-    });
   }
 
   private load(id: string | null): void {
@@ -138,7 +97,6 @@ export class AccessUserDetailsComponent implements OnInit {
         .subscribe({
           next: d => {
             this.data = d;
-            this.onGoToRolePage(0);
             this.reading = false;
           },
           error: error => {

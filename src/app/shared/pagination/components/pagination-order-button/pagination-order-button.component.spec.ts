@@ -1,14 +1,14 @@
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
-import { PaginationOrderButtonTemplateComponent } from './pagination-order-button-template.component';
-import { SimpleChange } from '@angular/core';
+import { PaginationOrderButtonComponent } from './pagination-order-button.component';
 
-describe('PaginationOrderButtonTemplateComponent', () => {
-  let component: PaginationOrderButtonTemplateComponent;
-  let fixture: ComponentFixture<PaginationOrderButtonTemplateComponent>;
+describe('PaginationOrderButtonComponent', () => {
+  let component: PaginationOrderButtonComponent;
+  let fixture: ComponentFixture<PaginationOrderButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,14 +16,14 @@ describe('PaginationOrderButtonTemplateComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        PaginationOrderButtonTemplateComponent
+        PaginationOrderButtonComponent
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationOrderButtonTemplateComponent);
+    fixture = TestBed.createComponent(PaginationOrderButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

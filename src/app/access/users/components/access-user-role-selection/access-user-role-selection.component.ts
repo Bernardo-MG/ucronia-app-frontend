@@ -14,10 +14,10 @@ export class AccessUserRoleSelectionComponent implements OnInit {
 
   @Output() public selectRole = new EventEmitter<Role>();
 
-  @Output() public goToPage = new EventEmitter<number>();
+  @Output() public goTo = new EventEmitter<number>();
 
   public ngOnInit(): void {
-    this.goToPage.emit(0);
+    this.goTo.emit(0);
   }
 
   public onSelect(role: Role) {
@@ -25,7 +25,7 @@ export class AccessUserRoleSelectionComponent implements OnInit {
   }
 
   public onGoToPage(page: number) {
-    this.goToPage.emit(page);
+    this.goTo.emit(page);
   }
 
 }
