@@ -14,29 +14,12 @@
   </div>
   <!-- Permissions -->
   <div class="mb-1">
-    <layout-waiting-wrapper [waiting]="readingPermissions">
-      <div class="card">
-        <div class="card-body">
-          <!-- Permissions list -->
-          <access-role-permissions [permissions]="permissions" (removePermission)="onRemovePermission($event)">
-          </access-role-permissions>
-          <!-- Permissions navigation -->
-          <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
-            (goTo)="onGoToPermissionPage($event)">
-          </pagination-navigation>
-        </div>
-      </div>
-    </layout-waiting-wrapper>
-  </div>
-  <!-- Edit privileges -->
-  <layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
     <div class="card">
       <div class="card-body">
-        <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
-          [resources]="resourceSelection" [totalResourcePages]="totalResourcePages"
-          (addPermission)="onAddPermission($event)" (goToActionPage)="onGoToActionSelectionPage($event)"
-          (goToResourcePage)="onGoToResourceSelectionPage($event)"></access-role-add-permission>
+        <!-- Permissions list -->
+        <access-role-permissions [roleId]="data.id">
+        </access-role-permissions>
       </div>
     </div>
-  </layout-waiting-wrapper>
+  </div>
 </layout-article>

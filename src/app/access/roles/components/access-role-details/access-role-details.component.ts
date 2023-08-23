@@ -33,27 +33,7 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public error = false;
 
-  public readingPermissions = false;
-
-  public readingActionsSelection = false;
-
-  public readingResourcesSelection = false;
-
   public data = new Role();
-
-  public formValid = false;
-
-  public permissions: Permission[] = [];
-
-  public actionSelection: Action[] = [];
-
-  public totalActionPages = 0;
-
-  public resourceSelection: Resource[] = [];
-
-  public totalResourcePages = 0;
-
-  public permissionsPageInfo = new PageInfo();
 
   public failures: { [key: string]: Failure[] } = {};
 
@@ -107,63 +87,8 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
   public onFormChange(value: Role) {
     this.data = value;
-  }
-
-  public onAddPermission(permission: Permission): void {
-    this.service.addPermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
-  }
-
-  public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
-  }
-
-  public onGoToPermissionSelectionPage(page: number) {
-    this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actionSelection = response.content;
-      this.totalActionPages = response.totalPages;
-      this.readingActionsSelection = false;
-    });
-    this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resourceSelection = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.readingResourcesSelection = false;
-    });
-  }
-
-  public onGoToActionSelectionPage(page: number) {
-    this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actionSelection = response.content;
-      this.totalActionPages = response.totalPages;
-      this.readingActionsSelection = false;
-    });
-  }
-
-  public onGoToResourceSelectionPage(page: number) {
-    this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resourceSelection = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.readingResourcesSelection = false;
-    });
-  }
-
-  public onGoToPermissionPage(page: number) {
-    this.readingPermissions = true;
-    this.service.getPermissions(this.data.id, page).subscribe(response => {
-      this.permissions = response.content;
-      this.permissionsPageInfo = response;
-      this.permissionsPageInfo.page = this.permissionsPageInfo.page + 1;
-      this.readingPermissions = false;
-    });
   }
 
   private load(id: string | null): void {
@@ -172,9 +97,8 @@ export class AccessRoleDetailsComponent implements OnInit {
       this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
-          next: d => {
-            this.data = d;
-            this.onGoToPermissionPage(0);
+          next: response => {
+            this.data = response;
             this.reading = false;
           },
           error: error => {
