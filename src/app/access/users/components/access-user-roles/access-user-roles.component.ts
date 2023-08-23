@@ -3,6 +3,8 @@ import { Direction } from '@app/core/api/models/direction';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
 import { PageInfo } from '@app/core/api/models/page-info';
+import { Sort } from '@app/core/api/models/sort';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-user-roles',
@@ -11,8 +13,6 @@ import { PageInfo } from '@app/core/api/models/page-info';
 export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public userId = -1;
-
-  @Output() public nameDirectionChange = new EventEmitter<Direction>();
 
   public roles: Role[] = [];
 
@@ -26,6 +26,8 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public roleSelectionPageInfo = new PageInfo();
 
+  private sort: Sort<Role>[] | undefined = undefined;
+
   constructor(
     private service: AccessUserService
   ) { }
@@ -38,7 +40,15 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onChangeNameDirection(direction: Direction) {
-    this.nameDirectionChange.emit(direction);
+    let nameSort;
+
+    nameSort = new Sort<Role>('name');
+    if (direction === Direction.Descending) {
+      nameSort.order = 'desc';
+    }
+
+    this.sort = [nameSort];
+    this.loadRoleSelectionPage(0);
   }
 
   public onRemoveRole(data: Role): void {
@@ -50,8 +60,12 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public loadRoleSelectionPage(page: number) {
+    const pagination = new PaginationRequest();
+    pagination.page = page;
+    pagination.sort = this.sort;
+
     this.readingSelection = true;
-    this.service.getRoleSelection(page).subscribe({
+    this.service.getRoleSelection(pagination).subscribe({
       next: response => {
         this.roleSelection = response.content;
         this.roleSelectionPageInfo = response;
