@@ -11,11 +11,11 @@ import { Direction } from '../../../../core/api/models/direction';
 })
 export class PaginationRouteOrderButtonComponent implements OnInit {
 
-  @Input() property = '';
-
-  @Input() direction = Direction.Unsorted;
+  @Input() public property = '';
 
   @Input() public disabled = false;
+
+  public direction = Direction.Unsorted;
 
   private routeActuator: RouteApiActuator;
 
