@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { PageInfo } from '@app/core/api/models/page-info';
-import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
