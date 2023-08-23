@@ -15,7 +15,7 @@
       <ng-template ngFor let-privilege [ngForOf]="permissions">
         <tr>
           <td>
-            <button (click)="onRemove(privilege)" type="button" class="btn btn-default" role="button" aria-label="Back">
+            <button (click)="onRemovePermission(privilege)" type="button" class="btn btn-default" role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>

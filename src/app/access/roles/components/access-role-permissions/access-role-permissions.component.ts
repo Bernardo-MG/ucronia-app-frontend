@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PageInfo } from '@app/core/api/models/page-info';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
@@ -12,8 +12,6 @@ import { AccessRoleService } from '../../services/access-role.service';
 export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public roleId = -1;
-
-  @Output() public removePermission = new EventEmitter<Permission>();
 
   public permissions: Permission[] = [];
 
@@ -40,11 +38,8 @@ export class AccessRolePermissionsComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roleId']) {
       this.loadPermissions(0);
+      this.loadPermissionSelectionPage(0);
     }
-  }
-
-  public onRemove(permission: Permission) {
-    this.removePermission.emit(permission);
   }
 
   public loadPermissions(page: number) {
@@ -70,7 +65,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
     this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => this.loadPermissions(0));
   }
 
-  public onGoToPermissionSelectionPage(page: number) {
+  public loadPermissionSelectionPage(page: number) {
     this.readingActionsSelection = true;
     this.service.getActionSelection(page).subscribe({
       next: response => {
