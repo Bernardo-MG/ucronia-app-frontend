@@ -4,12 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationOrderButtonTemplateComponent } from '../pagination-order-button-template/pagination-order-button-template.component';
-import { PaginationOrderButtonComponent } from './pagination-order-button.component';
+import { PaginationRouteOrderButtonComponent } from './pagination-route-order-button.component';
 import { Direction } from '@app/core/api/models/direction';
 
-describe('PaginationOrderButtonComponent', () => {
-  let component: PaginationOrderButtonComponent;
-  let fixture: ComponentFixture<PaginationOrderButtonComponent>;
+describe('PaginationRouteOrderButtonComponent', () => {
+  let component: PaginationRouteOrderButtonComponent;
+  let fixture: ComponentFixture<PaginationRouteOrderButtonComponent>;
   const activatedRouteQueryParams = new BehaviorSubject(convertToParamMap({}));
 
   beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('PaginationOrderButtonComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        PaginationOrderButtonComponent,
+        PaginationRouteOrderButtonComponent,
         PaginationOrderButtonTemplateComponent
       ],
       providers: [
@@ -35,7 +35,7 @@ describe('PaginationOrderButtonComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationOrderButtonComponent);
+    fixture = TestBed.createComponent(PaginationRouteOrderButtonComponent);
     component = fixture.componentInstance;
     component.property = 'property';
     fixture.detectChanges();

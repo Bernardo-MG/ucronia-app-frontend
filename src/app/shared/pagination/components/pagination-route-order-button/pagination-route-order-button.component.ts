@@ -6,10 +6,10 @@ import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-rou
 import { Direction } from '../../../../core/api/models/direction';
 
 @Component({
-  selector: 'pagination-order-button',
-  templateUrl: './pagination-order-button.component.html'
+  selector: 'pagination-route-order-button',
+  templateUrl: './pagination-route-order-button.component.html'
 })
-export class PaginationOrderButtonComponent implements OnInit {
+export class PaginationRouteOrderButtonComponent implements OnInit {
 
   @Input() property = '';
 
