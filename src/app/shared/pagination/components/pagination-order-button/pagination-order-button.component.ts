@@ -50,7 +50,7 @@ export class PaginationOrderButtonComponent implements OnInit {
       case Direction.Ascending:
         order = 'asc';
         break;
-      case Direction.Ascending:
+      case Direction.Descending:
         order = 'desc';
         break;
       default:
