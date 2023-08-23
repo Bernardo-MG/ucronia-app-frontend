@@ -11,81 +11,55 @@ import { Direction } from '../../../../core/api/models/direction';
 })
 export class PaginationOrderButtonTemplateComponent {
 
-  public _direction = Direction.Unsorted;
+  private _direction = Direction.Unsorted;
 
-  @Input() public set direction(direction: Direction) {
+  @Input() set direction(direction: Direction) {
     this._direction = direction;
     this.updateDirection();
   }
 
-  public get direction() {
+  get direction() {
     return this._direction;
   }
 
-  @Input() public disabled = false;
+  @Input() disabled = false;
 
-  @Output() public directionChange = new EventEmitter<Direction>();
-
-  public directionIcon;
+  @Output() directionChange = new EventEmitter<Direction>();
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
   private defaultIcon = faSort;
 
+  public directionIcon = this.defaultIcon;
+
   constructor() {
-    this.directionIcon = this.defaultIcon;
+    this.updateDirection();
   }
 
   public onChangeDirection() {
-    switch (this.direction) {
-      case Direction.Ascending: {
-        // Currently it is in ascending order
-        // Switching to descending order
-        this.direction = Direction.Descending;
-
-        this.directionIcon = this.descendingIcon;
-        this.directionChange.emit(this.direction);
-        break;
-      }
-      case Direction.Descending: {
-        // Currently it is in descending order
-        // Switching to unsorted order
-        this.direction = Direction.Unsorted;
-
-        this.directionIcon = this.defaultIcon;
-        this.directionChange.emit(this.direction);
-        break;
-      }
-      default: {
-        // Any other case
-        // Switching to ascending order
-        this.direction = Direction.Ascending;
-
-        this.directionIcon = this.ascendingIcon;
-        this.directionChange.emit(this.direction);
-        break;
-      }
+    if (this.direction === Direction.Ascending) {
+      this.direction = Direction.Descending;
+    } else if (this.direction === Direction.Descending) {
+      this.direction = Direction.Unsorted;
+    } else {
+      this.direction = Direction.Ascending;
     }
+
+    this.directionChange.emit(this.direction);
+    this.updateDirection();
   }
 
   private updateDirection() {
-    // Pick icon based on direction
     switch (this.direction) {
-      case Direction.Ascending: {
-        // Ascending
+      case Direction.Ascending:
         this.directionIcon = this.ascendingIcon;
         break;
-      }
-      case Direction.Descending: {
-        // Descending
+      case Direction.Descending:
         this.directionIcon = this.descendingIcon;
         break;
-      }
-      default: {
-        // Unsorted
+      default:
         this.directionIcon = this.defaultIcon;
-      }
+        break;
     }
   }
-
 }
