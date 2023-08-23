@@ -7,7 +7,6 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
-import { AccessUserRoleSelectionComponent } from '../../components/access-user-role-selection/access-user-role-selection.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserEditFormComponent } from '../access-user-edit-form/access-user-edit-form.component';
@@ -32,8 +31,7 @@ describe('AccessUserDetailsComponent', () => {
         AccessUserDetailsComponent,
         AccessUserEditFormComponent,
         AccessUserRoleFormComponent,
-        AccessUserInfoComponent,
-        AccessUserRoleSelectionComponent
+        AccessUserInfoComponent
       ],
       providers: [
         AccessUserService
