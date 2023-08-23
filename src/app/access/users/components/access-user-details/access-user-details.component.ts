@@ -83,10 +83,6 @@ export class AccessUserDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormChange(value: User) {
-    this.data = value;
-  }
-
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);

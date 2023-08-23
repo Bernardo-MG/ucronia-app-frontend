@@ -87,10 +87,6 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormChange(value: Role) {
-    this.data = value;
-  }
-
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
