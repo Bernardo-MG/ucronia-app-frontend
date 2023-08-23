@@ -17,7 +17,7 @@ export class PaginationOrderButtonComponent implements OnInit {
 
   @Input() public disabled = false;
 
-  private apiActuator: RouteApiActuator;
+  private routeActuator: RouteApiActuator;
 
   private sortObserver: SortRouteObserver;
 
@@ -25,7 +25,7 @@ export class PaginationOrderButtonComponent implements OnInit {
     router: Router,
     route: ActivatedRoute
   ) {
-    this.apiActuator = new RouteApiActuator(router);
+    this.routeActuator = new RouteApiActuator(router);
     this.sortObserver = new SortRouteObserver(route);
   }
 
@@ -62,7 +62,7 @@ export class PaginationOrderButtonComponent implements OnInit {
       order
     };
 
-    this.apiActuator.setOrder(sort);
+    this.routeActuator.setOrder(sort);
   }
 
 }
