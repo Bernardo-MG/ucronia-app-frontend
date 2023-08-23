@@ -38,10 +38,13 @@ export class PaginationOrderButtonTemplateComponent {
 
   public onChangeDirection() {
     if (this.direction === Direction.Ascending) {
+      // Ascending -> descending
       this.direction = Direction.Descending;
     } else if (this.direction === Direction.Descending) {
+      // Descending -> unsorted
       this.direction = Direction.Unsorted;
     } else {
+      // Unsorted -> ascending
       this.direction = Direction.Ascending;
     }
 
