@@ -13,6 +13,10 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public roleId = -1;
 
+  @Input() public editable = false;
+
+  @Input() public deletable = false;
+
   public permissions: Permission[] = [];
 
   public actionSelection: Action[] = [];
