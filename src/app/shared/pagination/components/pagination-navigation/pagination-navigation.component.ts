@@ -45,12 +45,27 @@ export class PaginationNavigationComponent implements OnChanges {
    */
   public right: number[] = [];
 
+  /**
+   * Invalid status flag. Disables the component if the inputs are incoherent.
+   */
+  public invalid = false;
+
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
-      const ranges = new PaginationRanges(this.current, this.pages);
-      this.left = ranges.left;
-      this.center = ranges.center;
-      this.right = ranges.right;
+      this.invalid = ((this.current < 1) || (this.current > this.pages));
+
+      if (this.invalid) {
+        // Invalid inputs
+        // Can't show meaningful ranges
+        this.left = [];
+        this.center = [];
+        this.right = [];
+      } else {
+        const ranges = new PaginationRanges(this.current, this.pages);
+        this.left = ranges.left;
+        this.center = ranges.center;
+        this.right = ranges.right;
+      }
     }
   }
 
@@ -67,7 +82,7 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the backward button should be disabled, false otherwise
    */
   public isBackwardDisabled(): boolean {
-    return (this.current <= 1);
+    return ((this.invalid) || (this.current <= 1));
   }
 
   /**
@@ -76,7 +91,7 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the forward button should be disabled, false otherwise
    */
   public isForwardDisabled(): boolean {
-    return (this.current >= this.pages);
+    return ((this.invalid) || (this.current >= this.pages));
   }
 
 }
