@@ -67,6 +67,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
       next: response => {
         this.roleSelection = response.content;
         this.roleSelectionPageInfo = response;
+        this.roleSelectionPageInfo.page = this.roleSelectionPageInfo.page + 1;
         this.readingSelection = false;
       },
       error: error => {
