@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberFormComponent } from '../../components/member-form/member-form.component';
+import { MemberEditionFormComponent } from '../member-edit-form/member-edit-form.component';
 import { MemberInfoComponent } from '../../components/member-info/member-info.component';
 import { MemberService } from '../../services/member.service';
 import { MemberDetailsComponent } from './member-details.component';
@@ -24,7 +24,7 @@ describe('MemberDetailsComponent', () => {
       ],
       declarations: [
         MemberDetailsComponent,
-        MemberFormComponent,
+        MemberEditionFormComponent,
         MemberInfoComponent
       ],
       providers: [

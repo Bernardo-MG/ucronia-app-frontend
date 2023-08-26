@@ -6,10 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class EditionWrapperComponent {
 
-  /**
-   * Saving flag.
-   */
-  @Input() public saving = false;
+  @Input() public waiting = false;
 
   @Input() public editable = false;
 
@@ -32,11 +29,11 @@ export class EditionWrapperComponent {
   }
 
   public isAbleToEdit() {
-    return (!this.error) && !this.saving && this.editable && this.editing;
+    return (!this.error) && (!this.waiting) && this.editable && this.editing;
   }
 
   public isAbleToDelete() {
-    return (!this.error) && !this.saving && this.deletable && !this.editing;
+    return (!this.error) && (!this.waiting) && this.deletable && (!this.editing);
   }
 
 }

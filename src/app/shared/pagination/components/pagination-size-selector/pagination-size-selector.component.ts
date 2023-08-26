@@ -15,7 +15,7 @@ export class PaginationSizeSelectorComponent implements OnInit {
 
   @Input() public disabled = false;
 
-  private apiActuator: RouteApiActuator;
+  private routeActuator: RouteApiActuator;
 
   private routePaginationObserver: PaginationRouteObserver;
 
@@ -23,7 +23,7 @@ export class PaginationSizeSelectorComponent implements OnInit {
     router: Router,
     route: ActivatedRoute
   ) {
-    this.apiActuator = new RouteApiActuator(router);
+    this.routeActuator = new RouteApiActuator(router);
     this.routePaginationObserver = new PaginationRouteObserver(route);
   }
 
@@ -36,7 +36,7 @@ export class PaginationSizeSelectorComponent implements OnInit {
   }
 
   public onSelect(size: number) {
-    this.apiActuator.setPageSize(size);
+    this.routeActuator.setPageSize(size);
   }
 
 }

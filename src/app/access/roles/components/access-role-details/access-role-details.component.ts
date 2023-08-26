@@ -16,6 +16,11 @@ import { AccessRoleService } from '../../services/access-role.service';
 export class AccessRoleDetailsComponent implements OnInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
@@ -26,34 +31,9 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public deletePermission = false;
 
-  /**
-   * Loading flag.
-   */
-  public waiting = false;
-
   public error = false;
 
-  public waitingPermissions = false;
-
-  public waitingActionsSelection = false;
-
-  public waitingResourcesSelection = false;
-
   public data = new Role();
-
-  public formValid = false;
-
-  public permissions: Permission[] = [];
-
-  public actionSelection: Action[] = [];
-
-  public totalActionPages = 0;
-
-  public resourceSelection: Resource[] = [];
-
-  public totalResourcePages = 0;
-
-  public permissionsPageInfo = new PageInfo();
 
   public failures: { [key: string]: Failure[] } = {};
 
@@ -107,77 +87,19 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: Role) {
-    this.data = value;
-  }
-
-  public onAddPermission(permission: Permission): void {
-    this.service.addPermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
-  }
-
-  public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.data.id, permission.resourceId, permission.actionId).subscribe(p => this.onGoToPermissionPage(0));
-  }
-
-  public onGoToPermissionSelectionPage(page: number) {
-    this.waitingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actionSelection = response.content;
-      this.totalActionPages = response.totalPages;
-      this.waitingActionsSelection = false;
-    });
-    this.waitingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resourceSelection = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.waitingResourcesSelection = false;
-    });
-  }
-
-  public onGoToActionSelectionPage(page: number) {
-    this.waitingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actionSelection = response.content;
-      this.totalActionPages = response.totalPages;
-      this.waitingActionsSelection = false;
-    });
-  }
-
-  public onGoToResourceSelectionPage(page: number) {
-    this.waitingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resourceSelection = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.waitingResourcesSelection = false;
-    });
-  }
-
-  public onGoToPermissionPage(page: number) {
-    this.waitingPermissions = true;
-    this.service.getPermissions(this.data.id, page).subscribe(response => {
-      this.permissions = response.content;
-      this.permissionsPageInfo = response;
-      this.waitingPermissions = false;
-    });
-  }
-
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
+      this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
-          next: d => {
-            this.data = d;
-            this.onGoToPermissionPage(0);
-            this.waiting = false;
+          next: response => {
+            this.data = response;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
             this.error = true;
+            this.reading = false;
           }
         });
     }
@@ -189,6 +111,10 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }

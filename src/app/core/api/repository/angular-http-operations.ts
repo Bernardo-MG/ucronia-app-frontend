@@ -123,6 +123,8 @@ export class AngularHttpOperations implements HttpOperations {
       if (paged) {
         this.options = { params: params };
       }
+
+      this.sort(pagination.sort);
     }
 
     return this;

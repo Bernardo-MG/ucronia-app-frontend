@@ -6,7 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
-import { FeeCreationFormComponent } from '../fee-creation-form/fee-creation-form.component';
+import { FeeCreateFormComponent } from '../fee-create-form/fee-create-form.component';
 import { FeeCreateComponent } from './fee-create.component';
 
 describe('FeeCreateComponent', () => {
@@ -30,7 +30,7 @@ describe('FeeCreateComponent', () => {
       declarations: [
         FeeCreateComponent,
         MemberSelectionComponent,
-        FeeCreationFormComponent
+        FeeCreateFormComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }

@@ -12,13 +12,16 @@ import { TransactionService } from '../../service/transaction.service';
 export class TransactionDetailsComponent implements OnInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
 
   public editing = false;
-
-  public waiting = false;
 
   public editPermission = false;
 
@@ -82,24 +85,28 @@ export class TransactionDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      this.waiting = true;
+      this.reading = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
-      .subscribe({
-        next: d => {
-          this.data = d;
-          this.waiting = false;
-        },
-        error: error => {
-          this.waiting = false;
-          this.error = true;
-        }
-      });
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.reading = false;
+          },
+          error: error => {
+            this.reading = false;
+            this.error = true;
+          }
+        });
     }
   }
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }
