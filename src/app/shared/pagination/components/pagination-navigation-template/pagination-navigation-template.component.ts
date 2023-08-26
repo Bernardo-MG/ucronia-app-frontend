@@ -97,7 +97,9 @@ export class PaginationNavigationTemplateComponent {
    * Sends a "go to page" event for selected page.
    */
   public onGoTo(page: number) {
-    this.goTo.emit(page);
+    if (this.current != page) {
+      this.goTo.emit(page);
+    }
   }
 
   /**
