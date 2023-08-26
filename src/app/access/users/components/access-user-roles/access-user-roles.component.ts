@@ -14,6 +14,10 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public userId = -1;
 
+  @Input() public editable = false;
+
+  @Input() public deletable = false;
+
   public roles: Role[] = [];
 
   public roleSelection: Role[] = [];
