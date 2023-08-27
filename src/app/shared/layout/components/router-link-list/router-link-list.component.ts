@@ -14,4 +14,10 @@ export class RouterLinkListComponent {
 
   @Input() public route = '';
 
+  @Input() public routeParser = (row: TableRow) => this.getRoute(row);
+
+  public getRoute(row: TableRow) {
+    return `${this.route}/${row.id}`;
+  }
+
 }

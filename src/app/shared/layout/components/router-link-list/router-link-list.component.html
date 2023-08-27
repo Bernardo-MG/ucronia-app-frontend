@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of rows" role="button" routerLink="{{route}}/{{row.id}}">
+    <tr *ngFor="let row of rows" role="button" routerLink="{{getRoute(row)}}">
       <!-- Data cells -->
       <td *ngFor="let cell of row.cells">
         {{cell}}
