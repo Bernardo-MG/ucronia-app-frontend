@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Member } from '@app/association/models/member';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
-import { TableRow } from '@app/shared/layout/models/table-row';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MemberService } from '../../services/member.service';
-import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-member-list',
   templateUrl: './member-list.component.html'
 })
 export class MemberListComponent implements OnInit {
+
+  public members: Member[] = [];
 
   /**
    * Loading flag.
@@ -23,12 +24,8 @@ export class MemberListComponent implements OnInit {
 
   public totalPages = 0;
 
-  public header: TableHeaderCell[] = [];
-
-  public rows: TableRow[] = [];
-
   private routePaginationObserver: PaginationRequestRouteObserver;
-  
+
   public addIcon = faPlus;
 
   constructor(
@@ -43,8 +40,6 @@ export class MemberListComponent implements OnInit {
     // Check permissions
     this.createPermission = this.authService.hasPermission("member", "create");
 
-    this.header = [{ name: 'Name', property: 'name' }, { name: 'Surname', property: 'surname' }, { name: 'Active', property: 'active' }];
-
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
@@ -54,14 +49,7 @@ export class MemberListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-        const members = page.content;
-
-        this.rows = members.map(m => {
-          return {
-            id: m.id,
-            cells: [m.name, m.surname, m.active]
-          };
-        });
+        this.members = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view
