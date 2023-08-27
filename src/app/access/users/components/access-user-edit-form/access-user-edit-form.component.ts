@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { User } from '@app/core/authentication/models/user';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'access-user-form',
-  templateUrl: './access-user-form.component.html'
+  selector: 'access-user-edit-form',
+  templateUrl: './access-user-edit-form.component.html'
 })
-export class AccessUserFormComponent extends FormComponent<User> {
+export class AccessUserEditFormComponent extends FormComponent<User> {
+
+  @Input() public username = '';
 
   constructor(
     fb: FormBuilder
@@ -16,7 +18,6 @@ export class AccessUserFormComponent extends FormComponent<User> {
 
     this.form = fb.group({
       id: [null],
-      username: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       credentialsExpired: [true, Validators.required],

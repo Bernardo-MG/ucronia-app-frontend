@@ -18,14 +18,13 @@ export class AccessUserService {
     return this.client.user().page(pagination).sort(pagination?.sort).readAll();
   }
 
-  public getRoles(id: number, page: number): Observable<PaginatedResponse<Role[]>> {
+  public getRoles(userId: number, page: number): Observable<PaginatedResponse<Role[]>> {
     const sort: Sort<Role> = new Sort<Role>('name');
-    return this.client.userRoles(id).page({ page }).sort([sort]).readAll();
+    return this.client.userRoles(userId).page({ page }).sort([sort]).readAll();
   }
 
-  public getRoleSelection(page: number): Observable<PaginatedResponse<Role[]>> {
-    const sort = new Sort<Role>('name');
-    return this.client.role().page({ page }).sort([sort]).readAll();
+  public getRoleSelection(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+    return this.client.role().page(pagination).readAll();
   }
 
   public create(data: User): Observable<User> {

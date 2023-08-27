@@ -4,10 +4,10 @@ import { Fee } from '@app/association/models/fee';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'assoc-fee-form',
-  templateUrl: './fee-form.component.html'
+  selector: 'assoc-fee-edit-form',
+  templateUrl: './fee-edit-form.component.html'
 })
-export class FeeFormComponent extends FormComponent<Fee> {
+export class FeeEditFormComponent extends FormComponent<Fee> {
 
   constructor(
     fb: FormBuilder

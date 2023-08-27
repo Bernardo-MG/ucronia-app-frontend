@@ -1,22 +1,50 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">
-        <pagination-order-button property="name"></pagination-order-button>name
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-template ngFor let-role [ngForOf]="roles">
+<layout-waiting-wrapper [waiting]="readingRoles">
+  <!-- Roles -->
+  <table class="table">
+    <thead>
       <tr>
-        <td>
-          <button (click)="onRemove(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
-            <icon-delete></icon-delete>
-          </button>
-        </td>
-        <td>{{role.name}}</td>
+        <th scope="col"></th>
+        <th scope="col">
+          <pagination-order-button (directionChange)="onChangeNameDirection($event)"></pagination-order-button>name
+        </th>
       </tr>
-    </ng-template>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-role [ngForOf]="roles">
+        <tr>
+          <td>
+            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark" role="button"
+              aria-label="Back">
+              <icon-delete></icon-delete>
+            </button>
+          </td>
+          <td>{{role.name}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages" (goTo)="loadRoles($event)">
+  </pagination-navigation>
+</layout-waiting-wrapper>
+<layout-waiting-wrapper [waiting]="readingSelection">
+  <!-- Add role -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">
+          role
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-role [ngForOf]="roleSelection">
+        <tr role="button" (click)="onAddRole(role)">
+          <td>{{role.name}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <pagination-navigation [current]="roleSelectionPageInfo.page" [pages]="roleSelectionPageInfo.totalPages"
+    (goTo)="loadRoleSelectionPage($event)">
+  </pagination-navigation>
+</layout-waiting-wrapper>

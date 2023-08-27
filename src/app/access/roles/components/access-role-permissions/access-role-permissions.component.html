@@ -1,26 +1,39 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col"></th>
-      <th scope="col">
-        <pagination-order-button property="resource"></pagination-order-button>Resource
-      </th>
-      <th scope="col">
-        <pagination-order-button property="action"></pagination-order-button>Action
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-template ngFor let-privilege [ngForOf]="permissions">
+<layout-waiting-wrapper [waiting]="readingPermissions">
+  <table class="table">
+    <thead>
       <tr>
-        <td>
-          <button (click)="onRemove(privilege)" type="button" class="btn btn-default" role="button" aria-label="Back">
-            <icon-delete></icon-delete>
-          </button>
-        </td>
-        <td>{{privilege.resource}}</td>
-        <td>{{privilege.action}}</td>
+        <th scope="col"></th>
+        <th scope="col">
+          <pagination-route-order-button property="resource"></pagination-route-order-button>Resource
+        </th>
+        <th scope="col">
+          <pagination-route-order-button property="action"></pagination-route-order-button>Action
+        </th>
       </tr>
-    </ng-template>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-privilege [ngForOf]="permissions">
+        <tr>
+          <td>
+            <button [disabled]="!deletable" (click)="onRemovePermission(privilege)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
+              <icon-delete></icon-delete>
+            </button>
+          </td>
+          <td>{{privilege.resource}}</td>
+          <td>{{privilege.action}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <!-- Permissions navigation -->
+  <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
+    (goTo)="loadPermissions($event)">
+  </pagination-navigation>
+</layout-waiting-wrapper>
+<!-- Edit privileges -->
+<layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
+  <access-role-add-permission [actions]="actionSelection" [totalActionPages]="totalActionPages"
+    [resources]="resourceSelection" [totalResourcePages]="totalResourcePages" (addPermission)="onAddPermission($event)"
+    (goToActionPage)="onGoToActionSelectionPage($event)"
+    (goToResourcePage)="onGoToResourceSelectionPage($event)"></access-role-add-permission>
+</layout-waiting-wrapper>

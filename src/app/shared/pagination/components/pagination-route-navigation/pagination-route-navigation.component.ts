@@ -15,7 +15,7 @@ export class PaginationRouteNavigationComponent implements OnInit {
 
   public page = 0;
 
-  private apiActuator: RouteApiActuator;
+  private routeActuator: RouteApiActuator;
 
   private routePaginationObserver: PaginationRouteObserver;
 
@@ -23,7 +23,7 @@ export class PaginationRouteNavigationComponent implements OnInit {
     router: Router,
     route: ActivatedRoute
   ) {
-    this.apiActuator = new RouteApiActuator(router);
+    this.routeActuator = new RouteApiActuator(router);
     this.routePaginationObserver = new PaginationRouteObserver(route);
   }
 
@@ -38,7 +38,7 @@ export class PaginationRouteNavigationComponent implements OnInit {
   }
 
   public onGoTo(page: number) {
-    this.apiActuator.setPage(page);
+    this.routeActuator.setPage(page);
   }
 
 }

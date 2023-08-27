@@ -1,67 +1,62 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Sort } from '@app/core/api/models/sort';
-import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
-import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Direction } from '../../../../core/api/models/direction';
 
+/**
+ * Loops through unsorted -> ascending -> descending -> unsorted
+ */
 @Component({
   selector: 'pagination-order-button',
   templateUrl: './pagination-order-button.component.html'
 })
-export class PaginationOrderButtonComponent implements OnInit {
+export class PaginationOrderButtonComponent implements OnChanges {
 
-  @Input() property = '';
-
-  @Input() direction: 'asc' | 'desc' | 'unsorted' = 'unsorted';
+  @Input() public direction = Direction.Unsorted;
 
   @Input() public disabled = false;
 
-  private apiActuator: RouteApiActuator;
+  @Output() public directionChange = new EventEmitter<Direction>();
 
-  private sortObserver: SortRouteObserver;
+  private ascendingIcon = faSortUp;
+  private descendingIcon = faSortDown;
+  private defaultIcon = faSort;
 
-  constructor(
-    router: Router,
-    route: ActivatedRoute
-  ) {
-    this.apiActuator = new RouteApiActuator(router);
-    this.sortObserver = new SortRouteObserver(route);
+  public directionIcon = this.defaultIcon;
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['direction']) {
+      this.updateDirection();
+    }
   }
 
-  ngOnInit(): void {
-    this.sortObserver.subject.subscribe(p => {
-      if (p) {
-        const propertySort = p.find(s => s.property === this.property);
-        if (propertySort) {
-          this.direction = propertySort.order;
-        } else {
-          this.direction = 'unsorted';
-        }
-      } else {
-        this.direction = 'unsorted';
-      }
-    });
+  public onChangeDirection() {
+    if (this.direction === Direction.Ascending) {
+      // Ascending -> descending
+      this.direction = Direction.Descending;
+    } else if (this.direction === Direction.Descending) {
+      // Descending -> unsorted
+      this.direction = Direction.Unsorted;
+    } else {
+      // Unsorted -> ascending
+      this.direction = Direction.Ascending;
+    }
+
+    this.directionChange.emit(this.direction);
+    this.updateDirection();
   }
 
-  public onSortAscending() {
-    this.sort('asc');
-  }
-
-  public onSortDescending() {
-    this.sort('desc');
-  }
-
-  public onSortUnsorted() {
-    this.apiActuator.removeOrder(this.property);
-  }
-
-  private sort(direction: 'asc' | 'desc') {
-    const sort: Sort<any> = {
-      property: this.property,
-      order: direction
-    };
-
-    this.apiActuator.setOrder(sort);
+  private updateDirection() {
+    switch (this.direction) {
+      case Direction.Ascending:
+        this.directionIcon = this.ascendingIcon;
+        break;
+      case Direction.Descending:
+        this.directionIcon = this.descendingIcon;
+        break;
+      default:
+        this.directionIcon = this.defaultIcon;
+        break;
+    }
   }
 
 }

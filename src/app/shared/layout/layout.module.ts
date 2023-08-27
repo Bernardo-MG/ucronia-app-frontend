@@ -5,11 +5,11 @@ import { IconsModule } from '../icons/icons.module';
 import { PaginationModule } from '../pagination/pagination.module';
 import { ArticleComponent } from './components/article/article.component';
 import { ButtonListComponent } from './components/button-list/button-list.component';
-import { RouterLinkListComponent } from './components/router-link-list/router-link-list.component';
-import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 import { EditionWrapperComponent } from './components/edition-wrapper/edition-wrapper.component';
-import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
 import { LinkListComponent } from './components/link-list/link-list.component';
+import { RouterLinkListComponent } from './components/router-link-list/router-link-list.component';
+import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
+import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 
 
 
