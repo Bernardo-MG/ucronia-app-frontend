@@ -6,7 +6,7 @@ import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { TransactionFilter } from '../../models/transaction-filter';
-import { TransactionService } from '../../service/transaction.service';
+import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
   selector: 'assoc-transaction-calendar',
@@ -30,7 +30,7 @@ export class TransactionCalendarComponent implements OnInit {
   public notes: CalendarNote[] = [];
 
   constructor(
-    private service: TransactionService,
+    private service: TransactionCalendarService,
     private router: Router,
     route: ActivatedRoute
   ) {
@@ -64,22 +64,10 @@ export class TransactionCalendarComponent implements OnInit {
   }
 
   private load(date: Date) {
-    const filter = new TransactionFilter();
-
-    const month = date.getMonth() + 1;
-    const firstDay = 1;
-    const lastDay = new Date(date.getFullYear(), month, 0).getDate();
-
-    const startDate = (date.getFullYear() + '-' + month + '-' + firstDay);
-    const endDate = (date.getFullYear() + '-' + month + '-' + lastDay);
-
-    filter.startDate = startDate;
-    filter.endDate = endDate;
-
     this.waiting = true
-    this.service.getAll(undefined, filter).subscribe({
-      next: page => {
-        const transactions = page.content;
+    this.service.getCalendar(date.getFullYear(), date.getMonth()).subscribe({
+      next: response => {
+        const transactions = response;
         this.notes = transactions.map(t => {
           const date = new Date(t.date);
           return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);

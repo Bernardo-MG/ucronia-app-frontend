@@ -14,9 +14,10 @@ import { TransactionFormComponent } from './components/transaction-form/transact
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { TransactionLayoutComponent } from './components/transaction-layout/transaction-layout.component';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
+import { TransactionSelectionListComponent } from './components/transaction-selection-list/transaction-selection-list.component';
+import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
-import { TransactionSelectionListComponent } from './components/transaction-selection-list/transaction-selection-list.component';
 
 
 
@@ -44,7 +45,8 @@ import { TransactionSelectionListComponent } from './components/transaction-sele
     MenuModule
   ],
   providers: [
-    TransactionService
+    TransactionService,
+    TransactionCalendarService
   ]
 })
 export class TransactionsModule { }
