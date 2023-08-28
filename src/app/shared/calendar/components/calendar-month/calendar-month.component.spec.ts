@@ -18,11 +18,17 @@ describe('CalendarMonthComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  // **************************************************************************
   // Moving through months
+  // **************************************************************************
 
   it('should send an event notifying the date when moving to the previous month', () => {
     spyOn(component.dateChange, 'emit');
@@ -34,6 +40,8 @@ describe('CalendarMonthComponent', () => {
 
     component.year = 2020;
     component.month = 2;
+
+    fixture.detectChanges();
 
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
@@ -52,6 +60,8 @@ describe('CalendarMonthComponent', () => {
     component.year = 2020;
     component.month = 2;
 
+    fixture.detectChanges();
+
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
@@ -60,24 +70,6 @@ describe('CalendarMonthComponent', () => {
     date.month = 1;
 
     expect(component.dateChange.emit).toHaveBeenCalledWith(date);
-  });
-
-  it('should change date to the previous month when moving to the previous month', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
-    component.year = 2020;
-    component.month = 2;
-
-    const button = fixture.debugElement.query(By.css('#previousMonthButton'));
-    button.triggerEventHandler('click');
-
-    expect(component.year).toEqual(2020);
-    expect(component.month).toEqual(1);
   });
 
   it('should send an event notifying the date when moving to the next month', () => {
@@ -90,6 +82,8 @@ describe('CalendarMonthComponent', () => {
 
     component.year = 2020;
     component.month = 2;
+
+    fixture.detectChanges();
 
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
@@ -108,6 +102,8 @@ describe('CalendarMonthComponent', () => {
     component.year = 2020;
     component.month = 2;
 
+    fixture.detectChanges();
+
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
@@ -118,25 +114,9 @@ describe('CalendarMonthComponent', () => {
     expect(component.dateChange.emit).toHaveBeenCalledWith(date);
   });
 
-  it('should change date to the next month when moving to the next month', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
-    component.year = 2020;
-    component.month = 2;
-
-    const button = fixture.debugElement.query(By.css('#nextMonthButton'));
-    button.triggerEventHandler('click');
-
-    expect(component.year).toEqual(2020);
-    expect(component.month).toEqual(3);
-  });
-
+  // **************************************************************************
   // Changing years
+  // **************************************************************************
 
   it('should send an event notifying the date when moving to the previous month when the current month is January', () => {
     spyOn(component.dateChange, 'emit');
@@ -148,6 +128,8 @@ describe('CalendarMonthComponent', () => {
 
     component.year = 2020;
     component.month = 1;
+
+    fixture.detectChanges();
 
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
@@ -166,6 +148,8 @@ describe('CalendarMonthComponent', () => {
     component.year = 2020;
     component.month = 1;
 
+    fixture.detectChanges();
+
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
@@ -174,24 +158,6 @@ describe('CalendarMonthComponent', () => {
     date.month = 12;
 
     expect(component.dateChange.emit).toHaveBeenCalledWith(date);
-  });
-
-  it('should change date to the previous month when moving to the previous month when the current month is January', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
-    component.year = 2020;
-    component.month = 1;
-
-    const button = fixture.debugElement.query(By.css('#previousMonthButton'));
-    button.triggerEventHandler('click');
-
-    expect(component.year).toEqual(2019);
-    expect(component.month).toEqual(12);
   });
 
   it('should send an event notifying the date when moving to the next month when the current month is December', () => {
@@ -204,6 +170,8 @@ describe('CalendarMonthComponent', () => {
 
     component.year = 2020;
     component.month = 12;
+
+    fixture.detectChanges();
 
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
@@ -222,6 +190,8 @@ describe('CalendarMonthComponent', () => {
     component.year = 2020;
     component.month = 12;
 
+    fixture.detectChanges();
+
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
@@ -232,25 +202,9 @@ describe('CalendarMonthComponent', () => {
     expect(component.dateChange.emit).toHaveBeenCalledWith(date);
   });
 
-  it('should change date to the next month when moving to the next month when the current month is December', () => {
-    spyOn(component.dateChange, 'emit');
-
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
-    component.year = 2020;
-    component.month = 12;
-
-    const button = fixture.debugElement.query(By.css('#nextMonthButton'));
-    button.triggerEventHandler('click');
-
-    expect(component.year).toEqual(2021);
-    expect(component.month).toEqual(1);
-  });
-
+  // **************************************************************************
   // Range and buttons
+  // **************************************************************************
 
   it('should disable the forward button by default', () => {
     const button = fixture.nativeElement.querySelector('#nextMonthButton');

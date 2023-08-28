@@ -44,15 +44,25 @@ export class CalendarMonthComponent implements OnChanges {
 
   public onGoPrevious() {
     const date = new Month();
-    date.year = this.year;
-    date.month = this.month - 1;
+    if (this.month > 1) {
+      date.year = this.year;
+      date.month = this.month - 1;
+    } else {
+      date.year = this.year - 1;
+      date.month = 12;
+    }
     this.dateChange.emit(date);
   }
 
   public onGoNext() {
     const date = new Month();
-    date.year = this.year;
-    date.month = this.month + 1;
+    if (this.month < 12) {
+      date.year = this.year;
+      date.month = this.month + 1;
+    } else {
+      date.year = this.year + 1;
+      date.month = 1;
+    }
     this.dateChange.emit(date);
   }
 
