@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
-import { Observable, catchError, of } from 'rxjs';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
 
@@ -27,16 +26,19 @@ export class PasswordResetRequestComponent {
     this.loading = true;
     this.failures = {};
     this.service.requestResetPassword(resetPassword)
-      .pipe(catchError((error: any, caught: Observable<any>): Observable<any> => {
-        this.loading = false;
-        const failure = new Failure();
-        failure.field = 'email';
-        failure.message = 'Invalid email';
-        this.failures = { 'email': [failure] };
-        return of();
-      })).subscribe(r => {
-        this.finished = true;
-        this.loading = false;
+      .subscribe({
+        next: response => {
+          this.finished = true;
+          this.loading = false;
+        },
+        error: error => {
+          this.loading = false;
+          if (error.failures) {
+            this.failures = error.failures;
+          } else {
+            this.failures = {};
+          }
+        }
       });
   }
 
