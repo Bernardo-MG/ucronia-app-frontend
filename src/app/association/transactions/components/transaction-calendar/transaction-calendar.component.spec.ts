@@ -13,13 +13,6 @@ describe('TransactionCalendarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        CoreModule,
-        CalendarModule,
-        LayoutModule
-      ],
       declarations: [
         TransactionCalendarComponent
       ],
