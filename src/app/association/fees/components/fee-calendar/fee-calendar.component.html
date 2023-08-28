@@ -41,18 +41,26 @@
     <ng-template ngFor let-row [ngForOf]="rows">
       <tr>
         <td>
-          <div *ngIf="row.active; then activeMember else inactiveMember"></div>
-          <ng-template #activeMember>
-            {{row.name}} {{row.surname}}
-          </ng-template>
-          <ng-template #inactiveMember>
-            <div class="text-decoration-line-through">{{row.name}} {{row.surname}}</div>
-          </ng-template>
+          <div [ngSwitch]="row.active">
+            <div *ngSwitchCase="true">
+              {{row.name}} {{row.surname}}
+            </div>
+            <div *ngSwitchCase="false">
+              <div class="text-decoration-line-through">{{row.name}} {{row.surname}}</div>
+            </div>
+          </div>
         </td>
         <ng-template ngFor let-column [ngForOf]="row.months">
           <td>
-            <ng-template [ngIf]="column !== undefined"><input type="checkbox" [checked]="column" [attr.disabled]="true"
-                id="active" class="form-check-input">
+            <ng-template [ngIf]="column !== undefined">
+              <div [ngSwitch]="column">
+                <div *ngSwitchCase="true">
+                  <fa-icon [icon]="activeIcon"></fa-icon>
+                </div>
+                <div *ngSwitchCase="false">
+                  <fa-icon [icon]="inactiveIcon"></fa-icon>
+                </div>
+              </div>
             </ng-template>
           </td>
         </ng-template>

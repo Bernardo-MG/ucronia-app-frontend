@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-calendar',
@@ -20,6 +21,9 @@ export class FeeCalendarComponent {
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
   public feesTable: FeeCalendarRow[] = []
+
+  public activeIcon = faCheck;
+  public inactiveIcon = faX;
 
   public onGoPrevious() {
     this.year = this.year - 1;
