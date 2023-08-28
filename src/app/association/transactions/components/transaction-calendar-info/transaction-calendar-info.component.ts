@@ -38,6 +38,7 @@ export class TransactionCalendarInfoComponent {
   }
 
   ngOnInit(): void {
+    // Watch for changes in selected date
     this.dateObserver.subject.subscribe(d => {
       if (d) {
         this.date = d;
@@ -46,6 +47,7 @@ export class TransactionCalendarInfoComponent {
         }
       }
     });
+    // Read range
     this.service.getRange().subscribe(d => {
       this.range = d;
       // TODO: What happens if this date is not in the range?
