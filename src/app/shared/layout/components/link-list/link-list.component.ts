@@ -4,8 +4,7 @@ import { TableRow } from '../../models/table-row';
 
 @Component({
   selector: 'layout-link-list',
-  templateUrl: './link-list.component.html',
-  styleUrls: ['./link-list.component.sass']
+  templateUrl: './link-list.component.html'
 })
 export class LinkListComponent {
 
