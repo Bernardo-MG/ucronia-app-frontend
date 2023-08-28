@@ -6,6 +6,7 @@ import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessUserService } from '../../services/access-user.service';
+import { User } from '@app/core/authentication/models/user';
 
 @Component({
   selector: 'access-user-list',
@@ -20,9 +21,7 @@ export class AccessUserListComponent implements OnInit {
 
   public createPermission = false;
 
-  public rows: TableRow[] = [];
-
-  public header = [{ name: 'Username', property: 'username' }];
+  public users: User[] = [];
 
   public totalPages = 0;
 
@@ -62,13 +61,7 @@ export class AccessUserListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
-
-        this.rows = page.content.map(m => {
-          return {
-            id: m.id,
-            cells: [m.username]
-          };
-        });
+        this.users = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view

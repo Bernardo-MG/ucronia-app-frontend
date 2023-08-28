@@ -9,6 +9,7 @@ import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { Transaction } from '@app/association/models/transaction';
 
 @Component({
   selector: 'assoc-transaction-list',
@@ -23,6 +24,8 @@ export class TransactionListComponent implements OnInit {
 
   public createPermission = false;
 
+  public transactions: Transaction[] = [];
+
   public totalPages = 0;
 
   public startDate: string | undefined = undefined;
@@ -30,10 +33,6 @@ export class TransactionListComponent implements OnInit {
   public endDate: string | undefined = undefined;
 
   public date: string | undefined = undefined;
-
-  public rows: TableRow[] = [];
-
-  public header = [{ name: 'Description', property: 'description' }, { name: 'Date', property: 'date' }, { name: 'Amount', property: 'amount' }];
 
   private routeActuator: RouteParametersActuator;
 
@@ -86,13 +85,7 @@ export class TransactionListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
-        this.rows = page.content.map(m => {
-          return {
-            id: m.id,
-            cells: [m.description, m.date, m.amount]
-          };
-        });
-
+        this.transactions = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view

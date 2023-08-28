@@ -15,6 +15,7 @@ import { AccessRoleListComponent } from './components/access-role-list/access-ro
 import { AccessRolePermissionsComponent } from './components/access-role-permissions/access-role-permissions.component';
 import { RoleRoutingModule } from './roles-routing.module';
 import { AccessRoleService } from './services/access-role.service';
+import { AccessRoleSelectionListComponent } from './components/access-role-selection-list/access-role-selection-list.component';
 
 
 
@@ -27,6 +28,7 @@ import { AccessRoleService } from './services/access-role.service';
     AccessRolePermissionsComponent,
     AccessRoleInfoComponent,
     AccessRoleAddPermissionComponent,
+    AccessRoleSelectionListComponent,
   ],
   imports: [
     CommonModule,

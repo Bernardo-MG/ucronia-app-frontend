@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Fee } from '@app/association/models/fee';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
-import { TableRow } from '@app/shared/layout/models/table-row';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FeeService } from '../../services/fee.service';
-import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -21,15 +20,13 @@ export class FeeListComponent implements OnInit {
 
   public createPermission = false;
 
+  public fees: Fee[] = [];
+
   public totalPages = 0;
 
   public startDate: string | undefined = undefined;
 
   public endDate: string | undefined = undefined;
-
-  public header: TableHeaderCell[] = [];
-
-  public rows: TableRow[] = [];
 
   private routePaginationObserver: PaginationRequestRouteObserver;
   
@@ -47,8 +44,6 @@ export class FeeListComponent implements OnInit {
     // Check permissions
     this.createPermission = this.authService.hasPermission("fee", "create");
 
-    this.header = [{ name: 'Name', property: 'name' }, { name: 'Pay date', property: 'date' }, { name: 'Paid', property: 'paid' }];
-
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);
     });
@@ -58,14 +53,7 @@ export class FeeListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination, this.startDate, this.endDate).subscribe({
       next: page => {
-        const fees = page.content;
-
-        this.rows = fees.map(f => {
-          return {
-            id: f.id,
-            cells: [f.memberName, f.date, f.paid]
-          };
-        });
+        this.fees = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view

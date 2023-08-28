@@ -1,0 +1,38 @@
+<!-- List -->
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          <pagination-route-order-button property="name"></pagination-route-order-button>Name
+        </th>
+        <th scope="col">
+          <pagination-route-order-button property="date"></pagination-route-order-button>Pay date
+        </th>
+        <th scope="col">
+          <pagination-route-order-button property="paid"></pagination-route-order-button>Paid
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fee of fees; let rowIndex = index" role="button" routerLink="'members/'{{fee.id}}">
+        <!-- Cells -->
+        <td>
+          {{fee.memberName}}
+        </td>
+        <td>
+          {{fee.date}}
+        </td>
+        <td>
+          <div [ngSwitch]="fee.paid">
+            <div *ngSwitchCase="true">
+              <fa-icon [icon]="activeIcon"></fa-icon>
+            </div>
+            <div *ngSwitchCase="false">
+              <fa-icon [icon]="inactiveIcon"></fa-icon>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>

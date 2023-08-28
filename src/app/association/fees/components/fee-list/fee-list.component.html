@@ -42,8 +42,8 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <layout-router-link-list [rows]="rows" [header]="header" route="/fees">
-        </layout-router-link-list>
+        <fee-selection-list [fees]="fees">
+        </fee-selection-list>
       </div>
       <div class="d-flex justify-content-center mt-1">
         <pagination-route-navigation [totalPages]="totalPages">

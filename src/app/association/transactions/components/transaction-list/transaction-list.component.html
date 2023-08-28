@@ -48,8 +48,8 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <layout-router-link-list [header]="header" [rows]="rows" route="/transactions">
-        </layout-router-link-list>
+        <transaction-selection-list [transactions]="transactions">
+        </transaction-selection-list>
       </div>
       <div class="d-flex justify-content-center mt-1">
         <pagination-route-navigation [totalPages]="totalPages">

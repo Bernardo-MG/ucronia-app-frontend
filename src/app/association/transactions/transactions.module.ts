@@ -16,6 +16,7 @@ import { TransactionLayoutComponent } from './components/transaction-layout/tran
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
+import { TransactionSelectionListComponent } from './components/transaction-selection-list/transaction-selection-list.component';
 
 
 
@@ -27,7 +28,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     TransactionCalendarComponent,
     TransactionFormComponent,
     TransactionInfoComponent,
-    TransactionLayoutComponent
+    TransactionLayoutComponent,
+    TransactionSelectionListComponent
   ],
   imports: [
     CommonModule,
