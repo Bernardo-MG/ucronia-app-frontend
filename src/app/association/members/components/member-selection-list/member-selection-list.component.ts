@@ -3,7 +3,7 @@ import { Member } from '@app/association/models/member';
 import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'member-selection-list',
+  selector: 'assoc-member-selection-list',
   templateUrl: './member-selection-list.component.html'
 })
 export class MemberSelectionListComponent {
