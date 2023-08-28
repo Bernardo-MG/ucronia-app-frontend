@@ -35,7 +35,6 @@ export class FeeCalendarService {
     return data.map(r => {
       const row = new FeeCalendarRow();
       row.name = r.name;
-      row.surname = r.surname;
       row.active = r.active;
       this.months.forEach(month => {
         const feeMonth = r.months.find(m => m.month === month);
