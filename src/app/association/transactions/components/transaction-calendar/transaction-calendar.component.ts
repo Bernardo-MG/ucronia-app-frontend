@@ -5,7 +5,6 @@ import { CalendarNote } from '@app/shared/calendar/models/calendar-note';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
-import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
@@ -47,7 +46,6 @@ export class TransactionCalendarComponent implements OnInit {
     });
     this.service.getRange().subscribe(d => {
       this.range = d;
-      this.load(new Date());
     });
   }
 
