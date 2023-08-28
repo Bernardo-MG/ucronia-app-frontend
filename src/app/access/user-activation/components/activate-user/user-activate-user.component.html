@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Activate new user {{username}}</h5>
-        <access-user-activate-user-form (save)="onUserActivate($event)"></access-user-activate-user-form>
+        <access-user-activate-user-form [failures]="failures" (save)="onUserActivate($event)"></access-user-activate-user-form>
       </div>
     </div>
   </div>
