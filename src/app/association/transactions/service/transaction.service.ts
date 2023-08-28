@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Transaction } from '@app/association/models/transaction';
-import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
@@ -38,10 +37,6 @@ export class TransactionService {
 
   public getOne(id: number): Observable<Transaction> {
     return this.client.transaction().id(id).readOne().pipe(map(r => r.content));
-  }
-
-  public getRange(): Observable<TransactionCalendarRange> {
-    return this.client.transactionRange().readOne().pipe(map(r => r.content));
   }
 
 }

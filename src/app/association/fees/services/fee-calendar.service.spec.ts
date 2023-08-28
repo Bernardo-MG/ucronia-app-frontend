@@ -9,6 +9,9 @@ describe('FeeCalendarService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
+      ],
+      providers: [
+        FeeCalendarService
       ]
     });
     service = TestBed.inject(FeeCalendarService);

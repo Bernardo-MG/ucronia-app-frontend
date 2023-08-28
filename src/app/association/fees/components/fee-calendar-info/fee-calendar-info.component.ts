@@ -13,7 +13,7 @@ export class FeeCalendarInfoComponent implements OnInit {
   /**
    * Loading flag. Shows the loading visual cue.
    */
-  public waiting = false;
+  public readingCalendar = false;
 
   public range = new FeeCalendarRange();
 
@@ -21,6 +21,7 @@ export class FeeCalendarInfoComponent implements OnInit {
 
   public rows: FeeCalendarRow[] = [];
 
+  // TODO: What happens if this date is not in the range?
   public year = new Date().getFullYear();
 
   constructor(
@@ -46,16 +47,16 @@ export class FeeCalendarInfoComponent implements OnInit {
   }
 
   private load(year: number) {
-    this.waiting = true;
+    this.readingCalendar = true;
 
     this.service.getCalendar(year, this.onlyActive).subscribe({
       next: data => {
         this.rows = data;
-        this.waiting = false;
+        this.readingCalendar = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingCalendar = false;
       }
     });
   }

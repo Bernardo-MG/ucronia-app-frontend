@@ -6,9 +6,7 @@ import { AssociationApiClient } from '@app/core/api/client/association-api-clien
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FeeCalendarService {
 
   private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
@@ -17,18 +15,22 @@ export class FeeCalendarService {
     private client: AssociationApiClient
   ) { }
 
-  public getAllForYear(year: number, onlyActive: boolean): Observable<UserFeeCalendar[]> {
+  public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
     const sort = new Sort<UserFeeCalendar>("name");
 
-    return this.client.feeCalendar().year(year).sort([sort]).parameter("onlyActive", onlyActive).readAll().pipe(map(r => r.content));
-  }
-
-  public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
-    return this.getAllForYear(year, onlyActive).pipe(map(data => this.toCalendar(data)));
+    return this.client.feeCalendar()
+      .year(year)
+      .sort([sort])
+      .parameter("onlyActive", onlyActive)
+      .readAll().pipe(map(r => r.content))
+      .pipe(map(data => this.toCalendar(data)));
   }
 
   public getRange(): Observable<FeeCalendarRange> {
-    return this.client.feeCalendar().range().readOne().pipe(map(r => r.content));
+    return this.client.feeCalendar()
+      .range()
+      .readOne()
+      .pipe(map(r => r.content));
   }
 
   private toCalendar(data: UserFeeCalendar[]): FeeCalendarRow[] {
