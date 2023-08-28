@@ -63,7 +63,9 @@ export class TransactionCalendarComponent implements OnInit {
 
   private load(date: Date) {
     this.waiting = true
-    this.service.getCalendar(date.getFullYear(), date.getMonth()).subscribe({
+    // Corrects month value
+    const month = date.getMonth() + 1;
+    this.service.getCalendar(date.getFullYear(), month).subscribe({
       next: response => {
         const transactions = response;
         this.notes = transactions.map(t => {
