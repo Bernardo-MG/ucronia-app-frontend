@@ -15,6 +15,7 @@ import { AccessUserListComponent } from './components/access-user-list/access-us
 import { AccessUserRoleFormComponent } from './components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from './services/access-user.service';
 import { UserRoutingModule } from './users-routing.module';
+import { AccessUserSelectionListComponent } from './components/access-user-selection-list/access-user-selection-list.component';
 
 
 
@@ -26,7 +27,8 @@ import { UserRoutingModule } from './users-routing.module';
     AccessUserDetailsComponent,
     AccessUserListComponent,
     AccessUserRoleFormComponent,
-    AccessUserInfoComponent
+    AccessUserInfoComponent,
+    AccessUserSelectionListComponent
   ],
   imports: [
     CommonModule,

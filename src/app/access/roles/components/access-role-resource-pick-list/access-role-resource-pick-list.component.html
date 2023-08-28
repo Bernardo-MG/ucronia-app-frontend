@@ -1,0 +1,19 @@
+<!-- List -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Headers -->
+      <th scope="col">
+        Resource
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let resource of resources" role="button" (click)="onClick(resource.id)">
+      <!-- Data cells -->
+      <td>
+        {{resource.name}}
+      </td>
+    </tr>
+  </tbody>
+</table>

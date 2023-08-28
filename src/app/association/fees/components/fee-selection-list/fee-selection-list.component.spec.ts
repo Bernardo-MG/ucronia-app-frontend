@@ -1,27 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { RouterLinkListComponent } from './router-link-list.component';
+import { FeeSelectionListComponent } from './fee-selection-list.component';
 
-describe('RouterLinkListComponent', () => {
-  let component: RouterLinkListComponent;
-  let fixture: ComponentFixture<RouterLinkListComponent>;
+describe('FeeSelectionListComponent', () => {
+  let component: FeeSelectionListComponent;
+  let fixture: ComponentFixture<FeeSelectionListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        PaginationModule,
-        IconsModule
+        LayoutModule,
+        PaginationModule
       ],
       declarations: [
-        RouterLinkListComponent
+        FeeSelectionListComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(RouterLinkListComponent);
+    fixture = TestBed.createComponent(FeeSelectionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

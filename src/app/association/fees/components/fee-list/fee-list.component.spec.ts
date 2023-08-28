@@ -6,6 +6,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeService } from '../../services/fee.service';
+import { FeeSelectionListComponent } from '../fee-selection-list/fee-selection-list.component';
 import { FeeListComponent } from './fee-list.component';
 
 describe('FeeListComponent', () => {
@@ -24,7 +25,8 @@ describe('FeeListComponent', () => {
         PaginationModule
       ],
       declarations: [
-        FeeListComponent
+        FeeListComponent,
+        FeeSelectionListComponent
       ],
       providers: [
         FeeService

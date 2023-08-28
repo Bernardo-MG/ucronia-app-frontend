@@ -1,0 +1,31 @@
+<!-- List -->
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          <pagination-route-order-button property="description"></pagination-route-order-button>Description
+        </th>
+        <th scope="col">
+          <pagination-route-order-button property="date"></pagination-route-order-button>Date
+        </th>
+        <th scope="col">
+          <pagination-route-order-button property="amount"></pagination-route-order-button>Amount
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of transactions; let rowIndex = index" role="button" routerLink="'transactions/'{{transaction.id}}">
+        <!-- Cells -->
+        <td>
+          {{transaction.description}}
+        </td>
+        <td>
+          {{transaction.date}}
+        </td>
+        <td>
+          {{transaction.amount}}
+        </td>
+      </tr>
+    </tbody>
+  </table>

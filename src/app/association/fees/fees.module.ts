@@ -19,6 +19,7 @@ import { FeeListComponent } from './components/fee-list/fee-list.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
+import { FeeSelectionListComponent } from './components/fee-selection-list/fee-selection-list.component';
 
 
 
@@ -33,7 +34,8 @@ import { FeeService } from './services/fee.service';
     FeeEditFormComponent,
     FeeCreateFormComponent,
     FeeInfoComponent,
-    FeeLayoutComponent
+    FeeLayoutComponent,
+    FeeSelectionListComponent
   ],
   imports: [
     CommonModule,

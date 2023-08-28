@@ -5,6 +5,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberService } from '../../services/member.service';
+import { MemberSelectionListComponent } from '../member-selection-list/member-selection-list.component';
 import { MemberListComponent } from './member-list.component';
 
 describe('MemberListComponent', () => {
@@ -21,7 +22,8 @@ describe('MemberListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        MemberListComponent
+        MemberListComponent,
+        MemberSelectionListComponent
       ],
       providers: [
         MemberService

@@ -14,6 +14,7 @@ import { MemberInfoComponent } from './components/member-info/member-info.compon
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
+import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
 
 
 
@@ -24,7 +25,8 @@ import { MemberService } from './services/member.service';
     MemberCreateComponent,
     MemberCreateFormComponent,
     MemberEditionFormComponent,
-    MemberInfoComponent
+    MemberInfoComponent,
+    MemberSelectionListComponent
   ],
   imports: [
     CommonModule,

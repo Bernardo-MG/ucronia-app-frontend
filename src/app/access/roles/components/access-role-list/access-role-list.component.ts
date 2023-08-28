@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Role } from '@app/core/authentication/models/role';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { TableRow } from '@app/shared/layout/models/table-row';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
@@ -20,9 +20,7 @@ export class AccessRoleListComponent implements OnInit {
 
   public createPermission = false;
 
-  public rows: TableRow[] = [];
-
-  public header = [{ name: 'Name', property: 'name' }];
+  public roles: Role[] = [];
 
   public totalPages = 0;
 
@@ -61,12 +59,7 @@ export class AccessRoleListComponent implements OnInit {
     this.service.getAll(pagination).subscribe({
       next: page => {
 
-        this.rows = page.content.map(m => {
-          return {
-            id: m.id,
-            cells: [m.name]
-          };
-        });
+        this.roles = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view
