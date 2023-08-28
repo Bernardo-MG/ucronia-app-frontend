@@ -55,10 +55,10 @@
             <ng-template [ngIf]="column !== undefined">
               <div [ngSwitch]="column">
                 <div *ngSwitchCase="true">
-                  <fa-icon [icon]="activeIcon"></fa-icon>
+                  <fa-icon class="text-success" [icon]="activeIcon"></fa-icon>
                 </div>
                 <div *ngSwitchCase="false">
-                  <fa-icon [icon]="inactiveIcon"></fa-icon>
+                  <fa-icon class="text-danger" [icon]="inactiveIcon"></fa-icon>
                 </div>
               </div>
             </ng-template>
