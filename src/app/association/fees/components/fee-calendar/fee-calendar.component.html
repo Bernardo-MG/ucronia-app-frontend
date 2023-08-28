@@ -42,17 +42,9 @@
   </thead>
   <tbody>
     <ng-template ngFor let-row [ngForOf]="rows">
-      <tr>
+      <tr [ngClass]="{ 'table-warning': row.active === false }">
         <td>
-          <div [ngSwitch]="row.active">
-            <div *ngSwitchCase="true">
-              <!-- User name -->
-              {{row.name}}
-            </div>
-            <div *ngSwitchCase="false">
-              <div class="text-decoration-line-through">{{row.name}}</div>
-            </div>
-          </div>
+          {{row.name}}
         </td>
         <!-- Month fees -->
         <ng-template ngFor let-column [ngForOf]="row.months">
