@@ -1,18 +1,22 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Calendar } from '../../models/calendar';
 import { CalendarDay } from '../../models/calendar-day';
 import { CalendarNote } from '../../models/calendar-note';
 import { CalendarWeek } from '../../models/calendar-week';
+import { Month } from '../../models/month';
+import { Day } from '../../models/day';
 
 @Component({
   selector: 'shared-calendar-month',
   templateUrl: './calendar-month.component.html'
 })
-export class CalendarMonthComponent implements OnInit, OnChanges {
+export class CalendarMonthComponent implements OnChanges {
 
   @Input() public notes: CalendarNote[] = [];
 
-  @Input() public date = new Date();
+  @Input() public year = 0;
+
+  @Input() public month = 0;
 
   @Input() public startYear = 0;
 
@@ -22,61 +26,55 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public endMonth = 0;
 
-  @Output() public dateChange = new EventEmitter<Date>();
+  @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Date>();
+  @Output() public pickDate = new EventEmitter<Day>();
 
   public calendar: Calendar = new Calendar();
 
-  public monthName = "";
+  public monthName = '';
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  constructor() {
-    this.date.setFullYear(0)
-    this.date.setMonth(0);
-    this.date.setDate(1);
-    this.date.setHours(0);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-    this.date.setMilliseconds(0);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    this.date.setDate(1);
-    this.date.setHours(0);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-    this.date.setMilliseconds(0);
-
-    this.loadMonth();
-  }
-
-  public ngOnInit(): void {
-    this.loadMonth();
+    if (changes['year'] || changes['month'] || changes['notes']) {
+      this.loadMonth();
+    }
   }
 
   public onGoPrevious() {
-    this.date.setMonth(this.date.getMonth() - 1);
-    this.loadMonth();
-    this.dateChange.emit(this.date);
+    const date = new Month();
+    if (this.month > 1) {
+      date.year = this.year;
+      date.month = this.month - 1;
+    } else {
+      date.year = this.year - 1;
+      date.month = 12;
+    }
+    this.dateChange.emit(date);
   }
 
   public onGoNext() {
-    this.date.setMonth(this.date.getMonth() + 1);
-    this.loadMonth();
-    this.dateChange.emit(this.date);
+    const date = new Month();
+    if (this.month < 12) {
+      date.year = this.year;
+      date.month = this.month + 1;
+    } else {
+      date.year = this.year + 1;
+      date.month = 1;
+    }
+    this.dateChange.emit(date);
   }
 
   public isAbleToGoNext() {
     let valid;
 
-    if (this.date.getFullYear() == this.endYear) {
+    if (this.year == this.endYear) {
       // In the same year
       // Checks month
-      valid = (this.date.getMonth() < this.endMonth);
+      valid = (this.month < this.endMonth);
     } else {
-      valid = (this.date.getFullYear() < this.endYear);
+      valid = (this.year < this.endYear);
     }
 
     return valid;
@@ -85,27 +83,23 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   public isAbleToGoPrevious() {
     let valid;
 
-    if (this.date.getFullYear() == this.startYear) {
+    if (this.year == this.startYear) {
       // In the same year
       // Checks month
-      valid = (this.date.getMonth() > this.startMonth);
+      valid = (this.month > this.startMonth);
     } else {
-      valid = (this.date.getFullYear() > this.startYear);
+      valid = (this.year > this.startYear);
     }
 
     return valid;
   }
 
-  public onPickDate(year: number, month: number, day: number | null) {
+  public onPickDate(year: number, month: number, day: number) {
     if (day) {
-      const date = new Date();
-      date.setFullYear(year);
-      date.setMonth(month);
-      date.setDate(day);
-      date.setHours(0);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+      const date = new Day();
+      date.year = year;
+      date.month = month;
+      date.day = day;
 
       this.pickDate.emit(date);
     }
@@ -116,10 +110,10 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   private loadMonth() {
-    this.calendar.year = this.date.getFullYear();
-    this.calendar.month = this.date.getMonth();
+    this.calendar.year = this.year;
+    this.calendar.month = this.month;
     this.monthName = this.getMonthName(this.calendar.month);
-    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
+    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.month);
     this.calendar.weeks.forEach(w => w.days
       .filter(d => d.number)
       .forEach(d => {
@@ -133,8 +127,8 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
     const weeks: CalendarWeek[] = [];
     let currentWeek: CalendarWeek = new CalendarWeek();
-    let currentDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
-    const numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let currentDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay();
+    const numDaysInMonth = new Date(currentYear, currentMonth, 0).getDate();
 
     // Add empty days to the beginning of the first week to align it with the correct day of the week
     for (let i = 0; i < currentDayOfWeek; i++) {
@@ -165,7 +159,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   private getMonthName(month: number): string {
-    return this.monthNames[month];
+    return this.monthNames[month - 1];
   }
 
 }

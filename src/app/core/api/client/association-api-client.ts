@@ -10,6 +10,7 @@ import { AngularHttpOperations } from "../repository/angular-http-operations";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
 import { FeeCalendarClient } from "./fee-calendar-client";
+import { TransactionCalendarClient } from "./transaction-calendar-client";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class AssociationApiClient {
 
   public transaction(): CrudRepository<Transaction> {
     return new CrudRepository<Transaction>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
+  }
+
+  public transactionCalendar(): TransactionCalendarClient {
+    return new TransactionCalendarClient(new AngularHttpOperations(this.http, this.rootUrl + '/transaction/calendar'));
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {

@@ -1,0 +1,12 @@
+<layout-article title="Transactions calendar">
+  <div *ngIf="readingCalendar; then waiting_cue else calendar"></div>
+  <ng-template #waiting_cue>
+    <div class="d-flex justify-content-center">
+      <span class="spinner-border spinner-border-sm mr-1"></span>
+    </div>
+  </ng-template>
+  <ng-template #calendar>
+    <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [range]="range"
+      (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></assoc-transaction-calendar>
+  </ng-template>
+</layout-article>
