@@ -22,23 +22,17 @@ describe('FeeCalendarComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // Range and buttons
-
-  it('should disable the forward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the backward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-
-    expect(button.disabled).toEqual(true);
-  });
+  // **************************************************************************
+  // Disable buttons
+  // **************************************************************************
 
   it('should enable the forward button when the current year is before the end', () => {
     component.end = 2020;
@@ -47,24 +41,6 @@ describe('FeeCalendarComponent', () => {
 
     const button = fixture.nativeElement.querySelector('#nextYearButton');
     expect(button.disabled).toEqual(false);
-  });
-
-  it('should disable the forward button when the current year is equal to the end', () => {
-    component.end = 2020;
-    component.year = 2020;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the forward button when the current year is after the end', () => {
-    component.end = 2020;
-    component.year = 2021;
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button.disabled).toEqual(true);
   });
 
   it('should enable the backward button when the current year is after the start', () => {
@@ -76,22 +52,56 @@ describe('FeeCalendarComponent', () => {
     expect(button.disabled).toEqual(false);
   });
 
-  it('should disable the backward button when the current year is equal to the start', () => {
+  // **************************************************************************
+  // Hide buttons
+  // **************************************************************************
+
+  it('should hide the forward button by default', () => {
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
+
+    expect(button).toBeNull();
+  });
+
+  it('should hide the backward button by default', () => {
+    const button = fixture.nativeElement.querySelector('#previousYearButton');
+
+    expect(button).toBeNull();
+  });
+
+  it('should hide the forward button when the current year is equal to the end', () => {
+    component.end = 2020;
+    component.year = 2020;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
+    expect(button).toBeNull();
+  });
+
+  it('should hide the forward button when the current year is after the end', () => {
+    component.end = 2020;
+    component.year = 2021;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#nextYearButton');
+    expect(button).toBeNull();
+  });
+
+  it('should hide the backward button when the current year is equal to the start', () => {
     component.start = 2020;
     component.year = 2020;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button.disabled).toEqual(true);
+    expect(button).toBeNull();
   });
 
-  it('should disable the backward button when the current year is before the start', () => {
+  it('should hide the backward button when the current year is before the start', () => {
     component.start = 2020;
     component.year = 2019;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button.disabled).toEqual(true);
+    expect(button).toBeNull();
   });
 
 });
