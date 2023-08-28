@@ -3,6 +3,8 @@ import { Calendar } from '../../models/calendar';
 import { CalendarDay } from '../../models/calendar-day';
 import { CalendarNote } from '../../models/calendar-note';
 import { CalendarWeek } from '../../models/calendar-week';
+import { Month } from '../../models/month';
+import { Day } from '../../models/day';
 
 @Component({
   selector: 'shared-calendar-month',
@@ -24,9 +26,9 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public endMonth = 0;
 
-  @Output() public dateChange = new EventEmitter<Date>();
+  @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Date>();
+  @Output() public pickDate = new EventEmitter<Day>();
 
   public calendar: Calendar = new Calendar();
 
@@ -41,18 +43,16 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onGoPrevious() {
-    const date = new Date();
-    date.setFullYear(this.year);
-    date.setMonth(this.month);
-    date.setDate(1);
+    const date = new Month();
+    date.year = this.year;
+    date.month = this.month - 1;
     this.dateChange.emit(date);
   }
 
   public onGoNext() {
-    const date = new Date();
-    date.setFullYear(this.year);
-    date.setMonth(this.month);
-    date.setDate(1);
+    const date = new Month();
+    date.year = this.year;
+    date.month = this.month + 1;
     this.dateChange.emit(date);
   }
 
@@ -84,16 +84,12 @@ export class CalendarMonthComponent implements OnChanges {
     return valid;
   }
 
-  public onPickDate(year: number, month: number, day: number | null) {
+  public onPickDate(year: number, month: number, day: number) {
     if (day) {
-      const date = new Date();
-      date.setFullYear(year);
-      date.setMonth(month);
-      date.setDate(day);
-      date.setHours(0);
-      date.setMinutes(0);
-      date.setSeconds(0);
-      date.setMilliseconds(0);
+      const date = new Day();
+      date.year = year;
+      date.month = month;
+      date.day = day;
 
       this.pickDate.emit(date);
     }

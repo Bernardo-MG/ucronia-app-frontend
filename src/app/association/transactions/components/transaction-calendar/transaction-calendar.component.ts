@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
 import { CalendarNote } from '@app/shared/calendar/models/calendar-note';
+import { Day } from '@app/shared/calendar/models/day';
+import { Month } from '@app/shared/calendar/models/month';
 
 @Component({
   selector: 'assoc-transaction-calendar',
@@ -17,9 +19,9 @@ export class TransactionCalendarComponent implements OnChanges {
   
   @Input() public transactions: Transaction[] = [];
 
-  @Output() public dateChange = new EventEmitter<Date>();
+  @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Date>();
+  @Output() public pickDate = new EventEmitter<Day>();
 
   public notes: CalendarNote[] = [];
 
@@ -35,11 +37,11 @@ export class TransactionCalendarComponent implements OnChanges {
     }
   }
   
-  public onPickDate(date: Date) {
+  public onPickDate(date: Day) {
     this.pickDate.emit(date);
   }
 
-  public onDateChange(date: Date) {
+  public onDateChange(date: Month) {
     this.dateChange.emit(date);
   }
 

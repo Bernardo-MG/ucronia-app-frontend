@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Transaction } from '@app/association/models/transaction';
 import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
+import { Day } from '@app/shared/calendar/models/day';
+import { Month } from '@app/shared/calendar/models/month';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
@@ -56,17 +58,15 @@ export class TransactionCalendarInfoComponent {
     });
   }
 
-  public onDateChange(date: Date) {
+  public onDateChange(date: Month) {
     // Corrects month value
-    const month = date.getMonth() + 1;
-    const formattedDate = (date.getFullYear() + '-' + month);
+    const formattedDate = (date.year + '-' + date.month);
     this.routeActuator.setParameters({ date: formattedDate });
   }
 
-  public onPickDate(date: Date) {
+  public onPickDate(date: Day) {
     // Corrects month value
-    const month = date.getMonth() + 1;
-    const formattedDate = (date.getFullYear() + '-' + month + '-' + date.getDate());
+    const formattedDate = (date.year + '-' + date.month + '-' + date.day);
     const parameters = { date: formattedDate };
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
