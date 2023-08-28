@@ -59,8 +59,7 @@ export class TransactionCalendarInfoComponent {
     this.date = date;
     // Corrects month value
     const month = date.getMonth() + 1;
-    // FIXME: For this, just set year and month
-    const formattedDate = (date.getFullYear() + '-' + month + '-1');
+    const formattedDate = (date.getFullYear() + '-' + month);
     this.routeActuator.setParameters({ date: formattedDate });
   }
 
