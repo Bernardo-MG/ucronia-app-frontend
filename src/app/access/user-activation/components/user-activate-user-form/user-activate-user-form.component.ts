@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
@@ -16,21 +16,26 @@ export class UserActivateUserFormComponent extends FormComponent<ConfirmPassword
 
     this.form = this.formBuilder.nonNullable.group({
       password: ['', Validators.required],
-      confirmPassword: ['', [Validators.required, this.passwordsMatch()]]
+      confirmPassword: ['', [Validators.required]]
     });
   }
 
-  private passwordsMatch(): ValidatorFn {
-    return (c: AbstractControl): ValidationErrors | null => {
-      if (c.parent) {
+  public override isSaveDisabled() {
+    return super.isSaveDisabled() || !this.isPasswordsMatching();
+  }
 
-        const password: any = c.parent.get('password');
-        const confirmPassword: any = c.parent.get('confirmPassword');
+  public isPasswordsMatching(): boolean {
+    const password = this.form.get('password');
+    const confirmPassword = this.form.get('confirmPassword');
 
-        return password.value !== confirmPassword.value ? { passwordMismatch: true } : null;
-      }
-      return null;
-    };
+    let matching;
+    if (password && confirmPassword) {
+      matching = password.getRawValue() === confirmPassword.getRawValue();
+    } else {
+      matching = false;
+    }
+
+    return matching;
   }
 
 }
