@@ -12,7 +12,9 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   @Input() public notes: CalendarNote[] = [];
 
-  @Input() public date = new Date();
+  @Input() public year = 0;
+
+  @Input() public month = 0;
 
   @Input() public startYear = 0;
 
@@ -32,24 +34,10 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  constructor() {
-    this.date.setFullYear(0)
-    this.date.setMonth(0);
-    this.date.setDate(1);
-    this.date.setHours(0);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-    this.date.setMilliseconds(0);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
-    this.date.setDate(1);
-    this.date.setHours(0);
-    this.date.setMinutes(0);
-    this.date.setSeconds(0);
-    this.date.setMilliseconds(0);
-
-    this.loadMonth();
+    if (changes['year'] || changes['month']) {
+      this.loadMonth();
+    }
   }
 
   public ngOnInit(): void {
@@ -57,26 +45,32 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   public onGoPrevious() {
-    this.date.setMonth(this.date.getMonth() - 1);
+    const date = new Date();
+    date.setFullYear(this.year);
+    date.setMonth(this.month - 1);
+    date.setDate(1);
     this.loadMonth();
-    this.dateChange.emit(this.date);
+    this.dateChange.emit(date);
   }
 
   public onGoNext() {
-    this.date.setMonth(this.date.getMonth() + 1);
+    const date = new Date();
+    date.setFullYear(this.year);
+    date.setMonth(this.month + 1);
+    date.setDate(1);
     this.loadMonth();
-    this.dateChange.emit(this.date);
+    this.dateChange.emit(date);
   }
 
   public isAbleToGoNext() {
     let valid;
 
-    if (this.date.getFullYear() == this.endYear) {
+    if (this.year == this.endYear) {
       // In the same year
       // Checks month
-      valid = (this.date.getMonth() < this.endMonth);
+      valid = (this.month < this.endMonth);
     } else {
-      valid = (this.date.getFullYear() < this.endYear);
+      valid = (this.year < this.endYear);
     }
 
     return valid;
@@ -85,12 +79,12 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   public isAbleToGoPrevious() {
     let valid;
 
-    if (this.date.getFullYear() == this.startYear) {
+    if (this.year == this.startYear) {
       // In the same year
       // Checks month
-      valid = (this.date.getMonth() > this.startMonth);
+      valid = (this.month > this.startMonth);
     } else {
-      valid = (this.date.getFullYear() > this.startYear);
+      valid = (this.year > this.startYear);
     }
 
     return valid;
@@ -116,10 +110,10 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   private loadMonth() {
-    this.calendar.year = this.date.getFullYear();
-    this.calendar.month = this.date.getMonth();
+    this.calendar.year = this.year;
+    this.calendar.month = this.month;
     this.monthName = this.getMonthName(this.calendar.month);
-    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.date.getMonth());
+    this.calendar.weeks = this.generateWeeks(this.calendar.year, this.month);
     this.calendar.weeks.forEach(w => w.days
       .filter(d => d.number)
       .forEach(d => {

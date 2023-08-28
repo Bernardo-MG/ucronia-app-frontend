@@ -9,8 +9,10 @@ import { CalendarNote } from '@app/shared/calendar/models/calendar-note';
 })
 export class TransactionCalendarComponent implements OnChanges {
 
-  @Input() public date = new Date();
-  
+  @Input() public year = 0;
+
+  @Input() public month = 0;
+
   @Input() public range = new TransactionCalendarRange();
   
   @Input() public transactions: Transaction[] = [];
@@ -20,8 +22,6 @@ export class TransactionCalendarComponent implements OnChanges {
   @Output() public pickDate = new EventEmitter<Date>();
 
   public notes: CalendarNote[] = [];
-
-  constructor() { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions']) {

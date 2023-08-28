@@ -20,7 +20,9 @@ export class TransactionCalendarInfoComponent {
 
   public range = new TransactionCalendarRange();
 
-  public date = new Date();
+  public year = 0;
+
+  public month = 0;
 
   private routeActuator: RouteParametersActuator;
 
@@ -41,8 +43,9 @@ export class TransactionCalendarInfoComponent {
     // Watch for changes in selected date
     this.dateObserver.subject.subscribe(d => {
       if (d) {
-        this.date = d;
-        if(!this.readingCalendar){
+        this.year = d.getFullYear();
+        this.month = d.getMonth() + 1;
+        if (!this.readingCalendar) {
           this.load(d);
         }
       }
@@ -56,7 +59,6 @@ export class TransactionCalendarInfoComponent {
   }
 
   public onDateChange(date: Date) {
-    this.date = date;
     // Corrects month value
     const month = date.getMonth() + 1;
     const formattedDate = (date.getFullYear() + '-' + month);

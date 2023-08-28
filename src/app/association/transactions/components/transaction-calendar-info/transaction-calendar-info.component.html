@@ -6,7 +6,7 @@
     </div>
   </ng-template>
   <ng-template #calendar>
-    <assoc-transaction-calendar [transactions]="transactions" [date]="date" [range]="range"
+    <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [range]="range"
       (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></assoc-transaction-calendar>
   </ng-template>
 </layout-article>
