@@ -1,5 +1,6 @@
 <!-- Controls -->
 <div class="row text-center">
+  <!-- To previous year button -->
   <div class="col-4">
     <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link"
       (click)="onGoPrevious()" [class.disabled]="!isAbleToGoPrevious()" [disabled]="!isAbleToGoPrevious()"
@@ -7,11 +8,13 @@
       <icon-backward></icon-backward>
     </button>
   </div>
+  <!-- Current year -->
   <div class="col-4">
     {{year}}
   </div>
-  <div class="col-4 ">
-    <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
+  <!-- To next year button -->
+  <div class="col-4">
+    <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link float-end" (click)="onGoNext()"
       [class.disabled]="!isAbleToGoNext()" [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()"
       aria-label="Previous page">
       <icon-forward></icon-forward>
@@ -39,29 +42,23 @@
   </thead>
   <tbody>
     <ng-template ngFor let-row [ngForOf]="rows">
-      <tr>
+      <tr [ngClass]="{ 'table-warning': row.active === false }">
         <td>
-          <div [ngSwitch]="row.active">
-            <div *ngSwitchCase="true">
-              {{row.name}} {{row.surname}}
-            </div>
-            <div *ngSwitchCase="false">
-              <div class="text-decoration-line-through">{{row.name}} {{row.surname}}</div>
-            </div>
-          </div>
+          {{row.name}}
         </td>
+        <!-- Month fees -->
         <ng-template ngFor let-column [ngForOf]="row.months">
           <td>
-            <ng-template [ngIf]="column !== undefined">
-              <div [ngSwitch]="column">
-                <div *ngSwitchCase="true">
-                  <fa-icon class="text-success" [icon]="activeIcon"></fa-icon>
-                </div>
-                <div *ngSwitchCase="false">
-                  <fa-icon class="text-danger" [icon]="inactiveIcon"></fa-icon>
-                </div>
+            <div [ngSwitch]="column">
+              <div *ngSwitchCase="true">
+                <!-- Paid month -->
+                <fa-icon class="text-success" [icon]="paidIcon"></fa-icon>
               </div>
-            </ng-template>
+              <div *ngSwitchCase="false">
+                <!-- Not paid month -->
+                <fa-icon class="text-danger" [icon]="notPaidIcon"></fa-icon>
+              </div>
+            </div>
           </td>
         </ng-template>
       </tr>
