@@ -1,5 +1,5 @@
 <layout-article title="Transactions calendar">
-  <div *ngIf="waiting; then waiting_cue else calendar"></div>
+  <div *ngIf="readingCalendar; then waiting_cue else calendar"></div>
   <ng-template #waiting_cue>
     <div class="d-flex justify-content-center">
       <span class="spinner-border spinner-border-sm mr-1"></span>

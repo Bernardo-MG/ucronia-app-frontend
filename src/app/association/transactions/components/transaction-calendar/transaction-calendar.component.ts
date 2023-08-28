@@ -16,7 +16,7 @@ export class TransactionCalendarComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public readingCalendar = false;
 
   public range = new TransactionCalendarRange();
 
@@ -41,28 +41,36 @@ export class TransactionCalendarComponent implements OnInit {
     this.dateObserver.subject.subscribe(d => {
       if (d) {
         this.date = d;
-        this.load(d);
+        if(!this.readingCalendar){
+          this.load(d);
+        }
       }
     });
     this.service.getRange().subscribe(d => {
       this.range = d;
+      // TODO: What happens if this date is not in the range?
+      this.load(new Date());
     });
   }
 
   public onDateChange(date: Date) {
     this.date = date;
-    const formattedDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-1');
+    // Corrects month value
+    const month = date.getMonth() + 1;
+    const formattedDate = (date.getFullYear() + '-' + month + '-1');
     this.routeActuator.setParameters({ date: formattedDate });
   }
 
   public onPickDate(date: Date) {
-    const formattedDate = (date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate());
+    // Corrects month value
+    const month = date.getMonth() + 1;
+    const formattedDate = (date.getFullYear() + '-' + month + '-' + date.getDate());
     const parameters = { date: formattedDate };
     this.router.navigate(["/transactions/list"], { queryParams: parameters });
   }
 
   private load(date: Date) {
-    this.waiting = true
+    this.readingCalendar = true
     // Corrects month value
     const month = date.getMonth() + 1;
     this.service.getCalendar(date.getFullYear(), month).subscribe({
@@ -73,11 +81,11 @@ export class TransactionCalendarComponent implements OnInit {
           return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
         });
         // Reactivate view
-        this.waiting = false;
+        this.readingCalendar = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingCalendar = false;
       }
     });
   }
