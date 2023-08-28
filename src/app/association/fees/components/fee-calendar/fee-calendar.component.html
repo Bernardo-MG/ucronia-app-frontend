@@ -46,21 +46,25 @@
         <td>
           <div [ngSwitch]="row.active">
             <div *ngSwitchCase="true">
-              {{row.name}} {{row.surname}}
+              <!-- User name -->
+              {{row.name}}
             </div>
             <div *ngSwitchCase="false">
-              <div class="text-decoration-line-through">{{row.name}} {{row.surname}}</div>
+              <div class="text-decoration-line-through">{{row.name}}</div>
             </div>
           </div>
         </td>
+        <!-- Month fees -->
         <ng-template ngFor let-column [ngForOf]="row.months">
           <td>
             <div [ngSwitch]="column">
               <div *ngSwitchCase="true">
-                <fa-icon class="text-success" [icon]="activeIcon"></fa-icon>
+                <!-- Paid month -->
+                <fa-icon class="text-success" [icon]="paidIcon"></fa-icon>
               </div>
               <div *ngSwitchCase="false">
-                <fa-icon class="text-danger" [icon]="inactiveIcon"></fa-icon>
+                <!-- Not paid month -->
+                <fa-icon class="text-danger" [icon]="notPaidIcon"></fa-icon>
               </div>
             </div>
           </td>
