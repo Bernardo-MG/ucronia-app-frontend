@@ -12,25 +12,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 })
 export class AccessRoleAddPermissionComponent {
 
-  private _actions: Action[] = [];
-
-  @Input() set actions(value: Action[]) {
-    this._actions = value;
-    this.actionRows = value.map((a, i) => {
-      return { id: i, cells: [a.name] };
-    });
-  }
+  @Input() public actions: Action[] = [];
 
   @Input() public totalActionPages = 0;
 
-  private _resources: Resource[] = [];
-
-  @Input() set resources(value: Resource[]) {
-    this._resources = value;
-    this.resourceRows = value.map((r, i) => {
-      return { id: i, cells: [r.name] };
-    });
-  }
+  @Input() public resources: Resource[] = [];
 
   @Input() public totalResourcePages = 0;
 
@@ -39,14 +25,6 @@ export class AccessRoleAddPermissionComponent {
   @Output() public goToActionPage = new EventEmitter<number>();
 
   @Output() public goToResourcePage = new EventEmitter<number>();
-
-  public actionHeader: TableHeaderCell[] = [{ name: 'Action', property: 'action' }];
-
-  public actionRows: TableRow[] = [];
-
-  public resourceHeader: TableHeaderCell[] = [{ name: 'Resource', property: 'resource' }];
-
-  public resourceRows: TableRow[] = [];
 
   public data = new Permission();
 
@@ -82,12 +60,12 @@ export class AccessRoleAddPermissionComponent {
   }
 
   public onSelectAction(index: number): void {
-    this.action = this._actions[index];
+    this.action = this.actions[index];
     this.view = 'main';
   }
 
   public onSelectResource(index: number): void {
-    this.resource = this._resources[index];
+    this.resource = this.resources[index];
     this.view = 'main';
   }
 
