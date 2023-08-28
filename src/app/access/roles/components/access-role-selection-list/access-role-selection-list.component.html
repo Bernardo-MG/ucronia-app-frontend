@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let role of roles; let rowIndex = index" role="button" routerLink="'roles/'{{role.id}}">
+        <tr *ngFor="let role of roles; let rowIndex = index" role="button" routerLink="/roles/{{role.id}}">
           <!-- Cells -->
           <td>
             {{role.name}}
