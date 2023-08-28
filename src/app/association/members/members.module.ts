@@ -9,11 +9,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberCreateFormComponent } from './components/member-create-form/member-create-form.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
-import { MemberFormComponent } from './components/member-form/member-form.component';
+import { MemberEditionFormComponent } from './components/member-edit-form/member-edit-form.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
+import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
 
 
 
@@ -23,8 +24,9 @@ import { MemberService } from './services/member.service';
     MemberDetailsComponent,
     MemberCreateComponent,
     MemberCreateFormComponent,
-    MemberFormComponent,
-    MemberInfoComponent
+    MemberEditionFormComponent,
+    MemberInfoComponent,
+    MemberSelectionListComponent
   ],
   imports: [
     CommonModule,

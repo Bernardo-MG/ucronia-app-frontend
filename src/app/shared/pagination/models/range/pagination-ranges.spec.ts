@@ -6,7 +6,9 @@ describe('PaginationRanges', () => {
     TestBed.configureTestingModule({});
   });
 
+  // **************************************************************************
   // Minimal values
+  // **************************************************************************
 
   it('should create no data for an empty pagination', () => {
     const ranges = new PaginationRanges(0, 0);
@@ -24,7 +26,9 @@ describe('PaginationRanges', () => {
     expect(ranges.right).withContext('Right range should be empty').toEqual([]);
   });
 
+  // **************************************************************************
   // Extremes
+  // **************************************************************************
 
   it('should create both extremes when pointing to the first page', () => {
     const ranges = new PaginationRanges(1, 10);
@@ -42,7 +46,9 @@ describe('PaginationRanges', () => {
     expect(ranges.right).withContext('Right range should contain the last pages').toEqual([8, 9, 10]);
   });
 
+  // **************************************************************************
   // Center range
+  // **************************************************************************
 
   it('should create all ranges when pointing to the middle page', () => {
     const ranges = new PaginationRanges(10, 20);
@@ -68,7 +74,9 @@ describe('PaginationRanges', () => {
     expect(ranges.right).withContext('Right range should contain the last pages').toEqual([18, 19, 20]);
   });
 
+  // **************************************************************************
   // Merging ranges
+  // **************************************************************************
 
   it('should create a single range when pointing to the middle page and all the ranges overlap', () => {
     const ranges = new PaginationRanges(5, 10);
@@ -102,7 +110,9 @@ describe('PaginationRanges', () => {
     expect(ranges.right).withContext('Right range should contain the merged range').toEqual([13, 14, 15, 16, 17, 18, 19, 20]);
   });
 
+  // **************************************************************************
   // Moving around extremes
+  // **************************************************************************
 
   it('should extend the left range when pointing to the second page', () => {
     const ranges = new PaginationRanges(2, 10);

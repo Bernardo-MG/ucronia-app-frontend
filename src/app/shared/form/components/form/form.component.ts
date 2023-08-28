@@ -7,7 +7,19 @@ import { Failure } from '@app/core/api/models/failure';
 })
 export class FormComponent<Data> {
 
-  @Input() public readonly = false;
+  /**
+   * Read only flag. Disables the inputs.
+   */
+  public _readonly = false;
+
+  @Input() public set readonly(flag: boolean) {
+    this._readonly = flag;
+    this.toggleEnable();
+  }
+
+  public get readonly() {
+    return this._readonly;
+  }
 
   /**
    * Waiting flag. Shows the waiting visual cue and disables the form.
@@ -16,11 +28,7 @@ export class FormComponent<Data> {
 
   @Input() public set waiting(flag: boolean) {
     this._waiting = flag;
-    if (this._waiting) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
+    this.toggleEnable();
   }
 
   public get waiting() {
@@ -118,6 +126,14 @@ export class FormComponent<Data> {
     }
 
     return invalid;
+  }
+
+  private toggleEnable() {
+    if (this.readonly || this.waiting) {
+      this.form.disable();
+    } else {
+      this.form.enable();
+    }
   }
 
 }

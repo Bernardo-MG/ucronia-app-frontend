@@ -12,6 +12,11 @@ import { MemberService } from '../../services/member.service';
 export class MemberDetailsComponent implements OnInit {
 
   /**
+   * Reading flag.
+   */
+  public reading = false;
+
+  /**
    * Saving flag.
    */
   public saving = false;
@@ -21,8 +26,6 @@ export class MemberDetailsComponent implements OnInit {
   public editPermission = false;
 
   public deletePermission = false;
-
-  public waiting = false;
 
   public error = false;
 
@@ -83,16 +86,16 @@ export class MemberDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      this.waiting = true;
+      this.reading = true;
       const identifier = Number(id);
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
             this.data = d;
-            this.waiting = false;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
+            this.reading = false;
             this.error = true;
           }
         });
@@ -101,6 +104,10 @@ export class MemberDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }

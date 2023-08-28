@@ -12,8 +12,8 @@
   <layout-waiting-wrapper [waiting]="waiting">
     <div class="card">
       <div class="card-body">
-        <layout-router-link-list [header]="header" [rows]="rows" route="/roles">
-        </layout-router-link-list>
+        <access-role-selection-list [roles]="roles">
+        </access-role-selection-list>
       </div>
       <div class="d-flex justify-content-center mt-1">
         <pagination-route-navigation [totalPages]="totalPages">

@@ -6,6 +6,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
 import { AccessRoleListComponent } from './access-role-list.component';
 
 describe('AccessRoleListComponent', () => {
@@ -23,7 +24,8 @@ describe('AccessRoleListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        AccessRoleListComponent
+        AccessRoleListComponent,
+        AccessRoleSelectionListComponent
       ],
       providers: [
         AccessRoleService

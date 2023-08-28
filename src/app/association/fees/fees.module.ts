@@ -10,15 +10,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarInfoComponent } from './components/fee-calendar-info/fee-calendar-info.component';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
 import { FeeCreateComponent } from './components/fee-create/fee-create.component';
-import { FeeCreationFormComponent } from './components/fee-creation-form/fee-creation-form.component';
+import { FeeCreateFormComponent } from './components/fee-create-form/fee-create-form.component';
 import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
-import { FeeFormComponent } from './components/fee-form/fee-form.component';
+import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeLayoutComponent } from './components/fee-layout/fee-layout.component';
 import { FeeListComponent } from './components/fee-list/fee-list.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeService } from './services/fee.service';
+import { FeeSelectionListComponent } from './components/fee-selection-list/fee-selection-list.component';
 
 
 
@@ -30,10 +31,11 @@ import { FeeService } from './services/fee.service';
     FeeListComponent,
     FeeDetailsComponent,
     MemberSelectionComponent,
-    FeeFormComponent,
-    FeeCreationFormComponent,
+    FeeEditFormComponent,
+    FeeCreateFormComponent,
     FeeInfoComponent,
-    FeeLayoutComponent
+    FeeLayoutComponent,
+    FeeSelectionListComponent
   ],
   imports: [
     CommonModule,

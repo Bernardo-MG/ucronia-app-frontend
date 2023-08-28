@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Transaction } from '@app/association/models/transaction';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { TableRow } from '@app/shared/layout/models/table-row';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
-import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'assoc-transaction-list',
@@ -23,6 +23,8 @@ export class TransactionListComponent implements OnInit {
 
   public createPermission = false;
 
+  public transactions: Transaction[] = [];
+
   public totalPages = 0;
 
   public startDate: string | undefined = undefined;
@@ -30,10 +32,6 @@ export class TransactionListComponent implements OnInit {
   public endDate: string | undefined = undefined;
 
   public date: string | undefined = undefined;
-
-  public rows: TableRow[] = [];
-
-  public header = [{ name: 'Description', property: 'description' }, { name: 'Date', property: 'date' }, { name: 'Amount', property: 'amount' }];
 
   private routeActuator: RouteParametersActuator;
 
@@ -86,13 +84,7 @@ export class TransactionListComponent implements OnInit {
     this.waiting = true;
     this.service.getAll(pagination, filter).subscribe({
       next: page => {
-        this.rows = page.content.map(m => {
-          return {
-            id: m.id,
-            cells: [m.description, m.date, m.amount]
-          };
-        });
-
+        this.transactions = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view

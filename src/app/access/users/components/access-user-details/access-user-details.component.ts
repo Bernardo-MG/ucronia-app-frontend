@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { PageInfo } from '@app/core/api/models/page-info';
-import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
@@ -12,6 +10,11 @@ import { AccessUserService } from '../../services/access-user.service';
   templateUrl: './access-user-details.component.html'
 })
 export class AccessUserDetailsComponent implements OnInit {
+
+  /**
+   * Reading flag.
+   */
+  public reading = false;
 
   /**
    * Saving flag.
@@ -24,25 +27,11 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public deletePermission = false;
 
-  public waiting = false;
-
   public error = false;
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public waitingRoles = false;
-
   public data = new User();
-
-  public formValid = false;
-
-  public roles: Role[] = [];
-
-  public roleSelection: Role[] = [];
-
-  public roleSelectionPageInfo = new PageInfo();
-
-  public rolesPageInfo = new PageInfo();
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +54,7 @@ export class AccessUserDetailsComponent implements OnInit {
   public onSave(data: User): void {
     this.saving = true;
     this.service.create(data).subscribe({
-      next: d => {
+      next: response => {
         this.failures = {};
         // Reactivate view
         this.saving = false;
@@ -94,51 +83,18 @@ export class AccessUserDetailsComponent implements OnInit {
     this.editing = true;
   }
 
-  public onFormValidChange(valid: boolean): void {
-    this.formValid = valid;
-  }
-
-  public onFormChange(value: User) {
-    this.data = value;
-  }
-
-  public onAddRole(data: Role): void {
-    this.service.addRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
-  }
-
-  public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.data.id, data.id).subscribe(p => this.onGoToRolePage(0));
-  }
-
-  public onGoToRoleSelectionPage(page: number) {
-    this.service.getRoleSelection(page).subscribe(response => {
-      this.roleSelection = response.content;
-      this.roleSelectionPageInfo = response;
-    });
-  }
-
-  public onGoToRolePage(page: number) {
-    this.waitingRoles = true;
-    this.service.getRoles(this.data.id, page).subscribe(response => {
-      this.roles = response.content;
-      this.rolesPageInfo = response;
-      this.waitingRoles = false;
-    });
-  }
-
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
-      this.waiting = true;
+      this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
             this.data = d;
-            this.onGoToRolePage(0);
-            this.waiting = false;
+            this.reading = false;
           },
           error: error => {
-            this.waiting = false;
+            this.reading = false;
             this.error = true;
           }
         });
@@ -147,6 +103,10 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public isEditable() {
     return this.editPermission && this.editing && (!this.error);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }

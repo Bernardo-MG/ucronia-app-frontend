@@ -342,4 +342,38 @@ describe('PaginationNavigationTemplateComponent', () => {
     expect(buttons.length).toEqual(3);
   });
 
+  // **************************************************************************
+  // Current page
+  // **************************************************************************
+
+  // **************************************************************************
+  // Click and go to event
+  // **************************************************************************
+
+  it('should emit the go to event when clicking a button', () => {
+    spyOn(component.goTo, 'emit');
+
+    component.left = [1, 2];
+    component.current = 1;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button')[1];
+    button.click();
+
+    expect(component.goTo.emit).toHaveBeenCalledWith(2);
+  });
+
+  it('should not emit the go to event when clicking the button for the current page', () => {
+    spyOn(component.goTo, 'emit');
+
+    component.left = [1];
+    component.current = 1;
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelectorAll('.page-item-number button')[0];
+    button.click();
+
+    expect(component.goTo.emit).not.toHaveBeenCalled();
+  });
+
 });
