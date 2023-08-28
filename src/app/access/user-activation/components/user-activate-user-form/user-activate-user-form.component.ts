@@ -24,7 +24,7 @@ export class UserActivateUserFormComponent extends FormComponent<ConfirmPassword
     return super.isSaveDisabled() || !this.isPasswordsMatching();
   }
 
-  private isPasswordsMatching(): boolean {
+  public isPasswordsMatching(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 

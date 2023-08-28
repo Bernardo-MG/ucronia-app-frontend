@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
@@ -24,7 +24,7 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
     return super.isSaveDisabled() || !this.isPasswordsMatching();
   }
 
-  private isPasswordsMatching(): boolean {
+  public isPasswordsMatching(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 
