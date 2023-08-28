@@ -2,6 +2,6 @@ export class Fee {
   id = -1;
   memberId = -1;
   memberName = '';
-  date = new Date();
+  date = '';
   paid = false;
 }

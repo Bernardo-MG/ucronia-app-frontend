@@ -30,7 +30,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   public calendar: Calendar = new Calendar();
 
-  public monthName = "";
+  public monthName = '';
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
