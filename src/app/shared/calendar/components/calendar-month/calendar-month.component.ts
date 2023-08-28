@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Calendar } from '../../models/calendar';
 import { CalendarDay } from '../../models/calendar-day';
 import { CalendarNote } from '../../models/calendar-note';
@@ -8,7 +8,7 @@ import { CalendarWeek } from '../../models/calendar-week';
   selector: 'shared-calendar-month',
   templateUrl: './calendar-month.component.html'
 })
-export class CalendarMonthComponent implements OnInit, OnChanges {
+export class CalendarMonthComponent implements OnChanges {
 
   @Input() public notes: CalendarNote[] = [];
 
@@ -40,25 +40,19 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void {
-    this.loadMonth();
-  }
-
   public onGoPrevious() {
     const date = new Date();
     date.setFullYear(this.year);
-    date.setMonth(this.month - 1);
+    date.setMonth(this.month);
     date.setDate(1);
-    this.loadMonth();
     this.dateChange.emit(date);
   }
 
   public onGoNext() {
     const date = new Date();
     date.setFullYear(this.year);
-    date.setMonth(this.month + 1);
+    date.setMonth(this.month);
     date.setDate(1);
-    this.loadMonth();
     this.dateChange.emit(date);
   }
 
@@ -127,8 +121,8 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
     const weeks: CalendarWeek[] = [];
     let currentWeek: CalendarWeek = new CalendarWeek();
-    let currentDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
-    const numDaysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    let currentDayOfWeek = new Date(currentYear, currentMonth - 1, 1).getDay();
+    const numDaysInMonth = new Date(currentYear, currentMonth, 0).getDate();
 
     // Add empty days to the beginning of the first week to align it with the correct day of the week
     for (let i = 0; i < currentDayOfWeek; i++) {
@@ -159,7 +153,7 @@ export class CalendarMonthComponent implements OnInit, OnChanges {
   }
 
   private getMonthName(month: number): string {
-    return this.monthNames[month];
+    return this.monthNames[month - 1];
   }
 
 }

@@ -43,8 +43,6 @@ export class TransactionCalendarInfoComponent {
     // Watch for changes in selected date
     this.dateObserver.subject.subscribe(d => {
       if (d) {
-        this.year = d.getFullYear();
-        this.month = d.getMonth() + 1;
         if (!this.readingCalendar) {
           this.load(d);
         }
@@ -76,8 +74,9 @@ export class TransactionCalendarInfoComponent {
   private load(date: Date) {
     this.readingCalendar = true
     // Corrects month value
-    const month = date.getMonth() + 1;
-    this.service.getCalendar(date.getFullYear(), month).subscribe({
+    this.year = date.getFullYear();
+    this.month = date.getMonth() + 1;
+    this.service.getCalendar(this.year, this.month).subscribe({
       next: response => {
         this.transactions = response;
         // Reactivate view
