@@ -27,7 +27,10 @@ export class TransactionCalendarComponent implements OnChanges {
     if (changes['transactions']) {
       this.notes = this.transactions.map(t => {
         const date = new Date(t.date);
-        return new CalendarNote(date.getFullYear(), date.getMonth(), date.getDate(), t.description);
+        // Corrects month value
+        const month = date.getMonth() + 1;
+        // TODO: Shouldn't the year and month match the ones in the calendar?
+        return new CalendarNote(date.getFullYear(), month, date.getDate(), t.description);
       });
     }
   }

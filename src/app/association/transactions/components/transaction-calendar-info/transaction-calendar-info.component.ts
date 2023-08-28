@@ -73,8 +73,8 @@ export class TransactionCalendarInfoComponent {
 
   private load(date: Date) {
     this.readingCalendar = true
-    // Corrects month value
     this.year = date.getFullYear();
+    // Corrects month value
     this.month = date.getMonth() + 1;
     this.service.getCalendar(this.year, this.month).subscribe({
       next: response => {

@@ -35,7 +35,7 @@ export class CalendarMonthComponent implements OnChanges {
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['year'] || changes['month']) {
+    if (changes['year'] || changes['month'] || changes['notes']) {
       this.loadMonth();
     }
   }
