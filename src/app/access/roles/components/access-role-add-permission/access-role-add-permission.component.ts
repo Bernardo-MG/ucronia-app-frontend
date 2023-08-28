@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
-import { TableHeaderCell } from '@app/shared/layout/models/table-header-cell';
-import { TableRow } from '@app/shared/layout/models/table-row';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

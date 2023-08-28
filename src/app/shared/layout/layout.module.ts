@@ -6,7 +6,6 @@ import { PaginationModule } from '../pagination/pagination.module';
 import { ArticleComponent } from './components/article/article.component';
 import { ButtonListComponent } from './components/button-list/button-list.component';
 import { EditionWrapperComponent } from './components/edition-wrapper/edition-wrapper.component';
-import { LinkListComponent } from './components/link-list/link-list.component';
 import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 
@@ -18,8 +17,7 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent,
-    LinkListComponent
+    WaitingButtonComponent
   ],
   imports: [
     CommonModule,
@@ -32,8 +30,7 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent,
-    LinkListComponent
+    WaitingButtonComponent
   ]
 })
 export class LayoutModule { }

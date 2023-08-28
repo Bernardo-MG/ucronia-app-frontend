@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Transaction } from '@app/association/models/transaction';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { TableRow } from '@app/shared/layout/models/table-row';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { TransactionFilter } from '../../models/transaction-filter';
 import { TransactionFilterRouteObserver } from '../../route/observer/transaction-filter-route-observer';
 import { TransactionService } from '../../service/transaction.service';
-import { AuthService } from '@app/core/authentication/services/auth.service';
-import { Transaction } from '@app/association/models/transaction';
 
 @Component({
   selector: 'assoc-transaction-list',
