@@ -7,7 +7,6 @@ import { ArticleComponent } from './components/article/article.component';
 import { ButtonListComponent } from './components/button-list/button-list.component';
 import { EditionWrapperComponent } from './components/edition-wrapper/edition-wrapper.component';
 import { LinkListComponent } from './components/link-list/link-list.component';
-import { RouterLinkListComponent } from './components/router-link-list/router-link-list.component';
 import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
 
@@ -15,7 +14,6 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
 
 @NgModule({
   declarations: [
-    RouterLinkListComponent,
     WaitingWrapperComponent,
     ArticleComponent,
     ButtonListComponent,
@@ -30,7 +28,6 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
     PaginationModule
   ],
   exports: [
-    RouterLinkListComponent,
     WaitingWrapperComponent,
     ArticleComponent,
     ButtonListComponent,
