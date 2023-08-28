@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { TransactionSelectionListComponent } from './transaction-selection-list.component';
 
 describe('TransactionSelectionListComponent', () => {
@@ -8,9 +10,16 @@ describe('TransactionSelectionListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransactionSelectionListComponent ]
+      imports: [
+        RouterTestingModule,
+        LayoutModule,
+        PaginationModule
+      ],
+      declarations: [
+        TransactionSelectionListComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(TransactionSelectionListComponent);
     component = fixture.componentInstance;

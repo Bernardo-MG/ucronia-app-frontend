@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserSelectionListComponent } from './access-user-selection-list.component';
 
 describe('AccessUserSelectionListComponent', () => {
@@ -8,9 +10,16 @@ describe('AccessUserSelectionListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccessUserSelectionListComponent ]
+      imports: [
+        RouterTestingModule,
+        LayoutModule,
+        PaginationModule
+      ],
+      declarations: [
+        AccessUserSelectionListComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AccessUserSelectionListComponent);
     component = fixture.componentInstance;

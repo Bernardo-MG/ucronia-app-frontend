@@ -7,6 +7,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserListComponent } from './access-user-list.component';
+import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 describe('AccessUserListComponent', () => {
   let component: AccessUserListComponent;
@@ -23,7 +24,8 @@ describe('AccessUserListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        AccessUserListComponent
+        AccessUserListComponent,
+        AccessUserSelectionListComponent
       ],
       providers: [
         AccessUserService

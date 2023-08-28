@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { TransactionService } from '../../service/transaction.service';
-import { TransactionListComponent } from './transaction-list.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TransactionService } from '../../service/transaction.service';
+import { TransactionSelectionListComponent } from '../transaction-selection-list/transaction-selection-list.component';
+import { TransactionListComponent } from './transaction-list.component';
 
 describe('TransactionListComponent', () => {
   let component: TransactionListComponent;
@@ -24,7 +25,8 @@ describe('TransactionListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        TransactionListComponent
+        TransactionListComponent,
+        TransactionSelectionListComponent
       ],
       providers: [
         TransactionService
