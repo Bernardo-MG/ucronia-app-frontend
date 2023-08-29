@@ -11,7 +11,7 @@ export class BalanceInfoComponent implements OnInit {
   /**
    * Waiting flag.
    */
-  public waiting = false;
+  public readingBalance = false;
 
   public balance: Balance = new Balance();
 
@@ -20,10 +20,10 @@ export class BalanceInfoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.waiting = true;
+    this.readingBalance = true;
     this.service.getBalance().subscribe(d => {
       this.balance = d;
-      this.waiting = false;
+      this.readingBalance = false;
     });
   }
 
