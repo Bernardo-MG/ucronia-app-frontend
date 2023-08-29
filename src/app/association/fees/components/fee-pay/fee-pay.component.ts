@@ -60,11 +60,16 @@ export class FeePayComponent {
 
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
-    this.service.getMembers(page).subscribe(response => {
-      this.members = response.content;
-      this.membersPage = response.page + 1;
-      this.membersTotalPages = response.totalPages;
-      this.readingMembers = false;
+    this.service.getMembers(page).subscribe({
+      next: response => {
+        this.members = response.content;
+        this.membersPage = response.page + 1;
+        this.membersTotalPages = response.totalPages;
+        this.readingMembers = false;
+      },
+      error: error => {
+        this.readingMembers = false;
+      }
     });
   }
 
