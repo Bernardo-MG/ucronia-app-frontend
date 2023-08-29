@@ -9,7 +9,7 @@ import { Sort } from '@app/core/api/models/sort';
   templateUrl: './member-stats.component.html'
 })
 export class MemberStatsComponent implements OnInit {
-  
+
   @Input() public members: Member[] = [];
 
   public activeCount = 0;
@@ -19,7 +19,7 @@ export class MemberStatsComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public readingMembers = false;
 
   public totalPages = 0;
 
@@ -45,20 +45,20 @@ export class MemberStatsComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest) {
+    this.readingMembers = true;
     this.service.getActiveMembers(pagination).subscribe({
       next: page => {
-
         this.members = page.content;
 
         this.totalPages = page.totalPages;
 
         this.activeCount = page.totalElements;
         // Reactivate view
-        this.waiting = false;
+        this.readingMembers = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingMembers = false;
       }
     });
   }
