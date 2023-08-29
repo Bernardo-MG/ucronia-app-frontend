@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
@@ -9,19 +9,13 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
   selector: 'assoc-fee-pay-form',
   templateUrl: './fee-pay-form.component.html'
 })
-export class FeePayFormComponent extends FormComponent<Fee> {
+export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges {
 
-  @Input() public waitingMembers = false;
+  @Input() public memberId = -1;
+  
+  @Input() public memberName = '';
 
-  @Input() public members: Member[] = [];
-
-  @Input() public membersPage = 0;
-
-  @Input() public membersTotalPages = 0;
-
-  @Output() public goToMembersPage = new EventEmitter<number>();
-
-  public selectingMember = false;
+  @Output() public selectMember = new EventEmitter<void>();
 
   public member = new Member();
 
@@ -42,27 +36,14 @@ export class FeePayFormComponent extends FormComponent<Fee> {
     });
   }
 
-  public onSelectMember(member: Member) {
-    this.member = member;
-    this.data = { ...this.data, memberId: member.id };
-    this.selectingMember = false;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['memberId']) {
+      this.data = { ...this.data, memberId: this.memberId };
+    }
   }
 
   public onStartSelectingMember() {
-    this.onGoToMembersPage(0);
-    this.selectingMember = true;
-  }
-
-  public onCancelSelectMember() {
-    this.selectingMember = false;
-  }
-
-  public onGoToMembersPage(page: number) {
-    this.goToMembersPage.emit(page);
-  }
-
-  public getMemberName() {
-    return this.member.name + ' ' + this.member.surname;
+    this.selectMember.emit();
   }
 
   public addDate() {

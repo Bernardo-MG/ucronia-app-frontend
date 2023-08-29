@@ -73,4 +73,22 @@ export class FeePayComponent {
     });
   }
 
+  public onSelectMember(member: Member) {
+    this.member = member;
+    this.selectingMember = false;
+  }
+
+  public onCancelSelectMember() {
+    this.selectingMember = false;
+  }
+
+  public onStartSelectingMember() {
+    this.onGoToMembersPage(0);
+    this.selectingMember = true;
+  }
+
+  public getMemberName() {
+    return this.member.name + ' ' + this.member.surname;
+  }
+
 }

@@ -1,11 +1,23 @@
 <layout-article title="Create fee">
   <div class="card">
     <div class="card-body">
-      <!-- Form -->
-      <assoc-fee-pay-form [members]="members" [waitingMembers]="readingMembers" [waiting]="saving" [failures]="failures"
-        [membersPage]="membersPage" [membersTotalPages]="membersTotalPages" (save)="onSave($event)"
-        (goToMembersPage)="onGoToMembersPage($event)">
-      </assoc-fee-pay-form>
+      <div [ngSwitch]="selectingMember">
+        <div *ngSwitchCase="true">
+          <!-- Member selection -->
+          <layout-waiting-wrapper [waiting]="readingMembers">
+            <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)" [current]="membersPage"
+              [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)"
+              (cancelSelectMember)="onCancelSelectMember()">
+            </assoc-member-selection>
+          </layout-waiting-wrapper>
+        </div>
+        <div *ngSwitchCase="false">
+          <!-- Form -->
+          <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [memberId]="memberId"
+            [memberName]="getMemberName()" (save)="onSave($event)" (selectMember)="onStartSelectingMember()">
+          </assoc-fee-pay-form>
+        </div>
+      </div>
     </div>
   </div>
 </layout-article>
