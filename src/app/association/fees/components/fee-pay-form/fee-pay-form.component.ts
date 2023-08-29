@@ -6,10 +6,10 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'assoc-fee-create-form',
-  templateUrl: './fee-create-form.component.html'
+  selector: 'assoc-fee-pay-form',
+  templateUrl: './fee-pay-form.component.html'
 })
-export class FeeCreateFormComponent extends FormComponent<Fee> {
+export class FeePayFormComponent extends FormComponent<Fee> {
 
   @Input() public waitingMembers = false;
 

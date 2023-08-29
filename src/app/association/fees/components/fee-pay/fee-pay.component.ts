@@ -7,9 +7,9 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
-  templateUrl: './fee-create.component.html'
+  templateUrl: './fee-pay.component.html'
 })
-export class FeeCreateComponent {
+export class FeePayComponent {
 
   /**
    * Saving flag.

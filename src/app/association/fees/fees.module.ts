@@ -9,13 +9,13 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarInfoComponent } from './components/fee-calendar-info/fee-calendar-info.component';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
-import { FeeCreateFormComponent } from './components/fee-create-form/fee-create-form.component';
-import { FeeCreateComponent } from './components/fee-create/fee-create.component';
 import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
 import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeLayoutComponent } from './components/fee-layout/fee-layout.component';
 import { FeeListComponent } from './components/fee-list/fee-list.component';
+import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
+import { FeePayComponent } from './components/fee-pay/fee-pay.component';
 import { FeeSelectionListComponent } from './components/fee-selection-list/fee-selection-list.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeesRoutingModule } from './fees-routing.module';
@@ -28,12 +28,12 @@ import { FeeService } from './services/fee.service';
   declarations: [
     FeeCalendarComponent,
     FeeCalendarInfoComponent,
-    FeeCreateComponent,
+    FeePayComponent,
     FeeListComponent,
     FeeDetailsComponent,
     MemberSelectionComponent,
     FeeEditFormComponent,
-    FeeCreateFormComponent,
+    FeePayFormComponent,
     FeeInfoComponent,
     FeeLayoutComponent,
     FeeSelectionListComponent

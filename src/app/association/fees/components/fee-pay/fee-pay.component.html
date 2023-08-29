@@ -2,10 +2,10 @@
   <div class="card">
     <div class="card-body">
       <!-- Form -->
-      <assoc-fee-create-form [members]="members" [waitingMembers]="readingMembers" [waiting]="saving" [failures]="failures"
+      <assoc-fee-pay-form [members]="members" [waitingMembers]="readingMembers" [waiting]="saving" [failures]="failures"
         [membersPage]="membersPage" [membersTotalPages]="membersTotalPages" (save)="onSave($event)"
         (goToMembersPage)="onGoToMembersPage($event)">
-      </assoc-fee-create-form>
+      </assoc-fee-pay-form>
     </div>
   </div>
 </layout-article>
