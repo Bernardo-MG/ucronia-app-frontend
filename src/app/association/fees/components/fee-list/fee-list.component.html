@@ -1,13 +1,4 @@
 <layout-article title="Fees">
-  <!-- Add -->
-  <div *ngIf="createPermission" class="row">
-    <!-- Add button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <a routerLink="/fees/create" type="button" class="btn btn-link link-dark" role="button">
-        <fa-icon [icon]="addIcon"></fa-icon>
-      </a>
-    </div>
-  </div>
   <!-- List -->
   <layout-waiting-wrapper [waiting]="waiting">
     <!-- Filter -->

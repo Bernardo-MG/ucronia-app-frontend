@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: '', component: FeeCalendarInfoComponent },
       { path: 'list', component: FeeListComponent },
       { path: 'calendar', component: FeeCalendarInfoComponent },
-      { path: 'create', component: FeePayComponent },
+      { path: 'pay', component: FeePayComponent },
       { path: ':id', component: FeeDetailsComponent }
     ]
   }
