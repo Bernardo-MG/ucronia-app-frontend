@@ -40,8 +40,8 @@ export class FeeCreateComponent {
   public onSave(data: Fee): void {
     this.saving = true;
     this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/fees/${d.id}`]);
+      next: response => {
+        this.router.navigate(['/fees']);
         this.failures = {};
         // Reactivate view
         this.saving = false;
