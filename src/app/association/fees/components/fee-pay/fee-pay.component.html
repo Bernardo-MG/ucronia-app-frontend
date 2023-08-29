@@ -13,8 +13,9 @@
         </div>
         <div *ngSwitchCase="false">
           <!-- Form -->
-          <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [memberId]="memberId"
-            [memberName]="getMemberName()" (save)="onSave($event)" (selectMember)="onStartSelectingMember()">
+          <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+            [memberId]="memberId" [memberName]="getMemberName()" (save)="onSave($event)"
+            (selectMember)="onStartSelectingMember()">
           </assoc-fee-pay-form>
         </div>
       </div>

@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
   templateUrl: './fee-pay.component.html'
 })
-export class FeePayComponent {
+export class FeePayComponent implements OnInit {
 
   /**
    * Saving flag.
@@ -19,6 +20,8 @@ export class FeePayComponent {
   public readingMembers = false;
 
   public selectingMember = false;
+
+  public createPermission = false;
 
   public members: Member[] = [];
 
@@ -34,8 +37,14 @@ export class FeePayComponent {
 
   constructor(
     private service: FeeService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
+
+  public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("fee", "create");
+  }
 
   public onSave(data: Fee): void {
     this.saving = true;

@@ -4,7 +4,7 @@
   <div class="row">
     <!-- Select member button -->
     <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" [disabled]="waiting" (click)="onStartSelectingMember()">
+      <button type="button" class="btn" aria-label="Search" [disabled]="isFormDisabled()" (click)="onStartSelectingMember()">
         <fa-icon [icon]="searchIcon"></fa-icon>
       </button>
     </div>
@@ -30,12 +30,12 @@
           </div>
         </div>
         <div class="col-md-2 mb-2">
-          <button type="button" class="btn btn-danger" (click)="removeDate(i)">Remove</button>
+          <button type="button" class="btn btn-danger" [disabled]="isFormDisabled()" (click)="removeDate(i)">Remove</button>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button type="button" class="btn btn-secondary" (click)="addDate()">Add Date</button>
+          <button type="button" class="btn btn-secondary" [disabled]="isFormDisabled()" (click)="addDate()">Add Date</button>
         </div>
       </div>
     </div>
