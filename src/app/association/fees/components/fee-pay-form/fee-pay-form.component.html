@@ -2,24 +2,24 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Select member -->
   <div class="row">
-    <!-- Select member button -->
+    <!-- Selected member -->
+    <div class="col-sm-2">
+      <label for="memberIdInput" class="col-form-label">Member</label>
+    </div>
     <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" [disabled]="isFormDisabled()" (click)="onStartSelectingMember()">
+      <button type="button" class="btn btn-link link-dark" aria-label="Search" [disabled]="isFormDisabled()"
+        (click)="onStartSelectingMember()">
         <fa-icon [icon]="searchIcon"></fa-icon>
       </button>
     </div>
-    <!-- Selected member -->
-    <div class="col-sm-4">
-      <label for="memberIdInput" class="col-form-label">Member</label>
-    </div>
     <div class="col-sm-7">
-      <input type="text" id="memberIdInput" [value]="memberName" readonly="true"
-        class="form-control" [class.is-invalid]="form.get('memberId').invalid" aria-describedby="memberIdLabel">
+      <input type="text" id="memberIdInput" [value]="memberName" readonly="true" class="form-control"
+        [class.is-invalid]="form.get('memberId').invalid" aria-describedby="memberIdLabel">
     </div>
   </div>
   <!-- Fee dates -->
   <div class="row mb-2">
-    <label class="col-sm-2 col-form-label">Fees</label>
+    <label class="col-sm-2 col-form-label">Fee dates</label>
     <div class="col-sm-10">
       <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
         <div class="col-md-6 mb-2">
@@ -30,12 +30,18 @@
           </div>
         </div>
         <div class="col-md-2 mb-2">
-          <button type="button" class="btn btn-danger" [disabled]="isFormDisabled()" (click)="removeDate(i)">Remove</button>
+          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="isFormDisabled()"
+            (click)="removeDate(i)">
+            <fa-icon [icon]="removeIcon"></fa-icon>
+          </button>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button type="button" class="btn btn-secondary" [disabled]="isFormDisabled()" (click)="addDate()">Add Date</button>
+          <button type="button" class="btn btn-link link-dark" aria-label="Add date" [disabled]="isFormDisabled()"
+            (click)="addDate()">
+            <fa-icon [icon]="addIcon"></fa-icon>
+          </button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-pay-form',
@@ -20,6 +20,10 @@ export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges
   public member = new Member();
 
   public searchIcon = faMagnifyingGlass;
+
+  public addIcon = faAdd;
+
+  public removeIcon = faTrash;
 
   constructor(
     private fb: FormBuilder
