@@ -19,7 +19,7 @@ export class FeePayComponent implements OnInit {
 
   public readingMembers = false;
 
-  public selectingMember = false;
+  public selectedMember = false;
 
   public createPermission = false;
 
@@ -32,8 +32,6 @@ export class FeePayComponent implements OnInit {
   public membersTotalPages = 0;
 
   public failures: { [key: string]: Failure[] } = {};
-
-  public memberId = 0;
 
   constructor(
     private service: FeeService,
@@ -84,16 +82,7 @@ export class FeePayComponent implements OnInit {
 
   public onSelectMember(member: Member) {
     this.member = member;
-    this.selectingMember = false;
-  }
-
-  public onCancelSelectMember() {
-    this.selectingMember = false;
-  }
-
-  public onStartSelectingMember() {
-    this.onGoToMembersPage(0);
-    this.selectingMember = true;
+    this.selectedMember = true;
   }
 
   public getMemberName() {

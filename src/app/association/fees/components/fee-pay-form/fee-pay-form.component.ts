@@ -15,8 +15,6 @@ export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges
   
   @Input() public memberName = '';
 
-  @Output() public selectMember = new EventEmitter<void>();
-
   public member = new Member();
 
   public searchIcon = faMagnifyingGlass;
@@ -44,10 +42,6 @@ export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges
     if (changes['memberId']) {
       this.data = { ...this.data, memberId: this.memberId };
     }
-  }
-
-  public onStartSelectingMember() {
-    this.selectMember.emit();
   }
 
   public addDate() {
