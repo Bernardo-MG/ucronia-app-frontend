@@ -42,6 +42,7 @@ export class FeePayComponent implements OnInit {
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authService.hasPermission("fee", "create");
+    this.onGoToMembersPage(0);
   }
 
   public onSave(data: Fee): void {

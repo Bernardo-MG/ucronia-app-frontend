@@ -1,7 +1,9 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
@@ -25,7 +27,9 @@ describe('FeePayComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         LayoutModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        HttpClientTestingModule,
+        PaginationModule
       ],
       declarations: [
         FeePayComponent,

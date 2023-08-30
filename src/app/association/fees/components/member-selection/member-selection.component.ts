@@ -6,7 +6,7 @@ import { Member } from '@app/association/models/member';
   templateUrl: './member-selection.component.html',
   styleUrls: ['./member-selection.component.sass']
 })
-export class MemberSelectionComponent implements OnInit {
+export class MemberSelectionComponent {
 
   @Input() public waiting = false;
 
@@ -25,10 +25,6 @@ export class MemberSelectionComponent implements OnInit {
   @Output() public selectMember = new EventEmitter<Member>();
 
   @Output() public goToPage = new EventEmitter<number>();
-
-  public ngOnInit(): void {
-    this.goToPage.emit(0);
-  }
 
   public onPick(member: Member) {
     this.selectMember.emit(member);
