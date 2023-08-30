@@ -91,10 +91,19 @@ export class FormComponent<Data> {
   /**
    * Returns if the save action is disabled.
    * 
-   * @returns true of the save action is disabled, false otherwise
+   * @returns true if the save action is disabled, false otherwise
    */
   public isSaveDisabled() {
     return ((!this.form.valid) || (this.waiting) || (this.readonly));
+  }
+
+  /**
+   * Returns if the form is disabled.
+   * 
+   * @returns true if the form is disabled, false otherwise
+   */
+  public isFormDisabled() {
+    return this.form.disabled;
   }
 
   /**

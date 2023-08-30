@@ -1,17 +1,19 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
-import { MemberSelectionComponent } from '../../components/member-selection/member-selection.component';
 import { FeeService } from '../../services/fee.service';
-import { FeeCreateFormComponent } from '../fee-create-form/fee-create-form.component';
-import { FeeCreateComponent } from './fee-create.component';
+import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
+import { MemberSelectionComponent } from '../member-selection/member-selection.component';
+import { FeePayComponent } from './fee-pay.component';
 
-describe('FeeCreateComponent', () => {
-  let component: FeeCreateComponent;
-  let fixture: ComponentFixture<FeeCreateComponent>;
+describe('FeePayComponent', () => {
+  let component: FeePayComponent;
+  let fixture: ComponentFixture<FeePayComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -25,12 +27,14 @@ describe('FeeCreateComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         LayoutModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        HttpClientTestingModule,
+        PaginationModule
       ],
       declarations: [
-        FeeCreateComponent,
+        FeePayComponent,
         MemberSelectionComponent,
-        FeeCreateFormComponent
+        FeePayFormComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }
@@ -38,7 +42,7 @@ describe('FeeCreateComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeCreateComponent);
+    fixture = TestBed.createComponent(FeePayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
