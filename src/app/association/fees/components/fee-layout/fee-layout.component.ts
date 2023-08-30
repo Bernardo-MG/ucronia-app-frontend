@@ -11,7 +11,8 @@ export class FeeLayoutComponent {
     new Menu(
       [
         { title: 'Calendar', path: '/fees/calendar' },
-        { title: 'List', path: '/fees/list' }
+        { title: 'List', path: '/fees/list' },
+        { title: 'Pay', path: '/fees/pay' }
       ]
     )
   ];

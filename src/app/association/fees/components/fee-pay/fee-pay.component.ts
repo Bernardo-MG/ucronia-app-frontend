@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
-  templateUrl: './fee-create.component.html'
+  templateUrl: './fee-pay.component.html'
 })
-export class FeeCreateComponent {
+export class FeePayComponent implements OnInit {
 
   /**
    * Saving flag.
@@ -18,7 +19,9 @@ export class FeeCreateComponent {
 
   public readingMembers = false;
 
-  public selectingMember = false;
+  public selectedMember = false;
+
+  public createPermission = false;
 
   public members: Member[] = [];
 
@@ -30,18 +33,23 @@ export class FeeCreateComponent {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  public memberId = 0;
-
   constructor(
     private service: FeeService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
+
+  public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authService.hasPermission("fee", "create");
+    this.onGoToMembersPage(0);
+  }
 
   public onSave(data: Fee): void {
     this.saving = true;
     this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/fees/${d.id}`]);
+      next: response => {
+        this.router.navigate(['/fees']);
         this.failures = {};
         // Reactivate view
         this.saving = false;
@@ -60,12 +68,26 @@ export class FeeCreateComponent {
 
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
-    this.service.getMembers(page).subscribe(response => {
-      this.members = response.content;
-      this.membersPage = response.page + 1;
-      this.membersTotalPages = response.totalPages;
-      this.readingMembers = false;
+    this.service.getMembers(page).subscribe({
+      next: response => {
+        this.members = response.content;
+        this.membersPage = response.page + 1;
+        this.membersTotalPages = response.totalPages;
+        this.readingMembers = false;
+      },
+      error: error => {
+        this.readingMembers = false;
+      }
     });
+  }
+
+  public onSelectMember(member: Member) {
+    this.member = member;
+    this.selectedMember = true;
+  }
+
+  public getMemberName() {
+    return this.member.name + ' ' + this.member.surname;
   }
 
 }
