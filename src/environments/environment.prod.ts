@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://association-app-backend.herokuapp.com'
+  apiUrl: process.env['API_URL']
 };
