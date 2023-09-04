@@ -38,6 +38,15 @@
       {{failure.message}}
     </div>
   </div>
+  <!-- Password expired -->
+  <div class="col-sm-10 offset-sm-2">
+    <input type="checkbox" id="passwordExpiredInput" formControlName="passwordExpired" class="form-check-input"
+      [ngClass]="{ 'is-invalid': isFieldInvalid('passwordExpired') }" aria-describedby="passwordExpiredLabel">
+    <label for="passwordExpiredInput" id="passwordExpiredLabel" class="form-check-label ps-1">Password expired</label>
+    <div class="invalid-feedback" *ngFor="let failure of getFailures('passwordExpired')">
+      {{failure.message}}
+    </div>
+  </div>
   <!-- Save button -->
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
