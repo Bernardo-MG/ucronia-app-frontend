@@ -27,7 +27,7 @@ export class EditionWrapperComponent {
   }
 
   public isAbleToEdit() {
-    return (!this.error) && (!this.waiting) && this.editable && this.editing;
+    return (!this.error) && (!this.waiting) && this.editable && !this.editing;
   }
 
   public isAbleToDelete() {

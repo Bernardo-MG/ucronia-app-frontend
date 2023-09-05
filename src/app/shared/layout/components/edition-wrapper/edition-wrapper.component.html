@@ -3,7 +3,7 @@
     <div *ngIf="editable">
       <!-- Buttons -->
       <div class="btn-group me-2" role="group">
-        <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="isAbleToEdit()"
+        <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="!isAbleToEdit()"
           aria-label="Edit">
           <icon-edit></icon-edit>
         </button>
