@@ -15,7 +15,7 @@ export class LayoutService {
 
 
   public getTitle(): string {
-    return 'Association App Frontend';
+    return 'AR Ucronía';
   }
 
   public getMenus(): Menu[] {
