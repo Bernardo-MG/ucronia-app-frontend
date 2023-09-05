@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  buid-deploy:
+  deploy:
     runs-on: ubuntu-latest
     environment: deployment
     steps:
@@ -28,4 +28,4 @@ jobs:
         repoToken: '${{ secrets.GITHUB_TOKEN }}'
         firebaseServiceAccount: '${{ secrets.FIREBASE_TOKEN }}'
         channelId: live
-        projectId: association-app-frontend
+        projectId: ar-ucronia

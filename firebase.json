@@ -1,16 +1,10 @@
 {
   "hosting": {
-    "public": "dist/association-app-frontend",
+    "public": "dist/ar-ucronia",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
