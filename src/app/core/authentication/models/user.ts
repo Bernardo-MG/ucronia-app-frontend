@@ -4,4 +4,5 @@ export class User {
   name = '';
   email = '';
   enabled = false;
+  passwordExpired = false;
 }
