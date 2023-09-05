@@ -1,6 +1,6 @@
-# Association App Frontend
+# Ucronia App Frontend
 
-Frontend for handling a small association.
+Frontend app for the Ucronía association.
 
 ## Features
 
@@ -51,6 +51,6 @@ If you wish to fork or modify the code, visit the [GitHub project page][scm], wh
 
 The project has been released under the [MIT License][license].
 
-[issues]: https://github.com/Bernardo-MG/association-app-frontend/issues
+[issues]: https://github.com/Bernardo-MG/ucronia-app-frontend/issues
 [license]: http://www.opensource.org/licenses/mit-license.php
-[scm]: https://github.com/Bernardo-MG/association-app-frontend
+[scm]: https://github.com/Bernardo-MG/ucronia-app-frontend

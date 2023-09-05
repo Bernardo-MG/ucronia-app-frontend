@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  title = 'association-app-frontend';
+  title = 'ucronia-app-frontend';
 
   public loggedIn = false;
 

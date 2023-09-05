@@ -1,19 +1,19 @@
 {
-  "name": "association-app-frontend",
+  "name": "ucronia-app-frontend",
   "version": "0.0.0",
-  "description": "Frontend application for handling a small association",
+  "description": "Frontend application for the Ucronia association",
   "author": "Bernardo Mart�nez Garrido",
-  "homepage": "https://github.com/Bernardo-MG/association-app-frontend",
+  "homepage": "https://github.com/Bernardo-MG/ucronia-app-frontend",
   "license": "MIT",
   "keywords": [
     "association"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:bernardo-mg/association-app-frontend.git"
+    "url": "git@github.com:bernardo-mg/ucronia-app-frontend.git"
   },
   "bugs": {
-    "url": "https://www.github.com/bernardo-mg/association-app-frontend/issues"
+    "url": "https://github.com/Bernardo-MG/ucronia-app-frontend/issues"
   },
   "scripts": {
     "ng": "ng",

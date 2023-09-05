@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "association-app-frontend": {
+    "ucronia-app-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/association-app-frontend",
+            "outputPath": "dist/ucronia-app-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -77,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "association-app-frontend:build:production"
+              "browserTarget": "ucronia-app-frontend:build:production"
             },
             "development": {
-              "browserTarget": "association-app-frontend:build:development"
+              "browserTarget": "ucronia-app-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -88,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "association-app-frontend:build"
+            "browserTarget": "ucronia-app-frontend:build"
           }
         },
         "test": {
