@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://backend.ucronia.com/'
+  apiUrl: 'https://backend.ucronia.com'
 };
