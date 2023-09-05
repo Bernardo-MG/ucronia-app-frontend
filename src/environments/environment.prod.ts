@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://ucronia-app-backend.herokuapp.com'
+  apiUrl: 'https://backend.ucronia.com/'
 };
