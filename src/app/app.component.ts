@@ -6,8 +6,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  title = 'ucronia-app-frontend';
-
-  public loggedIn = false;
+  title = 'AR Ucronía';
 
 }
