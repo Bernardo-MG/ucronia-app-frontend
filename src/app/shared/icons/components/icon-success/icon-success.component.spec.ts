@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { MemberInfoComponent } from './member-info.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconSuccessComponent } from './icon-success.component';
 
-describe('MemberInfoComponent', () => {
-  let component: MemberInfoComponent;
-  let fixture: ComponentFixture<MemberInfoComponent>;
+describe('IconSuccessComponent', () => {
+  let component: IconSuccessComponent;
+  let fixture: ComponentFixture<IconSuccessComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
+        FontAwesomeModule
       ],
       declarations: [
-        MemberInfoComponent
+        IconSuccessComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberInfoComponent);
+    fixture = TestBed.createComponent(IconSuccessComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

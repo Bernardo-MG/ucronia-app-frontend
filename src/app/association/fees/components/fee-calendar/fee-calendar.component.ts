@@ -22,9 +22,6 @@ export class FeeCalendarComponent {
 
   public feesTable: FeeCalendarRow[] = []
 
-  public paidIcon = faCheck;
-  public notPaidIcon = faX;
-
   public onGoPrevious() {
     this.year = this.year - 1;
     this.yearChange.emit(this.year);

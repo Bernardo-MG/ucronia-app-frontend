@@ -15,6 +15,8 @@ import { IconSaveComponent } from './components/icon-save/icon-save.component';
 import { IconSearchComponent } from './components/icon-search/icon-search.component';
 import { IconSettingsComponent } from './components/icon-settings/icon-settings.component';
 import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
+import { IconSuccessComponent } from './components/icon-success/icon-success.component';
+import { IconFailureComponent } from './components/icon-failure/icon-failure.component';
 
 
 
@@ -33,7 +35,9 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconSettingsComponent,
     IconAccountComponent,
     IconSaveComponent,
-    IconAddComponent
+    IconAddComponent,
+    IconSuccessComponent,
+    IconFailureComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +57,9 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconSettingsComponent,
     IconAccountComponent,
     IconSaveComponent,
-    IconAddComponent
+    IconAddComponent,
+    IconSuccessComponent,
+    IconFailureComponent
   ]
 })
 export class IconsModule { }

@@ -23,9 +23,9 @@ export class MemberDetailsComponent implements OnInit {
 
   public editing = false;
 
-  public editPermission = false;
+  public editable = false;
 
-  public deletePermission = false;
+  public deletable = false;
 
   public error = false;
 
@@ -42,8 +42,8 @@ export class MemberDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editPermission = this.authService.hasPermission("member", "update");
-    this.deletePermission = this.authService.hasPermission("member", "delete");
+    this.editable = this.authService.hasPermission("member", "update");
+    this.deletable = this.authService.hasPermission("member", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -84,6 +84,14 @@ export class MemberDetailsComponent implements OnInit {
     this.editing = true;
   }
 
+  public isAbleToEdit() {
+    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+  }
+
+  public isAbleToDelete() {
+    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
+  }
+
   private load(id: string | null): void {
     if (id) {
       this.reading = true;
@@ -103,7 +111,7 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing && (!this.error);
+    return this.editable && this.editing && (!this.error);
   }
 
   public isWaiting() {

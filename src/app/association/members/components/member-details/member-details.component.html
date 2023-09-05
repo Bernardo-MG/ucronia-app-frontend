@@ -1,9 +1,9 @@
 <layout-article title="Edit member">
-  <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-    [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+  <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+    (delete)="onDelete()" (startEditing)="onStartEditing()">
     <!-- Form -->
-    <assoc-member-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
-      (save)="onSave($event)">
+    <assoc-member-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+      [failures]="failures" (save)="onSave($event)">
     </assoc-member-edit-form>
     <!-- Info -->
     <assoc-member-info id="info" [data]="data"></assoc-member-info>
