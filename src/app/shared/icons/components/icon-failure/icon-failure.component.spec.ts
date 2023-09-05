@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconFailureComponent } from './icon-failure.component';
 
 describe('IconFailureComponent', () => {
@@ -8,7 +8,12 @@ describe('IconFailureComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconFailureComponent ]
+      imports: [
+        FontAwesomeModule
+      ],
+      declarations: [ 
+        IconFailureComponent
+       ]
     })
     .compileComponents();
 

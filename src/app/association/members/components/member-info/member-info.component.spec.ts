@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { MemberInfoComponent } from './member-info.component';
 
 describe('MemberInfoComponent', () => {
@@ -8,9 +8,14 @@ describe('MemberInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MemberInfoComponent ]
+      imports: [
+        IconsModule
+      ],
+      declarations: [
+        MemberInfoComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MemberInfoComponent);
     component = fixture.componentInstance;

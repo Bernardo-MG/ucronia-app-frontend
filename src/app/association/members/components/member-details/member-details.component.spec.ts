@@ -3,10 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberEditionFormComponent } from '../member-edit-form/member-edit-form.component';
 import { MemberInfoComponent } from '../../components/member-info/member-info.component';
 import { MemberService } from '../../services/member.service';
+import { MemberEditionFormComponent } from '../member-edit-form/member-edit-form.component';
 import { MemberDetailsComponent } from './member-details.component';
 
 describe('MemberDetailsComponent', () => {
@@ -20,7 +21,8 @@ describe('MemberDetailsComponent', () => {
         HttpClientTestingModule,
         CoreModule,
         ReactiveFormsModule,
-        LayoutModule
+        LayoutModule,
+        IconsModule
       ],
       declarations: [
         MemberDetailsComponent,
