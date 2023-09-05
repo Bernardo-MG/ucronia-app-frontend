@@ -10,18 +10,16 @@ export class EditionWrapperComponent {
 
   @Input() public editable = false;
 
-  @Input() public editing = false;
-
   @Input() public deletable = false;
 
   @Input() public error = false;
 
-  @Output() public edit = new EventEmitter<void>();
-
   @Output() public delete = new EventEmitter<void>();
 
+  public editing = false;
+
   public onStartEditing(): void {
-    this.edit.emit();
+    this.editing = true;
   }
 
   public onDelete(): void {

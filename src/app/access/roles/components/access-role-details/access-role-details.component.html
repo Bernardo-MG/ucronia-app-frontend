@@ -2,9 +2,9 @@
   <!-- Role -->
   <div class="mb-1">
     <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+      [error]="error" (delete)="onDelete()">
       <!-- Form -->
-      <access-role-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+      <access-role-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
         (save)="onSave($event)">
       </access-role-form>
       <!-- Info -->

@@ -1,7 +1,6 @@
-<div *ngIf="editable; then editForm else infoForm"></div>
-<ng-template #editForm>
-  <div class="card">
-    <div class="card-body">
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="editable">
       <!-- Buttons -->
       <div class="btn-group me-2" role="group">
         <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="isAbleToEdit()"
@@ -15,33 +14,31 @@
           <icon-delete></icon-delete>
         </button>
       </div>
-
-      <!-- Content -->
-      <ng-content select="#edit"></ng-content>
     </div>
-  </div>
-
-  <!-- Modal confirmation for delete -->
-  <div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p>Are you sure you want to delete the data?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">Delete</button>
-        </div>
+    <div [ngSwitch]="editing">
+      <div *ngSwitchCase="true">
+        <ng-content select="#form"></ng-content>
+      </div>
+      <div *ngSwitchCase="false">
+        <ng-content select="#info"></ng-content>
       </div>
     </div>
   </div>
-</ng-template>
-<ng-template #infoForm>
-  <div class="card">
-    <div class="card-body">
-      <ng-content select="#info"></ng-content>
+</div>
+
+<!-- Modal confirmation for delete -->
+<div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to delete the data?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">Delete</button>
+      </div>
     </div>
   </div>
-</ng-template>
+</div>

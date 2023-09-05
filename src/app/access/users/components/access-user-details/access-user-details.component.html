@@ -2,9 +2,9 @@
   <!-- User -->
   <div class="mb-1">
     <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+      [error]="error" (delete)="onDelete()">
       <!-- Form -->
-      <access-user-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username"
+      <access-user-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username"
         [data]="data" [failures]="failures" (save)="onSave($event)">
       </access-user-edit-form>
       <!-- Info -->
