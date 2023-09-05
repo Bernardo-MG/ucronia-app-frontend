@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/ar-ucronia",
+    "public": "dist/ucronia-app-frontend",
     "ignore": [
       "firebase.json",
       "**/.*",
