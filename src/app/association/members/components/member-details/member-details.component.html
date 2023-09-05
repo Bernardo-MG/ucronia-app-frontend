@@ -1,6 +1,6 @@
 <layout-article title="Edit member">
   <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-    [error]="error" (delete)="onDelete()">
+    [editing]="editing" [error]="error" (delete)="onDelete()" (startEditing)="onStartEditing()">
     <!-- Form -->
     <assoc-member-edit-form id="form" [waiting]="isWaiting()" [data]="data" [failures]="failures"
       (save)="onSave($event)">
