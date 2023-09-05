@@ -1,16 +1,18 @@
 <form class="needs-validation" novalidate>
-    <!-- Date -->
-    <div class="row mb-2">
-      <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
-      <div class="col-sm-10">
-        <input type="month" [value]="data.date" id="dateInput" [readonly]="true" class="form-control"
-          aria-describedby="dateLabel">
-      </div>
+  <!-- Date -->
+  <div class="row mb-2">
+    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="month" [value]="data.date" id="dateInput" [readonly]="true" class="form-control"
+        aria-describedby="dateLabel">
     </div>
-    <!-- Paid -->
-    <div class="col-sm-10 offset-sm-2">
-      <input type="checkbox" [checked]="data.paid" id="paidInput" [attr.disabled]="true" class="form-check-input"
-        aria-describedby="paidLabel">
-      <label for="paidInput" id="paidLabel" class="form-check-label ps-1">Paid</label>
+  </div>
+  <!-- Paid -->
+  <div class="row mb-2">
+    <label id="activeLabel" class="col-sm-2 col-form-label">Paid</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="data.paid"></icon-success>
+      <icon-failure *ngIf="!data.paid"></icon-failure>
     </div>
-  </form>
+  </div>
+</form>

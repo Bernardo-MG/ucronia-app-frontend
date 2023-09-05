@@ -52,11 +52,11 @@
             <div [ngSwitch]="column">
               <div *ngSwitchCase="true">
                 <!-- Paid month -->
-                <fa-icon class="text-success" [icon]="paidIcon"></fa-icon>
+                <icon-success class="text-success"></icon-success>
               </div>
               <div *ngSwitchCase="false">
                 <!-- Not paid month -->
-                <fa-icon class="text-danger" [icon]="notPaidIcon"></fa-icon>
+                <icon-failure class="text-danger"></icon-failure>
               </div>
             </div>
           </td>
