@@ -26,9 +26,9 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public editing = false;
 
-  public editPermission = false;
+  public editable = false;
 
-  public deletePermission = false;
+  public deletable = false;
 
   public error = false;
 
@@ -61,8 +61,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editPermission = this.authService.hasPermission("fee", "update");
-    this.deletePermission = this.authService.hasPermission("fee", "delete");
+    this.editable = this.authService.hasPermission("fee", "update");
+    this.deletable = this.authService.hasPermission("fee", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -115,6 +115,14 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.editing = true;
   }
 
+  public isAbleToEdit() {
+    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+  }
+
+  public isAbleToDelete() {
+    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
+  }
+
   public onGoToMembersPage(page: number) {
     this.service.getMembers(page).subscribe(response => {
       this.members = response.content;
@@ -147,7 +155,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing && (!this.error);
+    return this.editable && this.editing && (!this.error);
   }
 
   public isWaiting() {

@@ -27,9 +27,9 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public editing = false;
 
-  public editPermission = false;
+  public editable = false;
 
-  public deletePermission = false;
+  public deletable = false;
 
   public error = false;
 
@@ -46,8 +46,8 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // Check permissions
-    this.editPermission = this.authService.hasPermission("user", "update");
-    this.deletePermission = this.authService.hasPermission("user", "delete");
+    this.editable = this.authService.hasPermission("user", "update");
+    this.deletable = this.authService.hasPermission("user", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -87,6 +87,14 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
+  public isAbleToEdit() {
+    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+  }
+
+  public isAbleToDelete() {
+    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
+  }
+
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
@@ -110,7 +118,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public isEditable() {
-    return this.editPermission && this.editing && (!this.error);
+    return this.editable && this.editing && (!this.error);
   }
 
   public isWaiting() {
