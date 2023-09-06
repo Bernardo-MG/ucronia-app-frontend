@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PaginationOrderButtonComponent } from '../pagination-order-button/pagination-order-button.component';
 import { PaginationRouteOrderButtonComponent } from './pagination-route-order-button.component';
 import { Direction } from '@app/core/api/models/direction';
+import { By } from '@angular/platform-browser';
 
 describe('PaginationRouteOrderButtonComponent', () => {
   let component: PaginationRouteOrderButtonComponent;
@@ -41,9 +42,17 @@ describe('PaginationRouteOrderButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // **************************************************************************
+  // Route params
+  // **************************************************************************
 
   it('should set disabled direction when no property is received', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
