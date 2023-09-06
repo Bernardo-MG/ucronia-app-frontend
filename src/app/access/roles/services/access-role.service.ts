@@ -17,7 +17,10 @@ export class AccessRoleService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    return this.client.role().page(pagination).sort(pagination?.sort).readAll();
+    const defaultSort = new Sort<Role>('name');
+    defaultSort.order = 'asc';
+
+    return this.client.role().page(pagination).defaultSort([defaultSort]).readAll();
   }
 
   public getPermissions(id: number, page: number): Observable<PaginatedResponse<Permission[]>> {

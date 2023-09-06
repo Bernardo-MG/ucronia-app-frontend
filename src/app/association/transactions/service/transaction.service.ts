@@ -15,10 +15,12 @@ export class TransactionService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, filter: TransactionFilter): Observable<PaginatedResponse<Transaction[]>> {
-    const sort = new Sort<Transaction>('date');
-    sort.order = 'desc';
+    const defaultSortDate = new Sort<Transaction>('date');
+    defaultSortDate.order = 'desc';
+    const defaultSortDescription = new Sort<Transaction>('description');
+    defaultSortDescription.order = 'asc';
 
-    return this.client.transaction().page(pagination).sort([sort])
+    return this.client.transaction().page(pagination).defaultSort([defaultSortDate, defaultSortDescription])
       .parameter("startDate", filter.startDate).parameter("endDate", filter.endDate).parameter("date", filter.date)
       .readAll();
   }

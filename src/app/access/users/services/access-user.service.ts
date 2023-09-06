@@ -15,7 +15,10 @@ export class AccessUserService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {
-    return this.client.user().page(pagination).sort(pagination?.sort).readAll();
+    const defaultSort = new Sort<User>('name');
+    defaultSort.order = 'asc';
+
+    return this.client.user().page(pagination).defaultSort([defaultSort]).readAll();
   }
 
   public getRoles(userId: number, page: number): Observable<PaginatedResponse<Role[]>> {
