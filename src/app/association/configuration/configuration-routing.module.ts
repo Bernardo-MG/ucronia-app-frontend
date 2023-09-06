@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurationLayoutComponent } from './components/configuration-layout/configuration-layout.component';
+import { PaddedFrameComponent } from '@app/core/layout/components/padded-frame/padded-frame.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ConfigurationLayoutComponent,
+    component: PaddedFrameComponent,
     children: [
       { path: '', component: ConfigurationComponent }
     ]
