@@ -37,4 +37,10 @@ export class ReadRepository<T> {
     return this;
   }
 
+  public defaultSort(sort: Sort<T>[] | undefined): ReadRepository<T> {
+    this.operations.defaultSort(sort);
+
+    return this;
+  }
+
 }

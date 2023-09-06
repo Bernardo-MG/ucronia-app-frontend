@@ -41,8 +41,9 @@ export class PaginationOrderButtonComponent implements OnChanges {
       this.direction = Direction.Ascending;
     }
 
-    this.directionChange.emit(this.direction);
+    const previousDirection = this.direction;
     this.updateDirection();
+    this.directionChange.emit(previousDirection);
   }
 
   private updateDirection() {

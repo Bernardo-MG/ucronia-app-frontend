@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { Direction } from '@app/core/api/models/direction';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationOrderButtonComponent } from '../pagination-order-button/pagination-order-button.component';
 import { PaginationRouteOrderButtonComponent } from './pagination-route-order-button.component';
-import { Direction } from '@app/core/api/models/direction';
 
 describe('PaginationRouteOrderButtonComponent', () => {
   let component: PaginationRouteOrderButtonComponent;
@@ -41,9 +41,17 @@ describe('PaginationRouteOrderButtonComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // **************************************************************************
+  // Route params
+  // **************************************************************************
 
   it('should set disabled direction when no property is received', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
