@@ -1,10 +1,10 @@
 <layout-article title="Edit user">
   <!-- User -->
   <div class="mb-1">
-    <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <access-user-edit-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username"
+      <access-user-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [username]="data.username"
         [data]="data" [failures]="failures" (save)="onSave($event)">
       </access-user-edit-form>
       <!-- Info -->
@@ -15,7 +15,7 @@
   <div class="mb-1">
     <div class="card">
       <div class="card-body">
-        <access-user-roles [userId]="data.id" [editable]="editPermission" [deletable]="deletePermission">
+        <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
         </access-user-roles>
       </div>
     </div>

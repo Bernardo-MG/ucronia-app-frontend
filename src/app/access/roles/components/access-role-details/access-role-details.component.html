@@ -1,10 +1,10 @@
 <layout-article title="Edit role">
   <!-- Role -->
   <div class="mb-1">
-    <layout-edition-wrapper [editable]="editPermission" [deletable]="deletePermission" [waiting]="isWaiting()"
-      [editing]="editing" [error]="error" (delete)="onDelete()" (edit)="onStartEditing()">
+    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <access-role-form id="edit" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+      <access-role-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
         (save)="onSave($event)">
       </access-role-form>
       <!-- Info -->
@@ -16,7 +16,7 @@
     <div class="card">
       <div class="card-body">
         <!-- Permissions list -->
-        <access-role-permissions [roleId]="data.id" [editable]="editPermission" [deletable]="deletePermission">
+        <access-role-permissions [roleId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
         </access-role-permissions>
       </div>
     </div>

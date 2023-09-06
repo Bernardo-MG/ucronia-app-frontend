@@ -24,9 +24,19 @@
     </div>
   </div>
   <!-- Enabled -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" [value]="data.enabled" id="enabledInput" [attr.disabled]="true" class="form-check-input"
-      aria-describedby="enabledLabel">
-    <label for="enabledInput" id="enabledLabel" class="form-check-label ps-1">Enabled</label>
+  <div class="row mb-2">
+    <label id="enabledLabel" class="col-sm-2 col-form-label">Enabled</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="data.enabled"></icon-success>
+      <icon-failure *ngIf="!data.enabled"></icon-failure>
+    </div>
+  </div>
+  <!-- Password expired -->
+  <div class="row mb-2">
+    <label id="passwordExpiredLabel" class="col-sm-2 col-form-label">Password expired</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="data.passwordExpired"></icon-success>
+      <icon-failure *ngIf="!data.passwordExpired"></icon-failure>
+    </div>
   </div>
 </form>

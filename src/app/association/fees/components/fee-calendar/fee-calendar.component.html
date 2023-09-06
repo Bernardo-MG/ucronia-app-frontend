@@ -49,16 +49,16 @@
         <!-- Month fees -->
         <ng-template ngFor let-column [ngForOf]="row.months">
           <td>
-            <div [ngSwitch]="column">
-              <div *ngSwitchCase="true">
+            <ng-container [ngSwitch]="column">
+              <ng-container *ngSwitchCase="true">
                 <!-- Paid month -->
-                <fa-icon class="text-success" [icon]="paidIcon"></fa-icon>
-              </div>
-              <div *ngSwitchCase="false">
+                <icon-success class="text-success"></icon-success>
+              </ng-container>
+              <ng-container *ngSwitchCase="false">
                 <!-- Not paid month -->
-                <fa-icon class="text-danger" [icon]="notPaidIcon"></fa-icon>
-              </div>
-            </div>
+                <icon-failure class="text-danger"></icon-failure>
+              </ng-container>
+            </ng-container>
           </td>
         </ng-template>
       </tr>

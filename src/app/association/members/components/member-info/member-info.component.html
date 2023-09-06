@@ -32,9 +32,11 @@
     </div>
   </div>
   <!-- Active -->
-  <div class="col-sm-10 offset-sm-2">
-    <input type="checkbox" [value]="data.active" id="activeInput" [readonly]="true" class="form-check-input"
-      aria-describedby="activeLabel">
-    <label for="activeInput" id="activeLabel" class="form-check-label ps-1">Active</label>
+  <div class="row mb-2">
+    <label id="activeLabel" class="col-sm-2 col-form-label">Active</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="data.active"></icon-success>
+      <icon-failure *ngIf="!data.active"></icon-failure>
+    </div>
   </div>
 </form>

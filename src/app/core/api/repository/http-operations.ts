@@ -22,6 +22,8 @@ export interface HttpOperations {
 
   sort(sort: Sort<any>[] | undefined): HttpOperations;
 
+  defaultSort(sort: Sort<any>[] | undefined): HttpOperations;
+
   page(pagination: PaginationRequest | undefined): HttpOperations;
 
 }

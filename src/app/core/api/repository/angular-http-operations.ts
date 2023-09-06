@@ -1,16 +1,17 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { FailureResponse } from '../models/failure-response';
 import { PaginationRequest } from '../models/pagination-request';
 import { Sort } from '../models/sort';
 import { HttpOperations } from './http-operations';
-import { FailureResponse } from '../models/failure-response';
-import { Failure } from '../models/failure';
 
 export class AngularHttpOperations implements HttpOperations {
 
   private _route = '';
 
-  private content: any | undefined = undefined;
+  private _body: any | undefined = undefined;
+
+  private _defaultSort: Sort<any>[] | undefined = undefined;
 
   protected options: {
     params?: HttpParams
@@ -23,7 +24,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public create<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.post<T>(finalUrl, this.content, this.options)
+    return this.http.post<T>(finalUrl, this._body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -31,6 +32,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public read<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
+    this.applyDefaultSort();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.handleError)
@@ -39,7 +41,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public update<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this.content, this.options)
+    return this.http.put<T>(finalUrl, this._body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -53,8 +55,8 @@ export class AngularHttpOperations implements HttpOperations {
       );
   }
 
-  public body(content: any): AngularHttpOperations {
-    this.content = content;
+  public body(body: any): AngularHttpOperations {
+    this._body = body;
 
     return this;
   }
@@ -98,6 +100,12 @@ export class AngularHttpOperations implements HttpOperations {
 
       this.options = { params: params };
     }
+
+    return this;
+  }
+
+  public defaultSort(sort: Sort<any>[] | undefined): AngularHttpOperations {
+    this._defaultSort = sort;
 
     return this;
   }
@@ -169,6 +177,12 @@ export class AngularHttpOperations implements HttpOperations {
 
   private getFinalUrl(route: string) {
     return `${this.rootUrl}${route}`;
+  }
+
+  private applyDefaultSort() {
+    if (!this.getHttpParams().has('sort')) {
+      this.sort(this._defaultSort);
+    }
   }
 
 }
