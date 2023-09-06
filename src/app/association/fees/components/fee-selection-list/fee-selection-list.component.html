@@ -24,14 +24,16 @@
           {{fee.date}}
         </td>
         <td>
-          <div [ngSwitch]="fee.paid">
-            <div *ngSwitchCase="true">
-              <icon-success></icon-success>
-            </div>
-            <div *ngSwitchCase="false">
-              <icon-failure></icon-failure>
-            </div>
-          </div>
+          <ng-container [ngSwitch]="fee.paid">
+            <ng-container *ngSwitchCase="true">
+              <!-- Paid month -->
+              <icon-success class="text-success"></icon-success>
+            </ng-container>
+            <ng-container *ngSwitchCase="false">
+              <!-- Not paid month -->
+              <icon-failure class="text-danger"></icon-failure>
+            </ng-container>
+          </ng-container>
         </td>
       </tr>
     </tbody>
