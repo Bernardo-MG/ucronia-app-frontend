@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ConfigurationInfoComponent } from './components/configuration-info/configuration-info.component';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
-import { ConfigurationComponent } from './components/configuration/configuration.component';
 
 
 
 @NgModule({
   declarations: [
-    ConfigurationComponent
+    ConfigurationInfoComponent
   ],
   imports: [
     CommonModule,
