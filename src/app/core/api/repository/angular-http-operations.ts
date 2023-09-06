@@ -11,6 +11,8 @@ export class AngularHttpOperations implements HttpOperations {
 
   private _body: any | undefined = undefined;
 
+  private _defaultSort: Sort<any>[] | undefined = undefined;
+
   protected options: {
     params?: HttpParams
   } = {};
@@ -30,6 +32,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public read<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
+    this.applyDefaultSort();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.handleError)
@@ -101,6 +104,12 @@ export class AngularHttpOperations implements HttpOperations {
     return this;
   }
 
+  public defaultSort(sort: Sort<any>[] | undefined): AngularHttpOperations {
+    this._defaultSort = sort;
+
+    return this;
+  }
+
   public page(pagination: PaginationRequest | undefined): AngularHttpOperations {
     let params: HttpParams;
     let paged: boolean;
@@ -168,6 +177,12 @@ export class AngularHttpOperations implements HttpOperations {
 
   private getFinalUrl(route: string) {
     return `${this.rootUrl}${route}`;
+  }
+
+  private applyDefaultSort() {
+    if (!this.getHttpParams().has('sort')) {
+      this.sort(this._defaultSort);
+    }
   }
 
 }

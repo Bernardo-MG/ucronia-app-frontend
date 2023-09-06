@@ -15,17 +15,10 @@ export class FeeService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
-    let query = this.client.fee().page(pagination).parameter("startDate", startDate).parameter("endDate", endDate);
+    const defaultSort = new Sort<Fee>('date');
+    defaultSort.order = 'desc';
 
-    // If no sorting was received, apply the default one
-    // TODO: Maybe the repository can have a default sort
-    if (!pagination?.sort) {
-      const sort = new Sort<Fee>('date');
-      sort.order = 'desc';
-      query.sort([sort]);
-    }
-
-    return query.readAll();
+    return this.client.fee().page(pagination).defaultSort([defaultSort]).parameter("startDate", startDate).parameter("endDate", endDate).readAll();
   }
 
   public create(data: Fee): Observable<Fee> {
