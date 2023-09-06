@@ -1,16 +1,15 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { FailureResponse } from '../models/failure-response';
 import { PaginationRequest } from '../models/pagination-request';
 import { Sort } from '../models/sort';
 import { HttpOperations } from './http-operations';
-import { FailureResponse } from '../models/failure-response';
-import { Failure } from '../models/failure';
 
 export class AngularHttpOperations implements HttpOperations {
 
   private _route = '';
 
-  private content: any | undefined = undefined;
+  private _body: any | undefined = undefined;
 
   protected options: {
     params?: HttpParams
@@ -23,7 +22,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public create<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.post<T>(finalUrl, this.content, this.options)
+    return this.http.post<T>(finalUrl, this._body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -39,7 +38,7 @@ export class AngularHttpOperations implements HttpOperations {
 
   public update<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this.content, this.options)
+    return this.http.put<T>(finalUrl, this._body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -53,8 +52,8 @@ export class AngularHttpOperations implements HttpOperations {
       );
   }
 
-  public body(content: any): AngularHttpOperations {
-    this.content = content;
+  public body(body: any): AngularHttpOperations {
+    this._body = body;
 
     return this;
   }
