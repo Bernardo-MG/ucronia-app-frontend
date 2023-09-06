@@ -26,10 +26,10 @@
       <td>
         <div [ngSwitch]="member.active">
           <div *ngSwitchCase="true">
-            <fa-icon [icon]="activeIcon"></fa-icon>
+            <icon-success></icon-success>
           </div>
           <div *ngSwitchCase="false">
-            <fa-icon [icon]="inactiveIcon"></fa-icon>
+            <icon-failure></icon-failure>
           </div>
         </div>
       </td>
