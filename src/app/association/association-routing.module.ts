@@ -6,6 +6,7 @@ const statsModule = () => import('@app/association/stats/association-stats.modul
 const memberModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const feeModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
 const transactionModule = () => import('@app/association/transactions/transactions.module').then(m => m.TransactionsModule);
+const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
 
 const routes: Routes = [
     {
@@ -34,7 +35,7 @@ const routes: Routes = [
             {
                 path: 'configuration',
                 canActivate: [ResourceGuard("association_configuration")],
-                loadChildren: feeModule
+                loadChildren: configurationModule
             }
         ]
     }
