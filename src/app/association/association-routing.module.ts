@@ -30,6 +30,11 @@ const routes: Routes = [
                 path: 'fees',
                 canActivate: [ResourceGuard("fee")],
                 loadChildren: feeModule
+            },
+            {
+                path: 'configuration',
+                canActivate: [ResourceGuard("association_configuration")],
+                loadChildren: feeModule
             }
         ]
     }
