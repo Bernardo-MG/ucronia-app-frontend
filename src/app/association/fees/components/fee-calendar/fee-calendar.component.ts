@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-calendar',

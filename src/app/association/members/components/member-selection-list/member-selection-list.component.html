@@ -24,14 +24,16 @@
         {{member.surname}}
       </td>
       <td>
-        <div [ngSwitch]="member.active">
-          <div *ngSwitchCase="true">
-            <fa-icon [icon]="activeIcon"></fa-icon>
-          </div>
-          <div *ngSwitchCase="false">
-            <fa-icon [icon]="inactiveIcon"></fa-icon>
-          </div>
-        </div>
+        <ng-container [ngSwitch]="member.active">
+          <ng-container *ngSwitchCase="true">
+            <!-- Active -->
+            <icon-success class="text-success"></icon-success>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Not active -->
+            <icon-failure class="text-danger"></icon-failure>
+          </ng-container>
+        </ng-container>
       </td>
     </tr>
   </tbody>

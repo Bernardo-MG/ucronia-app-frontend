@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Fee } from '@app/association/models/fee';
-import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'assoc-fee-selection-list',
@@ -9,8 +8,5 @@ import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 export class FeeSelectionListComponent {
 
   @Input() public fees: Fee[] = [];
-
-  public activeIcon = faCheck;
-  public inactiveIcon = faX;
 
 }
