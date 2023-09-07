@@ -1,6 +1,4 @@
 import { Observable } from 'rxjs';
-import { PaginationRequest } from '../models/pagination-request';
-import { Sort } from '../models/sort';
 
 export interface Request {
 
@@ -19,7 +17,5 @@ export interface Request {
   appendRoute(route: string): Request;
 
   parameter(name: string, value: any): Request;
-
-  sort(sort: Sort<any>[] | undefined): Request;
 
 }

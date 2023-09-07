@@ -84,23 +84,6 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort(sort: Sort<any>[] | undefined): AngularRequest {
-    let params: HttpParams;
-
-    if (sort) {
-      params = this.getHttpParams();
-
-      for (let i = 0; i < sort.length; i += 1) {
-        const fieldSort = sort[i];
-        params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
-      }
-
-      this.options = { params: params };
-    }
-
-    return this;
-  }
-
   private getHttpParams(): HttpParams {
     let params: HttpParams;
 

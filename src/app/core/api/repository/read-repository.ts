@@ -3,6 +3,7 @@ import { Observable } from "rxjs";
 import { PaginatedResponse } from "../models/paginated-response";
 import { PaginatedQuery } from "../request/paginated-query";
 import { Request } from "./request";
+import { Sort } from "../models/sort";
 
 export class ReadRepository<T> {
 
@@ -20,9 +21,9 @@ export class ReadRepository<T> {
       operations.parameter('page', query.page);
     }
     if (query.sort.length > 0) {
-      operations.sort(query.sort);
+      this.applySort(query.sort, operations);
     } else if (query.defaultSort.length > 0) {
-      operations.sort(query.defaultSort);
+      this.applySort(query.defaultSort, operations);
     }
     for (var key in query.parameters) {
       if (query.parameters.hasOwnProperty(key)) {
@@ -44,6 +45,13 @@ export class ReadRepository<T> {
 
     operations.appendRoute(`/${id}`);
     return operations.read();
+  }
+
+  private applySort(sort: Sort<T>[], request: Request) {
+    for (let i = 0; i < sort.length; i += 1) {
+      const fieldSort = sort[i];
+      request.parameter('sort', `${String(fieldSort.property)},${fieldSort.order}`);
+    }
   }
 
 }
