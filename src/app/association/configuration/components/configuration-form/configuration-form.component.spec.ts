@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { ConfigurationFormComponent } from './configuration-form.component';
 
 describe('ConfigurationFormComponent', () => {
@@ -8,9 +9,16 @@ describe('ConfigurationFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationFormComponent ]
+      imports: [
+        LayoutModule,
+        FormsModule,
+        ReactiveFormsModule
+      ],
+      declarations: [
+        ConfigurationFormComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ConfigurationFormComponent);
     component = fixture.componentInstance;
