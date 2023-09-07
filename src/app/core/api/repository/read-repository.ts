@@ -37,28 +37,4 @@ export class ReadRepository<T> {
     return this.operations.read();
   }
 
-  public parameter(name: string, value: any): ReadRepository<T> {
-    this.operations = this.operations.parameter(name, value);
-
-    return this;
-  }
-
-  public page(pagination: PaginationRequest | undefined): ReadRepository<T> {
-    this.operations.page(pagination);
-
-    return this;
-  }
-
-  public sort(sort: Sort<T>[] | undefined): ReadRepository<T> {
-    this.operations.sort(sort);
-
-    return this;
-  }
-
-  public defaultSort(sort: Sort<T>[] | undefined): ReadRepository<T> {
-    this.operations.defaultSort(sort);
-
-    return this;
-  }
-
 }

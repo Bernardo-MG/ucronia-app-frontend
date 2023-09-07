@@ -38,8 +38,9 @@ export class AccessUserService {
 
   public getRoleSelection(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
     const query = new PaginatedQuery<Role>();
+    query.pagination = pagination;
 
-    return this.client.role().page(pagination).readAll(query);
+    return this.client.role().readAll(query);
   }
 
   public create(data: User): Observable<User> {
