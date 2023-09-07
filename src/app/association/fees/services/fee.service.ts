@@ -11,22 +11,18 @@ import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { FeePayment } from '../models/fee-payment';
 import { PaginatedQuery } from '@app/core/api/request/paginated-query';
+import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 
 @Injectable()
 export class FeeService {
 
-  private feeRepository: CrudRepository<Fee>;
-
   private feePaymentRepository: CrudRepository<FeePayment>;
 
-  private memberRepository: CrudRepository<Member>;
-
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private client: AssociationApiClient
   ) {
-    this.feeRepository = new CrudRepository<Fee>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
     this.feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
-    this.memberRepository = new CrudRepository<Member>(() => new AngularRequest(this.http, environment.apiUrl + '/member'));
   }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
@@ -41,7 +37,7 @@ export class FeeService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.feeRepository.readAll(query);
+    return this.client.fee().readAll(query);
   }
 
   public pay(data: FeePayment): Observable<FeePayment> {
@@ -49,15 +45,15 @@ export class FeeService {
   }
 
   public update(id: number, data: Fee): Observable<Fee> {
-    return this.feeRepository.updateById(id,data).pipe(map(r => r.content));
+    return this.client.fee().updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.feeRepository.deleteById(id).pipe(map(r => r.content));
+    return this.client.fee().deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Fee> {
-    return this.feeRepository.readById(id).pipe(map(r => r.content));
+    return this.client.fee().readById(id).pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
@@ -65,11 +61,11 @@ export class FeeService {
     query.sort = [new Sort<Member>('name')];
     query.page = page;
 
-    return this.memberRepository.readAll(query);
+    return this.client.member().readAll(query);
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.memberRepository.readById(id).pipe(map(r => r.content));
+    return this.client.member().readById(id).pipe(map(r => r.content));
   }
 
 }
