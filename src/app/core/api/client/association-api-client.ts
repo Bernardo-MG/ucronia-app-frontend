@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AssociationConfiguration } from "@app/association/configuration/models/association-configuration";
 import { Balance } from "@app/association/models/balance";
 import { Fee } from "@app/association/models/fee";
 import { Member } from "@app/association/models/member";
@@ -49,6 +50,10 @@ export class AssociationApiClient {
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
     return new ReadRepository<TransactionCalendarRange>(new AngularHttpOperations(this.http, this.rootUrl + '/transaction/range'));
+  }
+
+  public configuration(): CrudRepository<AssociationConfiguration> {
+    return new CrudRepository<AssociationConfiguration>(new AngularHttpOperations(this.http, this.rootUrl + '/configuration/association'));
   }
 
 }
