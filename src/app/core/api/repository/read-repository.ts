@@ -14,14 +14,6 @@ export class ReadRepository<T> {
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
     const request = this.requestProvider();
 
-    // Pagination
-    if (query.size > 0) {
-      request.parameter('size', query.size);
-    }
-    if (query.page > 0) {
-      request.parameter('page', query.page);
-    }
-
     // Sort
     if (query.sort.length > 0) {
       this.applySort(query.sort, request);
