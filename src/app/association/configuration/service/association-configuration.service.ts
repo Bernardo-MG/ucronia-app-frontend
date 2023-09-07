@@ -14,4 +14,8 @@ export class AssociationConfigurationService {
     return this.client.configuration().readOne().pipe(map(r => r.content));
   }
 
+  public update(data: AssociationConfiguration): Observable<AssociationConfiguration> {
+    return this.client.configuration().update(data).pipe(map(r => r.content));
+  }
+
 }

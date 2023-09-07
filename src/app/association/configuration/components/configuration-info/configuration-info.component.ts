@@ -7,6 +7,6 @@ import { AssociationConfiguration } from '../../models/association-configuration
 })
 export class ConfigurationInfoComponent {
 
-  @Input() configuration = new AssociationConfiguration();
+  @Input() data = new AssociationConfiguration();
 
 }
