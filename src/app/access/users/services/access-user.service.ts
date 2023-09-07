@@ -48,11 +48,11 @@ export class AccessUserService {
   }
 
   public update(id: number, data: User): Observable<User> {
-    return this.client.user().id(id).update(data).pipe(map(r => r.content));
+    return this.client.user().updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.user().id(id).delete().pipe(map(r => r.content));
+    return this.client.user().deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<User> {

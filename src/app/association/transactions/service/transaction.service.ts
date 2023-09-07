@@ -36,11 +36,11 @@ export class TransactionService {
   }
 
   public update(id: number, data: Transaction): Observable<Transaction> {
-    return this.client.transaction().id(id).update(data).pipe(map(r => r.content));
+    return this.client.transaction().updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.transaction().id(id).delete().pipe(map(r => r.content));
+    return this.client.transaction().deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Transaction> {

@@ -32,11 +32,11 @@ export class MemberService {
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.client.member().id(id).update(data).pipe(map(r => r.content));
+    return this.client.member().updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.member().id(id).delete().pipe(map(r => r.content));
+    return this.client.member().deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {

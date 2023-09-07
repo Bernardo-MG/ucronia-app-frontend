@@ -64,11 +64,11 @@ export class AccessRoleService {
   }
 
   public update(id: number, data: Role): Observable<Role> {
-    return this.client.role().id(id).update(data).pipe(map(r => r.content));
+    return this.client.role().updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.role().id(id).delete().pipe(map(r => r.content));
+    return this.client.role().deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Role> {

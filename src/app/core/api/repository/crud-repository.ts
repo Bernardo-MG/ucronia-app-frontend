@@ -19,14 +19,20 @@ export class CrudRepository<T> extends ReadRepository<T> {
     return this.oper.body(data).update();
   }
 
+  public updateById(id: number, data: T): Observable<ApiResponse<T>> {
+    this.oper.appendRoute(`/${id}`);
+
+    return this.oper.body(data).update();
+  }
+
   public delete(): Observable<ApiResponse<boolean>> {
     return this.oper.delete();
   }
 
-  public id(id: number): CrudRepository<T> {
+  public deleteById(id: number): Observable<ApiResponse<boolean>> {
     this.oper.appendRoute(`/${id}`);
 
-    return this;
+    return this.oper.delete();
   }
 
 }

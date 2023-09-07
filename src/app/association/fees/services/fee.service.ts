@@ -49,11 +49,11 @@ export class FeeService {
   }
 
   public update(id: number, data: Fee): Observable<Fee> {
-    return this.feeRepository.id(id).update(data).pipe(map(r => r.content));
+    return this.feeRepository.updateById(id,data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.feeRepository.id(id).delete().pipe(map(r => r.content));
+    return this.feeRepository.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Fee> {
