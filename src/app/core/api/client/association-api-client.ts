@@ -21,44 +21,62 @@ export class AssociationApiClient {
 
   private rootUrl = environment.apiUrl;
 
+  private balanceRepository = new ReadRepository<Balance>(() => new AngularRequest(this.http, this.rootUrl + '/balance'));
+
+  private feeRepository = new CrudRepository<Fee>(() => new AngularRequest(this.http, this.rootUrl + '/fee'));
+
+  private feeCalendarRepository = new FeeCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/fee/calendar'));
+
+  private feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
+
+  private memberRepository = new CrudRepository<Member>(() => new AngularRequest(this.http, this.rootUrl + '/member'));
+
+  private transactionRepository = new CrudRepository<Transaction>(() => new AngularRequest(this.http, this.rootUrl + '/transaction'));
+
+  private transactionCalendarRepository = new TransactionCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/transaction/calendar'));
+
+  private transactionRangeRepository = new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, this.rootUrl + '/transaction/range'));
+
+  private configurationRepository = new CrudRepository<AssociationConfiguration>(() => new AngularRequest(this.http, this.rootUrl + '/configuration/association'));
+
   constructor(
     private http: HttpClient
   ) { }
 
   public balance(): ReadRepository<Balance> {
-    return new ReadRepository<Balance>(() => new AngularRequest(this.http, this.rootUrl + '/balance'));
+    return this.balanceRepository;
   }
 
   public fee(): CrudRepository<Fee> {
-    return new CrudRepository<Fee>(() => new AngularRequest(this.http, this.rootUrl + '/fee'));
+    return this.feeRepository;
   }
 
   public feeCalendar(): FeeCalendarClient {
-    return new FeeCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/fee/calendar'));
+    return this.feeCalendarRepository;
   }
 
   public feePayment(): CrudRepository<FeePayment> {
-    return new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
+    return this.feePaymentRepository;
   }
 
   public member(): CrudRepository<Member> {
-    return new CrudRepository<Member>(() => new AngularRequest(this.http, this.rootUrl + '/member'));
+    return this.memberRepository;
   }
 
   public transaction(): CrudRepository<Transaction> {
-    return new CrudRepository<Transaction>(() => new AngularRequest(this.http, this.rootUrl + '/transaction'));
+    return this.transactionRepository;
   }
 
   public transactionCalendar(): TransactionCalendarClient {
-    return new TransactionCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/transaction/calendar'));
+    return this.transactionCalendarRepository;
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
-    return new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, this.rootUrl + '/transaction/range'));
+    return this.transactionRangeRepository;
   }
 
   public configuration(): CrudRepository<AssociationConfiguration> {
-    return new CrudRepository<AssociationConfiguration>(() => new AngularRequest(this.http, this.rootUrl + '/configuration/association'));
+    return this.configurationRepository;
   }
 
 }
