@@ -22,7 +22,7 @@ export class AccountService {
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
-    const resp: Observable<ApiResponse<PasswordChangeStatus>> = this.operations.body(data).update();
+    const resp: Observable<ApiResponse<PasswordChangeStatus>> = this.operations.update(data);
     return resp.pipe(map(r => r.content));
   }
 

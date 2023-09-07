@@ -14,13 +14,13 @@ export class CrudRepository<T> extends ReadRepository<T> {
   public create(data: T): Observable<ApiResponse<T>> {
     const request = this.requestsProv();
 
-    return request.body(data).create();
+    return request.create(data);
   }
 
   public update(data: T): Observable<ApiResponse<T>> {
     const request = this.requestsProv();
 
-    return request.body(data).update();
+    return request.update(data);
   }
 
   public updateById(id: number, data: T): Observable<ApiResponse<T>> {
@@ -28,7 +28,7 @@ export class CrudRepository<T> extends ReadRepository<T> {
 
     request.appendRoute(`/${id}`);
 
-    return request.body(data).update();
+    return request.update(data);
   }
 
   public delete(): Observable<ApiResponse<boolean>> {

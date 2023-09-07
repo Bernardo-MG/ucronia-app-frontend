@@ -15,13 +15,13 @@ export class RelationshipRepository<T> extends ReadRepository<T> {
   public create(data: Id): Observable<ApiResponse<boolean>> {
     const request = this.requestsProv();
 
-    return request.body(data).create();
+    return request.create(data);
   }
 
   public update(data: Id): Observable<ApiResponse<boolean>> {
     const request = this.requestsProv();
 
-    return request.body(data).update();
+    return request.update(data);
   }
 
   public delete(id: number): Observable<ApiResponse<boolean>> {

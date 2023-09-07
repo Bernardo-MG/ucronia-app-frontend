@@ -1,15 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { FailureResponse } from '../models/failure-response';
-import { PaginationRequest } from '../models/pagination-request';
-import { Sort } from '../models/sort';
 import { Request } from './request';
 
 export class AngularRequest implements Request {
 
   private _route = '';
-
-  private _body: any | undefined = undefined;
 
   protected options: {
     params?: HttpParams
@@ -20,9 +16,9 @@ export class AngularRequest implements Request {
     private rootUrl: string
   ) { }
 
-  public create<T>(): Observable<T> {
+  public create<T>(body: any): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.post<T>(finalUrl, this._body, this.options)
+    return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -36,9 +32,9 @@ export class AngularRequest implements Request {
       );
   }
 
-  public update<T>(): Observable<T> {
+  public update<T>(body: any): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this._body, this.options)
+    return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -50,12 +46,6 @@ export class AngularRequest implements Request {
       .pipe(
         catchError(this.handleError)
       );
-  }
-
-  public body(body: any): AngularRequest {
-    this._body = body;
-
-    return this;
   }
 
   public route(route: string): AngularRequest {
