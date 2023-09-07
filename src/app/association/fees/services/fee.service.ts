@@ -5,7 +5,7 @@ import { Member } from '@app/association/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { AngularHttpOperations } from '@app/core/api/repository/angular-http-operations';
+import { AngularRequest } from '@app/core/api/repository/angular-request';
 import { CrudRepository } from '@app/core/api/repository/crud-repository';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -24,9 +24,9 @@ export class FeeService {
   constructor(
     private http: HttpClient
   ) {
-    this.feeRepository = new CrudRepository<Fee>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.memberRepository = new CrudRepository<Member>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/member'));
+    this.feeRepository = new CrudRepository<Fee>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
+    this.feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
+    this.memberRepository = new CrudRepository<Member>(() => new AngularRequest(this.http, environment.apiUrl + '/member'));
   }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {

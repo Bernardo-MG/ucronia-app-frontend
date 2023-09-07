@@ -3,9 +3,9 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { FailureResponse } from '../models/failure-response';
 import { PaginationRequest } from '../models/pagination-request';
 import { Sort } from '../models/sort';
-import { HttpOperations } from './http-operations';
+import { Request } from './request';
 
-export class AngularHttpOperations implements HttpOperations {
+export class AngularRequest implements Request {
 
   private _route = '';
 
@@ -55,25 +55,25 @@ export class AngularHttpOperations implements HttpOperations {
       );
   }
 
-  public body(body: any): AngularHttpOperations {
+  public body(body: any): AngularRequest {
     this._body = body;
 
     return this;
   }
 
-  public route(route: string): AngularHttpOperations {
+  public route(route: string): AngularRequest {
     this._route = route;
 
     return this;
   }
 
-  public appendRoute(route: string): AngularHttpOperations {
+  public appendRoute(route: string): AngularRequest {
     this._route = `${this._route}${route}`;
 
     return this;
   }
 
-  public parameter(name: string, value: any): AngularHttpOperations {
+  public parameter(name: string, value: any): AngularRequest {
     let params: HttpParams;
 
     if (value) {
@@ -87,7 +87,7 @@ export class AngularHttpOperations implements HttpOperations {
     return this;
   }
 
-  public sort(sort: Sort<any>[] | undefined): AngularHttpOperations {
+  public sort(sort: Sort<any>[] | undefined): AngularRequest {
     let params: HttpParams;
 
     if (sort) {
@@ -104,13 +104,13 @@ export class AngularHttpOperations implements HttpOperations {
     return this;
   }
 
-  public defaultSort(sort: Sort<any>[] | undefined): AngularHttpOperations {
+  public defaultSort(sort: Sort<any>[] | undefined): AngularRequest {
     this._defaultSort = sort;
 
     return this;
   }
 
-  public page(pagination: PaginationRequest | undefined): AngularHttpOperations {
+  public page(pagination: PaginationRequest | undefined): AngularRequest {
     let params: HttpParams;
     let paged: boolean;
 

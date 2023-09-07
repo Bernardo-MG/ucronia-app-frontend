@@ -2,12 +2,12 @@ import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
 import { PaginatedResponse } from "../models/paginated-response";
 import { PaginatedQuery } from "../request/paginated-query";
-import { HttpOperations } from "./http-operations";
+import { Request } from "./request";
 
 export class ReadRepository<T> {
 
   constructor(
-    private operationsProvider: () => HttpOperations
+    private operationsProvider: () => Request
   ) { }
 
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
@@ -30,6 +30,7 @@ export class ReadRepository<T> {
         operations.parameter(key, query.parameters[key]);
       }
     }
+
     return operations.read();
   }
 

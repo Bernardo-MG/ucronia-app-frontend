@@ -1,12 +1,12 @@
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
-import { HttpOperations } from "../repository/http-operations";
+import { Request } from "../repository/request";
 import { ReadRepository } from "../repository/read-repository";
 
 export class TransactionCalendarClient {
 
   constructor(
-    private operationsProvider: () => HttpOperations
+    private operationsProvider: () => Request
   ) { }
 
   public date(year: number, month: number): ReadRepository<Transaction> {

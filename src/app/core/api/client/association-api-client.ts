@@ -7,7 +7,7 @@ import { Member } from "@app/association/models/member";
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
-import { AngularHttpOperations } from "../repository/angular-http-operations";
+import { AngularRequest } from "../repository/angular-request";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
 import { FeeCalendarClient } from "./fee-calendar-client";
@@ -25,35 +25,35 @@ export class AssociationApiClient {
   ) { }
 
   public balance(): ReadRepository<Balance> {
-    return new ReadRepository<Balance>(() => new AngularHttpOperations(this.http, this.rootUrl + '/balance'));
+    return new ReadRepository<Balance>(() => new AngularRequest(this.http, this.rootUrl + '/balance'));
   }
 
   public fee(): CrudRepository<Fee> {
-    return new CrudRepository<Fee>(() => new AngularHttpOperations(this.http, this.rootUrl + '/fee'));
+    return new CrudRepository<Fee>(() => new AngularRequest(this.http, this.rootUrl + '/fee'));
   }
 
   public feeCalendar(): FeeCalendarClient {
-    return new FeeCalendarClient(() => new AngularHttpOperations(this.http, this.rootUrl + '/fee/calendar'));
+    return new FeeCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/fee/calendar'));
   }
 
   public member(): CrudRepository<Member> {
-    return new CrudRepository<Member>(() => new AngularHttpOperations(this.http, this.rootUrl + '/member'));
+    return new CrudRepository<Member>(() => new AngularRequest(this.http, this.rootUrl + '/member'));
   }
 
   public transaction(): CrudRepository<Transaction> {
-    return new CrudRepository<Transaction>(() => new AngularHttpOperations(this.http, this.rootUrl + '/transaction'));
+    return new CrudRepository<Transaction>(() => new AngularRequest(this.http, this.rootUrl + '/transaction'));
   }
 
   public transactionCalendar(): TransactionCalendarClient {
-    return new TransactionCalendarClient(() => new AngularHttpOperations(this.http, this.rootUrl + '/transaction/calendar'));
+    return new TransactionCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/transaction/calendar'));
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
-    return new ReadRepository<TransactionCalendarRange>(() => new AngularHttpOperations(this.http, this.rootUrl + '/transaction/range'));
+    return new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, this.rootUrl + '/transaction/range'));
   }
 
   public configuration(): CrudRepository<AssociationConfiguration> {
-    return new CrudRepository<AssociationConfiguration>(() => new AngularHttpOperations(this.http, this.rootUrl + '/configuration/association'));
+    return new CrudRepository<AssociationConfiguration>(() => new AngularRequest(this.http, this.rootUrl + '/configuration/association'));
   }
 
 }

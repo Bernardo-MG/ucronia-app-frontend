@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { AngularHttpOperations } from '@app/core/api/repository/angular-http-operations';
-import { HttpOperations } from '@app/core/api/repository/http-operations';
+import { AngularRequest } from '@app/core/api/repository/angular-request';
+import { Request } from '@app/core/api/repository/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PasswordChange } from '../models/password-change';
@@ -11,14 +11,14 @@ import { PasswordChangeStatus } from '../models/password-change-status';
 @Injectable()
 export class AccountService {
 
-  private operations: HttpOperations;
+  private operations: Request;
 
   private changePasswordUrl = environment.apiUrl + "/password/change";
 
   constructor(
     http: HttpClient
   ) {
-    this.operations = new AngularHttpOperations(http, this.changePasswordUrl);
+    this.operations = new AngularRequest(http, this.changePasswordUrl);
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {

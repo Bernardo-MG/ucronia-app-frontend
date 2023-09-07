@@ -6,7 +6,7 @@ import { Resource } from "@app/core/authentication/models/resource";
 import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
-import { AngularHttpOperations } from "../repository/angular-http-operations";
+import { AngularRequest } from "../repository/angular-request";
 import { CrudRepository } from "../repository/crud-repository";
 import { RelationshipRepository } from "../repository/relationship-repository";
 
@@ -22,31 +22,31 @@ export class AccessApiClient {
   ) { }
 
   public role(): CrudRepository<Role> {
-    return new CrudRepository<Role>(() => new AngularHttpOperations(this.http, this.rootUrl + '/role'));
+    return new CrudRepository<Role>(() => new AngularRequest(this.http, this.rootUrl + '/role'));
   }
 
   public rolePermissions(id: number): CrudRepository<Permission> {
-    return new CrudRepository<Permission>(() => new AngularHttpOperations(this.http, this.rootUrl + `/role/${id}/permission`));
+    return new CrudRepository<Permission>(() => new AngularRequest(this.http, this.rootUrl + `/role/${id}/permission`));
   }
 
   public rolePermission(role: number, resource: number, action: number): CrudRepository<Permission> {
-    return new CrudRepository<Permission>(() => new AngularHttpOperations(this.http, this.rootUrl + `/role/${role}/permission/${resource}/${action}`));
+    return new CrudRepository<Permission>(() => new AngularRequest(this.http, this.rootUrl + `/role/${role}/permission/${resource}/${action}`));
   }
 
   public action(): CrudRepository<Action> {
-    return new CrudRepository<Action>(() => new AngularHttpOperations(this.http, this.rootUrl + '/action'));
+    return new CrudRepository<Action>(() => new AngularRequest(this.http, this.rootUrl + '/action'));
   }
 
   public resource(): CrudRepository<Resource> {
-    return new CrudRepository<Resource>(() => new AngularHttpOperations(this.http, this.rootUrl + '/resource'));
+    return new CrudRepository<Resource>(() => new AngularRequest(this.http, this.rootUrl + '/resource'));
   }
 
   public user(): CrudRepository<User> {
-    return new CrudRepository<User>(() => new AngularHttpOperations(this.http, this.rootUrl + '/user'));
+    return new CrudRepository<User>(() => new AngularRequest(this.http, this.rootUrl + '/user'));
   }
 
   public userRoles(id: number): RelationshipRepository<Role> {
-    return new RelationshipRepository<Role>(() => new AngularHttpOperations(this.http, this.rootUrl + `/user/${id}/role`));
+    return new RelationshipRepository<Role>(() => new AngularRequest(this.http, this.rootUrl + `/user/${id}/role`));
   }
 
 }
