@@ -101,34 +101,6 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public page(pagination: PaginationRequest | undefined): AngularRequest {
-    let params: HttpParams;
-    let paged: boolean;
-
-    if (pagination) {
-      params = this.getHttpParams();
-
-      paged = false;
-      if (pagination.page) {
-        // Pages start at 0
-        params = params.set('page', pagination.page - 1);
-        paged = true;
-      }
-      if (pagination.size) {
-        params = params.set('size', pagination.size);
-        paged = true;
-      }
-
-      if (paged) {
-        this.options = { params: params };
-      }
-
-      this.sort(pagination.sort);
-    }
-
-    return this;
-  }
-
   private getHttpParams(): HttpParams {
     let params: HttpParams;
 

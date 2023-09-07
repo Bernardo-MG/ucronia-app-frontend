@@ -22,6 +22,4 @@ export interface Request {
 
   sort(sort: Sort<any>[] | undefined): Request;
 
-  page(pagination: PaginationRequest | undefined): Request;
-
 }
