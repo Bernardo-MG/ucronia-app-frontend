@@ -1,22 +1,26 @@
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
-import { AngularHttpOperations } from "../repository/angular-http-operations";
+import { HttpOperations } from "../repository/http-operations";
 import { ReadRepository } from "../repository/read-repository";
 
 export class TransactionCalendarClient {
 
   constructor(
-    private operations: AngularHttpOperations
+    private operationsProvider: () => HttpOperations
   ) { }
 
   public date(year: number, month: number): ReadRepository<Transaction> {
-    this.operations.appendRoute(`/${year}/${month}`);
-    return new ReadRepository<Transaction>(this.operations);
+    const operations = this.operationsProvider();
+
+    operations.appendRoute(`/${year}/${month}`);
+    return new ReadRepository<Transaction>(() => operations);
   }
 
   public range(): ReadRepository<TransactionCalendarRange> {
-    this.operations.appendRoute("/range");
-    return new ReadRepository<TransactionCalendarRange>(this.operations);
+    const operations = this.operationsProvider();
+
+    operations.appendRoute("/range");
+    return new ReadRepository<TransactionCalendarRange>(() => operations);
   }
 
 }

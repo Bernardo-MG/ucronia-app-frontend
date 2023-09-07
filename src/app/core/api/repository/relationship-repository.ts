@@ -7,21 +7,27 @@ import { ReadRepository } from "./read-repository";
 export class RelationshipRepository<T> extends ReadRepository<T> {
 
   constructor(
-    private oper: HttpOperations
+    private operationsProv: () => HttpOperations
   ) {
-    super(oper);
+    super(operationsProv);
   }
 
   public create(data: Id): Observable<ApiResponse<boolean>> {
-    return this.oper.body(data).create();
+    const operations = this.operationsProv();
+
+    return operations.body(data).create();
   }
 
   public update(data: Id): Observable<ApiResponse<boolean>> {
-    return this.oper.body(data).update();
+    const operations = this.operationsProv();
+
+    return operations.body(data).update();
   }
 
   public delete(id: number): Observable<ApiResponse<boolean>> {
-    return this.oper.appendRoute(`/${id}`).delete();
+    const operations = this.operationsProv();
+
+    return operations.appendRoute(`/${id}`).delete();
   }
 
 }

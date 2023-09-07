@@ -7,37 +7,43 @@ import { HttpOperations } from "./http-operations";
 export class ReadRepository<T> {
 
   constructor(
-    private operations: HttpOperations
+    private operationsProvider: () => HttpOperations
   ) { }
 
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
+    const operations = this.operationsProvider();
+
     if (query.size > 0) {
-      this.operations.parameter('size', query.size);
+      operations.parameter('size', query.size);
     }
     if (query.page > 0) {
-      this.operations.parameter('page', query.page);
+      operations.parameter('page', query.page);
     }
     if (query.sort.length > 0) {
-      this.operations.sort(query.sort);
+      operations.sort(query.sort);
     }
     if (query.defaultSort.length > 0) {
-      this.operations.defaultSort(query.sort);
+      operations.defaultSort(query.sort);
     }
     for (var key in query.parameters) {
       if (query.parameters.hasOwnProperty(key)) {
-        this.operations.parameter(key, query.parameters[key]);
+        operations.parameter(key, query.parameters[key]);
       }
     }
-    return this.operations.read();
+    return operations.read();
   }
 
   public readOne(): Observable<ApiResponse<T>> {
-    return this.operations.read();
+    const operations = this.operationsProvider();
+
+    return operations.read();
   }
 
   public readById(id: number): Observable<ApiResponse<T>> {
-    this.operations.appendRoute(`/${id}`);
-    return this.operations.read();
+    const operations = this.operationsProvider();
+
+    operations.appendRoute(`/${id}`);
+    return operations.read();
   }
 
 }

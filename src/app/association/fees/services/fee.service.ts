@@ -24,9 +24,9 @@ export class FeeService {
   constructor(
     private http: HttpClient
   ) {
-    this.feeRepository = new CrudRepository<Fee>(new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.feePaymentRepository = new CrudRepository<FeePayment>(new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.memberRepository = new CrudRepository<Member>(new AngularHttpOperations(this.http, environment.apiUrl + '/member'));
+    this.feeRepository = new CrudRepository<Fee>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
+    this.feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
+    this.memberRepository = new CrudRepository<Member>(() => new AngularHttpOperations(this.http, environment.apiUrl + '/member'));
   }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
