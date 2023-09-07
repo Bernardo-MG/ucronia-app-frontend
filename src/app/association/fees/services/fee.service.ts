@@ -16,14 +16,9 @@ import { AssociationApiClient } from '@app/core/api/client/association-api-clien
 @Injectable()
 export class FeeService {
 
-  private feePaymentRepository: CrudRepository<FeePayment>;
-
   constructor(
-    private http: HttpClient,
     private client: AssociationApiClient
-  ) {
-    this.feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
-  }
+  ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
     const defaultSortName = new Sort<Fee>('memberName');
@@ -41,7 +36,7 @@ export class FeeService {
   }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.feePaymentRepository.create(data).pipe(map(r => r.content));
+    return this.client.feePayment().create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Fee): Observable<Fee> {

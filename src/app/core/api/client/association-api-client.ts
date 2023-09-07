@@ -12,6 +12,7 @@ import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
 import { FeeCalendarClient } from "./fee-calendar-client";
 import { TransactionCalendarClient } from "./transaction-calendar-client";
+import { FeePayment } from "@app/association/fees/models/fee-payment";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class AssociationApiClient {
 
   public feeCalendar(): FeeCalendarClient {
     return new FeeCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/fee/calendar'));
+  }
+
+  public feePayment(): CrudRepository<FeePayment> {
+    return new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
   }
 
   public member(): CrudRepository<Member> {
