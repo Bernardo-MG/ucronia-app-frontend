@@ -57,7 +57,7 @@ export class FeeService {
   }
 
   public getOne(id: number): Observable<Fee> {
-    return this.feeRepository.id(id).readOne().pipe(map(r => r.content));
+    return this.feeRepository.readById(id).pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
@@ -69,7 +69,7 @@ export class FeeService {
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.memberRepository.id(id).readOne().pipe(map(r => r.content));
+    return this.memberRepository.readById(id).pipe(map(r => r.content));
   }
 
 }

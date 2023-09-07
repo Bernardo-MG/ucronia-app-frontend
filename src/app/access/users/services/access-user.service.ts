@@ -56,7 +56,7 @@ export class AccessUserService {
   }
 
   public getOne(id: number): Observable<User> {
-    return this.client.user().id(id).readOne().pipe(map(r => r.content));
+    return this.client.user().readById(id).pipe(map(r => r.content));
   }
 
   public addRole(id: number, role: number): Observable<boolean> {

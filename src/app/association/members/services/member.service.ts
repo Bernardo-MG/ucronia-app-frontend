@@ -40,7 +40,7 @@ export class MemberService {
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.client.member().id(id).readOne().pipe(map(r => r.content));
+    return this.client.member().readById(id).pipe(map(r => r.content));
   }
 
 }

@@ -44,7 +44,7 @@ export class TransactionService {
   }
 
   public getOne(id: number): Observable<Transaction> {
-    return this.client.transaction().id(id).readOne().pipe(map(r => r.content));
+    return this.client.transaction().readById(id).pipe(map(r => r.content));
   }
 
 }

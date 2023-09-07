@@ -35,4 +35,9 @@ export class ReadRepository<T> {
     return this.operations.read();
   }
 
+  public readById(id: number): Observable<ApiResponse<T>> {
+    this.operations.appendRoute(`/${id}`);
+    return this.operations.read();
+  }
+
 }

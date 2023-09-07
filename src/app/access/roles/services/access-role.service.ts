@@ -72,7 +72,7 @@ export class AccessRoleService {
   }
 
   public getOne(id: number): Observable<Role> {
-    return this.client.role().id(id).readOne().pipe(map(r => r.content));
+    return this.client.role().readById(id).pipe(map(r => r.content));
   }
 
   public addPermission(id: number, resource: number, action: number): Observable<Permission> {
