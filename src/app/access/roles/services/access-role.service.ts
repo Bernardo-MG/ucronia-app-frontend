@@ -3,6 +3,7 @@ import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
@@ -20,23 +21,42 @@ export class AccessRoleService {
     const defaultSort = new Sort<Role>('name');
     defaultSort.order = 'asc';
 
-    return this.client.role().page(pagination).defaultSort([defaultSort]).readAll();
+    const query = new PaginatedQuery<Role>();
+    query.defaultSort = [defaultSort];
+    query.pagination = pagination;
+
+    return this.client.role().readAll(query);
   }
 
   public getPermissions(id: number, page: number): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort<Permission> = new Sort<Permission>('resource');
     const sortAction: Sort<Permission> = new Sort<Permission>('action');
-    return this.client.rolePermissions(id).page({ page }).sort([sortResource, sortAction]).readAll();
+
+    const query = new PaginatedQuery<Permission>();
+    query.defaultSort = [sortResource, sortAction];
+    query.page = page;
+
+    return this.client.rolePermissions(id).readAll(query);
   }
 
   public getActionSelection(page: number): Observable<PaginatedResponse<Action[]>> {
     const sort = new Sort<Action>('name');
-    return this.client.action().page({ page }).sort([sort]).readAll();
+
+    const query = new PaginatedQuery<Action>();
+    query.sort = [sort];
+    query.page = page;
+
+    return this.client.action().readAll(query);
   }
 
   public getResourceSelection(page: number): Observable<PaginatedResponse<Resource[]>> {
     const sort = new Sort<Resource>('name');
-    return this.client.resource().page({ page }).sort([sort]).readAll();
+
+    const query = new PaginatedQuery<Resource>();
+    query.sort = [sort];
+    query.page = page;
+
+    return this.client.resource().readAll(query);
   }
 
   public create(data: Role): Observable<Role> {

@@ -4,6 +4,7 @@ import { AssociationApiClient } from '@app/core/api/client/association-api-clien
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
@@ -19,7 +20,11 @@ export class MemberService {
     const defaultSortSurname = new Sort<Member>('surname');
     defaultSortSurname.order = 'asc';
 
-    return this.client.member().page(pagination).defaultSort([defaultSortName, defaultSortSurname]).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.defaultSort = [defaultSortName, defaultSortSurname];
+    query.pagination = pagination;
+
+    return this.client.member().readAll(query);
   }
 
   public create(data: Member): Observable<Member> {

@@ -10,6 +10,7 @@ import { CrudRepository } from '@app/core/api/repository/crud-repository';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { FeePayment } from '../models/fee-payment';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 
 @Injectable()
 export class FeeService {
@@ -34,7 +35,13 @@ export class FeeService {
     const defaultSortDate = new Sort<Fee>('date');
     defaultSortDate.order = 'desc';
 
-    return this.feeRepository.page(pagination).defaultSort([defaultSortDate, defaultSortName]).parameter("startDate", startDate).parameter("endDate", endDate).readAll();
+    const query = new PaginatedQuery<Fee>();
+    query.defaultSort = [defaultSortDate, defaultSortName];
+    query.pagination = pagination;
+    query.addParameter("startDate", startDate);
+    query.addParameter("endDate", endDate);
+
+    return this.feeRepository.readAll(query);
   }
 
   public pay(data: FeePayment): Observable<FeePayment> {
@@ -54,8 +61,11 @@ export class FeeService {
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
-    const sort: Sort<Member> = new Sort<Member>('name');
-    return this.memberRepository.page({ page }).sort([sort]).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.sort = [new Sort<Member>('name')];
+    query.page = page;
+
+    return this.memberRepository.readAll(query);
   }
 
   public getOneMember(id: number): Observable<Member> {

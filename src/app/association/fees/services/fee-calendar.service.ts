@@ -4,6 +4,7 @@ import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { Sort } from '@app/core/api/models/sort';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
@@ -16,13 +17,14 @@ export class FeeCalendarService {
   ) { }
 
   public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
-    const sort = new Sort<UserFeeCalendar>("name");
+    const query = new PaginatedQuery<UserFeeCalendar>();
+    query.sort = [new Sort<UserFeeCalendar>("name")];
+    query.addParameter("onlyActive", onlyActive);
 
     return this.client.feeCalendar()
       .year(year)
-      .sort([sort])
-      .parameter("onlyActive", onlyActive)
-      .readAll().pipe(map(r => r.content))
+      .readAll(query)
+      .pipe(map(r => r.content))
       .pipe(map(data => this.toCalendar(data)));
   }
 

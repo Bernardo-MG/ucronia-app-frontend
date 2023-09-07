@@ -4,6 +4,7 @@ import { AssociationApiClient } from '@app/core/api/client/association-api-clien
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
 
@@ -20,9 +21,14 @@ export class TransactionService {
     const defaultSortDescription = new Sort<Transaction>('description');
     defaultSortDescription.order = 'asc';
 
-    return this.client.transaction().page(pagination).defaultSort([defaultSortDate, defaultSortDescription])
-      .parameter("startDate", filter.startDate).parameter("endDate", filter.endDate).parameter("date", filter.date)
-      .readAll();
+    const query = new PaginatedQuery<Transaction>();
+    query.defaultSort = [defaultSortDate, defaultSortDescription];
+    query.pagination = pagination;
+    query.addParameter("startDate", filter.startDate);
+    query.addParameter("endDate", filter.endDate);
+    query.addParameter("date", filter.date);
+
+    return this.client.transaction().readAll(query);
   }
 
   public create(data: Transaction): Observable<Transaction> {

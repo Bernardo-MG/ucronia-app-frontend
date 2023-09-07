@@ -4,6 +4,7 @@ import { Member } from '@app/association/models/member';
 import { AssociationApiClient } from '@app/core/api/client/association-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -16,7 +17,11 @@ export class AssociationStatsService {
   ) { }
 
   public getActiveMembers(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
-    return this.client.member().parameter("active", true).page(pagination).sort(pagination?.sort).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.pagination = pagination;
+    query.addParameter("active", true);
+
+    return this.client.member().readAll(query);
   }
 
   public getBalance(): Observable<Balance> {
