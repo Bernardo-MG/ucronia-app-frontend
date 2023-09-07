@@ -21,9 +21,8 @@ export class ReadRepository<T> {
     }
     if (query.sort.length > 0) {
       operations.sort(query.sort);
-    }
-    if (query.defaultSort.length > 0) {
-      operations.defaultSort(query.sort);
+    } else if (query.defaultSort.length > 0) {
+      operations.sort(query.defaultSort);
     }
     for (var key in query.parameters) {
       if (query.parameters.hasOwnProperty(key)) {
