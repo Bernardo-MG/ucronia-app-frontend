@@ -6,43 +6,43 @@ import { ReadRepository } from "./read-repository";
 export class CrudRepository<T> extends ReadRepository<T> {
 
   constructor(
-    private operationsProv: () => Request
+    private requestsProv: () => Request
   ) {
-    super(operationsProv);
+    super(requestsProv);
   }
 
   public create(data: T): Observable<ApiResponse<T>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.body(data).create();
+    return request.body(data).create();
   }
 
   public update(data: T): Observable<ApiResponse<T>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.body(data).update();
+    return request.body(data).update();
   }
 
   public updateById(id: number, data: T): Observable<ApiResponse<T>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    operations.appendRoute(`/${id}`);
+    request.appendRoute(`/${id}`);
 
-    return operations.body(data).update();
+    return request.body(data).update();
   }
 
   public delete(): Observable<ApiResponse<boolean>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.delete();
+    return request.delete();
   }
 
   public deleteById(id: number): Observable<ApiResponse<boolean>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    operations.appendRoute(`/${id}`);
+    request.appendRoute(`/${id}`);
 
-    return operations.delete();
+    return request.delete();
   }
 
 }

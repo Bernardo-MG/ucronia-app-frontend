@@ -7,27 +7,27 @@ import { ReadRepository } from "./read-repository";
 export class RelationshipRepository<T> extends ReadRepository<T> {
 
   constructor(
-    private operationsProv: () => Request
+    private requestsProv: () => Request
   ) {
-    super(operationsProv);
+    super(requestsProv);
   }
 
   public create(data: Id): Observable<ApiResponse<boolean>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.body(data).create();
+    return request.body(data).create();
   }
 
   public update(data: Id): Observable<ApiResponse<boolean>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.body(data).update();
+    return request.body(data).update();
   }
 
   public delete(id: number): Observable<ApiResponse<boolean>> {
-    const operations = this.operationsProv();
+    const request = this.requestsProv();
 
-    return operations.appendRoute(`/${id}`).delete();
+    return request.appendRoute(`/${id}`).delete();
   }
 
 }
