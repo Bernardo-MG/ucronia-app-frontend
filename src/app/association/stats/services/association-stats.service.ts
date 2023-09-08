@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Balance } from '@app/association/models/balance';
 import { Member } from '@app/association/models/member';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
+import { BalanceApi } from '@app/core/api/client/balance-api';
 import { MemberApi } from '@app/core/api/client/member-api';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
@@ -16,8 +16,9 @@ export class AssociationStatsService {
 
   private memberApi = new MemberApi(this.http);
 
+  private balanceApi = new BalanceApi(this.http);
+
   constructor(
-    private client: AssociationApiClient,
     private http: HttpClient
   ) { }
 
@@ -30,7 +31,7 @@ export class AssociationStatsService {
   }
 
   public getBalance(): Observable<Balance> {
-    return this.client.balance().readOne().pipe(map(r => r.content));
+    return this.balanceApi.readOne().pipe(map(r => r.content));
   }
 
 }
