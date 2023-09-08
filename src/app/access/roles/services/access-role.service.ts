@@ -3,7 +3,7 @@ import { AccessApiClient } from '@app/core/api/client/access-api-client';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginatedQuery } from '@app/core/api/request/paginated-query';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';

@@ -1,11 +1,11 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
+import { PaginatedQuery } from "../models/paginated-query";
 import { PaginatedResponse } from "../models/paginated-response";
-import { PaginatedQuery } from "../request/paginated-query";
-import { Request } from "./request";
 import { Sort } from "../models/sort";
+import { Request } from "./request";
 
-export class ReadRepository<T> {
+export class ReadApi<T> {
 
   constructor(
     protected requestProvider: () => Request

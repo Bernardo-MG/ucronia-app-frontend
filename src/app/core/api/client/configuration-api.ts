@@ -2,9 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { AssociationConfiguration } from "@app/association/configuration/models/association-configuration";
 import { environment } from "environments/environment";
 import { AngularRequest } from "../repository/angular-request";
-import { CrudRepository } from "../repository/crud-repository";
+import { CrudApi } from "../repository/crud-api";
 
-export class ConfigurationApi extends CrudRepository<AssociationConfiguration> {
+export class ConfigurationApi extends CrudApi<AssociationConfiguration> {
 
   constructor(
     private http: HttpClient

@@ -5,7 +5,7 @@ import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { FeeApi } from '@app/core/api/client/fee-api';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginatedQuery } from '@app/core/api/request/paginated-query';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable()

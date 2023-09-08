@@ -5,7 +5,7 @@ import { TransactionApi } from '@app/core/api/client/transaction-api';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginatedQuery } from '@app/core/api/request/paginated-query';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { map, Observable } from 'rxjs';
 import { TransactionFilter } from '../models/transaction-filter';
 

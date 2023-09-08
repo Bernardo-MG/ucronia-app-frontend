@@ -2,9 +2,9 @@ import { HttpClient } from "@angular/common/http";
 import { Balance } from "@app/association/models/balance";
 import { environment } from "environments/environment";
 import { AngularRequest } from "../repository/angular-request";
-import { ReadRepository } from "../repository/read-repository";
+import { ReadApi } from "../repository/read-api";
 
-export class BalanceApi extends ReadRepository<Balance> {
+export class BalanceApi extends ReadApi<Balance> {
 
   constructor(
     private http: HttpClient

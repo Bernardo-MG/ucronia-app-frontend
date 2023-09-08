@@ -1,10 +1,10 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Id } from "@app/core/authentication/models/id";
 import { Observable } from "rxjs";
+import { ReadApi } from "./read-api";
 import { Request } from "./request";
-import { ReadRepository } from "./read-repository";
 
-export class RelationshipRepository<T> extends ReadRepository<T> {
+export class RelationshipRepository<T> extends ReadApi<T> {
 
   constructor(
     private requestsProv: () => Request

@@ -1,9 +1,9 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
+import { ReadApi } from "./read-api";
 import { Request } from "./request";
-import { ReadRepository } from "./read-repository";
 
-export class CrudRepository<T> extends ReadRepository<T> {
+export class CrudApi<T> extends ReadApi<T> {
 
   constructor(
     requestsProv: () => Request

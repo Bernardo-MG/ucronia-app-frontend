@@ -1,5 +1,5 @@
-import { PaginationRequest } from "../models/pagination-request";
-import { Sort } from "../models/sort";
+import { PaginationRequest } from "./pagination-request";
+import { Sort } from "./sort";
 
 export class PaginatedQuery<T> {
 
