@@ -25,11 +25,9 @@ export class FeeApi extends CrudApi<Fee> {
   }
 
   public calendarYear(year: number, query: PaginatedQuery<UserFeeCalendar>): Observable<ApiResponse<UserFeeCalendar[]>> {
-    const request = this.requestProvider();
+    const request = this.requestWithQuery(query);
 
     request.appendRoute(`/calendar/${year}`);
-
-    this.applyQuery(request, query);
 
     return request.read();
   }

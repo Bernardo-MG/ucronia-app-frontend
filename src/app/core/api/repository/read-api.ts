@@ -12,9 +12,7 @@ export class ReadApi<T> {
   ) { }
 
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
-    const request = this.requestProvider();
-
-    this.applyQuery(request, query);
+    const request = this.requestWithQuery(query);
 
     return request.read();
   }
@@ -33,7 +31,9 @@ export class ReadApi<T> {
     return request.read();
   }
 
-  protected applyQuery(request: Request, query: PaginatedQuery<any>) {
+  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+    const request = this.requestProvider();
+
     // Sort
     if (query.sort.length > 0) {
       this.applySort(query.sort, request);
@@ -48,6 +48,8 @@ export class ReadApi<T> {
         request.parameter(key, value);
       }
     }
+
+    return request;
   }
 
   private applySort(sort: Sort<T>[], request: Request) {
