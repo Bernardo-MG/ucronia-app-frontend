@@ -1,43 +1,44 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AssociationConfiguration } from "@app/association/configuration/models/association-configuration";
+import { FeePayment } from "@app/association/fees/models/fee-payment";
 import { Balance } from "@app/association/models/balance";
 import { Fee } from "@app/association/models/fee";
 import { Member } from "@app/association/models/member";
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
 import { environment } from "environments/environment";
+import { Observable } from "rxjs";
+import { ApiResponse } from "../models/api-response";
 import { AngularRequest } from "../repository/angular-request";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
+import { FeeApi } from "./fee-api";
 import { FeeCalendarClient } from "./fee-calendar-client";
 import { TransactionCalendarClient } from "./transaction-calendar-client";
-import { FeePayment } from "@app/association/fees/models/fee-payment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssociationApiClient {
 
-  private rootUrl = environment.apiUrl;
+  private balanceRepository = new ReadRepository<Balance>(() => new AngularRequest(this.http, environment.apiUrl + '/balance'));
 
-  private balanceRepository = new ReadRepository<Balance>(() => new AngularRequest(this.http, this.rootUrl + '/balance'));
+  private feeRepository = new FeeApi(this.http);
 
-  private feeRepository = new CrudRepository<Fee>(() => new AngularRequest(this.http, this.rootUrl + '/fee'));
-
-  private feeCalendarRepository = new FeeCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/fee/calendar'));
+  private feeCalendarRepository = new FeeCalendarClient(() => new AngularRequest(this.http, environment.apiUrl + '/fee/calendar'));
 
   private feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
 
-  private memberRepository = new CrudRepository<Member>(() => new AngularRequest(this.http, this.rootUrl + '/member'));
+  private memberRepository = new CrudRepository<Member>(() => new AngularRequest(this.http, environment.apiUrl + '/member'));
 
-  private transactionRepository = new CrudRepository<Transaction>(() => new AngularRequest(this.http, this.rootUrl + '/transaction'));
+  private transactionRepository = new CrudRepository<Transaction>(() => new AngularRequest(this.http, environment.apiUrl + '/transaction'));
 
-  private transactionCalendarRepository = new TransactionCalendarClient(() => new AngularRequest(this.http, this.rootUrl + '/transaction/calendar'));
+  private transactionCalendarRepository = new TransactionCalendarClient(() => new AngularRequest(this.http, environment.apiUrl + '/transaction/calendar'));
 
-  private transactionRangeRepository = new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, this.rootUrl + '/transaction/range'));
+  private transactionRangeRepository = new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, environment.apiUrl + '/transaction/range'));
 
-  private configurationRepository = new CrudRepository<AssociationConfiguration>(() => new AngularRequest(this.http, this.rootUrl + '/configuration/association'));
+  private configurationRepository = new CrudRepository<AssociationConfiguration>(() => new AngularRequest(this.http, environment.apiUrl + '/configuration/association'));
 
   constructor(
     private http: HttpClient
@@ -55,8 +56,8 @@ export class AssociationApiClient {
     return this.feeCalendarRepository;
   }
 
-  public feePayment(): CrudRepository<FeePayment> {
-    return this.feePaymentRepository;
+  public feePayment(data: FeePayment): Observable<ApiResponse<FeePayment>> {
+    return this.feePaymentRepository.create(data);
   }
 
   public member(): CrudRepository<Member> {

@@ -6,25 +6,25 @@ import { ReadRepository } from "./read-repository";
 export class CrudRepository<T> extends ReadRepository<T> {
 
   constructor(
-    private requestsProv: () => Request
+    requestsProv: () => Request
   ) {
     super(requestsProv);
   }
 
   public create(data: T): Observable<ApiResponse<T>> {
-    const request = this.requestsProv();
+    const request = this.requestProvider();
 
     return request.create(data);
   }
 
   public update(data: T): Observable<ApiResponse<T>> {
-    const request = this.requestsProv();
+    const request = this.requestProvider();
 
     return request.update(data);
   }
 
   public updateById(id: number, data: T): Observable<ApiResponse<T>> {
-    const request = this.requestsProv();
+    const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);
 
@@ -32,13 +32,13 @@ export class CrudRepository<T> extends ReadRepository<T> {
   }
 
   public delete(): Observable<ApiResponse<boolean>> {
-    const request = this.requestsProv();
+    const request = this.requestProvider();
 
     return request.delete();
   }
 
   public deleteById(id: number): Observable<ApiResponse<boolean>> {
-    const request = this.requestsProv();
+    const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);
 

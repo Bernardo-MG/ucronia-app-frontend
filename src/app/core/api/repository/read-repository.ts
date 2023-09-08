@@ -8,7 +8,7 @@ import { Sort } from "../models/sort";
 export class ReadRepository<T> {
 
   constructor(
-    private requestProvider: () => Request
+    protected requestProvider: () => Request
   ) { }
 
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
