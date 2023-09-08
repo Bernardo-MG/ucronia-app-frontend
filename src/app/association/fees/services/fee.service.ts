@@ -1,32 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FeeApi } from '@app/association/api/fee-api';
+import { MemberApi } from '@app/association/api/member-api';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { AngularHttpOperations } from '@app/core/api/repository/angular-http-operations';
-import { CrudRepository } from '@app/core/api/repository/crud-repository';
-import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { FeePayment } from '../models/fee-payment';
 
 @Injectable()
 export class FeeService {
 
-  private feeRepository: CrudRepository<Fee>;
+  private feeApi = new FeeApi(this.http);
 
-  private feePaymentRepository: CrudRepository<FeePayment>;
-
-  private memberRepository: CrudRepository<Member>;
+  private memberApi = new MemberApi(this.http);
 
   constructor(
     private http: HttpClient
-  ) {
-    this.feeRepository = new CrudRepository<Fee>(new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.feePaymentRepository = new CrudRepository<FeePayment>(new AngularHttpOperations(this.http, environment.apiUrl + '/fee'));
-    this.memberRepository = new CrudRepository<Member>(new AngularHttpOperations(this.http, environment.apiUrl + '/member'));
-  }
+  ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
     const defaultSortName = new Sort<Fee>('memberName');
@@ -34,32 +28,42 @@ export class FeeService {
     const defaultSortDate = new Sort<Fee>('date');
     defaultSortDate.order = 'desc';
 
-    return this.feeRepository.page(pagination).defaultSort([defaultSortDate, defaultSortName]).parameter("startDate", startDate).parameter("endDate", endDate).readAll();
+    const query = new PaginatedQuery<Fee>();
+    query.defaultSort = [defaultSortDate, defaultSortName];
+    query.pagination = pagination;
+    query.addParameter("startDate", startDate);
+    query.addParameter("endDate", endDate);
+
+    return this.feeApi.readAll(query);
   }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.feePaymentRepository.create(data).pipe(map(r => r.content));
+    return this.feeApi.pay(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Fee): Observable<Fee> {
-    return this.feeRepository.id(id).update(data).pipe(map(r => r.content));
+    return this.feeApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.feeRepository.id(id).delete().pipe(map(r => r.content));
+    return this.feeApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Fee> {
-    return this.feeRepository.id(id).readOne().pipe(map(r => r.content));
+    return this.feeApi.readById(id).pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
-    const sort: Sort<Member> = new Sort<Member>('name');
-    return this.memberRepository.page({ page }).sort([sort]).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.sort = [new Sort<Member>('name')];
+    query.page = page;
+
+    return this.memberApi.readAll(query);
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.memberRepository.id(id).readOne().pipe(map(r => r.content));
+    // return this.feeApi.member().readById(id).pipe(map(r => r.content));
+    return this.memberApi.readById(id).pipe(map(r => r.content));
   }
 
 }

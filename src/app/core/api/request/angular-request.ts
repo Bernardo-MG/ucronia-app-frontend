@@ -1,17 +1,11 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { FailureResponse } from '../models/failure-response';
-import { PaginationRequest } from '../models/pagination-request';
-import { Sort } from '../models/sort';
-import { HttpOperations } from './http-operations';
+import { Request } from './request';
 
-export class AngularHttpOperations implements HttpOperations {
+export class AngularRequest implements Request {
 
   private _route = '';
-
-  private _body: any | undefined = undefined;
-
-  private _defaultSort: Sort<any>[] | undefined = undefined;
 
   protected options: {
     params?: HttpParams
@@ -22,9 +16,9 @@ export class AngularHttpOperations implements HttpOperations {
     private rootUrl: string
   ) { }
 
-  public create<T>(): Observable<T> {
+  public create<T>(body: any): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.post<T>(finalUrl, this._body, this.options)
+    return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -32,16 +26,15 @@ export class AngularHttpOperations implements HttpOperations {
 
   public read<T>(): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    this.applyDefaultSort();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.handleError)
       );
   }
 
-  public update<T>(): Observable<T> {
+  public update<T>(body: any): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.put<T>(finalUrl, this._body, this.options)
+    return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.handleError)
       );
@@ -55,25 +48,19 @@ export class AngularHttpOperations implements HttpOperations {
       );
   }
 
-  public body(body: any): AngularHttpOperations {
-    this._body = body;
-
-    return this;
-  }
-
-  public route(route: string): AngularHttpOperations {
+  public route(route: string): AngularRequest {
     this._route = route;
 
     return this;
   }
 
-  public appendRoute(route: string): AngularHttpOperations {
+  public appendRoute(route: string): AngularRequest {
     this._route = `${this._route}${route}`;
 
     return this;
   }
 
-  public parameter(name: string, value: any): AngularHttpOperations {
+  public parameter(name: string, value: any): AngularRequest {
     let params: HttpParams;
 
     if (value) {
@@ -82,57 +69,6 @@ export class AngularHttpOperations implements HttpOperations {
       params = params.append(name, value);
 
       this.options = { params: params };
-    }
-
-    return this;
-  }
-
-  public sort(sort: Sort<any>[] | undefined): AngularHttpOperations {
-    let params: HttpParams;
-
-    if (sort) {
-      params = this.getHttpParams();
-
-      for (let i = 0; i < sort.length; i += 1) {
-        const fieldSort = sort[i];
-        params = params.append('sort', `${String(fieldSort.property)},${fieldSort.order}`);
-      }
-
-      this.options = { params: params };
-    }
-
-    return this;
-  }
-
-  public defaultSort(sort: Sort<any>[] | undefined): AngularHttpOperations {
-    this._defaultSort = sort;
-
-    return this;
-  }
-
-  public page(pagination: PaginationRequest | undefined): AngularHttpOperations {
-    let params: HttpParams;
-    let paged: boolean;
-
-    if (pagination) {
-      params = this.getHttpParams();
-
-      paged = false;
-      if (pagination.page) {
-        // Pages start at 0
-        params = params.set('page', pagination.page - 1);
-        paged = true;
-      }
-      if (pagination.size) {
-        params = params.set('size', pagination.size);
-        paged = true;
-      }
-
-      if (paged) {
-        this.options = { params: params };
-      }
-
-      this.sort(pagination.sort);
     }
 
     return this;
@@ -177,12 +113,6 @@ export class AngularHttpOperations implements HttpOperations {
 
   private getFinalUrl(route: string) {
     return `${this.rootUrl}${route}`;
-  }
-
-  private applyDefaultSort() {
-    if (!this.getHttpParams().has('sort')) {
-      this.sort(this._defaultSort);
-    }
   }
 
 }
