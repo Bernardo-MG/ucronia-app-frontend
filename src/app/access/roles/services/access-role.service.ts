@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AccessApiClient } from '@app/core/api/client/access-api-client';
+import { ActionApi } from '@app/access/api/action-api';
+import { ResourceApi } from '@app/access/api/resource-api';
+import { RoleApi } from '@app/access/api/role-api';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
@@ -13,8 +16,14 @@ import { map, Observable } from 'rxjs';
 @Injectable()
 export class AccessRoleService {
 
+  private actionApi = new ActionApi(this.http);
+
+  private resourceApi = new ResourceApi(this.http);
+
+  private roleApi = new RoleApi(this.http);
+
   constructor(
-    private client: AccessApiClient
+    private http: HttpClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
@@ -25,7 +34,7 @@ export class AccessRoleService {
     query.defaultSort = [defaultSort];
     query.pagination = pagination;
 
-    return this.client.role().readAll(query);
+    return this.roleApi.readAll(query);
   }
 
   public getPermissions(id: number, page: number): Observable<PaginatedResponse<Permission[]>> {
@@ -36,7 +45,7 @@ export class AccessRoleService {
     query.defaultSort = [sortResource, sortAction];
     query.page = page;
 
-    return this.client.rolePermissions(id).readAll(query);
+    return this.roleApi.readPermissions(id, query);
   }
 
   public getActionSelection(page: number): Observable<PaginatedResponse<Action[]>> {
@@ -46,7 +55,7 @@ export class AccessRoleService {
     query.sort = [sort];
     query.page = page;
 
-    return this.client.action().readAll(query);
+    return this.actionApi.readAll(query);
   }
 
   public getResourceSelection(page: number): Observable<PaginatedResponse<Resource[]>> {
@@ -56,37 +65,31 @@ export class AccessRoleService {
     query.sort = [sort];
     query.page = page;
 
-    return this.client.resource().readAll(query);
+    return this.resourceApi.readAll(query);
   }
 
   public create(data: Role): Observable<Role> {
-    return this.client.role().create(data).pipe(map(r => r.content));
+    return this.roleApi.create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Role): Observable<Role> {
-    return this.client.role().updateById(id, data).pipe(map(r => r.content));
+    return this.roleApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.role().deleteById(id).pipe(map(r => r.content));
+    return this.roleApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Role> {
-    return this.client.role().readById(id).pipe(map(r => r.content));
+    return this.roleApi.readById(id).pipe(map(r => r.content));
   }
 
   public addPermission(id: number, resource: number, action: number): Observable<Permission> {
-    return this.client.rolePermissions(id).update({
-      resourceId: resource, actionId: action,
-      roleId: 0,
-      role: '',
-      resource: '',
-      action: ''
-    }).pipe(map(r => r.content));
+    return this.roleApi.updatePermission(id, resource, action).pipe(map(r => r.content));
   }
 
   public removePermission(id: number, resource: number, action: number): Observable<boolean> {
-    return this.client.rolePermission(id, resource, action).delete().pipe(map(r => r.content));
+    return this.roleApi.removePermission(id, resource, action).pipe(map(r => r.content));
   }
 
 }
