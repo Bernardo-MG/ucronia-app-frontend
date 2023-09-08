@@ -15,11 +15,11 @@ export class TransactionCalendarService {
   ) { }
 
   public getCalendar(year: number, month: number): Observable<Transaction[]> {
-    return this.transactionApi.calendar(year, month).pipe(map(r => r.content));
+    return this.transactionApi.calendarMonth(year, month).pipe(map(r => r.content));
   }
 
   public getRange(): Observable<TransactionCalendarRange> {
-    return this.transactionApi.range().pipe(map(r => r.content));
+    return this.transactionApi.calendarRange().pipe(map(r => r.content));
   }
 
 }

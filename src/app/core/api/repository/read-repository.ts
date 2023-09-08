@@ -14,6 +14,26 @@ export class ReadRepository<T> {
   public readAll(query: PaginatedQuery<T>): Observable<PaginatedResponse<T[]>> {
     const request = this.requestProvider();
 
+    this.applyQuery(request, query);
+
+    return request.read();
+  }
+
+
+  public readOne(): Observable<ApiResponse<T>> {
+    const request = this.requestProvider();
+
+    return request.read();
+  }
+
+  public readById(id: number): Observable<ApiResponse<T>> {
+    const request = this.requestProvider();
+
+    request.appendRoute(`/${id}`);
+    return request.read();
+  }
+
+  protected applyQuery(request: Request, query: PaginatedQuery<any>) {
     // Sort
     if (query.sort.length > 0) {
       this.applySort(query.sort, request);
@@ -28,21 +48,6 @@ export class ReadRepository<T> {
         request.parameter(key, value);
       }
     }
-
-    return request.read();
-  }
-
-  public readOne(): Observable<ApiResponse<T>> {
-    const request = this.requestProvider();
-
-    return request.read();
-  }
-
-  public readById(id: number): Observable<ApiResponse<T>> {
-    const request = this.requestProvider();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
   }
 
   private applySort(sort: Sort<T>[], request: Request) {

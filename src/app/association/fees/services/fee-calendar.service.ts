@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
+import { FeeApi } from '@app/core/api/client/fee-api';
 import { Sort } from '@app/core/api/models/sort';
 import { PaginatedQuery } from '@app/core/api/request/paginated-query';
 import { map, Observable } from 'rxjs';
@@ -12,8 +13,10 @@ export class FeeCalendarService {
 
   private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
 
+  private feeApi = new FeeApi(this.http);
+
   constructor(
-    private client: AssociationApiClient
+    private http: HttpClient
   ) { }
 
   public getCalendar(year: number, onlyActive: boolean): Observable<FeeCalendarRow[]> {
@@ -21,17 +24,14 @@ export class FeeCalendarService {
     query.sort = [new Sort<UserFeeCalendar>("name")];
     query.addParameter("onlyActive", onlyActive);
 
-    return this.client.feeCalendar()
-      .year(year)
-      .readAll(query)
+    return this.feeApi.calendarYear(year, query)
       .pipe(map(r => r.content))
       .pipe(map(data => this.toCalendar(data)));
   }
 
   public getRange(): Observable<FeeCalendarRange> {
-    return this.client.feeCalendar()
-      .range()
-      .readOne()
+    return this.feeApi
+      .calendarRange()
       .pipe(map(r => r.content));
   }
 

@@ -15,7 +15,7 @@ export class TransactionApi extends CrudRepository<Transaction> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/transaction'))
   }
 
-  public calendar(year: number, month: number): Observable<ApiResponse<Transaction[]>> {
+  public calendarMonth(year: number, month: number): Observable<ApiResponse<Transaction[]>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/calendar/${year}/${month}`);
@@ -23,7 +23,7 @@ export class TransactionApi extends CrudRepository<Transaction> {
     return request.read();
   }
 
-  public range(): Observable<ApiResponse<TransactionCalendarRange>> {
+  public calendarRange(): Observable<ApiResponse<TransactionCalendarRange>> {
     const request = this.requestProvider();
 
     request.appendRoute("/calendar/range");
