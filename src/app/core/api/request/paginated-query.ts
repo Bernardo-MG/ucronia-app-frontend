@@ -20,9 +20,7 @@ export class PaginatedQuery<T> {
   public set pagination(pagination: PaginationRequest | undefined) {
     if (pagination) {
       if (pagination.page) {
-        // Pages start at 0
-        // TODO: Handle before reaching this point
-        this.page = pagination.page - 1;
+        this.page = pagination.page;
       }
       if (pagination.size) {
         this.size = pagination.size;

@@ -69,7 +69,8 @@ export class FeePayComponent implements OnInit {
 
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
-    this.service.getMembers(page).subscribe({
+    // TODO: The page correction should be done automatically
+    this.service.getMembers(page - 1).subscribe({
       next: response => {
         this.members = response.content;
         this.membersPage = response.page + 1;
