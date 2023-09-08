@@ -14,7 +14,7 @@ export class PaginatedQuery<T> {
   }
 
   public set page(page: number) {
-    this.parameters['page'] = page;
+    this.parameters['page'] = page - 1;
   }
 
   public set pagination(pagination: PaginationRequest | undefined) {

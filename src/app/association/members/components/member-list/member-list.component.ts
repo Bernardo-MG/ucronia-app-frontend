@@ -51,7 +51,7 @@ export class MemberListComponent implements OnInit {
       next: page => {
         this.members = page.content;
 
-        this.totalPages = page.totalPages - 1;
+        this.totalPages = page.totalPages;
         // Reactivate view
         this.waiting = false;
       },
