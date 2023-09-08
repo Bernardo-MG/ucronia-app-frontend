@@ -1,6 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Member } from '@app/association/models/member';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
+import { MemberApi } from '@app/core/api/client/member-api';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
@@ -10,8 +11,10 @@ import { map, Observable } from 'rxjs';
 @Injectable()
 export class MemberService {
 
+  private memberApi = new MemberApi(this.http);
+
   constructor(
-    private client: AssociationApiClient
+    private http: HttpClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
@@ -24,23 +27,23 @@ export class MemberService {
     query.defaultSort = [defaultSortName, defaultSortSurname];
     query.pagination = pagination;
 
-    return this.client.member().readAll(query);
+    return this.memberApi.readAll(query);
   }
 
   public create(data: Member): Observable<Member> {
-    return this.client.member().create(data).pipe(map(r => r.content));
+    return this.memberApi.create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.client.member().updateById(id, data).pipe(map(r => r.content));
+    return this.memberApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.member().deleteById(id).pipe(map(r => r.content));
+    return this.memberApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.client.member().readById(id).pipe(map(r => r.content));
+    return this.memberApi.readById(id).pipe(map(r => r.content));
   }
 
 }
