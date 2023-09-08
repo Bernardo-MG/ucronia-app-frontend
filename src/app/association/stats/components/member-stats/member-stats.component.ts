@@ -50,7 +50,7 @@ export class MemberStatsComponent implements OnInit {
       next: page => {
         this.members = page.content;
 
-        this.totalPages = page.totalPages;
+        this.totalPages = page.totalPages - 1;
 
         this.activeCount = page.totalElements;
         // Reactivate view

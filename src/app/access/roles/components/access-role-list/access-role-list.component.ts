@@ -61,7 +61,7 @@ export class AccessRoleListComponent implements OnInit {
 
         this.roles = page.content;
 
-        this.totalPages = page.totalPages;
+        this.totalPages = page.totalPages - 1;
         // Reactivate view
         this.waiting = false;
       },

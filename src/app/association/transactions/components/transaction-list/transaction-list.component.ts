@@ -86,7 +86,7 @@ export class TransactionListComponent implements OnInit {
       next: page => {
         this.transactions = page.content;
 
-        this.totalPages = page.totalPages;
+        this.totalPages = page.totalPages - 1;
         // Reactivate view
         this.waiting = false;
       },

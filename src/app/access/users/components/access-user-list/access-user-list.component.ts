@@ -62,7 +62,7 @@ export class AccessUserListComponent implements OnInit {
       next: page => {
         this.users = page.content;
 
-        this.totalPages = page.totalPages;
+        this.totalPages = page.totalPages - 1;
         // Reactivate view
         this.waiting = false;
       },

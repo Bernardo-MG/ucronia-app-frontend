@@ -55,7 +55,7 @@ export class FeeListComponent implements OnInit {
       next: page => {
         this.fees = page.content;
 
-        this.totalPages = page.totalPages;
+        this.totalPages = page.totalPages - 1;
         // Reactivate view
         this.waiting = false;
       },
