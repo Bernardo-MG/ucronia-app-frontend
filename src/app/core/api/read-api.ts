@@ -1,9 +1,9 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
-import { PaginatedQuery } from "../models/paginated-query";
-import { PaginatedResponse } from "../models/paginated-response";
-import { Sort } from "../models/sort";
-import { Request } from "./request";
+import { PaginatedQuery } from "./models/paginated-query";
+import { PaginatedResponse } from "./models/paginated-response";
+import { Sort } from "./models/sort";
+import { Request } from "./request/request";
 
 export class ReadApi<T> {
 

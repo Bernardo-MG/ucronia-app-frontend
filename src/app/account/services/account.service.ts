@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { AngularRequest } from '@app/core/api/repository/angular-request';
-import { Request } from '@app/core/api/repository/request';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PasswordChange } from '../models/password-change';

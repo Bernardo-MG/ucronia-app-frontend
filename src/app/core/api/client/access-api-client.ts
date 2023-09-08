@@ -6,8 +6,8 @@ import { Resource } from "@app/core/authentication/models/resource";
 import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
-import { AngularRequest } from "../repository/angular-request";
-import { CrudApi } from "../repository/crud-api";
+import { AngularRequest } from "../request/angular-request";
+import { CrudApi } from "../crud-api";
 import { RelationshipRepository } from "../repository/relationship-repository";
 
 @Injectable({

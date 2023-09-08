@@ -1,7 +1,7 @@
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
 import { ReadApi } from "./read-api";
-import { Request } from "./request";
+import { Request } from "./request/request";
 
 export class CrudApi<T> extends ReadApi<T> {
 
