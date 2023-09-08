@@ -11,7 +11,6 @@ import { AngularRequest } from "../repository/angular-request";
 import { CrudRepository } from "../repository/crud-repository";
 import { ReadRepository } from "../repository/read-repository";
 import { FeeCalendarClient } from "./fee-calendar-client";
-import { TransactionCalendarClient } from "./transaction-calendar-client";
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +22,6 @@ export class AssociationApiClient {
   private feeCalendarRepository = new FeeCalendarClient(() => new AngularRequest(this.http, environment.apiUrl + '/fee/calendar'));
 
   private feePaymentRepository = new CrudRepository<FeePayment>(() => new AngularRequest(this.http, environment.apiUrl + '/fee'));
-
-  private transactionCalendarRepository = new TransactionCalendarClient(() => new AngularRequest(this.http, environment.apiUrl + '/transaction/calendar'));
 
   private transactionRangeRepository = new ReadRepository<TransactionCalendarRange>(() => new AngularRequest(this.http, environment.apiUrl + '/transaction/range'));
 
@@ -44,10 +41,6 @@ export class AssociationApiClient {
 
   public feePayment(data: FeePayment): Observable<ApiResponse<FeePayment>> {
     return this.feePaymentRepository.create(data);
-  }
-
-  public transactionCalendar(): TransactionCalendarClient {
-    return this.transactionCalendarRepository;
   }
 
   public transactionRange(): ReadRepository<TransactionCalendarRange> {
