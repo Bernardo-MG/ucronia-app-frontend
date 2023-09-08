@@ -3,12 +3,12 @@ import { FeePayment } from "@app/association/fees/models/fee-payment";
 import { Fee } from "@app/association/models/fee";
 import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
 import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
+import { ApiResponse } from "@app/core/api/models/api-response";
+import { PaginatedQuery } from "@app/core/api/models/paginated-query";
+import { AngularRequest } from "@app/core/api/repository/angular-request";
+import { CrudApi } from "@app/core/api/repository/crud-api";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { ApiResponse } from "../models/api-response";
-import { PaginatedQuery } from "../models/paginated-query";
-import { AngularRequest } from "../repository/angular-request";
-import { CrudApi } from "../repository/crud-api";
 
 export class FeeApi extends CrudApi<Fee> {
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigurationApi } from '@app/core/api/client/configuration-api';
+import { ConfigurationApi } from '@app/association/api/configuration-api';
 import { Observable, map } from 'rxjs';
 import { AssociationConfiguration } from '../models/association-configuration';
 

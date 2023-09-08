@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BalanceApi } from '@app/association/api/balance-api';
+import { MemberApi } from '@app/association/api/member-api';
 import { Balance } from '@app/association/models/balance';
 import { Member } from '@app/association/models/member';
-import { BalanceApi } from '@app/core/api/client/balance-api';
-import { MemberApi } from '@app/core/api/client/member-api';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable({

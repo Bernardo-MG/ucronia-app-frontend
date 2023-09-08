@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FeeApi } from '@app/association/api/fee-api';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
-import { FeeApi } from '@app/core/api/client/fee-api';
-import { Sort } from '@app/core/api/models/sort';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
+import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 
 @Injectable()

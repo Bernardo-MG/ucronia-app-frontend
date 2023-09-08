@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MemberApi } from '@app/association/api/member-api';
 import { Member } from '@app/association/models/member';
-import { MemberApi } from '@app/core/api/client/member-api';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { map, Observable } from 'rxjs';
 
 @Injectable()

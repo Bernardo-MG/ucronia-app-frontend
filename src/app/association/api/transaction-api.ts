@@ -1,11 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Transaction } from "@app/association/models/transaction";
 import { TransactionCalendarRange } from "@app/association/models/transaction-calendar-range";
+import { ApiResponse } from "@app/core/api/models/api-response";
+import { AngularRequest } from "@app/core/api/repository/angular-request";
+import { CrudApi } from "@app/core/api/repository/crud-api";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { ApiResponse } from "../models/api-response";
-import { AngularRequest } from "../repository/angular-request";
-import { CrudApi } from "../repository/crud-api";
 
 export class TransactionApi extends CrudApi<Transaction> {
 

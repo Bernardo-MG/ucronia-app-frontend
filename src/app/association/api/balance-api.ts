@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Balance } from "@app/association/models/balance";
 import { environment } from "environments/environment";
-import { AngularRequest } from "../repository/angular-request";
-import { ReadApi } from "../repository/read-api";
+import { AngularRequest } from "../../core/api/repository/angular-request";
+import { ReadApi } from "../../core/api/repository/read-api";
 
 export class BalanceApi extends ReadApi<Balance> {
 
