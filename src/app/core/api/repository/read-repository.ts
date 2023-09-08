@@ -22,9 +22,10 @@ export class ReadRepository<T> {
     }
 
     // Other parameters
-    for (var key in query.parameters) {
-      if (query.parameters.hasOwnProperty(key)) {
-        request.parameter(key, query.parameters[key]);
+    for (const key in query.parameters) {
+      const value = query.parameters[key];
+      if (value) {
+        request.parameter(key, value);
       }
     }
 
