@@ -4,7 +4,6 @@ import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedQuery } from "@app/core/api/models/paginated-query";
 import { PaginatedResponse } from "@app/core/api/models/paginated-response";
 import { AngularRequest } from "@app/core/api/request/angular-request";
-import { Permission } from "@app/core/authentication/models/permission";
 import { Role } from "@app/core/authentication/models/role";
 import { User } from "@app/core/authentication/models/user";
 import { environment } from "environments/environment";
