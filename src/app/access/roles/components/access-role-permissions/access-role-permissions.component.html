@@ -15,7 +15,8 @@
       <ng-template ngFor let-privilege [ngForOf]="permissions">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemovePermission(privilege)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
+            <button [disabled]="!deletable" (click)="onRemovePermission(privilege)" type="button"
+              class="btn btn-link link-dark" role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>
@@ -26,8 +27,7 @@
     </tbody>
   </table>
   <!-- Permissions navigation -->
-  <pagination-navigation [current]="permissionsPageInfo.page" [pages]="permissionsPageInfo.totalPages"
-    (goTo)="loadPermissions($event)">
+  <pagination-navigation [current]="permissionsPage" [pages]="permissionsTotalPages" (goTo)="loadPermissions($event)">
   </pagination-navigation>
 </layout-waiting-wrapper>
 <!-- Edit privileges -->
