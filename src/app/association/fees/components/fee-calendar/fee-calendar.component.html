@@ -1,27 +1,24 @@
 <!-- Controls -->
 <div class="row text-center">
   <!-- To previous year button -->
-  <div class="col-4">
+  <div class="col-2 offset-md-5 d-flex align-items-center">
     <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link"
       (click)="onGoPrevious()" [class.disabled]="!isAbleToGoPrevious()" [disabled]="!isAbleToGoPrevious()"
       [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
       <icon-backward></icon-backward>
     </button>
-  </div>
-  <!-- Current year -->
-  <div class="col-4">
-    <div class="dropdown">
+    <!-- Current year -->
+    <div class="dropdown px-2">
       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         {{year}}
       </button>
       <ul class="dropdown-menu">
-        <li *ngFor="let selectionYear of years"><button class="dropdown-item" (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
+        <li *ngFor="let selectionYear of years"><button class="dropdown-item"
+            (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
       </ul>
     </div>
-  </div>
-  <!-- To next year button -->
-  <div class="col-4">
-    <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link float-end" (click)="onGoNext()"
+    <!-- To next year button -->
+    <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
       [class.disabled]="!isAbleToGoNext()" [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()"
       aria-label="Next year">
       <icon-forward></icon-forward>
