@@ -32,12 +32,14 @@ export class FeeCalendarComponent implements OnChanges {
   }
 
   public onGoPrevious() {
-    this.year = this.years[this.index - 1];
+    this.index = this.index - 1;
+    this.year = this.years[this.index];
     this.yearChange.emit(this.year);
   }
 
   public onGoNext() {
-    this.year = this.years[this.index + 1];
+    this.index = this.index + 1;
+    this.year = this.years[this.index];
     this.yearChange.emit(this.year);
   }
 
