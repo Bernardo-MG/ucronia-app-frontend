@@ -17,7 +17,7 @@ export class FeeCalendarComponent implements OnChanges {
 
   private index = 0;
 
-  public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
+  public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   public feesTable: FeeCalendarRow[] = [];
 
