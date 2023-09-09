@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
-import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
-import { ActivatedRoute, Router } from '@angular/router';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { YearRouteObserver } from '../../observer/year-route-observer';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 
 @Component({
