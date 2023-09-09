@@ -4,7 +4,7 @@
   <div class="col-4">
     <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link"
       (click)="onGoPrevious()" [class.disabled]="!isAbleToGoPrevious()" [disabled]="!isAbleToGoPrevious()"
-      [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous page">
+      [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
       <icon-backward></icon-backward>
     </button>
   </div>
@@ -23,7 +23,7 @@
   <div class="col-4">
     <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link float-end" (click)="onGoNext()"
       [class.disabled]="!isAbleToGoNext()" [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()"
-      aria-label="Previous page">
+      aria-label="Next year">
       <icon-forward></icon-forward>
     </button>
   </div>

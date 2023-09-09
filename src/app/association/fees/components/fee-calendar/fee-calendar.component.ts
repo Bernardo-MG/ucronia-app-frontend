@@ -44,7 +44,7 @@ export class FeeCalendarComponent implements OnChanges {
   }
 
   public isAbleToGoNext() {
-    return ((this.index + 1) < this.years.length);
+    return ((this.index >= 0) && ((this.index + 1) < this.years.length));
   }
 
   public isAbleToGoPrevious() {
