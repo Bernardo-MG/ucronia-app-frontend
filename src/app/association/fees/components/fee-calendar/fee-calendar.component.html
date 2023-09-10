@@ -1,13 +1,13 @@
 <!-- Controls -->
 <div class="row text-center">
   <!-- To previous year button -->
-  <div class="col-2 offset-md-5 d-flex align-items-center">
+  <div class="col-2 offset-5 d-flex align-items-center">
     <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link"
       (click)="onGoPrevious()" [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Previous year">
       <icon-backward></icon-backward>
     </button>
     <!-- Current year -->
-    <div class="dropdown px-2">
+    <div class="dropdown px-5">
       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
         [disabled]="waiting" [attr.aria-disabled]="waiting">
         {{year}}
