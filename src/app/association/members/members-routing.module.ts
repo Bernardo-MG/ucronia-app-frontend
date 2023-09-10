@@ -11,6 +11,7 @@ const routes: Routes = [
     path: '',
     component: PaddedFrameComponent,
     children: [
+      { path: '', component: MemberListComponent },
       { path: 'list', component: MemberListComponent },
       { path: 'create', component: MemberCreateComponent },
       { path: ':id', component: MemberDetailsComponent }

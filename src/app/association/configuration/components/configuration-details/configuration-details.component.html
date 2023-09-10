@@ -1,0 +1,10 @@
+<layout-article title="Configuration">
+  <layout-edition-wrapper [editable]="isAbleToEdit()" [editing]="editing" (startEditing)="onStartEditing()">
+    <!-- Form -->
+    <assoc-configuration-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+      [failures]="failures" (save)="onSave($event)">
+    </assoc-configuration-form>
+    <!-- Info -->
+    <assoc-configuration-info id="info" [data]="data"></assoc-configuration-info>
+  </layout-edition-wrapper>
+</layout-article>

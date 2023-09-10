@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FeeMonth } from '@app/association/models/fee-month';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 
@@ -6,36 +6,48 @@ import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
   selector: 'assoc-fee-calendar',
   templateUrl: './fee-calendar.component.html'
 })
-export class FeeCalendarComponent {
+export class FeeCalendarComponent implements OnChanges {
 
   @Input() public year = 0;
 
-  @Input() start = 0;
-
-  @Input() end = 0;
+  @Input() public years: number[] = [];
 
   @Input() public rows: UserFeeCalendar[] = [];
 
   @Output() public yearChange = new EventEmitter<number>();
 
-  public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
+  private index = 0;
+
+  public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['year']) || (changes['years'])) {
+      this.index = this.years.indexOf(this.year);
+    }
+  }
+
+  public onGoTo(selectedYear: number) {
+    this.yearChange.emit(selectedYear);
+  }
 
   public onGoPrevious() {
-    this.year = this.year - 1;
+    this.index = this.index - 1;
+    this.year = this.years[this.index];
     this.yearChange.emit(this.year);
   }
 
   public onGoNext() {
-    this.year = this.year + 1;
+    this.index = this.index + 1;
+    this.year = this.years[this.index];
     this.yearChange.emit(this.year);
   }
 
   public isAbleToGoNext() {
-    return (this.year < this.end);
+    return ((this.index >= 0) && ((this.index + 1) < this.years.length));
   }
 
   public isAbleToGoPrevious() {
-    return (this.year > this.start);
+    return (this.index > 0);
   }
 
   public hasMonth(months: FeeMonth[], month: number): boolean {
