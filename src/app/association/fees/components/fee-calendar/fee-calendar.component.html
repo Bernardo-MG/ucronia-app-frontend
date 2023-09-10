@@ -48,7 +48,7 @@
       <ng-template ngFor let-row [ngForOf]="rows">
         <tr [ngClass]="{ 'table-warning': row.active === false }">
           <td>
-            {{row.name}}
+            {{row.memberName}}
           </td>
           <!-- Month fees -->
           <ng-template ngFor let-month [ngForOf]="months">
