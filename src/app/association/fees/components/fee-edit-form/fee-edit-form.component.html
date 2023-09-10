@@ -1,10 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
-  <div class="row">
-    <div class="col-sm-4">
-      <label for="memberNameInput" id="memberNameLabel" class="col-sm-2 col-form-label">Member</label>
-    </div>
-    <div class="col-sm-7">
+  <div class="row mb-2">
+    <label for="memberNameInput" id="memberNameLabel" class="col-sm-2 col-form-label">Member</label>
+    <div class="col-sm-10">
       <input type="text" id="memberNameInput" formControlName="memberName" readonly="true" class="form-control"
         aria-describedby="memberNameLabel">
     </div>
