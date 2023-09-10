@@ -9,10 +9,10 @@ import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 
 @Component({
-  selector: 'assoc-fee-calendar-info',
-  templateUrl: './fee-calendar-info.component.html'
+  selector: 'assoc-fee-frontpage',
+  templateUrl: './fee-frontpage.component.html'
 })
-export class FeeCalendarInfoComponent implements OnInit {
+export class FeeFrontpageComponent implements OnInit {
 
   /**
    * Loading flag. Shows the loading visual cue.

@@ -10,7 +10,7 @@ export class FeeLayoutComponent {
   public menus: Menu[] = [
     new Menu(
       [
-        { title: 'Calendar', path: '/fees/calendar' },
+        { title: 'Calendar', path: '/fees' },
         { title: 'Pay', path: '/fees/pay' }
       ]
     )

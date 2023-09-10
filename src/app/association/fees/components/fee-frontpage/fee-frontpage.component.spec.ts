@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
-import { FeeCalendarInfoComponent } from './fee-calendar-info.component';
+import { FeeFrontpageComponent } from './fee-frontpage.component';
 
-describe('FeeCalendarInfoComponent', () => {
-  let component: FeeCalendarInfoComponent;
-  let fixture: ComponentFixture<FeeCalendarInfoComponent>;
+describe('FeeFrontpageComponent', () => {
+  let component: FeeFrontpageComponent;
+  let fixture: ComponentFixture<FeeFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('FeeCalendarInfoComponent', () => {
         ReactiveFormsModule
       ],
       declarations: [
-        FeeCalendarInfoComponent,
+        FeeFrontpageComponent,
         FeeCalendarComponent
       ],
       providers: [
@@ -30,7 +30,7 @@ describe('FeeCalendarInfoComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeCalendarInfoComponent);
+    fixture = TestBed.createComponent(FeeFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
