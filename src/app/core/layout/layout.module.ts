@@ -7,7 +7,6 @@ import { AccountMenuComponent } from './components/account-dropdown/account-drop
 import { CenteredFrameComponent } from './components/centered-frame/centered-frame.component';
 import { NavbarBodyComponent } from './components/navbar-body/navbar-body.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { PaddedFrameComponent } from './components/padded-frame/padded-frame.component';
 
 
 
@@ -16,8 +15,7 @@ import { PaddedFrameComponent } from './components/padded-frame/padded-frame.com
     NavbarComponent,
     NavbarBodyComponent,
     CenteredFrameComponent,
-    AccountMenuComponent,
-    PaddedFrameComponent
+    AccountMenuComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +25,7 @@ import { PaddedFrameComponent } from './components/padded-frame/padded-frame.com
   ],
   exports: [
     NavbarBodyComponent,
-    CenteredFrameComponent,
-    PaddedFrameComponent
+    CenteredFrameComponent
   ]
 })
 export class LayoutModule { }

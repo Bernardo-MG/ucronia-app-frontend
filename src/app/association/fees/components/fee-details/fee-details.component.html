@@ -1,7 +1,4 @@
-<article class="p-4">
-  <header>
-    <h1 class="border-bottom">Edit fee</h1>
-  </header>
+<layout-article title="Edit fee">
   <div class="col-md-6 offset-md-3">
     <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
@@ -13,4 +10,4 @@
       <assoc-fee-info id="info" [data]="data"></assoc-fee-info>
     </layout-edition-wrapper>
   </div>
-</article>
+</layout-article>
