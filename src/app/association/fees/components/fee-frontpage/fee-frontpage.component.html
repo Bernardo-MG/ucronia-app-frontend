@@ -25,8 +25,10 @@
           </div>
           <!-- Calendar -->
           <div class="col-12">
-            <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
-              (yearChange)="onYearChange($event)"></assoc-fee-calendar>
+            <div class="overflow-auto">
+              <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
+                (yearChange)="onYearChange($event)"></assoc-fee-calendar>
+            </div>
           </div>
         </div>
       </div>
