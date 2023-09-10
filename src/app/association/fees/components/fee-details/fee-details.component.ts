@@ -22,8 +22,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
    */
   public saving = false;
 
-  public readingMembers = false;
-
   public editing = false;
 
   public editable = false;
@@ -32,17 +30,9 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public error = false;
 
-  public members: Member[] = [];
-
   public member = new Member();
 
   public data = new Fee();
-
-  public selectingMember = false;
-
-  public membersPage = 0;
-
-  public membersTotalPages = 0;
 
   public failures: { [key: string]: Failure[] } = {};
 
@@ -68,9 +58,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
     });
-
-    // Get members
-    this.onGoToMembersPage(0);
   }
 
   public onSave(toSave: Fee): void {
@@ -102,15 +89,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     });
   }
 
-  public onRequestMember() {
-    this.selectingMember = true;
-  }
-
-  public onSelectMember(member: Member) {
-    this.member = member;
-    this.selectingMember = false;
-  }
-
   public onStartEditing(): void {
     this.editing = true;
   }
@@ -123,14 +101,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
   }
 
-  public onGoToMembersPage(page: number) {
-    this.service.getMembers(page).subscribe(response => {
-      this.members = response.content;
-      this.membersPage = response.page + 1;
-      this.membersTotalPages = response.totalPages;
-    });
-  }
-
   private load(id: string | null): void {
     if (id) {
       this.reading = true;
@@ -139,7 +109,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         .subscribe({
           next: d => {
             this.data = d;
-            this.service.getOneMember(this.data.memberId).subscribe(d => this.onSelectMember(d));
+            this.service.getOneMember(this.data.memberId).subscribe(m => this.member = m);
             this.reading = false;
           },
           error: error => {
@@ -148,10 +118,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
           }
         });
     }
-  }
-
-  public onCancelSelectMember() {
-    this.selectingMember = false;
   }
 
   public isEditable() {
