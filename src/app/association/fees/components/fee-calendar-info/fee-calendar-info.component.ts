@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
-import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 
@@ -19,7 +19,7 @@ export class FeeCalendarInfoComponent implements OnInit {
 
   public onlyActive = true;
 
-  public rows: FeeCalendarRow[] = [];
+  public rows: UserFeeCalendar[] = [];
 
   // TODO: What happens if this date is not in the range?
   public year = new Date().getFullYear();

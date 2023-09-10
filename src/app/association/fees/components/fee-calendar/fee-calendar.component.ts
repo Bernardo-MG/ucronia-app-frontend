@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { FeeMonth } from '@app/association/models/fee-month';
+import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 
 @Component({
   selector: 'assoc-fee-calendar',
@@ -13,13 +14,11 @@ export class FeeCalendarComponent {
 
   @Input() end = 0;
 
-  @Input() public rows: FeeCalendarRow[] = [];
+  @Input() public rows: UserFeeCalendar[] = [];
 
   @Output() public yearChange = new EventEmitter<number>();
 
   public months: number[] = Array(12).fill(0).map((x, i) => i + 1);
-
-  public feesTable: FeeCalendarRow[] = []
 
   public onGoPrevious() {
     this.year = this.year - 1;
@@ -37,6 +36,14 @@ export class FeeCalendarComponent {
 
   public isAbleToGoPrevious() {
     return (this.year > this.start);
+  }
+
+  public hasMonth(months: FeeMonth[], month: number): boolean {
+    return months.find(m => m.month === month) !== undefined;
+  }
+
+  public getMonth(months: FeeMonth[], month: number): FeeMonth | undefined {
+    return months.find(m => m.month === month);
   }
 
 }

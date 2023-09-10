@@ -47,9 +47,9 @@
           {{row.name}}
         </td>
         <!-- Month fees -->
-        <ng-template ngFor let-column [ngForOf]="row.months">
+        <ng-template ngFor let-month [ngForOf]="months">
           <td>
-            <ng-container [ngSwitch]="column">
+            <ng-container *ngIf="hasMonth(row.months, month)" [ngSwitch]="getMonth(row.months, month)?.paid">
               <ng-container *ngSwitchCase="true">
                 <!-- Paid month -->
                 <icon-success class="text-success"></icon-success>
