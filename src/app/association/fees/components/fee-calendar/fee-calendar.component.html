@@ -1,32 +1,30 @@
 <!-- Controls -->
-<div class="row text-center">
-  <!-- To previous year button -->
-  <div class="col-2 offset-md-5 d-flex align-items-center">
-    <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link"
-      (click)="onGoPrevious()" [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Previous year">
-      <icon-backward></icon-backward>
+<!-- To previous year button -->
+<div class="d-flex justify-content-center pb-2">
+  <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link" (click)="onGoPrevious()"
+    [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Previous year">
+    <icon-backward></icon-backward>
+  </button>
+  <!-- Current year -->
+  <div class="dropdown px-5">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+      [disabled]="waiting" [attr.aria-disabled]="waiting">
+      {{year}}
     </button>
-    <!-- Current year -->
-    <div class="dropdown px-2">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-        [disabled]="waiting" [attr.aria-disabled]="waiting">
-        {{year}}
-      </button>
-      <ul class="dropdown-menu">
-        <li *ngFor="let selectionYear of years"><button class="dropdown-item"
-            (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
-      </ul>
-    </div>
-    <!-- To next year button -->
-    <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
-      [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Next year">
-      <icon-forward></icon-forward>
-    </button>
+    <ul class="dropdown-menu">
+      <li *ngFor="let selectionYear of years"><button class="dropdown-item" [class.active]="selectionYear === year"
+          (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
+    </ul>
   </div>
+  <!-- To next year button -->
+  <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
+    [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Next year">
+    <icon-forward></icon-forward>
+  </button>
 </div>
 <layout-waiting-wrapper [waiting]="waiting">
   <!-- Table -->
-  <table class="table table-hover">
+  <table class="table table-sm table-hover">
     <thead class="thead-light">
       <tr>
         <th scope="col">Member</th>
@@ -44,17 +42,17 @@
         <th scope="col">12</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
       <ng-template ngFor let-row [ngForOf]="rows">
         <tr [ngClass]="{ 'table-warning': row.active === false }">
           <td>
-            {{row.name}}
+            {{row.memberName}}
           </td>
           <!-- Month fees -->
           <ng-template ngFor let-month [ngForOf]="months">
             <td>
               <ng-container *ngIf="hasMonth(row.months, month)" [ngSwitch]="getMonth(row.months, month)?.paid">
-                <button type="button" class="btn btn-secondary" role="button"
+                <button type="button" class="btn btn-secondary btn-sm" role="button"
                   routerLink="/fees/{{getMonth(row.months, month)?.feeId}}">
                   <ng-container *ngSwitchCase="true">
                     <!-- Paid month -->

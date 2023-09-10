@@ -1,7 +1,7 @@
 import { FeeMonth } from "./fee-month";
 
 export class UserFeeCalendar {
-  name = '';
+  memberName = '';
   memberId = -1;
   active = false;
   year = -1;

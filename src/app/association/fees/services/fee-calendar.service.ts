@@ -10,8 +10,6 @@ import { map, Observable } from 'rxjs';
 @Injectable()
 export class FeeCalendarService {
 
-  private months: number[] = Array(12).fill(0).map((x, i) => i + 1);
-
   private feeApi = new FeeApi(this.http);
 
   constructor(
@@ -20,7 +18,7 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, onlyActive: boolean): Observable<UserFeeCalendar[]> {
     const query = new PaginatedQuery<UserFeeCalendar>();
-    query.sort = [new Sort<UserFeeCalendar>("name")];
+    query.sort = [new Sort<UserFeeCalendar>("memberName")];
     query.addParameter("onlyActive", onlyActive);
 
     return this.feeApi.calendarYear(year, query)
