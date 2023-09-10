@@ -54,7 +54,7 @@
           <ng-template ngFor let-month [ngForOf]="months">
             <td>
               <ng-container *ngIf="hasMonth(row.months, month)" [ngSwitch]="getMonth(row.months, month)?.paid">
-                <button type="button" class="btn btn-secondary" role="button"
+                <button type="button" class="btn btn-secondary btn-sm" role="button"
                   routerLink="/fees/{{getMonth(row.months, month)?.feeId}}">
                   <ng-container *ngSwitchCase="true">
                     <!-- Paid month -->

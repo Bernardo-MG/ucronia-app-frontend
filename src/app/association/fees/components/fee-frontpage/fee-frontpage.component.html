@@ -24,13 +24,11 @@
             </div>
           </div>
           <!-- Calendar -->
-          <div class="col-12">
-            <div class="overflow-auto">
-              <div class="pt-2">
+          <div class="col-md-6 offset-md-3">
+              <div class="p-2">
                 <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
                   (yearChange)="onYearChange($event)"></assoc-fee-calendar>
               </div>
-            </div>
           </div>
         </div>
       </div>
