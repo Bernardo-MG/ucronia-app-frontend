@@ -3,35 +3,37 @@
   <div class="col-12 pb-2">
     <div class="card">
       <div class="card-body">
-        <div class="form-check form-switch">
-          <div class="row">
-            <div class="col-2">
-              Filters
-            </div>
-            <div class="col-10">
+        <div class="row">
+          <div class="col-2">
+            Filters
+          </div>
+          <div class="col-2">
+            <div class="form-check form-switch">
               <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive" [disabled]="readingCalendar"
                 [attr.aria-disabled]="readingCalendar" (change)="onFilterActiveMembers($event.target)"
                 class="form-check-input">
               <label for="onlyActive" class="form-check-label">Only active</label>
             </div>
           </div>
+          <div class="col-2 offset-6">
+            <!-- Add button -->
+            <div *ngIf="createPermission" class="d-grid">
+              <a routerLink="/fees/pay" type="button" class="btn btn-primary" role="button">
+                <icon-add></icon-add>
+              </a>
+            </div>
+          </div>
           <!-- Calendar -->
           <div class="col-12">
             <div class="overflow-auto">
-              <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
-                (yearChange)="onYearChange($event)"></assoc-fee-calendar>
+              <div class="pt-2">
+                <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
+                  (yearChange)="onYearChange($event)"></assoc-fee-calendar>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <footer *ngIf="createPermission">
-        <!-- Add button -->
-        <div class="d-grid px-2 pb-2 gap-2">
-          <a routerLink="/fees/pay" type="button" class="btn btn-primary" role="button">
-            <icon-add></icon-add>
-          </a>
-        </div>
-      </footer>
     </div>
   </div>
 </layout-article>
