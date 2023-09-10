@@ -9,7 +9,7 @@ export class ResourceApi extends ReadApi<Role> {
   constructor(
     private http: HttpClient
   ) {
-    super(() => new AngularRequest(this.http, environment.apiUrl + '/resource'))
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/security/resource'))
   }
 
 }

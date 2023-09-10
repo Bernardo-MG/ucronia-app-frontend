@@ -9,7 +9,7 @@ export class ActionApi extends CrudApi<Role> {
   constructor(
     private http: HttpClient
   ) {
-    super(() => new AngularRequest(this.http, environment.apiUrl + '/action'))
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/security/action'))
   }
 
 }

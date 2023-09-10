@@ -14,7 +14,7 @@ export class UserApi extends CrudApi<User> {
   constructor(
     private http: HttpClient
   ) {
-    super(() => new AngularRequest(this.http, environment.apiUrl + '/user'))
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/security/user'))
   }
 
   public readRoles(user: number, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
