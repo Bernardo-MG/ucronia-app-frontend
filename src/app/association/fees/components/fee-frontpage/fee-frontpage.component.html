@@ -1,4 +1,12 @@
 <layout-article title="Fees">
+  <div *ngIf="createPermission" class="row">
+    <!-- Add button -->
+    <div class="col-sm-2 d-grid gap-2 pb-2">
+      <a routerLink="/fees/pay" type="button" class="btn" role="button">
+        <icon-add></icon-add>
+      </a>
+    </div>
+  </div>
   <!-- Filter -->
   <div class="col-12 pb-2">
     <div class="card">

@@ -12,7 +12,6 @@ import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.com
 import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
 import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
-import { FeeLayoutComponent } from './components/fee-layout/fee-layout.component';
 import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './components/fee-pay/fee-pay.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
@@ -31,8 +30,7 @@ import { FeeService } from './services/fee.service';
     MemberSelectionComponent,
     FeeEditFormComponent,
     FeePayFormComponent,
-    FeeInfoComponent,
-    FeeLayoutComponent
+    FeeInfoComponent
   ],
   imports: [
     CommonModule,

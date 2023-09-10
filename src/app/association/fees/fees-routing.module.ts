@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeeFrontpageComponent } from './components/fee-frontpage/fee-frontpage.component';
+import { PaddedFrameComponent } from '@app/core/layout/components/padded-frame/padded-frame.component';
 import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
-import { FeeLayoutComponent } from './components/fee-layout/fee-layout.component';
+import { FeeFrontpageComponent } from './components/fee-frontpage/fee-frontpage.component';
 import { FeePayComponent } from './components/fee-pay/fee-pay.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: FeeLayoutComponent,
+    component: PaddedFrameComponent,
     children: [
       { path: '', component: FeeFrontpageComponent },
       { path: 'pay', component: FeePayComponent },
