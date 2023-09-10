@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { FeeMonth } from '@app/association/models/fee-month';
+import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 
 @Component({
   selector: 'assoc-fee-calendar',
@@ -7,19 +8,19 @@ import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
 })
 export class FeeCalendarComponent implements OnChanges {
 
+  @Input() public waiting = false;
+
   @Input() public year = 0;
 
   @Input() public years: number[] = [];
 
-  @Input() public rows: FeeCalendarRow[] = [];
+  @Input() public rows: UserFeeCalendar[] = [];
 
   @Output() public yearChange = new EventEmitter<number>();
 
   private index = 0;
 
   public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  public feesTable: FeeCalendarRow[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['year']) || (changes['years'])) {
@@ -49,6 +50,14 @@ export class FeeCalendarComponent implements OnChanges {
 
   public isAbleToGoPrevious() {
     return (this.index > 0);
+  }
+
+  public hasMonth(months: FeeMonth[], month: number): boolean {
+    return months.find(m => m.month === month) !== undefined;
+  }
+
+  public getMonth(months: FeeMonth[], month: number): FeeMonth | undefined {
+    return months.find(m => m.month === month);
   }
 
 }

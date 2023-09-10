@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
-import { FeeCalendarRow } from '@app/association/models/fee-calendar-row';
+import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { YearRouteObserver } from '../../observer/year-route-observer';
@@ -23,7 +23,7 @@ export class FeeCalendarInfoComponent implements OnInit {
 
   public onlyActive = true;
 
-  public rows: FeeCalendarRow[] = [];
+  public rows: UserFeeCalendar[] = [];
 
   public year = new Date().getFullYear();
 

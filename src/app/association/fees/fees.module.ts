@@ -13,10 +13,8 @@ import { FeeDetailsComponent } from './components/fee-details/fee-details.compon
 import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeLayoutComponent } from './components/fee-layout/fee-layout.component';
-import { FeeListComponent } from './components/fee-list/fee-list.component';
 import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './components/fee-pay/fee-pay.component';
-import { FeeSelectionListComponent } from './components/fee-selection-list/fee-selection-list.component';
 import { MemberSelectionComponent } from './components/member-selection/member-selection.component';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
@@ -29,14 +27,12 @@ import { FeeService } from './services/fee.service';
     FeeCalendarComponent,
     FeeCalendarInfoComponent,
     FeePayComponent,
-    FeeListComponent,
     FeeDetailsComponent,
     MemberSelectionComponent,
     FeeEditFormComponent,
     FeePayFormComponent,
     FeeInfoComponent,
-    FeeLayoutComponent,
-    FeeSelectionListComponent
+    FeeLayoutComponent
   ],
   imports: [
     CommonModule,

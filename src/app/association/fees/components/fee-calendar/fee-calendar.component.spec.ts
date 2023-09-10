@@ -1,7 +1,8 @@
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarComponent } from './fee-calendar.component';
-import { SimpleChange } from '@angular/core';
 
 describe('FeeCalendarComponent', () => {
   let component: FeeCalendarComponent;
@@ -10,7 +11,8 @@ describe('FeeCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
+        IconsModule,
+        LayoutModule
       ],
       declarations: [
         FeeCalendarComponent

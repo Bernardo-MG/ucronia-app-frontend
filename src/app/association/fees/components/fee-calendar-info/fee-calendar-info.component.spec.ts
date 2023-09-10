@@ -1,8 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 import { FeeCalendarInfoComponent } from './fee-calendar-info.component';
 
 describe('FeeCalendarInfoComponent', () => {
@@ -14,10 +16,13 @@ describe('FeeCalendarInfoComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule
+        LayoutModule,
+        FormsModule,
+        ReactiveFormsModule
       ],
       declarations: [
-        FeeCalendarInfoComponent
+        FeeCalendarInfoComponent,
+        FeeCalendarComponent
       ],
       providers: [
         FeeCalendarService
