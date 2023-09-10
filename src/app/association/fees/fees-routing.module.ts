@@ -6,14 +6,9 @@ import { FeePayComponent } from './components/fee-pay/fee-pay.component';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      { path: '', component: FeeFrontpageComponent },
-      { path: 'pay', component: FeePayComponent },
-      { path: ':id', component: FeeDetailsComponent }
-    ]
-  }
+  { path: '', component: FeeFrontpageComponent },
+  { path: 'pay', component: FeePayComponent },
+  { path: ':id', component: FeeDetailsComponent }
 ];
 
 @NgModule({

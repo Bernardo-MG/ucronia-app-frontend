@@ -6,14 +6,9 @@ import { AccessUserListComponent } from './components/access-user-list/access-us
 
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      { path: '', component: AccessUserListComponent },
-      { path: 'create', component: AccessUserCreateComponent },
-      { path: ':id', component: AccessUserDetailsComponent }
-    ]
-  }
+  { path: '', component: AccessUserListComponent },
+  { path: 'create', component: AccessUserCreateComponent },
+  { path: ':id', component: AccessUserDetailsComponent }
 ];
 
 @NgModule({

@@ -5,14 +5,9 @@ import { AccessRoleDetailsComponent } from './components/access-role-details/acc
 import { AccessRoleListComponent } from './components/access-role-list/access-role-list.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    children: [
-      { path: '', component: AccessRoleListComponent },
-      { path: 'create', component: AccessRoleCreateComponent },
-      { path: ':id', component: AccessRoleDetailsComponent }
-    ]
-  }
+  { path: '', component: AccessRoleListComponent },
+  { path: 'create', component: AccessRoleCreateComponent },
+  { path: ':id', component: AccessRoleDetailsComponent }
 ];
 
 @NgModule({
