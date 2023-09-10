@@ -54,14 +54,17 @@
         <ng-template ngFor let-month [ngForOf]="months">
           <td>
             <ng-container *ngIf="hasMonth(row.months, month)" [ngSwitch]="getMonth(row.months, month)?.paid">
-              <ng-container *ngSwitchCase="true">
-                <!-- Paid month -->
-                <icon-success class="text-success"></icon-success>
-              </ng-container>
-              <ng-container *ngSwitchCase="false">
-                <!-- Not paid month -->
-                <icon-failure class="text-danger"></icon-failure>
-              </ng-container>
+              <button type="button" class="btn btn-secondary" role="button"
+                routerLink="/fees/{{getMonth(row.months, month)?.feeId}}">
+                <ng-container *ngSwitchCase="true">
+                  <!-- Paid month -->
+                  <icon-success class="text-success"></icon-success>
+                </ng-container>
+                <ng-container *ngSwitchCase="false">
+                  <!-- Not paid month -->
+                  <icon-failure class="text-danger"></icon-failure>
+                </ng-container>
+              </button>
             </ng-container>
           </td>
         </ng-template>
