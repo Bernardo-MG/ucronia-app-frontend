@@ -1,11 +1,16 @@
-<layout-article title="Edit fee">
-  <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
-    (delete)="onDelete()" (startEditing)="onStartEditing()">
-    <!-- Form -->
-    <assoc-fee-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
-      (save)="onSave($event)">
-    </assoc-fee-edit-form>
-    <!-- Info -->
-    <assoc-fee-info id="info" [data]="data"></assoc-fee-info>
-  </layout-edition-wrapper>
-</layout-article>
+<article>
+  <header>
+    <h1 class="border-bottom">Edit fee</h1>
+  </header>
+  <div class="col-md-6 offset-md-3">
+    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
+      <!-- Form -->
+      <assoc-fee-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+        [failures]="failures" (save)="onSave($event)">
+      </assoc-fee-edit-form>
+      <!-- Info -->
+      <assoc-fee-info id="info" [data]="data"></assoc-fee-info>
+    </layout-edition-wrapper>
+  </div>
+</article>
