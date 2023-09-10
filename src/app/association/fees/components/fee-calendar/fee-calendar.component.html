@@ -13,7 +13,7 @@
         {{year}}
       </button>
       <ul class="dropdown-menu">
-        <li *ngFor="let selectionYear of years"><button class="dropdown-item"
+        <li *ngFor="let selectionYear of years"><button class="dropdown-item" [class.active]="selectionYear === year"
             (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
       </ul>
     </div>
