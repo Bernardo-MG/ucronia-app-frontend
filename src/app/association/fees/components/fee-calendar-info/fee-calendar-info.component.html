@@ -1,21 +1,19 @@
 <layout-article title="Fees calendar">
-  <layout-waiting-wrapper [waiting]="readingCalendar">
-    <!-- Filter -->
-    <div class="col-12 pb-2">
-      <div class="card">
-        <div class="card-body">
-          <div class="form-check">
-            <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive"
-              (change)="onFilterActiveMembers($event.target)" class="form-check-input">
-            <label for="onlyActive" class="form-check-label">Only active</label>
-          </div>
+  <!-- Filter -->
+  <div class="col-12 pb-2">
+    <div class="card">
+      <div class="card-body">
+        <div class="form-check">
+          <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive" [disabled]="readingCalendar" [attr.aria-disabled]="readingCalendar"
+            (change)="onFilterActiveMembers($event.target)" class="form-check-input">
+          <label for="onlyActive" class="form-check-label">Only active</label>
         </div>
       </div>
     </div>
+  </div>
     <!-- Calendar -->
     <div class="col-12">
-      <assoc-fee-calendar [rows]="rows" [years]="range.years" [year]="year"
+      <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
         (yearChange)="onYearChange($event)"></assoc-fee-calendar>
     </div>
-  </layout-waiting-wrapper>
 </layout-article>

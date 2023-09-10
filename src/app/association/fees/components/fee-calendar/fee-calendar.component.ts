@@ -8,6 +8,8 @@ import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 })
 export class FeeCalendarComponent implements OnChanges {
 
+  @Input() public waiting = false;
+
   @Input() public year = 0;
 
   @Input() public years: number[] = [];
