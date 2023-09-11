@@ -54,7 +54,11 @@ export class MemberFrontpageComponent implements OnInit {
 
   public onFilterActiveMembers(event: any) {
     this.onlyActive = event.checked;
-    this.routeApiActuator.setPage(0);
+    if (this.routePaginationObserver.subject.getValue()?.page === 0) {
+      this.load({ page: 0 });
+    } else {
+      this.routeApiActuator.setPage(0);
+    }
   }
 
   private load(pagination: PaginationRequest | undefined) {
