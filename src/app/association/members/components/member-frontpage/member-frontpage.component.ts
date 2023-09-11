@@ -5,8 +5,9 @@ import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { Active } from '../../models/active';
+import { ActiveRouteObserver } from '../../observer/active-route-observer';
 import { MemberService } from '../../services/member.service';
 
 @Component({
@@ -30,9 +31,11 @@ export class MemberFrontpageComponent implements OnInit {
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
-  private routeApiActuator: RouteApiActuator;
+  private routeActuator;
 
-  public addIcon = faPlus;
+  private activeRouteObserver;
+
+  private currentPage = 0;
 
   constructor(
     private service: MemberService,
@@ -41,7 +44,8 @@ export class MemberFrontpageComponent implements OnInit {
     private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
-    this.routeApiActuator = new RouteApiActuator(router);
+    this.routeActuator = new RouteParametersActuator(router);
+    this.activeRouteObserver = new ActiveRouteObserver(route);
   }
 
   public ngOnInit(): void {
@@ -49,25 +53,30 @@ export class MemberFrontpageComponent implements OnInit {
     this.createPermission = this.authService.hasPermission("member", "create");
 
     this.routePaginationObserver.subject.subscribe(p => {
-      this.load(p);
+      if (!this.readingMembers) {
+        this.load(p);
+      }
+    });
+    this.activeRouteObserver.subject.subscribe(p => {
+      if ((!this.readingMembers) && (this.currentPage === 0)) {
+        this.load({ page: 0 });
+      }
     });
   }
 
   public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
     this.activeFilter = (Active[active] as Active);
-    if (this.routePaginationObserver.subject.getValue()?.page === 0) {
-      this.load({ page: 0 });
-    } else {
-      this.routeApiActuator.setPage(0);
-    }
+    this.routeActuator.addParameters({ active: this.activeFilter });
   }
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingMembers = true;
+
     this.service.getAll(pagination, this.activeFilter).subscribe({
       next: page => {
         this.members = page.content;
 
+        this.currentPage = page.page;
         this.totalPages = page.totalPages;
         // Reactivate view
         this.readingMembers = false;
