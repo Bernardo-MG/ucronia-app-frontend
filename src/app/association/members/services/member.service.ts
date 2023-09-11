@@ -17,7 +17,7 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: PaginationRequest | undefined, onlyActive: boolean): Observable<PaginatedResponse<Member[]>> {
     const defaultSortName = new Sort<Member>('name');
     defaultSortName.order = 'asc';
     const defaultSortSurname = new Sort<Member>('surname');
@@ -26,6 +26,9 @@ export class MemberService {
     const query = new PaginatedQuery<Member>();
     query.defaultSort = [defaultSortName, defaultSortSurname];
     query.pagination = pagination;
+    if (onlyActive) {
+      query.addParameter("active", onlyActive);
+    }
 
     return this.memberApi.readAll(query);
   }

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MemberService } from '../../services/member.service';
+import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'assoc-member-frontpage',
@@ -28,14 +29,18 @@ export class MemberFrontpageComponent implements OnInit {
 
   private routePaginationObserver: PaginationRequestRouteObserver;
 
+  private routeApiActuator: RouteApiActuator;
+
   public addIcon = faPlus;
 
   constructor(
     private service: MemberService,
     route: ActivatedRoute,
+    router: Router,
     private authService: AuthService
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
+    this.routeApiActuator = new RouteApiActuator(router);
   }
 
   public ngOnInit(): void {
@@ -49,11 +54,12 @@ export class MemberFrontpageComponent implements OnInit {
 
   public onFilterActiveMembers(event: any) {
     this.onlyActive = event.checked;
+    this.routeApiActuator.setPage(0);
   }
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingMembers = true;
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(pagination, this.onlyActive).subscribe({
       next: page => {
         this.members = page.content;
 
