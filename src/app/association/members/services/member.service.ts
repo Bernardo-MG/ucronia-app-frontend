@@ -7,6 +7,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
+import { Active } from '../models/active';
 
 @Injectable()
 export class MemberService {
@@ -17,7 +18,7 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined, onlyActive: boolean): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
     const defaultSortName = new Sort<Member>('name');
     defaultSortName.order = 'asc';
     const defaultSortSurname = new Sort<Member>('surname');
@@ -26,8 +27,10 @@ export class MemberService {
     const query = new PaginatedQuery<Member>();
     query.defaultSort = [defaultSortName, defaultSortSurname];
     query.pagination = pagination;
-    if (onlyActive) {
-      query.addParameter("active", onlyActive);
+    if (active === Active.Active) {
+      query.addParameter("active", true);
+    } else if (active === Active.Inactive) {
+      query.addParameter("active", 'false');
     }
 
     return this.memberApi.readAll(query);

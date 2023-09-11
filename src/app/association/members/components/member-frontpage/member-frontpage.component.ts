@@ -24,9 +24,7 @@ export class MemberFrontpageComponent implements OnInit {
 
   public createPermission = false;
 
-  public onlyActive = true;
-
-  public activeFilter = Active.All;
+  public activeFilter = Active.Active;
 
   public totalPages = 0;
 
@@ -55,8 +53,8 @@ export class MemberFrontpageComponent implements OnInit {
     });
   }
 
-  public onFilterActiveMembers(event: any) {
-    this.onlyActive = event.checked;
+  public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
+    this.activeFilter = (Active[active] as Active);
     if (this.routePaginationObserver.subject.getValue()?.page === 0) {
       this.load({ page: 0 });
     } else {
@@ -64,13 +62,9 @@ export class MemberFrontpageComponent implements OnInit {
     }
   }
 
-  public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
-    this.activeFilter = (Active[active] as Active);
-  }
-
   private load(pagination: PaginationRequest | undefined) {
     this.readingMembers = true;
-    this.service.getAll(pagination, this.onlyActive).subscribe({
+    this.service.getAll(pagination, this.activeFilter).subscribe({
       next: page => {
         this.members = page.content;
 
