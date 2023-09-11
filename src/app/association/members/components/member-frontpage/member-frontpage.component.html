@@ -1,23 +1,55 @@
 <layout-article title="Members">
-  <!-- Add -->
-  <div *ngIf="createPermission" class="row">
-    <!-- Add button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <a routerLink="/members/create" type="button" class="btn btn-link link-dark" role="button">
-        <fa-icon [icon]="addIcon"></fa-icon>
-      </a>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="pb-2">
+        <!-- Add -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- Add button -->
+              <div *ngIf="createPermission" class="d-grid">
+                <a routerLink="/members/register" type="button" class="btn btn-primary" role="button">
+                  <icon-add></icon-add>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Filter -->
+      <div class="pb-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                Filters
+              </div>
+              <div class="col-8">
+                <div class="form-check form-switch">
+                  <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive" [disabled]="readingMembers"
+                    [attr.aria-disabled]="readingMembers" (change)="onFilterActiveMembers($event.target)"
+                    class="form-check-input">
+                  <label for="onlyActive" class="form-check-label">Only active</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <layout-waiting-wrapper [waiting]="readingMembers">
+        <div class="card">
+          <div class="card-body">
+            <assoc-member-selection-list [members]="members">
+            </assoc-member-selection-list>
+          </div>
+          <div class="d-flex justify-content-center mt-1">
+            <pagination-route-navigation [totalPages]="totalPages">
+            </pagination-route-navigation>
+          </div>
+        </div>
+      </layout-waiting-wrapper>
     </div>
   </div>
-  <layout-waiting-wrapper [waiting]="waiting">
-    <div class="card">
-      <div class="card-body">
-        <assoc-member-selection-list [members]="members">
-        </assoc-member-selection-list>
-      </div>
-      <div class="d-flex justify-content-center mt-1">
-        <pagination-route-navigation [totalPages]="totalPages">
-        </pagination-route-navigation>
-      </div>
-    </div>
-  </layout-waiting-wrapper>
 </layout-article>

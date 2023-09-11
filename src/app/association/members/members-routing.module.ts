@@ -7,7 +7,7 @@ import { MemberFrontpageComponent } from './components/member-frontpage/member-f
 
 const routes: Routes = [
   { path: '', component: MemberFrontpageComponent },
-  { path: 'create', component: MemberCreateComponent },
+  { path: 'register', component: MemberCreateComponent },
   { path: ':id', component: MemberDetailsComponent }
 ];
 

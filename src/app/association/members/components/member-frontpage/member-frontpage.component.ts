@@ -18,9 +18,11 @@ export class MemberFrontpageComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public readingMembers = false;
 
   public createPermission = false;
+
+  public onlyActive = true;
 
   public totalPages = 0;
 
@@ -45,19 +47,23 @@ export class MemberFrontpageComponent implements OnInit {
     });
   }
 
+  public onFilterActiveMembers(event: any) {
+    this.onlyActive = event.checked;
+  }
+
   private load(pagination: PaginationRequest | undefined) {
-    this.waiting = true;
+    this.readingMembers = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.members = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view
-        this.waiting = false;
+        this.readingMembers = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingMembers = false;
       }
     });
   }
