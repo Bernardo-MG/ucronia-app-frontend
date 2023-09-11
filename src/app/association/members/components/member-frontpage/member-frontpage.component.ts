@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Active } from '../../models/active';
 import { MemberService } from '../../services/member.service';
-import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 
 @Component({
   selector: 'assoc-member-frontpage',
@@ -24,6 +25,8 @@ export class MemberFrontpageComponent implements OnInit {
   public createPermission = false;
 
   public onlyActive = true;
+
+  public activeFilter = Active.All;
 
   public totalPages = 0;
 
@@ -59,6 +62,10 @@ export class MemberFrontpageComponent implements OnInit {
     } else {
       this.routeApiActuator.setPage(0);
     }
+  }
+
+  public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
+    this.activeFilter = (Active[active] as Active);
   }
 
   private load(pagination: PaginationRequest | undefined) {
