@@ -9,6 +9,8 @@ import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-
 import { Active } from '../../models/active';
 import { ActiveRouteObserver } from '../../observer/active-route-observer';
 import { MemberService } from '../../services/member.service';
+import { PaginationRequestParametersParser } from '@app/shared/utils/api/route/observer/parser/pagination-request-parameters-parser';
+import { ActiveParametersParser } from '../../observer/active-parameters-parser';
 
 @Component({
   selector: 'assoc-member-frontpage',
@@ -29,42 +31,40 @@ export class MemberFrontpageComponent implements OnInit {
 
   public totalPages = 0;
 
-  private routePaginationObserver: PaginationRequestRouteObserver;
-
   private routeActuator;
-
-  private activeRouteObserver;
 
   constructor(
     private service: MemberService,
-    route: ActivatedRoute,
+    private route: ActivatedRoute,
     router: Router,
     private authService: AuthService
   ) {
-    this.routePaginationObserver = new PaginationRequestRouteObserver(route);
     this.routeActuator = new RouteParametersActuator(router);
-    this.activeRouteObserver = new ActiveRouteObserver(route);
   }
 
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authService.hasPermission("member", "create");
 
-    this.routePaginationObserver.subject.subscribe(p => {
-      if (!this.readingMembers) {
-        this.load(p);
+    // TODO: both observers should be merged into a single component
+    const paginationParser = new PaginationRequestParametersParser();
+    const activeParser = new ActiveParametersParser();
+    this.route.queryParamMap.subscribe(params => {
+      const active = activeParser.parse(params);
+      if (active) {
+        this.activeFilter = active as Active;
+      } else {
+        this.activeFilter = Active.Active;
       }
-    });
-    this.activeRouteObserver.subject.subscribe(p => {
-      if (!this.readingMembers) {
-        this.load({ page: 0 });
-      }
+
+      const pagination = paginationParser.parse(params);
+      this.load(pagination);
     });
   }
 
   public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
     this.activeFilter = (Active[active] as Active);
-    this.routeActuator.addParameters({ active: this.activeFilter });
+    this.routeActuator.addParameters({ page: undefined, active: this.activeFilter });
   }
 
   private load(pagination: PaginationRequest | undefined) {
