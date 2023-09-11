@@ -8,10 +8,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'assoc-member-list',
-  templateUrl: './member-list.component.html'
+  selector: 'assoc-member-frontpage',
+  templateUrl: './member-frontpage.component.html'
 })
-export class MemberListComponent implements OnInit {
+export class MemberFrontpageComponent implements OnInit {
 
   public members: Member[] = [];
 
