@@ -11,7 +11,6 @@ export class PaginationRequestRouteObserver implements ParamsObserver<Pagination
   constructor(
     route: ActivatedRoute
   ) {
-    // FIXME: This is reacting to all changes in the route, not just pagination, when there is a pagination parameter
     this.wrappedObserver = new RouteParametersObserver(route, new PaginationRequestParametersParser());
   }
 

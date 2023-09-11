@@ -35,8 +35,6 @@ export class MemberFrontpageComponent implements OnInit {
 
   private activeRouteObserver;
 
-  private currentPage = 0;
-
   constructor(
     private service: MemberService,
     route: ActivatedRoute,
@@ -58,7 +56,7 @@ export class MemberFrontpageComponent implements OnInit {
       }
     });
     this.activeRouteObserver.subject.subscribe(p => {
-      if ((!this.readingMembers) && (this.currentPage === 0)) {
+      if (!this.readingMembers) {
         this.load({ page: 0 });
       }
     });
@@ -76,7 +74,6 @@ export class MemberFrontpageComponent implements OnInit {
       next: page => {
         this.members = page.content;
 
-        this.currentPage = page.page;
         this.totalPages = page.totalPages;
         // Reactivate view
         this.readingMembers = false;

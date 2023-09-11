@@ -2,6 +2,7 @@ import { ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { ParametersParser } from "./parameters-parser";
 import { ParamsObserver } from "./params-observer";
+import * as lodash from 'lodash';
 
 /**
  * Observes the route parameters, updating the stored data when it changes. This data is stored in a BehaviorSubject.
@@ -25,7 +26,7 @@ export class RouteParametersObserver<T> implements ParamsObserver<T> {
       const data = parser.parse(params);
 
       // Updates subject
-      if (this.subject.value !== data) {
+      if (!lodash.isEqual(this.subject.value, data)) {
         this.subject.next(data);
       }
     });
