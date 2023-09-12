@@ -26,11 +26,11 @@ export class TransactionFrontpageComponent {
 
   public month = 0;
 
+  public transactions: Transaction[] = [];
+
   private routeActuator: RouteParametersActuator;
 
   private dateObserver: RouteParametersObserver<Date>;
-
-  public transactions: Transaction[] = [];
 
   constructor(
     private service: TransactionCalendarService,
