@@ -1,5 +1,4 @@
 <layout-article title="Transactions calendar">
-  <full-calendar [options]="calendarOptions"></full-calendar>
   <layout-waiting-wrapper [waiting]="readingCalendar">
     <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [range]="range"
       (dateChange)="onDateChange($event)" (pickDate)="onPickDate($event)"></assoc-transaction-calendar>

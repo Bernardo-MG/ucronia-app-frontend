@@ -5,6 +5,8 @@ import { CalendarNote } from '../../models/calendar-note';
 import { CalendarWeek } from '../../models/calendar-week';
 import { Month } from '../../models/month';
 import { Day } from '../../models/day';
+import { CalendarOptions } from 'fullcalendar';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
   selector: 'shared-calendar-month',
@@ -31,6 +33,11 @@ export class CalendarMonthComponent implements OnChanges {
   @Output() public pickDate = new EventEmitter<Day>();
 
   public calendar: Calendar = new Calendar();
+
+  public calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin]
+  };
 
   public monthName = '';
 

@@ -8,8 +8,6 @@ import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
-import { CalendarOptions } from 'fullcalendar';
-import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
   selector: 'app-transaction-frontpage',
@@ -29,11 +27,6 @@ export class TransactionFrontpageComponent {
   public month = 0;
 
   public transactions: Transaction[] = [];
-
-  public calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin]
-  };
 
   private routeActuator: RouteParametersActuator;
 

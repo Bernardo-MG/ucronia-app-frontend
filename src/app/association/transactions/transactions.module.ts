@@ -7,7 +7,6 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FullCalendarModule } from '@fullcalendar/angular';
 import { TransactionCalendarComponent } from './components/transaction-calendar/transaction-calendar.component';
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
@@ -45,8 +44,7 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     PaginationModule,
     LayoutModule,
     FontAwesomeModule,
-    MenuModule,
-    FullCalendarModule
+    MenuModule
   ],
   providers: [
     TransactionService,
