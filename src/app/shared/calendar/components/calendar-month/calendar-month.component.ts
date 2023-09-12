@@ -5,10 +5,7 @@ import { CalendarNote } from '../../models/calendar-note';
 import { CalendarWeek } from '../../models/calendar-week';
 import { Month } from '../../models/month';
 import { Day } from '../../models/day';
-import { CalendarOptions } from 'fullcalendar';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calendar';
-import { isSameMinute, startOfDay } from 'date-fns';
 
 const colors: any = {
   red: {
