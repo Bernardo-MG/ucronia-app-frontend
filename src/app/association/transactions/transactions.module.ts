@@ -7,10 +7,12 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { TransactionCalendarComponent } from './components/transaction-calendar/transaction-calendar.component';
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { TransactionFrontpageComponent } from './components/transaction-frontpage/transaction-frontpage.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { TransactionLayoutComponent } from './components/transaction-layout/transaction-layout.component';
 import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
@@ -18,7 +20,6 @@ import { TransactionSelectionListComponent } from './components/transaction-sele
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
-import { TransactionFrontpageComponent } from './components/transaction-frontpage/transaction-frontpage.component';
 
 
 
@@ -44,7 +45,8 @@ import { TransactionFrontpageComponent } from './components/transaction-frontpag
     PaginationModule,
     LayoutModule,
     FontAwesomeModule,
-    MenuModule
+    MenuModule,
+    FullCalendarModule
   ],
   providers: [
     TransactionService,
