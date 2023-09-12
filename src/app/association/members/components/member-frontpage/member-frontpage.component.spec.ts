@@ -6,11 +6,11 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberService } from '../../services/member.service';
 import { MemberSelectionListComponent } from '../member-selection-list/member-selection-list.component';
-import { MemberListComponent } from './member-list.component';
+import { MemberFrontpageComponent } from './member-frontpage.component';
 
-describe('MemberListComponent', () => {
-  let component: MemberListComponent;
-  let fixture: ComponentFixture<MemberListComponent>;
+describe('MemberFrontpageComponent', () => {
+  let component: MemberFrontpageComponent;
+  let fixture: ComponentFixture<MemberFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('MemberListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        MemberListComponent,
+        MemberFrontpageComponent,
         MemberSelectionListComponent
       ],
       providers: [
@@ -31,7 +31,7 @@ describe('MemberListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberListComponent);
+    fixture = TestBed.createComponent(MemberFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

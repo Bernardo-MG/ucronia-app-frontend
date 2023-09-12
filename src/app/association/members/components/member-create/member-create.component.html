@@ -1,9 +1,11 @@
-<layout-article title="Create member">
-  <div class="card">
-    <div class="card-body">
-      <!-- Form -->
-      <assoc-member-create-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
-      </assoc-member-create-form>
+<layout-article title="Register member">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <!-- Form -->
+        <assoc-member-create-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+        </assoc-member-create-form>
+      </div>
     </div>
   </div>
 </layout-article>

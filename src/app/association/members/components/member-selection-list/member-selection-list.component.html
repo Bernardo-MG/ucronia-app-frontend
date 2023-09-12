@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let member of members; let rowIndex = index" role="button" routerLink="/members/{{member.id}}">
+    <tr *ngFor="let member of members; let rowIndex = index" [ngClass]="{ 'table-warning': member.active === false }" role="button" routerLink="/members/{{member.id}}">
       <!-- Cells -->
       <td>
         {{member.name}}

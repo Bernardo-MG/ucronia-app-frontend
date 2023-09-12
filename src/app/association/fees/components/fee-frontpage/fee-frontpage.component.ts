@@ -30,9 +30,9 @@ export class FeeFrontpageComponent implements OnInit {
 
   public year = new Date().getFullYear();
 
-  private routeActuator: RouteParametersActuator;
+  private routeActuator;
 
-  private routeObserver: RouteParametersObserver<number>;
+  private routeObserver;
 
   constructor(
     router: Router,
