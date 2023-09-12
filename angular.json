@@ -33,6 +33,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/angular-calendar/css/angular-calendar.css",
               "./node_modules/bootswatch/dist/materia/bootstrap.min.css"
             ],
             "scripts": [

@@ -1,3 +1,11 @@
+<mwl-calendar-month-view
+  [viewDate]="viewDate"
+  [events]="events"
+  [activeDayIsOpen]="true"
+  (beforeViewRender)="beforeMonthViewRender($event)"
+>
+</mwl-calendar-month-view>
+
 <full-calendar [options]="calendarOptions"></full-calendar>
 <div class="d-flex justify-content-between align-items-center mb-3">
   <button class="btn btn-primary" id="previousMonthButton" (click)="onGoPrevious()"

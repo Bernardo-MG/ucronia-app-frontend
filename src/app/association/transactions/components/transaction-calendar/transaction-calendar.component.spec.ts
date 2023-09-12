@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CalendarModule } from '@app/shared/calendar/calendar.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionCalendarComponent } from './transaction-calendar.component';
 
@@ -10,7 +10,7 @@ describe('TransactionCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        CalendarModule
+        ScheduleModule
       ],
       declarations: [
         TransactionCalendarComponent

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CalendarModule } from './calendar/calendar.module';
+import { ScheduleModule } from './calendar/calendar.module';
 import { IconsModule } from './icons/icons.module';
 import { LayoutModule } from './layout/layout.module';
 import { MenuModule } from './menu/menu.module';
@@ -14,7 +14,7 @@ import { FormModule } from './form/form.module';
     CommonModule,
     IconsModule,
     PaginationModule,
-    CalendarModule,
+    ScheduleModule,
     MenuModule,
     LayoutModule,
     FormModule
@@ -23,7 +23,7 @@ import { FormModule } from './form/form.module';
     CommonModule,
     IconsModule,
     PaginationModule,
-    CalendarModule,
+    ScheduleModule,
     MenuModule,
     LayoutModule,
     FormModule

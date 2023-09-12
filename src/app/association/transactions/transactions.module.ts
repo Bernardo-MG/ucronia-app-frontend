@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
-import { CalendarModule } from '@app/shared/calendar/calendar.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
@@ -40,7 +40,7 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    CalendarModule,
+    ScheduleModule,
     PaginationModule,
     LayoutModule,
     FontAwesomeModule,

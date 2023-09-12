@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { CalendarModule } from '@app/shared/calendar/calendar.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 import { TransactionCalendarComponent } from '../transaction-calendar/transaction-calendar.component';
@@ -18,7 +18,7 @@ describe('TransactionFrontpageComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         CoreModule,
-        CalendarModule,
+        ScheduleModule,
         LayoutModule
       ],
       declarations: [

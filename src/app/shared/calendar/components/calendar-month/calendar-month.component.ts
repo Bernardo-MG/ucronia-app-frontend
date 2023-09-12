@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Calendar } from '../../models/calendar';
 import { CalendarDay } from '../../models/calendar-day';
 import { CalendarNote } from '../../models/calendar-note';
@@ -7,12 +7,57 @@ import { Month } from '../../models/month';
 import { Day } from '../../models/day';
 import { CalendarOptions } from 'fullcalendar';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calendar';
+import { isSameMinute, startOfDay } from 'date-fns';
+
+const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3',
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF',
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA',
+  },
+};
 
 @Component({
   selector: 'shared-calendar-month',
   templateUrl: './calendar-month.component.html'
 })
 export class CalendarMonthComponent implements OnChanges {
+  viewDate: Date = new Date();
+
+  events: CalendarEvent<{ incrementsBadgeTotal: boolean }>[] = [
+    {
+      title: 'Increments badge total on the day cell',
+      color: colors.yellow,
+      start: new Date(),
+      meta: {
+        incrementsBadgeTotal: true,
+      },
+    },
+    {
+      title: 'Does not increment the badge total on the day cell',
+      color: colors.blue,
+      start: new Date(),
+      meta: {
+        incrementsBadgeTotal: false,
+      },
+    },
+  ];
+
+  beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach((day) => {
+      day.badgeTotal = day.events.filter(
+        (event) => event.meta.incrementsBadgeTotal
+      ).length;
+    });
+  }
 
   @Input() public notes: CalendarNote[] = [];
 
