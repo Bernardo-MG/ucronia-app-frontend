@@ -10,10 +10,10 @@ import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
-  selector: 'app-transaction-calendar-info',
-  templateUrl: './transaction-calendar-info.component.html'
+  selector: 'app-transaction-frontpage',
+  templateUrl: './transaction-frontpage.component.html'
 })
-export class TransactionCalendarInfoComponent {
+export class TransactionFrontpageComponent {
 
   /**
    * Loading flag.
