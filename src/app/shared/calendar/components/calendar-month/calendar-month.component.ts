@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { Day } from '../../models/day';
 import { Month } from '../../models/month';
 
 
@@ -17,13 +16,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public month = 0;
 
-  @Input() public startYear = 0;
-
-  @Input() public startMonth = 0;
-
-  @Input() public endYear = 0;
-
-  @Input() public endMonth = 0;
+  @Input() public months: Date[] = [];
 
   @Output() public dateChange = new EventEmitter<Month>();
 
@@ -31,17 +24,33 @@ export class CalendarMonthComponent implements OnChanges {
 
   public monthName = '';
 
-  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
   public viewDate: Date = new Date();
 
   public activeDayIsOpen: boolean = false;
+
+  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  private startYear = 0;
+
+  private startMonth = 0;
+
+  private endYear = 0;
+
+  private endMonth = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['year'] || changes['month'] || changes['notes']) {
       this.monthName = this.getMonthName(this.month);
       this.activeDayIsOpen = false;
       this.viewDate = new Date(this.year, this.month - 1, 1);
+    }
+    if (changes['months']) {
+      const startDate = this.months[0];
+      this.startYear = startDate.getFullYear();
+      this.startMonth = startDate.getMonth() + 1;
+      const endDate = this.months[this.months.length - 1];
+      this.endYear = endDate.getFullYear();
+      this.endMonth = endDate.getMonth() + 1;
     }
   }
 
@@ -72,12 +81,16 @@ export class CalendarMonthComponent implements OnChanges {
   public isAbleToGoNext() {
     let valid;
 
-    if (this.year == this.endYear) {
-      // In the same year
-      // Checks month
-      valid = (this.month < this.endMonth);
+    if (this.months.length > 0) {
+      if (this.year == this.endYear) {
+        // In the same year
+        // Checks month
+        valid = (this.month < this.endMonth);
+      } else {
+        valid = (this.year < this.endYear);
+      }
     } else {
-      valid = (this.year < this.endYear);
+      valid = false;
     }
 
     return valid;
@@ -86,12 +99,16 @@ export class CalendarMonthComponent implements OnChanges {
   public isAbleToGoPrevious() {
     let valid;
 
-    if (this.year == this.startYear) {
-      // In the same year
-      // Checks month
-      valid = (this.month > this.startMonth);
+    if (this.months.length > 0) {
+      if (this.year == this.startYear) {
+        // In the same year
+        // Checks month
+        valid = (this.month > this.startMonth);
+      } else {
+        valid = (this.year > this.startYear);
+      }
     } else {
-      valid = (this.year > this.startYear);
+      valid = false;
     }
 
     return valid;

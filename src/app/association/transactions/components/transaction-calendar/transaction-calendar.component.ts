@@ -16,7 +16,7 @@ export class TransactionCalendarComponent implements OnChanges {
 
   @Input() public month = 0;
 
-  @Input() public range = new TransactionCalendarRange();
+  @Input() public months: Date[] = [];
 
   @Input() public transactions: Transaction[] = [];
 

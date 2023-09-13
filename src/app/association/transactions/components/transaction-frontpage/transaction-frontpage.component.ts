@@ -20,11 +20,11 @@ export class TransactionFrontpageComponent {
    */
   public readingCalendar = false;
 
-  public range = new TransactionCalendarRange();
-
   public year = 0;
 
   public month = 0;
+
+  public months: Date[] = [];
 
   public transactions: Transaction[] = [];
 
@@ -52,7 +52,7 @@ export class TransactionFrontpageComponent {
     });
     // Read range
     this.service.getRange().subscribe(d => {
-      this.range = d;
+      this.months = d;
       // TODO: What happens if this date is not in the range?
       if ((!this.readingCalendar) && (this.year === 0)) {
         this.load(new Date());
