@@ -1,8 +1,9 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <button class="btn btn-primary" id="previousMonthButton" (click)="onGoPrevious()"
-    [disabled]="!isAbleToGoPrevious()">Previous</button>
+  <button class="btn btn-primary" id="previousMonthButton" (click)="onGoPrevious()" [disabled]="!isAbleToGoPrevious()"
+    [attr.aria-disabled]="!isAbleToGoPrevious()">Previous</button>
   <h2>{{ year }} {{ monthName }}</h2>
-  <button class="btn btn-primary" id="nextMonthButton" (click)="onGoNext()" [disabled]="!isAbleToGoNext()">Next</button>
+  <button class="btn btn-primary" id="nextMonthButton" (click)="onGoNext()" [disabled]="!isAbleToGoNext()"
+    [attr.aria-disabled]="!isAbleToGoNext()">Next</button>
 </div>
 <layout-waiting-wrapper [waiting]="waiting">
   <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
