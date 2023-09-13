@@ -58,7 +58,7 @@ export class CalendarMonthComponent implements OnChanges {
     });
   }
 
-  public activeDayIsOpen: boolean = true;
+  public activeDayIsOpen: boolean = false;
 
   @Input() public notes: CalendarNote[] = [];
 
@@ -153,7 +153,7 @@ export class CalendarMonthComponent implements OnChanges {
     }
   }
 
-  onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -165,6 +165,14 @@ export class CalendarMonthComponent implements OnChanges {
       }
       this.viewDate = date;
     }
+  }
+
+  public onSelectEvent({ event }: { event: CalendarEvent }): void {
+    const day = new Day();
+    day.day = event.start.getDate();
+    day.month = event.start.getMonth() + 1;
+    day.year = event.start.getFullYear();
+    this.pickDate.emit(day);
   }
 
   private getDateInfo(year: number, month: number, day: number | null): CalendarNote[] {
