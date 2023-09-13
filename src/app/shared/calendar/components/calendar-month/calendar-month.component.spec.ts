@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { CalendarMonthComponent } from './calendar-month.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Month } from '../../models/month';
+import { CalendarMonthComponent } from './calendar-month.component';
 
 describe('CalendarMonthComponent', () => {
   let component: CalendarMonthComponent;
@@ -9,6 +11,12 @@ describe('CalendarMonthComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: adapterFactory,
+        })
+      ],
       declarations: [CalendarMonthComponent]
     })
       .compileComponents();
