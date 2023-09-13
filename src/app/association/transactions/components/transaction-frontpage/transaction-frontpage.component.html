@@ -1,6 +1,8 @@
 <layout-article title="Transactions calendar">
-  <layout-waiting-wrapper [waiting]="readingCalendar">
-    <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [range]="range"
-      (dateChange)="onDateChange($event)" (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
-  </layout-waiting-wrapper>
+  <div class="col-md-8 offset-md-2">
+    <layout-waiting-wrapper [waiting]="readingCalendar">
+      <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [range]="range"
+        (dateChange)="onDateChange($event)" (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+    </layout-waiting-wrapper>
+  </div>
 </layout-article>
