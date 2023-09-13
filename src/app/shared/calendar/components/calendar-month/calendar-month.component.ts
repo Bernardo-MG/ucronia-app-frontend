@@ -6,6 +6,16 @@ import { CalendarWeek } from '../../models/calendar-week';
 import { Month } from '../../models/month';
 import { Day } from '../../models/day';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calendar';
+import {
+  startOfDay,
+  endOfDay,
+  subDays,
+  addDays,
+  endOfMonth,
+  isSameDay,
+  isSameMonth,
+  addHours,
+} from 'date-fns';
 
 const colors: any = {
   red: {
@@ -47,6 +57,8 @@ export class CalendarMonthComponent implements OnChanges {
       day.badgeTotal = day.events.length;
     });
   }
+
+  public activeDayIsOpen: boolean = true;
 
   @Input() public notes: CalendarNote[] = [];
 
@@ -138,6 +150,20 @@ export class CalendarMonthComponent implements OnChanges {
       date.day = day;
 
       this.pickDate.emit(date);
+    }
+  }
+
+  onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    if (isSameMonth(date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+      this.viewDate = date;
     }
   }
 
