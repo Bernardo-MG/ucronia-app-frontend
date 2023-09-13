@@ -30,27 +30,19 @@ export class CalendarMonthComponent implements OnChanges {
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-  private startYear = 0;
-
-  private startMonth = 0;
-
-  private endYear = 0;
-
-  private endMonth = 0;
+  private index = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['year'] || changes['month'] || changes['notes']) {
       this.monthName = this.getMonthName(this.month);
       this.activeDayIsOpen = false;
       this.viewDate = new Date(this.year, this.month - 1, 1);
+      // Reload index
+      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
     }
     if (changes['months']) {
-      const startDate = this.months[0];
-      this.startYear = startDate.getFullYear();
-      this.startMonth = startDate.getMonth() + 1;
-      const endDate = this.months[this.months.length - 1];
-      this.endYear = endDate.getFullYear();
-      this.endMonth = endDate.getMonth() + 1;
+      // Reload index
+      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
     }
   }
 
@@ -79,39 +71,11 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public isAbleToGoNext() {
-    let valid;
-
-    if (this.months.length > 0) {
-      if (this.year == this.endYear) {
-        // In the same year
-        // Checks month
-        valid = (this.month < this.endMonth);
-      } else {
-        valid = (this.year < this.endYear);
-      }
-    } else {
-      valid = false;
-    }
-
-    return valid;
+    return ((this.index >= 0) && ((this.index + 1) < this.months.length));
   }
 
   public isAbleToGoPrevious() {
-    let valid;
-
-    if (this.months.length > 0) {
-      if (this.year == this.startYear) {
-        // In the same year
-        // Checks month
-        valid = (this.month > this.startMonth);
-      } else {
-        valid = (this.year > this.startYear);
-      }
-    } else {
-      valid = false;
-    }
-
-    return valid;
+    return (this.index > 0);
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
