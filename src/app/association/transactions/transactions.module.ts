@@ -13,9 +13,6 @@ import { TransactionDetailsComponent } from './components/transaction-details/tr
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionFrontpageComponent } from './components/transaction-frontpage/transaction-frontpage.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
-import { TransactionLayoutComponent } from './components/transaction-layout/transaction-layout.component';
-import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
-import { TransactionSelectionListComponent } from './components/transaction-selection-list/transaction-selection-list.component';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
@@ -25,13 +22,10 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
 @NgModule({
   declarations: [
     TransactionCreateComponent,
-    TransactionListComponent,
     TransactionDetailsComponent,
     TransactionCalendarComponent,
     TransactionFormComponent,
     TransactionInfoComponent,
-    TransactionLayoutComponent,
-    TransactionSelectionListComponent,
     TransactionFrontpageComponent
   ],
   imports: [
