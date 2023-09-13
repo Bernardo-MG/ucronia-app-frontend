@@ -26,9 +26,9 @@ export class CalendarMonthComponent implements OnChanges {
 
   public monthName = '';
 
-  public viewDate: Date = new Date();
+  public viewDate = new Date();
 
-  public activeDayIsOpen: boolean = false;
+  public activeDayIsOpen = false;
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
