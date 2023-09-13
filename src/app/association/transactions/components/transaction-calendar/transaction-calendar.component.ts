@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Transaction } from '@app/association/models/transaction';
-import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
-import { Day } from '@app/shared/calendar/models/day';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
@@ -11,6 +9,8 @@ import { CalendarEvent } from 'angular-calendar';
   templateUrl: './transaction-calendar.component.html'
 })
 export class TransactionCalendarComponent implements OnChanges {
+
+  @Input() public waiting = false;
 
   @Input() public year = 0;
 

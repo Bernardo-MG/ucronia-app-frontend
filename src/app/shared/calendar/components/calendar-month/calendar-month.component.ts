@@ -10,6 +10,8 @@ import { Month } from '../../models/month';
 })
 export class CalendarMonthComponent implements OnChanges {
 
+  @Input() public waiting = false;
+
   @Input() public events: CalendarEvent<any>[] = [];
 
   @Input() public year = 0;
@@ -69,11 +71,11 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public isAbleToGoNext() {
-    return ((this.index >= 0) && ((this.index + 1) < this.months.length));
+    return ((!this.waiting) && ((this.index >= 0) && ((this.index + 1) < this.months.length)));
   }
 
   public isAbleToGoPrevious() {
-    return (this.index > 0);
+    return ((!this.waiting) && (this.index > 0));
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
