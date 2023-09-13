@@ -22,9 +22,9 @@ export class TransactionCalendarComponent implements OnChanges {
 
   @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Day>();
+  @Output() public pickTransaction = new EventEmitter<number>();
 
-  public events: CalendarEvent<any>[] = [];
+  public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions']) {
@@ -33,14 +33,17 @@ export class TransactionCalendarComponent implements OnChanges {
         return {
           title: t.description,
           color: Colors.yellow,
-          start: date
+          start: date,
+          meta: {
+            transactionId: t.id,
+          }
         };
       });
     }
   }
 
-  public onPickDate(date: Day) {
-    this.pickDate.emit(date);
+  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
+    this.pickTransaction.emit(event.meta?.transactionId);
   }
 
   public onDateChange(date: Month) {

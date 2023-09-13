@@ -66,11 +66,8 @@ export class TransactionFrontpageComponent {
     this.routeActuator.setParameters({ date: formattedDate });
   }
 
-  public onPickDate(date: Day) {
-    // Corrects month value
-    const formattedDate = (date.year + '-' + date.month + '-' + date.day);
-    const parameters = { date: formattedDate };
-    this.router.navigate(["/transactions/list"], { queryParams: parameters });
+  public onPickTransaction(transaction: number) {
+    this.router.navigate([`/transactions/${transaction}`]);
   }
 
   private load(date: Date) {

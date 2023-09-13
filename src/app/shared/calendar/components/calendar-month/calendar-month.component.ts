@@ -27,7 +27,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Day>();
+  @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
 
   public monthName = '';
 
@@ -118,11 +118,7 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onSelectEvent({ event }: { event: CalendarEvent }): void {
-    const day = new Day();
-    day.day = event.start.getDate();
-    day.month = event.start.getMonth() + 1;
-    day.year = event.start.getFullYear();
-    this.pickDate.emit(day);
+    this.pickDate.emit(event);
   }
 
   private getMonthName(month: number): string {
