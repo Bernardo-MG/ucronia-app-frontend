@@ -1,5 +1,7 @@
+import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Month } from '../../models/month';
@@ -15,7 +17,8 @@ describe('CalendarMonthComponent', () => {
         CalendarModule.forRoot({
           provide: DateAdapter,
           useFactory: adapterFactory,
-        })
+        }),
+        LayoutModule
       ],
       declarations: [CalendarMonthComponent]
     })
@@ -41,13 +44,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the previous month', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
     component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -60,13 +62,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the previous month when moving to the previous month', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
     component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -83,13 +84,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the next month', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
     component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -102,13 +102,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the next month when moving to the next month', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
     component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -129,13 +128,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the previous month when the current month is January', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2019, 11), new Date(2020, 0), new Date(2020, 1)];
     component.year = 2020;
     component.month = 1;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -148,13 +146,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the previous month when moving to the previous month when the current month is January', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2019, 11), new Date(2020, 0), new Date(2020, 1)];
     component.year = 2020;
     component.month = 1;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -171,13 +168,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the next month when the current month is December', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 10), new Date(2020, 11), new Date(2021, 0)];
     component.year = 2020;
     component.month = 12;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -190,13 +186,12 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the next month when moving to the next month when the current month is December', () => {
     spyOn(component.dateChange, 'emit');
 
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2021;
-    component.endMonth = 1;
-
+    component.months = [new Date(2020, 10), new Date(2020, 11), new Date(2021, 0)];
     component.year = 2020;
     component.month = 12;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -227,13 +222,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should enable the forward button when the current month is before the end', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
-    component.month = 1;
+    component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -242,13 +236,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should disable the forward button when the current month is equal to the end', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
     component.month = 3;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -257,13 +250,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should disable the forward button when the current month is after the end', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
-    component.year = 2021;
-    component.month = 1;
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
+    component.year = 2020;
+    component.month = 4;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -272,13 +264,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should enable the backward button when the current month is after the start', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
+    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
     component.year = 2020;
-    component.month = 1;
+    component.month = 3;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -287,13 +278,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should disable the backward button when the current month is equal to the start', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
-    component.year = 2019;
-    component.month = 1;
+    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
+    component.year = 2020;
+    component.month = 2;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
@@ -302,13 +292,12 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should disable the backward button when the current month is before the start', () => {
-    component.startYear = 2019;
-    component.startMonth = 1;
-    component.endYear = 2020;
-    component.endMonth = 3;
-
-    component.year = 2018;
-    component.month = 0;
+    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
+    component.year = 2020;
+    component.month = 1;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
 
     fixture.detectChanges();
 
