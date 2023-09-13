@@ -18,8 +18,8 @@ export class TransactionCalendarService {
     return this.transactionApi.calendarMonth(year, month).pipe(map(r => r.content));
   }
 
-  public getRange(): Observable<TransactionCalendarRange> {
-    return this.transactionApi.calendarRange().pipe(map(r => r.content));
+  public getRange(): Observable<Date[]> {
+    return this.transactionApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => new Date(m))));
   }
 
 }

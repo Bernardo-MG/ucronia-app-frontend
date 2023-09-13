@@ -10,27 +10,27 @@ import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
-  selector: 'app-transaction-calendar-info',
-  templateUrl: './transaction-calendar-info.component.html'
+  selector: 'app-transaction-frontpage',
+  templateUrl: './transaction-frontpage.component.html'
 })
-export class TransactionCalendarInfoComponent {
+export class TransactionFrontpageComponent {
 
   /**
    * Loading flag.
    */
   public readingCalendar = false;
 
-  public range = new TransactionCalendarRange();
-
   public year = 0;
 
   public month = 0;
 
+  public months: Date[] = [];
+
+  public transactions: Transaction[] = [];
+
   private routeActuator: RouteParametersActuator;
 
   private dateObserver: RouteParametersObserver<Date>;
-
-  public transactions: Transaction[] = [];
 
   constructor(
     private service: TransactionCalendarService,
@@ -52,9 +52,11 @@ export class TransactionCalendarInfoComponent {
     });
     // Read range
     this.service.getRange().subscribe(d => {
-      this.range = d;
+      this.months = d;
       // TODO: What happens if this date is not in the range?
-      this.load(new Date());
+      if ((!this.readingCalendar) && (this.year === 0)) {
+        this.load(new Date());
+      }
     });
   }
 
@@ -64,11 +66,8 @@ export class TransactionCalendarInfoComponent {
     this.routeActuator.setParameters({ date: formattedDate });
   }
 
-  public onPickDate(date: Day) {
-    // Corrects month value
-    const formattedDate = (date.year + '-' + date.month + '-' + date.day);
-    const parameters = { date: formattedDate };
-    this.router.navigate(["/transactions/list"], { queryParams: parameters });
+  public onPickTransaction(transaction: number) {
+    this.router.navigate([`/transactions/${transaction}`]);
   }
 
   private load(date: Date) {

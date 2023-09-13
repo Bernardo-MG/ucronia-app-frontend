@@ -2,15 +2,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
-import { CalendarModule } from '@app/shared/calendar/calendar.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 import { TransactionCalendarComponent } from '../transaction-calendar/transaction-calendar.component';
-import { TransactionCalendarInfoComponent } from './transaction-calendar-info.component';
+import { TransactionFrontpageComponent } from './transaction-frontpage.component';
 
-describe('TransactionCalendarInfoComponent', () => {
-  let component: TransactionCalendarInfoComponent;
-  let fixture: ComponentFixture<TransactionCalendarInfoComponent>;
+describe('TransactionFrontpageComponent', () => {
+  let component: TransactionFrontpageComponent;
+  let fixture: ComponentFixture<TransactionFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,11 +18,11 @@ describe('TransactionCalendarInfoComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         CoreModule,
-        CalendarModule,
+        ScheduleModule,
         LayoutModule
       ],
       declarations: [
-        TransactionCalendarInfoComponent,
+        TransactionFrontpageComponent,
         TransactionCalendarComponent
       ],
       providers: [
@@ -31,7 +31,7 @@ describe('TransactionCalendarInfoComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionCalendarInfoComponent);
+    fixture = TestBed.createComponent(TransactionFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

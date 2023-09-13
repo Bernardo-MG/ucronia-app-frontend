@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
-import { CalendarModule } from '@app/shared/calendar/calendar.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
@@ -11,28 +11,22 @@ import { TransactionCalendarComponent } from './components/transaction-calendar/
 import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { TransactionFrontpageComponent } from './components/transaction-frontpage/transaction-frontpage.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
-import { TransactionLayoutComponent } from './components/transaction-layout/transaction-layout.component';
-import { TransactionListComponent } from './components/transaction-list/transaction-list.component';
-import { TransactionSelectionListComponent } from './components/transaction-selection-list/transaction-selection-list.component';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { TransactionsRoutingModule } from './transactions-routing.module';
-import { TransactionCalendarInfoComponent } from './components/transaction-calendar-info/transaction-calendar-info.component';
 
 
 
 @NgModule({
   declarations: [
     TransactionCreateComponent,
-    TransactionListComponent,
     TransactionDetailsComponent,
     TransactionCalendarComponent,
     TransactionFormComponent,
     TransactionInfoComponent,
-    TransactionLayoutComponent,
-    TransactionSelectionListComponent,
-    TransactionCalendarInfoComponent
+    TransactionFrontpageComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +34,7 @@ import { TransactionCalendarInfoComponent } from './components/transaction-calen
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
-    CalendarModule,
+    ScheduleModule,
     PaginationModule,
     LayoutModule,
     FontAwesomeModule,
