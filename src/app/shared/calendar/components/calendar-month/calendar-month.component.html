@@ -1,44 +1,10 @@
-<mwl-calendar-month-view
-  [viewDate]="viewDate"
-  [events]="events"
-  [activeDayIsOpen]="activeDayIsOpen"
-  (beforeViewRender)="beforeMonthViewRender($event)"
-  (dayClicked)="onSelectDay($event.day)"
-  (eventClicked)="onSelectEvent($event)"
->
-</mwl-calendar-month-view>
-
 <div class="d-flex justify-content-between align-items-center mb-3">
   <button class="btn btn-primary" id="previousMonthButton" (click)="onGoPrevious()"
     [disabled]="!isAbleToGoPrevious()">Previous</button>
-  <h2>{{ calendar.year }} {{ monthName }}</h2>
+  <h2>{{ year }} {{ monthName }}</h2>
   <button class="btn btn-primary" id="nextMonthButton" (click)="onGoNext()" [disabled]="!isAbleToGoNext()">Next</button>
 </div>
-<table class="table table-bordered table-responsive-sm">
-  <thead>
-    <tr>
-      <th>Sun</th>
-      <th>Mon</th>
-      <th>Tue</th>
-      <th>Wed</th>
-      <th>Thu</th>
-      <th>Fri</th>
-      <th>Sat</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let week of calendar.weeks">
-      <td *ngFor="let day of week.days">
-        <p>
-          <ng-template [ngIf]="day.number">
-            <button type="button" class="btn btn-primary" [class.disabled]="day.notes.length === 0" aria-label="To Date"
-              (click)="onPickDate(calendar.year, calendar.month, day.number)">
-              {{ day.number }}
-            </button>
-          </ng-template>
-        </p>
-        <p *ngFor="let note of day.notes">{{ note.description }}</p>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
+  (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="onPickDate($event.day)"
+  (eventClicked)="onSelectEvent($event)">
+</mwl-calendar-month-view>
