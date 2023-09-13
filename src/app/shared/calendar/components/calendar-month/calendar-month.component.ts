@@ -47,27 +47,25 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onGoPrevious() {
-    const date = new Month();
-    if (this.month > 1) {
-      date.year = this.year;
-      date.month = this.month - 1;
-    } else {
-      date.year = this.year - 1;
-      date.month = 12;
-    }
-    this.dateChange.emit(date);
+    this.index = this.index - 1;
+    const date = this.months[this.index];
+    this.year = date.getFullYear();
+    this.month = date.getMonth() + 1;
+    const month = new Month();
+    month.year = this.year;
+    month.month = this.month;
+    this.dateChange.emit(month);
   }
 
   public onGoNext() {
-    const date = new Month();
-    if (this.month < 12) {
-      date.year = this.year;
-      date.month = this.month + 1;
-    } else {
-      date.year = this.year + 1;
-      date.month = 1;
-    }
-    this.dateChange.emit(date);
+    this.index = this.index + 1;
+    const date = this.months[this.index];
+    this.year = date.getFullYear();
+    this.month = date.getMonth() + 1;
+    const month = new Month();
+    month.year = this.year;
+    month.month = this.month;
+    this.dateChange.emit(month);
   }
 
   public isAbleToGoNext() {
