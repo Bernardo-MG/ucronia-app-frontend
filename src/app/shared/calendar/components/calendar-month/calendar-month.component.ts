@@ -29,30 +29,22 @@ const colors: any = {
 export class CalendarMonthComponent implements OnChanges {
   viewDate: Date = new Date();
 
-  events: CalendarEvent<{ incrementsBadgeTotal: boolean }>[] = [
+  events: CalendarEvent<any>[] = [
     {
       title: 'Increments badge total on the day cell',
       color: colors.yellow,
-      start: new Date(),
-      meta: {
-        incrementsBadgeTotal: true,
-      },
+      start: new Date()
     },
     {
       title: 'Does not increment the badge total on the day cell',
       color: colors.blue,
-      start: new Date(),
-      meta: {
-        incrementsBadgeTotal: false,
-      },
+      start: new Date()
     },
   ];
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach((day) => {
-      day.badgeTotal = day.events.filter(
-        (event) => event.meta.incrementsBadgeTotal
-      ).length;
+      day.badgeTotal = day.events.length;
     });
   }
 
@@ -75,11 +67,6 @@ export class CalendarMonthComponent implements OnChanges {
   @Output() public pickDate = new EventEmitter<Day>();
 
   public calendar: Calendar = new Calendar();
-
-  public calendarOptions: CalendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin]
-  };
 
   public monthName = '';
 
@@ -170,7 +157,14 @@ export class CalendarMonthComponent implements OnChanges {
         if (notes) {
           d.notes = notes;
         }
-      }))
+      }));
+    this.events = this.notes.map(n => {
+      return {
+        title: n.description,
+        color: colors.yellow,
+        start: n.date
+      };
+    });
   }
 
   private generateWeeks(currentYear: number, currentMonth: number): CalendarWeek[] {
