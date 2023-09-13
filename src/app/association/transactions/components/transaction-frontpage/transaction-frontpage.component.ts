@@ -54,7 +54,9 @@ export class TransactionFrontpageComponent {
     this.service.getRange().subscribe(d => {
       this.range = d;
       // TODO: What happens if this date is not in the range?
-      this.load(new Date());
+      if ((!this.readingCalendar) && (this.year === 0)) {
+        this.load(new Date());
+      }
     });
   }
 
