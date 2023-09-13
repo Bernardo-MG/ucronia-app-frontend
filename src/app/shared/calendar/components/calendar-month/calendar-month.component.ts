@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
-import { CalendarNote } from '../../models/calendar-note';
 import { Day } from '../../models/day';
 import { Month } from '../../models/month';
 
@@ -13,7 +11,7 @@ import { Month } from '../../models/month';
 })
 export class CalendarMonthComponent implements OnChanges {
 
-  @Input() public notes: CalendarNote[] = [];
+  @Input() public events: CalendarEvent<any>[] = [];
 
   @Input() public year = 0;
 
@@ -37,13 +35,13 @@ export class CalendarMonthComponent implements OnChanges {
 
   public viewDate: Date = new Date();
 
-  public events: CalendarEvent<any>[] = [];
-
   public activeDayIsOpen: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['year'] || changes['month'] || changes['notes']) {
-      this.loadMonth();
+      this.monthName = this.getMonthName(this.month);
+      this.activeDayIsOpen = false;
+      this.viewDate = new Date(this.year, this.month - 1, 1);
     }
   }
 
@@ -125,19 +123,6 @@ export class CalendarMonthComponent implements OnChanges {
     day.month = event.start.getMonth() + 1;
     day.year = event.start.getFullYear();
     this.pickDate.emit(day);
-  }
-
-  private loadMonth() {
-    this.monthName = this.getMonthName(this.month);
-    this.activeDayIsOpen = false;
-    this.viewDate = new Date(this.year, this.month - 1, 1);
-    this.events = this.notes.map(n => {
-      return {
-        title: n.description,
-        color: Colors.yellow,
-        start: n.date
-      };
-    });
   }
 
   private getMonthName(month: number): string {
