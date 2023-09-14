@@ -16,7 +16,7 @@ export class AccessFrontpageComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public readingRoles = false;
 
   public createPermission = false;
 
@@ -57,18 +57,18 @@ export class AccessFrontpageComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.waiting = true;
+    this.readingRoles = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
         this.users = page.content;
 
         this.totalPages = page.totalPages;
         // Reactivate view
-        this.waiting = false;
+        this.readingRoles = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingRoles = false;
       }
     });
   }

@@ -1,24 +1,35 @@
 <layout-article title="Users">
-  <!-- Add -->
-  <div *ngIf="createPermission" class="row">
-    <!-- Add button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <a routerLink="/users/create" type="button" class="btn btn-link link-dark" role="button">
-        <fa-icon [icon]="addIcon"></fa-icon>
-      </a>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="pb-2">
+        <!-- Add -->
+        <div class="card">
+          <div class="card-body">
+            <div class="d-grid">
+              <!-- Add button -->
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/users/add"
+                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                Add role
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <!-- List -->
+      <div class="card">
+        <div class="card-body">
+          <layout-waiting-wrapper [waiting]="readingRoles">
+            <access-user-selection-list [users]="users">
+            </access-user-selection-list>
+          </layout-waiting-wrapper>
+        </div>
+        <div class="d-flex justify-content-center mt-1">
+          <pagination-route-navigation [disabled]="readingRoles" [totalPages]="totalPages">
+          </pagination-route-navigation>
+        </div>
+      </div>
     </div>
   </div>
-  <!-- List -->
-  <layout-waiting-wrapper [waiting]="waiting">
-    <div class="card">
-      <div class="card-body">
-        <access-user-selection-list [users]="users">
-        </access-user-selection-list>
-      </div>
-      <div class="d-flex justify-content-center mt-1">
-        <pagination-route-navigation [totalPages]="totalPages">
-        </pagination-route-navigation>
-      </div>
-    </div>
-  </layout-waiting-wrapper>
 </layout-article>

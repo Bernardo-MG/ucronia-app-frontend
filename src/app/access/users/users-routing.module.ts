@@ -7,7 +7,7 @@ import { AccessFrontpageComponent } from './components/access-user-frontpage/acc
 
 const routes: Routes = [
   { path: '', component: AccessFrontpageComponent },
-  { path: 'create', component: AccessUserCreateComponent },
+  { path: 'add', component: AccessUserCreateComponent },
   { path: ':id', component: AccessUserDetailsComponent }
 ];
 
