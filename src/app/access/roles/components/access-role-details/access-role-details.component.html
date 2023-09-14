@@ -1,23 +1,25 @@
 <layout-article title="Edit role">
-  <!-- Role -->
-  <div class="mb-1">
-    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
-      (delete)="onDelete()" (startEditing)="onStartEditing()">
-      <!-- Form -->
-      <access-role-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
-        (save)="onSave($event)">
-      </access-role-form>
-      <!-- Info -->
-      <access-role-info id="info" [data]="data"></access-role-info>
-    </layout-edition-wrapper>
-  </div>
-  <!-- Permissions -->
-  <div class="mb-1">
-    <div class="card">
-      <div class="card-body">
-        <!-- Permissions list -->
-        <access-role-permissions [roleId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
-        </access-role-permissions>
+  <div class="col-md-6 offset-md-3">
+    <!-- Role -->
+    <div class="mb-1">
+      <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+        (delete)="onDelete()" (startEditing)="onStartEditing()">
+        <!-- Form -->
+        <access-role-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+          [failures]="failures" (save)="onSave($event)">
+        </access-role-form>
+        <!-- Info -->
+        <access-role-info id="info" [data]="data"></access-role-info>
+      </layout-edition-wrapper>
+    </div>
+    <!-- Permissions -->
+    <div class="mb-1">
+      <div class="card">
+        <div class="card-body">
+          <!-- Permissions list -->
+          <access-role-permissions [roleId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+          </access-role-permissions>
+        </div>
       </div>
     </div>
   </div>
