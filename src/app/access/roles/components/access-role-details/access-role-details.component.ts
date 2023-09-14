@@ -28,6 +28,8 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public deletable = false;
 
+  public permissionView = 'list';
+
   public roleId = 0;
 
   public error = false;
@@ -86,6 +88,10 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.editing = true;
   }
 
+  public onShowAddPermission() {
+    this.permissionView = 'add';
+  }
+
   public isAbleToEdit() {
     return (!this.error) && (!this.reading) && this.editable && !this.editing;
   }
@@ -125,8 +131,9 @@ export class AccessRoleDetailsComponent implements OnInit {
     return this.reading || this.saving;
   }
 
-  public onAddPermission(permission: Permission){
+  public onAddPermission(permission: Permission) {
     this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
+      this.permissionView = 'list';
       // TODO: Load permissions
     });
   }
