@@ -1,6 +1,6 @@
 <layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
-  <span [ngSwitch]="view">
-    <span *ngSwitchCase="'main'">
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'main'">
       <div class="row mb-2">
         <!-- Select resource button -->
         <div class="col-sm-1">
@@ -40,9 +40,9 @@
             [attr.aria-disabled]="!isAbleToAdd()" aria-label="Add">Add</button>
         </div>
       </div>
-    </span>
+    </ng-container>
     <!-- Select action view -->
-    <span *ngSwitchCase="'action'">
+    <ng-container *ngSwitchCase="'action'">
       <!-- Action list -->
       <access-role-action-pick-list [actions]="actions" (selectRow)="onSelectAction($event)">
       </access-role-action-pick-list>
@@ -56,9 +56,9 @@
           Cancel
         </button>
       </div>
-    </span>
+    </ng-container>
     <!-- Select resource view -->
-    <span *ngSwitchCase="'resource'">
+    <ng-container *ngSwitchCase="'resource'">
       <!-- Resource list -->
       <access-role-resource-pick-list [resources]="resources" (selectRow)="onSelectResource($event)">
       </access-role-resource-pick-list>
@@ -72,6 +72,6 @@
           Cancel
         </button>
       </div>
-    </span>
-  </span>
+    </ng-container>
+  </ng-container>
 </layout-waiting-wrapper>
