@@ -8,10 +8,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-list',
-  templateUrl: './access-role-list.component.html'
+  selector: 'access-role-frontpage',
+  templateUrl: './access-role-frontpage.component.html'
 })
-export class AccessRoleListComponent implements OnInit {
+export class AccessFrontpageComponent implements OnInit {
 
   /**
    * Loading flag.
