@@ -30,9 +30,15 @@ export class TransactionCalendarComponent implements OnChanges {
     if (changes['transactions']) {
       this.events = this.transactions.map(t => {
         const date = new Date(t.date);
+        let color;
+        if (t.amount >= 0) {
+          color = Colors.blue;
+        } else {
+          color = Colors.red;
+        }
         return {
           title: t.description,
-          color: Colors.yellow,
+          color: color,
           start: date,
           meta: {
             transactionId: t.id,
