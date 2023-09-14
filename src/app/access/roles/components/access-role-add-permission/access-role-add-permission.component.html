@@ -1,7 +1,8 @@
 <layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
   <ng-container [ngSwitch]="view">
+    <!-- Selector -->
     <ng-container *ngSwitchCase="'main'">
-      <div class="row mb-2">
+      <div class="row pb-1">
         <!-- Select resource button -->
         <div class="col-sm-1">
           <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
@@ -9,15 +10,10 @@
           </button>
         </div>
         <!-- Selected resource -->
-        <div class="row col-sm-11">
-          <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
-          <div class="col-sm-10">
-            <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
-              aria-describedby="resourceLabel">
-          </div>
+        <div class="row col-sm-5">
+          <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
+            placeholder="Resource">
         </div>
-      </div>
-      <div class="row mb-2">
         <!-- Select action button -->
         <div class="col-sm-1">
           <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
@@ -25,12 +21,9 @@
           </button>
         </div>
         <!-- Selected action -->
-        <div class="row col-sm-11">
-          <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
-          <div class="col-sm-10">
-            <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
-              aria-describedby="actionLabel">
-          </div>
+        <div class="row col-sm-5">
+          <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
+            placeholder="Action">
         </div>
       </div>
       <!-- Save button -->
