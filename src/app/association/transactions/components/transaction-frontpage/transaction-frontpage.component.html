@@ -1,7 +1,26 @@
 <layout-article title="Transactions calendar">
-  <div class="col-md-8 offset-md-2">
-    <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
-      [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
-      (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="pb-2">
+        <!-- Add -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- Add button -->
+              <div *ngIf="createPermission" class="d-grid">
+                <a routerLink="/transactions/add" type="button" class="btn btn-primary" role="button">
+                  <icon-add></icon-add>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
+        [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
+        (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+    </div>
   </div>
 </layout-article>

@@ -8,7 +8,7 @@ import { TransactionFrontpageComponent } from './components/transaction-frontpag
 const routes: Routes = [
   { path: '', component: TransactionFrontpageComponent },
   { path: 'calendar', component: TransactionFrontpageComponent },
-  { path: 'create', component: TransactionCreateComponent },
+  { path: 'add', component: TransactionCreateComponent },
   { path: ':id', component: TransactionDetailsComponent }
 ];
 
