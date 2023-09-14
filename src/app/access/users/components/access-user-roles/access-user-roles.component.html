@@ -13,8 +13,8 @@
       <ng-template ngFor let-role [ngForOf]="roles">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark" role="button"
-              aria-label="Back">
+            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark"
+              role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>
@@ -23,9 +23,11 @@
       </ng-template>
     </tbody>
   </table>
-  <pagination-navigation [current]="rolesPage" [pages]="rolesTotalPages" (goTo)="loadRoles($event)">
-  </pagination-navigation>
 </layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [disabled]="readingRoles" [current]="rolesPage" [pages]="rolesTotalPages" (goTo)="loadRoles($event)">
+  </pagination-navigation>
+</div>
 <layout-waiting-wrapper [waiting]="readingSelection">
   <!-- Add role -->
   <table class="table table-hover">
@@ -44,7 +46,9 @@
       </ng-template>
     </tbody>
   </table>
-  <pagination-navigation [current]="roleSelectionPage" [pages]="roleSelectionTotalPages"
+</layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [disabled]="readingSelection" [current]="roleSelectionPage" [pages]="roleSelectionTotalPages"
     (goTo)="loadRoleSelectionPage($event)">
   </pagination-navigation>
-</layout-waiting-wrapper>
+</div>

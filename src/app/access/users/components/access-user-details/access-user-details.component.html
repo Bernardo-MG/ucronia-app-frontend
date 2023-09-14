@@ -12,14 +12,19 @@
         <access-user-info id="info" [data]="data"></access-user-info>
       </layout-edition-wrapper>
     </div>
-    <!-- Roles -->
-    <div class="mb-1">
-      <div class="card">
-        <div class="card-body">
-          <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
-          </access-user-roles>
+    <article class="p-4">
+      <header>
+        <h2 class="border-bottom">Permissions</h2>
+      </header>
+      <!-- Roles -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+            </access-user-roles>
+          </div>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 </layout-article>
