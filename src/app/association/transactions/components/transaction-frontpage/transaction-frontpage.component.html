@@ -6,11 +6,12 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <!-- Add button -->
-              <div *ngIf="createPermission" class="d-grid">
-                <a routerLink="/transactions/add" type="button" class="btn btn-primary" role="button">
-                  <icon-add></icon-add>
-                </a>
+              <div class="d-grid">
+                <!-- Add button -->
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/transactions/add"
+                  [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                  Add transaction
+                </button>
               </div>
             </div>
           </div>

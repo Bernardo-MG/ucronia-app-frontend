@@ -5,13 +5,12 @@
         <!-- Add -->
         <div class="card">
           <div class="card-body">
-            <div class="row">
+            <div class="d-grid">
               <!-- Add button -->
-              <div *ngIf="createPermission" class="d-grid">
-                <a routerLink="/members/register" type="button" class="btn btn-primary" role="button">
-                  <icon-add></icon-add>
-                </a>
-              </div>
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
+                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                Register member
+              </button>
             </div>
           </div>
         </div>
