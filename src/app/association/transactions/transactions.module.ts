@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
@@ -38,7 +39,8 @@ import { TransactionsRoutingModule } from './transactions-routing.module';
     PaginationModule,
     LayoutModule,
     FontAwesomeModule,
-    MenuModule
+    MenuModule,
+    IconsModule
   ],
   providers: [
     TransactionService,

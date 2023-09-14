@@ -20,7 +20,7 @@ export class UserApi extends CrudApi<User> {
   public readRoles(user: number, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
     const request = this.requestWithQuery(query);
 
-    request.appendRoute(`/user/${user}/role`);
+    request.appendRoute(`/${user}/role`);
 
     return request.read();
   }
@@ -28,7 +28,7 @@ export class UserApi extends CrudApi<User> {
   public updateRoles(user: number, role: number): Observable<ApiResponse<Role>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/user/${user}/role`);
+    request.appendRoute(`/${user}/role`);
 
     return request.update({ id: role });
   }
@@ -36,7 +36,7 @@ export class UserApi extends CrudApi<User> {
   public removeRoles(user: number, role: number): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/user/${user}/role/${role}`);
+    request.appendRoute(`/${user}/role/${role}`);
 
     return request.delete();
   }

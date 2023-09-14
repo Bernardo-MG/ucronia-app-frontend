@@ -20,7 +20,7 @@ export class RoleApi extends CrudApi<Role> {
   public readPermissions(role: number, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
     const request = this.requestWithQuery(query);
 
-    request.appendRoute(`/role/${role}/permission`);
+    request.appendRoute(`/${role}/permission`);
 
     return request.read();
   }
@@ -28,7 +28,7 @@ export class RoleApi extends CrudApi<Role> {
   public updatePermission(role: number, resource: number, action: number): Observable<ApiResponse<Permission>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/role/${role}/permission/`);
+    request.appendRoute(`/${role}/permission/`);
 
     return request.update({
       resourceId: resource,
@@ -43,7 +43,7 @@ export class RoleApi extends CrudApi<Role> {
   public removePermission(role: number, resource: number, action: number): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/role/${role}/permission/${resource}/${action}`);
+    request.appendRoute(`/${role}/permission/${resource}/${action}`);
 
     return request.delete();
   }

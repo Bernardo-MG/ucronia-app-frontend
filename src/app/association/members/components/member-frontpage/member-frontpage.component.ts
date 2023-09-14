@@ -3,14 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/association/models/member';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
-import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
+import { PaginationRequestParametersParser } from '@app/shared/utils/api/route/observer/parser/pagination-request-parameters-parser';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { Active } from '../../models/active';
-import { ActiveRouteObserver } from '../../observer/active-route-observer';
-import { MemberService } from '../../services/member.service';
-import { PaginationRequestParametersParser } from '@app/shared/utils/api/route/observer/parser/pagination-request-parameters-parser';
 import { ActiveParametersParser } from '../../observer/active-parameters-parser';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-frontpage',
