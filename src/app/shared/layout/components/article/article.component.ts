@@ -14,9 +14,4 @@ export class ArticleComponent {
    */
   @Input() public title = '';
 
-  /**
-   * Waiting flag. When active the body is replaced by a waiting cue.
-   */
-  @Input() public waiting = false;
-
 }

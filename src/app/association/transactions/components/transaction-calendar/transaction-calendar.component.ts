@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Transaction } from '@app/association/models/transaction';
-import { TransactionCalendarRange } from '@app/association/models/transaction-calendar-range';
-import { CalendarNote } from '@app/shared/calendar/models/calendar-note';
-import { Day } from '@app/shared/calendar/models/day';
 import { Month } from '@app/shared/calendar/models/month';
+import { Colors } from '@app/shared/utils/colors';
+import { CalendarEvent } from 'angular-calendar';
 
 @Component({
   selector: 'assoc-transaction-calendar',
@@ -11,34 +10,40 @@ import { Month } from '@app/shared/calendar/models/month';
 })
 export class TransactionCalendarComponent implements OnChanges {
 
+  @Input() public waiting = false;
+
   @Input() public year = 0;
 
   @Input() public month = 0;
 
-  @Input() public range = new TransactionCalendarRange();
-  
+  @Input() public months: Date[] = [];
+
   @Input() public transactions: Transaction[] = [];
 
   @Output() public dateChange = new EventEmitter<Month>();
 
-  @Output() public pickDate = new EventEmitter<Day>();
+  @Output() public pickTransaction = new EventEmitter<number>();
 
-  public notes: CalendarNote[] = [];
+  public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['transactions']) {
-      this.notes = this.transactions.map(t => {
+      this.events = this.transactions.map(t => {
         const date = new Date(t.date);
-        // Corrects month value
-        const month = date.getMonth() + 1;
-        // TODO: Shouldn't the year and month match the ones in the calendar?
-        return new CalendarNote(date.getFullYear(), month, date.getDate(), t.description);
+        return {
+          title: t.description,
+          color: Colors.yellow,
+          start: date,
+          meta: {
+            transactionId: t.id,
+          }
+        };
       });
     }
   }
-  
-  public onPickDate(date: Day) {
-    this.pickDate.emit(date);
+
+  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
+    this.pickTransaction.emit(event.meta?.transactionId);
   }
 
   public onDateChange(date: Month) {

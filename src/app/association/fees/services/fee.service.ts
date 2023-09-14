@@ -1,17 +1,25 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FeeApi } from '@app/association/api/fee-api';
+import { MemberApi } from '@app/association/api/member-api';
 import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
+import { FeePayment } from '../models/fee-payment';
 
 @Injectable()
 export class FeeService {
 
+  private feeApi = new FeeApi(this.http);
+
+  private memberApi = new MemberApi(this.http);
+
   constructor(
-    private client: AssociationApiClient
+    private http: HttpClient
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
@@ -20,32 +28,42 @@ export class FeeService {
     const defaultSortDate = new Sort<Fee>('date');
     defaultSortDate.order = 'desc';
 
-    return this.client.fee().page(pagination).defaultSort([defaultSortDate, defaultSortName]).parameter("startDate", startDate).parameter("endDate", endDate).readAll();
+    const query = new PaginatedQuery<Fee>();
+    query.defaultSort = [defaultSortDate, defaultSortName];
+    query.pagination = pagination;
+    query.addParameter("startDate", startDate);
+    query.addParameter("endDate", endDate);
+
+    return this.feeApi.readAll(query);
   }
 
-  public create(data: Fee): Observable<Fee> {
-    return this.client.fee().create(data).pipe(map(r => r.content));
+  public pay(data: FeePayment): Observable<FeePayment> {
+    return this.feeApi.pay(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Fee): Observable<Fee> {
-    return this.client.fee().id(id).update(data).pipe(map(r => r.content));
+    return this.feeApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.fee().id(id).delete().pipe(map(r => r.content));
+    return this.feeApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Fee> {
-    return this.client.fee().id(id).readOne().pipe(map(r => r.content));
+    return this.feeApi.readById(id).pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
-    const sort: Sort<Member> = new Sort<Member>('name');
-    return this.client.member().page({ page }).sort([sort]).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.sort = [new Sort<Member>('name')];
+    query.page = page;
+
+    return this.memberApi.readAll(query);
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.client.member().id(id).readOne().pipe(map(r => r.content));
+    // return this.feeApi.member().readById(id).pipe(map(r => r.content));
+    return this.memberApi.readById(id).pipe(map(r => r.content));
   }
 
 }

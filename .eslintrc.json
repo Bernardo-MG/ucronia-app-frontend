@@ -19,7 +19,21 @@
           "error",
           {
             "type": "attribute",
-            "prefix": ["account", "access", "assoc", "app", "authentication", "login", "edition", "button", "icon", "layout", "menu", "pagination", "shared"],
+            "prefix": [
+              "account",
+              "access",
+              "assoc",
+              "app",
+              "authentication",
+              "login",
+              "edition",
+              "button",
+              "icon",
+              "layout",
+              "menu",
+              "pagination",
+              "shared"
+            ],
             "style": "camelCase"
           }
         ],
@@ -27,7 +41,21 @@
           "error",
           {
             "type": "element",
-            "prefix": ["account", "access", "assoc", "app", "authentication", "login", "edition", "button", "icon", "layout", "menu", "pagination", "shared"],
+            "prefix": [
+              "account",
+              "access",
+              "assoc",
+              "app",
+              "authentication",
+              "login",
+              "edition",
+              "button",
+              "icon",
+              "layout",
+              "menu",
+              "pagination",
+              "shared"
+            ],
             "style": "kebab-case"
           }
         ]

@@ -1,41 +1,55 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MemberApi } from '@app/association/api/member-api';
 import { Member } from '@app/association/models/member';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
+import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
+import { Active } from '../models/active';
 
 @Injectable()
 export class MemberService {
 
+  private memberApi = new MemberApi(this.http);
+
   constructor(
-    private client: AssociationApiClient
+    private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
     const defaultSortName = new Sort<Member>('name');
     defaultSortName.order = 'asc';
     const defaultSortSurname = new Sort<Member>('surname');
     defaultSortSurname.order = 'asc';
 
-    return this.client.member().page(pagination).defaultSort([defaultSortName, defaultSortSurname]).readAll();
+    const query = new PaginatedQuery<Member>();
+    query.defaultSort = [defaultSortName, defaultSortSurname];
+    query.pagination = pagination;
+    if (active === Active.Active) {
+      query.addParameter("active", true);
+    } else if (active === Active.Inactive) {
+      query.addParameter("active", 'false');
+    }
+
+    return this.memberApi.readAll(query);
   }
 
   public create(data: Member): Observable<Member> {
-    return this.client.member().create(data).pipe(map(r => r.content));
+    return this.memberApi.create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.client.member().id(id).update(data).pipe(map(r => r.content));
+    return this.memberApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.member().id(id).delete().pipe(map(r => r.content));
+    return this.memberApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.client.member().id(id).readOne().pipe(map(r => r.content));
+    return this.memberApi.readById(id).pipe(map(r => r.content));
   }
 
 }

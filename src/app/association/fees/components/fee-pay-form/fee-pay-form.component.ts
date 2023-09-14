@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Fee } from '@app/association/models/fee';
 import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faAdd, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FeePayment } from '../../models/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',
   templateUrl: './fee-pay-form.component.html'
 })
-export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges {
+export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
 
   @Input() public memberId = -1;
   
@@ -32,9 +32,7 @@ export class FeePayFormComponent extends FormComponent<Fee> implements OnChanges
       id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
       paymentDate: [null, Validators.required],
-      feeDates: fb.array([], Validators.required),
-      amount: [0, Validators.required],
-      description: ['', Validators.required]
+      feeDates: fb.array([], Validators.required)
     });
   }
 

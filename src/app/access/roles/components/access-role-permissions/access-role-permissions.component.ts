@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PageInfo } from '@app/core/api/models/page-info';
 import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Resource } from '@app/core/authentication/models/resource';
@@ -21,7 +20,9 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public actionSelection: Action[] = [];
 
-  public permissionsPageInfo = new PageInfo();
+  public permissionsPage = 0;
+
+  public permissionsTotalPages = 0;
 
   public readingPermissions = false;
 
@@ -51,8 +52,8 @@ export class AccessRolePermissionsComponent implements OnChanges {
     this.service.getPermissions(this.roleId, page).subscribe({
       next: response => {
         this.permissions = response.content;
-        this.permissionsPageInfo = response;
-        this.permissionsPageInfo.page = this.permissionsPageInfo.page + 1;
+        this.permissionsPage = response.page + 1;
+        this.permissionsTotalPages = response.totalPages;
         this.readingPermissions = false;
       },
       error: error => {

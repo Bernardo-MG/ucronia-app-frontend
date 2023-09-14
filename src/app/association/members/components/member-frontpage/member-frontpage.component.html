@@ -1,0 +1,63 @@
+<layout-article title="Members">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="pb-2">
+        <!-- Add -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <!-- Add button -->
+              <div *ngIf="createPermission" class="d-grid">
+                <a routerLink="/members/register" type="button" class="btn btn-primary" role="button">
+                  <icon-add></icon-add>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Filter -->
+      <div class="pb-2">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                Filters
+              </div>
+              <div class="col-8">
+                <div class="dropdown px-5">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false" [disabled]="readingMembers" [attr.aria-disabled]="readingMembers">
+                    {{activeFilter}}
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" [class.active]="activeFilter === 'active'"
+                        (click)="onFilterActive('Active')">Active</button></li>
+                    <li><button class="dropdown-item" [class.active]="activeFilter === 'inactive'"
+                        (click)="onFilterActive('Inactive')">Inactive</button></li>
+                    <li><button class="dropdown-item" [class.active]="activeFilter === 'all'"
+                        (click)="onFilterActive('All')">All</button></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <layout-waiting-wrapper [waiting]="readingMembers">
+            <assoc-member-selection-list [members]="members">
+            </assoc-member-selection-list>
+          </layout-waiting-wrapper>
+        </div>
+        <div class="d-flex justify-content-center mt-1">
+          <pagination-route-navigation [disabled]="readingMembers" [totalPages]="totalPages">
+          </pagination-route-navigation>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-article>

@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Direction } from '@app/core/api/models/direction';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
-import { PageInfo } from '@app/core/api/models/page-info';
-import { Sort } from '@app/core/api/models/sort';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-user-roles',
@@ -26,9 +25,13 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public readingSelection = false;
 
-  public rolesPageInfo = new PageInfo();
+  public rolesPage = 0;
 
-  public roleSelectionPageInfo = new PageInfo();
+  public rolesTotalPages = 0;
+
+  public roleSelectionPage = 0;
+
+  public roleSelectionTotalPages = 0;
 
   private sort: Sort<Role>[] | undefined = undefined;
 
@@ -70,8 +73,8 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.service.getRoleSelection(pagination).subscribe({
       next: response => {
         this.roleSelection = response.content;
-        this.roleSelectionPageInfo = response;
-        this.roleSelectionPageInfo.page = this.roleSelectionPageInfo.page + 1;
+        this.roleSelectionPage = response.page + 1;
+        this.roleSelectionTotalPages = response.totalPages;
         this.readingSelection = false;
       },
       error: error => {
@@ -85,8 +88,8 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.service.getRoles(this.userId, page).subscribe({
       next: response => {
         this.roles = response.content;
-        this.rolesPageInfo = response;
-        this.rolesPageInfo.page = this.rolesPageInfo.page + 1;
+        this.rolesPage = response.page + 1;
+        this.rolesTotalPages = response.totalPages;
         this.readingRoles = false;
       },
       error: error => {

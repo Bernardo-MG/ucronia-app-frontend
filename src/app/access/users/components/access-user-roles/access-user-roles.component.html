@@ -23,7 +23,7 @@
       </ng-template>
     </tbody>
   </table>
-  <pagination-navigation [current]="rolesPageInfo.page" [pages]="rolesPageInfo.totalPages" (goTo)="loadRoles($event)">
+  <pagination-navigation [current]="rolesPage" [pages]="rolesTotalPages" (goTo)="loadRoles($event)">
   </pagination-navigation>
 </layout-waiting-wrapper>
 <layout-waiting-wrapper [waiting]="readingSelection">
@@ -44,7 +44,7 @@
       </ng-template>
     </tbody>
   </table>
-  <pagination-navigation [current]="roleSelectionPageInfo.page" [pages]="roleSelectionPageInfo.totalPages"
+  <pagination-navigation [current]="roleSelectionPage" [pages]="roleSelectionTotalPages"
     (goTo)="loadRoleSelectionPage($event)">
   </pagination-navigation>
 </layout-waiting-wrapper>

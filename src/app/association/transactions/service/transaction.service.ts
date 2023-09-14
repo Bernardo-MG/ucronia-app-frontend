@@ -1,44 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { TransactionApi } from '@app/association/api/transaction-api';
 import { Transaction } from '@app/association/models/transaction';
-import { AssociationApiClient } from '@app/core/api/client/association-api-client';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
-import { TransactionFilter } from '../models/transaction-filter';
 
 @Injectable()
 export class TransactionService {
 
+  private transactionApi = new TransactionApi(this.http);
+
   constructor(
-    private client: AssociationApiClient
+    private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined, filter: TransactionFilter): Observable<PaginatedResponse<Transaction[]>> {
-    const defaultSortDate = new Sort<Transaction>('date');
-    defaultSortDate.order = 'desc';
-    const defaultSortDescription = new Sort<Transaction>('description');
-    defaultSortDescription.order = 'asc';
-
-    return this.client.transaction().page(pagination).defaultSort([defaultSortDate, defaultSortDescription])
-      .parameter("startDate", filter.startDate).parameter("endDate", filter.endDate).parameter("date", filter.date)
-      .readAll();
-  }
-
   public create(data: Transaction): Observable<Transaction> {
-    return this.client.transaction().create(data).pipe(map(r => r.content));
+    return this.transactionApi.create(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Transaction): Observable<Transaction> {
-    return this.client.transaction().id(id).update(data).pipe(map(r => r.content));
+    return this.transactionApi.updateById(id, data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.client.transaction().id(id).delete().pipe(map(r => r.content));
+    return this.transactionApi.deleteById(id).pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Transaction> {
-    return this.client.transaction().id(id).readOne().pipe(map(r => r.content));
+    return this.transactionApi.readById(id).pipe(map(r => r.content));
   }
 
 }

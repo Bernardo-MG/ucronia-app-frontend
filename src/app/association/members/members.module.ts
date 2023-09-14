@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
@@ -10,17 +10,17 @@ import { MemberCreateFormComponent } from './components/member-create-form/membe
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { MemberEditionFormComponent } from './components/member-edit-form/member-edit-form.component';
+import { MemberFrontpageComponent } from './components/member-frontpage/member-frontpage.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
-import { MemberListComponent } from './components/member-list/member-list.component';
+import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
 import { MembersRoutingModule } from './members-routing.module';
 import { MemberService } from './services/member.service';
-import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
 
 
 
 @NgModule({
   declarations: [
-    MemberListComponent,
+    MemberFrontpageComponent,
     MemberDetailsComponent,
     MemberCreateComponent,
     MemberCreateFormComponent,
@@ -31,6 +31,7 @@ import { MemberSelectionListComponent } from './components/member-selection-list
   imports: [
     CommonModule,
     MembersRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
     CoreModule,
     PaginationModule,
