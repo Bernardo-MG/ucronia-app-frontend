@@ -4,6 +4,7 @@ import { Failure } from '@app/core/api/models/failure';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Permission } from '@app/core/authentication/models/permission';
 
 @Component({
   selector: 'access-role-details',
@@ -26,6 +27,8 @@ export class AccessRoleDetailsComponent implements OnInit {
   public editable = false;
 
   public deletable = false;
+
+  public roleId = 0;
 
   public error = false;
 
@@ -94,6 +97,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   private load(id: string | null): void {
     if (id) {
       const identifier = Number(id);
+      this.roleId = identifier;
       this.reading = true;
       this.service.getOne(identifier)
         .subscribe({
@@ -119,6 +123,10 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public isWaiting() {
     return this.reading || this.saving;
+  }
+
+  public onAddPermission(permission: Permission){
+    
   }
 
 }

@@ -12,15 +12,23 @@
         <access-role-info id="info" [data]="data"></access-role-info>
       </layout-edition-wrapper>
     </div>
-    <!-- Permissions -->
-    <div class="mb-1">
-      <div class="card">
-        <div class="card-body">
-          <!-- Permissions list -->
-          <access-role-permissions [roleId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
-          </access-role-permissions>
+    <article class="p-4">
+      <header>
+        <h1 class="border-bottom">Permissions</h1>
+      </header>
+      <!-- Permissions -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <!-- Permissions list -->
+            <access-role-permissions [roleId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+            </access-role-permissions>
+            <!-- Edit privileges -->
+            <access-role-add-permission [roleId]="roleId"
+              (addPermission)="onAddPermission($event)"></access-role-add-permission>
+          </div>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 </layout-article>

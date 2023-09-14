@@ -1,75 +1,77 @@
-<span [ngSwitch]="view">
-  <span *ngSwitchCase="'main'">
-    <div class="row mb-2">
-      <!-- Select resource button -->
-      <div class="col-sm-1">
-        <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
-          <fa-icon [icon]="searchIcon"></fa-icon>
-        </button>
-      </div>
-      <!-- Selected resource -->
-      <div class="row col-sm-11">
-        <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
-        <div class="col-sm-10">
-          <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
-            aria-describedby="resourceLabel">
+<layout-waiting-wrapper [waiting]="readingActionsSelection || readingResourcesSelection">
+  <span [ngSwitch]="view">
+    <span *ngSwitchCase="'main'">
+      <div class="row mb-2">
+        <!-- Select resource button -->
+        <div class="col-sm-1">
+          <button type="button" class="btn" aria-label="Search" (click)="onShowResourceSelection()">
+            <fa-icon [icon]="searchIcon"></fa-icon>
+          </button>
+        </div>
+        <!-- Selected resource -->
+        <div class="row col-sm-11">
+          <label for="resourceInput" id="resourceLabel" class="col-sm-2 col-form-label">Resource</label>
+          <div class="col-sm-10">
+            <input type="text" [value]="resource.name" id="resourceInput" [readonly]="true" class="form-control"
+              aria-describedby="resourceLabel">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="row mb-2">
-      <!-- Select action button -->
-      <div class="col-sm-1">
-        <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
-          <fa-icon [icon]="searchIcon"></fa-icon>
-        </button>
-      </div>
-      <!-- Selected action -->
-      <div class="row col-sm-11">
-        <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
-        <div class="col-sm-10">
-          <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
-            aria-describedby="actionLabel">
+      <div class="row mb-2">
+        <!-- Select action button -->
+        <div class="col-sm-1">
+          <button type="button" class="btn" aria-label="Search" (click)="onShowActionSelection()">
+            <fa-icon [icon]="searchIcon"></fa-icon>
+          </button>
+        </div>
+        <!-- Selected action -->
+        <div class="row col-sm-11">
+          <label for="actionInput" id="actionLabel" class="col-sm-2 col-form-label">Action</label>
+          <div class="col-sm-10">
+            <input type="text" [value]="action.name" id="actionInput" [readonly]="true" class="form-control"
+              aria-describedby="actionLabel">
+          </div>
         </div>
       </div>
-    </div>
-    <!-- Save button -->
-    <div class="row">
-      <div class="col-sm-2 d-grid gap-2">
-        <button type="submit" class="btn btn-primary" (click)="onAddPermission()" [disabled]="!isAbleToAdd()"
-          [attr.aria-disabled]="!isAbleToAdd()" aria-label="Add">Add</button>
+      <!-- Save button -->
+      <div class="row">
+        <div class="col-sm-2 d-grid gap-2">
+          <button type="submit" class="btn btn-primary" (click)="onAddPermission()" [disabled]="!isAbleToAdd()"
+            [attr.aria-disabled]="!isAbleToAdd()" aria-label="Add">Add</button>
+        </div>
       </div>
-    </div>
+    </span>
+    <!-- Select action view -->
+    <span *ngSwitchCase="'action'">
+      <!-- Action list -->
+      <access-role-action-pick-list [actions]="actions" (selectRow)="onSelectAction($event)">
+      </access-role-action-pick-list>
+      <div class="d-flex justify-content-center mt-1">
+        <pagination-route-navigation [totalPages]="totalActionPages">
+        </pagination-route-navigation>
+      </div>
+      <!-- Cancel button -->
+      <div class="col-sm-1">
+        <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
+          Cancel
+        </button>
+      </div>
+    </span>
+    <!-- Select resource view -->
+    <span *ngSwitchCase="'resource'">
+      <!-- Resource list -->
+      <access-role-resource-pick-list [resources]="resources" (selectRow)="onSelectResource($event)">
+      </access-role-resource-pick-list>
+      <div class="d-flex justify-content-center mt-1">
+        <pagination-route-navigation [totalPages]="totalResourcePages">
+        </pagination-route-navigation>
+      </div>
+      <!-- Cancel button -->
+      <div class="col-sm-1">
+        <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
+          Cancel
+        </button>
+      </div>
+    </span>
   </span>
-  <!-- Select action view -->
-  <span *ngSwitchCase="'action'">
-    <!-- Action list -->
-    <access-role-action-pick-list [actions]="actions" (selectRow)="onSelectAction($event)">
-    </access-role-action-pick-list>
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-route-navigation [totalPages]="totalActionPages">
-      </pagination-route-navigation>
-    </div>
-    <!-- Cancel button -->
-    <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
-        Cancel
-      </button>
-    </div>
-  </span>
-  <!-- Select resource view -->
-  <span *ngSwitchCase="'resource'">
-    <!-- Resource list -->
-    <access-role-resource-pick-list [resources]="resources" (selectRow)="onSelectResource($event)">
-    </access-role-resource-pick-list>
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-route-navigation [totalPages]="totalResourcePages">
-      </pagination-route-navigation>
-    </div>
-    <!-- Cancel button -->
-    <div class="col-sm-1">
-      <button type="button" class="btn" aria-label="Search" (click)="onCancelSelect()">
-        Cancel
-      </button>
-    </div>
-  </span>
-</span>
+</layout-waiting-wrapper>
