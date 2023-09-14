@@ -55,7 +55,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     const permission = new Permission();
     permission.actionId = this.action.id;
     permission.resourceId = this.resource.id;
-    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => this.addPermission.emit(permission));
+    this.addPermission.emit(permission);
     this.action = new Action();
     this.resource = new Resource();
   }

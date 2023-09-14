@@ -126,7 +126,9 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onAddPermission(permission: Permission){
-    
+    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
+      // TODO: Load permissions
+    });
   }
 
 }
