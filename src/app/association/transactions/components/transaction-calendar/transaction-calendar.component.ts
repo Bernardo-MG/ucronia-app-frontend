@@ -37,7 +37,7 @@ export class TransactionCalendarComponent implements OnChanges {
           color = Colors.red;
         }
         return {
-          title: t.description,
+          title: `${t.description} (${t.amount}€)`,
           color: color,
           start: date,
           meta: {
