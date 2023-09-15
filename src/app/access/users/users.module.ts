@@ -11,7 +11,7 @@ import { AccessUserCreateComponent } from './components/access-user-create/acces
 import { AccessUserDetailsComponent } from './components/access-user-details/access-user-details.component';
 import { AccessUserEditFormComponent } from './components/access-user-edit-form/access-user-edit-form.component';
 import { AccessUserInfoComponent } from './components/access-user-info/access-user-info.component';
-import { AccessUserListComponent } from './components/access-user-list/access-user-list.component';
+import { AccessFrontpageComponent } from './components/access-user-frontpage/access-user-frontpage.component';
 import { AccessUserRoleFormComponent } from './components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from './services/access-user.service';
 import { UserRoutingModule } from './users-routing.module';
@@ -25,7 +25,7 @@ import { AccessUserSelectionListComponent } from './components/access-user-selec
     AccessUserCreateFormComponent,
     AccessUserCreateComponent,
     AccessUserDetailsComponent,
-    AccessUserListComponent,
+    AccessFrontpageComponent,
     AccessUserRoleFormComponent,
     AccessUserInfoComponent,
     AccessUserSelectionListComponent

@@ -7,7 +7,6 @@ import { LayoutModule } from './layout/layout.module';
 
 @NgModule({
   imports: [
-    LayoutModule,
     PaginationModule,
     AuthenticationModule
   ],

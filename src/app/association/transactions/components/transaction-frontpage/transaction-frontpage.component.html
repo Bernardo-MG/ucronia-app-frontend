@@ -6,11 +6,12 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <!-- Add button -->
-              <div *ngIf="createPermission" class="d-grid">
-                <a routerLink="/transactions/add" type="button" class="btn btn-primary" role="button">
-                  <icon-add></icon-add>
-                </a>
+              <div class="d-grid">
+                <!-- Add button -->
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/transactions/add"
+                  [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                  Add transaction
+                </button>
               </div>
             </div>
           </div>
@@ -18,9 +19,13 @@
       </div>
     </div>
     <div class="col-md-10">
-      <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
-        [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
-        (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+      <div class="card">
+        <div class="card-body">
+          <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
+            [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
+            (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+        </div>
+      </div>
     </div>
   </div>
 </layout-article>

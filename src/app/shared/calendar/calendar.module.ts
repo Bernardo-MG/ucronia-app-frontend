@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
+import { IconsModule } from '../icons/icons.module';
 import { LayoutModule } from '../layout/layout.module';
+import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { LayoutModule } from '../layout/layout.module';
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    LayoutModule
+    LayoutModule,
+    IconsModule
   ],
   exports: [
     CalendarMonthComponent

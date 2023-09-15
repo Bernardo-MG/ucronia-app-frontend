@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AccountChangePasswordFormComponent } from '@app/account/components/account-change-password-form/account-change-password-form.component';
 import { AccountService } from '@app/account/services/account.service';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { AccountChangePasswordViewComponent } from './account-password-view.component';
+import { AccountPasswordChangeComponent } from './account-password-change.component';
 
-describe('AccountChangePasswordViewComponent', () => {
-  let component: AccountChangePasswordViewComponent;
-  let fixture: ComponentFixture<AccountChangePasswordViewComponent>;
+describe('AccountPasswordChangeComponent', () => {
+  let component: AccountPasswordChangeComponent;
+  let fixture: ComponentFixture<AccountPasswordChangeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,13 +23,13 @@ describe('AccountChangePasswordViewComponent', () => {
         AccountService
       ],
       declarations: [
-        AccountChangePasswordViewComponent,
+        AccountPasswordChangeComponent,
         AccountChangePasswordFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountChangePasswordViewComponent);
+    fixture = TestBed.createComponent(AccountPasswordChangeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

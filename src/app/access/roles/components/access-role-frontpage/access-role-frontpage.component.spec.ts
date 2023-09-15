@@ -7,11 +7,11 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
-import { AccessRoleListComponent } from './access-role-list.component';
+import { AccessFrontpageComponent } from './access-role-frontpage.component';
 
-describe('AccessRoleListComponent', () => {
-  let component: AccessRoleListComponent;
-  let fixture: ComponentFixture<AccessRoleListComponent>;
+describe('AccessFrontpageComponent', () => {
+  let component: AccessFrontpageComponent;
+  let fixture: ComponentFixture<AccessFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('AccessRoleListComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        AccessRoleListComponent,
+        AccessFrontpageComponent,
         AccessRoleSelectionListComponent
       ],
       providers: [
@@ -33,7 +33,7 @@ describe('AccessRoleListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleListComponent);
+    fixture = TestBed.createComponent(AccessFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

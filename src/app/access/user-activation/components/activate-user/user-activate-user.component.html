@@ -1,16 +1,16 @@
-<div [ngSwitch]="status">
-  <div *ngSwitchCase="'valid_token'">
+<ng-container [ngSwitch]="status">
+  <ng-container *ngSwitchCase="'valid_token'">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Activate new user {{username}}</h5>
         <access-user-activate-user-form [failures]="failures" (save)="onUserActivate($event)"></access-user-activate-user-form>
       </div>
     </div>
-  </div>
-  <div *ngSwitchCase="'invalid_token'">
+  </ng-container>
+  <ng-container *ngSwitchCase="'invalid_token'">
     Invalid token
-  </div>
-  <div *ngSwitchCase="'finished'">
+  </ng-container>
+  <ng-container *ngSwitchCase="'finished'">
     User activated
-  </div>
-</div>
+  </ng-container>
+</ng-container>
