@@ -11,7 +11,7 @@ import { AccessRoleCreateComponent } from './components/access-role-create/acces
 import { AccessRoleDetailsComponent } from './components/access-role-details/access-role-details.component';
 import { AccessRoleFormComponent } from './components/access-role-form/access-role-form.component';
 import { AccessRoleInfoComponent } from './components/access-role-info/access-role-info.component';
-import { AccessRoleListComponent } from './components/access-role-list/access-role-list.component';
+import { AccessFrontpageComponent } from './components/access-role-frontpage/access-role-frontpage.component';
 import { AccessRolePermissionsComponent } from './components/access-role-permissions/access-role-permissions.component';
 import { RoleRoutingModule } from './roles-routing.module';
 import { AccessRoleService } from './services/access-role.service';
@@ -26,7 +26,7 @@ import { AccessRoleResourcePickListComponent } from './components/access-role-re
     AccessRoleFormComponent,
     AccessRoleCreateComponent,
     AccessRoleDetailsComponent,
-    AccessRoleListComponent,
+    AccessFrontpageComponent,
     AccessRolePermissionsComponent,
     AccessRoleInfoComponent,
     AccessRoleAddPermissionComponent,

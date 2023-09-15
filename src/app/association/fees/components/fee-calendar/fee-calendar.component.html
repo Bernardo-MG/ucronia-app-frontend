@@ -1,8 +1,8 @@
 <!-- Controls -->
-<!-- To previous year button -->
 <div class="d-flex justify-content-center pb-2">
+  <!-- To previous year button -->
   <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link" (click)="onGoPrevious()"
-    [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Previous year">
+    [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
     <icon-backward></icon-backward>
   </button>
   <!-- Current year -->
@@ -18,12 +18,12 @@
   </div>
   <!-- To next year button -->
   <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
-    [disabled]="waiting" [attr.aria-disabled]="waiting" aria-label="Next year">
+    [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()" aria-label="Next year">
     <icon-forward></icon-forward>
   </button>
 </div>
+<!-- Table -->
 <layout-waiting-wrapper [waiting]="waiting">
-  <!-- Table -->
   <table class="table table-sm table-hover">
     <thead class="thead-light">
       <tr>

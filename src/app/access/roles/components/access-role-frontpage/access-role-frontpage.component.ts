@@ -8,15 +8,15 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-list',
-  templateUrl: './access-role-list.component.html'
+  selector: 'access-role-frontpage',
+  templateUrl: './access-role-frontpage.component.html'
 })
-export class AccessRoleListComponent implements OnInit {
+export class AccessFrontpageComponent implements OnInit {
 
   /**
    * Loading flag.
    */
-  public waiting = false;
+  public readingRoles = false;
 
   public createPermission = false;
 
@@ -55,7 +55,7 @@ export class AccessRoleListComponent implements OnInit {
   }
 
   private load(pagination: PaginationRequest | undefined) {
-    this.waiting = true;
+    this.readingRoles = true;
     this.service.getAll(pagination).subscribe({
       next: page => {
 
@@ -63,11 +63,11 @@ export class AccessRoleListComponent implements OnInit {
 
         this.totalPages = page.totalPages;
         // Reactivate view
-        this.waiting = false;
+        this.readingRoles = false;
       },
       error: error => {
         // Reactivate view
-        this.waiting = false;
+        this.readingRoles = false;
       }
     });
   }

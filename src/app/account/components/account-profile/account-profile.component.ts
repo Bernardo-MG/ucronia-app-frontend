@@ -3,8 +3,8 @@ import { SecurityStatus } from '@app/core/authentication/models/security-status'
 import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Component({
-  selector: 'account-profile-view',
-  templateUrl: './account-profile-view.component.html'
+  selector: 'account-profile',
+  templateUrl: './account-profile.component.html'
 })
 export class AccountProfileViewComponent {
 

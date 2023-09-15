@@ -8,19 +8,17 @@ import { MenuModule } from '@app/shared/menu/menu.module';
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountChangePasswordFormComponent } from './components/account-change-password-form/account-change-password-form.component';
 import { AccountLayoutComponent } from './components/account-layout/account-layout.component';
-import { AccountProfileViewComponent } from './components/account-profile-view/account-profile-view.component';
-import { AccountSideMenuOptionsComponent } from './components/account-side-menu-options/account-side-menu-options.component';
+import { AccountProfileViewComponent } from './components/account-profile/account-profile.component';
 import { AccountService } from './services/account.service';
-import { AccountChangePasswordViewComponent } from './components/account-password-view/account-password-view.component';
+import { AccountPasswordChangeComponent } from './components/account-password-change/account-password-change.component';
 
 
 
 @NgModule({
   declarations: [
     AccountProfileViewComponent,
-    AccountChangePasswordViewComponent,
+    AccountPasswordChangeComponent,
     AccountChangePasswordFormComponent,
-    AccountSideMenuOptionsComponent,
     AccountLayoutComponent
   ],
   imports: [

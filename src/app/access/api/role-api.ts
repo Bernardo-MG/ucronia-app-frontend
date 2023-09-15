@@ -32,11 +32,7 @@ export class RoleApi extends CrudApi<Role> {
 
     return request.update({
       resourceId: resource,
-      actionId: action,
-      roleId: 0,
-      role: '',
-      resource: '',
-      action: ''
+      actionId: action
     });
   }
 

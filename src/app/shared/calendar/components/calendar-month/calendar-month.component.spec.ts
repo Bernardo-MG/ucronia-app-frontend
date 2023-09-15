@@ -1,6 +1,7 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -18,7 +19,8 @@ describe('CalendarMonthComponent', () => {
           provide: DateAdapter,
           useFactory: adapterFactory,
         }),
-        LayoutModule
+        LayoutModule,
+        IconsModule
       ],
       declarations: [CalendarMonthComponent]
     })
@@ -209,18 +211,6 @@ describe('CalendarMonthComponent', () => {
   // Range and buttons
   // **************************************************************************
 
-  it('should disable the forward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#nextMonthButton');
-
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the backward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#previousMonthButton');
-
-    expect(button.disabled).toEqual(true);
-  });
-
   it('should enable the forward button when the current month is before the end', () => {
     component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
     component.year = 2020;
@@ -233,34 +223,6 @@ describe('CalendarMonthComponent', () => {
 
     const button = fixture.nativeElement.querySelector('#nextMonthButton');
     expect(button.disabled).toEqual(false);
-  });
-
-  it('should disable the forward button when the current month is equal to the end', () => {
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 3;
-    component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
-    });
-
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('#nextMonthButton');
-    expect(button.disabled).toEqual(true);
-  });
-
-  it('should disable the forward button when the current month is after the end', () => {
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 4;
-    component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
-    });
-
-    fixture.detectChanges();
-
-    const button = fixture.nativeElement.querySelector('#nextMonthButton');
-    expect(button.disabled).toEqual(true);
   });
 
   it('should enable the backward button when the current month is after the start', () => {
@@ -277,7 +239,23 @@ describe('CalendarMonthComponent', () => {
     expect(button.disabled).toEqual(false);
   });
 
-  it('should disable the backward button when the current month is equal to the start', () => {
+  // **************************************************************************
+  // Hide buttons
+  // **************************************************************************
+
+  it('should hide the forward button by default', () => {
+    const button = fixture.nativeElement.querySelector('#nextMonthButton');
+
+    expect(button).toBeNull();
+  });
+
+  it('should hide the backward button by default', () => {
+    const button = fixture.nativeElement.querySelector('#previousMonthButton');
+
+    expect(button).toBeNull();
+  });
+
+  it('should hide the backward button when the current month is equal to the start', () => {
     component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
     component.year = 2020;
     component.month = 2;
@@ -288,10 +266,10 @@ describe('CalendarMonthComponent', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#previousMonthButton');
-    expect(button.disabled).toEqual(true);
+    expect(button).toBeNull();
   });
 
-  it('should disable the backward button when the current month is before the start', () => {
+  it('should hide the backward button when the current month is before the start', () => {
     component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
     component.year = 2020;
     component.month = 1;
@@ -302,7 +280,35 @@ describe('CalendarMonthComponent', () => {
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('#previousMonthButton');
-    expect(button.disabled).toEqual(true);
+    expect(button).toBeNull();
+  });
+
+  it('should hide the forward button when the current month is equal to the end', () => {
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
+    component.year = 2020;
+    component.month = 3;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
+
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#nextMonthButton');
+    expect(button).toBeNull();
+  });
+
+  it('should hide the forward button when the current month is after the end', () => {
+    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
+    component.year = 2020;
+    component.month = 4;
+    component.ngOnChanges({
+      month: new SimpleChange(null, component.month, true)
+    });
+
+    fixture.detectChanges();
+
+    const button = fixture.nativeElement.querySelector('#nextMonthButton');
+    expect(button).toBeNull();
   });
 
 });

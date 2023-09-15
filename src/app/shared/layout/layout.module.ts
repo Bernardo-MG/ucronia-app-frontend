@@ -8,6 +8,7 @@ import { ButtonListComponent } from './components/button-list/button-list.compon
 import { EditionWrapperComponent } from './components/edition-wrapper/edition-wrapper.component';
 import { WaitingButtonComponent } from './components/waiting-button/waiting-button.component';
 import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wrapper.component';
+import { CenteredFrameComponent } from './components/centered-frame/centered-frame.component';
 
 
 
@@ -17,7 +18,8 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent
+    WaitingButtonComponent,
+    CenteredFrameComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { WaitingWrapperComponent } from './components/waiting-wrapper/waiting-wr
     ArticleComponent,
     ButtonListComponent,
     EditionWrapperComponent,
-    WaitingButtonComponent
+    WaitingButtonComponent,
+    CenteredFrameComponent
   ]
 })
 export class LayoutModule { }

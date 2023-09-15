@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountLayoutComponent } from './account/components/account-layout/account-layout.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
+import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -71,7 +70,6 @@ const routes: Routes = [
           // Account
           {
             path: 'account',
-            component: AccountLayoutComponent,
             children: [
               { path: '', loadChildren: accountModule }
             ]

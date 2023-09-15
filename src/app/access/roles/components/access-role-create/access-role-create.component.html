@@ -1,9 +1,11 @@
 <layout-article title="Create role">
-  <div class="card">
-    <div class="card-body">
-      <!-- Form -->
-      <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
-      </access-role-form>
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <!-- Form -->
+        <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+        </access-role-form>
+      </div>
     </div>
   </div>
 </layout-article>
