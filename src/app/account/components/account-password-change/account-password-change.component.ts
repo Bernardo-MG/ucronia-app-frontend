@@ -4,10 +4,10 @@ import { AccountService } from '@app/account/services/account.service';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'account-password-view',
-  templateUrl: './account-password-view.component.html'
+  selector: 'account-password-change',
+  templateUrl: './account-password-change.component.html'
 })
-export class AccountChangePasswordViewComponent {
+export class AccountPasswordChangeComponent {
 
   public saving = false;
 
