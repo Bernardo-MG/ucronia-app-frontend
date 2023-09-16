@@ -1,4 +1,4 @@
-<layout-article title="Members">
+<layout-article>
   <div class="row">
     <div class="col-md-2">
       <div class="pb-2">
@@ -35,9 +35,11 @@
         </div>
       </div>
     </div>
+    <!-- List -->
     <div class="col-md-10">
       <div class="card">
         <div class="card-body">
+          <h2>Members</h2>
           <layout-waiting-wrapper [waiting]="readingMembers">
             <assoc-member-selection-list [members]="members">
             </assoc-member-selection-list>
