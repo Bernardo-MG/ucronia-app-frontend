@@ -5,16 +5,13 @@
     [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
     <icon-backward></icon-backward>
   </button>
-  <!-- Current year -->
-  <div class="dropdown px-5">
-    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
-      [disabled]="waiting" [attr.aria-disabled]="waiting">
-      {{year}}
-    </button>
-    <ul class="dropdown-menu">
-      <li *ngFor="let selectionYear of years"><button class="dropdown-item" [class.active]="selectionYear === year"
-          (click)="onGoTo(selectionYear)">{{selectionYear}}</button></li>
-    </ul>
+  <div class="w-25 px-3">
+    <!-- Current year -->
+    <select class="form-select" aria-label="Filter member status" [disabled]="waiting"
+      (change)="onGoTo($event)">
+      <option *ngFor="let selectionYear of years.reverse()" [selected]="selectionYear === year" [value]="selectionYear">
+        {{selectionYear}}</option>
+    </select>
   </div>
   <!-- To next year button -->
   <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
