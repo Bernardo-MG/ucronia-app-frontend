@@ -59,8 +59,9 @@ export class MemberFrontpageComponent implements OnInit {
     });
   }
 
-  public onFilterActive(active: 'Active' | 'Inactive' | 'All') {
-    this.activeFilter = (Active[active] as Active);
+  public onChangeActiveFilter(event: any) {
+    const value = event.target.value as 'Active' | 'Inactive' | 'All';
+    this.activeFilter = (Active[value] as Active);
     this.routeActuator.addParameters({ page: undefined, active: this.activeFilter });
   }
 
