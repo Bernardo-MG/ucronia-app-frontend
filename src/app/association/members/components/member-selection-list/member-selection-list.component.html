@@ -14,8 +14,9 @@
       </th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let member of members; let rowIndex = index" [ngClass]="{ 'table-warning': member.active === false }" role="button" routerLink="/members/{{member.id}}">
+  <tbody class="table-group-divider">
+    <tr *ngFor="let member of members; let rowIndex = index" [ngClass]="{ 'table-warning': member.active === false }"
+      role="button" routerLink="/members/{{member.id}}">
       <!-- Cells -->
       <td>
         {{member.name}}

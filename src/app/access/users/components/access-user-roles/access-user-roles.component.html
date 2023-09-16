@@ -11,7 +11,7 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
           <ng-template ngFor let-role [ngForOf]="roles">
             <tr>
               <td>
@@ -49,7 +49,7 @@
             </th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
           <ng-template ngFor let-role [ngForOf]="roleSelection">
             <tr role="button" (click)="onAddRole(role)">
               <td>{{role.name}}</td>
