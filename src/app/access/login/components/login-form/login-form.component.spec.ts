@@ -164,6 +164,29 @@ describe('LoginFormComponent', () => {
   });
 
   // **************************************************************************
+  // Inputs
+  // **************************************************************************
+
+  it('should enable the inputs by default', () => {
+    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
+    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
+
+    expect(username.disabled).toEqual(false);
+    expect(password.disabled).toEqual(false);
+  });
+
+  it('should disable the inputs when waiting', () => {
+    component.waiting = true;
+    fixture.detectChanges();
+
+    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
+    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
+
+    expect(username.disabled).toEqual(true);
+    expect(password.disabled).toEqual(true);
+  });
+
+  // **************************************************************************
   // Failed login warning
   // **************************************************************************
 
