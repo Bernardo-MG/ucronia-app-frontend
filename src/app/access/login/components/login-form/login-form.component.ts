@@ -124,11 +124,11 @@ export class LoginFormComponent {
   }
 
   /**
-   * Returns true if the inputs are enabled.
+   * Returns true if the remember me check is enabled.
    * 
-   * @returns true if the inputs are enabled, false otherwise
+   * @returns true if the remember me check is enabled, false otherwise
    */
-  public isInputEnabled(): boolean {
+  public isRememberMeEnabled(): boolean {
     return (!this.waiting);
   }
 
