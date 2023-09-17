@@ -21,7 +21,7 @@ export class AccessUserActivateService {
       .post<ApiResponse<void>>(`${this.activateUserRequestUrl}/${token}`, reset);
   }
 
-  public validateActivateUserToken(token: string): Observable<ApiResponse<TokenStatus>> {
+  public validateToken(token: string): Observable<ApiResponse<TokenStatus>> {
     return this.http
       // Validate token request
       .get<ApiResponse<TokenStatus>>(`${this.activateUserRequestUrl}/${token}`);

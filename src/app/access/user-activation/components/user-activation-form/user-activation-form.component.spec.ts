@@ -1,26 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { PasswordResetFormComponent } from './password-reset-form.component';
+import { UserActivationFormComponent } from './user-activation-form.component';
 
-describe('PasswordResetFormComponent', () => {
-  let component: PasswordResetFormComponent;
-  let fixture: ComponentFixture<PasswordResetFormComponent>;
+describe('UserActivationFormComponent', () => {
+  let component: UserActivationFormComponent;
+  let fixture: ComponentFixture<UserActivationFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        FormsModule,
-        LayoutModule
+        FormsModule
       ],
       declarations: [
-        PasswordResetFormComponent
+        UserActivationFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetFormComponent);
+    fixture = TestBed.createComponent(UserActivationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

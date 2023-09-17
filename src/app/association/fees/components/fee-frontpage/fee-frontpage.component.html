@@ -1,4 +1,4 @@
-<layout-article title="Fees">
+<layout-article>
   <div class="row">
     <div class="col-md-2">
       <div class="pb-2">
@@ -40,10 +40,9 @@
       <!-- Calendar -->
       <div class="card">
         <div class="card-body">
-          <div class="p-2">
-            <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
-              (yearChange)="onYearChange($event)"></assoc-fee-calendar>
-          </div>
+          <h2>Fees</h2>
+          <assoc-fee-calendar [waiting]="readingCalendar" [rows]="rows" [years]="range.years" [year]="year"
+            (yearChange)="onYearChange($event)"></assoc-fee-calendar>
         </div>
       </div>
     </div>

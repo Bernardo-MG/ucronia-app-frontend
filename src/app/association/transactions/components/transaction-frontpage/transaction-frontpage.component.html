@@ -1,4 +1,4 @@
-<layout-article title="Transactions calendar">
+<layout-article>
   <div class="row">
     <div class="col-md-2">
       <div class="pb-2">
@@ -21,6 +21,7 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-body">
+          <h2>Transactions</h2>
           <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
             [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
             (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>

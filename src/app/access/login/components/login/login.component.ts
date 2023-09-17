@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   /**
    * Failed login flag.
    */
-  public failed = false;
+  public failedLogin = false;
 
   /**
    * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
 
     // Mark the form as loading
     this.loading = true;
-    this.failed = false;
+    this.failedLogin = false;
 
     this.loginService.login(login)
       .subscribe({
@@ -93,7 +93,7 @@ export class LoginComponent implements OnInit {
               this.loading = false;
             });
           } else {
-            this.failed = true;
+            this.failedLogin = true;
             this.loading = false;
 
             // Store user
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           // Failed request
-          this.failed = true;
+          this.failedLogin = true;
           // Reactivate form
           this.loading = false;
         }

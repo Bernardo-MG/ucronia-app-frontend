@@ -60,7 +60,7 @@ export class FormComponent<Data> {
   }
 
   /**
-   * Checks if the form field is invalid.
+   * Indicates if the form field is invalid.
    * 
    * @param property property to check
    * @returns true if the form is invalid, false otherwise
@@ -89,7 +89,7 @@ export class FormComponent<Data> {
   }
 
   /**
-   * Returns if the save action is disabled.
+   * Indicates if the save action is disabled.
    * 
    * @returns true if the save action is disabled, false otherwise
    */
@@ -98,7 +98,7 @@ export class FormComponent<Data> {
   }
 
   /**
-   * Returns if the form is disabled.
+   * Indicates if the form is disabled.
    * 
    * @returns true if the form is disabled, false otherwise
    */
@@ -107,7 +107,7 @@ export class FormComponent<Data> {
   }
 
   /**
-   * Checks if the form field is invalid.
+   * Indicates if the form field is invalid.
    * 
    * @param property property to check
    * @returns true if the form is invalid, false otherwise
@@ -137,6 +137,9 @@ export class FormComponent<Data> {
     return invalid;
   }
 
+  /**
+   * Toggles the form enabled status, based on the status flags.
+   */
   private toggleEnable() {
     if (this.readonly || this.waiting) {
       this.form.disable();

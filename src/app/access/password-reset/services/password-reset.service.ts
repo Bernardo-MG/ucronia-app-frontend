@@ -28,7 +28,7 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset);
   }
 
-  public validateResetPasswordToken(token: string): Observable<ApiResponse<TokenStatus>> {
+  public validateToken(token: string): Observable<ApiResponse<TokenStatus>> {
     return this.http
       // Validate token request
       .get<ApiResponse<TokenStatus>>(`${this.passwordResetRequestUrl}/${token}`);

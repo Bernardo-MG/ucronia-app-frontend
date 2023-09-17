@@ -7,6 +7,8 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PasswordChange } from '../models/password-change';
 import { PasswordChangeStatus } from '../models/password-change-status';
+import { Account } from '../models/account';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 
 @Injectable()
 export class AccountService {
@@ -16,9 +18,21 @@ export class AccountService {
   private changePasswordUrl = environment.apiUrl + "/password/change";
 
   constructor(
-    http: HttpClient
+    http: HttpClient,
+    private authService: AuthService
   ) {
     this.operations = new AngularRequest(http, this.changePasswordUrl);
+  }
+
+  public getAccount(): Observable<Account> {
+    return this.authService.getStatus().pipe(map(s => {
+      const account = new Account();
+
+      account.username = s.username;
+      account.email = '';
+
+      return account;
+    }));
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
