@@ -70,7 +70,7 @@ describe('LoginFormComponent', () => {
     expect(button.disabled).toEqual(true);
   });
 
-  it('should disable the login button when the form is valid but it is loading', () => {
+  it('should disable the login button when the form is valid but it is waiting', () => {
     component.form.controls['username'].setValue('username');
     component.form.controls['password'].setValue('password');
     component.waiting = true;
@@ -80,12 +80,54 @@ describe('LoginFormComponent', () => {
     expect(button.disabled).toEqual(true);
   });
 
-  it('should disable the login button when the form is loading', () => {
+  it('should disable the login button when the form is waiting', () => {
     component.waiting = true;
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
     expect(button.disabled).toEqual(true);
+  });
+
+  // **************************************************************************
+  // Remember me
+  // **************************************************************************
+
+  it('should enable the remember me check button by default', () => {
+    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+
+    expect(rememberMe.disabled).toEqual(false);
+  });
+
+  it('should disable the remember me check button when waiting', () => {
+    component.waiting = true;
+    fixture.detectChanges();
+
+    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+
+    expect(rememberMe.disabled).toEqual(true);
+  });
+
+  // **************************************************************************
+  // Inputs
+  // **************************************************************************
+
+  it('should enable the inputs by default', () => {
+    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
+    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
+
+    expect(username.disabled).toEqual(false);
+    expect(password.disabled).toEqual(false);
+  });
+
+  it('should disable the inputs when waiting', () => {
+    component.waiting = true;
+    fixture.detectChanges();
+
+    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
+    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
+
+    expect(username.disabled).toEqual(true);
+    expect(password.disabled).toEqual(true);
   });
 
   // **************************************************************************
@@ -142,48 +184,6 @@ describe('LoginFormComponent', () => {
 
     expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
     expect(component.rememberMe.emit).toHaveBeenCalledWith(false);
-  });
-
-  // **************************************************************************
-  // Remember me
-  // **************************************************************************
-
-  it('should enable the remember me check button by default', () => {
-    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
-
-    expect(rememberMe.disabled).toEqual(false);
-  });
-
-  it('should disable the remember me check button when waiting', () => {
-    component.waiting = true;
-    fixture.detectChanges();
-
-    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
-
-    expect(rememberMe.disabled).toEqual(true);
-  });
-
-  // **************************************************************************
-  // Inputs
-  // **************************************************************************
-
-  it('should enable the inputs by default', () => {
-    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
-    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
-
-    expect(username.disabled).toEqual(false);
-    expect(password.disabled).toEqual(false);
-  });
-
-  it('should disable the inputs when waiting', () => {
-    component.waiting = true;
-    fixture.detectChanges();
-
-    const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
-    const password = fixture.debugElement.nativeElement.querySelector('#passwordInput');
-
-    expect(username.disabled).toEqual(true);
-    expect(password.disabled).toEqual(true);
   });
 
   // **************************************************************************
