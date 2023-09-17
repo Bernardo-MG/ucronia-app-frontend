@@ -26,6 +26,12 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
   public override isSaveDisabled() {
     return super.isSaveDisabled() || !this.isPasswordsMatching();
   }
+
+  /**
+   * Indicates if the password mismatch warning should be shown.
+   * 
+   * @returns true if the password mismatch warning should be shown, false otherwise
+   */
   public showPasswordMismatchWarning(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
@@ -40,6 +46,11 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
     return show;
   }
 
+  /**
+   * Indicates if the passwords match.
+   * 
+   * @returns true if the passwords match, false otherwise
+   */
   private isPasswordsMatching(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
