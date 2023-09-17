@@ -72,6 +72,7 @@ export class PasswordResetComponent implements OnInit {
         this.validating = false;
       },
       error: response => {
+        this.status = 'invalid_token';
         this.validating = false;
       }
     });
