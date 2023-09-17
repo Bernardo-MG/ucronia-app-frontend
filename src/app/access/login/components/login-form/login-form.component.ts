@@ -3,7 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginFormUser } from '../../models/login-form-user';
 
 /**
- * Login form component. Dumb component for handling the form. Includes checkbox for the 'remember me' functionality.
+ * Login form component. Dumb component for just handling the form.
+ * 
+ * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
   selector: 'login-login-form',
@@ -32,18 +34,7 @@ export class LoginFormComponent {
   /**
    * Failed login flag. Shows the failure warning.
    */
-  @Input() public failed = false;
-
-  /**
-   * Disabled flag.
-   */
-  @Input() public set disabled(flag: boolean) {
-    if (flag) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
-  }
+  @Input() public failedLogin = false;
 
   /**
    * Login event. Sent when the user accepts the data in the form.
@@ -131,16 +122,16 @@ export class LoginFormComponent {
    * @returns true if the login button is enabled, false otherwise
    */
   public isLoginEnabled(): boolean {
-    return ((this.form.valid) && (!this.waiting) && (!this.disabled));
+    return ((this.form.valid) && (!this.waiting));
   }
 
   /**
-   * Returns true if the inputs are enabled.
+   * Returns true if the remember me check is enabled.
    * 
-   * @returns true if the inputs are enabled, false otherwise
+   * @returns true if the remember me check is enabled, false otherwise
    */
-  public isInputEnabled(): boolean {
-    return ((!this.waiting) && (!this.disabled));
+  public isRememberMeEnabled(): boolean {
+    return (!this.waiting);
   }
 
 }

@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PasswordResetService } from '../../services/password-reset.service';
 import { PasswordResetFormComponent } from '../password-reset-form/password-reset-form.component';
 import { PasswordResetComponent } from './password-reset.component';
@@ -15,7 +16,8 @@ describe('PasswordResetComponent', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
         PasswordResetComponent,
@@ -31,6 +33,10 @@ describe('PasswordResetComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
 
   it('should create', () => {
     expect(component).toBeTruthy();

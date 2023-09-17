@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { PasswordReset } from '../../models/password-reset';
-import { PasswordResetService } from '../../services/password-reset.service';
+import { UserActivate } from '../../models/user-activate';
+import { AccessUserActivateService } from '../../services/user-activate.service';
 
 /**
- * Password reset. Changes the password for an existing user, identified by a token.
+ * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
  * 
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'login-password-reset',
-  templateUrl: './password-reset.component.html'
+  selector: 'access-user-activation',
+  templateUrl: './user-activation.component.html'
 })
-export class PasswordResetComponent implements OnInit {
+export class UserActivationComponent implements OnInit {
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
@@ -21,9 +21,9 @@ export class PasswordResetComponent implements OnInit {
   public validating = false;
 
   /**
-   * Password reset flag. If set to true the component is waiting for the password change request to finish.
+   * User activation flag. If set to true the component is waiting for the user actiation request to finish.
    */
-  public reseting = false;
+  public activating = false;
 
   /**
    * View status.
@@ -31,18 +31,23 @@ export class PasswordResetComponent implements OnInit {
   public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
 
   /**
+   * Username for the user being activated. This is taken from the token validation response.
+   */
+  public username = '';
+
+  /**
    * Token for identifying the user.
    */
   private token = '';
 
   /**
-   * Failures when reseting the password.
+   * Failures when activating the user.
    */
   public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private route: ActivatedRoute,
-    private service: PasswordResetService
+    private service: AccessUserActivateService
   ) { }
 
   public ngOnInit(): void {
@@ -56,21 +61,21 @@ export class PasswordResetComponent implements OnInit {
   }
 
   /**
-   * Resets the password. The user will be acquired by the backend from the token.
+   * Activates the user with the received password. The user will be acquired by the backend from the token.
    * 
    * @param password new password for the user
    */
-  public onPasswordReset(password: string): void {
-    this.reseting = true;
+  public onActivateUser(password: string): void {
+    this.validating = true;
 
     this.failures = {};
 
-    const reset = new PasswordReset();
+    const reset = new UserActivate();
     reset.password = password;
-    this.service.resetPassword(this.token, reset).subscribe({
+    this.service.activateUser(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';
-        this.reseting = false;
+        this.validating = false;
       },
       error: response => {
         // TODO: Unwrap error response automatically
@@ -79,7 +84,7 @@ export class PasswordResetComponent implements OnInit {
         } else {
           this.failures = {};
         }
-        this.reseting = false;
+        this.validating = false;
       }
     });
   }
@@ -97,6 +102,7 @@ export class PasswordResetComponent implements OnInit {
           this.status = 'invalid_token';
         } else {
           this.token = token;
+          this.username = response.content.username;
         }
         this.validating = false;
       },

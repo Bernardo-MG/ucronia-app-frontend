@@ -4,13 +4,13 @@ import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 /**
- * Password reset form component. Dumb component for just handling the form.
+ * User activation form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'login-password-reset-form',
-  templateUrl: './password-reset-form.component.html'
+  selector: 'access-user-activation-form',
+  templateUrl: './user-activation-form.component.html'
 })
-export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
+export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
 
   constructor(
     private formBuilder: FormBuilder
@@ -59,4 +59,3 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
   }
 
 }
-

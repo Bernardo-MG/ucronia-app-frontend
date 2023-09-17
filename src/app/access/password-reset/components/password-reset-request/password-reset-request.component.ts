@@ -3,41 +3,55 @@ import { Failure } from '@app/core/api/models/failure';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
 
+/**
+ * Password reset form component. Dumb component for just handling the form.
+ */
 @Component({
   selector: 'login-password-reset-request',
   templateUrl: './password-reset-request.component.html'
 })
 export class PasswordResetRequestComponent {
 
+  /**
+   * Finished flag. If set to true the component is finished and allows no furter operation.
+   */
   public finished = false;
 
   /**
-   * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
+   * Password reset flag. If set to true the component is waiting for the password change request to finish.
    */
-  public loading = false;
+  public reseting = false;
 
+  /**
+   * Failures when reseting the password.
+   */
   public failures: { [key: string]: Failure[] } = {};
 
   constructor(
     private service: PasswordResetService
   ) { }
 
-  public onPasswordReset(resetPassword: PasswordResetRequest) {
-    this.loading = true;
+  /**
+   * Handles the password reset request.
+   * 
+   * @param resetPassword password reset data
+   */
+  public onPasswordResetRequest(resetPassword: PasswordResetRequest) {
+    this.reseting = true;
     this.failures = {};
     this.service.requestResetPassword(resetPassword)
       .subscribe({
         next: response => {
           this.finished = true;
-          this.loading = false;
+          this.reseting = false;
         },
         error: error => {
-          this.loading = false;
           if (error.failures) {
             this.failures = error.failures;
           } else {
             this.failures = {};
           }
+          this.reseting = false;
         }
       });
   }
