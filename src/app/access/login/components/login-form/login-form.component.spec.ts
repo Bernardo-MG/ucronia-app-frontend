@@ -145,6 +145,25 @@ describe('LoginFormComponent', () => {
   });
 
   // **************************************************************************
+  // Remember me
+  // **************************************************************************
+
+  it('should enable the remember me check button by default', () => {
+    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+
+    expect(rememberMe.disabled).toEqual(false);
+  });
+
+  it('should disable the remember me check button when waiting', () => {
+    component.waiting = true;
+    fixture.detectChanges();
+
+    const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+
+    expect(rememberMe.disabled).toEqual(true);
+  });
+
+  // **************************************************************************
   // Failed login warning
   // **************************************************************************
 
@@ -156,6 +175,7 @@ describe('LoginFormComponent', () => {
 
   it('should hide the login failure warning when receiving the failure flag as false', () => {
     component.failed = false;
+    fixture.detectChanges();
 
     const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
 
@@ -164,6 +184,7 @@ describe('LoginFormComponent', () => {
 
   it('should show the login failure warning when receiving the failure flag', () => {
     component.failed = true;
+    fixture.detectChanges();
 
     const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
 
