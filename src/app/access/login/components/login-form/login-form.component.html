@@ -1,5 +1,5 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()" class="needs-validation" novalidate>
-  <div *ngIf="failed" class="text-danger text-center">Invalid user</div>
+  <div *ngIf="failed" id="loginFailedWarning" class="text-danger text-center">Invalid user</div>
   <!-- Username -->
   <div class="mb-2">
     <input placeholder="Username" type="text" id="usernameInput" formControlName="username" class="form-control"

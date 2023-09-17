@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginFormComponent } from './login-form.component';
+import { SimpleChange } from '@angular/core';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -27,9 +28,17 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // **************************************************************************
+  // Login button
+  // **************************************************************************
 
   it('should disable the login button by default', () => {
     const button = fixture.nativeElement.querySelector('form button');
@@ -78,6 +87,10 @@ describe('LoginFormComponent', () => {
     const button = fixture.nativeElement.querySelector('form button');
     expect(button.disabled).toEqual(true);
   });
+
+  // **************************************************************************
+  // Events
+  // **************************************************************************
 
   it('should send a login event when clicking the login button', () => {
     spyOn(component.login, 'emit');
@@ -129,6 +142,32 @@ describe('LoginFormComponent', () => {
 
     expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
     expect(component.rememberMe.emit).toHaveBeenCalledWith(false);
+  });
+
+  // **************************************************************************
+  // Failed login warning
+  // **************************************************************************
+
+  it('should hide the login failure warning by default', () => {
+    const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
+
+    expect(warning).toBeNull();
+  });
+
+  it('should hide the login failure warning when receiving the failure flag as false', () => {
+    component.failed = false;
+
+    const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
+
+    expect(warning).toBeNull();
+  });
+
+  it('should show the login failure warning when receiving the failure flag', () => {
+    component.failed = true;
+
+    const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
+
+    expect(warning).not.toBeUndefined();
   });
 
 });
