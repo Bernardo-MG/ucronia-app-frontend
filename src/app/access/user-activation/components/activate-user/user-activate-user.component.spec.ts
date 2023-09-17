@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserActivateService } from '../../services/user-activate.service';
 import { UserActivateUserFormComponent } from '../user-activate-user-form/user-activate-user-form.component';
 import { UserActivateUserComponent } from './user-activate-user.component';
@@ -16,7 +17,8 @@ describe('UserActivateUserComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
         UserActivateUserComponent,
