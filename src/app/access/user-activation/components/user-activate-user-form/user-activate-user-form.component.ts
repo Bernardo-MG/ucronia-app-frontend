@@ -30,7 +30,7 @@ export class UserActivateUserFormComponent extends FormComponent<ConfirmPassword
 
     let matching;
     if (password && confirmPassword) {
-      matching = password.getRawValue() === confirmPassword.getRawValue();
+      matching = (password.getRawValue() === confirmPassword.getRawValue());
     } else {
       matching = false;
     }
