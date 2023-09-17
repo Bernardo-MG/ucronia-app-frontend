@@ -23,19 +23,25 @@ export class UserActivateUserFormComponent extends FormComponent<ConfirmPassword
   public override isSaveDisabled() {
     return super.isSaveDisabled() || !this.isPasswordsMatching();
   }
-
-  public isPasswordsMatching(): boolean {
+  public showPasswordMismatchWarning(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 
-    let matching;
-    if (password && confirmPassword) {
-      matching = (password.getRawValue() === confirmPassword.getRawValue());
+    let show;
+    if (password.getRawValue().length && confirmPassword.getRawValue().length) {
+      show = !this.isPasswordsMatching();
     } else {
-      matching = false;
+      show = false;
     }
 
-    return matching;
+    return show;
+  }
+
+  private isPasswordsMatching(): boolean {
+    const password = this.form.get('password');
+    const confirmPassword = this.form.get('confirmPassword');
+
+    return (password.getRawValue() === confirmPassword.getRawValue());
   }
 
 }

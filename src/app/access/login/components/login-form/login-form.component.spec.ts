@@ -197,7 +197,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should hide the login failure warning when receiving the failure flag as false', () => {
-    component.failed = false;
+    component.failedLogin = false;
     fixture.detectChanges();
 
     const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
@@ -206,7 +206,7 @@ describe('LoginFormComponent', () => {
   });
 
   it('should show the login failure warning when receiving the failure flag', () => {
-    component.failed = true;
+    component.failedLogin = true;
     fixture.detectChanges();
 
     const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');

@@ -66,6 +66,8 @@ export class PasswordResetComponent implements OnInit {
       next: response => {
         if (!response.content.valid) {
           this.status = 'invalid_token';
+        } else {
+          this.token = token;
         }
         this.validating = false;
       },

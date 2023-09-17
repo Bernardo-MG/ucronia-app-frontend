@@ -32,7 +32,7 @@ export class LoginFormComponent {
   /**
    * Failed login flag. Shows the failure warning.
    */
-  @Input() public failed = false;
+  @Input() public failedLogin = false;
 
   /**
    * Login event. Sent when the user accepts the data in the form.
