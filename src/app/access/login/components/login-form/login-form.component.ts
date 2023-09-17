@@ -35,17 +35,6 @@ export class LoginFormComponent {
   @Input() public failed = false;
 
   /**
-   * Disabled flag.
-   */
-  @Input() public set disabled(flag: boolean) {
-    if (flag) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
-  }
-
-  /**
    * Login event. Sent when the user accepts the data in the form.
    */
   @Output() public login = new EventEmitter<LoginFormUser>();
@@ -131,7 +120,7 @@ export class LoginFormComponent {
    * @returns true if the login button is enabled, false otherwise
    */
   public isLoginEnabled(): boolean {
-    return ((this.form.valid) && (!this.waiting) && (!this.disabled));
+    return ((this.form.valid) && (!this.waiting));
   }
 
   /**
@@ -140,7 +129,7 @@ export class LoginFormComponent {
    * @returns true if the inputs are enabled, false otherwise
    */
   public isInputEnabled(): boolean {
-    return ((!this.waiting) && (!this.disabled));
+    return (!this.waiting);
   }
 
 }
