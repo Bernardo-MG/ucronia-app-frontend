@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Account } from '@app/account/models/account';
-import { AccountService } from '../service/account.service';
+import { AccountService } from '@app/account/services/account.service';
 
 @Component({
   selector: 'account-profile',
