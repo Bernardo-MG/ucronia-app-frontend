@@ -1,4 +1,5 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()" class="needs-validation" novalidate>
+  <!-- Login failed warning -->
   <div *ngIf="failed" id="loginFailedWarning" class="text-danger text-center">Invalid user</div>
   <!-- Username -->
   <div class="mb-2">
@@ -20,6 +21,7 @@
       </div>
     </div>
   </div>
+  <!-- Submit button -->
   <div class="d-grid gap-2">
     <div *ngIf="waiting; then waiting_cue else login_button"></div>
     <ng-template #waiting_cue>
