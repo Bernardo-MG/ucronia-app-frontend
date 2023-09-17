@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';

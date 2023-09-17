@@ -32,6 +32,10 @@ describe('PasswordResetComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PasswordResetFormComponent } from './components/password-reset-form/password-reset-form.component';
 import { PasswordResetRequestFormComponent } from './components/password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequestComponent } from './components/password-reset-request/password-reset-request.component';
@@ -23,7 +24,8 @@ import { PasswordResetService } from './services/password-reset.service';
     PasswordResetRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    IconsModule
+    IconsModule,
+    LayoutModule
   ],
   providers: [
     PasswordResetService

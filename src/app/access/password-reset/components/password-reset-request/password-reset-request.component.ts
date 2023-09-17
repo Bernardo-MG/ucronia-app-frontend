@@ -14,7 +14,7 @@ export class PasswordResetRequestComponent {
   /**
    * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
    */
-  public loading = false;
+  public reseting = false;
 
   public failures: { [key: string]: Failure[] } = {};
 
@@ -23,16 +23,16 @@ export class PasswordResetRequestComponent {
   ) { }
 
   public onPasswordReset(resetPassword: PasswordResetRequest) {
-    this.loading = true;
+    this.reseting = true;
     this.failures = {};
     this.service.requestResetPassword(resetPassword)
       .subscribe({
         next: response => {
           this.finished = true;
-          this.loading = false;
+          this.reseting = false;
         },
         error: error => {
-          this.loading = false;
+          this.reseting = false;
           if (error.failures) {
             this.failures = error.failures;
           } else {
