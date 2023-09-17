@@ -3,7 +3,10 @@
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Activate new user {{username}}</h5>
-        <access-user-activate-user-form [failures]="failures" (save)="onUserActivate($event)"></access-user-activate-user-form>
+        <layout-waiting-wrapper [waiting]="validating">
+          <access-user-activate-user-form [failures]="failures" [waiting]="activating"
+            (save)="onActivateUser($event)"></access-user-activate-user-form>
+        </layout-waiting-wrapper>
       </div>
     </div>
   </ng-container>

@@ -6,6 +6,7 @@ import { UserActivateUserComponent } from './components/activate-user/user-activ
 import { UserActivateUserFormComponent } from './components/user-activate-user-form/user-activate-user-form.component';
 import { AccessUserActivateService } from './services/user-activate.service';
 import { UserActivationRoutingModule } from './user-activation-routing.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 
 
@@ -18,7 +19,8 @@ import { UserActivationRoutingModule } from './user-activation-routing.module';
     CommonModule,
     UserActivationRoutingModule,
     IconsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LayoutModule
   ],
   providers: [
     AccessUserActivateService

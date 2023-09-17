@@ -11,6 +11,10 @@ import { Failure } from '@app/core/api/models/failure';
 })
 export class UserActivateUserComponent implements OnInit {
 
+  public validating = false;
+
+  public activating = false;
+
   public status = 'valid_token';
 
   public username = '';
@@ -27,17 +31,24 @@ export class UserActivateUserComponent implements OnInit {
   public ngOnInit(): void {
     // Validate token
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('token'));
+      const token = params.get('token');
+      if (token) {
+        this.validate(token);
+      }
     });
   }
 
-  public onUserActivate(confirm: ConfirmPassword): void {
+  public onActivateUser(confirm: ConfirmPassword): void {
+    this.validating = true;
+
+    this.failures = {};
+
     const reset = new UserActivate();
     reset.password = confirm.password;
-    this.failures = {};
     this.service.activateUser(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';
+        this.validating = false;
       },
       error: response => {
         // TODO: Unwrap error response automatically
@@ -46,25 +57,26 @@ export class UserActivateUserComponent implements OnInit {
         } else {
           this.failures = {};
         }
+        this.validating = false;
       }
     });
   }
 
-  private load(token: string | null): void {
-    if (token) {
-      this.token = token;
-      this.service.validateActivateUserToken(token).subscribe({
-        next: response => {
-          if (!response.content.valid) {
-            this.status = 'invalid_token';
-          }
-          this.username = response.content.username;
-        },
-        error: error => {
-          // TODO
+  private validate(token: string): void {
+    this.validating = true;
+    this.service.validateActivateUserToken(token).subscribe({
+      next: response => {
+        if (!response.content.valid) {
+          this.status = 'invalid_token';
+        } else {
+          this.token = token;
         }
-      });
-    }
+        this.validating = false;
+      },
+      error: response => {
+        this.validating = false;
+      }
+    });
   }
 
 }
