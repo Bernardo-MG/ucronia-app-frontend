@@ -4,12 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserActivateService } from '../../services/user-activate.service';
-import { UserActivateUserFormComponent } from '../user-activate-user-form/user-activate-user-form.component';
-import { UserActivateUserComponent } from './user-activate-user.component';
+import { UserActivationFormComponent } from '../user-activation-form/user-activation-form.component';
+import { UserActivationComponent } from './user-activation.component';
 
-describe('UserActivateUserComponent', () => {
-  let component: UserActivateUserComponent;
-  let fixture: ComponentFixture<UserActivateUserComponent>;
+describe('UserActivationComponent', () => {
+  let component: UserActivationComponent;
+  let fixture: ComponentFixture<UserActivationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,8 +21,8 @@ describe('UserActivateUserComponent', () => {
         LayoutModule
       ],
       declarations: [
-        UserActivateUserComponent,
-        UserActivateUserFormComponent
+        UserActivationComponent,
+        UserActivationFormComponent
       ],
       providers: [
         AccessUserActivateService
@@ -30,7 +30,7 @@ describe('UserActivateUserComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivateUserComponent);
+    fixture = TestBed.createComponent(UserActivationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

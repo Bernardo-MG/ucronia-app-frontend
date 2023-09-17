@@ -3,6 +3,9 @@ import { Failure } from '@app/core/api/models/failure';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
 
+/**
+ * Password reset form component. Dumb component for just handling the form.
+ */
 @Component({
   selector: 'login-password-reset-request',
   templateUrl: './password-reset-request.component.html'

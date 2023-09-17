@@ -3,7 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LoginFormUser } from '../../models/login-form-user';
 
 /**
- * Login form component. Dumb component for handling the form. Includes checkbox for the 'remember me' functionality.
+ * Login form component. Dumb component for just handling the form.
+ * 
+ * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
   selector: 'login-login-form',

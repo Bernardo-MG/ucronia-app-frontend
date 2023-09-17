@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserActivateUserFormComponent } from './user-activate-user-form.component';
+import { UserActivationFormComponent } from './user-activation-form.component';
 
-describe('UserActivateUserFormComponent', () => {
-  let component: UserActivateUserFormComponent;
-  let fixture: ComponentFixture<UserActivateUserFormComponent>;
+describe('UserActivationFormComponent', () => {
+  let component: UserActivationFormComponent;
+  let fixture: ComponentFixture<UserActivationFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -13,12 +13,12 @@ describe('UserActivateUserFormComponent', () => {
         FormsModule
       ],
       declarations: [
-        UserActivateUserFormComponent
+        UserActivationFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivateUserFormComponent);
+    fixture = TestBed.createComponent(UserActivationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

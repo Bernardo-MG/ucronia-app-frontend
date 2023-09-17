@@ -6,10 +6,10 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'access-user-activate-user',
-  templateUrl: './user-activate-user.component.html'
+  selector: 'access-user-activation',
+  templateUrl: './user-activation.component.html'
 })
-export class UserActivateUserComponent implements OnInit {
+export class UserActivationComponent implements OnInit {
 
   public validating = false;
 

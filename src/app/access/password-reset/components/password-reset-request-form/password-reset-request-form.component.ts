@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 
+/**
+ * Password reset request form component. Dumb component for just handling the form.
+ */
 @Component({
   selector: 'login-password-reset-request-form',
   templateUrl: './password-reset-request-form.component.html'
