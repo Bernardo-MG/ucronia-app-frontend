@@ -56,9 +56,10 @@ export class AccessRoleDetailsComponent implements OnInit {
     });
   }
 
-  public onSave(data: Role): void {
+  public onSave(toSave: Role): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(toSave.id, toSave).subscribe({
       next: d => {
         this.failures = {};
         // Reactivate view

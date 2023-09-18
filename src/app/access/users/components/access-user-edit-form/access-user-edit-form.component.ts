@@ -9,8 +9,6 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 })
 export class AccessUserEditFormComponent extends FormComponent<User> {
 
-  @Input() public username = '';
-
   constructor(
     fb: FormBuilder
   ) {

@@ -3,8 +3,7 @@ import { Member } from '@app/association/models/member';
 
 @Component({
   selector: 'assoc-member-info',
-  templateUrl: './member-info.component.html',
-  styleUrls: ['./member-info.component.sass']
+  templateUrl: './member-info.component.html'
 })
 export class MemberInfoComponent {
 
