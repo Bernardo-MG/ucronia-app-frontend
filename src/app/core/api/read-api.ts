@@ -17,7 +17,6 @@ export class ReadApi<T> {
     return request.read();
   }
 
-
   public readOne(): Observable<ApiResponse<T>> {
     const request = this.requestProvider();
 

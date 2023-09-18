@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
-const statsModule = () => import('@app/association/stats/association-stats.module').then(m => m.AssociationStatsModule);
 const memberModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const feeModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
@@ -12,11 +11,6 @@ const routes: Routes = [
     {
         path: '',
         children: [
-            {
-                path: 'stats',
-                canActivate: [ResourceGuard("stats")],
-                loadChildren: statsModule
-            },
             {
                 path: 'funds',
                 canActivate: [ResourceGuard("funds")],

@@ -15,8 +15,9 @@ import { FundsFormComponent } from './components/funds-form/funds-form.component
 import { FundsFrontpageComponent } from './components/funds-frontpage/funds-frontpage.component';
 import { FundsInfoComponent } from './components/funds-info/funds-info.component';
 import { FundsRoutingModule } from './funds-routing.module';
-import { TransactionService } from './service/transaction.service';
+import { BalanceService } from './service/balance.service';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
+import { TransactionService } from './service/transaction.service';
 
 
 
@@ -43,6 +44,7 @@ import { TransactionCalendarService } from './service/transaction-calendar.servi
     IconsModule
   ],
   providers: [
+    BalanceService,
     TransactionService,
     TransactionCalendarService
   ]
