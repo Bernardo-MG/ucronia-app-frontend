@@ -18,6 +18,7 @@ import { FundsRoutingModule } from './funds-routing.module';
 import { BalanceService } from './service/balance.service';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
+import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
 
 
 
@@ -28,7 +29,8 @@ import { TransactionService } from './service/transaction.service';
     FundsCalendarComponent,
     FundsFormComponent,
     FundsInfoComponent,
-    FundsFrontpageComponent
+    FundsFrontpageComponent,
+    FundsBalanceChartComponent
   ],
   imports: [
     CommonModule,
