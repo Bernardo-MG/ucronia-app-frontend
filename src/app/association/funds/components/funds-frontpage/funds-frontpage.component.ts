@@ -10,9 +10,9 @@ import { TransactionCalendarService } from '../../service/transaction-calendar.s
 
 @Component({
   selector: 'app-transaction-frontpage',
-  templateUrl: './transaction-frontpage.component.html'
+  templateUrl: './funds-frontpage.component.html'
 })
-export class TransactionFrontpageComponent {
+export class FundsFrontpageComponent {
 
   /**
    * Loading flag.
@@ -72,7 +72,7 @@ export class TransactionFrontpageComponent {
   }
 
   public onPickTransaction(transaction: number) {
-    this.router.navigate([`/transactions/${transaction}`]);
+    this.router.navigate([`/funds/${transaction}`]);
   }
 
   private load(date: Date) {

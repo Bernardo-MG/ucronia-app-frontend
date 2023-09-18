@@ -5,10 +5,10 @@ import { Failure } from '@app/core/api/models/failure';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'assoc-transaction-create',
-  templateUrl: './transaction-create.component.html'
+  selector: 'assoc-funds-create',
+  templateUrl: './funds-create.component.html'
 })
-export class TransactionCreateComponent {
+export class FundsCreateComponent {
 
   /**
    * Loading flag.
@@ -26,7 +26,7 @@ export class TransactionCreateComponent {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.router.navigate([`/transactions/${d.id}`]);
+        this.router.navigate([`/funds/${d.id}`]);
         this.failures = {};
         // Reactivate view
         this.saving = false;

@@ -5,12 +5,12 @@ import { CoreModule } from '@app/core/core.module';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
-import { TransactionCalendarComponent } from '../transaction-calendar/transaction-calendar.component';
-import { TransactionFrontpageComponent } from './transaction-frontpage.component';
+import { FundsCalendarComponent } from '../funds-calendar/funds-calendar.component';
+import { FundsFrontpageComponent } from './funds-frontpage.component';
 
-describe('TransactionFrontpageComponent', () => {
-  let component: TransactionFrontpageComponent;
-  let fixture: ComponentFixture<TransactionFrontpageComponent>;
+describe('FundsFrontpageComponent', () => {
+  let component: FundsFrontpageComponent;
+  let fixture: ComponentFixture<FundsFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,8 +22,8 @@ describe('TransactionFrontpageComponent', () => {
         LayoutModule
       ],
       declarations: [
-        TransactionFrontpageComponent,
-        TransactionCalendarComponent
+        FundsFrontpageComponent,
+        FundsCalendarComponent
       ],
       providers: [
         TransactionCalendarService
@@ -31,7 +31,7 @@ describe('TransactionFrontpageComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionFrontpageComponent);
+    fixture = TestBed.createComponent(FundsFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

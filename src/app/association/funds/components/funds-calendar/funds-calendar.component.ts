@@ -5,10 +5,10 @@ import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
 
 @Component({
-  selector: 'assoc-transaction-calendar',
-  templateUrl: './transaction-calendar.component.html'
+  selector: 'assoc-funds-calendar',
+  templateUrl: './funds-calendar.component.html'
 })
-export class TransactionCalendarComponent implements OnChanges {
+export class FundsCalendarComponent implements OnChanges {
 
   @Input() public waiting = false;
 

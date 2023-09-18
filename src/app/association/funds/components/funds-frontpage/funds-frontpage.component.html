@@ -8,7 +8,7 @@
             <div class="row">
               <div class="d-grid">
                 <!-- Add button -->
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/transactions/add"
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
                   [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
                   Add transaction
                 </button>
@@ -22,9 +22,9 @@
       <div class="card">
         <div class="card-body">
           <h2>Transactions</h2>
-          <assoc-transaction-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
+          <assoc-funds-calendar [transactions]="transactions" [year]="year" [month]="month" [months]="months"
             [waiting]="readingCalendar" (dateChange)="onDateChange($event)"
-            (pickTransaction)="onPickTransaction($event)"></assoc-transaction-calendar>
+            (pickTransaction)="onPickTransaction($event)"></assoc-funds-calendar>
         </div>
       </div>
     </div>

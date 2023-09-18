@@ -4,14 +4,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
-import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';
+import { FundsFormComponent } from '../funds-form/funds-form.component';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionDetailsComponent } from './transaction-details.component';
+import { FundsCreateComponent } from './funds-create.component';
 
-describe('TransactionDetailsComponent', () => {
-  let component: TransactionDetailsComponent;
-  let fixture: ComponentFixture<TransactionDetailsComponent>;
+describe('FundsCreateComponent', () => {
+  let component: FundsCreateComponent;
+  let fixture: ComponentFixture<FundsCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,9 +22,8 @@ describe('TransactionDetailsComponent', () => {
         LayoutModule
       ],
       declarations: [
-        TransactionDetailsComponent,
-        TransactionFormComponent,
-        TransactionInfoComponent
+        FundsCreateComponent,
+        FundsFormComponent
       ],
       providers: [
         TransactionService
@@ -33,7 +31,7 @@ describe('TransactionDetailsComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionDetailsComponent);
+    fixture = TestBed.createComponent(FundsCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

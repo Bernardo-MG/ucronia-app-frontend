@@ -6,10 +6,10 @@ import { AuthService } from '@app/core/authentication/services/auth.service';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'assoc-transaction-details',
-  templateUrl: './transaction-details.component.html'
+  selector: 'assoc-funds-details',
+  templateUrl: './funds-details.component.html'
 })
-export class TransactionDetailsComponent implements OnInit {
+export class FundsDetailsComponent implements OnInit {
 
   /**
    * Reading flag.
