@@ -28,6 +28,8 @@ export class MemberFrontpageComponent implements OnInit {
 
   public totalPages = 0;
 
+  public totalMembers = 0;
+
   private routeActuator;
 
   constructor(
@@ -73,6 +75,7 @@ export class MemberFrontpageComponent implements OnInit {
         this.members = page.content;
 
         this.totalPages = page.totalPages;
+        this.totalMembers = page.totalElements;
         // Reactivate view
         this.readingMembers = false;
       },
