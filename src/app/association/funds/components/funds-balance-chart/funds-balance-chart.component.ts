@@ -27,7 +27,7 @@ export class FundsBalanceChartComponent implements OnInit {
         },
       ],
     };
-    this.chart = new Chart('MyChart', {
+    this.chart = new Chart('balanceChart', {
       type: 'line',
       data,
       options: {
