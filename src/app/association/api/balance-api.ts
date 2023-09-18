@@ -5,6 +5,7 @@ import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
 import { Balance } from "../models/balance";
+import { MonthlyBalance } from "../models/monthly-balance";
 
 export class BalanceApi {
 
@@ -15,9 +16,17 @@ export class BalanceApi {
   ) {
     this.requestProvider = () => new AngularRequest(this.http, environment.apiUrl + '/balance');
   }
-  
+
   public read(): Observable<ApiResponse<Balance[]>> {
     const request = this.requestProvider();
+
+    return request.read();
+  }
+
+  public readMonthly(): Observable<ApiResponse<MonthlyBalance[]>> {
+    const request = this.requestProvider();
+
+    request.appendRoute('/monthly');
 
     return request.read();
   }

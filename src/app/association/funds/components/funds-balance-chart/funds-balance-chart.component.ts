@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MonthlyBalance } from '@app/association/models/monthly-balance';
 import Chart from 'chart.js/auto';
+import { BalanceService } from '../../service/balance.service';
 
 @Component({
   selector: 'assoc-funds-balance-chart',
@@ -9,20 +11,36 @@ export class FundsBalanceChartComponent implements OnInit {
 
   public chart: any;
 
-  constructor() { }
+  private data: MonthlyBalance[] = [];
+
+  constructor(
+    private balanceService: BalanceService
+  ) { }
 
   ngOnInit(): void {
-    this.createChart();
+    this.balanceService.monthly().subscribe(b => {
+      this.data = b;
+      this.createChart();
+    });
   }
 
   createChart() {
+    const labels = this.data.map(b => b.date)
+    const cumulatives = this.data.map(b => b.cumulative)
+    const totals = this.data.map(b => b.total)
     const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels: labels,
       datasets: [
         {
-          label: 'Series A',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: 'Balance',
+          data: cumulatives,
           borderColor: 'rgba(200, 99, 132, .7)',
+          borderWidth: 2,
+        },
+        {
+          label: 'Month results',
+          data: totals,
+          borderColor: 'rgba(15, 10, 222, .7)',
           borderWidth: 2,
         },
       ],
