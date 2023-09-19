@@ -29,23 +29,22 @@ export class CalendarMonthComponent implements OnChanges {
   private index = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['currentMonth']) {
-      this.activeDayIsOpen = false;
-      // Reload index
-      this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
-      if (this.index >= 0) {
-        this.currentMonth = this.months[this.index];
-      } else {
-        this.currentMonth = new Date();
-      }
-    }
     if (changes['months']) {
       // Reload index
       this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
       if (this.index >= 0) {
         this.currentMonth = this.months[this.index];
       } else {
+        // Outside the range
+        const lastMonth = this.months[this.months.length - 1];
         this.currentMonth = new Date();
+        if ((lastMonth.getFullYear() < this.currentMonth.getFullYear()) && (lastMonth.getMonth() < this.currentMonth.getMonth())) {
+          // After the range
+          this.currentMonth = lastMonth;
+        } else {
+          // Before the range
+          this.currentMonth = this.months[0];
+        }
       }
     }
   }
