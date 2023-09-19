@@ -1,21 +1,53 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import Chart from 'chart.js/auto';
+import { BalanceService } from '../../service/balance.service';
 
 @Component({
   selector: 'assoc-funds-balance-chart',
   templateUrl: './funds-balance-chart.component.html'
 })
-export class FundsBalanceChartComponent implements OnChanges {
+export class FundsBalanceChartComponent implements OnChanges, OnInit {
 
-  @Input() public balance: MonthlyBalance[] = [];
+  public balance: MonthlyBalance[] = [];
+
+  public months: string[] = [];
 
   public chart: any;
+
+  public readingBalance = false;
+
+  public startMonth: string | undefined;
+
+  public endMonth: string | undefined;
+
+  constructor(
+    private balanceService: BalanceService
+  ) {}
+
+  ngOnInit(): void {
+    // Read balance
+    this.readingBalance = true;
+    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+      this.balance = b;
+      this.months = this.balance.map(b => b.month);
+      this.readingBalance = false;
+      this.loadChart();
+    });
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['balance']) {
       this.loadChart();
     }
+  }
+
+  public onSelectStartMonth(event: any) {
+    this.startMonth = event.target.value;
+  }
+
+  public onSelectEndMonth(event: any) {
+    this.endMonth = event.target.value;
   }
 
   private loadChart() {
