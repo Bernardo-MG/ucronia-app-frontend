@@ -23,7 +23,17 @@ export class FundsBalanceChartComponent implements OnChanges {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.date)
+    const labels = this.balance.map(b => {
+      const substrings = b.date.match(/^[0-9]*-[0-9]*/);
+      let date;
+      if (substrings) {
+        date = substrings[0];
+      } else {
+        date = b;
+      }
+
+      return date;
+    })
     const cumulatives = this.balance.map(b => b.cumulative)
     const totals = this.balance.map(b => b.total)
 
