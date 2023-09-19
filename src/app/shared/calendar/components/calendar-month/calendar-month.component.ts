@@ -52,23 +52,19 @@ export class CalendarMonthComponent implements OnChanges {
   public onGoPrevious() {
     this.index = this.index - 1;
     this.currentMonth = this.months[this.index];
-    const year = this.currentMonth.getFullYear();
-    const monthValue = this.currentMonth.getUTCMonth() + 1;
-    const month = new Month();
-    month.year = year;
-    month.month = monthValue;
-    this.dateChange.emit(month);
+    this.goToMonth();
   }
 
   public onGoNext() {
     this.index = this.index + 1;
     this.currentMonth = this.months[this.index];
-    const year = this.currentMonth.getFullYear();
-    const monthValue = this.currentMonth.getUTCMonth() + 1;
-    const month = new Month();
-    month.year = year;
-    month.month = monthValue;
-    this.dateChange.emit(month);
+    this.goToMonth();
+  }
+
+  public onGoTo(event: any) {
+    this.currentMonth = new Date(event.target.value);
+    this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
+    this.goToMonth();
   }
 
   public isAbleToGoNext() {
@@ -95,7 +91,6 @@ export class CalendarMonthComponent implements OnChanges {
       } else {
         this.activeDayIsOpen = true;
       }
-      this.currentMonth = date;
     }
   }
 
@@ -103,16 +98,17 @@ export class CalendarMonthComponent implements OnChanges {
     this.pickDate.emit(event);
   }
 
-  public onGoTo(event: any) {
-    this.currentMonth = event.target.value;
-  }
-
-  public monthName2(date: Date) {
+  public getMonthName(date: Date) {
     return `${date.getFullYear()} ${this.monthNames[date.getUTCMonth()]}`;
   }
 
-  private getMonthName(month: number): string {
-    return this.monthNames[month - 1];
+  private goToMonth() {
+    const year = this.currentMonth.getFullYear();
+    const monthValue = this.currentMonth.getUTCMonth() + 1;
+    const month = new Month();
+    month.year = year;
+    month.month = monthValue;
+    this.dateChange.emit(month);
   }
 
 }

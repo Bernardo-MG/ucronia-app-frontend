@@ -10,7 +10,7 @@
     <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
       <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === currentMonth"
         [value]="selectionMonth">
-        {{monthName2(selectionMonth)}}</option>
+        {{getMonthName(selectionMonth)}}</option>
     </select>
   </div>
   <!-- To next month button -->
