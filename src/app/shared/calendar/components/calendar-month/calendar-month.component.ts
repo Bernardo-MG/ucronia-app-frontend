@@ -14,19 +14,13 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public events: CalendarEvent<any>[] = [];
 
-  @Input() public year = 0;
-
-  @Input() public month = 0;
-
   @Input() public months: Date[] = [];
+
+  @Input() public currentMonth = new Date();
 
   @Output() public dateChange = new EventEmitter<Month>();
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
-
-  public monthName = '';
-
-  public viewDate = new Date();
 
   public activeDayIsOpen = false;
 
@@ -35,38 +29,46 @@ export class CalendarMonthComponent implements OnChanges {
   private index = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['year'] || changes['month'] || changes['notes']) {
-      this.monthName = this.getMonthName(this.month);
+    if (changes['currentMonth']) {
       this.activeDayIsOpen = false;
-      this.viewDate = new Date(this.year, this.month - 1, 1);
       // Reload index
-      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
+      this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
+      if (this.index >= 0) {
+        this.currentMonth = this.months[this.index];
+      } else {
+        this.currentMonth = new Date();
+      }
     }
     if (changes['months']) {
       // Reload index
-      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
+      this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
+      if (this.index >= 0) {
+        this.currentMonth = this.months[this.index];
+      } else {
+        this.currentMonth = new Date();
+      }
     }
   }
 
   public onGoPrevious() {
     this.index = this.index - 1;
-    const date = this.months[this.index];
-    this.year = date.getFullYear();
-    this.month = date.getMonth() + 1;
+    this.currentMonth = this.months[this.index];
+    const year = this.currentMonth.getFullYear();
+    const monthValue = this.currentMonth.getUTCMonth() + 1;
     const month = new Month();
-    month.year = this.year;
-    month.month = this.month;
+    month.year = year;
+    month.month = monthValue;
     this.dateChange.emit(month);
   }
 
   public onGoNext() {
     this.index = this.index + 1;
-    const date = this.months[this.index];
-    this.year = date.getFullYear();
-    this.month = date.getMonth() + 1;
+    this.currentMonth = this.months[this.index];
+    const year = this.currentMonth.getFullYear();
+    const monthValue = this.currentMonth.getUTCMonth() + 1;
     const month = new Month();
-    month.year = this.year;
-    month.month = this.month;
+    month.year = year;
+    month.month = monthValue;
     this.dateChange.emit(month);
   }
 
@@ -85,21 +87,29 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onPickDate({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
+    if (isSameMonth(date, this.currentMonth)) {
       if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        (isSameDay(this.currentMonth, date) && this.activeDayIsOpen === true) ||
         events.length === 0
       ) {
         this.activeDayIsOpen = false;
       } else {
         this.activeDayIsOpen = true;
       }
-      this.viewDate = date;
+      this.currentMonth = date;
     }
   }
 
   public onSelectEvent({ event }: { event: CalendarEvent }): void {
     this.pickDate.emit(event);
+  }
+
+  public onGoTo(event: any) {
+    this.currentMonth = event.target.value;
+  }
+
+  public monthName2(date: Date) {
+    return `${date.getFullYear()} ${this.monthNames[date.getUTCMonth()]}`;
   }
 
   private getMonthName(month: number): string {
