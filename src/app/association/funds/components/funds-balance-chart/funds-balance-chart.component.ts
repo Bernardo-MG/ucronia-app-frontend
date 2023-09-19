@@ -1,33 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MonthlyBalance } from '@app/association/models/monthly-balance';
 import Chart from 'chart.js/auto';
-import { BalanceService } from '../../service/balance.service';
 
 @Component({
   selector: 'assoc-funds-balance-chart',
   templateUrl: './funds-balance-chart.component.html'
 })
-export class FundsBalanceChartComponent implements OnInit {
+export class FundsBalanceChartComponent implements OnChanges {
+
+  @Input() public balance: MonthlyBalance[] = [];
 
   public chart: any;
 
-  private data: MonthlyBalance[] = [];
-
-  constructor(
-    private balanceService: BalanceService
-  ) { }
-
-  ngOnInit(): void {
-    this.balanceService.monthly().subscribe(b => {
-      this.data = b;
-      this.createChart();
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['balance']) {
+      this.loadChart();
+    }
   }
 
-  createChart() {
-    const labels = this.data.map(b => b.date)
-    const cumulatives = this.data.map(b => b.cumulative)
-    const totals = this.data.map(b => b.total)
+  private loadChart() {
+    if (this.chart) {
+      this.chart.destroy();
+    }
+
+    const labels = this.balance.map(b => b.date)
+    const cumulatives = this.balance.map(b => b.cumulative)
+    const totals = this.balance.map(b => b.total)
+
     const data = {
       labels: labels,
       datasets: [

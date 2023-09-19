@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MonthlyBalance } from '@app/association/models/monthly-balance';
 import { Transaction } from '@app/association/models/transaction';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { Month } from '@app/shared/calendar/models/month';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { DateRouteObserver } from '@app/shared/utils/route/date/date-route-observer';
 import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
+import { BalanceService } from '../../service/balance.service';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
@@ -29,12 +31,15 @@ export class FundsFrontpageComponent {
 
   public transactions: Transaction[] = [];
 
+  public balance: MonthlyBalance[] = [];
+
   private routeActuator: RouteParametersActuator;
 
   private dateObserver: RouteParametersObserver<Date>;
 
   constructor(
     private service: TransactionCalendarService,
+    private balanceService: BalanceService,
     private router: Router,
     route: ActivatedRoute,
     private authService: AuthService
@@ -55,6 +60,7 @@ export class FundsFrontpageComponent {
         }
       }
     });
+
     // Read range
     this.service.getRange().subscribe(d => {
       this.months = d;
@@ -62,6 +68,11 @@ export class FundsFrontpageComponent {
       if ((!this.readingCalendar) && (this.year === 0)) {
         this.load(new Date());
       }
+    });
+
+    // Read balance
+    this.balanceService.monthly().subscribe(b => {
+      this.balance = b;
     });
   }
 
