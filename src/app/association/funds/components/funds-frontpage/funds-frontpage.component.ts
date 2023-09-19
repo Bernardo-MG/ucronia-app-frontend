@@ -37,6 +37,10 @@ export class FundsFrontpageComponent {
 
   private dateObserver: RouteParametersObserver<Date>;
 
+  private startDate: string | undefined;
+
+  private endDate: string | undefined;
+
   constructor(
     private service: TransactionCalendarService,
     private balanceService: BalanceService,
@@ -71,7 +75,7 @@ export class FundsFrontpageComponent {
     });
 
     // Read balance
-    this.balanceService.monthly().subscribe(b => {
+    this.balanceService.monthly(this.startDate, this.endDate).subscribe(b => {
       this.balance = b;
     });
   }

@@ -22,21 +22,6 @@ export class FeeService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined, startDate: string | undefined, endDate: string | undefined): Observable<PaginatedResponse<Fee[]>> {
-    const defaultSortName = new Sort<Fee>('memberName');
-    defaultSortName.order = 'asc';
-    const defaultSortDate = new Sort<Fee>('date');
-    defaultSortDate.order = 'desc';
-
-    const query = new PaginatedQuery<Fee>();
-    query.defaultSort = [defaultSortDate, defaultSortName];
-    query.pagination = pagination;
-    query.addParameter("startDate", startDate);
-    query.addParameter("endDate", endDate);
-
-    return this.feeApi.readAll(query);
-  }
-
   public pay(data: FeePayment): Observable<FeePayment> {
     return this.feeApi.pay(data).pipe(map(r => r.content));
   }

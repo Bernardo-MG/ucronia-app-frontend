@@ -6,15 +6,15 @@ import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
 import { Balance } from "../funds/models/balance";
 import { MonthlyBalance } from "../funds/models/monthly-balance";
+import { PaginatedQuery } from "@app/core/api/models/paginated-query";
+import { ReadApi } from "@app/core/api/read-api";
 
-export class BalanceApi {
-
-  private requestProvider: () => Request;
+export class BalanceApi extends ReadApi<Balance> {
 
   constructor(
     private http: HttpClient
   ) {
-    this.requestProvider = () => new AngularRequest(this.http, environment.apiUrl + '/balance');
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/balance'))
   }
 
   public read(): Observable<ApiResponse<Balance[]>> {
@@ -23,8 +23,8 @@ export class BalanceApi {
     return request.read();
   }
 
-  public readMonthly(): Observable<ApiResponse<MonthlyBalance[]>> {
-    const request = this.requestProvider();
+  public readMonthly(query: PaginatedQuery<MonthlyBalance>): Observable<ApiResponse<MonthlyBalance[]>> {
+    const request = this.requestWithQuery(query);
 
     request.appendRoute('/monthly');
 
