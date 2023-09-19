@@ -16,11 +16,11 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public months: Date[] = [];
 
-  @Input() public currentMonth = new Date();
-
   @Output() public dateChange = new EventEmitter<Month>();
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
+
+  public currentMonth = new Date();
 
   public activeDayIsOpen = false;
 
