@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BalanceApi } from '@app/association/api/balance-api';
-import { MonthlyBalance } from '@app/association/models/monthly-balance';
+import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import { Observable, map } from 'rxjs';
 
 @Injectable()

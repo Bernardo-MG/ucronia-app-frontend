@@ -4,8 +4,8 @@ import { Request } from "@app/core/api/request/request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
-import { Balance } from "../models/balance";
-import { MonthlyBalance } from "../models/monthly-balance";
+import { Balance } from "../funds/models/balance";
+import { MonthlyBalance } from "../funds/models/monthly-balance";
 
 export class BalanceApi {
 

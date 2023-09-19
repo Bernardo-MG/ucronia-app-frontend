@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { MonthlyBalance } from '@app/association/models/monthly-balance';
+import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import Chart from 'chart.js/auto';
 
 @Component({

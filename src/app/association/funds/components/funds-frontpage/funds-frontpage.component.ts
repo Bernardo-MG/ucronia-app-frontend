@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MonthlyBalance } from '@app/association/models/monthly-balance';
+import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import { Transaction } from '@app/association/models/transaction';
 import { AuthService } from '@app/core/authentication/services/auth.service';
 import { Month } from '@app/shared/calendar/models/month';
