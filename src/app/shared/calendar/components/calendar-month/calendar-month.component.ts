@@ -24,6 +24,8 @@ export class CalendarMonthComponent implements OnChanges {
 
   public activeDayIsOpen = false;
 
+  public viewDate = new Date();
+
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   private index = 0;
@@ -34,7 +36,7 @@ export class CalendarMonthComponent implements OnChanges {
       this.index = this.months.findIndex(d => (d.getUTCFullYear() === this.currentMonth.getUTCFullYear()) && (d.getUTCMonth() === (this.currentMonth.getUTCMonth())));
       if (this.index >= 0) {
         this.currentMonth = this.months[this.index];
-      } else {
+      } else if (this.months.length > 0) {
         // Outside the range
         const lastMonth = this.months[this.months.length - 1];
         this.currentMonth = new Date();
@@ -45,6 +47,9 @@ export class CalendarMonthComponent implements OnChanges {
           // Before the range
           this.currentMonth = this.months[0];
         }
+      } else {
+        // Empty range
+        this.currentMonth = new Date();
       }
     }
   }
@@ -82,13 +87,11 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onPickDate({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.currentMonth)) {
-      if (
-        (isSameDay(this.currentMonth, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
+    if (isSameMonth(date, this.viewDate)) {
+      if (this.activeDayIsOpen && (isSameDay(this.viewDate, date)) || events.length === 0) {
         this.activeDayIsOpen = false;
       } else {
+        this.viewDate = date;
         this.activeDayIsOpen = true;
       }
     }
@@ -108,6 +111,9 @@ export class CalendarMonthComponent implements OnChanges {
     const month = new Month();
     month.year = year;
     month.month = monthValue;
+
+    this.activeDayIsOpen = false;
+
     this.dateChange.emit(month);
   }
 
