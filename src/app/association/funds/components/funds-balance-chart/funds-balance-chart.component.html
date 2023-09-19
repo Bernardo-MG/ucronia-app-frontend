@@ -1,16 +1,21 @@
 <canvas id="balanceChart"></canvas>
 
 <div class="row">
-  <div class="col">
-    <!-- Start month -->
-    <select class="form-select" aria-label="Start month" [disabled]="readingBalance"
-      (change)="onSelectStartMonth($event)">
+  <div class="col-4">
+    Start
+  </div>
+  <div class="col-8">
+    <select class="form-select form-select-sm" aria-label="Start month" (change)="onSelectStartMonth($event)">
       <option *ngFor="let selectionMonth of months.reverse()" [selected]="selectionMonth === startMonth"
         [value]="selectionMonth">
         {{selectionMonth}}</option>
     </select>
-    <!-- End month -->
-    <select class="form-select" aria-label="End month" [disabled]="readingBalance" (change)="onSelectEndMonth($event)">
+  </div>
+  <div class="col-4">
+    End
+  </div>
+  <div class="col-8">
+    <select class="form-select form-select-sm" aria-label="End month" (change)="onSelectEndMonth($event)">
       <option *ngFor="let selectionMonth of months.reverse()" [selected]="selectionMonth === endMonth"
         [value]="selectionMonth">
         {{selectionMonth}}</option>

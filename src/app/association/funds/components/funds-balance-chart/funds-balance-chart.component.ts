@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import Chart from 'chart.js/auto';
 import { BalanceService } from '../../service/balance.service';
@@ -23,14 +23,16 @@ export class FundsBalanceChartComponent implements OnChanges, OnInit {
 
   constructor(
     private balanceService: BalanceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Read balance
     this.readingBalance = true;
     this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.balance = b;
-      this.months = this.balance.map(b => b.month);
+      this.months = this.balance.map(b => this.removeDay(b.month));
+      this.startMonth = this.months[0];
+      this.endMonth = this.months[this.months.length - 1];
       this.readingBalance = false;
       this.loadChart();
     });
@@ -55,17 +57,7 @@ export class FundsBalanceChartComponent implements OnChanges, OnInit {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => {
-      const substrings = b.month.match(/^[0-9]*-[0-9]*/);
-      let date;
-      if (substrings) {
-        date = substrings[0];
-      } else {
-        date = b;
-      }
-
-      return date;
-    })
+    const labels = this.balance.map(b => this.removeDay(b.month))
     const cumulatives = this.balance.map(b => b.cumulative)
     const totals = this.balance.map(b => b.monthlyTotal)
 
@@ -93,6 +85,18 @@ export class FundsBalanceChartComponent implements OnChanges, OnInit {
         responsive: true,
       }
     });
+  }
+
+  private removeDay(date: string) {
+    const substrings = date.match(/^[0-9]*-[0-9]*/);
+    let month;
+    if (substrings) {
+      month = substrings[0];
+    } else {
+      month = date;
+    }
+
+    return month;
   }
 
 }

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { BalanceService } from '../../service/balance.service';
 import { FundsBalanceChartComponent } from './funds-balance-chart.component';
 
 describe('FundsBalanceChartComponent', () => {
@@ -8,7 +8,10 @@ describe('FundsBalanceChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FundsBalanceChartComponent]
+      declarations: [FundsBalanceChartComponent],
+      providers: [
+        BalanceService
+      ]
     });
     fixture = TestBed.createComponent(FundsBalanceChartComponent);
     component = fixture.componentInstance;
