@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Transaction } from '@app/association/models/transaction';
+import { Transaction } from '../../models/transaction';
 
 @Component({
   selector: 'assoc-funds-info',

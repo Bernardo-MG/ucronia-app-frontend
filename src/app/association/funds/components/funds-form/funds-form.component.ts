@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Transaction } from '@app/association/models/transaction';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { Transaction } from '../../models/transaction';
 
 @Component({
   selector: 'assoc-funds-form',

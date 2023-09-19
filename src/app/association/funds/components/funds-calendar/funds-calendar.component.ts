@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Transaction } from '@app/association/models/transaction';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
+import { Transaction } from '../../models/transaction';
 
 @Component({
   selector: 'assoc-funds-calendar',

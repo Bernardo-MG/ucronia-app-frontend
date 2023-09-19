@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Transaction } from '@app/association/models/transaction';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({

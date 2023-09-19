@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TransactionApi } from '@app/association/api/transaction-api';
-import { Transaction } from '@app/association/models/transaction';
 import { map, Observable } from 'rxjs';
+import { Transaction } from '../models/transaction';
 
 @Injectable()
 export class TransactionService {

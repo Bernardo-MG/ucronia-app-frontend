@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TransactionApi } from '@app/association/api/transaction-api';
-import { Transaction } from '@app/association/models/transaction';
 import { Observable, map } from 'rxjs';
+import { Transaction } from '../models/transaction';
 
 @Injectable()
 export class TransactionCalendarService {
