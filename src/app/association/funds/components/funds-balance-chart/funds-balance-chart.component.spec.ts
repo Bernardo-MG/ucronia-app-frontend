@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BalanceService } from '../../service/balance.service';
 import { FundsBalanceChartComponent } from './funds-balance-chart.component';
@@ -8,7 +9,12 @@ describe('FundsBalanceChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FundsBalanceChartComponent],
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [
+        FundsBalanceChartComponent
+      ],
       providers: [
         BalanceService
       ]
