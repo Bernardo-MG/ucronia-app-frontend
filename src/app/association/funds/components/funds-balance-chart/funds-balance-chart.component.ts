@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import Chart from 'chart.js/auto';
 import { BalanceService } from '../../service/balance.service';
@@ -7,7 +7,7 @@ import { BalanceService } from '../../service/balance.service';
   selector: 'assoc-funds-balance-chart',
   templateUrl: './funds-balance-chart.component.html'
 })
-export class FundsBalanceChartComponent implements OnChanges, OnInit {
+export class FundsBalanceChartComponent implements OnInit {
 
   public balance: MonthlyBalance[] = [];
 
@@ -16,6 +16,8 @@ export class FundsBalanceChartComponent implements OnChanges, OnInit {
   public chart: any;
 
   public readingBalance = false;
+
+  public readingRange = false;
 
   public startMonth: string | undefined;
 
@@ -26,30 +28,38 @@ export class FundsBalanceChartComponent implements OnChanges, OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Read balance
-    this.readingBalance = true;
+    // Read balance range
+    this.readingRange = true;
     this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.balance = b;
-      this.months = this.balance.map(b => this.removeDay(b.month));
+      this.months = b.map(v => this.removeDay(v.month));
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
-      this.readingBalance = false;
-      this.loadChart();
+      this.readingRange = false;
+      this.loadBalance();
     });
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['balance']) {
-      this.loadChart();
-    }
   }
 
   public onSelectStartMonth(event: any) {
     this.startMonth = event.target.value;
+    this.loadBalance();
   }
 
   public onSelectEndMonth(event: any) {
     this.endMonth = event.target.value;
+    this.loadBalance();
+  }
+
+  public isWaiting() {
+    return (this.readingBalance || this.readingRange);
+  }
+
+  private loadBalance() {
+    this.readingBalance = true;
+    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+      this.balance = b;
+      this.readingBalance = false;
+      this.loadChart();
+    });
   }
 
   private loadChart() {

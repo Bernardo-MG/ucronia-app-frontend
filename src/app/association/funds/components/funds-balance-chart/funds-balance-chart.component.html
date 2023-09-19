@@ -5,8 +5,8 @@
     Start
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="Start month" (change)="onSelectStartMonth($event)">
-      <option *ngFor="let selectionMonth of months.reverse()" [selected]="selectionMonth === startMonth"
+    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="isWaiting()" (change)="onSelectStartMonth($event)">
+      <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === startMonth"
         [value]="selectionMonth">
         {{selectionMonth}}</option>
     </select>
@@ -15,8 +15,8 @@
     End
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="End month" (change)="onSelectEndMonth($event)">
-      <option *ngFor="let selectionMonth of months.reverse()" [selected]="selectionMonth === endMonth"
+    <select class="form-select form-select-sm" aria-label="End month" [disabled]="isWaiting()" (change)="onSelectEndMonth($event)">
+      <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === endMonth"
         [value]="selectionMonth">
         {{selectionMonth}}</option>
     </select>
