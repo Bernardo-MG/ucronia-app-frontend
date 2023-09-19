@@ -24,7 +24,7 @@ export class FundsBalanceChartComponent implements OnChanges {
     }
 
     const labels = this.balance.map(b => {
-      const substrings = b.date.match(/^[0-9]*-[0-9]*/);
+      const substrings = b.month.match(/^[0-9]*-[0-9]*/);
       let date;
       if (substrings) {
         date = substrings[0];
@@ -35,7 +35,7 @@ export class FundsBalanceChartComponent implements OnChanges {
       return date;
     })
     const cumulatives = this.balance.map(b => b.cumulative)
-    const totals = this.balance.map(b => b.total)
+    const totals = this.balance.map(b => b.monthlyTotal)
 
     const data = {
       labels: labels,

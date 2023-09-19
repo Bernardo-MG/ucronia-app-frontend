@@ -1,5 +1,5 @@
 export class MonthlyBalance {
-  date = '';
+  month = '';
   cumulative = -1;
-  total = -1;
+  monthlyTotal = -1;
 }
