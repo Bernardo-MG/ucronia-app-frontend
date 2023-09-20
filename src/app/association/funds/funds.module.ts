@@ -19,6 +19,7 @@ import { BalanceService } from './service/balance.service';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
+import { FundsCurrentBalanceComponent } from './components/funds-current-balance/funds-current-balance.component';
 
 
 
@@ -30,7 +31,8 @@ import { FundsBalanceChartComponent } from './components/funds-balance-chart/fun
     FundsFormComponent,
     FundsInfoComponent,
     FundsFrontpageComponent,
-    FundsBalanceChartComponent
+    FundsBalanceChartComponent,
+    FundsCurrentBalanceComponent
   ],
   imports: [
     CommonModule,

@@ -1,15 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { ApiResponse } from "@app/core/api/models/api-response";
-import { Request } from "@app/core/api/request/request";
+import { PaginatedQuery } from "@app/core/api/models/paginated-query";
+import { ReadApi } from "@app/core/api/read-api";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
-import { Balance } from "../funds/models/balance";
 import { MonthlyBalance } from "../funds/models/monthly-balance";
-import { PaginatedQuery } from "@app/core/api/models/paginated-query";
-import { ReadApi } from "@app/core/api/read-api";
+import { CurrentBalance } from "../funds/models/current-balance";
 
-export class BalanceApi extends ReadApi<Balance> {
+export class BalanceApi extends ReadApi<CurrentBalance> {
 
   constructor(
     private http: HttpClient
@@ -17,7 +16,7 @@ export class BalanceApi extends ReadApi<Balance> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/balance'))
   }
 
-  public read(): Observable<ApiResponse<Balance[]>> {
+  public read(): Observable<ApiResponse<CurrentBalance>> {
     const request = this.requestProvider();
 
     return request.read();
