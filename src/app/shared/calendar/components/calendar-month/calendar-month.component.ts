@@ -112,6 +112,8 @@ export class CalendarMonthComponent implements OnChanges {
     month.year = year;
     month.month = monthValue;
 
+    this.viewDate = new Date(`${year}-${monthValue}`);
+
     this.activeDayIsOpen = false;
 
     this.dateChange.emit(month);

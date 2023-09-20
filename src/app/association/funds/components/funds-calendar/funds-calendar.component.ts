@@ -11,10 +11,6 @@ import { TransactionCalendarService } from '../../service/transaction-calendar.s
 })
 export class FundsCalendarComponent {
 
-  public year = 0;
-
-  public month = 0;
-
   public months: Date[] = [];
 
   /**
@@ -34,28 +30,25 @@ export class FundsCalendarComponent {
     this.calendarService.getRange().subscribe(d => {
       this.months = d;
       // TODO: What happens if this date is not in the range?
-      if ((!this.readingCalendar) && (this.year === 0)) {
-        this.load(new Date());
+      if (!this.readingCalendar) {
+        const date = new Date();
+        this.load(date.getFullYear(), date.getMonth() + 1);
       }
     });
   }
 
   public onDateChange(date: Month) {
     // Corrects month value
-    const formattedDate = (date.year + '-' + date.month);
-    this.load(new Date(formattedDate));
+    this.load(date.year, date.month);
   }
 
   public onPickTransaction(event: CalendarEvent<{ transactionId: number }>) {
     this.router.navigate([`/funds/${event.meta?.transactionId}`]);
   }
 
-  private load(date: Date) {
-    this.readingCalendar = true
-    this.year = date.getFullYear();
-    // Corrects month value
-    this.month = date.getMonth() + 1;
-    this.calendarService.getCalendar(this.year, this.month).subscribe({
+  private load(year: number, month: number) {
+    this.readingCalendar = true;
+    this.calendarService.getCalendar(year, month).subscribe({
       next: response => {
         this.events = response.map(t => {
           const date = new Date(t.date);
