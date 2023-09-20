@@ -66,10 +66,10 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public onGoTo(event: any) {
-    const date = new Date(event.target.value);
+    const date = event.target.value.split('-');
     this.currentMonth = new Month();
-    this.currentMonth.year = date.getFullYear();
-    this.currentMonth.month = date.getMonth();
+    this.currentMonth.year = Number(date[0]);
+    this.currentMonth.month = Number(date[1]);
     this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
     this.goToMonth();
   }
@@ -104,26 +104,22 @@ export class CalendarMonthComponent implements OnChanges {
   }
 
   public getMonthName(month: Month) {
-    return `${month.year} ${this.monthNames[month.month]}`;
+    return `${month.year} ${this.monthNames[month.month - 1]}`;
   }
 
   private goToMonth() {
-    const month = new Month();
-    month.year = this.currentMonth.year;
-    month.month = this.currentMonth.month + 1;
-
-    this.viewDate = new Date(`${month.year}-${month.month}`);
+    this.viewDate = new Date(`${this.currentMonth.year}-${this.currentMonth.month}`);
 
     this.activeDayIsOpen = false;
 
-    this.changeMonth.emit(month);
+    this.changeMonth.emit(this.currentMonth);
   }
 
   private getThisMonth() {
     const date = new Date();
     const month = new Month();
     month.year = date.getFullYear();
-    month.month = date.getMonth();
+    month.month = date.getMonth() + 1;
 
     return month;
   }

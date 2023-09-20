@@ -27,14 +27,8 @@ export class FundsCalendarComponent {
 
   public ngOnInit(): void {
     // Read range
-    this.calendarService.getRange().subscribe(dates => {
-      this.months = dates.map(d => {
-        const month = new Month();
-        month.year = d.getFullYear();
-        month.month = d.getMonth();
-
-        return month;
-      });
+    this.calendarService.getRange().subscribe(months => {
+      this.months = months;
       // TODO: What happens if this date is not in the range?
       if (!this.readingCalendar) {
         const date = new Date();

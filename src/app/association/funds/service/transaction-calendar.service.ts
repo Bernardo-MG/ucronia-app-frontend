@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TransactionApi } from '@app/association/api/transaction-api';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../models/transaction';
+import { Month } from '@app/shared/calendar/models/month';
 
 @Injectable()
 export class TransactionCalendarService {
@@ -25,12 +26,12 @@ export class TransactionCalendarService {
     }
     let nextYear;
     let nextMonth;
-    if (month > 1) {
+    if (month < 12) {
       nextYear = year;
       nextMonth = month + 1;
     } else {
-      nextYear = year - 1;
-      nextMonth = 12;
+      nextYear = year + 1;
+      nextMonth = 1;
     }
 
     const previousMonthQuery = this.transactionApi.calendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
@@ -43,8 +44,15 @@ export class TransactionCalendarService {
     );
   }
 
-  public getRange(): Observable<Date[]> {
-    return this.transactionApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => new Date(m))));
+  public getRange(): Observable<Month[]> {
+    return this.transactionApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+      const date = new Date(m);
+      const month = new Month();
+      month.year = date.getFullYear();
+      month.month = date.getMonth() + 1;
+
+      return month;
+    })));
   }
 
 }
