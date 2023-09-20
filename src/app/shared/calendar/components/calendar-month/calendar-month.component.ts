@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Month } from '../../models/month';
@@ -8,7 +8,7 @@ import { Month } from '../../models/month';
   selector: 'shared-calendar-month',
   templateUrl: './calendar-month.component.html'
 })
-export class CalendarMonthComponent implements OnChanges, OnInit {
+export class CalendarMonthComponent implements OnChanges {
 
   @Input() public waiting = false;
 
@@ -20,7 +20,7 @@ export class CalendarMonthComponent implements OnChanges, OnInit {
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
 
-  public currentMonth = new Month();
+  public currentMonth = this.getThisMonth();
 
   public activeDayIsOpen = false;
 
@@ -29,13 +29,6 @@ export class CalendarMonthComponent implements OnChanges, OnInit {
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   private index = 0;
-
-  ngOnInit(): void {
-    const date = new Date();
-    this.currentMonth = new Month();
-    this.currentMonth.year = date.getFullYear();
-    this.currentMonth.month = date.getMonth();
-  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['months']) {
@@ -55,7 +48,7 @@ export class CalendarMonthComponent implements OnChanges, OnInit {
         }
       } else {
         // Empty range
-        this.currentMonth = new Month();
+        this.currentMonth = this.getThisMonth();
       }
     }
   }
@@ -115,17 +108,24 @@ export class CalendarMonthComponent implements OnChanges, OnInit {
   }
 
   private goToMonth() {
-    const year = this.currentMonth.year;
-    const monthValue = this.currentMonth.month + 1;
     const month = new Month();
-    month.year = year;
-    month.month = monthValue;
+    month.year = this.currentMonth.year;
+    month.month = this.currentMonth.month + 1;
 
-    this.viewDate = new Date(`${year}-${monthValue}`);
+    this.viewDate = new Date(`${month.year}-${month.month}`);
 
     this.activeDayIsOpen = false;
 
     this.changeMonth.emit(month);
+  }
+
+  private getThisMonth() {
+    const date = new Date();
+    const month = new Month();
+    month.year = date.getFullYear();
+    month.month = date.getMonth();
+
+    return month;
   }
 
 }
