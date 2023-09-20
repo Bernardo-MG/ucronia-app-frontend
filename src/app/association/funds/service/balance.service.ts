@@ -5,7 +5,6 @@ import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { Observable, map } from 'rxjs';
-import { CurrentBalance } from '../models/current-balance';
 
 @Injectable()
 export class BalanceService {
@@ -16,7 +15,7 @@ export class BalanceService {
     private http: HttpClient
   ) { }
 
-  public current(): Observable<CurrentBalance> {
+  public current(): Observable<MonthlyBalance> {
     return this.balanceApi.read().pipe(map(r => r.content));
   }
 
