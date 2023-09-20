@@ -37,12 +37,12 @@ export class FundsCalendarComponent {
     });
   }
 
-  public onDateChange(date: Month) {
+  public onChangeMonth(date: Month) {
     // Corrects month value
     this.load(date.year, date.month);
   }
 
-  public onPickTransaction(event: CalendarEvent<{ transactionId: number }>) {
+  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
     this.router.navigate([`/funds/${event.meta?.transactionId}`]);
   }
 

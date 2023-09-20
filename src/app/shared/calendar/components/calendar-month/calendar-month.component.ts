@@ -16,7 +16,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public months: Date[] = [];
 
-  @Output() public dateChange = new EventEmitter<Month>();
+  @Output() public changeMonth = new EventEmitter<Month>();
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
 
@@ -116,7 +116,7 @@ export class CalendarMonthComponent implements OnChanges {
 
     this.activeDayIsOpen = false;
 
-    this.dateChange.emit(month);
+    this.changeMonth.emit(month);
   }
 
 }
