@@ -11,7 +11,7 @@ import { TransactionCalendarService } from '../../service/transaction-calendar.s
 })
 export class FundsCalendarComponent {
 
-  public months: Date[] = [];
+  public months: Month[] = [];
 
   /**
    * Loading flag.
@@ -27,8 +27,14 @@ export class FundsCalendarComponent {
 
   public ngOnInit(): void {
     // Read range
-    this.calendarService.getRange().subscribe(d => {
-      this.months = d;
+    this.calendarService.getRange().subscribe(dates => {
+      this.months = dates.map(d => {
+        const month = new Month();
+        month.year = d.getFullYear();
+        month.month = d.getMonth();
+
+        return month;
+      });
       // TODO: What happens if this date is not in the range?
       if (!this.readingCalendar) {
         const date = new Date();
