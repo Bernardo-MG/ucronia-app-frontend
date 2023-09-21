@@ -1,18 +1,14 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Member } from '@app/association/models/member';
-import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
-import { MemberService } from '../../services/member.service';
-import { PaginationRequestParametersParser } from '@app/shared/utils/api/route/observer/parser/pagination-request-parameters-parser';
-import { Active } from '../../models/active';
-import { ActiveParametersParser } from '../../observer/active-parameters-parser';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Active } from '../../models/active';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-selection-list',
   templateUrl: './member-selection-list.component.html'
 })
-export class MemberSelectionListComponent implements OnInit, OnChanges {
+export class MemberSelectionListComponent implements OnChanges {
 
   @Input() public activeFilter = Active.Active;
 
@@ -22,14 +18,15 @@ export class MemberSelectionListComponent implements OnInit, OnChanges {
    * Loading flag.
    */
   public readingMembers = false;
-  
+
+  public currentPage = 0;
+
   public totalPages = 0;
 
   public totalMembers = 0;
 
   constructor(
-    private service: MemberService,
-    private route: ActivatedRoute
+    private service: MemberService
   ) {}
   
   public ngOnChanges(changes: SimpleChanges): void {
@@ -38,21 +35,8 @@ export class MemberSelectionListComponent implements OnInit, OnChanges {
     }
   }
 
-  public ngOnInit(): void {
-    // TODO: both observers should be merged into a single component
-    const paginationParser = new PaginationRequestParametersParser();
-    const activeParser = new ActiveParametersParser();
-    this.route.queryParamMap.subscribe(params => {
-      const active = activeParser.parse(params);
-      if (active) {
-        this.activeFilter = active as Active;
-      } else {
-        this.activeFilter = Active.Active;
-      }
-
-      const pagination = paginationParser.parse(params);
-      this.load(pagination);
-    });
+  public onGoTo(page: number) {
+    this.load({page});
   }
 
   private load(pagination: PaginationRequest | undefined) {
@@ -62,6 +46,7 @@ export class MemberSelectionListComponent implements OnInit, OnChanges {
       next: page => {
         this.members = page.content;
 
+        this.currentPage = page.page + 1;
         this.totalPages = page.totalPages;
         this.totalMembers = page.totalElements;
         // Reactivate view

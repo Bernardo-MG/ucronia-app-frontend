@@ -44,6 +44,6 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-route-navigation [disabled]="readingMembers" [totalPages]="totalPages">
-  </pagination-route-navigation>
+  <pagination-navigation [current]="currentPage" [pages]="totalPages" [disabled]="readingMembers" (goTo)="onGoTo($event)">
+  </pagination-navigation>
 </div>
