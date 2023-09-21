@@ -5,7 +5,7 @@ import { CoreModule } from '@app/core/core.module';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { BalanceService } from '../../service/balance.service';
-import { TransactionCalendarService } from '../../service/transaction-calendar.service';
+import { FundsCalendarService } from '../../service/funds-calendar.service';
 import { FundsBalanceChartComponent } from '../funds-balance-chart/funds-balance-chart.component';
 import { FundsCalendarComponent } from '../funds-calendar/funds-calendar.component';
 import { FundsFrontpageComponent } from './funds-frontpage.component';
@@ -29,7 +29,7 @@ describe('FundsFrontpageComponent', () => {
         FundsBalanceChartComponent
       ],
       providers: [
-        TransactionCalendarService,
+        FundsCalendarService,
         BalanceService
       ]
     })

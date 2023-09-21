@@ -6,7 +6,7 @@ import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../models/transaction';
 
 @Injectable()
-export class TransactionCalendarService {
+export class FundsCalendarService {
 
   private fundsCalendarApi = new FundsCalendarApi(this.http);
 

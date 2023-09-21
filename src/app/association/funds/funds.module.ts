@@ -16,7 +16,7 @@ import { FundsFrontpageComponent } from './components/funds-frontpage/funds-fron
 import { FundsInfoComponent } from './components/funds-info/funds-info.component';
 import { FundsRoutingModule } from './funds-routing.module';
 import { BalanceService } from './service/balance.service';
-import { TransactionCalendarService } from './service/transaction-calendar.service';
+import { FundsCalendarService } from './service/funds-calendar.service';
 import { TransactionService } from './service/transaction.service';
 import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
 import { FundsCurrentBalanceComponent } from './components/funds-current-balance/funds-current-balance.component';
@@ -50,7 +50,7 @@ import { FundsCurrentBalanceComponent } from './components/funds-current-balance
   providers: [
     BalanceService,
     TransactionService,
-    TransactionCalendarService
+    FundsCalendarService
   ]
 })
 export class FundsModule { }

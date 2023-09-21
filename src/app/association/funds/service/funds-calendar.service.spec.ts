@@ -1,10 +1,10 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TransactionCalendarService } from './transaction-calendar.service';
+import { FundsCalendarService } from './funds-calendar.service';
 
-describe('TransactionCalendarService', () => {
-  let service: TransactionCalendarService;
+describe('FundsCalendarService', () => {
+  let service: FundsCalendarService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,10 +13,10 @@ describe('TransactionCalendarService', () => {
         RouterTestingModule
       ],
       providers: [
-        TransactionCalendarService
+        FundsCalendarService
       ]
     });
-    service = TestBed.inject(TransactionCalendarService);
+    service = TestBed.inject(FundsCalendarService);
   });
 
   it('should be created', () => {

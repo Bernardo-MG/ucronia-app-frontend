@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
-import { TransactionCalendarService } from '../../service/transaction-calendar.service';
+import { FundsCalendarService } from '../../service/funds-calendar.service';
 
 @Component({
   selector: 'assoc-funds-calendar',
@@ -21,7 +21,7 @@ export class FundsCalendarComponent {
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   constructor(
-    private calendarService: TransactionCalendarService,
+    private calendarService: FundsCalendarService,
     private router: Router
   ) { }
 
