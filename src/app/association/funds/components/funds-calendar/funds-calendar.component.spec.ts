@@ -1,6 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
-import { TransactionService } from '../../service/transaction.service';
+import { FundsCalendarService } from '../../service/funds-calendar.service';
 import { FundsCalendarComponent } from './funds-calendar.component';
 
 describe('FundsCalendarComponent', () => {
@@ -10,13 +11,14 @@ describe('FundsCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        HttpClientTestingModule,
         ScheduleModule
       ],
       declarations: [
         FundsCalendarComponent
       ],
       providers: [
-        TransactionService
+        FundsCalendarService
       ]
     })
       .compileComponents();

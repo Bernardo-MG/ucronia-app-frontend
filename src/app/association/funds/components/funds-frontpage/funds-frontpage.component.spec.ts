@@ -8,6 +8,7 @@ import { BalanceService } from '../../service/balance.service';
 import { FundsCalendarService } from '../../service/funds-calendar.service';
 import { FundsBalanceChartComponent } from '../funds-balance-chart/funds-balance-chart.component';
 import { FundsCalendarComponent } from '../funds-calendar/funds-calendar.component';
+import { FundsCurrentBalanceComponent } from '../funds-current-balance/funds-current-balance.component';
 import { FundsFrontpageComponent } from './funds-frontpage.component';
 
 describe('FundsFrontpageComponent', () => {
@@ -26,7 +27,8 @@ describe('FundsFrontpageComponent', () => {
       declarations: [
         FundsFrontpageComponent,
         FundsCalendarComponent,
-        FundsBalanceChartComponent
+        FundsBalanceChartComponent,
+        FundsCurrentBalanceComponent
       ],
       providers: [
         FundsCalendarService,
