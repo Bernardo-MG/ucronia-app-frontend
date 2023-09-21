@@ -46,7 +46,7 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the previous month', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -63,7 +63,7 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the previous month when moving to the previous month', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -82,7 +82,7 @@ describe('CalendarMonthComponent', () => {
   it('should send an event notifying the date when moving to the next month', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -99,7 +99,7 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the next month when moving to the next month', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -119,10 +119,10 @@ describe('CalendarMonthComponent', () => {
   // Changing years
   // **************************************************************************
 
-  it('should send an event notifying the date when moving to the previous month when the current month is January', () => {
+  it('should send an event notifying the date when moving to the previous month and the current month is January', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2019, 1), new Month(2020, 0), new Month(2020, 1)];
+    component.months = [new Month(2019, 12), new Month(2020, 1), new Month(2020, 2)];
     component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -136,10 +136,10 @@ describe('CalendarMonthComponent', () => {
     expect(component.changeMonth.emit).toHaveBeenCalledTimes(1);
   });
 
-  it('should send an event with the previous month when moving to the previous month when the current month is January', () => {
+  it('should send an event with the previous month when moving to the previous month and the current month is January', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2019, 1), new Month(2020, 0), new Month(2020, 1)];
+    component.months = [new Month(2019, 12), new Month(2020, 1), new Month(2020, 2)];
     component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -155,10 +155,10 @@ describe('CalendarMonthComponent', () => {
     expect(component.changeMonth.emit).toHaveBeenCalledWith(date);
   });
 
-  it('should send an event notifying the date when moving to the next month when the current month is December', () => {
+  it('should send an event notifying the date when moving to the next month and the current month is December', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 10), new Month(2020, 11), new Month(2021, 0)];
+    component.months = [new Month(2020, 11), new Month(2020, 12), new Month(2021, 1)];
     component.currentMonth = new Month(2020, 12);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -175,7 +175,7 @@ describe('CalendarMonthComponent', () => {
   it('should send an event with the next month when moving to the next month when the current month is December', () => {
     spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Month(2020, 10), new Month(2020, 11), new Month(2021, 0)];
+    component.months = [new Month(2020, 11), new Month(2020, 12), new Month(2021, 1)];
     component.currentMonth = new Month(2020, 12);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -196,7 +196,7 @@ describe('CalendarMonthComponent', () => {
   // **************************************************************************
 
   it('should enable the forward button when the current month is before the end', () => {
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -210,7 +210,7 @@ describe('CalendarMonthComponent', () => {
 
   it('should enable the backward button when the current month is after the start', () => {
     component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
-    component.currentMonth = new Month(2020, 3);
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
     });
@@ -239,7 +239,7 @@ describe('CalendarMonthComponent', () => {
 
   it('should hide the backward button when the current month is equal to the start', () => {
     component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
-    component.currentMonth = new Month(2020, 2);
+    component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
     });
@@ -252,7 +252,7 @@ describe('CalendarMonthComponent', () => {
 
   it('should hide the backward button when the current month is before the start', () => {
     component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
-    component.currentMonth = new Month(2020, 1);
+    component.currentMonth = new Month(2019, 12);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
     });
@@ -264,7 +264,7 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the forward button when the current month is equal to the end', () => {
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 3);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
@@ -277,7 +277,7 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the forward button when the current month is after the end', () => {
-    component.months = [new Month(2020, 0), new Month(2020, 1), new Month(2020, 2)];
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
     component.currentMonth = new Month(2020, 4);
     component.ngOnChanges({
       months: new SimpleChange(null, component.months, true)
