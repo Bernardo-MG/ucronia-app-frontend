@@ -2,14 +2,19 @@
   <div class="row">
     <div class="col-md-2">
       <div class="pb-2">
-        <!-- Add -->
+        <!-- Register member -->
         <div class="card">
           <div class="card-body">
-            <div class="d-grid">
-              <!-- Add button -->
+            <div class="d-grid pb-2">
               <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
                 [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
                 Register member
+              </button>
+            </div>
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
+                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                Pay fee
               </button>
             </div>
           </div>
@@ -36,39 +41,27 @@
         </div>
       </div>
     </div>
-    <!-- List -->
     <div class="col-md-10">
-      <div class="card">
-        <div class="card-body">
-          <assoc-member-selection-list [activeFilter]="activeFilter">
-          </assoc-member-selection-list>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="pb-2">
-        <!-- Add -->
+      <div class="row">
+      <div class="col-lg-6">
+        <!-- Member List -->
         <div class="card">
           <div class="card-body">
-            <div class="d-grid">
-              <!-- Add button -->
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
-                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-                Pay fee
-              </button>
-            </div>
+            <assoc-member-selection-list [activeFilter]="activeFilter">
+            </assoc-member-selection-list>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- Fee calendar -->
+        <div class="card">
+          <div class="card-body">
+            <h2>Fees</h2>
+            <assoc-fee-calendar [activeFilter]="activeFilter"></assoc-fee-calendar>
           </div>
         </div>
       </div>
     </div>
-    <!-- Fee calendar -->
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-body">
-          <h2>Fees</h2>
-          <assoc-fee-calendar [activeFilter]="activeFilter"></assoc-fee-calendar>
-        </div>
-      </div>
     </div>
   </div>
 </layout-article>
