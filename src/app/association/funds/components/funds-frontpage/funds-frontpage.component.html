@@ -1,0 +1,48 @@
+<layout-article>
+  <div class="row pb-2">
+    <div class="col-md-3 offset-md-3 pb-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Balance timeline</h5>
+          <assoc-funds-balance-chart></assoc-funds-balance-chart>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Current balance</h5>
+          <assoc-funds-current-balance></assoc-funds-current-balance>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="pb-2">
+        <!-- Add -->
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="d-grid">
+                <!-- Add button -->
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
+                  [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                  Add transaction
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <h2>Transactions</h2>
+          <assoc-funds-calendar></assoc-funds-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-article>

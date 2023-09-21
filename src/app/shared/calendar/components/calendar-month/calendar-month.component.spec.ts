@@ -44,13 +44,12 @@ describe('CalendarMonthComponent', () => {
   // **************************************************************************
 
   it('should send an event notifying the date when moving to the previous month', () => {
-    spyOn(component.dateChange, 'emit');
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -58,17 +57,16 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
-    expect(component.dateChange.emit).toHaveBeenCalledTimes(1);
+    expect(component.changeMonth.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should send an event with the previous month when moving to the previous month', () => {
-    spyOn(component.dateChange, 'emit');
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -76,21 +74,18 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
-    const date = new Month();
-    date.year = 2020;
-    date.month = 1;
+    const date = new Month(2020, 1);
 
-    expect(component.dateChange.emit).toHaveBeenCalledWith(date);
+    expect(component.changeMonth.emit).toHaveBeenCalledWith(date);
   });
 
   it('should send an event notifying the date when moving to the next month', () => {
-    spyOn(component.dateChange, 'emit');
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -98,17 +93,16 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
-    expect(component.dateChange.emit).toHaveBeenCalledTimes(1);
+    expect(component.changeMonth.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should send an event with the next month when moving to the next month', () => {
-    spyOn(component.dateChange, 'emit');
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -116,25 +110,22 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
-    const date = new Month();
-    date.year = 2020;
-    date.month = 3;
+    const date = new Month(2020, 3);
 
-    expect(component.dateChange.emit).toHaveBeenCalledWith(date);
+    expect(component.changeMonth.emit).toHaveBeenCalledWith(date);
   });
 
   // **************************************************************************
   // Changing years
   // **************************************************************************
 
-  it('should send an event notifying the date when moving to the previous month when the current month is January', () => {
-    spyOn(component.dateChange, 'emit');
+  it('should send an event notifying the date when moving to the previous month and the current month is January', () => {
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2019, 11), new Date(2020, 0), new Date(2020, 1)];
-    component.year = 2020;
-    component.month = 1;
+    component.months = [new Month(2019, 12), new Month(2020, 1), new Month(2020, 2)];
+    component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -142,17 +133,16 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
-    expect(component.dateChange.emit).toHaveBeenCalledTimes(1);
+    expect(component.changeMonth.emit).toHaveBeenCalledTimes(1);
   });
 
-  it('should send an event with the previous month when moving to the previous month when the current month is January', () => {
-    spyOn(component.dateChange, 'emit');
+  it('should send an event with the previous month when moving to the previous month and the current month is January', () => {
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2019, 11), new Date(2020, 0), new Date(2020, 1)];
-    component.year = 2020;
-    component.month = 1;
+    component.months = [new Month(2019, 12), new Month(2020, 1), new Month(2020, 2)];
+    component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -160,21 +150,18 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#previousMonthButton'));
     button.triggerEventHandler('click');
 
-    const date = new Month();
-    date.year = 2019;
-    date.month = 12;
+    const date = new Month(2019, 12);
 
-    expect(component.dateChange.emit).toHaveBeenCalledWith(date);
+    expect(component.changeMonth.emit).toHaveBeenCalledWith(date);
   });
 
-  it('should send an event notifying the date when moving to the next month when the current month is December', () => {
-    spyOn(component.dateChange, 'emit');
+  it('should send an event notifying the date when moving to the next month and the current month is December', () => {
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 10), new Date(2020, 11), new Date(2021, 0)];
-    component.year = 2020;
-    component.month = 12;
+    component.months = [new Month(2020, 11), new Month(2020, 12), new Month(2021, 1)];
+    component.currentMonth = new Month(2020, 12);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -182,17 +169,16 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
-    expect(component.dateChange.emit).toHaveBeenCalledTimes(1);
+    expect(component.changeMonth.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should send an event with the next month when moving to the next month when the current month is December', () => {
-    spyOn(component.dateChange, 'emit');
+    spyOn(component.changeMonth, 'emit');
 
-    component.months = [new Date(2020, 10), new Date(2020, 11), new Date(2021, 0)];
-    component.year = 2020;
-    component.month = 12;
+    component.months = [new Month(2020, 11), new Month(2020, 12), new Month(2021, 1)];
+    component.currentMonth = new Month(2020, 12);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -200,11 +186,9 @@ describe('CalendarMonthComponent', () => {
     const button = fixture.debugElement.query(By.css('#nextMonthButton'));
     button.triggerEventHandler('click');
 
-    const date = new Month();
-    date.year = 2021;
-    date.month = 1;
+    const date = new Month(2021, 1);
 
-    expect(component.dateChange.emit).toHaveBeenCalledWith(date);
+    expect(component.changeMonth.emit).toHaveBeenCalledWith(date);
   });
 
   // **************************************************************************
@@ -212,11 +196,10 @@ describe('CalendarMonthComponent', () => {
   // **************************************************************************
 
   it('should enable the forward button when the current month is before the end', () => {
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -226,11 +209,10 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should enable the backward button when the current month is after the start', () => {
-    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
-    component.year = 2020;
-    component.month = 3;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 2);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -256,11 +238,10 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the backward button when the current month is equal to the start', () => {
-    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
-    component.year = 2020;
-    component.month = 2;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 1);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -270,11 +251,10 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the backward button when the current month is before the start', () => {
-    component.months = [new Date(2020, 1), new Date(2020, 2), new Date(2020, 3)];
-    component.year = 2020;
-    component.month = 1;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2019, 12);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -284,11 +264,10 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the forward button when the current month is equal to the end', () => {
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 3;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 3);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();
@@ -298,11 +277,10 @@ describe('CalendarMonthComponent', () => {
   });
 
   it('should hide the forward button when the current month is after the end', () => {
-    component.months = [new Date(2020, 0), new Date(2020, 1), new Date(2020, 2)];
-    component.year = 2020;
-    component.month = 4;
+    component.months = [new Month(2020, 1), new Month(2020, 2), new Month(2020, 3)];
+    component.currentMonth = new Month(2020, 4);
     component.ngOnChanges({
-      month: new SimpleChange(null, component.month, true)
+      months: new SimpleChange(null, component.months, true)
     });
 
     fixture.detectChanges();

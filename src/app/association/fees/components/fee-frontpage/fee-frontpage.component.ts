@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
 import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
+import { AuthService } from '@app/core/authentication/services/auth.service';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
-import { RouteParametersObserver } from '@app/shared/utils/route/observer/route-params-observer';
 import { YearRouteObserver } from '../../observer/year-route-observer';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
-import { AuthService } from '@app/core/authentication/services/auth.service';
 
 
 @Component({

@@ -14,60 +14,62 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public events: CalendarEvent<any>[] = [];
 
-  @Input() public year = 0;
+  @Input() public months: Month[] = [];
 
-  @Input() public month = 0;
-
-  @Input() public months: Date[] = [];
-
-  @Output() public dateChange = new EventEmitter<Month>();
+  @Output() public changeMonth = new EventEmitter<Month>();
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
 
-  public monthName = '';
-
-  public viewDate = new Date();
+  public currentMonth = this.getThisMonth();
 
   public activeDayIsOpen = false;
+
+  public viewDate = new Date();
 
   private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   private index = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['year'] || changes['month'] || changes['notes']) {
-      this.monthName = this.getMonthName(this.month);
-      this.activeDayIsOpen = false;
-      this.viewDate = new Date(this.year, this.month - 1, 1);
-      // Reload index
-      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
-    }
     if (changes['months']) {
       // Reload index
-      this.index = this.months.findIndex(d => (d.getFullYear() === this.year) && (d.getMonth() === (this.month - 1)));
+      this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
+      if (this.index >= 0) {
+        this.currentMonth = this.months[this.index];
+      } else if (this.months.length > 0) {
+        // Outside the range
+        const lastMonth = this.months[this.months.length - 1];
+        if ((lastMonth.year < this.currentMonth.year) && (lastMonth.month < this.currentMonth.month)) {
+          // After the range
+          this.currentMonth = lastMonth;
+        } else {
+          // Before the range
+          this.currentMonth = this.months[0];
+        }
+      } else {
+        // Empty range
+        this.currentMonth = this.getThisMonth();
+      }
     }
   }
 
   public onGoPrevious() {
     this.index = this.index - 1;
-    const date = this.months[this.index];
-    this.year = date.getFullYear();
-    this.month = date.getMonth() + 1;
-    const month = new Month();
-    month.year = this.year;
-    month.month = this.month;
-    this.dateChange.emit(month);
+    this.currentMonth = this.months[this.index];
+    this.goToMonth();
   }
 
   public onGoNext() {
     this.index = this.index + 1;
-    const date = this.months[this.index];
-    this.year = date.getFullYear();
-    this.month = date.getMonth() + 1;
-    const month = new Month();
-    month.year = this.year;
-    month.month = this.month;
-    this.dateChange.emit(month);
+    this.currentMonth = this.months[this.index];
+    this.goToMonth();
+  }
+
+  public onGoTo(event: any) {
+    const date = event.target.value.split('-');
+    this.currentMonth = new Month(Number(date[0]), Number(date[1]));
+    this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
+    this.goToMonth();
   }
 
   public isAbleToGoNext() {
@@ -86,15 +88,12 @@ export class CalendarMonthComponent implements OnChanges {
 
   public onPickDate({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
+      if (this.activeDayIsOpen && (isSameDay(this.viewDate, date)) || events.length === 0) {
         this.activeDayIsOpen = false;
       } else {
+        this.viewDate = date;
         this.activeDayIsOpen = true;
       }
-      this.viewDate = date;
     }
   }
 
@@ -102,8 +101,23 @@ export class CalendarMonthComponent implements OnChanges {
     this.pickDate.emit(event);
   }
 
-  private getMonthName(month: number): string {
-    return this.monthNames[month - 1];
+  public getMonthName(month: Month) {
+    return `${month.year} ${this.monthNames[month.month - 1]}`;
+  }
+
+  private goToMonth() {
+    this.viewDate = new Date(`${this.currentMonth.year}-${this.currentMonth.month}`);
+
+    this.activeDayIsOpen = false;
+
+    this.changeMonth.emit(this.currentMonth);
+  }
+
+  private getThisMonth() {
+    const date = new Date();
+    const month = new Month(date.getFullYear(), date.getMonth() + 1);
+
+    return month;
   }
 
 }
