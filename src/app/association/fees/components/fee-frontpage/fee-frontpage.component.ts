@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
-import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
+import { Active } from '@app/association/membership/models/active';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
-import { YearRouteObserver } from '../../observer/year-route-observer';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 
 @Component({
@@ -16,7 +11,7 @@ export class FeeFrontpageComponent implements OnInit {
 
   public createPermission = false;
 
-  public onlyActive = true;
+  public activeFilter = Active.Active;
 
   constructor(
     private authService: AuthService
@@ -27,8 +22,9 @@ export class FeeFrontpageComponent implements OnInit {
     this.createPermission = this.authService.hasPermission("fee", "create");
   }
 
-  public onFilterActiveMembers(event: any) {
-    this.onlyActive = event.checked;
+  public onChangeActiveFilter(event: any) {
+    const value = event.target.value as 'Active' | 'Inactive' | 'All';
+    this.activeFilter = (Active[value] as Active);
   }
 
 }

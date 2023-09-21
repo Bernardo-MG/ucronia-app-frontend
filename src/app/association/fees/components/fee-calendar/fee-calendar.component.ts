@@ -6,6 +6,7 @@ import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
 import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { YearRouteObserver } from '../../observer/year-route-observer';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { Active } from '@app/association/membership/models/active';
 
 @Component({
   selector: 'assoc-fee-calendar',
@@ -13,7 +14,7 @@ import { FeeCalendarService } from '../../services/fee-calendar.service';
 })
 export class FeeCalendarComponent implements OnInit, OnChanges {
 
-  @Input() public onlyActive = true;
+  @Input() public activeFilter = Active.Active;
 
   public year = new Date().getFullYear();
 
@@ -66,7 +67,7 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['onlyActive']) {
+    if (changes['activeFilter']) {
       this.load(this.year);
     }
   }
@@ -109,7 +110,7 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
     this.readingCalendar = true;
     this.routeActuator.addParameters({ year });
 
-    this.service.getCalendar(year, this.onlyActive).subscribe({
+    this.service.getCalendar(year, this.activeFilter).subscribe({
       next: data => {
         this.rows = data;
         this.readingCalendar = false;

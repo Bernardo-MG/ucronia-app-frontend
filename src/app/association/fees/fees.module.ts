@@ -32,6 +32,9 @@ import { FeeService } from './services/fee.service';
     FeePayFormComponent,
     FeeInfoComponent
   ],
+  exports: [
+    FeeCalendarComponent
+  ],
   imports: [
     CommonModule,
     FeesRoutingModule,

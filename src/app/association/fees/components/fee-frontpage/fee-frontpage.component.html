@@ -24,11 +24,12 @@
                 Filters
               </div>
               <div class="col-8">
-                <div class="form-check form-switch">
-                  <input id="onlyActive" type="checkbox" [(ngModel)]="onlyActive"
-                    (change)="onFilterActiveMembers($event.target)" class="form-check-input">
-                  <label for="onlyActive" class="form-check-label">Only active</label>
-                </div>
+                <select class="form-select form-select-sm" aria-label="Filter member status"
+                  (change)="onChangeActiveFilter($event)">
+                  <option [selected]="activeFilter === 'active'" value="Active">Active</option>
+                  <option [selected]="activeFilter === 'inactive'" value="Inactive">Inactive</option>
+                  <option [selected]="activeFilter === 'all'" value="All">All</option>
+                </select>
               </div>
             </div>
           </div>
@@ -40,7 +41,7 @@
       <div class="card">
         <div class="card-body">
           <h2>Fees</h2>
-          <assoc-fee-calendar [onlyActive]="onlyActive"></assoc-fee-calendar>
+          <assoc-fee-calendar [activeFilter]="activeFilter"></assoc-fee-calendar>
         </div>
       </div>
     </div>
