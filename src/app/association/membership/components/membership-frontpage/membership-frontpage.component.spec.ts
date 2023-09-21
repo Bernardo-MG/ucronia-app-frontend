@@ -4,7 +4,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { MemberService } from '../../services/member.service';
+import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 import { MemberSelectionListComponent } from '../member-selection-list/member-selection-list.component';
 import { MembershipFrontpageComponent } from './membership-frontpage.component';
 
@@ -23,10 +25,12 @@ describe('MembershipFrontpageComponent', () => {
       ],
       declarations: [
         MembershipFrontpageComponent,
-        MemberSelectionListComponent
+        MemberSelectionListComponent,
+        FeeCalendarComponent
       ],
       providers: [
-        MemberService
+        MemberService,
+        FeeCalendarService
       ]
     })
       .compileComponents();

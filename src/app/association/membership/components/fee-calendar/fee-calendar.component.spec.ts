@@ -1,7 +1,10 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarComponent } from './fee-calendar.component';
 
 describe('FeeCalendarComponent', () => {
@@ -11,11 +14,16 @@ describe('FeeCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
         IconsModule,
         LayoutModule
       ],
       declarations: [
         FeeCalendarComponent
+      ],
+      providers: [
+        FeeCalendarService
       ]
     })
       .compileComponents();
@@ -38,12 +46,10 @@ describe('FeeCalendarComponent', () => {
   // **************************************************************************
 
   it('should enable the backward button when the current year is after the start', () => {
-    component.years = [2020, 2021];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020, 2021, 2022] };
     component.year = 2021;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -53,12 +59,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should enable the forward button when the current year is before the end', () => {
-    component.years = [2019, 2020];
+    component.range = { years: [2020, 2021, 2022] };
+    component.year = 2021;
     component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
-    component.year = 2019;
-    component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -68,12 +72,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should enable the backward button when the current year is inside the range', () => {
-    component.years = [2019, 2020, 2021];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2019, 2020, 2021] };
     component.year = 2020;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -83,12 +85,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should enable the forward button when the current year is inside the range', () => {
-    component.years = [2019, 2020, 2021];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2019, 2020, 2021] };
     component.year = 2020;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -114,12 +114,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the backward button when the current year is before the range', () => {
-    component.years = [2020];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020] };
     component.year = 2019;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -129,12 +127,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the forward button when the current year is before the range', () => {
-    component.years = [2020];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020] };
     component.year = 2019;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -144,12 +140,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the backward button when the current year is before the range', () => {
-    component.years = [2020];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020] };
     component.year = 2021;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -159,12 +153,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the forward button when the current year is before the range', () => {
-    component.years = [2020];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020] };
     component.year = 2021;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -174,12 +166,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the forward button when the current year is equal to the end', () => {
-    component.years = [2019, 2020];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2019, 2020] };
     component.year = 2020;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();
@@ -189,12 +179,10 @@ describe('FeeCalendarComponent', () => {
   });
 
   it('should hide the backward button when the current year is equal to the start', () => {
-    component.years = [2020, 2021];
-    component.ngOnChanges({
-      years: new SimpleChange(null, component.years, true)
-    });
+    component.range = { years: [2020, 2021] };
     component.year = 2020;
     component.ngOnChanges({
+      range: new SimpleChange(null, component.range, true),
       year: new SimpleChange(null, component.year, true)
     });
     fixture.detectChanges();

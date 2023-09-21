@@ -6,10 +6,10 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
-import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from '../../components/fee-info/fee-info.component';
+import { FeeService } from '../../services/fee.service';
+import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
 import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
-import { FeeService } from '../../../fees/services/fee.service';
 import { FeeDetailsComponent } from './fee-details.component';
 
 describe('FeeDetailsComponent', () => {

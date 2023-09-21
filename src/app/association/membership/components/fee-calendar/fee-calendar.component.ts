@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/membership/models/active';
 import { FeeCalendarRange } from '@app/association/membership/models/fee-calendar-range';
 import { FeeMonth } from '../../models/fee-month';
@@ -14,7 +13,7 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
 
   @Input() public activeFilter = Active.Active;
 
-  public year = new Date().getFullYear();
+  @Input() public year = new Date().getFullYear();
 
   /**
    * Loading flag. Shows the loading visual cue.
@@ -30,8 +29,6 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
   public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   constructor(
-    router: Router,
-    route: ActivatedRoute,
     private service: FeeCalendarService
   ) { }
 
@@ -53,6 +50,9 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['activeFilter']) {
       this.load(this.year);
+    }
+    if (changes['year']) {
+      this.index = this.range.years.indexOf(this.year);
     }
   }
 
