@@ -10,10 +10,10 @@ import { ActiveParametersParser } from '../../observer/active-parameters-parser'
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'assoc-member-frontpage',
-  templateUrl: './member-frontpage.component.html'
+  selector: 'assoc-membership-frontpage',
+  templateUrl: './membership-frontpage.component.html'
 })
-export class MemberFrontpageComponent implements OnInit {
+export class MembershipFrontpageComponent implements OnInit {
 
   public members: Member[] = [];
 

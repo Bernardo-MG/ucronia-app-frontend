@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
-import { MemberFrontpageComponent } from './components/member-frontpage/member-frontpage.component';
+import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 
 
 const routes: Routes = [
-  { path: '', component: MemberFrontpageComponent },
+  { path: '', component: MembershipFrontpageComponent },
   { path: 'register', component: MemberCreateComponent },
   { path: ':id', component: MemberDetailsComponent }
 ];
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MembersRoutingModule { }
+export class MembershipRoutingModule { }

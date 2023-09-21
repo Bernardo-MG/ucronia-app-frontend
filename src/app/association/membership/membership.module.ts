@@ -10,17 +10,17 @@ import { MemberCreateFormComponent } from './components/member-create-form/membe
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { MemberEditionFormComponent } from './components/member-edit-form/member-edit-form.component';
-import { MemberFrontpageComponent } from './components/member-frontpage/member-frontpage.component';
+import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
 import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
-import { MembersRoutingModule } from './members-routing.module';
+import { MembershipRoutingModule } from './membership-routing.module';
 import { MemberService } from './services/member.service';
 
 
 
 @NgModule({
   declarations: [
-    MemberFrontpageComponent,
+    MembershipFrontpageComponent,
     MemberDetailsComponent,
     MemberCreateComponent,
     MemberCreateFormComponent,
@@ -30,7 +30,7 @@ import { MemberService } from './services/member.service';
   ],
   imports: [
     CommonModule,
-    MembersRoutingModule,
+    MembershipRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
@@ -43,4 +43,4 @@ import { MemberService } from './services/member.service';
     MemberService
   ]
 })
-export class MembersModule { }
+export class MembershipModule { }

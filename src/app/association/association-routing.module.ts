@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
-const memberModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
+const memberModule = () => import('@app/association/membership/membership.module').then(m => m.MembershipModule);
 const feeModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
 const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
