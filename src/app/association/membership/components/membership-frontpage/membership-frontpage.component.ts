@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Member } from '@app/association/models/member';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { AuthService } from '@app/core/authentication/services/auth.service';
-import { PaginationRequestParametersParser } from '@app/shared/utils/api/route/observer/parser/pagination-request-parameters-parser';
-import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
 import { Active } from '../../models/active';
-import { ActiveParametersParser } from '../../observer/active-parameters-parser';
-import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-membership-frontpage',
@@ -15,75 +8,22 @@ import { MemberService } from '../../services/member.service';
 })
 export class MembershipFrontpageComponent implements OnInit {
 
-  public members: Member[] = [];
-
-  /**
-   * Loading flag.
-   */
-  public readingMembers = false;
-
   public createPermission = false;
 
   public activeFilter = Active.Active;
 
-  public totalPages = 0;
-
-  public totalMembers = 0;
-
-  private routeActuator;
-
   constructor(
-    private service: MemberService,
-    private route: ActivatedRoute,
-    router: Router,
     private authService: AuthService
-  ) {
-    this.routeActuator = new RouteParametersActuator(router);
-  }
+  ) {}
 
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authService.hasPermission("member", "create");
-
-    // TODO: both observers should be merged into a single component
-    const paginationParser = new PaginationRequestParametersParser();
-    const activeParser = new ActiveParametersParser();
-    this.route.queryParamMap.subscribe(params => {
-      const active = activeParser.parse(params);
-      if (active) {
-        this.activeFilter = active as Active;
-      } else {
-        this.activeFilter = Active.Active;
-      }
-
-      const pagination = paginationParser.parse(params);
-      this.load(pagination);
-    });
   }
 
   public onChangeActiveFilter(event: any) {
     const value = event.target.value as 'Active' | 'Inactive' | 'All';
     this.activeFilter = (Active[value] as Active);
-    this.routeActuator.addParameters({ page: undefined, active: this.activeFilter });
-  }
-
-  private load(pagination: PaginationRequest | undefined) {
-    this.readingMembers = true;
-
-    this.service.getAll(pagination, this.activeFilter).subscribe({
-      next: page => {
-        this.members = page.content;
-
-        this.totalPages = page.totalPages;
-        this.totalMembers = page.totalElements;
-        // Reactivate view
-        this.readingMembers = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingMembers = false;
-      }
-    });
   }
 
 }

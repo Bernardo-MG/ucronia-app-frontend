@@ -24,7 +24,8 @@
                 Filters
               </div>
               <div class="col-8">
-                <select class="form-select form-select-sm" aria-label="Filter member status" (change)="onChangeActiveFilter($event)">
+                <select class="form-select form-select-sm" aria-label="Filter member status"
+                  (change)="onChangeActiveFilter($event)">
                   <option [selected]="activeFilter === 'active'" value="Active">Active</option>
                   <option [selected]="activeFilter === 'inactive'" value="Inactive">Inactive</option>
                   <option [selected]="activeFilter === 'all'" value="All">All</option>
@@ -39,16 +40,8 @@
     <div class="col-md-10">
       <div class="card">
         <div class="card-body">
-          <h2>Members</h2>
-          <p>Total: {{totalMembers}}</p>
-          <layout-waiting-wrapper [waiting]="readingMembers">
-            <assoc-member-selection-list [members]="members">
-            </assoc-member-selection-list>
-          </layout-waiting-wrapper>
-        </div>
-        <div class="d-flex justify-content-center mt-1">
-          <pagination-route-navigation [disabled]="readingMembers" [totalPages]="totalPages">
-          </pagination-route-navigation>
+          <assoc-member-selection-list [activeFilter]="activeFilter">
+          </assoc-member-selection-list>
         </div>
       </div>
     </div>
