@@ -23,7 +23,7 @@ export class LayoutService {
 
     const associationLinks = this.filterNodes([
       { title: 'Fees', path: '/fees', resource: 'fee' },
-      { title: 'Members', path: '/members', resource: 'member' },
+      { title: 'Members', path: '/membership', resource: 'membership' },
       { title: 'Funds', path: '/funds', resource: 'funds' },
       { title: 'Configuration', path: '/configuration', resource: 'association_configuration' }
     ]);
