@@ -27,19 +27,14 @@ export class MemberSelectionListComponent implements OnInit, OnChanges {
 
   public totalMembers = 0;
 
-  private routeActuator;
-
   constructor(
     private service: MemberService,
-    private route: ActivatedRoute,
-    router: Router
-  ) {
-    this.routeActuator = new RouteParametersActuator(router);
-  }
+    private route: ActivatedRoute
+  ) {}
   
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['activeFilter']) {
-      this.routeActuator.addParameters({ page: undefined, active: this.activeFilter });
+      this.load(undefined);
     }
   }
 
