@@ -67,9 +67,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   public onGoTo(event: any) {
     const date = event.target.value.split('-');
-    this.currentMonth = new Month();
-    this.currentMonth.year = Number(date[0]);
-    this.currentMonth.month = Number(date[1]);
+    this.currentMonth = new Month(Number(date[0]), Number(date[1]));
     this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
     this.goToMonth();
   }
@@ -117,9 +115,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   private getThisMonth() {
     const date = new Date();
-    const month = new Month();
-    month.year = date.getFullYear();
-    month.month = date.getMonth() + 1;
+    const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
     return month;
   }

@@ -47,9 +47,7 @@ export class FundsCalendarService {
   public getRange(): Observable<Month[]> {
     return this.fundsCalendarApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
       const date = new Date(m);
-      const month = new Month();
-      month.year = date.getFullYear();
-      month.month = date.getMonth() + 1;
+      const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
       return month;
     })));
