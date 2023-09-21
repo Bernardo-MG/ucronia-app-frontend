@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TransactionApi } from '@app/association/api/transaction-api';
+import { FundsCalendarApi } from '@app/association/api/funds-calendar-api';
+import { Month } from '@app/shared/calendar/models/month';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../models/transaction';
-import { Month } from '@app/shared/calendar/models/month';
 
 @Injectable()
 export class TransactionCalendarService {
 
-  private transactionApi = new TransactionApi(this.http);
+  private fundsCalendarApi = new FundsCalendarApi(this.http);
 
   constructor(
     private http: HttpClient
@@ -34,9 +34,9 @@ export class TransactionCalendarService {
       nextMonth = 1;
     }
 
-    const previousMonthQuery = this.transactionApi.calendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
-    const thisMonthQuery = this.transactionApi.calendarMonth(year, month).pipe(map(r => r.content));
-    const nextMonthQuery = this.transactionApi.calendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
+    const previousMonthQuery = this.fundsCalendarApi.calendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
+    const thisMonthQuery = this.fundsCalendarApi.calendarMonth(year, month).pipe(map(r => r.content));
+    const nextMonthQuery = this.fundsCalendarApi.calendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
 
     return concat(previousMonthQuery, thisMonthQuery, nextMonthQuery).pipe(
       mergeMap((data) => data), // Flatten the arrays emitted by each observable
@@ -45,7 +45,7 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.transactionApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+    return this.fundsCalendarApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
       const date = new Date(m);
       const month = new Month();
       month.year = date.getFullYear();

@@ -12,7 +12,7 @@ export class BalanceApi extends ReadApi<MonthlyBalance> {
   constructor(
     private http: HttpClient
   ) {
-    super(() => new AngularRequest(this.http, environment.apiUrl + '/balance'))
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/funds/balance'))
   }
 
   public read(): Observable<ApiResponse<MonthlyBalance>> {
