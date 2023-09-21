@@ -21,9 +21,9 @@ export class FeeCalendarService {
     const query = new PaginatedQuery<UserFeeCalendar>();
     query.sort = [new Sort<UserFeeCalendar>("memberName")];
     if (active === Active.Active) {
-      query.addParameter("active", true);
+      query.addParameter("status", 'ACTIVE');
     } else if (active === Active.Inactive) {
-      query.addParameter("active", 'false');
+      query.addParameter("status", 'INACTIVE');
     }
 
     return this.feeApi.calendarYear(year, query)

@@ -28,9 +28,9 @@ export class MemberService {
     query.defaultSort = [defaultSortName, defaultSortSurname];
     query.pagination = pagination;
     if (active === Active.Active) {
-      query.addParameter("active", true);
+      query.addParameter("status", 'ACTIVE');
     } else if (active === Active.Inactive) {
-      query.addParameter("active", 'false');
+      query.addParameter("status", 'INACTIVE');
     }
 
     return this.memberApi.readAll(query);
