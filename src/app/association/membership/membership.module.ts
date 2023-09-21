@@ -22,6 +22,8 @@ import { MemberInfoComponent } from './components/member-info/member-info.compon
 import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
 import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 import { MembershipRoutingModule } from './membership-routing.module';
+import { FeeCalendarService } from './services/fee-calendar.service';
+import { FeeService } from './services/fee.service';
 import { MemberService } from './services/member.service';
 
 
@@ -56,7 +58,9 @@ import { MemberService } from './services/member.service';
     FontAwesomeModule
   ],
   providers: [
-    MemberService
+    MemberService,
+    FeeCalendarService,
+    FeeService
   ]
 })
 export class MembershipModule { }
