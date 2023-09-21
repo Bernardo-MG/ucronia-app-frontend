@@ -1,9 +1,9 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Fee } from '@app/association/models/fee';
-import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthService } from '@app/core/authentication/services/auth.service';
+import { Fee } from '../../models/fee';
+import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
 
 @Component({

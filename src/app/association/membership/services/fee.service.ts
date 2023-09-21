@@ -2,14 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeeApi } from '@app/association/api/fee-api';
 import { MemberApi } from '@app/association/api/member-api';
-import { Fee } from '@app/association/models/fee';
-import { Member } from '@app/association/models/member';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
+import { Fee } from '../models/fee';
 import { FeePayment } from '../models/fee-payment';
+import { Member } from '../models/member';
 
 @Injectable()
 export class FeeService {

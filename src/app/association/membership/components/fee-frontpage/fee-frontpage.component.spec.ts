@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
-import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
+import { FeeCalendarComponent } from '../../../membership/components/fee-calendar/fee-calendar.component';
 import { FeeFrontpageComponent } from './fee-frontpage.component';
 
 describe('FeeFrontpageComponent', () => {

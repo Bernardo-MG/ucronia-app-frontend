@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Member } from '@app/association/models/member';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Active } from '../../models/active';
+import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
 @Component({

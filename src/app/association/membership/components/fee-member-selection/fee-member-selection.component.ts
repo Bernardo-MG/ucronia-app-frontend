@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Member } from '@app/association/models/member';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Member } from '../../models/member';
 
 @Component({
   selector: 'assoc-member-selection',
-  templateUrl: './member-selection.component.html',
-  styleUrls: ['./member-selection.component.sass']
+  templateUrl: './fee-member-selection.component.html',
+  styleUrls: ['./fee-member-selection.component.sass']
 })
-export class MemberSelectionComponent {
+export class FeeMemberSelectionComponent {
 
   @Input() public waiting = false;
 

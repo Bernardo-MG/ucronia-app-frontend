@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
-import { FeePayment } from "@app/association/fees/models/fee-payment";
-import { Fee } from "@app/association/models/fee";
-import { FeeCalendarRange } from "@app/association/models/fee-calendar-range";
-import { UserFeeCalendar } from "@app/association/models/user-fee-calendar";
+import { FeeCalendarRange } from "@app/association/membership/models/fee-calendar-range";
+import { FeePayment } from "@app/association/membership/models/fee-payment";
+import { CrudApi } from "@app/core/api/crud-api";
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedQuery } from "@app/core/api/models/paginated-query";
 import { AngularRequest } from "@app/core/api/request/angular-request";
-import { CrudApi } from "@app/core/api/crud-api";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
+import { Fee } from "../membership/models/fee";
+import { UserFeeCalendar } from "../membership/models/user-fee-calendar";
 
 export class FeeApi extends CrudApi<Fee> {
 

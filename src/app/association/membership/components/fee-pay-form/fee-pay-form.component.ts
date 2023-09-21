@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Member } from '@app/association/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faAdd, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FeePayment } from '../../models/fee-payment';
+import { Member } from '../../models/member';
 
 @Component({
   selector: 'assoc-fee-pay-form',

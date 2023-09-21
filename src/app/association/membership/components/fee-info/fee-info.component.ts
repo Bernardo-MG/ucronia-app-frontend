@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Fee } from '@app/association/models/fee';
+import { Fee } from '../../models/fee';
 
 @Component({
   selector: 'assoc-fee-info',

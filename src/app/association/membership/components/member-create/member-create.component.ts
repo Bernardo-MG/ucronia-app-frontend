@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Member } from '@app/association/models/member';
 import { Failure } from '@app/core/api/models/failure';
+import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
 @Component({

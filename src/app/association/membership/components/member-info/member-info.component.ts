@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Member } from '@app/association/models/member';
+import { Member } from '../../models/member';
 
 @Component({
   selector: 'assoc-member-info',

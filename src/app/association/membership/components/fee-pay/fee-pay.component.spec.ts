@@ -8,7 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
-import { MemberSelectionComponent } from '../member-selection/member-selection.component';
+import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
 import { FeePayComponent } from './fee-pay.component';
 
 describe('FeePayComponent', () => {
@@ -33,7 +33,7 @@ describe('FeePayComponent', () => {
       ],
       declarations: [
         FeePayComponent,
-        MemberSelectionComponent,
+        FeeMemberSelectionComponent,
         FeePayFormComponent
       ],
       providers: [

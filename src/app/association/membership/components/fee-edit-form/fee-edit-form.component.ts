@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Fee } from '@app/association/models/fee';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { Fee } from '../../models/fee';
 
 @Component({
   selector: 'assoc-fee-edit-form',

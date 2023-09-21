@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
-import { Member } from "@app/association/models/member";
-import { AngularRequest } from "@app/core/api/request/angular-request";
 import { CrudApi } from "@app/core/api/crud-api";
+import { AngularRequest } from "@app/core/api/request/angular-request";
 import { environment } from "environments/environment";
+import { Member } from "../membership/models/member";
 
 export class MemberApi extends CrudApi<Member> {
     

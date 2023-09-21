@@ -1,12 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeCalendarRange } from '@app/association/models/fee-calendar-range';
-import { FeeMonth } from '@app/association/models/fee-month';
-import { UserFeeCalendar } from '@app/association/models/user-fee-calendar';
-import { RouteParametersActuator } from '@app/shared/utils/route/actuator/route-parameters-actuator';
-import { YearRouteObserver } from '../../observer/year-route-observer';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { Active } from '@app/association/membership/models/active';
+import { FeeCalendarRange } from '@app/association/membership/models/fee-calendar-range';
+import { FeeMonth } from '../../models/fee-month';
+import { UserFeeCalendar } from '../../models/user-fee-calendar';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar',
@@ -31,18 +29,11 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
 
   public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-  private routeActuator;
-
-  private routeObserver;
-
   constructor(
     router: Router,
     route: ActivatedRoute,
     private service: FeeCalendarService
-  ) {
-    this.routeActuator = new RouteParametersActuator(router);
-    this.routeObserver = new YearRouteObserver(route);
-  }
+  ) { }
 
   public ngOnInit(): void {
     // Load range
@@ -55,15 +46,8 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
       this.index = this.range.years.indexOf(this.year);
     });
 
-    // Watch for year changes
-    this.routeObserver.subject.subscribe(y => {
-      if (y) {
-        this.load(y);
-      } else {
-        // Load initial year
-        this.load(new Date().getFullYear());
-      }
-    });
+    // Load initial year
+    this.load(new Date().getFullYear());
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -108,7 +92,6 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
   private load(year: number) {
     this.year = year;
     this.readingCalendar = true;
-    this.routeActuator.addParameters({ year });
 
     this.service.getCalendar(year, this.activeFilter).subscribe({
       next: data => {
