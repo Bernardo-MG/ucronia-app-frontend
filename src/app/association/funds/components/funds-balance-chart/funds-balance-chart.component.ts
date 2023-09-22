@@ -68,21 +68,21 @@ export class FundsBalanceChartComponent implements OnInit {
     }
 
     const labels = this.balance.map(b => this.removeDay(b.month))
-    const cumulatives = this.balance.map(b => b.cumulative)
-    const totals = this.balance.map(b => b.monthlyTotal)
+    const totals = this.balance.map(b => b.total)
+    const differences = this.balance.map(b => b.difference)
 
     const data = {
       labels: labels,
       datasets: [
         {
           label: 'Balance',
-          data: cumulatives,
+          data: totals,
           borderColor: 'rgba(200, 99, 132, .7)',
           borderWidth: 2,
         },
         {
           label: 'Month results',
-          data: totals,
+          data: differences,
           borderColor: 'rgba(15, 10, 222, .7)',
           borderWidth: 2,
         },

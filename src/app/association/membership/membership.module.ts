@@ -25,6 +25,7 @@ import { MembershipRoutingModule } from './membership-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
 import { FeeService } from './services/fee.service';
 import { MemberService } from './services/member.service';
+import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
 
 
 
@@ -44,7 +45,8 @@ import { MemberService } from './services/member.service';
     FeeEditFormComponent,
     FeePayFormComponent,
     FeeInfoComponent,
-    FeePayComponent
+    FeePayComponent,
+    MemberBalanceChartComponent
   ],
   imports: [
     CommonModule,
