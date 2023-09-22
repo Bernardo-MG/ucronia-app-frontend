@@ -1,0 +1,24 @@
+<canvas id="balanceChart"></canvas>
+
+<div class="row pt-2">
+  <div class="col-4">
+    Start
+  </div>
+  <div class="col-8">
+    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="isWaiting()"
+      (change)="onSelectStartMonth($event)">
+      <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === startMonth" [value]="selectionMonth">
+        {{selectionMonth}}</option>
+    </select>
+  </div>
+  <div class="col-4">
+    End
+  </div>
+  <div class="col-8">
+    <select class="form-select form-select-sm" aria-label="End month" [disabled]="isWaiting()"
+      (change)="onSelectEndMonth($event)">
+      <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === endMonth" [value]="selectionMonth">
+        {{selectionMonth}}</option>
+    </select>
+  </div>
+</div>

@@ -26,6 +26,7 @@ import { FeeCalendarService } from './services/fee-calendar.service';
 import { FeeService } from './services/fee.service';
 import { MemberService } from './services/member.service';
 import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
+import { MemberBalanceService } from './services/member-balance.service';
 
 
 
@@ -62,7 +63,8 @@ import { MemberBalanceChartComponent } from './components/member-balance-chart/m
   providers: [
     MemberService,
     FeeCalendarService,
-    FeeService
+    FeeService,
+    MemberBalanceService
   ]
 })
 export class MembershipModule { }
