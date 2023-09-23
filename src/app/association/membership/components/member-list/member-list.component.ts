@@ -41,8 +41,7 @@ export class MemberListComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.currentPage = page;
-    this.load({ page: this.currentPage, sort: this.sort });
+    this.load({ page, sort: this.sort });
   }
 
   public onChangeDirection(sort: Sort<Member>) {
@@ -66,12 +65,12 @@ export class MemberListComponent implements OnChanges {
     this.readingMembers = true;
 
     this.service.getAll(pagination, this.activeFilter).subscribe({
-      next: page => {
-        this.members = page.content;
+      next: response => {
+        this.members = response.content;
 
-        this.currentPage = page.page + 1;
-        this.totalPages = page.totalPages;
-        this.totalMembers = page.totalElements;
+        this.currentPage = response.page + 1;
+        this.totalPages = response.totalPages;
+        this.totalMembers = response.totalElements;
         // Reactivate view
         this.readingMembers = false;
       },

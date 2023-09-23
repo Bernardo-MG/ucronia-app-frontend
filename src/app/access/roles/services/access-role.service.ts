@@ -38,13 +38,13 @@ export class AccessRoleService {
     return this.roleApi.readAll(query);
   }
 
-  public getPermissions(roleId: number, page: number): Observable<PaginatedResponse<Permission[]>> {
+  public getPermissions(roleId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort<Permission> = new Sort<Permission>('resource');
     const sortAction: Sort<Permission> = new Sort<Permission>('action');
 
     const query = new PaginatedQuery<Permission>();
     query.defaultSort = [sortResource, sortAction];
-    query.page = page;
+    query.pagination = pagination;
 
     return this.roleApi.readPermissions(roleId, query);
   }

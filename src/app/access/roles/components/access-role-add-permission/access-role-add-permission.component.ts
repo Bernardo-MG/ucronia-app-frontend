@@ -19,7 +19,11 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public resources: Resource[] = [];
 
+  public actionPage = 0;
+
   public totalActionPages = 0;
+
+  public resourcePage = 0;
 
   public totalResourcePages = 0;
 
@@ -61,12 +65,12 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onShowActionSelection(): void {
-    this.onGoToActionSelectionPage(0);
+    this.onGoToActionPage(0);
     this.view = 'action';
   }
 
   public onShowResourceSelection(): void {
-    this.onGoToResourceSelectionPage(0);
+    this.onGoToResourcePage(0);
     this.view = 'resource';
   }
 
@@ -91,45 +95,41 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public loadPermissionSelectionPage(page: number) {
+    this.onGoToActionPage(0);
+    this.onGoToResourcePage(0);
+  }
+
+  public onGoToActionPage(page: number) {
     this.readingActionsSelection = true;
     this.service.getActionSelection(page).subscribe({
       next: response => {
         this.actions = response.content;
+
+        this.actionPage = response.page + 1;
         this.totalActionPages = response.totalPages;
+
         this.readingActionsSelection = false;
       },
       error: error => {
         this.readingActionsSelection = false;
       }
     });
+  }
+
+  public onGoToResourcePage(page: number) {
     this.readingResourcesSelection = true;
     this.service.getResourceSelection(page).subscribe({
       next: response => {
         this.resources = response.content;
+
+        this.resourcePage = response.page + 1;
         this.totalResourcePages = response.totalPages;
+
         this.readingResourcesSelection = false;
       },
       error: error => {
         this.readingResourcesSelection = false;
       }
-    });
-  }
-
-  public onGoToActionSelectionPage(page: number) {
-    this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe(response => {
-      this.actions = response.content;
-      this.totalActionPages = response.totalPages;
-      this.readingActionsSelection = false;
-    });
-  }
-
-  public onGoToResourceSelectionPage(page: number) {
-    this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe(response => {
-      this.resources = response.content;
-      this.totalResourcePages = response.totalPages;
-      this.readingResourcesSelection = false;
     });
   }
 
