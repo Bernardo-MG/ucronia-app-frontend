@@ -4,11 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { MemberService } from '../../services/member.service';
-import { MemberSelectionListComponent } from './member-selection-list.component';
+import { MemberListComponent } from './member-list.component';
 
-describe('MemberSelectionListComponent', () => {
-  let component: MemberSelectionListComponent;
-  let fixture: ComponentFixture<MemberSelectionListComponent>;
+describe('MemberListComponent', () => {
+  let component: MemberListComponent;
+  let fixture: ComponentFixture<MemberListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +19,7 @@ describe('MemberSelectionListComponent', () => {
         PaginationModule
       ],
       declarations: [
-        MemberSelectionListComponent
+        MemberListComponent
       ],
       providers: [
         MemberService
@@ -27,7 +27,7 @@ describe('MemberSelectionListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberSelectionListComponent);
+    fixture = TestBed.createComponent(MemberListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

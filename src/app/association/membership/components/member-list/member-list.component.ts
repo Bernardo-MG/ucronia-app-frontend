@@ -5,10 +5,10 @@ import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'assoc-member-selection-list',
-  templateUrl: './member-selection-list.component.html'
+  selector: 'assoc-member-list',
+  templateUrl: './member-list.component.html'
 })
-export class MemberSelectionListComponent implements OnChanges {
+export class MemberListComponent implements OnChanges {
 
   @Input() public activeFilter = Active.Active;
 
