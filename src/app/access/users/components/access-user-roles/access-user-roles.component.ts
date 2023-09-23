@@ -48,13 +48,8 @@ export class AccessUserRoleFormComponent implements OnChanges {
     }
   }
 
-  public onChangeNameDirection(direction: Direction) {
-    const nameSort = new Sort<Role>('name');
-    if (direction === Direction.Descending) {
-      nameSort.direction = Direction.Descending;
-    }
-
-    this.sort = [nameSort];
+  public onChangeNameDirection(sort: Sort<any>) {
+    this.sort = [sort];
     this.loadRoleSelectionPage(0);
   }
 
