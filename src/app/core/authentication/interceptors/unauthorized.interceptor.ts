@@ -25,8 +25,8 @@ export class UnauthorizedErrorInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           // Unauthenticated
           // Logs out
-          this.authService.logout();
-          location.reload();
+          // this.authService.logout();
+          // location.reload();
         }
 
         return throwError(() => error);
