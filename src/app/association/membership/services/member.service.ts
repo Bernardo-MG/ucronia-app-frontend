@@ -8,6 +8,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
 import { Member } from '../models/member';
+import { Direction } from '@app/core/api/models/direction';
 
 @Injectable()
 export class MemberService {
@@ -20,9 +21,9 @@ export class MemberService {
 
   public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
     const defaultSortName = new Sort<Member>('name');
-    defaultSortName.order = 'asc';
+    defaultSortName.direction = Direction.Ascending;
     const defaultSortSurname = new Sort<Member>('surname');
-    defaultSortSurname.order = 'asc';
+    defaultSortSurname.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<Member>();
     query.defaultSort = [defaultSortName, defaultSortSurname];

@@ -34,7 +34,7 @@ export class PaginationRouteOrderButtonComponent implements OnInit {
       if (p) {
         const propertySort = p.find(s => s.property === this.property);
         if (propertySort) {
-          this.direction = propertySort.order as Direction;
+          this.direction = propertySort.direction as Direction;
         } else {
           this.direction = Direction.Unsorted;
         }
@@ -44,27 +44,10 @@ export class PaginationRouteOrderButtonComponent implements OnInit {
     });
   }
 
-  public onChangeDirection(direction: Direction) {
-    if (direction === Direction.Unsorted) {
+  public onChangeDirection(sort: Sort<any>) {
+    if (sort.direction === Direction.Unsorted) {
       this.routeActuator.removeOrder(this.property);
     } else {
-      let order: 'asc' | 'desc';
-      switch (direction) {
-        case Direction.Ascending:
-          order = 'asc';
-          break;
-        case Direction.Descending:
-          order = 'desc';
-          break;
-        default:
-          order = 'asc';
-          break;
-      }
-      const sort: Sort<any> = {
-        property: this.property,
-        order
-      };
-
       this.routeActuator.setOrder(sort);
     }
   }

@@ -9,7 +9,7 @@ import { MemberBalanceService } from '../../services/member-balance.service';
 import { MemberService } from '../../services/member.service';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 import { MemberBalanceChartComponent } from '../member-balance-chart/member-balance-chart.component';
-import { MemberSelectionListComponent } from '../member-selection-list/member-selection-list.component';
+import { MemberListComponent } from '../member-list/member-list.component';
 import { MembershipFrontpageComponent } from './membership-frontpage.component';
 
 describe('MembershipFrontpageComponent', () => {
@@ -27,7 +27,7 @@ describe('MembershipFrontpageComponent', () => {
       ],
       declarations: [
         MembershipFrontpageComponent,
-        MemberSelectionListComponent,
+        MemberListComponent,
         FeeCalendarComponent,
         MemberBalanceChartComponent
       ],

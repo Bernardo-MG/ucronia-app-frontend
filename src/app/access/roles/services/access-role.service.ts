@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActionApi } from '@app/access/api/action-api';
 import { ResourceApi } from '@app/access/api/resource-api';
 import { RoleApi } from '@app/access/api/role-api';
+import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
@@ -28,7 +29,7 @@ export class AccessRoleService {
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
     const defaultSort = new Sort<Role>('name');
-    defaultSort.order = 'asc';
+    defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<Role>();
     query.defaultSort = [defaultSort];

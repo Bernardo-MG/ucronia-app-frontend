@@ -54,7 +54,7 @@ export class ReadApi<T> {
   private applySort(sort: Sort<T>[], request: Request) {
     for (let i = 0; i < sort.length; i += 1) {
       const fieldSort = sort[i];
-      request.parameter('sort', `${String(fieldSort.property)},${fieldSort.order}`);
+      request.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
     }
   }
 

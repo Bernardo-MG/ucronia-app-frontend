@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MemberApi } from '@app/association/api/member-api';
+import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { Observable, map } from 'rxjs';
@@ -17,7 +18,7 @@ export class MemberBalanceService {
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
     const defaultSortDate = new Sort<MemberBalance>('month');
-    defaultSortDate.order = 'asc';
+    defaultSortDate.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<MemberBalance>();
     query.defaultSort = [defaultSortDate];

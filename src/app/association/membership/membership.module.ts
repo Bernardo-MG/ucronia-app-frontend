@@ -20,7 +20,7 @@ import { MemberCreateComponent } from './components/member-create/member-create.
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
 import { MemberEditionFormComponent } from './components/member-edit-form/member-edit-form.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
-import { MemberSelectionListComponent } from './components/member-selection-list/member-selection-list.component';
+import { MemberListComponent } from './components/member-list/member-list.component';
 import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 import { MembershipRoutingModule } from './membership-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
@@ -38,7 +38,7 @@ import { MemberService } from './services/member.service';
     MemberCreateFormComponent,
     MemberEditionFormComponent,
     MemberInfoComponent,
-    MemberSelectionListComponent,
+    MemberListComponent,
     FeeCalendarComponent,
     FeeFrontpageComponent,
     FeeDetailsComponent,

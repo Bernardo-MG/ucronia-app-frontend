@@ -32,7 +32,7 @@ export class RouteApiActuator {
   }
 
   public setOrder(sort: Sort<any>): void {
-    const value = `${String(sort.property)},${sort.order}`
+    const value = `${String(sort.property)},${sort.direction}`
     let parameters = this.urlExtractor.getUrlParams(this.router.url);
 
     parameters = this.urlProcessor.getUrlParamsWithout(parameters, 'sort', (s) => s.startsWith(`${String(sort.property)},`));
