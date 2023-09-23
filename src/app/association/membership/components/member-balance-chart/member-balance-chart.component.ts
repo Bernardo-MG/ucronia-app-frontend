@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import Chart from 'chart.js/auto';
-import { BalanceService } from '../../service/balance.service';
+import { MemberBalance } from '../../models/member-balance';
+import { MemberBalanceService } from '../../services/member-balance.service';
 
 @Component({
-  selector: 'assoc-funds-balance-chart',
-  templateUrl: './funds-balance-chart.component.html'
+  selector: 'assoc-member-balance-chart',
+  templateUrl: './member-balance-chart.component.html'
 })
-export class FundsBalanceChartComponent implements OnInit {
+export class MemberBalanceChartComponent implements OnInit {
 
-  public balance: MonthlyBalance[] = [];
+  public balance: MemberBalance[] = [];
 
   public months: string[] = [];
 
@@ -24,13 +24,13 @@ export class FundsBalanceChartComponent implements OnInit {
   public endMonth: string | undefined;
 
   constructor(
-    private balanceService: BalanceService
+    private memberBalanceService: MemberBalanceService
   ) { }
 
   ngOnInit(): void {
     // Read balance range
     this.readingRange = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+    this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.months = b.map(v => this.removeDay(v.month));
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
@@ -55,7 +55,7 @@ export class FundsBalanceChartComponent implements OnInit {
 
   private loadBalance() {
     this.readingBalance = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+    this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.balance = b;
       this.readingBalance = false;
       this.loadChart();
@@ -69,26 +69,19 @@ export class FundsBalanceChartComponent implements OnInit {
 
     const labels = this.balance.map(b => this.removeDay(b.month))
     const totals = this.balance.map(b => b.total)
-    const differences = this.balance.map(b => b.difference)
 
     const data = {
       labels: labels,
       datasets: [
         {
-          label: 'Balance',
+          label: 'Members',
           data: totals,
           borderColor: 'rgba(200, 99, 132, .7)',
           borderWidth: 2,
         },
-        {
-          label: 'Month results',
-          data: differences,
-          borderColor: 'rgba(15, 10, 222, .7)',
-          borderWidth: 2,
-        }
       ],
     };
-    this.chart = new Chart('balanceChart', {
+    this.chart = new Chart('memberBalanceChart', {
       type: 'line',
       data,
       options: {
