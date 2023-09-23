@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import { Chart } from 'chart.js';
+import { MemberBalance } from '../../models/member-balance';
 import { MemberBalanceService } from '../../services/member-balance.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MemberBalanceService } from '../../services/member-balance.service';
 })
 export class MemberBalanceChartComponent implements OnInit {
 
-  public balance: MonthlyBalance[] = [];
+  public balance: MemberBalance[] = [];
 
   public months: string[] = [];
 
@@ -69,7 +69,6 @@ export class MemberBalanceChartComponent implements OnInit {
 
     const labels = this.balance.map(b => this.removeDay(b.month))
     const totals = this.balance.map(b => b.total)
-    const differences = this.balance.map(b => b.difference)
 
     const data = {
       labels: labels,
