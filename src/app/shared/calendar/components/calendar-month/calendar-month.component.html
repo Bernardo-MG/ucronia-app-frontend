@@ -1,11 +1,20 @@
 <!-- Controls -->
 <div class="d-flex justify-content-center pb-2">
-  <button *ngIf="isAbleToGoPrevious()" class="page-link" id="previousMonthButton" (click)="onGoPrevious()"
+  <!-- To previous month button -->
+  <button *ngIf="isAbleToGoPrevious()" id="previousMonthButton" class="page-link" (click)="onGoPrevious()"
     [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()">
     <icon-backward></icon-backward>
   </button>
-  <h2 class="px-5">{{ year }} {{ monthName }}</h2>
-  <button *ngIf="isAbleToGoNext()" class="page-link" id="nextMonthButton" (click)="onGoNext()"
+  <div class="w-25 px-3">
+    <!-- Current month -->
+    <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
+      <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === currentMonth"
+        [value]="selectionMonth.year + '-' + selectionMonth.month">
+        {{getMonthName(selectionMonth)}}</option>
+    </select>
+  </div>
+  <!-- To next month button -->
+  <button *ngIf="isAbleToGoNext()" id="nextMonthButton" class="page-link" (click)="onGoNext()"
     [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()">
     <icon-forward></icon-forward>
   </button>

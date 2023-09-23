@@ -51,9 +51,10 @@ export class AccessUserDetailsComponent implements OnInit {
     });
   }
 
-  public onSave(data: User): void {
+  public onSave(toSave: User): void {
+    this.data = toSave;
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(toSave.id, toSave).subscribe({
       next: response => {
         this.failures = {};
         // Reactivate view

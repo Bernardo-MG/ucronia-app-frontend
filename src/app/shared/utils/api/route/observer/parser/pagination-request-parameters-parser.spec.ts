@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
+import { Direction } from '@app/core/api/models/direction';
 import { PaginationRequestParametersParser } from './pagination-request-parameters-parser';
 
 describe('PaginationRequestParametersParser', () => {
@@ -128,7 +129,7 @@ describe('PaginationRequestParametersParser', () => {
     expect(request?.sort?.length).toEqual(1);
     if (request?.sort) {
       expect(request.sort[0].property).toEqual('property');
-      expect(request.sort[0].order).toEqual('asc');
+      expect(request.sort[0].direction).toEqual(Direction.Ascending);
     }
   });
 
@@ -141,7 +142,7 @@ describe('PaginationRequestParametersParser', () => {
     expect(request?.sort?.length).toEqual(1);
     if (request?.sort) {
       expect(request.sort[0].property).toEqual('property');
-      expect(request.sort[0].order).toEqual('asc');
+      expect(request.sort[0].direction).toEqual(Direction.Ascending);
     }
   });
 
@@ -154,7 +155,7 @@ describe('PaginationRequestParametersParser', () => {
     expect(request?.sort?.length).toEqual(1);
     if (request?.sort) {
       expect(request.sort[0].property).toEqual('property');
-      expect(request.sort[0].order).toEqual('asc');
+      expect(request.sort[0].direction).toEqual(Direction.Ascending);
     }
   });
 
@@ -167,9 +168,9 @@ describe('PaginationRequestParametersParser', () => {
     expect(request?.sort?.length).toEqual(2);
     if (request?.sort) {
       expect(request.sort[0].property).toEqual('property1');
-      expect(request.sort[0].order).toEqual('asc');
+      expect(request.sort[0].direction).toEqual(Direction.Ascending);
       expect(request.sort[1].property).toEqual('property2');
-      expect(request.sort[1].order).toEqual('desc');
+      expect(request.sort[1].direction).toEqual(Direction.Descending);
     }
   });
 

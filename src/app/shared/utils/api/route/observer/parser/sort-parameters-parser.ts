@@ -1,6 +1,7 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
 import { Sort } from "../../../../../../core/api/models/sort";
+import { Direction } from "@app/core/api/models/direction";
 
 /**
  * Parses a {@link Sort} from the route parameters.
@@ -58,18 +59,17 @@ export class SortParametersParser implements ParametersParser<Sort<any>[]> {
       if (splitPair.length > 1) {
         // It contains a direction
         direction = splitPair[1];
-        if ((direction === 'desc') || (direction === 'asc')) {
+        if (direction === 'desc') {
           // Valid direction
-          sort.order = direction;
+          sort.direction = Direction.Descending;
         } else {
-          // Invalid direction
-          // Applies default direction
-          sort.order = 'asc';
+          // Default or invalid direction
+          sort.direction = Direction.Ascending;
         }
       } else {
         // No direction
         // Applies default direction
-        sort.order = 'asc';
+        sort.direction = Direction.Ascending;
       }
     } else {
       // No property

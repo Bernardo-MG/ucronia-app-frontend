@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Sort } from '@app/core/api/models/sort';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
 
@@ -11,11 +12,13 @@ import { Direction } from '../../../../core/api/models/direction';
 })
 export class PaginationOrderButtonComponent implements OnChanges {
 
+  @Input() public property = '';
+
   @Input() public direction = Direction.Unsorted;
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<Direction>();
+  @Output() public directionChange = new EventEmitter<Sort<any>>();
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
@@ -43,7 +46,10 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
     const previousDirection = this.direction;
     this.updateDirection();
-    this.directionChange.emit(previousDirection);
+
+    const sort = new Sort<any>(this.property);
+    sort.direction = previousDirection;
+    this.directionChange.emit(sort);
   }
 
   private updateDirection() {

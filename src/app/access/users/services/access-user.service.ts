@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RoleApi } from '@app/access/api/role-api';
 import { UserApi } from '@app/access/api/user-api';
+import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
@@ -23,7 +24,7 @@ export class AccessUserService {
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {
     const defaultSort = new Sort<User>('name');
-    defaultSort.order = 'asc';
+    defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<User>();
     query.defaultSort = [defaultSort];
