@@ -40,8 +40,8 @@
       <access-role-action-pick-list [actions]="actions" (selectRow)="onSelectAction($event)">
       </access-role-action-pick-list>
       <div class="d-flex justify-content-center mt-1">
-        <pagination-route-navigation [totalPages]="totalActionPages">
-        </pagination-route-navigation>
+        <pagination-navigation [current]="actionPage" [pages]="totalActionPages" (goTo)="onGoToActionPage($event)">
+        </pagination-navigation>
       </div>
       <!-- Cancel button -->
       <div class="col-sm-1">
@@ -56,8 +56,8 @@
       <access-role-resource-pick-list [resources]="resources" (selectRow)="onSelectResource($event)">
       </access-role-resource-pick-list>
       <div class="d-flex justify-content-center mt-1">
-        <pagination-route-navigation [totalPages]="totalResourcePages">
-        </pagination-route-navigation>
+        <pagination-navigation [current]="resourcePage" [pages]="totalResourcePages" (goTo)="onGoToResourcePage($event)">
+        </pagination-navigation>
       </div>
       <!-- Cancel button -->
       <div class="col-sm-1">
