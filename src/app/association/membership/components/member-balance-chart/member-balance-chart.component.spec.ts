@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MemberBalanceService } from '../../services/member-balance.service';
 import { MemberBalanceChartComponent } from './member-balance-chart.component';
 
 describe('MemberBalanceChartComponent', () => {
@@ -8,7 +9,15 @@ describe('MemberBalanceChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MemberBalanceChartComponent]
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [
+        MemberBalanceChartComponent
+      ],
+      providers: [
+        MemberBalanceService
+      ]
     });
     fixture = TestBed.createComponent(MemberBalanceChartComponent);
     component = fixture.componentInstance;
