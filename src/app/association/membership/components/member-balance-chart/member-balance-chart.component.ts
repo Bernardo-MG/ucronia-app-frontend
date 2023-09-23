@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Chart } from 'chart.js';
+import Chart from 'chart.js/auto';
 import { MemberBalance } from '../../models/member-balance';
 import { MemberBalanceService } from '../../services/member-balance.service';
 
@@ -74,14 +74,14 @@ export class MemberBalanceChartComponent implements OnInit {
       labels: labels,
       datasets: [
         {
-          label: 'Balance',
+          label: 'Members',
           data: totals,
           borderColor: 'rgba(200, 99, 132, .7)',
           borderWidth: 2,
         },
       ],
     };
-    this.chart = new Chart('balanceChart', {
+    this.chart = new Chart('memberBalanceChart', {
       type: 'line',
       data,
       options: {
