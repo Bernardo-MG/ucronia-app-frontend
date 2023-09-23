@@ -31,7 +31,7 @@ export class MemberBalanceChartComponent implements OnInit {
     // Read balance range
     this.readingRange = true;
     this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => this.removeDay(v.month));
+      this.months = b.map(v => v.month);
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
       this.readingRange = false;
@@ -67,7 +67,7 @@ export class MemberBalanceChartComponent implements OnInit {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => this.removeDay(b.month))
+    const labels = this.balance.map(b => b.month)
     const totals = this.balance.map(b => b.total)
 
     const data = {
@@ -88,18 +88,6 @@ export class MemberBalanceChartComponent implements OnInit {
         responsive: true,
       }
     });
-  }
-
-  private removeDay(date: string) {
-    const substrings = date.match(/^[0-9]*-[0-9]*/);
-    let month;
-    if (substrings) {
-      month = substrings[0];
-    } else {
-      month = date;
-    }
-
-    return month;
   }
 
 }
