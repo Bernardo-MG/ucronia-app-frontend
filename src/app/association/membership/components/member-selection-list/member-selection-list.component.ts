@@ -27,8 +27,8 @@ export class MemberSelectionListComponent implements OnChanges {
 
   constructor(
     private service: MemberService
-  ) {}
-  
+  ) { }
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['activeFilter']) {
       this.load(undefined);
@@ -36,7 +36,7 @@ export class MemberSelectionListComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({page});
+    this.load({ page });
   }
 
   private load(pagination: PaginationRequest | undefined) {

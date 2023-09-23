@@ -3,8 +3,8 @@
     <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-funds-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
-        [failures]="failures" (save)="onSave($event)">
+      <assoc-funds-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+        (save)="onSave($event)">
       </assoc-funds-form>
       <!-- Info -->
       <assoc-funds-info id="info" [data]="data"></assoc-funds-info>

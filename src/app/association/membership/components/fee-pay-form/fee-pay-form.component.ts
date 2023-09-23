@@ -12,7 +12,7 @@ import { Member } from '../../models/member';
 export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
 
   @Input() public memberId = -1;
-  
+
   @Input() public memberName = '';
 
   public member = new Member();

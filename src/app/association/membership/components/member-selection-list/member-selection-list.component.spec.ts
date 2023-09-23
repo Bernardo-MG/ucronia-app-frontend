@@ -18,14 +18,14 @@ describe('MemberSelectionListComponent', () => {
         LayoutModule,
         PaginationModule
       ],
-      declarations: [ 
-        MemberSelectionListComponent 
+      declarations: [
+        MemberSelectionListComponent
       ],
       providers: [
         MemberService
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MemberSelectionListComponent);
     component = fixture.componentInstance;

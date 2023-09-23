@@ -27,5 +27,5 @@ export class MemberBalanceService {
     return this.memberApi.readMonthly(query).pipe(map(r => r.content));
   }
 
-  
+
 }

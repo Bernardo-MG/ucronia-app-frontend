@@ -25,8 +25,8 @@
   <div class="row mb-2">
     <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Amount</label>
     <div class="col-sm-10">
-      <input type="number" step="any" id="amountInput" formControlName="amount"
-        class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }" aria-describedby="amountLabel">
+      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }" aria-describedby="amountLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('amount')">
         {{failure.message}}
       </div>

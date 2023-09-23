@@ -11,7 +11,7 @@ export class FundsFrontpageComponent implements OnInit {
 
   constructor(
     private authService: AuthService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     // Check permissions

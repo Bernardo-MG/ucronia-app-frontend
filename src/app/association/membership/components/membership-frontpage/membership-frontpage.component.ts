@@ -14,7 +14,7 @@ export class MembershipFrontpageComponent implements OnInit {
 
   constructor(
     private authService: AuthService
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     // Check permissions

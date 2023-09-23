@@ -6,9 +6,7 @@ import { ConfigurationDetailsComponent } from './components/configuration-detail
 const routes: Routes = [
   {
     path: '',
-    children: [
-      { path: '', component: ConfigurationDetailsComponent }
-    ]
+    component: ConfigurationDetailsComponent
   }
 ];
 

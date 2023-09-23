@@ -8,14 +8,14 @@ describe('FeeInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports:[
+      imports: [
         IconsModule
       ],
       declarations: [
-         FeeInfoComponent 
+        FeeInfoComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FeeInfoComponent);
     component = fixture.componentInstance;

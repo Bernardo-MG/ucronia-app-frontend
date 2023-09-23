@@ -14,6 +14,7 @@ import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeMemberSelectionComponent } from './components/fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './components/fee-pay/fee-pay.component';
+import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
 import { MemberCreateFormComponent } from './components/member-create-form/member-create-form.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
 import { MemberDetailsComponent } from './components/member-details/member-details.component';
@@ -24,9 +25,8 @@ import { MembershipFrontpageComponent } from './components/membership-frontpage/
 import { MembershipRoutingModule } from './membership-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
 import { FeeService } from './services/fee.service';
-import { MemberService } from './services/member.service';
-import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
 import { MemberBalanceService } from './services/member-balance.service';
+import { MemberService } from './services/member.service';
 
 
 

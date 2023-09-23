@@ -7,26 +7,26 @@ const fundsModule = () => import('@app/association/funds/funds.module').then(m =
 const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
 
 const routes: Routes = [
-    {
-        path: '',
-        children: [
-            {
-                path: 'funds',
-                canActivate: [ResourceGuard("funds")],
-                loadChildren: fundsModule
-            },
-            {
-                path: 'membership',
-                canActivate: [ResourceGuard("membership")],
-                loadChildren: membersipModule
-            },
-            {
-                path: 'configuration',
-                canActivate: [ResourceGuard("association_configuration")],
-                loadChildren: configurationModule
-            }
-        ]
-    }
+  {
+    path: '',
+    children: [
+      {
+        path: 'funds',
+        canActivate: [ResourceGuard("funds")],
+        loadChildren: fundsModule
+      },
+      {
+        path: 'membership',
+        canActivate: [ResourceGuard("membership")],
+        loadChildren: membersipModule
+      },
+      {
+        path: 'configuration',
+        canActivate: [ResourceGuard("association_configuration")],
+        loadChildren: configurationModule
+      }
+    ]
+  }
 ];
 
 @NgModule({

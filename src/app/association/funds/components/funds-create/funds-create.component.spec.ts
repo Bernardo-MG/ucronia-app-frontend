@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FundsFormComponent } from '../funds-form/funds-form.component';
 import { TransactionService } from '../../service/transaction.service';
+import { FundsFormComponent } from '../funds-form/funds-form.component';
 import { FundsCreateComponent } from './funds-create.component';
 
 describe('FundsCreateComponent', () => {

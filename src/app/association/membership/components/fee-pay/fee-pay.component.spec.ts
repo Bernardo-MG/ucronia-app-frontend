@@ -7,8 +7,8 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
-import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
+import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './fee-pay.component';
 
 describe('FeePayComponent', () => {
