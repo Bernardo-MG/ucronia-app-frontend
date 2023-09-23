@@ -5,6 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
 import { PaginationOrderButtonComponent } from './pagination-order-button.component';
+import { Sort } from '@app/core/api/models/sort';
 
 describe('PaginationOrderButtonComponent', () => {
   let component: PaginationOrderButtonComponent;
@@ -41,16 +42,22 @@ describe('PaginationOrderButtonComponent', () => {
   // **************************************************************************
 
   it('should send an event to change to ascending direction when clicking for the first time', () => {
+    component.property = 'property';
+
     spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
-    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Ascending);
+    const sort = new Sort<any>('property');
+    sort.direction = Direction.Ascending;
+    expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
   it('should send an event to change to descending direction when clicking for the second time', () => {
+    component.property = 'property';
+
     spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
@@ -58,10 +65,14 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
-    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Descending);
+    const sort = new Sort<any>('property');
+    sort.direction = Direction.Descending;
+    expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
   it('should go back to unsorted when clicking for the third time', () => {
+    component.property = 'property';
+
     spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
@@ -70,10 +81,14 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
-    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Unsorted);
+    const sort = new Sort<any>('property');
+    sort.direction = Direction.Unsorted;
+    expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
   it('should send an event to loop back to ascending direction when clicking for the fourth time', () => {
+    component.property = 'property';
+
     spyOn(component.directionChange, 'emit');
 
     const button = fixture.debugElement.query(By.css('button'));
@@ -83,7 +98,9 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
-    expect(component.directionChange.emit).toHaveBeenCalledWith(Direction.Ascending);
+    const sort = new Sort<any>('property');
+    sort.direction = Direction.Ascending;
+    expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
   // **************************************************************************
