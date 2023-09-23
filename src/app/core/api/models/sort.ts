@@ -1,3 +1,5 @@
+import { Direction } from "./direction";
+
 export class Sort<T> {
 
   constructor(prop: keyof T) {
@@ -5,5 +7,5 @@ export class Sort<T> {
   }
 
   property: keyof T;
-  order: 'asc' | 'desc' = 'asc';
+  direction = Direction.Ascending;
 }
