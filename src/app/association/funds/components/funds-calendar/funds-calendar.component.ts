@@ -43,7 +43,7 @@ export class FundsCalendarComponent {
   }
 
   public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
-    this.router.navigate([`/funds/${event.meta?.transactionId}`]);
+    this.router.navigate([`/funds/transaction/${event.meta?.transactionId}`]);
   }
 
   private load(year: number, month: number) {

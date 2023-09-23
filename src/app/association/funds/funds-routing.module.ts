@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: FundsFrontpageComponent },
   { path: 'calendar', component: FundsFrontpageComponent },
   { path: 'add', component: FundsCreateComponent },
-  { path: ':id', component: FundsDetailsComponent }
+  { path: 'transaction/:id', component: FundsDetailsComponent }
 ];
 
 @NgModule({
