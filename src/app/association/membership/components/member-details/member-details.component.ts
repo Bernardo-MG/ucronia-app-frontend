@@ -76,7 +76,7 @@ export class MemberDetailsComponent implements OnInit {
 
   public onDelete(): void {
     this.service.delete(this.data.id).subscribe(r => {
-      this.router.navigate([`/members/list`]);
+      this.router.navigate([`/membership`]);
     });
   }
 
