@@ -3,11 +3,11 @@
     <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-funds-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
+      <assoc-transaction-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data" [failures]="failures"
         (save)="onSave($event)">
-      </assoc-funds-form>
+      </assoc-transaction-form>
       <!-- Info -->
-      <assoc-funds-info id="info" [data]="data"></assoc-funds-info>
+      <assoc-transaction-info id="info" [data]="data"></assoc-transaction-info>
     </layout-edition-wrapper>
   </div>
 </layout-article>

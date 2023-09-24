@@ -10,12 +10,12 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
 import { FundsCalendarComponent } from './components/funds-calendar/funds-calendar.component';
-import { FundsCreateComponent } from './components/funds-create/funds-create.component';
 import { FundsCurrentBalanceComponent } from './components/funds-current-balance/funds-current-balance.component';
-import { FundsDetailsComponent } from './components/funds-details/funds-details.component';
-import { FundsFormComponent } from './components/funds-form/funds-form.component';
 import { FundsFrontpageComponent } from './components/funds-frontpage/funds-frontpage.component';
-import { FundsInfoComponent } from './components/funds-info/funds-info.component';
+import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
+import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
+import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { FundsRoutingModule } from './funds-routing.module';
 import { BalanceService } from './service/balance.service';
 import { FundsCalendarService } from './service/funds-calendar.service';
@@ -25,11 +25,11 @@ import { TransactionService } from './service/transaction.service';
 
 @NgModule({
   declarations: [
-    FundsCreateComponent,
-    FundsDetailsComponent,
+    TransactionCreateComponent,
+    TransactionDetailsComponent,
     FundsCalendarComponent,
-    FundsFormComponent,
-    FundsInfoComponent,
+    TransactionFormComponent,
+    TransactionInfoComponent,
     FundsFrontpageComponent,
     FundsBalanceChartComponent,
     FundsCurrentBalanceComponent

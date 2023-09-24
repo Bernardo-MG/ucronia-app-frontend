@@ -6,10 +6,10 @@ import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'assoc-funds-details',
-  templateUrl: './funds-details.component.html'
+  selector: 'assoc-transaction-details',
+  templateUrl: './transaction-details.component.html'
 })
-export class FundsDetailsComponent implements OnInit {
+export class TransactionDetailsComponent implements OnInit {
 
   /**
    * Reading flag.
