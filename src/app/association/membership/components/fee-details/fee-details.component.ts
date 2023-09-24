@@ -85,7 +85,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public onDelete(): void {
     this.service.delete(this.data.id).subscribe(r => {
-      this.router.navigate([`/funds`]);
+      this.router.navigate([`/membership`]);
     });
   }
 
