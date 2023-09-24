@@ -5,10 +5,10 @@ import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
 @Component({
-  selector: 'assoc-funds-create',
-  templateUrl: './funds-create.component.html'
+  selector: 'assoc-transaction-create',
+  templateUrl: './transaction-create.component.html'
 })
-export class FundsCreateComponent {
+export class TransactionCreateComponent {
 
   /**
    * Loading flag.

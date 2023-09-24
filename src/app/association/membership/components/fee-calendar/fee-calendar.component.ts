@@ -41,10 +41,10 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
         this.year = lastYear;
       }
       this.index = this.range.years.indexOf(this.year);
-    });
 
-    // Load initial year
-    this.load(new Date().getFullYear());
+      // Load initial year
+      this.load(this.year);
+    });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -90,7 +90,6 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
   }
 
   private load(year: number) {
-    this.year = year;
     this.readingCalendar = true;
 
     this.service.getCalendar(year, this.activeFilter).subscribe({

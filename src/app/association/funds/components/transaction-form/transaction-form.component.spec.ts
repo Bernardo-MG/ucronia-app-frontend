@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FundsFormComponent } from './funds-form.component';
+import { TransactionFormComponent } from './transaction-form.component';
 
-describe('FundsFormComponent', () => {
-  let component: FundsFormComponent;
-  let fixture: ComponentFixture<FundsFormComponent>;
+describe('TransactionFormComponent', () => {
+  let component: TransactionFormComponent;
+  let fixture: ComponentFixture<TransactionFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,12 +14,12 @@ describe('FundsFormComponent', () => {
         LayoutModule
       ],
       declarations: [
-        FundsFormComponent
+        TransactionFormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FundsFormComponent);
+    fixture = TestBed.createComponent(TransactionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

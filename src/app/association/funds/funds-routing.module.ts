@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FundsCreateComponent } from './components/funds-create/funds-create.component';
-import { FundsDetailsComponent } from './components/funds-details/funds-details.component';
 import { FundsFrontpageComponent } from './components/funds-frontpage/funds-frontpage.component';
+import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
+import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 
 
 const routes: Routes = [
   { path: '', component: FundsFrontpageComponent },
-  { path: 'add', component: FundsCreateComponent },
-  { path: 'transaction/:id', component: FundsDetailsComponent }
+  { path: 'add', component: TransactionCreateComponent },
+  { path: 'transaction/:id', component: TransactionDetailsComponent }
 ];
 
 @NgModule({
