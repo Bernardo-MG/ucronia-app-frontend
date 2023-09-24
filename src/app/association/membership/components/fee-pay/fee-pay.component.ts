@@ -49,7 +49,7 @@ export class FeePayComponent implements OnInit {
     this.saving = true;
     this.service.pay(data).subscribe({
       next: response => {
-        this.router.navigate(['/fees']);
+        this.router.navigate(['/membership']);
         this.failures = {};
         // Reactivate view
         this.saving = false;
