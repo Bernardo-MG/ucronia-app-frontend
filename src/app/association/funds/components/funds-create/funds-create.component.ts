@@ -26,7 +26,7 @@ export class FundsCreateComponent {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.router.navigate([`/funds/${d.id}`]);
+        this.router.navigate([`/funds/transaction/${d.id}`]);
         this.failures = {};
         // Reactivate view
         this.saving = false;
