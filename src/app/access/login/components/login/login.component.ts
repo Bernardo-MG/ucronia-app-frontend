@@ -77,20 +77,25 @@ export class LoginComponent implements OnInit {
           if (user.logged) {
             // Logged in
 
-            // Save user to authenticate requests
-            this.authService.setStatus(user, this.rememberMe);
-
             // Load permissions
-            this.authService.loadPermissions().subscribe(p => {
-              // The failed flag may be set, if the user didn't log in succesfully
-              // Save again
-              this.authService.setStatus(user, this.rememberMe);
+            this.authService.loadPermissions().subscribe({
+              next: permissions => {
+                // The failed flag may be set, if the user didn't log in succesfully
+                // Save again
+                this.authService.setStatus(user, this.rememberMe);
 
-              // No problem
-              // Redirects to the return route
-              this.router.navigate([this.returnRoute]);
+                // No problem
+                // Redirects to the return route
+                this.router.navigate([this.returnRoute]);
 
-              this.loading = false;
+                this.loading = false;
+              },
+              error: error => {
+                // Failed loading permissions
+                this.authService.setStatus(user, this.rememberMe);
+
+                this.loading = false;
+              }
             });
           } else {
             this.failedLogin = true;
