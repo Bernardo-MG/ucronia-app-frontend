@@ -94,6 +94,7 @@ export class LoginComponent implements OnInit {
                 // Failed loading permissions
                 this.authService.setStatus(user, this.rememberMe);
 
+                this.failedLogin = true;
                 this.loading = false;
               }
             });
