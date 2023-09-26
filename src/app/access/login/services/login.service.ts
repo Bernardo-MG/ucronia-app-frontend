@@ -17,10 +17,6 @@ export class LoginService {
   constructor(
     private http: HttpClient
   ) { }
-  
-  public probe(): Observable<Object> {
-    return this.http.options(this.loginUrl);
-  }
 
   /**
    * Logs in a user. This requires sending a login request. If the request fails it returns an
