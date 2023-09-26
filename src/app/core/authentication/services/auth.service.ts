@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable, ReplaySubject, map, tap } from 'rxjs';
+import { Observable, ReplaySubject, map, tap } from 'rxjs';
 import { PermissionsSet } from '../models/permissions.set';
 import { SecurityStatus } from '../models/security-status';
 
@@ -22,22 +23,30 @@ export class AuthService {
   /**
    * Subject with the user status.
    */
-  private statusSubject: ReplaySubject<SecurityStatus> = new ReplaySubject<SecurityStatus>(1);
+  private statusSubject = new ReplaySubject<SecurityStatus>(1);
 
   /**
    * Permissions endpoint URL.
    */
   private permissionUrl = environment.apiUrl + "/security/permission";
 
-  private status: SecurityStatus = new SecurityStatus();
+  private jwtHelper = new JwtHelperService();
+
+  private status = new SecurityStatus();
 
   constructor(
     private http: HttpClient
   ) {
+
+    // Watch for changes in the status
     this.statusSubject.subscribe((s) => {
       this.status = s;
     });
+
+    // Load the stored status
     this.loadStatusFromLocal();
+    // Clear up status if the token is invalid
+    this.verifyToken();
   }
 
   /**
@@ -139,8 +148,6 @@ export class AuthService {
    * @returns the user stored in the local storage as part of the 'remember me'
    */
   private loadStatusFromLocal() {
-    let subject: BehaviorSubject<SecurityStatus>;
-
     // If the user was stored, load it
     const localUser = localStorage.getItem(this.userKey);
     if (localUser) {
@@ -151,7 +158,15 @@ export class AuthService {
       // User not found
       // Use default user
       this.statusSubject.next(new SecurityStatus());
-      subject = new BehaviorSubject<SecurityStatus>(new SecurityStatus());
+    }
+  }
+
+  private verifyToken() {
+    const token = this.getToken();
+    if ((token) && (this.jwtHelper.isTokenExpired(token))) {
+      // Token expired 
+      // Use default user
+      this.statusSubject.next(new SecurityStatus());
     }
   }
 
