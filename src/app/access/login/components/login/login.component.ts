@@ -70,43 +70,45 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.failedLogin = false;
 
-    this.loginService.login(login)
-      .subscribe({
-        next: user => {
-          // Succesful request
-          if (user.logged) {
-            // Logged in
+    this.loginService.probe().subscribe(r => {
+      this.loginService.login(login)
+        .subscribe({
+          next: user => {
+            // Succesful request
+            if (user.logged) {
+              // Logged in
 
-            // Save user to authenticate requests
-            this.authService.setStatus(user, this.rememberMe);
-
-            // Load permissions
-            this.authService.loadPermissions().subscribe(p => {
-              // The failed flag may be set, if the user didn't log in succesfully
-              // Save again
+              // Save user to authenticate requests
               this.authService.setStatus(user, this.rememberMe);
 
-              // No problem
-              // Redirects to the return route
-              this.router.navigate([this.returnRoute]);
+              // Load permissions
+              this.authService.loadPermissions().subscribe(p => {
+                // The failed flag may be set, if the user didn't log in succesfully
+                // Save again
+                this.authService.setStatus(user, this.rememberMe);
 
+                // No problem
+                // Redirects to the return route
+                this.router.navigate([this.returnRoute]);
+
+                this.loading = false;
+              });
+            } else {
+              this.failedLogin = true;
               this.loading = false;
-            });
-          } else {
-            this.failedLogin = true;
-            this.loading = false;
 
-            // Store user
-            this.authService.setStatus(user, this.rememberMe);
+              // Store user
+              this.authService.setStatus(user, this.rememberMe);
+            }
+          },
+          error: error => {
+            // Failed request
+            this.failedLogin = true;
+            // Reactivate form
+            this.loading = false;
           }
-        },
-        error: error => {
-          // Failed request
-          this.failedLogin = true;
-          // Reactivate form
-          this.loading = false;
-        }
-      });
+        });
+    })
   }
 
   /**
