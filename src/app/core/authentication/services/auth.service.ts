@@ -128,9 +128,7 @@ export class AuthService {
       // Request permissions
       .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
       // Get content
-      .pipe(map(response => response.content))
-      // Store in status
-      .pipe(tap(permissions => this.status.permissions = permissions.permissions));
+      .pipe(map(response => response.content));
   }
 
   /**
