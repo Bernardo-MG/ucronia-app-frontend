@@ -69,14 +69,6 @@ export class AuthService {
   }
 
   /**
-   * Sets the permissions for the user currently in session.
-   * @param permissions  permissions for the user
-   */
-  public setPermissions(permissions: { [key: string]: string }) {
-    this.status.permissions = permissions;
-  }
-
-  /**
    * Returns if the current user is logged in.
    * @returns if the current user is logged in
    */
@@ -137,8 +129,8 @@ export class AuthService {
       .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
       // Get content
       .pipe(map(response => response.content))
-      // Store in user
-      .pipe(tap(permissions => this.setPermissions(permissions.permissions)));
+      // Store in status
+      .pipe(tap(permissions => this.status.permissions = permissions.permissions));
   }
 
   /**

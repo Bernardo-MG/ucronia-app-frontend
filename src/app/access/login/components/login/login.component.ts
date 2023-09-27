@@ -74,14 +74,21 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: user => {
           // Succesful request
+
+          // Save token
+          this.authService.setStatus(user, this.rememberMe);
+
           if (user.logged) {
             // Logged in
 
+
+            // TODO: This should be handled in the login service
             // Load permissions
             this.authService.loadPermissions().subscribe({
-              next: permissions => {
+              next: permissionsSet => {
                 // The failed flag may be set, if the user didn't log in succesfully
-                // Save again
+
+                // Save permissions
                 this.authService.setStatus(user, this.rememberMe);
 
                 // No problem
@@ -91,9 +98,6 @@ export class LoginComponent implements OnInit {
                 this.loading = false;
               },
               error: error => {
-                // Failed loading permissions
-                this.authService.setStatus(user, this.rememberMe);
-
                 this.failedLogin = true;
                 this.loading = false;
               }
@@ -101,9 +105,6 @@ export class LoginComponent implements OnInit {
           } else {
             this.failedLogin = true;
             this.loading = false;
-
-            // Store user
-            this.authService.setStatus(user, this.rememberMe);
           }
         },
         error: error => {
