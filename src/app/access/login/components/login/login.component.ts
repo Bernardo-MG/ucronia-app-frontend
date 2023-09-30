@@ -74,30 +74,37 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: user => {
           // Succesful request
+
+          // Save token
+          this.authService.setStatus(user, this.rememberMe);
+
           if (user.logged) {
             // Logged in
 
-            // Save user to authenticate requests
-            this.authService.setStatus(user, this.rememberMe);
 
+            // TODO: This should be handled in the login service
             // Load permissions
-            this.authService.loadPermissions().subscribe(p => {
-              // The failed flag may be set, if the user didn't log in succesfully
-              // Save again
-              this.authService.setStatus(user, this.rememberMe);
+            this.authService.loadPermissions().subscribe({
+              next: permissionsSet => {
+                // The failed flag may be set, if the user didn't log in succesfully
 
-              // No problem
-              // Redirects to the return route
-              this.router.navigate([this.returnRoute]);
+                // Save permissions
+                this.authService.setStatus(user, this.rememberMe);
 
-              this.loading = false;
+                // No problem
+                // Redirects to the return route
+                this.router.navigate([this.returnRoute]);
+
+                this.loading = false;
+              },
+              error: error => {
+                this.failedLogin = true;
+                this.loading = false;
+              }
             });
           } else {
             this.failedLogin = true;
             this.loading = false;
-
-            // Store user
-            this.authService.setStatus(user, this.rememberMe);
           }
         },
         error: error => {
