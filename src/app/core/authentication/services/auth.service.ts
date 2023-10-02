@@ -92,6 +92,14 @@ export class AuthService {
    * @param user user status to store
    */
   public setStatus(user: SecurityStatus, rememberMe: boolean) {
+    // Try to get permissions from token
+    if (user.token) {
+      const tokenData = this.jwtHelper.decodeToken(user.token);
+      if (tokenData.permissions) {
+        user.permissions = tokenData.permissions;
+      }
+    }
+
     this.statusSubject.next(user);
 
     if (rememberMe) {

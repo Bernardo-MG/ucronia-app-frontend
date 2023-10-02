@@ -40,17 +40,6 @@ export class LoginService {
 
         // Save token
         this.authService.setStatus(user, rememberMe);
-
-        if (user.logged) {
-          // Logged in
-
-          // Load permissions
-          // FIXME: this is being executed async
-          this.authService.loadPermissions().subscribe(permissions => {
-            user.permissions = permissions.permissions;
-            this.authService.setStatus(user, rememberMe);
-          });
-        }
       }));
   }
 
