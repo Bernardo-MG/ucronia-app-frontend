@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Active } from '../../models/active';
 
 @Component({
@@ -13,7 +13,7 @@ export class MembershipFrontpageComponent implements OnInit {
   public activeFilter = Active.Active;
 
   constructor(
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {

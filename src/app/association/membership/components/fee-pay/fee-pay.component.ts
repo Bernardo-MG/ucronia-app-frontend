@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeePayment } from '../../models/fee-payment';
 import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
@@ -36,7 +36,7 @@ export class FeePayComponent implements OnInit {
   constructor(
     private service: FeeService,
     private router: Router,
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {

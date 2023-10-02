@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { SecurityDetails } from '@app/core/authentication/models/security-status';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 import { LoginRequest } from '../models/login-request';
@@ -17,7 +17,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   /**

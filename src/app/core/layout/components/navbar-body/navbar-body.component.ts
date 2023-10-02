@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutService } from '../../services/layout.service';
 import { Menu } from '@app/shared/menu/models/menu';
 
@@ -16,7 +16,7 @@ export class NavbarBodyComponent implements OnInit {
   public menus: Menu[] = [];
 
   constructor(
-    private authContainer: AuhtContainer,
+    private authContainer: AuthContainer,
     private layoutService: LayoutService
   ) { }
 

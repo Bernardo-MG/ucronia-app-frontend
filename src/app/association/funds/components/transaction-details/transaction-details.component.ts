@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
@@ -37,7 +37,7 @@ export class TransactionDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: TransactionService,
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {

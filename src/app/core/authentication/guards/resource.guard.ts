@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuhtContainer } from '../services/auth.service';
+import { AuthContainer } from '../services/auth.service';
 
 /**
  * Resource guard. Allows access only if the user has view permission for the resource.
@@ -9,7 +9,7 @@ import { AuhtContainer } from '../services/auth.service';
 export const ResourceGuard = (resource: string) => {
   return () => {
     const router = inject(Router);
-    const authContainer = inject(AuhtContainer)
+    const authContainer = inject(AuthContainer)
     const rootRoute = '/';
     let active;
 

@@ -9,7 +9,7 @@ import { SecurityDetails } from '../models/security-status';
 @Injectable({
   providedIn: 'root',
 })
-export class AuhtContainer {
+export class AuthContainer {
 
   /**
    * User key for storing user status into the local storage.

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { Role } from '@app/core/authentication/models/role';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessRoleService } from '../../services/access-role.service';
 import { Permission } from '@app/core/authentication/models/permission';
 
@@ -42,7 +42,7 @@ export class AccessRoleDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: AccessRoleService,
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   ngOnInit(): void {

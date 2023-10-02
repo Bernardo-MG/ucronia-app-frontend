@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'layout-account-dropdown',
@@ -13,7 +13,7 @@ export class AccountMenuComponent implements OnInit {
   private loginUrl = '/login';
 
   constructor(
-    private authContainer: AuhtContainer,
+    private authContainer: AuthContainer,
     private router: Router
   ) { }
 

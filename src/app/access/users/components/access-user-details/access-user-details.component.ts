@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { User } from '@app/core/authentication/models/user';
-import { AuhtContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class AccessUserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: AccessUserService,
-    private authContainer: AuhtContainer
+    private authContainer: AuthContainer
   ) { }
 
   ngOnInit(): void {
