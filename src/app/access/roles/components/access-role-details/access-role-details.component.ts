@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { Role } from '@app/core/authentication/models/role';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessRoleService } from '../../services/access-role.service';
 import { Permission } from '@app/core/authentication/models/permission';
 
@@ -42,13 +42,13 @@ export class AccessRoleDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: AccessRoleService,
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) { }
 
   ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("user", "update");
-    this.deletable = this.authService.hasPermission("user", "delete");
+    this.editable = this.authContainer.hasPermission("user", "update");
+    this.deletable = this.authContainer.hasPermission("user", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

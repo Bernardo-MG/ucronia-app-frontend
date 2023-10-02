@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '../../models/fee';
 import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
@@ -41,7 +41,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private router: Router,
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) { }
 
   ngAfterContentInit(): void {
@@ -51,8 +51,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("fee", "update");
-    this.deletable = this.authService.hasPermission("fee", "delete");
+    this.editable = this.authContainer.hasPermission("fee", "update");
+    this.deletable = this.authContainer.hasPermission("fee", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

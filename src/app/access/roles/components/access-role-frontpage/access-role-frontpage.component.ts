@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Role } from '@app/core/authentication/models/role';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
@@ -31,14 +31,14 @@ export class AccessFrontpageComponent implements OnInit {
   constructor(
     private service: AccessRoleService,
     route: ActivatedRoute,
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("role", "create");
+    this.createPermission = this.authContainer.hasPermission("role", "create");
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);

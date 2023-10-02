@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '@app/core/authentication/services/auth.service';
 import { LoginFormUser } from '../../models/login-form-user';
 import { LoginService } from '../../services/login.service';
 
@@ -49,8 +48,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private loginService: LoginService,
-    private authService: AuthService
+    private loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -70,38 +68,19 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.failedLogin = false;
 
-    this.loginService.login(login)
+    this.loginService.login(login, this.rememberMe)
       .subscribe({
         next: user => {
           // Succesful request
 
-          // Save token
-          this.authService.setStatus(user, this.rememberMe);
-
           if (user.logged) {
             // Logged in
 
+            // Redirects to the return route
+            this.router.navigate([this.returnRoute]);
 
-            // TODO: This should be handled in the login service
-            // Load permissions
-            this.authService.loadPermissions().subscribe({
-              next: permissionsSet => {
-                // The failed flag may be set, if the user didn't log in succesfully
-
-                // Save permissions
-                this.authService.setStatus(user, this.rememberMe);
-
-                // No problem
-                // Redirects to the return route
-                this.router.navigate([this.returnRoute]);
-
-                this.loading = false;
-              },
-              error: error => {
-                this.failedLogin = true;
-                this.loading = false;
-              }
-            });
+            this.failedLogin = false;
+            this.loading = false;
           } else {
             this.failedLogin = true;
             this.loading = false;

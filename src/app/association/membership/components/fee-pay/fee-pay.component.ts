@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeePayment } from '../../models/fee-payment';
 import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
@@ -36,12 +36,12 @@ export class FeePayComponent implements OnInit {
   constructor(
     private service: FeeService,
     private router: Router,
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("fee", "create");
+    this.createPermission = this.authContainer.hasPermission("fee", "create");
     this.onGoToMembersPage(0);
   }
 

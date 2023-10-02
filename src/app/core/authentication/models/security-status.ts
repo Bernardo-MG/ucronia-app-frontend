@@ -1,8 +1,8 @@
 
 /**
- * Security status for a user.
+ * Security details for a user.
  */
-export class SecurityStatus {
+export class SecurityDetails {
   /**
    * User username.
    */

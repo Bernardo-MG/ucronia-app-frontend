@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
@@ -37,13 +37,13 @@ export class TransactionDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: TransactionService,
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("transaction", "update");
-    this.deletable = this.authService.hasPermission("transaction", "delete");
+    this.editable = this.authContainer.hasPermission("transaction", "update");
+    this.deletable = this.authContainer.hasPermission("transaction", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
