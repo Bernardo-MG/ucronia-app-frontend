@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '../../models/fee';
 import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
@@ -41,7 +41,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private router: Router,
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   ngAfterContentInit(): void {

@@ -1,13 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { EMPTY } from 'rxjs';
 import { AccountService } from './account.service';
 
 describe('AccountService', () => {
   let service: AccountService;
-  let authService: AuthService;
+  let authService: AuhtContainer;
 
   beforeEach(() => {
     authService = jasmine.createSpyObj('AuthService', ['getStatus']);
@@ -20,7 +20,7 @@ describe('AccountService', () => {
       ],
       providers: [
         AccountService,
-        { provide: AuthService, useValue: authService }
+        { provide: AuhtContainer, useValue: authService }
       ]
     });
     service = TestBed.inject(AccountService);

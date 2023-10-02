@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuhtContainer } from '../services/auth.service';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
   private tokenHeaderIdentifier = 'Bearer'
 
   constructor(
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

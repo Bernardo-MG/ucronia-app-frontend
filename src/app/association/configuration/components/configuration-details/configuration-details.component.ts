@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
 
@@ -29,7 +29,7 @@ export class ConfigurationDetailsComponent implements OnInit {
 
   constructor(
     private service: AssociationConfigurationService,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'app-transaction-frontpage',
@@ -10,7 +10,7 @@ export class FundsFrontpageComponent implements OnInit {
   public createPermission = false;
 
   constructor(
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   public ngOnInit(): void {

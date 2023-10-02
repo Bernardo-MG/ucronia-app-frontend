@@ -1,52 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { environment } from 'environments/environment';
-import { Observable, ReplaySubject, map, tap } from 'rxjs';
-import { PermissionsSet } from '../models/permissions.set';
-import { SecurityStatus } from '../models/security-status';
+import { Observable, ReplaySubject } from 'rxjs';
+import { SecurityDetails } from '../models/security-status';
 
 /**
- * Security details container.
+ * Authentication and authorization details container.
  */
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService {
+export class AuhtContainer {
 
   /**
    * User key for storing user status into the local storage.
    */
-  private userKey = 'user';
+  private detailsKey = 'securityDetails';
 
   /**
    * Subject with the user status.
    */
-  private statusSubject = new ReplaySubject<SecurityStatus>(1);
-
-  /**
-   * Permissions endpoint URL.
-   */
-  private permissionUrl = environment.apiUrl + "/security/permission";
+  private detailsSubject = new ReplaySubject<SecurityDetails>(1);
 
   private jwtHelper = new JwtHelperService();
 
-  private status = new SecurityStatus();
+  private details = new SecurityDetails();
 
-  constructor(
-    private http: HttpClient
-  ) {
-
+  constructor() {
     // Watch for changes in the status
-    this.statusSubject.subscribe((s) => {
-      this.status = s;
+    this.detailsSubject.subscribe((s) => {
+      this.details = s;
     });
 
     // Load the stored status
-    this.loadStatusFromLocal();
+    this.loadDetailsFromLocal();
     // Clear up status if the token is invalid
-    this.verifyToken();
+    this.checkTokenExpired();
   }
 
   /**
@@ -54,10 +42,10 @@ export class AuthService {
    */
   public logout() {
     // Replace local data with empty user status
-    this.statusSubject.next(new SecurityStatus());
+    this.detailsSubject.next(new SecurityDetails());
 
     // Clear local storage
-    localStorage.removeItem(this.userKey);
+    localStorage.removeItem(this.detailsKey);
   }
 
   /**
@@ -65,7 +53,7 @@ export class AuthService {
    * @returns the user security token
    */
   public getToken(): string | undefined {
-    return this.status.token;
+    return this.details.token;
   }
 
   /**
@@ -73,7 +61,7 @@ export class AuthService {
    * @returns if the current user is logged in
    */
   public isLogged(): boolean {
-    return this.status.logged;
+    return this.details.logged;
   }
 
   /**
@@ -81,17 +69,18 @@ export class AuthService {
    * 
    * @returns the user status for the user currently in session as an observable
    */
-  public getStatus(): Observable<SecurityStatus> {
-    return this.statusSubject.asObservable();
+  public getDetails(): Observable<SecurityDetails> {
+    return this.detailsSubject.asObservable();
   }
 
   /**
-   * Stores the received user status. This takes two steps, first it is stored in the local
-   * subject. Then, if the 'remember me' option is enabled, it will be stored in the local storage.
+   * Stores the received security details. If the store flag is set, then this will be kept in the
+   * local storage, to keep the session alive when reloading.
    * 
-   * @param user user status to store
+   * @param details security details to store
+   * @param store keep the details in the local storage
    */
-  public setStatus(user: SecurityStatus, rememberMe: boolean) {
+  public setDetails(user: SecurityDetails, store: boolean) {
     // Try to get permissions from token
     if (user.token) {
       const tokenData = this.jwtHelper.decodeToken(user.token);
@@ -100,24 +89,31 @@ export class AuthService {
       }
     }
 
-    this.statusSubject.next(user);
+    this.detailsSubject.next(user);
 
-    if (rememberMe) {
+    if (store) {
       // Store user status in the local storage
       // This allows getting them back on a page reload
-      localStorage.setItem(this.userKey, JSON.stringify(user));
+      localStorage.setItem(this.detailsKey, JSON.stringify(user));
     } else {
       // Remember me disabled
       // Remove stored details
-      localStorage.removeItem(this.userKey);
+      localStorage.removeItem(this.detailsKey);
     }
   }
 
+  /**
+   * Checks if the current security details contains the received permission.
+   * 
+   * @param resource permission resource
+   * @param action permission action
+   * @returns true if the security details contains the permission, false otherwise
+   */
   public hasPermission(resource: string, action: string): boolean {
     let hasPermission;
 
-    const permissions = this.status.permissions;
-    if (permissions != undefined) {
+    const permissions = this.details.permissions;
+    if (permissions) {
       const key = resource;
       if (key in permissions) {
         hasPermission = permissions[key].includes(action);
@@ -131,40 +127,37 @@ export class AuthService {
     return hasPermission;
   }
 
-  public loadPermissions(): Observable<PermissionsSet> {
-    return this.http
-      // Request permissions
-      .get<ApiResponse<PermissionsSet>>(this.permissionUrl)
-      // Get content
-      .pipe(map(response => response.content));
-  }
-
   /**
-   * Reads the login status from the local storage. This allows recovering users stored as part of
-   * the 'remember me' functionality.
+   * Reads the security details from the local storage.
    * 
-   * @returns the user stored in the local storage as part of the 'remember me'
+   * @returns the user stored in the local storage
    */
-  private loadStatusFromLocal() {
+  private loadDetailsFromLocal() {
     // If the user was stored, load it
-    const localUser = localStorage.getItem(this.userKey);
+    const localUser = localStorage.getItem(this.detailsKey);
+
     if (localUser) {
       // User found in local storage
       const readUser = JSON.parse(localUser);
-      this.statusSubject.next(readUser);
+      this.detailsSubject.next(readUser);
     } else {
       // User not found
       // Use default user
-      this.statusSubject.next(new SecurityStatus());
+      this.detailsSubject.next(new SecurityDetails());
     }
   }
 
-  private verifyToken() {
+  /**
+   * Checks if the token is expired. And if it is expired, then it replaces the current security details
+   * for the default ones.
+   */
+  private checkTokenExpired() {
     const token = this.getToken();
+
     if ((token) && (this.jwtHelper.isTokenExpired(token))) {
       // Token expired 
       // Use default user
-      this.statusSubject.next(new SecurityStatus());
+      this.detailsSubject.next(new SecurityDetails());
     }
   }
 

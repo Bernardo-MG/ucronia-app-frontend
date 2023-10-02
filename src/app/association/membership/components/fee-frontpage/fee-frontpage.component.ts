@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Active } from '@app/association/membership/models/active';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class FeeFrontpageComponent implements OnInit {
   public activeFilter = Active.Active;
 
   constructor(
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   ngOnInit(): void {

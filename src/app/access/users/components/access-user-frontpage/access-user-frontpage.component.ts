@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { User } from '@app/core/authentication/models/user';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { PaginationRequestRouteObserver } from '@app/shared/utils/api/route/observer/pagination-request-route-observer';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AccessUserService } from '../../services/access-user.service';
@@ -33,7 +33,7 @@ export class AccessFrontpageComponent implements OnInit {
   constructor(
     private service: AccessUserService,
     route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }

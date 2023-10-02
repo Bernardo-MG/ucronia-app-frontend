@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from '../services/auth.service';
+import { AuhtContainer } from '../services/auth.service';
 import { UnauthorizedErrorInterceptor } from './unauthorized.interceptor';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -10,7 +10,7 @@ describe('UnauthorizedErrorInterceptor', () => {
     ],
     providers: [
       UnauthorizedErrorInterceptor,
-      AuthService
+      AuhtContainer
     ]
   }));
 

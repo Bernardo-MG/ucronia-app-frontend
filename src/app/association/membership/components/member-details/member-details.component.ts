@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
@@ -37,7 +37,7 @@ export class MemberDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   public ngOnInit(): void {

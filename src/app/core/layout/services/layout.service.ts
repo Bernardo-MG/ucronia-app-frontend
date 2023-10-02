@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
@@ -10,7 +10,7 @@ import { MenuLink } from '@app/shared/menu/models/menu-link';
 export class LayoutService {
 
   constructor(
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
 

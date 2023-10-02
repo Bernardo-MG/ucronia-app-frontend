@@ -8,7 +8,7 @@ import { Observable, map } from 'rxjs';
 import { PasswordChange } from '../models/password-change';
 import { PasswordChangeStatus } from '../models/password-change-status';
 import { Account } from '../models/account';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 
 @Injectable()
 export class AccountService {
@@ -19,13 +19,13 @@ export class AccountService {
 
   constructor(
     http: HttpClient,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) {
     this.operations = new AngularRequest(http, this.changePasswordUrl);
   }
 
   public getAccount(): Observable<Account> {
-    return this.authService.getStatus().pipe(map(s => {
+    return this.authService.getDetails().pipe(map(s => {
       const account = new Account();
 
       account.username = s.username;

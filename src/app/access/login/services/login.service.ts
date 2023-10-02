@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { SecurityStatus } from '@app/core/authentication/models/security-status';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { SecurityDetails } from '@app/core/authentication/models/security-status';
+import { AuhtContainer } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { map, Observable, tap } from 'rxjs';
 import { LoginRequest } from '../models/login-request';
@@ -17,7 +17,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuthService
+    private authService: AuhtContainer
   ) { }
 
   /**
@@ -29,17 +29,17 @@ export class LoginService {
    * @param request login request
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityStatus> {
+  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
     return this.http
       // Login request
-      .post<ApiResponse<SecurityStatus>>(this.loginUrl, request)
+      .post<ApiResponse<SecurityDetails>>(this.loginUrl, request)
       // Get content
       .pipe(map(response => response.content))
       .pipe(tap(user => {
         // Succesful request
 
         // Save token
-        this.authService.setStatus(user, rememberMe);
+        this.authService.setDetails(user, rememberMe);
       }));
   }
 
