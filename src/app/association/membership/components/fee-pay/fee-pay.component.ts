@@ -36,12 +36,12 @@ export class FeePayComponent implements OnInit {
   constructor(
     private service: FeeService,
     private router: Router,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("fee", "create");
+    this.createPermission = this.authContainer.hasPermission("fee", "create");
     this.onGoToMembersPage(0);
   }
 

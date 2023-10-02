@@ -37,13 +37,13 @@ export class AccessUserDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: AccessUserService,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("user", "update");
-    this.deletable = this.authService.hasPermission("user", "delete");
+    this.editable = this.authContainer.hasPermission("user", "update");
+    this.deletable = this.authContainer.hasPermission("user", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

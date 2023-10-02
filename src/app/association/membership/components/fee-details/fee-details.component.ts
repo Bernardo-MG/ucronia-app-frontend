@@ -41,7 +41,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private router: Router,
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   ngAfterContentInit(): void {
@@ -51,8 +51,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("fee", "update");
-    this.deletable = this.authService.hasPermission("fee", "delete");
+    this.editable = this.authContainer.hasPermission("fee", "update");
+    this.deletable = this.authContainer.hasPermission("fee", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

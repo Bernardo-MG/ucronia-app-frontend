@@ -17,7 +17,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   /**
@@ -39,7 +39,7 @@ export class LoginService {
         // Succesful request
 
         // Save token
-        this.authService.setDetails(user, rememberMe);
+        this.authContainer.setDetails(user, rememberMe);
       }));
   }
 

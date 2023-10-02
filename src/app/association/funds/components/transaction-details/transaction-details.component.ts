@@ -37,13 +37,13 @@ export class TransactionDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: TransactionService,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("transaction", "update");
-    this.deletable = this.authService.hasPermission("transaction", "delete");
+    this.editable = this.authContainer.hasPermission("transaction", "update");
+    this.deletable = this.authContainer.hasPermission("transaction", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

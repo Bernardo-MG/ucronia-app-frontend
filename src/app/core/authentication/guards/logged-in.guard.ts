@@ -8,11 +8,11 @@ import { AuhtContainer } from '../services/auth.service';
  */
 export const LoggedInGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router);
-  const authService = inject(AuhtContainer)
+  const authContainer = inject(AuhtContainer)
   const loginRoute = '/login';
   let active;
 
-  if (authService.isLogged()) {
+  if (authContainer.isLogged()) {
     // Logged in
     active = true;
   } else {

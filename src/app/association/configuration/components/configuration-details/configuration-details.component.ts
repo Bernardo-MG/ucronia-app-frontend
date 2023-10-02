@@ -29,12 +29,12 @@ export class ConfigurationDetailsComponent implements OnInit {
 
   constructor(
     private service: AssociationConfigurationService,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("association_configuration", "update");
+    this.editable = this.authContainer.hasPermission("association_configuration", "update");
 
     this.load();
   }

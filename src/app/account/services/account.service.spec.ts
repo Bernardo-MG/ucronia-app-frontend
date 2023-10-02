@@ -7,11 +7,11 @@ import { AccountService } from './account.service';
 
 describe('AccountService', () => {
   let service: AccountService;
-  let authService: AuhtContainer;
+  let authContainer: AuhtContainer;
 
   beforeEach(() => {
-    authService = jasmine.createSpyObj('AuthService', ['getStatus']);
-    (authService as any).getStatus.and.returnValue(EMPTY);
+    authContainer = jasmine.createSpyObj('authContainer', ['getStatus']);
+    (authContainer as any).getStatus.and.returnValue(EMPTY);
 
     TestBed.configureTestingModule({
       imports: [
@@ -20,7 +20,7 @@ describe('AccountService', () => {
       ],
       providers: [
         AccountService,
-        { provide: AuhtContainer, useValue: authService }
+        { provide: AuhtContainer, useValue: authContainer }
       ]
     });
     service = TestBed.inject(AccountService);

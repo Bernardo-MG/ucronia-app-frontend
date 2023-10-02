@@ -31,14 +31,14 @@ export class AccessFrontpageComponent implements OnInit {
   constructor(
     private service: AccessRoleService,
     route: ActivatedRoute,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) {
     this.routePaginationObserver = new PaginationRequestRouteObserver(route);
   }
 
   ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("role", "create");
+    this.createPermission = this.authContainer.hasPermission("role", "create");
 
     this.routePaginationObserver.subject.subscribe(p => {
       this.load(p);

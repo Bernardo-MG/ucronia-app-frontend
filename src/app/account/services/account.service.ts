@@ -19,13 +19,13 @@ export class AccountService {
 
   constructor(
     http: HttpClient,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) {
     this.operations = new AngularRequest(http, this.changePasswordUrl);
   }
 
   public getAccount(): Observable<Account> {
-    return this.authService.getDetails().pipe(map(s => {
+    return this.authContainer.getDetails().pipe(map(s => {
       const account = new Account();
 
       account.username = s.username;

@@ -16,7 +16,7 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
   private tokenHeaderIdentifier = 'Bearer'
 
   constructor(
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -28,8 +28,8 @@ export class JwtAuthenticationInterceptor implements HttpInterceptor {
       // It is a request to our API
 
       // Acquire the current user token
-      const logged = this.authService.isLogged();
-      const token = this.authService.getToken();
+      const logged = this.authContainer.isLogged();
+      const token = this.authContainer.getToken();
 
       if ((logged) && (token)) {
         // Has token

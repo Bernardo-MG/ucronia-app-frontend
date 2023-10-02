@@ -9,11 +9,11 @@ import { AuhtContainer } from '../services/auth.service';
 export const ResourceGuard = (resource: string) => {
   return () => {
     const router = inject(Router);
-    const authService = inject(AuhtContainer)
+    const authContainer = inject(AuhtContainer)
     const rootRoute = '/';
     let active;
 
-    if (authService.hasPermission(resource, "view")) {
+    if (authContainer.hasPermission(resource, "view")) {
       // Logged in
       active = true;
     } else {

@@ -13,16 +13,16 @@ export class AccountMenuComponent implements OnInit {
   private loginUrl = '/login';
 
   constructor(
-    private authService: AuhtContainer,
+    private authContainer: AuhtContainer,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.authService.getDetails().subscribe(u => { this.username = u.username });
+    this.authContainer.getDetails().subscribe(u => { this.username = u.username });
   }
 
   public onLogout() {
-    this.authService.logout();
+    this.authContainer.logout();
     this.router.navigate([this.loginUrl]);
   }
 

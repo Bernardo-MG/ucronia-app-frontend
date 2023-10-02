@@ -37,13 +37,13 @@ export class MemberDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authService.hasPermission("member", "update");
-    this.deletable = this.authService.hasPermission("member", "delete");
+    this.editable = this.authContainer.hasPermission("member", "update");
+    this.deletable = this.authContainer.hasPermission("member", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

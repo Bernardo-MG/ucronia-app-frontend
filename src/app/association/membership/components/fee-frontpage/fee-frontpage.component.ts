@@ -14,12 +14,12 @@ export class FeeFrontpageComponent implements OnInit {
   public activeFilter = Active.Active;
 
   constructor(
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("fee", "create");
+    this.createPermission = this.authContainer.hasPermission("fee", "create");
   }
 
   public onChangeActiveFilter(event: any) {

@@ -13,12 +13,12 @@ export class MembershipFrontpageComponent implements OnInit {
   public activeFilter = Active.Active;
 
   constructor(
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("member", "create");
+    this.createPermission = this.authContainer.hasPermission("member", "create");
   }
 
   public onChangeActiveFilter(event: any) {

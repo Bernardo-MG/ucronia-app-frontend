@@ -10,7 +10,7 @@ import { MenuLink } from '@app/shared/menu/models/menu-link';
 export class LayoutService {
 
   constructor(
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
 
@@ -46,7 +46,7 @@ export class LayoutService {
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only links the user has permissions for
-      .filter(link => this.authService.hasPermission(link.resource, 'view'));
+      .filter(link => this.authContainer.hasPermission(link.resource, 'view'));
   }
 
 }

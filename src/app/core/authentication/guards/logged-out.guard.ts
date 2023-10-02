@@ -8,11 +8,11 @@ import { AuhtContainer } from '../services/auth.service';
  */
 export const LoggedOutGuard = () => {
   const router = inject(Router);
-  const authService = inject(AuhtContainer)
+  const authContainer = inject(AuhtContainer)
   const homeRoute = '/';
   let active;
 
-  if (authService.isLogged()) {
+  if (authContainer.isLogged()) {
     // Logged in
     // Redirect to home
     active = false;

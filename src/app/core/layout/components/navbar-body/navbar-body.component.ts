@@ -16,12 +16,12 @@ export class NavbarBodyComponent implements OnInit {
   public menus: Menu[] = [];
 
   constructor(
-    private authService: AuhtContainer,
+    private authContainer: AuhtContainer,
     private layoutService: LayoutService
   ) { }
 
   ngOnInit(): void {
-    this.authService.getDetails().subscribe(u => { this.loggedIn = u.logged });
+    this.authContainer.getDetails().subscribe(u => { this.loggedIn = u.logged });
     this.title = this.layoutService.getTitle();
     this.menus = this.layoutService.getMenus();
   }

@@ -10,12 +10,12 @@ export class FundsFrontpageComponent implements OnInit {
   public createPermission = false;
 
   constructor(
-    private authService: AuhtContainer
+    private authContainer: AuhtContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("transaction", "create");
+    this.createPermission = this.authContainer.hasPermission("transaction", "create");
   }
 
 }
