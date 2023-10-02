@@ -30,8 +30,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public error = false;
 
-  public member = new Member();
-
   public data = new Fee();
 
   public failures: { [key: string]: Failure[] } = {};
@@ -109,7 +107,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         .subscribe({
           next: d => {
             this.data = d;
-            this.service.getOneMember(this.data.memberId).subscribe(m => this.member = m);
             this.reading = false;
           },
           error: error => {
