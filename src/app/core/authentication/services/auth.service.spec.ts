@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
+import { AuthContainer } from './auth.service';
 
-describe('AuthService', () => {
-  let service: AuthService;
+describe('AuhtContainer', () => {
+  let service: AuthContainer;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,10 +11,10 @@ describe('AuthService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        AuthService
+        AuthContainer
       ]
     });
-    service = TestBed.inject(AuthService);
+    service = TestBed.inject(AuthContainer);
   });
 
   it('should be created', () => {

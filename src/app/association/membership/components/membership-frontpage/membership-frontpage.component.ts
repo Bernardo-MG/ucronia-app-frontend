@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Active } from '../../models/active';
 
 @Component({
@@ -13,12 +13,12 @@ export class MembershipFrontpageComponent implements OnInit {
   public activeFilter = Active.Active;
 
   constructor(
-    private authService: AuthService
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authService.hasPermission("member", "create");
+    this.createPermission = this.authContainer.hasPermission("member", "create");
   }
 
   public onChangeActiveFilter(event: any) {
