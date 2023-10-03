@@ -47,7 +47,8 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roleId']) {
-      this.loadPermissionSelectionPage(0);
+      this.onGoToActionPage(0);
+      this.onGoToResourcePage(0);
     }
   }
 
@@ -59,7 +60,9 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     const permission = new Permission();
     permission.actionId = this.action.id;
     permission.resourceId = this.resource.id;
-    this.addPermission.emit(permission);
+    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
+      this.addPermission.emit(permission);
+    });
     this.action = new Action();
     this.resource = new Resource();
   }
@@ -92,11 +95,6 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public onCancelSelect() {
     this.view = 'main';
-  }
-
-  public loadPermissionSelectionPage(page: number) {
-    this.onGoToActionPage(0);
-    this.onGoToResourcePage(0);
   }
 
   public onGoToActionPage(page: number) {
