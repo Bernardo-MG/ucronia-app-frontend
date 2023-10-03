@@ -15,31 +15,15 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
-  public actions: Action[] = [];
+  public permissions: Permission[] = [];
 
-  public resources: Resource[] = [];
+  public permissionsPage = 0;
 
-  public actionPage = 0;
+  public permissionsTotalPages = 0;
 
-  public totalActionPages = 0;
-
-  public resourcePage = 0;
-
-  public totalResourcePages = 0;
+  public readingPermissions = false;
 
   public data = new Permission();
-
-  public view = 'main';
-
-  public action = new Action();
-
-  public resource = new Resource();
-
-  public searchIcon = faMagnifyingGlass;
-
-  public readingActionsSelection = false;
-
-  public readingResourcesSelection = false;
 
   constructor(
     private service: AccessRoleService
@@ -47,86 +31,29 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roleId']) {
-      this.onGoToActionPage(0);
-      this.onGoToResourcePage(0);
+      this.onGoTo(0);
     }
   }
 
-  public isAbleToAdd() {
-    return (this.action.id > 0) && (this.resource.id > 0);
-  }
-
-  public onAddPermission(): void {
-    const permission = new Permission();
-    permission.actionId = this.action.id;
-    permission.resourceId = this.resource.id;
-    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
+  public onAddPermission(permission: Permission): void {
+    this.service.addPermission(this.roleId, permission.id).subscribe(p => {
       this.addPermission.emit(permission);
     });
-    this.action = new Action();
-    this.resource = new Resource();
   }
 
-  public onShowActionSelection(): void {
-    this.onGoToActionPage(0);
-    this.view = 'action';
-  }
-
-  public onShowResourceSelection(): void {
-    this.onGoToResourcePage(0);
-    this.view = 'resource';
-  }
-
-  public onSelectAction(id: number): void {
-    const found = this.actions.find(a => a.id === id);
-    if (found) {
-      this.action = found;
-      this.view = 'main';
-    }
-  }
-
-  public onSelectResource(id: number): void {
-    const found = this.resources.find(a => a.id === id);
-    if (found) {
-      this.resource = found;
-      this.view = 'main';
-    }
-  }
-
-  public onCancelSelect() {
-    this.view = 'main';
-  }
-
-  public onGoToActionPage(page: number) {
-    this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe({
+  public onGoTo(page: number) {
+    this.readingPermissions = true;
+    this.service.getAllPermissions(page).subscribe({
       next: response => {
-        this.actions = response.content;
+        this.permissions = response.content;
 
-        this.actionPage = response.page + 1;
-        this.totalActionPages = response.totalPages;
+        this.permissionsPage = response.page + 1;
+        this.permissionsTotalPages = response.totalPages;
 
-        this.readingActionsSelection = false;
+        this.readingPermissions = false;
       },
       error: error => {
-        this.readingActionsSelection = false;
-      }
-    });
-  }
-
-  public onGoToResourcePage(page: number) {
-    this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe({
-      next: response => {
-        this.resources = response.content;
-
-        this.resourcePage = response.page + 1;
-        this.totalResourcePages = response.totalPages;
-
-        this.readingResourcesSelection = false;
-      },
-      error: error => {
-        this.readingResourcesSelection = false;
+        this.readingPermissions = false;
       }
     });
   }

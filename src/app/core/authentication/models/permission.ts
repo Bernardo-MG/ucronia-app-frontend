@@ -1,4 +1,5 @@
 export class Permission {
+  id = -1;
   roleId = -1;
   role = '';
   resourceId = -1;
