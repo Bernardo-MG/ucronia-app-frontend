@@ -27,10 +27,6 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public currentPage = 0;
 
-  public totalActionPages = 0;
-
-  public totalResourcePages = 0;
-
   private sort: Sort<Permission>[] = [];
 
   constructor(
