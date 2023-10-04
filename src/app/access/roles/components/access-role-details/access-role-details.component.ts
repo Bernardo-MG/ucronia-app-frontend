@@ -93,6 +93,10 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.permissionView = 'add';
   }
 
+  public onCancelAddPermission() {
+    this.permissionView = 'list';
+  }
+
   public isAbleToEdit() {
     return (!this.error) && (!this.reading) && this.editable && !this.editing;
   }
