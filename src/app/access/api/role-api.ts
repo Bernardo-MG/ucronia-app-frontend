@@ -35,10 +35,10 @@ export class RoleApi extends CrudApi<Role> {
     });
   }
 
-  public removePermission(role: number, resource: number, action: number): Observable<ApiResponse<boolean>> {
+  public removePermission(role: number, permission: number): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/${role}/permission/${resource}/${action}`);
+    request.appendRoute(`/${role}/permission/${permission}`);
 
     return request.delete();
   }

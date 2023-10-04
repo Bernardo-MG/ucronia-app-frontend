@@ -103,8 +103,8 @@ export class AccessRoleService {
     return this.roleApi.updatePermission(roleId, permission).pipe(map(r => r.content));
   }
 
-  public removePermission(roleId: number, resource: number, action: number): Observable<boolean> {
-    return this.roleApi.removePermission(roleId, resource, action).pipe(map(r => r.content));
+  public removePermission(roleId: number, permission: number): Observable<boolean> {
+    return this.roleApi.removePermission(roleId, permission).pipe(map(r => r.content));
   }
 
 }
