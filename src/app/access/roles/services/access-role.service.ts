@@ -1,17 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActionApi } from '@app/access/api/action-api';
 import { PermissionApi } from '@app/access/api/permission-api';
-import { ResourceApi } from '@app/access/api/resource-api';
 import { RoleApi } from '@app/access/api/role-api';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
-import { Resource } from '@app/core/authentication/models/resource';
 import { Role } from '@app/core/authentication/models/role';
 import { map, Observable } from 'rxjs';
 
@@ -19,10 +15,6 @@ import { map, Observable } from 'rxjs';
 export class AccessRoleService {
 
   private permissionApi = new PermissionApi(this.http);
-
-  private actionApi = new ActionApi(this.http);
-
-  private resourceApi = new ResourceApi(this.http);
 
   private roleApi = new RoleApi(this.http);
 
@@ -61,26 +53,6 @@ export class AccessRoleService {
     query.page = page;
 
     return this.permissionApi.readAll(query);
-  }
-
-  public getActionSelection(page: number): Observable<PaginatedResponse<Action[]>> {
-    const sort = new Sort<Action>('name');
-
-    const query = new PaginatedQuery<Action>();
-    query.sort = [sort];
-    query.page = page;
-
-    return this.actionApi.readAll(query);
-  }
-
-  public getResourceSelection(page: number): Observable<PaginatedResponse<Resource[]>> {
-    const sort = new Sort<Resource>('name');
-
-    const query = new PaginatedQuery<Resource>();
-    query.sort = [sort];
-    query.page = page;
-
-    return this.resourceApi.readAll(query);
   }
 
   public create(data: Role): Observable<Role> {
