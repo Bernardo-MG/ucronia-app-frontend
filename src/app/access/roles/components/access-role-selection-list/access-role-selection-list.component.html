@@ -1,19 +1,30 @@
-<!-- List -->
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <!-- Headers -->
-      <th scope="col">
-        Name<pagination-route-order-button property="name"></pagination-route-order-button>
-      </th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    <tr *ngFor="let role of roles; let rowIndex = index" role="button" routerLink="/roles/{{role.id}}">
-      <!-- Cells -->
-      <td>
-        {{role.name}}
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="card">
+  <div class="card-body">
+    <layout-waiting-wrapper [waiting]="readingRoles">
+      <!-- List -->
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- Headers -->
+            <th scope="col">
+              Name<pagination-order-button property="name"
+                (directionChange)="onChangeDirection($event)"></pagination-order-button>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let role of roles; let rowIndex = index" role="button" routerLink="/roles/{{role.id}}">
+            <!-- Cells -->
+            <td>
+              {{role.name}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </layout-waiting-wrapper>
+  </div>
+  <div class="d-flex justify-content-center mt-1">
+    <pagination-route-navigation [disabled]="readingRoles" [totalPages]="totalPages">
+    </pagination-route-navigation>
+  </div>
+</div>
