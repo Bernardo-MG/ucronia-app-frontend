@@ -42,7 +42,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public loadRoles(page: number) {
     this.readingRoles = true;
-    this.service.getRoles(this.userId, page).subscribe({
+    this.service.getRoles(this.userId, { page }).subscribe({
       next: response => {
         this.roles = response.content;
         this.rolesPage = response.page + 1;

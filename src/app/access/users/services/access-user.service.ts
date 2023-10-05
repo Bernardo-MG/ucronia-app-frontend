@@ -33,22 +33,22 @@ export class AccessUserService {
     return this.userApi.readAll(query);
   }
 
-  public getRoles(userId: number, page: number): Observable<PaginatedResponse<Role[]>> {
-    const sort: Sort<Role> = new Sort<Role>('name');
+  public getRoles(userId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+    const defaultSort: Sort<Role> = new Sort<Role>('name');
 
     const query = new PaginatedQuery<Role>();
-    query.sort = [sort];
-    query.page = page;
+    query.defaultSort = [defaultSort];
+    query.pagination = pagination;
 
     return this.userApi.readRoles(userId, query);
   }
 
-  public getAvailableRoles(userId: number, page: number): Observable<PaginatedResponse<Role[]>> {
-    const sort: Sort<Role> = new Sort<Role>('name');
+  public getAvailableRoles(userId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+    const defaultSort: Sort<Role> = new Sort<Role>('name');
 
     const query = new PaginatedQuery<Role>();
-    query.sort = [sort];
-    query.page = page;
+    query.defaultSort = [defaultSort];
+    query.pagination = pagination;
 
     return this.userApi.readAvailableRoles(userId, query);
   }
@@ -74,7 +74,7 @@ export class AccessUserService {
   }
 
   public removeRole(id: number, role: number): Observable<boolean> {
-    return this.userApi.removeRoles(id,role).pipe(map(r => r.content));
+    return this.userApi.removeRoles(id, role).pipe(map(r => r.content));
   }
 
 }

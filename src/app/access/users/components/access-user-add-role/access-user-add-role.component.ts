@@ -39,7 +39,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
 
   public loadRoleSelectionPage(page: number) {
     this.readingSelection = true;
-    this.service.getAvailableRoles(this.userId, page).subscribe({
+    this.service.getAvailableRoles(this.userId, { page }).subscribe({
       next: response => {
         this.roleSelection = response.content;
         this.roleSelectionPage = response.page + 1;
