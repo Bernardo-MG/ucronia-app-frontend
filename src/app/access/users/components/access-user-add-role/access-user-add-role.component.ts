@@ -4,8 +4,7 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-add-role',
-  templateUrl: './access-user-add-role.component.html',
-  styleUrls: ['./access-user-add-role.component.sass']
+  templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnChanges {
 
