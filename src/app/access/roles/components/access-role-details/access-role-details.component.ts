@@ -93,6 +93,10 @@ export class AccessRoleDetailsComponent implements OnInit {
     this.permissionView = 'add';
   }
 
+  public onCancelAddPermission() {
+    this.permissionView = 'list';
+  }
+
   public isAbleToEdit() {
     return (!this.error) && (!this.reading) && this.editable && !this.editing;
   }
@@ -133,10 +137,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onAddPermission(permission: Permission) {
-    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
-      this.permissionView = 'list';
-      // TODO: Load permissions
-    });
+    this.permissionView = 'list';
   }
 
 }

@@ -10,14 +10,12 @@ import { AccessRoleAddPermissionComponent } from './components/access-role-add-p
 import { AccessRoleCreateComponent } from './components/access-role-create/access-role-create.component';
 import { AccessRoleDetailsComponent } from './components/access-role-details/access-role-details.component';
 import { AccessRoleFormComponent } from './components/access-role-form/access-role-form.component';
-import { AccessRoleInfoComponent } from './components/access-role-info/access-role-info.component';
 import { AccessFrontpageComponent } from './components/access-role-frontpage/access-role-frontpage.component';
+import { AccessRoleInfoComponent } from './components/access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from './components/access-role-permissions/access-role-permissions.component';
+import { AccessRoleSelectionListComponent } from './components/access-role-selection-list/access-role-selection-list.component';
 import { RoleRoutingModule } from './roles-routing.module';
 import { AccessRoleService } from './services/access-role.service';
-import { AccessRoleSelectionListComponent } from './components/access-role-selection-list/access-role-selection-list.component';
-import { AccessRoleActionPickListComponent } from './components/access-role-action-pick-list/access-role-action-pick-list.component';
-import { AccessRoleResourcePickListComponent } from './components/access-role-resource-pick-list/access-role-resource-pick-list.component';
 
 
 
@@ -30,9 +28,7 @@ import { AccessRoleResourcePickListComponent } from './components/access-role-re
     AccessRolePermissionsComponent,
     AccessRoleInfoComponent,
     AccessRoleAddPermissionComponent,
-    AccessRoleSelectionListComponent,
-    AccessRoleActionPickListComponent,
-    AccessRoleResourcePickListComponent,
+    AccessRoleSelectionListComponent
   ],
   imports: [
     CommonModule,

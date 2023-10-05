@@ -4,6 +4,7 @@ import { PaginatedQuery } from "./models/paginated-query";
 import { PaginatedResponse } from "./models/paginated-response";
 import { Sort } from "./models/sort";
 import { Request } from "./request/request";
+import { Direction } from "./models/direction";
 
 export class ReadApi<T> {
 
@@ -52,8 +53,9 @@ export class ReadApi<T> {
   }
 
   private applySort(sort: Sort<T>[], request: Request) {
-    for (let i = 0; i < sort.length; i += 1) {
-      const fieldSort = sort[i];
+    const validSort = sort.filter(s => s.direction !== Direction.Unsorted);
+    for (let i = 0; i < validSort.length; i += 1) {
+      const fieldSort = validSort[i];
       request.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
     }
   }

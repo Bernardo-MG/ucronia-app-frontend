@@ -1,67 +1,32 @@
-<ng-container [ngSwitch]="view">
-  <ng-container *ngSwitchCase="'list'">
-    <layout-waiting-wrapper [waiting]="readingRoles">
-      <!-- Roles -->
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col"></th>
-            <th scope="col">
-              Name<pagination-order-button property="name" (directionChange)="onChangeNameDirection($event)"></pagination-order-button>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <ng-template ngFor let-role [ngForOf]="roles">
-            <tr>
-              <td>
-                <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button"
-                  class="btn btn-link link-dark" role="button" aria-label="Back">
-                  <icon-delete></icon-delete>
-                </button>
-              </td>
-              <td>{{role.name}}</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-    </layout-waiting-wrapper>
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-navigation [disabled]="readingRoles" [current]="rolesPage" [pages]="rolesTotalPages"
-        (goTo)="loadRoles($event)">
-      </pagination-navigation>
-    </div>
-    <div class="d-grid">
-      <!-- Add button -->
-      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
-        Add
-      </button>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="'add'">
-    <layout-waiting-wrapper [waiting]="readingSelection">
-      <!-- Add role -->
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">
-              role
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <ng-template ngFor let-role [ngForOf]="roleSelection">
-            <tr role="button" (click)="onAddRole(role)">
-              <td>{{role.name}}</td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
-    </layout-waiting-wrapper>
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-navigation [disabled]="readingSelection" [current]="roleSelectionPage"
-        [pages]="roleSelectionTotalPages" (goTo)="loadRoleSelectionPage($event)">
-      </pagination-navigation>
-    </div>
-  </ng-container>
-</ng-container>
+<layout-waiting-wrapper [waiting]="readingRoles">
+  <!-- Roles -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">
+          Name<pagination-order-button property="name"
+            (directionChange)="onChangeDirection($event)"></pagination-order-button>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <ng-template ngFor let-role [ngForOf]="roles">
+        <tr>
+          <td>
+            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark"
+              role="button" aria-label="Back">
+              <icon-delete></icon-delete>
+            </button>
+          </td>
+          <td>{{role.name}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [disabled]="readingRoles" [current]="currentPage" [pages]="totalPages"
+    (goTo)="onGoTo($event)">
+  </pagination-navigation>
+</div>

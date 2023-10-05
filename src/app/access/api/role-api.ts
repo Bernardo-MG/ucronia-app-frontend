@@ -25,21 +25,28 @@ export class RoleApi extends CrudApi<Role> {
     return request.read();
   }
 
-  public updatePermission(role: number, resource: number, action: number): Observable<ApiResponse<Permission>> {
+  public readAvailablePermissions(role: number, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
+    const request = this.requestWithQuery(query);
+
+    request.appendRoute(`/${role}/permission/available`);
+
+    return request.read();
+  }
+
+  public updatePermission(role: number, permission: number): Observable<ApiResponse<Permission>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${role}/permission`);
 
     return request.update({
-      resourceId: resource,
-      actionId: action
+      permissionId: permission
     });
   }
 
-  public removePermission(role: number, resource: number, action: number): Observable<ApiResponse<boolean>> {
+  public removePermission(role: number, permission: number): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/${role}/permission/${resource}/${action}`);
+    request.appendRoute(`/${role}/permission/${permission}`);
 
     return request.delete();
   }

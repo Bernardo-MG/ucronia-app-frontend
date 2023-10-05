@@ -19,17 +19,11 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public permissions: Permission[] = [];
 
-  public permissionsPage = 0;
-
-  public permissionsTotalPages = 0;
-
   public readingPermissions = false;
 
   public currentPage = 0;
 
-  public totalActionPages = 0;
-
-  public totalResourcePages = 0;
+  public totalPages = 0;
 
   private sort: Sort<Permission>[] = [];
 
@@ -43,26 +37,8 @@ export class AccessRolePermissionsComponent implements OnChanges {
     }
   }
 
-  public load(pagination: PaginationRequest | undefined) {
-    this.readingPermissions = true;
-    this.service.getPermissions(this.roleId, pagination).subscribe({
-      next: response => {
-        this.permissions = response.content;
-
-        this.currentPage = response.page + 1;
-        this.permissionsPage = response.page + 1;
-
-        this.permissionsTotalPages = response.totalPages;
-        this.readingPermissions = false;
-      },
-      error: error => {
-        this.readingPermissions = false;
-      }
-    });
-  }
-
   public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => this.load(undefined));
+    this.service.removePermission(this.roleId, permission.id).subscribe(p => this.load(undefined));
   }
 
   public onGoTo(page: number) {
@@ -75,15 +51,27 @@ export class AccessRolePermissionsComponent implements OnChanges {
       // New property to sort
       this.sort.push(sort);
     } else {
-      if (sort.direction === Direction.Unsorted) {
-        // Remove property
-        this.sort = this.sort.filter(s => s.property !== sort.property);
-      } else {
-        // Replace property
-        this.sort[index] = sort;
-      }
+      // Replace property
+      this.sort[index] = sort;
     }
     this.load({ page: this.currentPage, sort: this.sort });
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.readingPermissions = true;
+    this.service.getPermissions(this.roleId, pagination).subscribe({
+      next: response => {
+        this.permissions = response.content;
+
+        this.currentPage = response.page + 1;
+
+        this.totalPages = response.totalPages;
+        this.readingPermissions = false;
+      },
+      error: error => {
+        this.readingPermissions = false;
+      }
+    });
   }
 
 }

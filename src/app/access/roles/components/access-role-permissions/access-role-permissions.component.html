@@ -12,23 +12,23 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-privilege [ngForOf]="permissions">
+      <ng-template ngFor let-permission [ngForOf]="permissions">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemovePermission(privilege)" type="button"
+            <button [disabled]="!deletable" (click)="onRemovePermission(permission)" type="button"
               class="btn btn-link link-dark" role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>
-          <td>{{privilege.resource}}</td>
-          <td>{{privilege.action}}</td>
+          <td>{{permission.resource}}</td>
+          <td>{{permission.action}}</td>
         </tr>
       </ng-template>
     </tbody>
   </table>
   <!-- Permissions navigation -->
   <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="permissionsPage" [pages]="permissionsTotalPages" (goTo)="onGoTo($event)">
+    <pagination-navigation [current]="currentPage" [pages]="totalPages" (goTo)="onGoTo($event)">
     </pagination-navigation>
   </div>
 </layout-waiting-wrapper>

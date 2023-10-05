@@ -1,25 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActionApi } from '@app/access/api/action-api';
-import { ResourceApi } from '@app/access/api/resource-api';
 import { RoleApi } from '@app/access/api/role-api';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
-import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
-import { Resource } from '@app/core/authentication/models/resource';
 import { Role } from '@app/core/authentication/models/role';
 import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class AccessRoleService {
-
-  private actionApi = new ActionApi(this.http);
-
-  private resourceApi = new ResourceApi(this.http);
 
   private roleApi = new RoleApi(this.http);
 
@@ -49,24 +41,15 @@ export class AccessRoleService {
     return this.roleApi.readPermissions(roleId, query);
   }
 
-  public getActionSelection(page: number): Observable<PaginatedResponse<Action[]>> {
-    const sort = new Sort<Action>('name');
+  public getAvailablePermissions(roleId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+    const sortResource: Sort<Permission> = new Sort<Permission>('resource');
+    const sortAction: Sort<Permission> = new Sort<Permission>('action');
 
-    const query = new PaginatedQuery<Action>();
-    query.sort = [sort];
-    query.page = page;
+    const query = new PaginatedQuery<Permission>();
+    query.defaultSort = [sortResource, sortAction];
+    query.pagination = pagination;
 
-    return this.actionApi.readAll(query);
-  }
-
-  public getResourceSelection(page: number): Observable<PaginatedResponse<Resource[]>> {
-    const sort = new Sort<Resource>('name');
-
-    const query = new PaginatedQuery<Resource>();
-    query.sort = [sort];
-    query.page = page;
-
-    return this.resourceApi.readAll(query);
+    return this.roleApi.readAvailablePermissions(roleId, query);
   }
 
   public create(data: Role): Observable<Role> {
@@ -85,12 +68,12 @@ export class AccessRoleService {
     return this.roleApi.readById(roleId).pipe(map(r => r.content));
   }
 
-  public addPermission(roleId: number, resource: number, action: number): Observable<Permission> {
-    return this.roleApi.updatePermission(roleId, resource, action).pipe(map(r => r.content));
+  public addPermission(roleId: number, permission: number): Observable<Permission> {
+    return this.roleApi.updatePermission(roleId, permission).pipe(map(r => r.content));
   }
 
-  public removePermission(roleId: number, resource: number, action: number): Observable<boolean> {
-    return this.roleApi.removePermission(roleId, resource, action).pipe(map(r => r.content));
+  public removePermission(roleId: number, permission: number): Observable<boolean> {
+    return this.roleApi.removePermission(roleId, permission).pipe(map(r => r.content));
   }
 
 }

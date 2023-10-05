@@ -20,8 +20,27 @@
       <div class="mb-1">
         <div class="card">
           <div class="card-body">
-            <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
-            </access-user-roles>
+            <ng-container [ngSwitch]="view">
+              <ng-container *ngSwitchCase="'list'">
+                <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+                </access-user-roles>
+                <div class="d-grid">
+                  <!-- Add button -->
+                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
+                    Add
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'add'">
+                <access-user-add-role [userId]="data.id" (addRole)="onAddRole($event)"></access-user-add-role>
+                <div class="d-grid">
+                  <!-- Cancel button -->
+                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">
+                    Cancel
+                  </button>
+                </div>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
       </div>

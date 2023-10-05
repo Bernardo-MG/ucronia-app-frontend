@@ -4,6 +4,7 @@ import { Failure } from '@app/core/api/models/failure';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
+import { Role } from '@app/core/authentication/models/role';
 
 @Component({
   selector: 'access-user-details',
@@ -32,6 +33,8 @@ export class AccessUserDetailsComponent implements OnInit {
   public failures: { [key: string]: Failure[] } = {};
 
   public data = new User();
+
+  public view = 'list';
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +85,18 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
+  }
+
+  public onAddRole(data: Role): void {
+    this.view = "list";
+  }
+
+  public onShowAddRole() {
+    this.view = "add";
+  }
+
+  public onCancelAddRole() {
+    this.view = "list";
   }
 
   public isAbleToEdit() {

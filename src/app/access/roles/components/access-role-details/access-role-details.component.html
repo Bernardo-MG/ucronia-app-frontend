@@ -33,9 +33,15 @@
                 </div>
               </ng-container>
               <ng-container *ngSwitchCase="'add'">
-                <!-- Add privileges -->
+                <!-- Add permissions -->
                 <access-role-add-permission [roleId]="roleId"
                   (addPermission)="onAddPermission($event)"></access-role-add-permission>
+                <div class="d-grid">
+                  <!-- Cancel button -->
+                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddPermission()">
+                    Cancel
+                  </button>
+                </div>
               </ng-container>
             </ng-container>
           </div>
