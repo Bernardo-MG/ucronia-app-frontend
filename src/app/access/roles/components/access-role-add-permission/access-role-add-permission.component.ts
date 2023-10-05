@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Permission } from '@app/core/authentication/models/permission';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Sort } from '@app/core/api/models/sort';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-role-add-permission',
@@ -14,13 +16,15 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public permissions: Permission[] = [];
 
-  public permissionsPage = 0;
-
-  public permissionsTotalPages = 0;
-
   public readingPermissions = false;
 
+  public currentPage = 0;
+
+  public totalPages = 0;
+
   public data = new Permission();
+
+  private sort: Sort<Permission>[] = [];
 
   constructor(
     private service: AccessRoleService
@@ -28,7 +32,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roleId']) {
-      this.onGoTo(0);
+      this.load(undefined);
     }
   }
 
@@ -39,13 +43,29 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
+    this.load({ page, sort: this.sort });
+  }
+
+  public onChangeDirection(sort: Sort<Permission>) {
+    const index = this.sort.findIndex(s => s.property === sort.property);
+    if (index < 0) {
+      // New property to sort
+      this.sort.push(sort);
+    } else {
+      // Replace property
+      this.sort[index] = sort;
+    }
+    this.load({ page: this.currentPage, sort: this.sort });
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.roleId, {page}).subscribe({
+    this.service.getAvailablePermissions(this.roleId, pagination).subscribe({
       next: response => {
         this.permissions = response.content;
 
-        this.permissionsPage = response.page + 1;
-        this.permissionsTotalPages = response.totalPages;
+        this.currentPage = response.page + 1;
+        this.totalPages = response.totalPages;
 
         this.readingPermissions = false;
       },

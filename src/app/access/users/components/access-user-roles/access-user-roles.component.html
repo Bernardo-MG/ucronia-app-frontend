@@ -6,7 +6,7 @@
         <th scope="col"></th>
         <th scope="col">
           Name<pagination-order-button property="name"
-            (directionChange)="onChangeNameDirection($event)"></pagination-order-button>
+            (directionChange)="onChangeDirection($event)"></pagination-order-button>
         </th>
       </tr>
     </thead>
@@ -26,7 +26,7 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingRoles" [current]="rolesPage" [pages]="rolesTotalPages"
-    (goTo)="loadRoles($event)">
+  <pagination-navigation [disabled]="readingRoles" [current]="currentPage" [pages]="totalPages"
+    (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>

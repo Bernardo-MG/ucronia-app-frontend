@@ -19,13 +19,11 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public permissions: Permission[] = [];
 
-  public permissionsPage = 0;
-
-  public permissionsTotalPages = 0;
-
   public readingPermissions = false;
 
   public currentPage = 0;
+
+  public totalPages = 0;
 
   private sort: Sort<Permission>[] = [];
 
@@ -37,24 +35,6 @@ export class AccessRolePermissionsComponent implements OnChanges {
     if (changes['roleId']) {
       this.load(undefined);
     }
-  }
-
-  public load(pagination: PaginationRequest | undefined) {
-    this.readingPermissions = true;
-    this.service.getPermissions(this.roleId, pagination).subscribe({
-      next: response => {
-        this.permissions = response.content;
-
-        this.currentPage = response.page + 1;
-        this.permissionsPage = response.page + 1;
-
-        this.permissionsTotalPages = response.totalPages;
-        this.readingPermissions = false;
-      },
-      error: error => {
-        this.readingPermissions = false;
-      }
-    });
   }
 
   public onRemovePermission(permission: Permission): void {
@@ -75,6 +55,23 @@ export class AccessRolePermissionsComponent implements OnChanges {
       this.sort[index] = sort;
     }
     this.load({ page: this.currentPage, sort: this.sort });
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.readingPermissions = true;
+    this.service.getPermissions(this.roleId, pagination).subscribe({
+      next: response => {
+        this.permissions = response.content;
+
+        this.currentPage = response.page + 1;
+
+        this.totalPages = response.totalPages;
+        this.readingPermissions = false;
+      },
+      error: error => {
+        this.readingPermissions = false;
+      }
+    });
   }
 
 }

@@ -4,10 +4,10 @@
       <tr>
         <th scope="col"></th>
         <th scope="col">
-          Resource
+          Resource<pagination-order-button property="resource" (directionChange)="onChangeDirection($event)"></pagination-order-button>
         </th>
         <th scope="col">
-          Action
+          Action<pagination-order-button property="action" (directionChange)="onChangeDirection($event)"></pagination-order-button>
         </th>
       </tr>
     </thead>
@@ -28,7 +28,7 @@
   </table>
   <!-- Permissions navigation -->
   <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="permissionsPage" [pages]="permissionsTotalPages" (goTo)="onGoTo($event)">
+    <pagination-navigation [current]="currentPage" [pages]="totalPages" (goTo)="onGoTo($event)">
     </pagination-navigation>
   </div>
 </layout-waiting-wrapper>
