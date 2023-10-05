@@ -35,8 +35,6 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public roleSelectionTotalPages = 0;
 
-  private sort: Sort<Role>[] | undefined = undefined;
-
   constructor(
     private service: AccessUserService
   ) { }
@@ -49,7 +47,6 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onChangeNameDirection(sort: Sort<any>) {
-    this.sort = [sort];
     this.loadRoleSelectionPage(0);
   }
 
@@ -69,12 +66,8 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public loadRoleSelectionPage(page: number) {
-    const pagination = new PaginationRequest();
-    pagination.page = page;
-    pagination.sort = this.sort;
-
     this.readingSelection = true;
-    this.service.getRoleSelection(pagination).subscribe({
+    this.service.getAvailableRoles(this.userId, page).subscribe({
       next: response => {
         this.roleSelection = response.content;
         this.roleSelectionPage = response.page + 1;

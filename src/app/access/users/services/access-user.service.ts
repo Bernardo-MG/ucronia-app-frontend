@@ -43,11 +43,14 @@ export class AccessUserService {
     return this.userApi.readRoles(userId, query);
   }
 
-  public getRoleSelection(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    const query = new PaginatedQuery<Role>();
-    query.pagination = pagination;
+  public getAvailableRoles(userId: number, page: number): Observable<PaginatedResponse<Role[]>> {
+    const sort: Sort<Role> = new Sort<Role>('name');
 
-    return this.roleApi.readAll(query);
+    const query = new PaginatedQuery<Role>();
+    query.sort = [sort];
+    query.page = page;
+
+    return this.userApi.readAvailableRoles(userId, query);
   }
 
   public create(data: User): Observable<User> {

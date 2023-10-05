@@ -25,6 +25,14 @@ export class UserApi extends CrudApi<User> {
     return request.read();
   }
 
+  public readAvailableRoles(user: number, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
+    const request = this.requestWithQuery(query);
+
+    request.appendRoute(`/${user}/role/available`);
+
+    return request.read();
+  }
+
   public updateRoles(user: number, role: number): Observable<ApiResponse<Role>> {
     const request = this.requestProvider();
 
