@@ -40,7 +40,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public onGoTo(page: number) {
     this.readingPermissions = true;
-    this.service.getAllPermissions(page).subscribe({
+    this.service.getAvailablePermissions(this.roleId, {page}).subscribe({
       next: response => {
         this.permissions = response.content;
 

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PermissionApi } from '@app/access/api/permission-api';
 import { RoleApi } from '@app/access/api/role-api';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -13,8 +12,6 @@ import { map, Observable } from 'rxjs';
 
 @Injectable()
 export class AccessRoleService {
-
-  private permissionApi = new PermissionApi(this.http);
 
   private roleApi = new RoleApi(this.http);
 
@@ -44,15 +41,15 @@ export class AccessRoleService {
     return this.roleApi.readPermissions(roleId, query);
   }
 
-  public getAllPermissions(page: number): Observable<PaginatedResponse<Permission[]>> {
-    const sortResource = new Sort<Permission>('resource');
-    const sortAction = new Sort<Permission>('action');
+  public getAvailablePermissions(roleId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+    const sortResource: Sort<Permission> = new Sort<Permission>('resource');
+    const sortAction: Sort<Permission> = new Sort<Permission>('action');
 
     const query = new PaginatedQuery<Permission>();
-    query.sort = [sortResource, sortAction];
-    query.page = page;
+    query.defaultSort = [sortResource, sortAction];
+    query.pagination = pagination;
 
-    return this.permissionApi.readAll(query);
+    return this.roleApi.readAvailablePermissions(roleId, query);
   }
 
   public create(data: Role): Observable<Role> {
