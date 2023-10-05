@@ -11,8 +11,6 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleSelectionListComponent  implements OnInit {
 
-  @Output() public changeDirection = new EventEmitter<Sort<Permission>>();
-
   /**
    * Loading flag.
    */
@@ -21,6 +19,10 @@ export class AccessRoleSelectionListComponent  implements OnInit {
   public roles: Role[] = [];
 
   public totalPages = 0;
+
+  public currentPage = 0;
+
+  private sort: Sort<Permission>[] = [];
 
   constructor(
     private service: AccessRoleService
@@ -31,7 +33,15 @@ export class AccessRoleSelectionListComponent  implements OnInit {
   }
 
   public onChangeDirection(sort: Sort<Permission>) {
-    this.changeDirection.emit(sort);
+    const index = this.sort.findIndex(s => s.property === sort.property);
+    if (index < 0) {
+      // New property to sort
+      this.sort.push(sort);
+    } else {
+      // Replace property
+      this.sort[index] = sort;
+    }
+    this.load({ page: this.currentPage, sort: this.sort });
   }
 
   private load(pagination: PaginationRequest | undefined) {
@@ -41,6 +51,7 @@ export class AccessRoleSelectionListComponent  implements OnInit {
 
         this.roles = page.content;
 
+        this.currentPage = page.page;
         this.totalPages = page.totalPages;
         // Reactivate view
         this.readingRoles = false;
