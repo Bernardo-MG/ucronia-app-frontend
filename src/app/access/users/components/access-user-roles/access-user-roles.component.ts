@@ -15,8 +15,6 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public view = 'list';
-
   public roles: Role[] = [];
 
   public readingRoles = false;
@@ -40,17 +38,6 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public onRemoveRole(data: Role): void {
     this.service.removeRole(this.userId, data.id).subscribe(p => this.loadRoles(0));
-  }
-
-  public onAddRole(data: Role): void {
-    this.service.addRole(this.userId, data.id).subscribe(p => {
-      this.loadRoles(0);
-      this.view = "list";
-    });
-  }
-
-  public onShowAddRole() {
-    this.view = "add";
   }
 
   public loadRoles(page: number) {
