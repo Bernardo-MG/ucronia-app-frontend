@@ -52,10 +52,11 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public onSave(toSave: Member): void {
-    this.data = toSave;
     this.saving = true;
-    this.service.update(this.data.id, this.data).subscribe({
+    this.service.update(toSave.id, toSave).subscribe({
       next: d => {
+        this.data = d;
+
         this.failures = {};
         // Reactivate view
         this.saving = false;
