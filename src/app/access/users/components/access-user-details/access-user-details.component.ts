@@ -4,6 +4,7 @@ import { Failure } from '@app/core/api/models/failure';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
+import { Role } from '@app/core/authentication/models/role';
 
 @Component({
   selector: 'access-user-details',
@@ -33,6 +34,8 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public data = new User();
 
+  public view = 'list';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -52,10 +55,11 @@ export class AccessUserDetailsComponent implements OnInit {
   }
 
   public onSave(toSave: User): void {
-    this.data = toSave;
     this.saving = true;
     this.service.update(toSave.id, toSave).subscribe({
-      next: response => {
+      next: d => {
+        this.data = d;
+
         this.failures = {};
         // Reactivate view
         this.saving = false;
@@ -82,6 +86,18 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public onStartEditing(): void {
     this.editing = true;
+  }
+
+  public onAddRole(data: Role): void {
+    this.view = "list";
+  }
+
+  public onShowAddRole() {
+    this.view = "add";
+  }
+
+  public onCancelAddRole() {
+    this.view = "list";
   }
 
   public isAbleToEdit() {

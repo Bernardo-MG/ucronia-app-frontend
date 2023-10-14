@@ -57,10 +57,11 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onSave(toSave: Role): void {
-    this.data = toSave;
     this.saving = true;
     this.service.update(toSave.id, toSave).subscribe({
       next: d => {
+        this.data = d;
+
         this.failures = {};
         // Reactivate view
         this.saving = false;
@@ -91,6 +92,10 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public onShowAddPermission() {
     this.permissionView = 'add';
+  }
+
+  public onCancelAddPermission() {
+    this.permissionView = 'list';
   }
 
   public isAbleToEdit() {
@@ -133,10 +138,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onAddPermission(permission: Permission) {
-    this.service.addPermission(this.roleId, permission.resourceId, permission.actionId).subscribe(p => {
-      this.permissionView = 'list';
-      // TODO: Load permissions
-    });
+    this.permissionView = 'list';
   }
 
 }

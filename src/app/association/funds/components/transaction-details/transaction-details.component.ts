@@ -51,10 +51,12 @@ export class TransactionDetailsComponent implements OnInit {
     });
   }
 
-  public onSave(data: Transaction): void {
+  public onSave(toSave: Transaction): void {
     this.saving = true;
-    this.service.update(data.id, data).subscribe({
+    this.service.update(toSave.id, toSave).subscribe({
       next: d => {
+        this.data = d;
+
         this.failures = {};
         // Reactivate view
         this.saving = false;

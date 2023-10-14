@@ -1,19 +1,30 @@
-<!-- List -->
-<table class="table table-hover">
-    <thead>
-      <tr>
-        <!-- Headers -->
-        <th scope="col">
-          Username<pagination-route-order-button property="username"></pagination-route-order-button>
-        </th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-        <tr *ngFor="let user of users; let rowIndex = index" role="button" routerLink="/users/{{user.id}}">
-          <!-- Cells -->
-          <td>
-            {{user.name}}
-          </td>
-        </tr>
-    </tbody>
-  </table>
+<div class="card">
+  <div class="card-body">
+    <layout-waiting-wrapper [waiting]="readingUsers">
+      <!-- List -->
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <!-- Headers -->
+            <th scope="col">
+              Username<pagination-order-button property="username"
+                (directionChange)="onChangeDirection($event)"></pagination-order-button>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let user of users; let rowIndex = index" role="button" routerLink="/users/{{user.id}}">
+            <!-- Cells -->
+            <td>
+              {{user.name}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </layout-waiting-wrapper>
+  </div>
+  <div class="d-flex justify-content-center mt-1">
+    <pagination-route-navigation [disabled]="readingUsers" [totalPages]="totalPages">
+    </pagination-route-navigation>
+  </div>
+</div>

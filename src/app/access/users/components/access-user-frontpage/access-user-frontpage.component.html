@@ -18,18 +18,8 @@
     </div>
     <div class="col-md-10">
       <!-- List -->
-      <div class="card">
-        <div class="card-body">
-          <layout-waiting-wrapper [waiting]="readingRoles">
-            <access-user-selection-list [users]="users">
-            </access-user-selection-list>
-          </layout-waiting-wrapper>
-        </div>
-        <div class="d-flex justify-content-center mt-1">
-          <pagination-route-navigation [disabled]="readingRoles" [totalPages]="totalPages">
-          </pagination-route-navigation>
-        </div>
-      </div>
+      <access-user-selection-list>
+      </access-user-selection-list>
     </div>
   </div>
 </layout-article>

@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Direction } from '@app/core/api/models/direction';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-user-roles',
@@ -17,25 +16,15 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public view = 'list';
-
   public roles: Role[] = [];
-
-  public roleSelection: Role[] = [];
 
   public readingRoles = false;
 
-  public readingSelection = false;
+  public currentPage = 0;
 
-  public rolesPage = 0;
+  public totalPages = 0;
 
-  public rolesTotalPages = 0;
-
-  public roleSelectionPage = 0;
-
-  public roleSelectionTotalPages = 0;
-
-  private sort: Sort<Role>[] | undefined = undefined;
+  private sort: Sort<Role>[] = [];
 
   constructor(
     private service: AccessUserService
@@ -43,57 +32,37 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['userId']) {
-      this.loadRoles(0);
-      this.loadRoleSelectionPage(0);
+      this.load(undefined);
     }
   }
 
-  public onChangeNameDirection(sort: Sort<any>) {
-    this.sort = [sort];
-    this.loadRoleSelectionPage(0);
+  public onGoTo(page: number) {
+    this.load({ page, sort: this.sort });
+  }
+
+  public onChangeDirection(sort: Sort<Role>) {
+    const index = this.sort.findIndex(s => s.property === sort.property);
+    if (index < 0) {
+      // New property to sort
+      this.sort.push(sort);
+    } else {
+      // Replace property
+      this.sort[index] = sort;
+    }
+    this.load({ page: this.currentPage, sort: this.sort });
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.userId, data.id).subscribe(p => this.loadRoles(0));
+    this.service.removeRole(this.userId, data.id).subscribe(p => this.load(undefined));
   }
 
-  public onAddRole(data: Role): void {
-    this.service.addRole(this.userId, data.id).subscribe(p => {
-      this.loadRoles(0);
-      this.view = "list";
-    });
-  }
-
-  public onShowAddRole() {
-    this.view = "add";
-  }
-
-  public loadRoleSelectionPage(page: number) {
-    const pagination = new PaginationRequest();
-    pagination.page = page;
-    pagination.sort = this.sort;
-
-    this.readingSelection = true;
-    this.service.getRoleSelection(pagination).subscribe({
-      next: response => {
-        this.roleSelection = response.content;
-        this.roleSelectionPage = response.page + 1;
-        this.roleSelectionTotalPages = response.totalPages;
-        this.readingSelection = false;
-      },
-      error: error => {
-        this.readingSelection = false;
-      }
-    });
-  }
-
-  public loadRoles(page: number) {
+  private load(pagination: PaginationRequest | undefined) {
     this.readingRoles = true;
-    this.service.getRoles(this.userId, page).subscribe({
+    this.service.getRoles(this.userId, pagination).subscribe({
       next: response => {
         this.roles = response.content;
-        this.rolesPage = response.page + 1;
-        this.rolesTotalPages = response.totalPages;
+        this.currentPage = response.page + 1;
+        this.totalPages = response.totalPages;
         this.readingRoles = false;
       },
       error: error => {

@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Action } from '@app/core/authentication/models/action';
 import { Permission } from '@app/core/authentication/models/permission';
-import { Resource } from '@app/core/authentication/models/resource';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Sort } from '@app/core/api/models/sort';
+import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-role-add-permission',
@@ -15,31 +14,17 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
-  public actions: Action[] = [];
+  public permissions: Permission[] = [];
 
-  public resources: Resource[] = [];
+  public readingPermissions = false;
 
-  public actionPage = 0;
+  public currentPage = 0;
 
-  public totalActionPages = 0;
-
-  public resourcePage = 0;
-
-  public totalResourcePages = 0;
+  public totalPages = 0;
 
   public data = new Permission();
 
-  public view = 'main';
-
-  public action = new Action();
-
-  public resource = new Resource();
-
-  public searchIcon = faMagnifyingGlass;
-
-  public readingActionsSelection = false;
-
-  public readingResourcesSelection = false;
+  private sort: Sort<Permission>[] = [];
 
   constructor(
     private service: AccessRoleService
@@ -47,88 +32,45 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roleId']) {
-      this.loadPermissionSelectionPage(0);
+      this.load(undefined);
     }
   }
 
-  public isAbleToAdd() {
-    return (this.action.id > 0) && (this.resource.id > 0);
-  }
-
-  public onAddPermission(): void {
-    const permission = new Permission();
-    permission.actionId = this.action.id;
-    permission.resourceId = this.resource.id;
-    this.addPermission.emit(permission);
-    this.action = new Action();
-    this.resource = new Resource();
-  }
-
-  public onShowActionSelection(): void {
-    this.onGoToActionPage(0);
-    this.view = 'action';
-  }
-
-  public onShowResourceSelection(): void {
-    this.onGoToResourcePage(0);
-    this.view = 'resource';
-  }
-
-  public onSelectAction(id: number): void {
-    const found = this.actions.find(a => a.id === id);
-    if (found) {
-      this.action = found;
-      this.view = 'main';
-    }
-  }
-
-  public onSelectResource(id: number): void {
-    const found = this.resources.find(a => a.id === id);
-    if (found) {
-      this.resource = found;
-      this.view = 'main';
-    }
-  }
-
-  public onCancelSelect() {
-    this.view = 'main';
-  }
-
-  public loadPermissionSelectionPage(page: number) {
-    this.onGoToActionPage(0);
-    this.onGoToResourcePage(0);
-  }
-
-  public onGoToActionPage(page: number) {
-    this.readingActionsSelection = true;
-    this.service.getActionSelection(page).subscribe({
-      next: response => {
-        this.actions = response.content;
-
-        this.actionPage = response.page + 1;
-        this.totalActionPages = response.totalPages;
-
-        this.readingActionsSelection = false;
-      },
-      error: error => {
-        this.readingActionsSelection = false;
-      }
+  public onAddPermission(permission: Permission): void {
+    this.service.addPermission(this.roleId, permission.id).subscribe(p => {
+      this.addPermission.emit(permission);
     });
   }
 
-  public onGoToResourcePage(page: number) {
-    this.readingResourcesSelection = true;
-    this.service.getResourceSelection(page).subscribe({
+  public onGoTo(page: number) {
+    this.load({ page, sort: this.sort });
+  }
+
+  public onChangeDirection(sort: Sort<Permission>) {
+    const index = this.sort.findIndex(s => s.property === sort.property);
+    if (index < 0) {
+      // New property to sort
+      this.sort.push(sort);
+    } else {
+      // Replace property
+      this.sort[index] = sort;
+    }
+    this.load({ page: this.currentPage, sort: this.sort });
+  }
+
+  private load(pagination: PaginationRequest | undefined) {
+    this.readingPermissions = true;
+    this.service.getAvailablePermissions(this.roleId, pagination).subscribe({
       next: response => {
-        this.resources = response.content;
+        this.permissions = response.content;
 
-        this.resourcePage = response.page + 1;
-        this.totalResourcePages = response.totalPages;
+        this.currentPage = response.page + 1;
+        this.totalPages = response.totalPages;
 
-        this.readingResourcesSelection = false;
+        this.readingPermissions = false;
       },
       error: error => {
-        this.readingResourcesSelection = false;
+        this.readingPermissions = false;
       }
     });
   }

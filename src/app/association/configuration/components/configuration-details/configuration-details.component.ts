@@ -39,10 +39,12 @@ export class ConfigurationDetailsComponent implements OnInit {
     this.load();
   }
 
-  public onSave(data: AssociationConfiguration): void {
+  public onSave(toSave: AssociationConfiguration): void {
     this.saving = true;
-    this.service.update(data).subscribe({
+    this.service.update(toSave).subscribe({
       next: d => {
+        this.data = d;
+
         this.failures = {};
 
         // Reload data

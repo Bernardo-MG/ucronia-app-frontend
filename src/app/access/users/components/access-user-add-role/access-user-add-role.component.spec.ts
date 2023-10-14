@@ -2,30 +2,28 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { AccessRoleService } from '../../services/access-role.service';
-import { AccessRoleSelectionListComponent } from './access-role-selection-list.component';
+import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserAddRoleComponent } from './access-user-add-role.component';
 
-describe('AccessRoleSelectionListComponent', () => {
-  let component: AccessRoleSelectionListComponent;
-  let fixture: ComponentFixture<AccessRoleSelectionListComponent>;
+describe('AccessUserAddRoleComponent', () => {
+  let component: AccessUserAddRoleComponent;
+  let fixture: ComponentFixture<AccessUserAddRoleComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         LayoutModule,
         PaginationModule
       ],
       declarations: [
-        AccessRoleSelectionListComponent
+        AccessUserAddRoleComponent
       ],
       providers: [
-        AccessRoleService
+        AccessUserService
       ]
-    })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(AccessRoleSelectionListComponent);
+    });
+    fixture = TestBed.createComponent(AccessUserAddRoleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserActivateService } from '../../services/user-activate.service';
@@ -15,7 +15,6 @@ describe('UserActivationComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        FormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
         LayoutModule

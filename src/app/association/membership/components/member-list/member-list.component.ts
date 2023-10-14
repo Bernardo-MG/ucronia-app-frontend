@@ -50,13 +50,8 @@ export class MemberListComponent implements OnChanges {
       // New property to sort
       this.sort.push(sort);
     } else {
-      if (sort.direction === Direction.Unsorted) {
-        // Remove property
-        this.sort = this.sort.filter(s => s.property !== sort.property);
-      } else {
-        // Replace property
-        this.sort[index] = sort;
-      }
+      // Replace property
+      this.sort[index] = sort;
     }
     this.load({ page: this.currentPage, sort: this.sort });
   }

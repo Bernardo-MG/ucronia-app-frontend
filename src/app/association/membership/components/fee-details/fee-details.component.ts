@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '../../models/fee';
-import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
@@ -59,10 +58,11 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public onSave(toSave: Fee): void {
-    this.data = toSave;
     this.saving = true;
-    this.service.update(this.data.id, this.data).subscribe({
+    this.service.update(toSave.id, toSave).subscribe({
       next: d => {
+        this.data = d;
+
         this.failures = {};
         // Reactivate view
         this.saving = false;
