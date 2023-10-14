@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberInfoComponent } from '../../components/member-info/member-info.component';
@@ -19,7 +18,6 @@ describe('MemberDetailsComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        CoreModule,
         ReactiveFormsModule,
         LayoutModule,
         IconsModule

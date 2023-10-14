@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { ConfigurationFormComponent } from './configuration-form.component';
 
@@ -11,7 +11,6 @@ describe('ConfigurationFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         LayoutModule,
-        FormsModule,
         ReactiveFormsModule
       ],
       declarations: [

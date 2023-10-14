@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from '../../services/access-user.service';
@@ -23,7 +22,6 @@ describe('AccessUserDetailsComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         CoreModule,
-        PaginationModule,
         LayoutModule,
         IconsModule
       ],

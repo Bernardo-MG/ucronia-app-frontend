@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Failure } from '@app/core/api/models/failure';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '../../models/fee';
-import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
 
 @Component({

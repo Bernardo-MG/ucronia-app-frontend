@@ -1,10 +1,9 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from './access-role-selection-list.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AccessRoleSelectionListComponent', () => {
   let component: AccessRoleSelectionListComponent;
@@ -14,7 +13,6 @@ describe('AccessRoleSelectionListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
         LayoutModule,
         PaginationModule
       ],

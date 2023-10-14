@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
 
@@ -13,7 +12,6 @@ describe('AccessRoleAddPermissionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule,
         HttpClientTestingModule,
         LayoutModule,
         PaginationModule

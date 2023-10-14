@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginFormComponent } from './login-form.component';
-import { SimpleChange } from '@angular/core';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;

@@ -1,8 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberService } from '../../services/member.service';
 import { MemberCreateFormComponent } from '../member-create-form/member-create-form.component';
@@ -18,10 +16,8 @@ describe('MemberCreateComponent', () => {
         MemberService
       ],
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        IconsModule,
         LayoutModule
       ],
       declarations: [

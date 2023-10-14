@@ -1,8 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionService } from '../../service/transaction.service';
 import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
@@ -15,10 +13,8 @@ describe('TransactionCreateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        IconsModule,
         LayoutModule
       ],
       declarations: [

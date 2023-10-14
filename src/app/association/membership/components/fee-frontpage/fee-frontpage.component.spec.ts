@@ -1,7 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarComponent } from '../../../membership/components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
@@ -14,11 +12,8 @@ describe('FeeFrontpageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule,
-        FormsModule,
-        ReactiveFormsModule
+        LayoutModule
       ],
       declarations: [
         FeeFrontpageComponent,
