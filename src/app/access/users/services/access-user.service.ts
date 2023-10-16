@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RoleApi } from '@app/access/api/role-api';
 import { UserApi } from '@app/access/api/user-api';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -15,8 +14,6 @@ import { map, Observable } from 'rxjs';
 export class AccessUserService {
 
   private userApi = new UserApi(this.http);
-
-  private roleApi = new RoleApi(this.http);
 
   constructor(
     private http: HttpClient
