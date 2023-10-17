@@ -9,7 +9,7 @@ export class UserTokenApi extends CrudApi<UserToken> {
   constructor(
     private http: HttpClient
   ) {
-    super(() => new AngularRequest(this.http, environment.apiUrl + '/security/token'))
+    super(() => new AngularRequest(this.http, environment.apiUrl + '/security/user/token'))
   }
 
 }
