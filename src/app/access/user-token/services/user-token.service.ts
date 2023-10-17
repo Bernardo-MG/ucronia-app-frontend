@@ -7,7 +7,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
 import { UserToken } from '@app/core/authentication/models/user-token';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,10 @@ export class UserTokenService {
     query.pagination = pagination;
 
     return this.userTokenApi.readAll(query);
+  }
+
+  public getOne(roleId: number): Observable<UserToken> {
+    return this.userTokenApi.readById(roleId).pipe(map(r => r.content));
   }
 
 }

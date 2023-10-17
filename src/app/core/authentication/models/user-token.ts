@@ -4,6 +4,7 @@ export class UserToken {
   expirationDate = '';
   scope = '';
   token = '';
+  name = '';
   username = '';
   consumed = false;
   revoked = false;
