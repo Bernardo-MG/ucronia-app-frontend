@@ -10,7 +10,7 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 export class UserTokenInfoComponent extends FormComponent<UserToken> {
 
   @Input() public editable = false;
-  
+
   @Input() public override set data(value: UserToken) {
     this.info = value;
     super.data = value;
@@ -24,6 +24,7 @@ export class UserTokenInfoComponent extends FormComponent<UserToken> {
     super();
 
     this.form = fb.group({
+      expirationDate: [null, Validators.required],
       revoked: [false, Validators.required]
     });
   }

@@ -43,8 +43,18 @@
   <div class="row mb-2">
     <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Expiration date</label>
     <div class="col-sm-10">
-      <input type="expirationDate" [value]="info.expirationDate" id="expirationDateInput" [readonly]="true"
-        class="form-control" aria-describedby="expirationDateLabel">
+      <div *ngIf="editable; then editExpirationDateInput else showExpirationDateInfo"></div>
+      <ng-template #showExpirationDateInfo>
+        <input type="expirationDate" [value]="info.expirationDate" id="expirationDateInput" [readonly]="true"
+          class="form-control" aria-describedby="expirationDateLabel">
+      </ng-template>
+      <ng-template #editExpirationDateInput>
+        <input type="datetime-local" id="expirationDateInput" formControlName="expirationDate" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('expirationDate') }" aria-describedby="expirationDateLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('expirationDate')">
+          {{failure.message}}
+        </div>
+      </ng-template>
     </div>
   </div>
   <!-- Consumed -->
