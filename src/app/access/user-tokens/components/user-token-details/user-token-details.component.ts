@@ -4,6 +4,7 @@ import { Failure } from '@app/core/api/models/failure';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { UserTokenService } from '../../services/user-token.service';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'access-user-token-details',
@@ -31,13 +32,19 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public failures: { [key: string]: Failure[] } = {};
 
-  private expirationDate = '';
+  public extendExpirationForm;
 
   constructor(
+    fb: FormBuilder,
     private route: ActivatedRoute,
     private service: UserTokenService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+
+    this.extendExpirationForm = fb.group({
+      expirationDate: ['', Validators.required]
+    });
+  }
 
   public ngOnInit(): void {
     // Check permissions
@@ -76,24 +83,28 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public onExtend(): void {
     this.saving = true;
-    this.service.extend(this.data.id, this.expirationDate).subscribe({
-      next: d => {
-        this.data = d;
+    const expirationDate = this.extendExpirationForm.value.expirationDate;
+    if (expirationDate) {
+      this.service.extend(this.data.id, expirationDate).subscribe({
+        next: d => {
+          this.data = d;
+          this.extendExpirationForm.patchValue(this.data.expirationDate as any);
 
-        this.failures = {};
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error.failures) {
-          this.failures = error.failures;
-        } else {
           this.failures = {};
+          // Reactivate view
+          this.saving = false;
+        },
+        error: error => {
+          if (error.failures) {
+            this.failures = error.failures;
+          } else {
+            this.failures = {};
+          }
+          // Reactivate view
+          this.saving = false;
         }
-        // Reactivate view
-        this.saving = false;
-      }
-    });
+      });
+    }
   }
 
   public isAbleToEdit() {
@@ -113,6 +124,7 @@ export class UserTokenDetailsComponent implements OnInit {
         .subscribe({
           next: response => {
             this.data = response;
+            this.extendExpirationForm.patchValue(this.data as any);
             this.reading = false;
           },
           error: error => {

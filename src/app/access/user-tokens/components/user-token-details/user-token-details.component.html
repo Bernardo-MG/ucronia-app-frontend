@@ -32,7 +32,9 @@
     <div class="modal-content">
       <div class="modal-body">
         <p>Choose new date</p>
-        <input type="datetime-local" id="extendExpirationInput" class="form-control" [value]="data.expirationDate">
+        <form [formGroup]="extendExpirationForm" (ngSubmit)="onExtendExpiration()" class="needs-validation" novalidate>
+          <input type="datetime-local" id="extendExpirationInput" class="form-control" formControlName="expirationDate">
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
