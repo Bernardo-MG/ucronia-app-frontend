@@ -15,7 +15,16 @@
                 (directionChange)="onChangeDirection($event)"></pagination-order-button>
             </th>
             <th scope="col">
-              Token
+              Created<pagination-order-button property="creationDate"
+                (directionChange)="onChangeDirection($event)"></pagination-order-button>
+            </th>
+            <th scope="col">
+              Consumed<pagination-order-button property="consumed"
+                (directionChange)="onChangeDirection($event)"></pagination-order-button>
+            </th>
+            <th scope="col">
+              Revoked<pagination-order-button property="revoked"
+                (directionChange)="onChangeDirection($event)"></pagination-order-button>
             </th>
           </tr>
         </thead>
@@ -29,7 +38,13 @@
               {{token.scope}}
             </td>
             <td>
-              {{token.token}}
+              {{token.creationDate}}
+            </td>
+            <td>
+              {{token.consumed}}
+            </td>
+            <td>
+              {{token.revoked}}
             </td>
           </tr>
         </tbody>
