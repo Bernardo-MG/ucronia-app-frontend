@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { UserTokenInfoComponent } from './user-token-info.component';
 
 describe('UserTokenInfoComponent', () => {
@@ -8,7 +8,12 @@ describe('UserTokenInfoComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UserTokenInfoComponent]
+      imports: [
+        IconsModule
+      ],
+      declarations: [
+        UserTokenInfoComponent
+      ]
     });
     fixture = TestBed.createComponent(UserTokenInfoComponent);
     component = fixture.componentInstance;
