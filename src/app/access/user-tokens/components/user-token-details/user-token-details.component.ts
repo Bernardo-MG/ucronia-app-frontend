@@ -71,6 +71,9 @@ export class UserTokenDetailsComponent implements OnInit {
     });
   }
 
+  public onExtendExpiration(): void {
+  }
+
   public onExtend(): void {
     this.saving = true;
     this.service.extend(this.data.id, this.expirationDate).subscribe({

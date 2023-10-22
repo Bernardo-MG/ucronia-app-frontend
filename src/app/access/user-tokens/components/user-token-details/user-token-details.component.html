@@ -16,7 +16,7 @@
             </div>
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()"
-                name="Extend expiration"></layout-waiting-button>
+                name="Extend expiration" (action)="onExtendExpiration()"></layout-waiting-button>
             </div>
           </div>
         </footer>
