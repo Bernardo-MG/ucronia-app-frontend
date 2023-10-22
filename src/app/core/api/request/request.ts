@@ -10,6 +10,8 @@ export interface Request {
 
   delete<T>(): Observable<T>;
 
+  patch<T>(body: any): Observable<T>;
+
   route(route: string): Request;
 
   appendRoute(route: string): Request;

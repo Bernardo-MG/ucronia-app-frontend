@@ -35,4 +35,8 @@ export class UserTokenService {
     return this.userTokenApi.readById(roleId).pipe(map(r => r.content));
   }
 
+  public patch(data: UserToken): Observable<UserToken> {
+    return this.userTokenApi.patch(data).pipe(map(r => r.content));
+  }
+
 }

@@ -45,4 +45,10 @@ export class CrudApi<T> extends ReadApi<T> {
     return request.delete();
   }
 
+  public patch(data: T): Observable<ApiResponse<T>> {
+    const request = this.requestProvider();
+
+    return request.patch(data);
+  }
+
 }
