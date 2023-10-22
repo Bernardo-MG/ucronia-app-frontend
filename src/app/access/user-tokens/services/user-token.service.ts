@@ -39,4 +39,12 @@ export class UserTokenService {
     return this.userTokenApi.patchById(tokenId, data).pipe(map(r => r.content));
   }
 
+  public revoke(tokenId: number): Observable<UserToken> {
+    return this.userTokenApi.patchById(tokenId, { revoked: true }).pipe(map(r => r.content));
+  }
+
+  public extend(tokenId: number, date: string): Observable<UserToken> {
+    return this.userTokenApi.patchById(tokenId, { expirationDate: date }).pipe(map(r => r.content));
+  }
+
 }

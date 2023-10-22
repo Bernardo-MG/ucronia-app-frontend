@@ -5,9 +5,21 @@
       <!-- Info -->
       <div class="card">
         <div class="card-body">
-          <access-user-token-info id="info" [data]="data" [waiting]="isWaiting()" [editable]="editable"
-            [readonly]="!isAbleToEdit()" (save)="onSave($event)"></access-user-token-info>
+          <access-user-token-info id="info" [data]="data"></access-user-token-info>
         </div>
+        <footer class="card-footer">
+          <div class="row">
+            <!-- Buttons -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()" name="Revoke"
+                (action)="onRevoke()"></layout-waiting-button>
+            </div>
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()"
+                name="Extend expiration"></layout-waiting-button>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   </div>

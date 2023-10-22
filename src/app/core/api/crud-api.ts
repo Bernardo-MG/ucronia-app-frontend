@@ -51,7 +51,7 @@ export class CrudApi<T> extends ReadApi<T> {
     return request.patch(data);
   }
 
-  public patchById(id: number, data: T): Observable<ApiResponse<T>> {
+  public patchById<P>(id: number, data: P): Observable<ApiResponse<T>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);

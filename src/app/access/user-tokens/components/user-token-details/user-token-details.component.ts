@@ -21,8 +21,6 @@ export class UserTokenDetailsComponent implements OnInit {
    */
   public saving = false;
 
-  public editing = false;
-
   public editable = false;
 
   public tokenId = 0;
@@ -32,6 +30,8 @@ export class UserTokenDetailsComponent implements OnInit {
   public data = new UserToken();
 
   public failures: { [key: string]: Failure[] } = {};
+
+  private expirationDate = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -49,16 +49,15 @@ export class UserTokenDetailsComponent implements OnInit {
     });
   }
 
-  public onSave(toSave: UserToken): void {
+  public onRevoke(): void {
     this.saving = true;
-    this.service.patch(this.data.id, toSave).subscribe({
+    this.service.revoke(this.data.id).subscribe({
       next: d => {
         this.data = d;
 
         this.failures = {};
         // Reactivate view
         this.saving = false;
-        this.editing = false;
       },
       error: error => {
         if (error.failures) {
@@ -68,17 +67,38 @@ export class UserTokenDetailsComponent implements OnInit {
         }
         // Reactivate view
         this.saving = false;
-        this.editing = false;
       }
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
+  public onExtend(): void {
+    this.saving = true;
+    this.service.extend(this.data.id, this.expirationDate).subscribe({
+      next: d => {
+        this.data = d;
+
+        this.failures = {};
+        // Reactivate view
+        this.saving = false;
+      },
+      error: error => {
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = {};
+        }
+        // Reactivate view
+        this.saving = false;
+      }
+    });
   }
 
   public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+    return (!this.error) && (!this.reading) && (this.editable) && (!this.data.revoked);
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
   private load(id: string | null): void {
@@ -98,10 +118,6 @@ export class UserTokenDetailsComponent implements OnInit {
           }
         });
     }
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
 }
