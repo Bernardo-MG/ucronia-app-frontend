@@ -79,9 +79,6 @@ export class UserTokenDetailsComponent implements OnInit {
   }
 
   public onExtendExpiration(): void {
-  }
-
-  public onExtend(): void {
     this.saving = true;
     const expirationDate = this.extendExpirationForm.value.expirationDate;
     if (expirationDate) {
