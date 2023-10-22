@@ -67,6 +67,9 @@
       <ng-template #editRevokedInput>
         <input type="checkbox" id="revokedInput" formControlName="revoked" class="form-check-input"
           [ngClass]="{ 'is-invalid': isFieldInvalid('revoked') }" aria-describedby="revokedLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('revoked')">
+          {{failure.message}}
+        </div>
       </ng-template>
     </div>
   </div>
