@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { UserTokenInfoComponent } from './user-token-info.component';
 
@@ -9,6 +10,7 @@ describe('UserTokenInfoComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
+        ReactiveFormsModule,
         IconsModule
       ],
       declarations: [
