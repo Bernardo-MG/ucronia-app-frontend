@@ -15,8 +15,8 @@
                 (action)="onRevoke()"></layout-waiting-button>
             </div>
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()"
-                name="Extend expiration" (action)="onExtendExpiration()"></layout-waiting-button>
+              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()" name="Extend expiration"
+                data-bs-toggle="modal" data-bs-target="#extendExpirationModal"></layout-waiting-button>
             </div>
           </div>
         </footer>
@@ -24,3 +24,21 @@
     </div>
   </div>
 </layout-article>
+
+<!-- Modal for extending expiration -->
+<div id="extendExpirationModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Choose new date</p>
+        <input type="datetime-local" id="extendExpirationInput" class="form-control" [value]="data.expirationDate">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" (click)="onExtendExpiration()"
+          data-bs-dismiss="modal">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>
