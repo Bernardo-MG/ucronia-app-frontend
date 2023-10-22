@@ -48,9 +48,9 @@ export class AngularRequest implements Request {
       );
   }
 
-  public patch<T>(): Observable<T> {
+  public patch<T>(body: any): Observable<T> {
     const finalUrl = this.getFinalUrl(this._route);
-    return this.http.patch<T>(finalUrl, this.options)
+    return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.handleError)
       );
