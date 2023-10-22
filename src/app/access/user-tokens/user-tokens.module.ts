@@ -8,6 +8,7 @@ import { UserTokenFrontpageComponent } from './components/user-token-frontpage/u
 import { UserTokenInfoComponent } from './components/user-token-info/user-token-info.component';
 import { UserTokenSelectionListComponent } from './components/user-token-selection-list/user-token-selection-list.component';
 import { UserTokensRoutingModule } from './user-tokens-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,6 +21,7 @@ import { UserTokensRoutingModule } from './user-tokens-routing.module';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     UserTokensRoutingModule,
     LayoutModule,
     PaginationModule,
