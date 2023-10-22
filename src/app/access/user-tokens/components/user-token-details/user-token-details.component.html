@@ -5,7 +5,8 @@
       <!-- Info -->
       <div class="card">
         <div class="card-body">
-          <access-user-token-info id="info" [data]="data"></access-user-token-info>
+          <access-user-token-info id="info" [data]="data" [waiting]="isWaiting()" [editable]="editable"
+            [readonly]="!isAbleToEdit()" (save)="onSave($event)"></access-user-token-info>
         </div>
       </div>
     </div>

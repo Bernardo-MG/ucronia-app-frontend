@@ -31,12 +31,12 @@ export class UserTokenService {
     return this.userTokenApi.readAll(query);
   }
 
-  public getOne(roleId: number): Observable<UserToken> {
-    return this.userTokenApi.readById(roleId).pipe(map(r => r.content));
+  public getOne(tokenId: number): Observable<UserToken> {
+    return this.userTokenApi.readById(tokenId).pipe(map(r => r.content));
   }
 
-  public patch(data: UserToken): Observable<UserToken> {
-    return this.userTokenApi.patch(data).pipe(map(r => r.content));
+  public patch(tokenId: number, data: UserToken): Observable<UserToken> {
+    return this.userTokenApi.patchById(tokenId, data).pipe(map(r => r.content));
   }
 
 }

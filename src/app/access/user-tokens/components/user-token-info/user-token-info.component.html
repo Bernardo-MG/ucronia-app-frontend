@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Username</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name" id="usernameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="info.name" id="usernameInput" [readonly]="true" class="form-control"
         aria-describedby="usernameLabel">
     </div>
   </div>
@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name" id="nameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="info.name" id="nameInput" [readonly]="true" class="form-control"
         aria-describedby="nameLabel">
     </div>
   </div>
@@ -19,7 +19,7 @@
   <div class="row mb-2">
     <label for="tokenInput" id="tokenLabel" class="col-sm-2 col-form-label">Token</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.token" id="tokenInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="info.token" id="tokenInput" [readonly]="true" class="form-control"
         aria-describedby="tokenLabel">
     </div>
   </div>
@@ -27,7 +27,7 @@
   <div class="row mb-2">
     <label for="scopeInput" id="scopeLabel" class="col-sm-2 col-form-label">Scope</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.scope" id="scopeInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="info.scope" id="scopeInput" [readonly]="true" class="form-control"
         aria-describedby="scopeLabel">
     </div>
   </div>
@@ -35,32 +35,46 @@
   <div class="row mb-2">
     <label for="creationDateInput" id="creationDateLabel" class="col-sm-2 col-form-label">Creation date</label>
     <div class="col-sm-10">
-      <input type="creationDate" [value]="data.creationDate" id="creationDateInput" [readonly]="true" class="form-control"
-        aria-describedby="creationDateLabel">
+      <input type="creationDate" [value]="info.creationDate" id="creationDateInput" [readonly]="true"
+        class="form-control" aria-describedby="creationDateLabel">
     </div>
   </div>
   <!-- Expiration date -->
   <div class="row mb-2">
     <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Expiration date</label>
     <div class="col-sm-10">
-      <input type="expirationDate" [value]="data.expirationDate" id="expirationDateInput" [readonly]="true" class="form-control"
-        aria-describedby="expirationDateLabel">
+      <input type="expirationDate" [value]="info.expirationDate" id="expirationDateInput" [readonly]="true"
+        class="form-control" aria-describedby="expirationDateLabel">
     </div>
   </div>
   <!-- Consumed -->
   <div class="row mb-2">
     <label id="consumedLabel" class="col-sm-2 col-form-label">Consumed</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.consumed"></icon-success>
-      <icon-failure *ngIf="!data.consumed"></icon-failure>
+      <icon-success *ngIf="info.consumed"></icon-success>
+      <icon-failure *ngIf="!info.consumed"></icon-failure>
     </div>
   </div>
   <!-- Revoked -->
   <div class="row mb-2">
     <label id="revokedLabel" class="col-sm-2 col-form-label">Revoked</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.revoked"></icon-success>
-      <icon-failure *ngIf="!data.revoked"></icon-failure>
+      <div *ngIf="editable; then editRevokedInput else showRevokedInfo"></div>
+      <ng-template #showRevokedInfo>
+        <icon-success *ngIf="info.revoked"></icon-success>
+        <icon-failure *ngIf="!info.revoked"></icon-failure>
+      </ng-template>
+      <ng-template #editRevokedInput>
+        <input type="checkbox" id="revokedInput" formControlName="revoked" class="form-check-input"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('revoked') }" aria-describedby="revokedLabel">
+      </ng-template>
+    </div>
+  </div>
+  <!-- Save button -->
+  <div *ngIf="editable" class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
     </div>
   </div>
 </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Failure } from '@app/core/api/models/failure';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { UserTokenService } from '../../services/user-token.service';
@@ -30,6 +31,8 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public data = new UserToken();
 
+  public failures: { [key: string]: Failure[] } = {};
+
   constructor(
     private route: ActivatedRoute,
     private service: UserTokenService,
@@ -43,6 +46,30 @@ export class UserTokenDetailsComponent implements OnInit {
     // Get id
     this.route.paramMap.subscribe(params => {
       this.load(params.get('id'));
+    });
+  }
+
+  public onSave(toSave: UserToken): void {
+    this.saving = true;
+    this.service.patch(this.data.id, toSave).subscribe({
+      next: d => {
+        this.data = d;
+
+        this.failures = {};
+        // Reactivate view
+        this.saving = false;
+        this.editing = false;
+      },
+      error: error => {
+        if (error.failures) {
+          this.failures = error.failures;
+        } else {
+          this.failures = {};
+        }
+        // Reactivate view
+        this.saving = false;
+        this.editing = false;
+      }
     });
   }
 
@@ -71,6 +98,10 @@ export class UserTokenDetailsComponent implements OnInit {
           }
         });
     }
+  }
+
+  public isWaiting() {
+    return this.reading || this.saving;
   }
 
 }
