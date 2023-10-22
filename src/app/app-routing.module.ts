@@ -51,7 +51,7 @@ const routes: Routes = [
         path: 'user-tokens',
         component: NavbarBodyComponent,
         loadChildren: userTokenModule,
-        canActivate: [ResourceGuard("user-token")]
+        canActivate: [ResourceGuard("user_token")]
       },
       // Activate user
       {

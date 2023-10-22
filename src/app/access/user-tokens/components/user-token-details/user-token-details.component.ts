@@ -24,8 +24,6 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public editable = false;
 
-  public deletable = false;
-
   public tokenId = 0;
 
   public error = false;
@@ -40,8 +38,7 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("user", "update");
-    this.deletable = this.authContainer.hasPermission("user", "delete");
+    this.editable = this.authContainer.hasPermission("user_token", "update");
 
     // Get id
     this.route.paramMap.subscribe(params => {
