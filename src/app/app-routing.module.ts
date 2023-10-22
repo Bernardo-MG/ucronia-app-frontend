@@ -10,7 +10,7 @@ const associationModule = () => import('@app/association/association.module').th
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
 const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
-const userTokenModule = () => import('@app/access/user-token/user-tokens.module').then(m => m.UserTokensModule);
+const userTokenModule = () => import('@app/access/user-tokens/user-tokens.module').then(m => m.UserTokensModule);
 const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
 const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
 const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
