@@ -77,15 +77,7 @@ export class FormComponent<Data> {
    * @returns failures for the property
    */
   public getFailures(property: string): Failure[] {
-    let fieldFailures: Failure[];
-
-    if (this.failures.hasProperty(property)) {
-      fieldFailures = this.failures.getFailures(property);
-    } else {
-      fieldFailures = [];
-    }
-
-    return fieldFailures;
+    return this.failures.getFailures(property);
   }
 
   /**

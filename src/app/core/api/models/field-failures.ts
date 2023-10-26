@@ -18,8 +18,8 @@ export class FieldFailures {
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.propertyFailures[property];
-    if (found) {
+    if (this.hasProperty(property)) {
+      const found = this.propertyFailures[property];
       failures = (found as Failure[]);
     } else {
       failures = [];
