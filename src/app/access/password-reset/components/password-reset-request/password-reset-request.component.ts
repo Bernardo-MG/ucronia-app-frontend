@@ -47,11 +47,13 @@ export class PasswordResetRequestComponent {
           this.finished = true;
           this.reseting = false;
         },
-        error: (error: FailureResponse) => {
+        error: error => {
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
-            this.reseting = false;
+          } else {
+            this.failures = new FieldFailures();
           }
+          this.reseting = false;
 
           return throwError(() => error);
         }

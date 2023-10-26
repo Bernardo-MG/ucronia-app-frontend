@@ -3,6 +3,7 @@ import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'account-password-change',
@@ -28,14 +29,16 @@ export class AccountPasswordChangeComponent {
         // Reactivate form
         this.saving = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
         }
-        // Reactivate form
+        // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }

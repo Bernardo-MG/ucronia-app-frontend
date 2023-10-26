@@ -107,7 +107,7 @@ export class AngularRequest implements Request {
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
       response = new FailureResponse();
-      response.failures = error.error.failures;
+      response.failures.fieldFailures = error.error.failures;
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.

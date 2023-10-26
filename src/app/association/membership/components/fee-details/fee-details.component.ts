@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
 
@@ -69,8 +70,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         this.saving = false;
         this.editing = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
@@ -78,6 +79,8 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

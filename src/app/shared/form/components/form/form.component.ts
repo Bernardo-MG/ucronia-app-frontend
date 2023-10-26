@@ -77,16 +77,16 @@ export class FormComponent<Data> {
    * @returns failures for the property
    */
   public getFailures(property: string): Failure[] {
-    let failures: Failure[];
+    let fieldFailures: Failure[];
 
     const found = this.failures.getFailures(property);
     if (found) {
-      failures = (found as Failure[]);
+      fieldFailures = (found as Failure[]);
     } else {
-      failures = [];
+      fieldFailures = [];
     }
 
-    return failures;
+    return fieldFailures;
   }
 
   /**

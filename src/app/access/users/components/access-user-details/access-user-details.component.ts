@@ -6,6 +6,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessUserService } from '../../services/access-user.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'access-user-details',
@@ -66,8 +67,8 @@ export class AccessUserDetailsComponent implements OnInit {
         this.saving = false;
         this.editing = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
@@ -75,6 +76,8 @@ export class AccessUserDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

@@ -1,7 +1,7 @@
 import { Failure } from "./failure";
 
 export class FieldFailures {
-  failures: { [key: string]: Failure[] } = {};
+  fieldFailures: { [key: string]: Failure[] } = {};
 
   /**
    * Returns the failures for a property.
@@ -12,7 +12,7 @@ export class FieldFailures {
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.failures[property];
+    const found = this.fieldFailures[property];
     if (found) {
       failures = (found as Failure[]);
     } else {

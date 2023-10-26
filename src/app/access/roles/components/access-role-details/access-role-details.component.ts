@@ -5,6 +5,7 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -68,8 +69,8 @@ export class AccessRoleDetailsComponent implements OnInit {
         this.saving = false;
         this.editing = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
@@ -77,6 +78,8 @@ export class AccessRoleDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

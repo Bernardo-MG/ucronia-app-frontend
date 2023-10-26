@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
 
@@ -77,14 +79,16 @@ export class UserActivationComponent implements OnInit {
         this.status = 'finished';
         this.validating = false;
       },
-      error: response => {
-        // TODO: Unwrap error response automatically
-        if (response.error.failures) {
-          this.failures = response.error.failures;
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
         }
+        // Reactivate view
         this.validating = false;
+
+        return throwError(() => error);
       }
     });
   }

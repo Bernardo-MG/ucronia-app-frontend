@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
 
@@ -55,8 +56,8 @@ export class ConfigurationDetailsComponent implements OnInit {
         this.saving = false;
         this.editing = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
@@ -64,6 +65,8 @@ export class ConfigurationDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

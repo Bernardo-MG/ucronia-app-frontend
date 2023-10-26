@@ -5,6 +5,7 @@ import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
@@ -67,14 +68,16 @@ export class UserTokenDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }
@@ -92,15 +95,16 @@ export class UserTokenDetailsComponent implements OnInit {
           // Reactivate view
           this.saving = false;
         },
-        error: (error: FailureResponse) => {
-          // TODO: show these failures
-          if (error.failures) {
+        error: error => {
+          if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
             this.failures = new FieldFailures();
           }
           // Reactivate view
           this.saving = false;
+  
+          return throwError(() => error);
         }
       });
     }

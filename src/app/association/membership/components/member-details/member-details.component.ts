@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
@@ -63,8 +64,8 @@ export class MemberDetailsComponent implements OnInit {
         this.saving = false;
         this.editing = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
@@ -72,6 +73,8 @@ export class MemberDetailsComponent implements OnInit {
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

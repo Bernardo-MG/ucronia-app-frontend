@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
 
@@ -32,14 +33,16 @@ export class TransactionCreateComponent {
         // Reactivate view
         this.saving = false;
       },
-      error: (error: FailureResponse) => {
-        if (error.failures) {
+      error: error => {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
           this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }
