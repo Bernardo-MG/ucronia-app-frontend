@@ -1,7 +1,13 @@
 import { Failure } from "./failure";
 
 export class FieldFailures {
-  fieldFailures: { [key: string]: Failure[] } = {};
+  propertyFailures: { [key: string]: Failure[] } = {};
+
+  constructor(failures?: { [key: string]: Failure[] }) {
+    if (failures) {
+      this.propertyFailures = failures;
+    }
+  }
 
   /**
    * Returns the failures for a property.
@@ -12,7 +18,7 @@ export class FieldFailures {
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.fieldFailures[property];
+    const found = this.propertyFailures[property];
     if (found) {
       failures = (found as Failure[]);
     } else {
@@ -21,4 +27,15 @@ export class FieldFailures {
 
     return failures;
   }
+
+  /**
+   * Indicates if there are failures for the received property.
+   * 
+   * @param property property to check for failures
+   * @returns true if there are failures for the property, false otherwise
+   */
+  public hasProperty(property: string) {
+    return property in this.propertyFailures;
+  }
+
 }

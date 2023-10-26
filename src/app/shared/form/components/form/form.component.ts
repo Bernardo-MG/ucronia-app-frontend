@@ -67,7 +67,7 @@ export class FormComponent<Data> {
    * @returns true if the form is invalid, false otherwise
    */
   public isFieldInvalid(property: string): boolean {
-    return this.isFormFieldInvalid(property) || (property in this.failures);
+    return this.isFormFieldInvalid(property) || (this.failures.hasProperty(property));
   }
 
   /**
@@ -79,9 +79,8 @@ export class FormComponent<Data> {
   public getFailures(property: string): Failure[] {
     let fieldFailures: Failure[];
 
-    const found = this.failures.getFailures(property);
-    if (found) {
-      fieldFailures = (found as Failure[]);
+    if (this.failures.hasProperty(property)) {
+      fieldFailures = this.failures.getFailures(property);
     } else {
       fieldFailures = [];
     }
