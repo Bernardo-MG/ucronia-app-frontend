@@ -16,7 +16,8 @@
             </div>
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()" name="Extend expiration"
-                data-bs-toggle="modal" data-bs-target="#extendExpirationModal"></layout-waiting-button>
+                data-bs-toggle="modal"
+                [attr.data-bs-target]="isAbleToEdit() ? '#extendExpirationModal' : ''"></layout-waiting-button>
             </div>
           </div>
         </footer>
