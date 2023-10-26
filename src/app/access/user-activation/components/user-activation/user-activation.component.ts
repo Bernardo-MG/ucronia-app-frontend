@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
 
@@ -43,7 +43,7 @@ export class UserActivationComponent implements OnInit {
   /**
    * Failures when activating the user.
    */
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class UserActivationComponent implements OnInit {
   public onActivateUser(password: string): void {
     this.validating = true;
 
-    this.failures = {};
+    this.failures = new FieldFailures();
 
     const reset = new UserActivate();
     reset.password = password;
@@ -82,7 +82,7 @@ export class UserActivationComponent implements OnInit {
         if (response.error.failures) {
           this.failures = response.error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         this.validating = false;
       }

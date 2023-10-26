@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 
 @Component({
   selector: 'app-form',
@@ -35,7 +36,7 @@ export class FormComponent<Data> {
     return this._waiting;
   }
 
-  @Input() public failures: { [key: string]: Failure[] } = {};
+  @Input() public failures = new FieldFailures();
 
   @Input() public set data(value: Data) {
     this.form.patchValue(value as any);
@@ -78,7 +79,7 @@ export class FormComponent<Data> {
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    const found = this.failures[property];
+    const found = this.failures.getFailures(property);
     if (found) {
       failures = (found as Failure[]);
     } else {

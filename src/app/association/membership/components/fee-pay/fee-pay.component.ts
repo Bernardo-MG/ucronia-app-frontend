@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeePayment } from '../../models/fee-payment';
 import { Member } from '../../models/member';
@@ -31,7 +32,7 @@ export class FeePayComponent implements OnInit {
 
   public membersTotalPages = 0;
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private service: FeeService,
@@ -50,15 +51,15 @@ export class FeePayComponent implements OnInit {
     this.service.pay(data).subscribe({
       next: response => {
         this.router.navigate(['/membership']);
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
       },
-      error: error => {
+      error: (error: FailureResponse) => {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { UserTokenService } from '../../services/user-token.service';
-import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'access-user-token-details',
@@ -30,7 +31,7 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public data = new UserToken();
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   public extendExpirationForm;
 
@@ -62,15 +63,15 @@ export class UserTokenDetailsComponent implements OnInit {
       next: d => {
         this.data = d;
 
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
       },
-      error: error => {
+      error: (error: FailureResponse) => {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
@@ -87,15 +88,16 @@ export class UserTokenDetailsComponent implements OnInit {
           this.data = d;
           this.extendExpirationForm.patchValue(this.data.expirationDate as any);
 
-          this.failures = {};
+          this.failures = new FieldFailures();
           // Reactivate view
           this.saving = false;
         },
-        error: error => {
+        error: (error: FailureResponse) => {
+          // TODO: show these failures
           if (error.failures) {
             this.failures = error.failures;
           } else {
-            this.failures = {};
+            this.failures = new FieldFailures();
           }
           // Reactivate view
           this.saving = false;

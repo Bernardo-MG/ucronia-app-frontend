@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
 
@@ -38,7 +38,7 @@ export class PasswordResetComponent implements OnInit {
   /**
    * Failures when reseting the password.
    */
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +63,7 @@ export class PasswordResetComponent implements OnInit {
   public onPasswordReset(password: string): void {
     this.reseting = true;
 
-    this.failures = {};
+    this.failures = new FieldFailures();
 
     const reset = new PasswordReset();
     reset.password = password;
@@ -77,7 +77,7 @@ export class PasswordResetComponent implements OnInit {
         if (response.error.failures) {
           this.failures = response.error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         this.reseting = false;
       }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
@@ -23,7 +24,7 @@ export class ConfigurationDetailsComponent implements OnInit {
 
   public error = false;
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   public data = new AssociationConfiguration();
 
@@ -45,7 +46,7 @@ export class ConfigurationDetailsComponent implements OnInit {
       next: d => {
         this.data = d;
 
-        this.failures = {};
+        this.failures = new FieldFailures();
 
         // Reload data
         this.load();
@@ -54,11 +55,11 @@ export class ConfigurationDetailsComponent implements OnInit {
         this.saving = false;
         this.editing = false;
       },
-      error: error => {
+      error: (error: FailureResponse) => {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;

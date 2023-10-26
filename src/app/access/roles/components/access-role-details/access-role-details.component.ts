@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AccessRoleService } from '../../services/access-role.service';
-import { Permission } from '@app/core/authentication/models/permission';
 
 @Component({
   selector: 'access-role-details',
@@ -36,7 +37,7 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public data = new Role();
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -62,16 +63,16 @@ export class AccessRoleDetailsComponent implements OnInit {
       next: d => {
         this.data = d;
 
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
         this.editing = false;
       },
-      error: error => {
+      error: (error: FailureResponse) => {
         if (error.failures) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;

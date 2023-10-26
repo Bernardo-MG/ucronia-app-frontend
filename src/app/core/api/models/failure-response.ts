@@ -1,5 +1,5 @@
-import { Failure } from "./failure";
+import { FieldFailures } from "./field-failures";
 
 export class FailureResponse {
-  failures: Failure[] = [];
+  failures = new FieldFailures();
 }
