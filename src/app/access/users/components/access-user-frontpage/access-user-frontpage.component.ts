@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'access-user-frontpage',
@@ -9,10 +8,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 export class AccessFrontpageComponent implements OnInit {
 
   public createPermission = false;
-
-  public totalPages = 0;
-
-  public addIcon = faPlus;
 
   constructor(
     private authContainer: AuthContainer

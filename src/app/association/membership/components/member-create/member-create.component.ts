@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
@@ -15,7 +17,7 @@ export class MemberCreateComponent {
    */
   public saving = false;
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private service: MemberService,
@@ -27,18 +29,20 @@ export class MemberCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/membership/member/${d.id}`]);
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        if (error.failures) {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }

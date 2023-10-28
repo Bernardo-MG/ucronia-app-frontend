@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
 
@@ -25,7 +27,7 @@ export class PasswordResetRequestComponent {
   /**
    * Failures when reseting the password.
    */
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private service: PasswordResetService
@@ -38,7 +40,7 @@ export class PasswordResetRequestComponent {
    */
   public onPasswordResetRequest(resetPassword: PasswordResetRequest) {
     this.reseting = true;
-    this.failures = {};
+    this.failures = new FieldFailures();
     this.service.requestResetPassword(resetPassword)
       .subscribe({
         next: response => {
@@ -46,12 +48,14 @@ export class PasswordResetRequestComponent {
           this.reseting = false;
         },
         error: error => {
-          if (error.failures) {
+          if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
-            this.failures = {};
+            this.failures = new FieldFailures();
           }
           this.reseting = false;
+
+          return throwError(() => error);
         }
       });
   }

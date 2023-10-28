@@ -33,7 +33,8 @@ export class LayoutService {
 
     const securityLinks = this.filterNodes([
       { title: 'Users', path: '/users', resource: 'user' },
-      { title: 'Roles', path: '/roles', resource: 'role' }
+      { title: 'Roles', path: '/roles', resource: 'role' },
+      { title: 'User tokens', path: '/user-tokens', resource: 'user_token' }
     ]);
 
     if (securityLinks.length > 0) {

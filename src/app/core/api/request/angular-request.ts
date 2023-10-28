@@ -48,6 +48,14 @@ export class AngularRequest implements Request {
       );
   }
 
+  public patch<T>(body: any): Observable<T> {
+    const finalUrl = this.getFinalUrl(this._route);
+    return this.http.patch<T>(finalUrl, body, this.options)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   public route(route: string): AngularRequest {
     this._route = route;
 
@@ -98,8 +106,7 @@ export class AngularRequest implements Request {
       // Failures response
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
-      response = new FailureResponse();
-      response.failures = error.error.failures;
+      response = new FailureResponse(error.error.failures);
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.

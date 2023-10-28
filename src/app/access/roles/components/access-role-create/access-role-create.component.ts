@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Role } from '@app/core/authentication/models/role';
+import { throwError } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
@@ -15,7 +17,7 @@ export class AccessRoleCreateComponent {
    */
   public saving = false;
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private service: AccessRoleService,
@@ -27,18 +29,20 @@ export class AccessRoleCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/roles/${d.id}`]);
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
       },
       error: error => {
-        if (error.failures) {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }
