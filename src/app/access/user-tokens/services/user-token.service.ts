@@ -21,11 +21,13 @@ export class UserTokenService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<UserToken[]>> {
-    const defaultSort = new Sort<UserToken>('username');
-    defaultSort.direction = Direction.Ascending;
+    const sortDate = new Sort<UserToken>('creationDate');
+    sortDate.direction = Direction.Descending;
+    const sortUsername = new Sort<UserToken>('username');
+    sortUsername.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<UserToken>();
-    query.defaultSort = [defaultSort];
+    query.defaultSort = [sortDate, sortUsername];
     query.pagination = pagination;
 
     return this.userTokenApi.readAll(query);
