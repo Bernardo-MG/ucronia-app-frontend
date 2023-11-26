@@ -6,6 +6,7 @@ import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
 import { MonthlyBalance } from "../funds/models/monthly-balance";
+import { CurrentBalance } from "../funds/models/current-balance";
 
 export class BalanceApi extends ReadApi<MonthlyBalance> {
 
@@ -15,7 +16,7 @@ export class BalanceApi extends ReadApi<MonthlyBalance> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/funds/balance'))
   }
 
-  public read(): Observable<ApiResponse<MonthlyBalance>> {
+  public current(): Observable<ApiResponse<CurrentBalance>> {
     const request = this.requestProvider();
 
     return request.read();

@@ -69,7 +69,7 @@ export class FundsBalanceChartComponent implements OnInit {
 
     const labels = this.balance.map(b => b.month)
     const totals = this.balance.map(b => b.total)
-    const differences = this.balance.map(b => b.difference)
+    const results = this.balance.map(b => b.results)
 
     const data = {
       labels: labels,
@@ -82,7 +82,7 @@ export class FundsBalanceChartComponent implements OnInit {
         },
         {
           label: 'Month results',
-          data: differences,
+          data: results,
           borderColor: 'rgba(15, 10, 222, .7)',
           borderWidth: 2,
         }
