@@ -1,7 +1,9 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { throwError } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
 
@@ -31,7 +33,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public data = new Fee();
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -63,20 +65,22 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       next: d => {
         this.data = d;
 
-        this.failures = {};
+        this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;
         this.editing = false;
       },
       error: error => {
-        if (error.failures) {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         // Reactivate view
         this.saving = false;
         this.editing = false;
+
+        return throwError(() => error);
       }
     });
   }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
 
@@ -38,7 +40,7 @@ export class PasswordResetComponent implements OnInit {
   /**
    * Failures when reseting the password.
    */
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -63,7 +65,7 @@ export class PasswordResetComponent implements OnInit {
   public onPasswordReset(password: string): void {
     this.reseting = true;
 
-    this.failures = {};
+    this.failures = new FieldFailures();
 
     const reset = new PasswordReset();
     reset.password = password;
@@ -72,14 +74,15 @@ export class PasswordResetComponent implements OnInit {
         this.status = 'finished';
         this.reseting = false;
       },
-      error: response => {
-        // TODO: Unwrap error response automatically
-        if (response.error.failures) {
-          this.failures = response.error.failures;
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
         this.reseting = false;
+
+        return throwError(() => error);
       }
     });
   }

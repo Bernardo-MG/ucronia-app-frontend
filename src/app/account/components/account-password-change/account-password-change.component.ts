@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
-import { Failure } from '@app/core/api/models/failure';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'account-password-change',
@@ -11,7 +13,7 @@ export class AccountPasswordChangeComponent {
 
   public saving = false;
 
-  public failures: { [key: string]: Failure[] } = {};
+  public failures = new FieldFailures();
 
   constructor(
     private service: AccountService
@@ -28,13 +30,15 @@ export class AccountPasswordChangeComponent {
         this.saving = false;
       },
       error: error => {
-        if (error.failures) {
+        if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = {};
+          this.failures = new FieldFailures();
         }
-        // Reactivate form
+        // Reactivate view
         this.saving = false;
+
+        return throwError(() => error);
       }
     });
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyBalance } from '../../models/monthly-balance';
+import { CurrentBalance } from '../../models/current-balance';
 import { BalanceService } from '../../service/balance.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class FundsCurrentBalanceComponent implements OnInit {
 
   public readingBalance = false;
 
-  public balance = new MonthlyBalance();
+  public balance = new CurrentBalance();
 
   constructor(
     private balanceService: BalanceService

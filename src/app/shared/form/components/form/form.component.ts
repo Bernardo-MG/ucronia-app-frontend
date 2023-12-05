@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
+import { FieldFailures } from '@app/core/api/models/field-failures';
 
 @Component({
   selector: 'app-form',
@@ -35,7 +36,7 @@ export class FormComponent<Data> {
     return this._waiting;
   }
 
-  @Input() public failures: { [key: string]: Failure[] } = {};
+  @Input() public failures = new FieldFailures();
 
   @Input() public set data(value: Data) {
     this.form.patchValue(value as any);
@@ -66,7 +67,7 @@ export class FormComponent<Data> {
    * @returns true if the form is invalid, false otherwise
    */
   public isFieldInvalid(property: string): boolean {
-    return this.isFormFieldInvalid(property) || (property in this.failures);
+    return this.isFormFieldInvalid(property) || (this.failures.hasProperty(property));
   }
 
   /**
@@ -76,16 +77,7 @@ export class FormComponent<Data> {
    * @returns failures for the property
    */
   public getFailures(property: string): Failure[] {
-    let failures: Failure[];
-
-    const found = this.failures[property];
-    if (found) {
-      failures = (found as Failure[]);
-    } else {
-      failures = [];
-    }
-
-    return failures;
+    return this.failures.getFailures(property);
   }
 
   /**

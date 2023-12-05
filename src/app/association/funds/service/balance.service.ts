@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BalanceApi } from '@app/association/api/balance-api';
-import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { Observable, map } from 'rxjs';
+import { CurrentBalance } from '../models/current-balance';
+import { MonthlyBalance } from '../models/monthly-balance';
 
 @Injectable()
 export class BalanceService {
@@ -16,8 +17,8 @@ export class BalanceService {
     private http: HttpClient
   ) { }
 
-  public current(): Observable<MonthlyBalance> {
-    return this.balanceApi.read().pipe(map(r => r.content));
+  public current(): Observable<CurrentBalance> {
+    return this.balanceApi.current().pipe(map(r => r.content));
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MonthlyBalance[]> {
