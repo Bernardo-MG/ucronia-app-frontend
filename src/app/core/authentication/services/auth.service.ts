@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
-import { SecurityDetails } from '../models/security-status';
+import { SecurityDetails } from '../models/security-details';
+import { LoginStatus } from '../models/login-status';
 
 /**
  * Authentication and authorization details container.
@@ -80,10 +81,18 @@ export class AuthContainer {
    * @param details security details to store
    * @param store keep the details in the local storage
    */
-  public setDetails(user: SecurityDetails, store: boolean) {
+  public setDetails(loginStatus: LoginStatus, store: boolean): SecurityDetails {
+    const user = new SecurityDetails();
+
+    user.logged = loginStatus.logged;
+
     // Try to get permissions from token
-    if (user.token) {
-      const tokenData = this.jwtHelper.decodeToken(user.token);
+    if (loginStatus.token) {
+      user.token = loginStatus.token;
+      const tokenData = this.jwtHelper.decodeToken(loginStatus.token);
+      if (tokenData.subject) {
+        user.username = tokenData.subject;
+      }
       if (tokenData.permissions) {
         user.permissions = tokenData.permissions;
       }
@@ -100,6 +109,8 @@ export class AuthContainer {
       // Remove stored details
       localStorage.removeItem(this.detailsKey);
     }
+
+    return user;
   }
 
   /**

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
-import { SecurityDetails } from '@app/core/authentication/models/security-status';
+import { LoginStatus } from '@app/core/authentication/models/login-status';
+import { SecurityDetails } from '@app/core/authentication/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { LoginRequest } from '../models/login-request';
 
 @Injectable()
@@ -32,14 +33,14 @@ export class LoginService {
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
     return this.http
       // Login request
-      .post<ApiResponse<SecurityDetails>>(this.loginUrl, request)
+      .post<ApiResponse<LoginStatus>>(this.loginUrl, request)
       // Get content
       .pipe(map(response => response.content))
-      .pipe(tap(user => {
+      .pipe(map(loginStatus => {
         // Succesful request
 
         // Save token
-        this.authContainer.setDetails(user, rememberMe);
+        return this.authContainer.setDetails(loginStatus, rememberMe);
       }));
   }
 
