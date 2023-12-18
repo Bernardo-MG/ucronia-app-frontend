@@ -78,7 +78,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
         }
         // Reactivate view
         this.saving = false;
-        this.editing = false;
 
         return throwError(() => error);
       }

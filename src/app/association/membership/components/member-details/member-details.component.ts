@@ -72,7 +72,6 @@ export class MemberDetailsComponent implements OnInit {
         }
         // Reactivate view
         this.saving = false;
-        this.editing = false;
 
         return throwError(() => error);
       }

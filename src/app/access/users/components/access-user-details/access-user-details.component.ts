@@ -75,7 +75,6 @@ export class AccessUserDetailsComponent implements OnInit {
         }
         // Reactivate view
         this.saving = false;
-        this.editing = false;
 
         return throwError(() => error);
       }

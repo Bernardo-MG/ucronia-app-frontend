@@ -76,7 +76,6 @@ export class AccessRoleDetailsComponent implements OnInit {
           this.failures = new FieldFailures();
         }
         // Reactivate view
-        this.saving = false;
         this.editing = false;
 
         return throwError(() => error);
