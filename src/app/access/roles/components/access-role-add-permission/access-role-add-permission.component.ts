@@ -37,7 +37,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onAddPermission(permission: Permission): void {
-    this.service.addPermission(this.roleId, permission.id).subscribe(p => {
+    this.service.addPermission(this.roleId, permission.name).subscribe(p => {
       this.addPermission.emit(permission);
     });
   }

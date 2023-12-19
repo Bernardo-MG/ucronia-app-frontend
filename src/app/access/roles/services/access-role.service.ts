@@ -68,7 +68,7 @@ export class AccessRoleService {
     return this.roleApi.readById(roleId).pipe(map(r => r.content));
   }
 
-  public addPermission(roleId: number, permission: number): Observable<Permission> {
+  public addPermission(roleId: number, permission: string): Observable<Permission> {
     return this.roleApi.updatePermission(roleId, permission).pipe(map(r => r.content));
   }
 
