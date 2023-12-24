@@ -17,7 +17,7 @@ export class UserApi extends CrudApi<User> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/security/user'))
   }
 
-  public readRoles(user: number, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
+  public readRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute(`/${user}/role`);
@@ -25,7 +25,7 @@ export class UserApi extends CrudApi<User> {
     return request.read();
   }
 
-  public readAvailableRoles(user: number, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
+  public readAvailableRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute(`/${user}/role/available`);
@@ -33,7 +33,7 @@ export class UserApi extends CrudApi<User> {
     return request.read();
   }
 
-  public updateRoles(user: number, role: string): Observable<ApiResponse<Role>> {
+  public updateRoles(user: string, role: string): Observable<ApiResponse<Role>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${user}/role`);
@@ -41,7 +41,7 @@ export class UserApi extends CrudApi<User> {
     return request.update({ id: role });
   }
 
-  public removeRoles(user: number, role: string): Observable<ApiResponse<boolean>> {
+  public removeRoles(user: string, role: string): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${user}/role/${role}`);

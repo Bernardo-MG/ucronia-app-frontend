@@ -28,7 +28,7 @@ export class AccessUserCreateComponent {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.router.navigate([`/users/${d.id}`]);
+        this.router.navigate([`/users/${d.username}`]);
         this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;

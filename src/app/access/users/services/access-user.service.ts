@@ -30,48 +30,48 @@ export class AccessUserService {
     return this.userApi.readAll(query);
   }
 
-  public getRoles(userId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+  public getRoles(username: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
     const defaultSort: Sort<Role> = new Sort<Role>('name');
 
     const query = new PaginatedQuery<Role>();
     query.defaultSort = [defaultSort];
     query.pagination = pagination;
 
-    return this.userApi.readRoles(userId, query);
+    return this.userApi.readRoles(username, query);
   }
 
-  public getAvailableRoles(userId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+  public getAvailableRoles(username: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
     const defaultSort: Sort<Role> = new Sort<Role>('name');
 
     const query = new PaginatedQuery<Role>();
     query.defaultSort = [defaultSort];
     query.pagination = pagination;
 
-    return this.userApi.readAvailableRoles(userId, query);
+    return this.userApi.readAvailableRoles(username, query);
   }
 
   public create(data: User): Observable<User> {
     return this.userApi.create(data).pipe(map(r => r.content));
   }
 
-  public update(id: number, data: User): Observable<User> {
-    return this.userApi.updateById(id, data).pipe(map(r => r.content));
+  public update(username: string, data: User): Observable<User> {
+    return this.userApi.updateById(username, data).pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<boolean> {
-    return this.userApi.deleteById(id).pipe(map(r => r.content));
+  public delete(username: string): Observable<boolean> {
+    return this.userApi.deleteById(username).pipe(map(r => r.content));
   }
 
-  public getOne(id: number): Observable<User> {
-    return this.userApi.readById(id).pipe(map(r => r.content));
+  public getOne(username: string): Observable<User> {
+    return this.userApi.readById(username).pipe(map(r => r.content));
   }
 
-  public addRole(id: number, role: string): Observable<Role> {
-    return this.userApi.updateRoles(id, role).pipe(map(r => r.content));
+  public addRole(username: string, role: string): Observable<Role> {
+    return this.userApi.updateRoles(username, role).pipe(map(r => r.content));
   }
 
-  public removeRole(id: number, role: string): Observable<boolean> {
-    return this.userApi.removeRoles(id, role).pipe(map(r => r.content));
+  public removeRole(username: string, role: string): Observable<boolean> {
+    return this.userApi.removeRoles(username, role).pipe(map(r => r.content));
   }
 
 }

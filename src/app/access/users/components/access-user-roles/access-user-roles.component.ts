@@ -10,7 +10,7 @@ import { PaginationRequest } from '@app/core/api/models/pagination-request';
 })
 export class AccessUserRoleFormComponent implements OnChanges {
 
-  @Input() public userId = -1;
+  @Input() public user = "";
 
   @Input() public editable = false;
 
@@ -53,12 +53,12 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.userId, data.name).subscribe(p => this.load(undefined));
+    this.service.removeRole(this.user, data.name).subscribe(p => this.load(undefined));
   }
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingRoles = true;
-    this.service.getRoles(this.userId, pagination).subscribe({
+    this.service.getRoles(this.user, pagination).subscribe({
       next: response => {
         this.roles = response.content;
         this.currentPage = response.page + 1;

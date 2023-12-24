@@ -8,7 +8,7 @@ import { AccessUserService } from '../../services/access-user.service';
 })
 export class AccessUserAddRoleComponent implements OnChanges {
 
-  @Input() public userId = -1;
+  @Input() public user = "";
 
   @Output() public addRole = new EventEmitter<Role>();
 
@@ -25,20 +25,20 @@ export class AccessUserAddRoleComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['userId']) {
+    if ((changes['user']) && (this.user.length)) {
       this.loadRoleSelectionPage(0);
     }
   }
 
   public onAddRole(data: Role): void {
-    this.service.addRole(this.userId, data.name).subscribe(p => {
+    this.service.addRole(this.user, data.name).subscribe(p => {
       this.addRole.emit(data);
     });
   }
 
   public loadRoleSelectionPage(page: number) {
     this.readingSelection = true;
-    this.service.getAvailableRoles(this.userId, { page }).subscribe({
+    this.service.getAvailableRoles(this.user, { page }).subscribe({
       next: response => {
         this.roleSelection = response.content;
         this.roleSelectionPage = response.page + 1;
