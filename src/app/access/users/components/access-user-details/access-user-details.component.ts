@@ -52,13 +52,13 @@ export class AccessUserDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('user'));
     });
   }
 
   public onSave(toSave: User): void {
     this.saving = true;
-    this.service.update(toSave.id, toSave).subscribe({
+    this.service.update(toSave.username, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -82,7 +82,7 @@ export class AccessUserDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.id).subscribe(r => {
+    this.service.delete(this.data.username).subscribe(r => {
       this.router.navigate([`/users`]);
     });
   }
@@ -113,9 +113,8 @@ export class AccessUserDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      const identifier = Number(id);
       this.reading = true;
-      this.service.getOne(identifier)
+      this.service.getOne(id)
         .subscribe({
           next: d => {
             this.data = d;

@@ -5,7 +5,7 @@ import { UserTokenDetailsComponent } from './components/user-token-details/user-
 
 const routes: Routes = [
   { path: '', component: UserTokenFrontpageComponent },
-  { path: ':id', component: UserTokenDetailsComponent }
+  { path: ':token', component: UserTokenDetailsComponent }
 ];
 
 @NgModule({

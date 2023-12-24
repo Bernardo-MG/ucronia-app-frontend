@@ -30,7 +30,7 @@ export class AccessRoleService {
     return this.roleApi.readAll(query);
   }
 
-  public getPermissions(roleId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+  public getPermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort<Permission> = new Sort<Permission>('resource');
     const sortAction: Sort<Permission> = new Sort<Permission>('action');
 
@@ -38,10 +38,10 @@ export class AccessRoleService {
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
 
-    return this.roleApi.readPermissions(roleId, query);
+    return this.roleApi.readPermissions(role, query);
   }
 
-  public getAvailablePermissions(roleId: number, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+  public getAvailablePermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort<Permission> = new Sort<Permission>('resource');
     const sortAction: Sort<Permission> = new Sort<Permission>('action');
 
@@ -49,31 +49,31 @@ export class AccessRoleService {
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
 
-    return this.roleApi.readAvailablePermissions(roleId, query);
+    return this.roleApi.readAvailablePermissions(role, query);
   }
 
   public create(data: Role): Observable<Role> {
     return this.roleApi.create(data).pipe(map(r => r.content));
   }
 
-  public update(roleId: number, data: Role): Observable<Role> {
-    return this.roleApi.updateById(roleId, data).pipe(map(r => r.content));
+  public update(role: string, data: Role): Observable<Role> {
+    return this.roleApi.updateById(role, data).pipe(map(r => r.content));
   }
 
-  public delete(roleId: number): Observable<boolean> {
-    return this.roleApi.deleteById(roleId).pipe(map(r => r.content));
+  public delete(role: string): Observable<boolean> {
+    return this.roleApi.deleteById(role).pipe(map(r => r.content));
   }
 
-  public getOne(roleId: number): Observable<Role> {
-    return this.roleApi.readById(roleId).pipe(map(r => r.content));
+  public getOne(role: string): Observable<Role> {
+    return this.roleApi.readById(role).pipe(map(r => r.content));
   }
 
-  public addPermission(roleId: number, permission: number): Observable<Permission> {
-    return this.roleApi.updatePermission(roleId, permission).pipe(map(r => r.content));
+  public addPermission(role: string, permission: string): Observable<Permission> {
+    return this.roleApi.updatePermission(role, permission).pipe(map(r => r.content));
   }
 
-  public removePermission(roleId: number, permission: number): Observable<boolean> {
-    return this.roleApi.removePermission(roleId, permission).pipe(map(r => r.content));
+  public removePermission(role: string, permission: string): Observable<boolean> {
+    return this.roleApi.removePermission(role, permission).pipe(map(r => r.content));
   }
 
 }

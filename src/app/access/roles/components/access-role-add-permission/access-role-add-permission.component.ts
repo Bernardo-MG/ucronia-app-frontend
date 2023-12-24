@@ -10,7 +10,7 @@ import { PaginationRequest } from '@app/core/api/models/pagination-request';
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
 
-  @Input() public roleId = 0;
+  @Input() public role = "";
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
@@ -31,13 +31,13 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['roleId']) {
+    if (changes['role']) {
       this.load(undefined);
     }
   }
 
   public onAddPermission(permission: Permission): void {
-    this.service.addPermission(this.roleId, permission.id).subscribe(p => {
+    this.service.addPermission(this.role, permission.name).subscribe(p => {
       this.addPermission.emit(permission);
     });
   }
@@ -60,7 +60,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.roleId, pagination).subscribe({
+    this.service.getAvailablePermissions(this.role, pagination).subscribe({
       next: response => {
         this.permissions = response.content;
 

@@ -1,5 +1,5 @@
 
-export class TokenStatus {
+export class UserTokenStatus {
   valid = false;
   username = '';
 }
