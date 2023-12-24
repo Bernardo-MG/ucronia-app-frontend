@@ -36,9 +36,9 @@ export class UserApi extends CrudApi<User> {
   public updateRoles(user: string, role: string): Observable<ApiResponse<Role>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/${user}/role`);
+    request.appendRoute(`/${user}/role/${role}`);
 
-    return request.update({ id: role });
+    return request.update({});
   }
 
   public removeRoles(user: string, role: string): Observable<ApiResponse<boolean>> {

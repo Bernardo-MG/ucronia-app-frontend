@@ -3,6 +3,7 @@
   <table class="table table-hover">
     <thead>
       <tr>
+        <th scope="col"></th>
         <th scope="col">
           role
         </th>
@@ -10,7 +11,13 @@
     </thead>
     <tbody class="table-group-divider">
       <ng-template ngFor let-role [ngForOf]="roleSelection">
-        <tr role="button" (click)="onAddRole(role)">
+        <tr role="button">
+          <td>
+            <button (click)="onAddRole(role)" type="button" class="btn btn-link link-dark" role="button"
+              aria-label="Back">
+              <icon-add></icon-add>
+            </button>
+          </td>
           <td>{{role.name}}</td>
         </tr>
       </ng-template>
