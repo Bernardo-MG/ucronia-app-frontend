@@ -31,7 +31,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['userId']) {
+    if ((changes['user']) && (this.user.length)) {
       this.load(undefined);
     }
   }
