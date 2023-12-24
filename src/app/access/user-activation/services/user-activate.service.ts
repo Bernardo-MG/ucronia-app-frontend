@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenStatus } from '@app/access/models/token-status';
+import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { environment } from 'environments/environment';
@@ -21,10 +21,10 @@ export class AccessUserActivateService {
       .post<ApiResponse<void>>(`${this.activateUserRequestUrl}/${token}`, reset);
   }
 
-  public validateToken(token: string): Observable<ApiResponse<TokenStatus>> {
+  public validateToken(token: string): Observable<ApiResponse<UserTokenStatus>> {
     return this.http
       // Validate token request
-      .get<ApiResponse<TokenStatus>>(`${this.activateUserRequestUrl}/${token}`);
+      .get<ApiResponse<UserTokenStatus>>(`${this.activateUserRequestUrl}/${token}`);
   }
 
 }

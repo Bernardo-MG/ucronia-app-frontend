@@ -11,7 +11,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRolePermissionsComponent implements OnChanges {
 
-  @Input() public roleId = -1;
+  @Input() public role = "";
 
   @Input() public editable = false;
 
@@ -32,13 +32,13 @@ export class AccessRolePermissionsComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['roleId']) {
+    if ((changes['role']) && (this.role.length)) {
       this.load(undefined);
     }
   }
 
   public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.roleId, permission.id).subscribe(p => this.load(undefined));
+    this.service.removePermission(this.role, permission.id).subscribe(p => this.load(undefined));
   }
 
   public onGoTo(page: number) {
@@ -59,7 +59,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingPermissions = true;
-    this.service.getPermissions(this.roleId, pagination).subscribe({
+    this.service.getPermissions(this.role, pagination).subscribe({
       next: response => {
         this.permissions = response.content;
 

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TokenStatus } from '@app/access/models/token-status';
+import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -28,10 +28,10 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset);
   }
 
-  public validateToken(token: string): Observable<ApiResponse<TokenStatus>> {
+  public validateToken(token: string): Observable<ApiResponse<UserTokenStatus>> {
     return this.http
       // Validate token request
-      .get<ApiResponse<TokenStatus>>(`${this.passwordResetRequestUrl}/${token}`);
+      .get<ApiResponse<UserTokenStatus>>(`${this.passwordResetRequestUrl}/${token}`);
   }
 
 }

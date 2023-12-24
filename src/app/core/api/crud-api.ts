@@ -23,7 +23,7 @@ export class CrudApi<T> extends ReadApi<T> {
     return request.update(data);
   }
 
-  public updateById(id: number, data: T): Observable<ApiResponse<T>> {
+  public updateById(id: any, data: T): Observable<ApiResponse<T>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);
@@ -37,7 +37,7 @@ export class CrudApi<T> extends ReadApi<T> {
     return request.delete();
   }
 
-  public deleteById(id: number): Observable<ApiResponse<boolean>> {
+  public deleteById(id: any): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);
@@ -51,7 +51,7 @@ export class CrudApi<T> extends ReadApi<T> {
     return request.patch(data);
   }
 
-  public patchById<P>(id: number, data: P): Observable<ApiResponse<T>> {
+  public patchById<P>(id: any, data: P): Observable<ApiResponse<T>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);
