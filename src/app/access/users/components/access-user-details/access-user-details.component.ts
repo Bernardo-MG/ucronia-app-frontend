@@ -52,7 +52,7 @@ export class AccessUserDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('user'));
     });
   }
 
