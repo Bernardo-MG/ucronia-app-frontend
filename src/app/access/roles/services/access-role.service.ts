@@ -72,7 +72,7 @@ export class AccessRoleService {
     return this.roleApi.updatePermission(role, permission).pipe(map(r => r.content));
   }
 
-  public removePermission(role: string, permission: number): Observable<boolean> {
+  public removePermission(role: string, permission: string): Observable<boolean> {
     return this.roleApi.removePermission(role, permission).pipe(map(r => r.content));
   }
 

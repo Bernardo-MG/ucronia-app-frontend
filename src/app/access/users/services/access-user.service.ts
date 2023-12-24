@@ -66,11 +66,11 @@ export class AccessUserService {
     return this.userApi.readById(id).pipe(map(r => r.content));
   }
 
-  public addRole(id: number, role: number): Observable<Role> {
+  public addRole(id: number, role: string): Observable<Role> {
     return this.userApi.updateRoles(id, role).pipe(map(r => r.content));
   }
 
-  public removeRole(id: number, role: number): Observable<boolean> {
+  public removeRole(id: number, role: string): Observable<boolean> {
     return this.userApi.removeRoles(id, role).pipe(map(r => r.content));
   }
 

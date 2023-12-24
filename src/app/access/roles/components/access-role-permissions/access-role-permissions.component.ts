@@ -38,7 +38,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
   }
 
   public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.role, permission.id).subscribe(p => this.load(undefined));
+    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(undefined));
   }
 
   public onGoTo(page: number) {

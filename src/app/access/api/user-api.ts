@@ -33,7 +33,7 @@ export class UserApi extends CrudApi<User> {
     return request.read();
   }
 
-  public updateRoles(user: number, role: number): Observable<ApiResponse<Role>> {
+  public updateRoles(user: number, role: string): Observable<ApiResponse<Role>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${user}/role`);
@@ -41,7 +41,7 @@ export class UserApi extends CrudApi<User> {
     return request.update({ id: role });
   }
 
-  public removeRoles(user: number, role: number): Observable<ApiResponse<boolean>> {
+  public removeRoles(user: number, role: string): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${user}/role/${role}`);

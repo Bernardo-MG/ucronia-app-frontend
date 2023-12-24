@@ -53,7 +53,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.userId, data.id).subscribe(p => this.load(undefined));
+    this.service.removeRole(this.userId, data.name).subscribe(p => this.load(undefined));
   }
 
   private load(pagination: PaginationRequest | undefined) {

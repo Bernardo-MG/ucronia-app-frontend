@@ -31,7 +31,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
   }
 
   public onAddRole(data: Role): void {
-    this.service.addRole(this.userId, data.id).subscribe(p => {
+    this.service.addRole(this.userId, data.name).subscribe(p => {
       this.addRole.emit(data);
     });
   }
