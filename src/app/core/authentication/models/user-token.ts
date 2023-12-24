@@ -1,5 +1,4 @@
 export class UserToken {
-  id = -1;
   creationDate = '';
   expirationDate = '';
   scope = '';

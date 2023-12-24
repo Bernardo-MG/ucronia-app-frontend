@@ -8,7 +8,7 @@ import { AccessFrontpageComponent } from './components/access-user-frontpage/acc
 const routes: Routes = [
   { path: '', component: AccessFrontpageComponent },
   { path: 'add', component: AccessUserCreateComponent },
-  { path: ':id', component: AccessUserDetailsComponent }
+  { path: ':user', component: AccessUserDetailsComponent }
 ];
 
 @NgModule({

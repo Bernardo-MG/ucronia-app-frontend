@@ -33,20 +33,20 @@ export class UserTokenService {
     return this.userTokenApi.readAll(query);
   }
 
-  public getOne(tokenId: number): Observable<UserToken> {
-    return this.userTokenApi.readById(tokenId).pipe(map(r => r.content));
+  public getOne(token: string): Observable<UserToken> {
+    return this.userTokenApi.readById(token).pipe(map(r => r.content));
   }
 
-  public patch(tokenId: number, data: UserToken): Observable<UserToken> {
-    return this.userTokenApi.patchById(tokenId, data).pipe(map(r => r.content));
+  public patch(token: string, data: UserToken): Observable<UserToken> {
+    return this.userTokenApi.patchById(token, data).pipe(map(r => r.content));
   }
 
-  public revoke(tokenId: number): Observable<UserToken> {
-    return this.userTokenApi.patchById(tokenId, { revoked: true }).pipe(map(r => r.content));
+  public revoke(token: string): Observable<UserToken> {
+    return this.userTokenApi.patchById(token, { revoked: true }).pipe(map(r => r.content));
   }
 
-  public extend(tokenId: number, date: string): Observable<UserToken> {
-    return this.userTokenApi.patchById(tokenId, { expirationDate: date }).pipe(map(r => r.content));
+  public extend(token: string, date: string): Observable<UserToken> {
+    return this.userTokenApi.patchById(token, { expirationDate: date }).pipe(map(r => r.content));
   }
 
 }

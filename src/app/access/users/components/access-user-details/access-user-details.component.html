@@ -22,7 +22,7 @@
           <div class="card-body">
             <ng-container [ngSwitch]="view">
               <ng-container *ngSwitchCase="'list'">
-                <access-user-roles [userId]="data.id" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+                <access-user-roles [user]="data.username" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
                 </access-user-roles>
                 <div class="d-grid">
                   <!-- Add button -->
@@ -32,7 +32,7 @@
                 </div>
               </ng-container>
               <ng-container *ngSwitchCase="'add'">
-                <access-user-add-role [userId]="data.id" (addRole)="onAddRole($event)"></access-user-add-role>
+                <access-user-add-role [user]="data.username" (addRole)="onAddRole($event)"></access-user-add-role>
                 <div class="d-grid">
                   <!-- Cancel button -->
                   <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">

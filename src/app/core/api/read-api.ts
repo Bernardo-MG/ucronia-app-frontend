@@ -24,7 +24,7 @@ export class ReadApi<T> {
     return request.read();
   }
 
-  public readById(id: number): Observable<ApiResponse<T>> {
+  public readById(id: any): Observable<ApiResponse<T>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${id}`);

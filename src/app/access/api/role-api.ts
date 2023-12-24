@@ -17,7 +17,7 @@ export class RoleApi extends CrudApi<Role> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/security/role'))
   }
 
-  public readPermissions(role: number, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
+  public readPermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute(`/${role}/permission`);
@@ -25,7 +25,7 @@ export class RoleApi extends CrudApi<Role> {
     return request.read();
   }
 
-  public readAvailablePermissions(role: number, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
+  public readAvailablePermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute(`/${role}/permission/available`);
@@ -33,17 +33,15 @@ export class RoleApi extends CrudApi<Role> {
     return request.read();
   }
 
-  public updatePermission(role: number, permission: number): Observable<ApiResponse<Permission>> {
+  public updatePermission(role: string, permission: string): Observable<ApiResponse<Permission>> {
     const request = this.requestProvider();
 
-    request.appendRoute(`/${role}/permission`);
+    request.appendRoute(`/${role}/permission/${permission}`);
 
-    return request.update({
-      permissionId: permission
-    });
+    return request.update({});
   }
 
-  public removePermission(role: number, permission: number): Observable<ApiResponse<boolean>> {
+  public removePermission(role: string, permission: string): Observable<ApiResponse<boolean>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${role}/permission/${permission}`);

@@ -32,7 +32,7 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public permissionView = 'list';
 
-  public roleId = 0;
+  public role = "";
 
   public error = false;
 
@@ -54,13 +54,13 @@ export class AccessRoleDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('role'));
     });
   }
 
   public onSave(toSave: Role): void {
     this.saving = true;
-    this.service.update(toSave.id, toSave).subscribe({
+    this.service.update(toSave.name, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -76,7 +76,6 @@ export class AccessRoleDetailsComponent implements OnInit {
           this.failures = new FieldFailures();
         }
         // Reactivate view
-        this.saving = false;
         this.editing = false;
 
         return throwError(() => error);
@@ -85,7 +84,7 @@ export class AccessRoleDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.id).subscribe(r => {
+    this.service.delete(this.data.name).subscribe(r => {
       this.router.navigate([`/roles`]);
     });
   }
@@ -112,10 +111,9 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      const identifier = Number(id);
-      this.roleId = identifier;
+      this.role = id;
       this.reading = true;
-      this.service.getOne(identifier)
+      this.service.getOne(id)
         .subscribe({
           next: response => {
             this.data = response;

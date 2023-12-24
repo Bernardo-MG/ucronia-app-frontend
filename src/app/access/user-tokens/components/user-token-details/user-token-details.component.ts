@@ -26,7 +26,7 @@ export class UserTokenDetailsComponent implements OnInit {
 
   public editable = false;
 
-  public tokenId = 0;
+  public token = "";
 
   public error = false;
 
@@ -54,13 +54,13 @@ export class UserTokenDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('token'));
     });
   }
 
   public onRevoke(): void {
     this.saving = true;
-    this.service.revoke(this.data.id).subscribe({
+    this.service.revoke(this.data.token).subscribe({
       next: d => {
         this.data = d;
 
@@ -86,7 +86,7 @@ export class UserTokenDetailsComponent implements OnInit {
     this.saving = true;
     const expirationDate = this.extendExpirationForm.value.expirationDate;
     if (expirationDate) {
-      this.service.extend(this.data.id, expirationDate).subscribe({
+      this.service.extend(this.data.token, expirationDate).subscribe({
         next: d => {
           this.data = d;
           this.extendExpirationForm.patchValue(this.data.expirationDate as any);
@@ -120,10 +120,9 @@ export class UserTokenDetailsComponent implements OnInit {
 
   private load(id: string | null): void {
     if (id) {
-      const identifier = Number(id);
-      this.tokenId = identifier;
+      this.token = id;
       this.reading = true;
-      this.service.getOne(identifier)
+      this.service.getOne(id)
         .subscribe({
           next: response => {
             this.data = response;

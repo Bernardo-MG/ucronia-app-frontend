@@ -7,7 +7,7 @@ import { AccessFrontpageComponent } from './components/access-role-frontpage/acc
 const routes: Routes = [
   { path: '', component: AccessFrontpageComponent },
   { path: 'add', component: AccessRoleCreateComponent },
-  { path: ':id', component: AccessRoleDetailsComponent }
+  { path: ':role', component: AccessRoleDetailsComponent }
 ];
 
 @NgModule({
