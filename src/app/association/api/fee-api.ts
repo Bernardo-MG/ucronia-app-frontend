@@ -24,6 +24,29 @@ export class FeeApi extends CrudApi<Fee> {
     return request.create(data);
   }
 
+  public updateByFeeId(date: string, memberId: number, data: Fee): Observable<ApiResponse<Fee>> {
+    const request = this.requestProvider();
+
+    request.appendRoute(`/${date}/${memberId}`);
+
+    return request.update(data);
+  }
+
+  public deleteByFeeId(date: string, memberId: number): Observable<ApiResponse<boolean>> {
+    const request = this.requestProvider();
+
+    request.appendRoute(`/${date}/${memberId}`);
+
+    return request.delete();
+  }
+
+  public readByFeeId(date: string, memberId: number): Observable<ApiResponse<Fee>> {
+    const request = this.requestProvider();
+
+    request.appendRoute(`/${date}/${memberId}`);
+    return request.read();
+  }
+
   public calendarYear(year: number, query: PaginatedQuery<UserFeeCalendar>): Observable<ApiResponse<UserFeeCalendar[]>> {
     const request = this.requestWithQuery(query);
 
