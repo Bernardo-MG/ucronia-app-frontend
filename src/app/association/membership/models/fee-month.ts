@@ -1,5 +1,6 @@
 export class FeeMonth {
-  feeId = -1;
+  memberId = -1;
+  date = '';
   month = -1;
   paid = false;
 }
