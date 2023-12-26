@@ -26,15 +26,15 @@ export class FeeService {
   }
 
   public update(date: string, memberId: number, data: Fee): Observable<Fee> {
-    return this.feeApi.updateByFeeId(date, memberId, data).pipe(map(r => r.content));
+    return this.feeApi.updateById(date, memberId, data).pipe(map(r => r.content));
   }
 
   public delete(date: string, memberId: number): Observable<boolean> {
-    return this.feeApi.deleteByFeeId(date, memberId).pipe(map(r => r.content));
+    return this.feeApi.deleteById(date, memberId).pipe(map(r => r.content));
   }
 
   public getOne(date: string, memberId: number): Observable<Fee> {
-    return this.feeApi.readByFeeId(date, memberId).pipe(map(r => r.content));
+    return this.feeApi.readById(date, memberId).pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
