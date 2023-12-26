@@ -29,7 +29,6 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
     super();
 
     this.form = fb.group({
-      id: [-1],
       memberId: [null, [Validators.required, Validators.min(0)]],
       paymentDate: [null, Validators.required],
       feeDates: fb.array([], Validators.required)
