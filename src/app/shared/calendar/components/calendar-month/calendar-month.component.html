@@ -21,7 +21,7 @@
 </div>
 <!-- Table -->
 <layout-waiting-wrapper [waiting]="waiting">
-  <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
+  <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
     (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="onPickDate($event.day)"
     (eventClicked)="onSelectEvent($event)">
   </mwl-calendar-month-view>
