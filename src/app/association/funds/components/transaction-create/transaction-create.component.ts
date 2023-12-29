@@ -28,7 +28,7 @@ export class TransactionCreateComponent {
     this.saving = true;
     this.service.create(data).subscribe({
       next: d => {
-        this.router.navigate([`/funds/transaction/${d.id}`]);
+        this.router.navigate([`/funds/transaction/${d.index}`]);
         this.failures = new FieldFailures();
         // Reactivate view
         this.saving = false;

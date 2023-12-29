@@ -55,7 +55,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   public onSave(toSave: Transaction): void {
     this.saving = true;
-    this.service.update(toSave.id, toSave).subscribe({
+    this.service.update(toSave.index, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -79,7 +79,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.id).subscribe(r => {
+    this.service.delete(this.data.index).subscribe(r => {
       this.router.navigate([`/funds`]);
     });
   }

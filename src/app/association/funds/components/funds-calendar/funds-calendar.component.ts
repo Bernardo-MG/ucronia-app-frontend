@@ -63,7 +63,7 @@ export class FundsCalendarComponent {
             color: color,
             start: date,
             meta: {
-              transactionId: t.id,
+              transactionId: t.index,
             }
           };
         });
