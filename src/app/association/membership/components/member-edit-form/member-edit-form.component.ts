@@ -19,8 +19,7 @@ export class MemberEditionFormComponent extends FormComponent<Member> {
       name: ['', Validators.required],
       surname: [''],
       identifier: [''],
-      phone: [''],
-      active: [true, Validators.required]
+      phone: ['']
     });
   }
 
