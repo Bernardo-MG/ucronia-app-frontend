@@ -11,7 +11,7 @@ import { Member } from '../../models/member';
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
 
-  @Input() public memberId = -1;
+  @Input() public memberNumber = -1;
 
   @Input() public memberName = '';
 
@@ -29,15 +29,15 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
     super();
 
     this.form = fb.group({
-      memberId: [null, [Validators.required, Validators.min(0)]],
+      memberNumber: [null, [Validators.required, Validators.min(0)]],
       paymentDate: [null, Validators.required],
       feeDates: fb.array([], Validators.required)
     });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['memberId']) {
-      this.data = { ...this.data, memberId: this.memberId };
+    if (changes['memberNumber']) {
+      this.data = { ...this.data, memberNumber: this.memberNumber };
     }
   }
 

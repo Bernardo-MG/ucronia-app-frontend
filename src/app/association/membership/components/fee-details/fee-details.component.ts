@@ -55,13 +55,13 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('date'),params.get('memberId'));
+      this.load(params.get('date'),params.get('memberNumber'));
     });
   }
 
   public onSave(toSave: Fee): void {
     this.saving = true;
-    this.service.update(toSave.date, toSave.memberId, toSave).subscribe({
+    this.service.update(toSave.date, toSave.memberNumber, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -85,7 +85,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.date, this.data.memberId).subscribe(r => {
+    this.service.delete(this.data.date, this.data.memberNumber).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
@@ -102,10 +102,10 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
   }
 
-  private load(date: string | null, memberId: string | null): void {
-    if (date && memberId) {
+  private load(date: string | null, memberNumber: string | null): void {
+    if (date && memberNumber) {
       this.reading = true;
-      const identifier = Number(memberId);
+      const identifier = Number(memberNumber);
       this.service.getOne(date, identifier)
         .subscribe({
           next: d => {

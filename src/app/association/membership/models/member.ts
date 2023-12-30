@@ -1,5 +1,5 @@
 export class Member {
-  id = -1;
+  number = -1;
   name = '';
   surname = '';
   identifier = '';

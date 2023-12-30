@@ -49,13 +49,13 @@ export class MemberDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('number'));
     });
   }
 
   public onSave(toSave: Member): void {
     this.saving = true;
-    this.service.update(toSave.id, toSave).subscribe({
+    this.service.update(toSave.number, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -79,7 +79,7 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.id).subscribe(r => {
+    this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }

@@ -24,26 +24,26 @@ export class FeeApi {
     return request.create(data);
   }
 
-  public updateById(date: string, memberId: number, data: Fee): Observable<ApiResponse<Fee>> {
+  public updateById(date: string, memberNumber: number, data: Fee): Observable<ApiResponse<Fee>> {
     const request = this.getRequest();
 
-    request.appendRoute(`/${date}/${memberId}`);
+    request.appendRoute(`/${date}/${memberNumber}`);
 
     return request.update(data);
   }
 
-  public deleteById(date: string, memberId: number): Observable<ApiResponse<boolean>> {
+  public deleteById(date: string, memberNumber: number): Observable<ApiResponse<boolean>> {
     const request = this.getRequest();
 
-    request.appendRoute(`/${date}/${memberId}`);
+    request.appendRoute(`/${date}/${memberNumber}`);
 
     return request.delete();
   }
 
-  public readById(date: string, memberId: number): Observable<ApiResponse<Fee>> {
+  public readById(date: string, memberNumber: number): Observable<ApiResponse<Fee>> {
     const request = this.getRequest();
 
-    request.appendRoute(`/${date}/${memberId}`);
+    request.appendRoute(`/${date}/${memberNumber}`);
     return request.read();
   }
 
