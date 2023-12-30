@@ -15,7 +15,6 @@ export class MemberCreateFormComponent extends FormComponent<Member> {
     super();
 
     this.form = fb.group({
-      id: [null],
       name: ['', Validators.required],
       surname: [''],
       identifier: [''],
