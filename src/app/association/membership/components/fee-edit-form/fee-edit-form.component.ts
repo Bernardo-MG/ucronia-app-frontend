@@ -18,7 +18,8 @@ export class FeeEditFormComponent extends FormComponent<Fee> {
       memberNumber: [null, [Validators.required, Validators.min(0)]],
       memberName: [null, Validators.required],
       date: [null, Validators.required],
-      paid: [false, Validators.required]
+      paid: [false, Validators.required],
+      paymentDate: [null, Validators.required]
     });
   }
 

@@ -3,4 +3,5 @@ export class Fee {
   date = '';
   memberName = '';
   paid = false;
+  paymentDate = '';
 }
