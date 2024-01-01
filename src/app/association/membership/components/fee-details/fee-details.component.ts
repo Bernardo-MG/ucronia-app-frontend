@@ -55,7 +55,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('date'),params.get('memberNumber'));
+      this.load(params.get('date'), params.get('memberNumber'));
     });
   }
 
@@ -126,6 +126,10 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public isWaiting() {
     return this.reading || this.saving;
+  }
+
+  public goToTransaction(index: number) {
+    this.router.navigate([`funds/transaction/${index}`]);
   }
 
 }

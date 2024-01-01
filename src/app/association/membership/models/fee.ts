@@ -4,4 +4,5 @@ export class Fee {
   memberName = '';
   paid = false;
   paymentDate = '';
+  transactionIndex = -1;
 }
