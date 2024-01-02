@@ -15,12 +15,11 @@ export class MemberEditionFormComponent extends FormComponent<Member> {
     super();
 
     this.form = fb.group({
-      id: [null],
+      number: [-1],
       name: ['', Validators.required],
       surname: [''],
       identifier: [''],
-      phone: [''],
-      active: [true, Validators.required]
+      phone: ['']
     });
   }
 

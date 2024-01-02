@@ -19,7 +19,7 @@
     </thead>
     <tbody class="table-group-divider">
       <tr *ngFor="let member of members; let rowIndex = index" [ngClass]="{ 'table-warning': member.active === false }"
-        role="button" routerLink="/membership/member/{{member.id}}">
+        role="button" routerLink="/membership/member/{{member.number}}">
         <!-- Cells -->
         <td>
           {{member.name}}

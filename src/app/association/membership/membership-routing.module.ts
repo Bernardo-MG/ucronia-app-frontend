@@ -10,9 +10,9 @@ import { MembershipFrontpageComponent } from './components/membership-frontpage/
 const routes: Routes = [
   { path: '', component: MembershipFrontpageComponent },
   { path: 'register', component: MemberCreateComponent },
-  { path: 'member/:id', component: MemberDetailsComponent },
+  { path: 'member/:number', component: MemberDetailsComponent },
   { path: 'pay', component: FeePayComponent },
-  { path: 'fee/:date/:memberId', component: FeeDetailsComponent }
+  { path: 'fee/:date/:memberNumber', component: FeeDetailsComponent }
 ];
 
 @NgModule({

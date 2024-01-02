@@ -15,7 +15,7 @@ export class TransactionFormComponent extends FormComponent<Transaction> {
     super();
 
     this.form = fb.group({
-      id: [-1],
+      index: [-1],
       description: ['', Validators.required],
       date: [null, Validators.required],
       amount: [0, Validators.required]

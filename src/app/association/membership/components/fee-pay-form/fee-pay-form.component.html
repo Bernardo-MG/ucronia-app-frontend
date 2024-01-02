@@ -3,11 +3,11 @@
   <!-- Select member -->
   <div class="row mb-2">
     <!-- Selected member -->
-    <label for="memberIdInput" class="col-sm-2 col-form-label">Member</label>
+    <label for="memberNumberInput" class="col-sm-2 col-form-label">Member</label>
     <div class="col-sm-10">
-      <input type="text" id="memberIdInput" [value]="memberName" readonly="true" class="form-control"
-        [class.is-invalid]="form.get('memberId').invalid" aria-describedby="memberIdLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('memberId')">
+      <input type="text" id="memberNumberInput" [value]="memberName" readonly="true" class="form-control"
+        [class.is-invalid]="form.get('memberNumber').invalid" aria-describedby="memberNumberLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('memberNumber')">
         {{failure.message}}
       </div>
     </div>
