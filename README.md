@@ -12,7 +12,7 @@ This builds the development version:
 
 ```
 npm run build
-``` 
+```
 
 ### Running tests
 
