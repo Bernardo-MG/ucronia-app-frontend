@@ -10,6 +10,10 @@ export class PaginatedQuery<T> {
 
   public parameters: { [key: string]: any } = {};
 
+  public set sort(sort: Sort<T>[]) {
+    this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
+  }
+
   public get sort(): Sort<T>[] {
     const defaults = new Map(this._defaultSort.map(s => [s.property, s]));
 
@@ -24,7 +28,7 @@ export class PaginatedQuery<T> {
       .map(s => defaults.get(s.property) as Sort<T>);
 
     const sorted = directSort.concat(defaultSort).sort((a, b) => {
-      var direction;
+      let direction;
 
       if (a.property.toString() < b.property.toString()) {
         direction = -1;
@@ -44,10 +48,6 @@ export class PaginatedQuery<T> {
 
   public set page(page: number) {
     this.parameters['page'] = page - 1;
-  }
-
-  public set sort(sort: Sort<T>[]) {
-    this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
   }
 
   public set defaultSort(defaultSort: Sort<T>[]) {
