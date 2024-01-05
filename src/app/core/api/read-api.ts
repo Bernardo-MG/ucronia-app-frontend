@@ -2,9 +2,7 @@ import { ApiResponse } from "@app/core/api/models/api-response";
 import { Observable } from "rxjs";
 import { PaginatedQuery } from "./models/paginated-query";
 import { PaginatedResponse } from "./models/paginated-response";
-import { Sort } from "./models/sort";
 import { Request } from "./request/request";
-import { Direction } from "./models/direction";
 
 export class ReadApi<T> {
 
@@ -35,11 +33,7 @@ export class ReadApi<T> {
     const request = this.requestProvider();
 
     // Sort
-    if (query.sort.length > 0) {
-      this.applySort(query.sort, request);
-    } else if (query.defaultSort.length > 0) {
-      this.applySort(query.defaultSort, request);
-    }
+    request.sort(query.sort);
 
     // Other parameters
     for (const key in query.parameters) {
@@ -50,14 +44,6 @@ export class ReadApi<T> {
     }
 
     return request;
-  }
-
-  private applySort(sort: Sort<T>[], request: Request) {
-    const validSort = sort.filter(s => s.direction !== Direction.Unsorted);
-    for (let i = 0; i < validSort.length; i += 1) {
-      const fieldSort = validSort[i];
-      request.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
-    }
   }
 
 }

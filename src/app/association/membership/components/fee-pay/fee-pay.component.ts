@@ -91,8 +91,8 @@ export class FeePayComponent implements OnInit {
     this.selectedMember = true;
   }
 
-  public getMemberName() {
-    return this.member.name + ' ' + this.member.surname;
+  public getName() {
+    return this.member.fullName;
   }
 
 }

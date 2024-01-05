@@ -20,18 +20,13 @@ export class MemberService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
-    const defaultSortName = new Sort<Member>('name');
-    defaultSortName.direction = Direction.Ascending;
-    const defaultSortSurname = new Sort<Member>('surname');
-    defaultSortSurname.direction = Direction.Ascending;
-
     const query = new PaginatedQuery<Member>();
-    query.defaultSort = [defaultSortName, defaultSortSurname];
+    query.defaultSort = [new Sort<Member>('fullName'), new Sort<Member>('number')];
     query.pagination = pagination;
     if (active === Active.Active) {
-      query.addParameter("status", 'ACTIVE');
+      query.addParameter('status', 'ACTIVE');
     } else if (active === Active.Inactive) {
-      query.addParameter("status", 'INACTIVE');
+      query.addParameter('status', 'INACTIVE');
     }
 
     return this.memberApi.readAll(query);
