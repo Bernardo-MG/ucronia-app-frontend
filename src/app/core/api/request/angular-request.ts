@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
+import { Direction } from '../models/direction';
 import { FailureResponse } from '../models/failure-response';
+import { Sort } from '../models/sort';
 import { Request } from './request';
 
 export class AngularRequest implements Request {
@@ -77,6 +79,15 @@ export class AngularRequest implements Request {
       params = params.append(name, value);
 
       this.options = { params: params };
+    }
+
+    return this;
+  }
+
+  public sort<T>(sort: Sort<T>[]): AngularRequest {
+    for (let i = 0; i < sort.length; i += 1) {
+      const fieldSort = sort[i];
+      this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
     }
 
     return this;

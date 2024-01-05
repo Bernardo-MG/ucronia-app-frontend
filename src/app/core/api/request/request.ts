@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { Sort } from '../models/sort';
 
 export interface Request {
 
@@ -17,5 +18,7 @@ export interface Request {
   appendRoute(route: string): Request;
 
   parameter(name: string, value: any): Request;
+
+  sort<T>(sort: Sort<T>[]): Request;
 
 }

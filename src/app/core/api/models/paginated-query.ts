@@ -1,13 +1,42 @@
+import { Direction } from "./direction";
 import { PaginationRequest } from "./pagination-request";
 import { Sort } from "./sort";
 
 export class PaginatedQuery<T> {
 
-  public sort: Sort<T>[] = [];
+  public _sort: Sort<T>[] = [];
 
-  public defaultSort: Sort<T>[] = [];
+  public _defaultSort: Sort<T>[] = [];
 
   public parameters: { [key: string]: any } = {};
+
+  public get sort(): Sort<T>[] {
+    const defaults = new Map(this._defaultSort.map(s => [s.property, s]));
+
+    // Check all sorts which can't be replaced by defaults
+    const directSort = this._sort
+      .filter(s => (s.direction !== Direction.Unsorted) || (!defaults.has(s.property)));
+
+    // Replace sorts as needed
+    const defaultSort = this._sort
+      .filter(s => s.direction === Direction.Unsorted)
+      .filter(s => defaults.has(s.property))
+      .map(s => defaults.get(s.property) as Sort<T>);
+
+    const sorted = directSort.concat(defaultSort).sort((a, b) => {
+      var direction;
+
+      if (a.property.toString() < b.property.toString()) {
+        direction = -1;
+      } else {
+        direction = 1;
+      }
+
+      return direction;
+    });
+
+    return sorted;
+  }
 
   public set size(size: number) {
     this.parameters['size'] = size;
@@ -15,6 +44,14 @@ export class PaginatedQuery<T> {
 
   public set page(page: number) {
     this.parameters['page'] = page - 1;
+  }
+
+  public set sort(sort: Sort<T>[]) {
+    this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
+  }
+
+  public set defaultSort(defaultSort: Sort<T>[]) {
+    this._defaultSort = defaultSort;
   }
 
   public set pagination(pagination: PaginationRequest | undefined) {
@@ -26,7 +63,7 @@ export class PaginatedQuery<T> {
         this.size = pagination.size;
       }
       if (pagination.sort) {
-        this.sort = pagination.sort;
+        this._sort = pagination.sort;
       }
     }
   }
