@@ -19,7 +19,7 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, active: Active): Observable<UserFeeCalendar[]> {
     const query = new PaginatedQuery<UserFeeCalendar>();
-    query.sort = [new Sort<UserFeeCalendar>("memberName")];
+    query.sort = [new Sort<UserFeeCalendar>("fullName")];
     if (active === Active.Active) {
       query.addParameter("status", 'ACTIVE');
     } else if (active === Active.Inactive) {

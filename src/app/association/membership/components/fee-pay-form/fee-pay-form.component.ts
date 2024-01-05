@@ -13,7 +13,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
 
   @Input() public memberNumber = -1;
 
-  @Input() public memberName = '';
+  @Input() public fullName = '';
 
   public member = new Member();
 
