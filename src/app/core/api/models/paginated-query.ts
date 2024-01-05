@@ -15,19 +15,31 @@ export class PaginatedQuery<T> {
   }
 
   public get sort(): Sort<T>[] {
-    const defaults = new Map(this._defaultSort.map(s => [s.property, s]));
+    let sorts;
 
-    // Check all sorts which can't be replaced by defaults
-    const directSort = this._sort
-      .filter(s => (s.direction !== Direction.Unsorted) || (!defaults.has(s.property)));
+    if (this._sort.length === 0) {
+      // Use default sorts if no sorting was received
+      sorts = this._defaultSort;
+    } else {
+      // Merge default sorting with the received one
 
-    // Replace sorts as needed
-    const defaultSort = this._sort
-      .filter(s => s.direction === Direction.Unsorted)
-      .filter(s => defaults.has(s.property))
-      .map(s => defaults.get(s.property) as Sort<T>);
+      // Prepare map with defaults
+      const defaults = new Map(this._defaultSort.map(s => [s.property, s]));
 
-    const sorted = directSort.concat(defaultSort).sort((a, b) => {
+      // Keep all fields sorted or not in the default list
+      const directSort = this._sort
+        .filter(s => (s.direction !== Direction.Unsorted) || (!defaults.has(s.property)));
+
+      // Replace unsorted fields with defaults
+      const defaultSort = this._sort
+        .filter(s => s.direction === Direction.Unsorted)
+        .filter(s => defaults.has(s.property))
+        .map(s => defaults.get(s.property) as Sort<T>);
+
+      sorts = directSort.concat(defaultSort);
+    }
+
+    const sorted = sorts.sort((a, b) => {
       let direction;
 
       if (a.property.toString() < b.property.toString()) {
