@@ -26,7 +26,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
 
     this.form = fb.group({
       transaction: fb.group({
-        date: [null, Validators.required],
+        date: [null, Validators.required]
       }),
       feeDates: fb.array([], Validators.required)
     });

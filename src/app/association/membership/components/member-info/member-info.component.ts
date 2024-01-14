@@ -7,6 +7,6 @@ import { Member } from '../../models/member';
 })
 export class MemberInfoComponent {
 
-  @Input() data = new Member();
+  @Input() member = new Member();
 
 }

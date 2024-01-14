@@ -3,28 +3,32 @@
   <div class="row mb-2">
     <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Number</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.number" id="numberInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="member.number" id="numberInput" [readonly]="true" class="form-control"
         aria-describedby="numberLabel">
     </div>
   </div>
-  <!-- Name -->
+  <!-- First name -->
   <div class="row mb-2">
-    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
+    <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">First name</label>
     <div class="col-sm-10">
-      <input type="text" id="nameInput" formControlName="name" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('name')">
+      <div formGroupName="name">
+        <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('firstName') }" aria-describedby="firstNameLabel">
+      </div>
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('firstName')">
         {{failure.message}}
       </div>
     </div>
   </div>
-  <!-- Surname -->
+  <!-- Last name -->
   <div class="row mb-2">
-    <label for="surnameInput" id="surnameLabel" class="col-sm-2 col-form-label">Surname</label>
+    <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">lastName</label>
     <div class="col-sm-10">
-      <input type="text" id="surnameInput" formControlName="surname" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('surname') }" aria-describedby="surnameLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('surname')">
+      <div formGroupName="name">
+        <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('lastName') }" aria-describedby="lastNameLabel">
+      </div>
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('lastName')">
         {{failure.message}}
       </div>
     </div>
@@ -55,8 +59,8 @@
   <div class="row mb-2">
     <label id="activeLabel" class="col-sm-2 col-form-label">Active</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.active"></icon-success>
-      <icon-failure *ngIf="!data.active"></icon-failure>
+      <icon-success *ngIf="member.active"></icon-success>
+      <icon-failure *ngIf="!member.active"></icon-failure>
     </div>
   </div>
   <!-- Save button -->

@@ -31,7 +31,7 @@ export class MemberDetailsComponent implements OnInit {
 
   public error = false;
 
-  public data = new Member();
+  public member = new Member();
 
   public failures = new FieldFailures();
 
@@ -55,9 +55,10 @@ export class MemberDetailsComponent implements OnInit {
 
   public onSave(toSave: Member): void {
     this.saving = true;
+    toSave.number = this.member.number;
     this.service.update(toSave.number, toSave).subscribe({
       next: d => {
-        this.data = d;
+        this.member = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -79,7 +80,7 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.number).subscribe(r => {
+    this.service.delete(this.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
@@ -103,7 +104,7 @@ export class MemberDetailsComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.data = d;
+            this.member = d;
             this.reading = false;
           },
           error: error => {
