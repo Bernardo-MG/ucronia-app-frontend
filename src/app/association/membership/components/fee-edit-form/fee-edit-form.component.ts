@@ -9,7 +9,12 @@ import { Fee } from '../../models/fee';
 })
 export class FeeEditFormComponent extends FormComponent<Fee> {
 
-  @Input() public info = new Fee();
+  public info = new Fee();
+
+  @Input() public override set data(value: Fee) {
+    super.data = value;
+    this.info = value;
+  }
 
   constructor(
     fb: FormBuilder
