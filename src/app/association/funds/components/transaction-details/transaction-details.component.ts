@@ -31,7 +31,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   public error = false;
 
-  public data = new Transaction();
+  public transaction = new Transaction();
 
   public failures = new FieldFailures();
 
@@ -55,9 +55,10 @@ export class TransactionDetailsComponent implements OnInit {
 
   public onSave(toSave: Transaction): void {
     this.saving = true;
+    toSave.index = this.transaction.index;
     this.service.update(toSave.index, toSave).subscribe({
       next: d => {
-        this.data = d;
+        this.transaction = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -79,7 +80,7 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.index).subscribe(r => {
+    this.service.delete(this.transaction.index).subscribe(r => {
       this.router.navigate([`/funds`]);
     });
   }
@@ -103,7 +104,7 @@ export class TransactionDetailsComponent implements OnInit {
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.data = d;
+            this.transaction = d;
             this.reading = false;
           },
           error: error => {
