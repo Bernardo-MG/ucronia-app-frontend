@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Fee } from '../../../membership/models/fee';
+import { Fee } from '../../models/fee';
 
 @Component({
   selector: 'assoc-fee-info',

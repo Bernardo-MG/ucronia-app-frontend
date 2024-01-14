@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../../membership/services/fee.service';
+import { FeeService } from '../../services/fee.service';
 import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './fee-pay.component';

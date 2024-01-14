@@ -8,7 +8,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 import { Fee } from '../models/fee';
 import { FeePayment } from '../models/fee-payment';
-import { Member } from '../models/member';
+import { Member } from '../../members/models/member';
 
 @Injectable()
 export class FeeService {

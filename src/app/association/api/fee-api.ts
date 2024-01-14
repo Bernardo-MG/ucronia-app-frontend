@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
-import { FeeCalendarRange } from "@app/association/membership/models/fee-calendar-range";
-import { FeePayment } from "@app/association/membership/models/fee-payment";
+import { FeeCalendarRange } from "@app/association/fees/models/fee-calendar-range";
+import { FeePayment } from "@app/association/fees/models/fee-payment";
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedQuery } from "@app/core/api/models/paginated-query";
 import { AngularRequest } from "@app/core/api/request/angular-request";
 import { Request } from "@app/core/api/request/request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { Fee } from "../membership/models/fee";
-import { UserFeeCalendar } from "../membership/models/user-fee-calendar";
+import { Fee } from "../fees/models/fee";
+import { UserFeeCalendar } from "../fees/models/user-fee-calendar";
 
 export class FeeApi {
 

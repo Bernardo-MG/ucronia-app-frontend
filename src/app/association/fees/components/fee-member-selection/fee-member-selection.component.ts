@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '../../../membership/models/member';
+import { Member } from '../../../members/models/member';
 
 @Component({
   selector: 'assoc-member-selection',

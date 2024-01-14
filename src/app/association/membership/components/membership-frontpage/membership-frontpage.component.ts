@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Active } from '../../models/active';
+import { Active } from '../../../members/models/active';
 
 @Component({
   selector: 'assoc-membership-frontpage',

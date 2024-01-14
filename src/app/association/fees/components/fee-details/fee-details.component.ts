@@ -4,8 +4,8 @@ import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { throwError } from 'rxjs';
-import { Fee } from '../../../membership/models/fee';
-import { FeeService } from '../../../membership/services/fee.service';
+import { Fee } from '../../models/fee';
+import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-details',

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeeApi } from '@app/association/api/fee-api';
-import { Active } from '@app/association/membership/models/active';
-import { FeeCalendarRange } from '@app/association/membership/models/fee-calendar-range';
+import { Active } from '@app/association/members/models/active';
+import { FeeCalendarRange } from '@app/association/fees/models/fee-calendar-range';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';

@@ -4,10 +4,10 @@ import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { throwError } from 'rxjs';
-import { FeePayment } from '../../../membership/models/fee-payment';
-import { Member } from '../../../membership/models/member';
-import { FeeService } from '../../../membership/services/fee.service';
-import { FeePaymentMember } from '../../../membership/models/fee-payment-member';
+import { FeePayment } from '../../models/fee-payment';
+import { Member } from '../../../members/models/member';
+import { FeeService } from '../../services/fee.service';
+import { FeePaymentMember } from '../../models/fee-payment-member';
 
 @Component({
   selector: 'assoc-fee-create',

@@ -6,7 +6,7 @@ import { AngularRequest } from "@app/core/api/request/angular-request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { MonthlyBalance } from "../funds/models/monthly-balance";
-import { Member } from "../membership/models/member";
+import { Member } from "../members/models/member";
 
 export class MemberApi extends CrudApi<Member> {
 
