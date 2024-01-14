@@ -92,7 +92,7 @@ export class FeePayComponent implements OnInit {
   }
 
   public getName() {
-    return this.member.fullName;
+    return this.member.name.fullName;
   }
 
 }

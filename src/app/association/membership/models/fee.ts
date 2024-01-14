@@ -1,8 +1,9 @@
+import { FeeMember } from "./fee-member";
+import { FeeTransaction } from "./fee-transaction";
+
 export class Fee {
-  memberNumber = -1;
   date = '';
-  fullName = '';
   paid = false;
-  paymentDate = '';
-  transactionIndex = -1;
+  transaction = new FeeTransaction();
+  member = new FeeMember();
 }

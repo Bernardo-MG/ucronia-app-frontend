@@ -22,7 +22,7 @@ export class BalanceService {
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MonthlyBalance[]> {
-    const defaultSortDate = new Sort<MonthlyBalance>('month');
+    const defaultSortDate = new Sort('month');
     defaultSortDate.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<MonthlyBalance>();

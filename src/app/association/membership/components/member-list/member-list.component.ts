@@ -27,7 +27,7 @@ export class MemberListComponent implements OnChanges {
 
   public totalMembers = 0;
 
-  private sort: Sort<Member>[] = [];
+  private sort: Sort[] = [];
 
   constructor(
     private service: MemberService
@@ -44,7 +44,7 @@ export class MemberListComponent implements OnChanges {
     this.load({ page, sort: this.sort });
   }
 
-  public onChangeDirection(sort: Sort<Member>) {
+  public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
     if (index < 0) {
       // New property to sort

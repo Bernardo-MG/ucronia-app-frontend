@@ -39,7 +39,7 @@ export class FeeService {
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery<Member>();
-    query.sort = [new Sort<Member>('fullName'), new Sort<Member>('number')];
+    query.sort = [new Sort('fullName'), new Sort('number')];
     query.page = page;
 
     return this.memberApi.readAll(query);

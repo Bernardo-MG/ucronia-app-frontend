@@ -17,7 +17,7 @@ export class MemberBalanceService {
   ) { }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
-    const defaultSortDate = new Sort<MemberBalance>('month');
+    const defaultSortDate = new Sort('month');
     defaultSortDate.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<MemberBalance>();

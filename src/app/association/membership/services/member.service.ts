@@ -8,7 +8,6 @@ import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
 import { Member } from '../models/member';
-import { Direction } from '@app/core/api/models/direction';
 
 @Injectable()
 export class MemberService {
@@ -21,7 +20,7 @@ export class MemberService {
 
   public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery<Member>();
-    query.defaultSort = [new Sort<Member>('fullName'), new Sort<Member>('number')];
+    query.defaultSort = [new Sort('fullName'), new Sort('number')];
     query.pagination = pagination;
     if (active === Active.Active) {
       query.addParameter('status', 'ACTIVE');

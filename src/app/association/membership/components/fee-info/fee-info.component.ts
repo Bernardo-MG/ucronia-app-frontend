@@ -12,11 +12,11 @@ export class FeeInfoComponent {
   @Output() public goToTransaction = new EventEmitter<number>();
 
   public selectTransaction() {
-    this.goToTransaction.emit(this.data.transactionIndex);
+    this.goToTransaction.emit(this.data.transaction.index);
   }
 
   public isTransactionDisabled(): boolean {
-    return this.data.paymentDate === null;
+    return this.data.transaction.date === null;
   }
 
 }

@@ -20,7 +20,7 @@ export class AccessUserService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<User[]>> {
-    const defaultSort = new Sort<User>('name');
+    const defaultSort = new Sort('name');
     defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<User>();
@@ -31,7 +31,7 @@ export class AccessUserService {
   }
 
   public getRoles(username: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: Sort<Role> = new Sort<Role>('name');
+    const defaultSort: Sort = new Sort('name');
 
     const query = new PaginatedQuery<Role>();
     query.defaultSort = [defaultSort];
@@ -41,7 +41,7 @@ export class AccessUserService {
   }
 
   public getAvailableRoles(username: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: Sort<Role> = new Sort<Role>('name');
+    const defaultSort: Sort = new Sort('name');
 
     const query = new PaginatedQuery<Role>();
     query.defaultSort = [defaultSort];

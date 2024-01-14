@@ -61,7 +61,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public onSave(toSave: Fee): void {
     this.saving = true;
-    this.service.update(toSave.date, toSave.memberNumber, toSave).subscribe({
+    this.service.update(toSave.date, toSave.member.number, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -85,7 +85,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.date, this.data.memberNumber).subscribe(r => {
+    this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }

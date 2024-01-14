@@ -35,7 +35,7 @@ export class FeeMemberSelectionComponent {
   }
 
   public nameRenderer(member: Member) {
-    return member.fullName;
+    return member.name.fullName;
   }
 
 }

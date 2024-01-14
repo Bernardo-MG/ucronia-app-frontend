@@ -19,6 +19,6 @@ export interface Request {
 
   parameter(name: string, value: any): Request;
 
-  sort<T>(sort: Sort<T>[]): Request;
+  sort(sort: Sort[]): Request;
 
 }

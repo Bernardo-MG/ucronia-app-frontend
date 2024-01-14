@@ -4,7 +4,7 @@ import { RouteParametersObserver } from "@app/shared/utils/route/observer/route-
 import { Sort } from "../../../../../core/api/models/sort";
 import { SortParametersParser } from "./parser/sort-parameters-parser";
 
-export class SortRouteObserver implements ParamsObserver<Sort<any>[]> {
+export class SortRouteObserver implements ParamsObserver<Sort[]> {
 
   private wrappedObserver;
 

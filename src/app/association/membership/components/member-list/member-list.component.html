@@ -19,7 +19,7 @@
         role="button" routerLink="/membership/member/{{member.number}}">
         <!-- Cells -->
         <td>
-          {{member.fullName}}
+          {{member.name.fullName}}
         </td>
         <td>
           <ng-container [ngSwitch]="member.active">

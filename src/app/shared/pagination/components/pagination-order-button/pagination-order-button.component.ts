@@ -18,7 +18,7 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<Sort<any>>();
+  @Output() public directionChange = new EventEmitter<Sort>();
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
@@ -47,7 +47,7 @@ export class PaginationOrderButtonComponent implements OnChanges {
     const previousDirection = this.direction;
     this.updateDirection();
 
-    const sort = new Sort<any>(this.property);
+    const sort = new Sort(this.property);
     sort.direction = previousDirection;
     this.directionChange.emit(sort);
   }

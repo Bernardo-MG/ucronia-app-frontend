@@ -84,7 +84,7 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort<T>(sort: Sort<T>[]): AngularRequest {
+  public sort(sort: Sort[]): AngularRequest {
     for (let i = 0; i < sort.length; i += 1) {
       const fieldSort = sort[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
