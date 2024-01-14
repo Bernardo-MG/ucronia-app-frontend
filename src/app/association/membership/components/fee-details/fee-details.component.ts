@@ -61,7 +61,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public onSave(toSave: Fee): void {
     this.saving = true;
-    this.service.update(toSave.date, toSave.member.number, toSave).subscribe({
+    this.service.update(this.data.date, this.data.member.number, toSave).subscribe({
       next: d => {
         this.data = d;
 

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faAdd, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -9,13 +9,9 @@ import { Member } from '../../models/member';
   selector: 'assoc-fee-pay-form',
   templateUrl: './fee-pay-form.component.html'
 })
-export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
+export class FeePayFormComponent extends FormComponent<FeePayment> {
 
-  @Input() public memberNumber = -1;
-
-  @Input() public fullName = '';
-
-  public member = new Member();
+  @Input() public member = new Member();
 
   public searchIcon = faMagnifyingGlass;
 
@@ -29,16 +25,11 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
     super();
 
     this.form = fb.group({
-      memberNumber: [null, [Validators.required, Validators.min(0)]],
-      paymentDate: [null, Validators.required],
+      transaction: fb.group({
+        date: [null, Validators.required],
+      }),
       feeDates: fb.array([], Validators.required)
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['memberNumber']) {
-      this.data = { ...this.data, memberNumber: this.memberNumber };
-    }
   }
 
   public addDate() {

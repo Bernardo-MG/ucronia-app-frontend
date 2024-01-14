@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 import { FeePayment } from '../../models/fee-payment';
 import { Member } from '../../models/member';
 import { FeeService } from '../../services/fee.service';
+import { FeePaymentMember } from '../../models/fee-payment-member';
 
 @Component({
   selector: 'assoc-fee-create',
@@ -49,6 +50,8 @@ export class FeePayComponent implements OnInit {
 
   public onSave(data: FeePayment): void {
     this.saving = true;
+    data.member = new FeePaymentMember();
+    data.member.number = this.member.number;
     this.service.pay(data).subscribe({
       next: response => {
         this.router.navigate(['/membership']);
@@ -89,10 +92,6 @@ export class FeePayComponent implements OnInit {
   public onSelectMember(member: Member) {
     this.member = member;
     this.selectedMember = true;
-  }
-
-  public getName() {
-    return this.member.name.fullName;
   }
 
 }
