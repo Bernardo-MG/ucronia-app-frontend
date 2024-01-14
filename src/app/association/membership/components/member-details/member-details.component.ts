@@ -55,8 +55,7 @@ export class MemberDetailsComponent implements OnInit {
 
   public onSave(toSave: Member): void {
     this.saving = true;
-    toSave.number = this.member.number;
-    this.service.update(toSave.number, toSave).subscribe({
+    this.service.update(this.member.number, toSave).subscribe({
       next: d => {
         this.member = d;
 

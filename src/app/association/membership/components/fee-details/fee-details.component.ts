@@ -31,7 +31,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public error = false;
 
-  public data = new Fee();
+  public fee = new Fee();
 
   public failures = new FieldFailures();
 
@@ -61,9 +61,9 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
 
   public onSave(toSave: Fee): void {
     this.saving = true;
-    this.service.update(this.data.date, this.data.member.number, toSave).subscribe({
+    this.service.update(this.fee.date, this.fee.member.number, toSave).subscribe({
       next: d => {
-        this.data = d;
+        this.fee = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -85,7 +85,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
+    this.service.delete(this.fee.date, this.fee.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
@@ -109,7 +109,7 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
       this.service.getOne(date, identifier)
         .subscribe({
           next: d => {
-            this.data = d;
+            this.fee = d;
             this.reading = false;
           },
           error: error => {

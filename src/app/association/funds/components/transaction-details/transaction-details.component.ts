@@ -55,8 +55,7 @@ export class TransactionDetailsComponent implements OnInit {
 
   public onSave(toSave: Transaction): void {
     this.saving = true;
-    toSave.index = this.transaction.index;
-    this.service.update(toSave.index, toSave).subscribe({
+    this.service.update(this.transaction.index, toSave).subscribe({
       next: d => {
         this.transaction = d;
 
