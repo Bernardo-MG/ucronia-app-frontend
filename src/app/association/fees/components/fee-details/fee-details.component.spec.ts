@@ -1,16 +1,20 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../services/fee.service';
+import { FeeInfoComponent } from '../../components/fee-info/fee-info.component';
+import { FeeService } from '../../../membership/services/fee.service';
+import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
 import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
-import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
-import { FeePayComponent } from './fee-pay.component';
+import { FeeDetailsComponent } from './fee-details.component';
 
-describe('FeePayComponent', () => {
-  let component: FeePayComponent;
-  let fixture: ComponentFixture<FeePayComponent>;
+describe('FeeDetailsComponent', () => {
+  let component: FeeDetailsComponent;
+  let fixture: ComponentFixture<FeeDetailsComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -20,14 +24,19 @@ describe('FeePayComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
+        RouterTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        IconsModule,
         LayoutModule,
-        PaginationModule
+        HttpClientTestingModule,
+        FontAwesomeModule
       ],
       declarations: [
-        FeePayComponent,
+        FeeDetailsComponent,
         FeeMemberSelectionComponent,
-        FeePayFormComponent
+        FeeEditFormComponent,
+        FeeInfoComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }
@@ -35,7 +44,7 @@ describe('FeePayComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeePayComponent);
+    fixture = TestBed.createComponent(FeeDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

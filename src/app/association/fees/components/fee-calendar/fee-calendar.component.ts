@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Active } from '@app/association/membership/models/active';
 import { FeeCalendarRange } from '@app/association/membership/models/fee-calendar-range';
-import { FeeMonth } from '../../models/fee-month';
-import { UserFeeCalendar } from '../../models/user-fee-calendar';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeMonth } from '../../../membership/models/fee-month';
+import { UserFeeCalendar } from '../../../membership/models/user-fee-calendar';
+import { FeeCalendarService } from '../../../membership/services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar',

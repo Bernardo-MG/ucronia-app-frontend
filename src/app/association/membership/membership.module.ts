@@ -6,14 +6,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
-import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
-import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
-import { FeeFrontpageComponent } from './components/fee-frontpage/fee-frontpage.component';
-import { FeeInfoComponent } from './components/fee-info/fee-info.component';
-import { FeeMemberSelectionComponent } from './components/fee-member-selection/fee-member-selection.component';
-import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
-import { FeePayComponent } from './components/fee-pay/fee-pay.component';
+import { FeesModule } from '../fees/fees.module';
 import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
 import { MemberCreateFormComponent } from './components/member-create-form/member-create-form.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
@@ -23,8 +16,6 @@ import { MemberInfoComponent } from './components/member-info/member-info.compon
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 import { MembershipRoutingModule } from './membership-routing.module';
-import { FeeCalendarService } from './services/fee-calendar.service';
-import { FeeService } from './services/fee.service';
 import { MemberBalanceService } from './services/member-balance.service';
 import { MemberService } from './services/member.service';
 
@@ -39,14 +30,6 @@ import { MemberService } from './services/member.service';
     MemberEditionFormComponent,
     MemberInfoComponent,
     MemberListComponent,
-    FeeCalendarComponent,
-    FeeFrontpageComponent,
-    FeeDetailsComponent,
-    FeeMemberSelectionComponent,
-    FeeEditFormComponent,
-    FeePayFormComponent,
-    FeeInfoComponent,
-    FeePayComponent,
     MemberBalanceChartComponent
   ],
   imports: [
@@ -58,12 +41,11 @@ import { MemberService } from './services/member.service';
     PaginationModule,
     LayoutModule,
     IconsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    FeesModule
   ],
   providers: [
     MemberService,
-    FeeCalendarService,
-    FeeService,
     MemberBalanceService
   ]
 })
