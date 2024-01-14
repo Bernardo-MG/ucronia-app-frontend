@@ -23,4 +23,10 @@ export class MemberEditionFormComponent extends FormComponent<Member> {
     });
   }
 
+  protected override loadData(data: Member) {
+    super.loadData(data);
+    this.form.controls['name'].setValue(data.name.firstName);
+    this.form.controls['surname'].setValue(data.name.lastName);
+  }
+
 }

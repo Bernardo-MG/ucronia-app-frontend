@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name" id="nameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data.name.firstName" id="nameInput" [readonly]="true" class="form-control"
         aria-describedby="nameLabel">
     </div>
   </div>
@@ -19,7 +19,7 @@
   <div class="row mb-2">
     <label for="surnameInput" id="surnameLabel" class="col-sm-2 col-form-label">Surname</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name.surname" id="surnameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data.name.lastName" id="surnameInput" [readonly]="true" class="form-control"
         aria-describedby="surnameLabel">
     </div>
   </div>
