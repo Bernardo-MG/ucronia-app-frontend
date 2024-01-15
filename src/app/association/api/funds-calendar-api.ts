@@ -6,7 +6,7 @@ import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { Transaction } from "../transactions/models/transaction";
 import { TransactionCalendarMonth } from "../transactions/models/transaction-calendar-month";
-import { TransactionCalendarRange } from "../transactions/models/transaction-calendar-range";
+import { TransactionCalendarMonthsRange } from "../transactions/models/transaction-calendar-months-range";
 
 export class FundsCalendarApi extends CrudApi<Transaction> {
 
@@ -24,7 +24,7 @@ export class FundsCalendarApi extends CrudApi<Transaction> {
     return request.read();
   }
 
-  public calendarRange(): Observable<ApiResponse<TransactionCalendarRange>> {
+  public calendarRange(): Observable<ApiResponse<TransactionCalendarMonthsRange>> {
     const request = this.requestProvider();
 
     request.appendRoute("/range");
