@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyBalance } from '@app/association/funds/models/monthly-balance';
+import { MonthlyBalance } from '@app/association/transactions/models/monthly-balance';
 import Chart from 'chart.js/auto';
 import { BalanceService } from '../../service/balance.service';
 

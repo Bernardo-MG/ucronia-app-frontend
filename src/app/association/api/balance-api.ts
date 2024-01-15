@@ -5,8 +5,8 @@ import { ReadApi } from "@app/core/api/read-api";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { AngularRequest } from "../../core/api/request/angular-request";
-import { MonthlyBalance } from "../funds/models/monthly-balance";
-import { CurrentBalance } from "../funds/models/current-balance";
+import { MonthlyBalance } from "../transactions/models/monthly-balance";
+import { CurrentBalance } from "../transactions/models/current-balance";
 
 export class BalanceApi extends ReadApi<MonthlyBalance> {
 

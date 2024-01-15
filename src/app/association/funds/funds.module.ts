@@ -8,31 +8,14 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
-import { FundsCalendarComponent } from './components/funds-calendar/funds-calendar.component';
-import { FundsCurrentBalanceComponent } from './components/funds-current-balance/funds-current-balance.component';
 import { FundsFrontpageComponent } from './components/funds-frontpage/funds-frontpage.component';
-import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
-import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
-import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
-import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { FundsRoutingModule } from './funds-routing.module';
-import { BalanceService } from './service/balance.service';
-import { FundsCalendarService } from './service/funds-calendar.service';
-import { TransactionService } from './service/transaction.service';
 
 
 
 @NgModule({
   declarations: [
-    TransactionCreateComponent,
-    TransactionDetailsComponent,
-    FundsCalendarComponent,
-    TransactionFormComponent,
-    TransactionInfoComponent,
-    FundsFrontpageComponent,
-    FundsBalanceChartComponent,
-    FundsCurrentBalanceComponent
+    FundsFrontpageComponent
   ],
   imports: [
     CommonModule,
@@ -46,11 +29,6 @@ import { TransactionService } from './service/transaction.service';
     FontAwesomeModule,
     MenuModule,
     IconsModule
-  ],
-  providers: [
-    BalanceService,
-    TransactionService,
-    FundsCalendarService
   ]
 })
 export class FundsModule { }

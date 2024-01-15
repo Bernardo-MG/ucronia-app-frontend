@@ -5,7 +5,7 @@ import { PaginatedQuery } from "@app/core/api/models/paginated-query";
 import { AngularRequest } from "@app/core/api/request/angular-request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { MonthlyBalance } from "../funds/models/monthly-balance";
+import { MonthlyBalance } from "../transactions/models/monthly-balance";
 import { Member } from "../members/models/member";
 
 export class MemberApi extends CrudApi<Member> {
