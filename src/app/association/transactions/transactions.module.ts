@@ -15,8 +15,8 @@ import { TransactionCreateComponent } from './components/transaction-create/tran
 import { TransactionDetailsComponent } from './components/transaction-details/transaction-details.component';
 import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
-import { BalanceService } from './service/balance.service';
-import { FundsCalendarService } from './service/funds-calendar.service';
+import { TransactionBalanceService } from './service/transaction-balance.service';
+import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
 
 
@@ -53,9 +53,9 @@ import { TransactionService } from './service/transaction.service';
     FundsCurrentBalanceComponent
   ],
   providers: [
-    BalanceService,
+    TransactionBalanceService,
     TransactionService,
-    FundsCalendarService
+    TransactionCalendarService
   ]
 })
 export class TransactionsModule { }

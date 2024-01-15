@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CurrentBalance } from '../../models/current-balance';
-import { BalanceService } from '../../service/balance.service';
+import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
   selector: 'assoc-funds-current-balance',
@@ -13,7 +13,7 @@ export class FundsCurrentBalanceComponent implements OnInit {
   public balance = new CurrentBalance();
 
   constructor(
-    private balanceService: BalanceService
+    private balanceService: TransactionBalanceService
   ) { }
 
   ngOnInit(): void {

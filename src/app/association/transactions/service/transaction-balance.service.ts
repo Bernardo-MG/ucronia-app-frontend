@@ -9,7 +9,7 @@ import { CurrentBalance } from '../models/current-balance';
 import { MonthlyBalance } from '../models/monthly-balance';
 
 @Injectable()
-export class BalanceService {
+export class TransactionBalanceService {
 
   private balanceApi = new BalanceApi(this.http);
 

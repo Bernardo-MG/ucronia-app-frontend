@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BalanceService } from '../../service/balance.service';
+import { TransactionBalanceService } from '../../service/transaction-balance.service';
 import { FundsBalanceChartComponent } from './funds-balance-chart.component';
 
 describe('FundsBalanceChartComponent', () => {
@@ -16,7 +16,7 @@ describe('FundsBalanceChartComponent', () => {
         FundsBalanceChartComponent
       ],
       providers: [
-        BalanceService
+        TransactionBalanceService
       ]
     });
     fixture = TestBed.createComponent(FundsBalanceChartComponent);

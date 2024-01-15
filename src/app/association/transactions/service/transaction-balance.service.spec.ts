@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { BalanceService } from './balance.service';
+import { TransactionBalanceService } from './transaction-balance.service';
 
-describe('BalanceService', () => {
-  let service: BalanceService;
+describe('TransactionBalanceService', () => {
+  let service: TransactionBalanceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,10 +12,10 @@ describe('BalanceService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        BalanceService
+        TransactionBalanceService
       ]
     });
-    service = TestBed.inject(BalanceService);
+    service = TestBed.inject(TransactionBalanceService);
   });
 
   it('should be created', () => {

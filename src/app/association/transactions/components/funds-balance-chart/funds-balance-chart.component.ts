@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MonthlyBalance } from '@app/association/transactions/models/monthly-balance';
 import Chart from 'chart.js/auto';
-import { BalanceService } from '../../service/balance.service';
+import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
   selector: 'assoc-funds-balance-chart',
@@ -24,7 +24,7 @@ export class FundsBalanceChartComponent implements OnInit {
   public endMonth: string | undefined;
 
   constructor(
-    private balanceService: BalanceService
+    private balanceService: TransactionBalanceService
   ) { }
 
   ngOnInit(): void {

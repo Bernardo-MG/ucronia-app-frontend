@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
-import { FundsCalendarService } from '../../service/funds-calendar.service';
+import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 import { FundsCalendarComponent } from './funds-calendar.component';
 
 describe('FundsCalendarComponent', () => {
@@ -18,7 +18,7 @@ describe('FundsCalendarComponent', () => {
         FundsCalendarComponent
       ],
       providers: [
-        FundsCalendarService
+        TransactionCalendarService
       ]
     })
       .compileComponents();
