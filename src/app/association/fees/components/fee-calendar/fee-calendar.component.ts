@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Active } from '@app/association/members/models/active';
-import { FeeCalendarRange } from '@app/association/fees/models/fee-calendar-range';
+import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
 import { FeeCalendarMonth } from '../../models/fee-month';
 import { FeeCalendar } from '../../models/fee-calendar';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
@@ -22,7 +22,7 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
 
   public rows: FeeCalendar[] = [];
 
-  public range = new FeeCalendarRange();
+  public range = new FeeCalendarYearsRange();
 
   private index = 0;
 

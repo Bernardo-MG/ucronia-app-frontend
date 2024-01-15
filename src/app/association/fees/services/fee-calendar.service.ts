@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeeApi } from '@app/association/api/fee-api';
 import { Active } from '@app/association/members/models/active';
-import { FeeCalendarRange } from '@app/association/fees/models/fee-calendar-range';
+import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
@@ -30,7 +30,7 @@ export class FeeCalendarService {
       .pipe(map(r => r.content));
   }
 
-  public getRange(): Observable<FeeCalendarRange> {
+  public getRange(): Observable<FeeCalendarYearsRange> {
     return this.feeApi
       .calendarRange()
       .pipe(map(r => r.content));

@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { FeeCalendarRange } from "@app/association/fees/models/fee-calendar-range";
+import { FeeCalendarYearsRange } from "@app/association/fees/models/fee-calendar-years-range";
 import { FeePayment } from "@app/association/fees/models/fee-payment";
 import { ApiResponse } from "@app/core/api/models/api-response";
 import { PaginatedQuery } from "@app/core/api/models/paginated-query";
@@ -53,7 +53,7 @@ export class FeeApi {
     return request.read();
   }
 
-  public calendarRange(): Observable<ApiResponse<FeeCalendarRange>> {
+  public calendarRange(): Observable<ApiResponse<FeeCalendarYearsRange>> {
     const request = this.getRequest();
 
     request.appendRoute("/calendar/range");
