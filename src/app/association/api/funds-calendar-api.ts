@@ -5,6 +5,7 @@ import { AngularRequest } from "@app/core/api/request/angular-request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { Transaction } from "../transactions/models/transaction";
+import { TransactionCalendarMonth } from "../transactions/models/transaction-calendar-month";
 import { TransactionCalendarRange } from "../transactions/models/transaction-calendar-range";
 
 export class FundsCalendarApi extends CrudApi<Transaction> {
@@ -15,7 +16,7 @@ export class FundsCalendarApi extends CrudApi<Transaction> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/funds/calendar'))
   }
 
-  public calendarMonth(year: number, month: number): Observable<ApiResponse<Transaction[]>> {
+  public calendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
     const request = this.requestProvider();
 
     request.appendRoute(`/${year}/${month}`);
