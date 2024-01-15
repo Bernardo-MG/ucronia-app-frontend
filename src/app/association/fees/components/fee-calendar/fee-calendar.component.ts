@@ -1,8 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Active } from '@app/association/members/models/active';
 import { FeeCalendarRange } from '@app/association/fees/models/fee-calendar-range';
-import { FeeMonth } from '../../models/fee-month';
-import { UserFeeCalendar } from '../../models/user-fee-calendar';
+import { FeeCalendarMonth } from '../../models/fee-month';
+import { FeeCalendar } from '../../models/fee-calendar';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
    */
   public readingCalendar = false;
 
-  public rows: UserFeeCalendar[] = [];
+  public rows: FeeCalendar[] = [];
 
   public range = new FeeCalendarRange();
 
@@ -81,11 +81,11 @@ export class FeeCalendarComponent implements OnInit, OnChanges {
     return (this.index > 0);
   }
 
-  public hasMonth(months: FeeMonth[], month: number): boolean {
+  public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
     return months.find(m => m.month === month) !== undefined;
   }
 
-  public getMonth(months: FeeMonth[], month: number): FeeMonth | undefined {
+  public getMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth | undefined {
     return months.find(m => m.month === month);
   }
 

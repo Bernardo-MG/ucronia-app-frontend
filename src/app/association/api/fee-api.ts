@@ -8,7 +8,7 @@ import { Request } from "@app/core/api/request/request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { Fee } from "../fees/models/fee";
-import { UserFeeCalendar } from "../fees/models/user-fee-calendar";
+import { FeeCalendar } from "../fees/models/fee-calendar";
 
 export class FeeApi {
 
@@ -45,7 +45,7 @@ export class FeeApi {
     return request.read();
   }
 
-  public calendarYear(year: number, query: PaginatedQuery<UserFeeCalendar>): Observable<ApiResponse<UserFeeCalendar[]>> {
+  public calendarYear(year: number, query: PaginatedQuery<FeeCalendar>): Observable<ApiResponse<FeeCalendar[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute(`/calendar/${year}`);

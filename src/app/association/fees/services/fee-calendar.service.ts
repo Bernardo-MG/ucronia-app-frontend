@@ -6,7 +6,7 @@ import { FeeCalendarRange } from '@app/association/fees/models/fee-calendar-rang
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { map, Observable } from 'rxjs';
-import { UserFeeCalendar } from '../models/user-fee-calendar';
+import { FeeCalendar } from '../models/fee-calendar';
 
 @Injectable()
 export class FeeCalendarService {
@@ -17,8 +17,8 @@ export class FeeCalendarService {
     private http: HttpClient
   ) { }
 
-  public getCalendar(year: number, active: Active): Observable<UserFeeCalendar[]> {
-    const query = new PaginatedQuery<UserFeeCalendar>();
+  public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
+    const query = new PaginatedQuery<FeeCalendar>();
     query.sort = [new Sort("fullName")];
     if (active === Active.Active) {
       query.addParameter("status", 'ACTIVE');
