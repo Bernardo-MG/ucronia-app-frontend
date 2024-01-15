@@ -8,6 +8,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TransactionsModule } from '../transactions/transactions.module';
 import { FundsFrontpageComponent } from './components/funds-frontpage/funds-frontpage.component';
 import { FundsRoutingModule } from './funds-routing.module';
 
@@ -28,7 +29,8 @@ import { FundsRoutingModule } from './funds-routing.module';
     LayoutModule,
     FontAwesomeModule,
     MenuModule,
-    IconsModule
+    IconsModule,
+    TransactionsModule
   ]
 })
 export class FundsModule { }

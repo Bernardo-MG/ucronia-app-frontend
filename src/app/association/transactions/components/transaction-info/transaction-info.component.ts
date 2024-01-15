@@ -7,6 +7,6 @@ import { Transaction } from '../../models/transaction';
 })
 export class TransactionInfoComponent {
 
-  @Input() transaction = new Transaction();
+  @Input() public transaction = new Transaction();
 
 }

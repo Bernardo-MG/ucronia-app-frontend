@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
@@ -13,7 +14,6 @@ import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeMemberSelectionComponent } from './components/fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
 import { FeePayComponent } from './components/fee-pay/fee-pay.component';
-import { FeesRoutingModule } from './fees-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
 import { FeeService } from './services/fee.service';
 
@@ -31,7 +31,6 @@ import { FeeService } from './services/fee.service';
   ],
   imports: [
     CommonModule,
-    FeesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
@@ -39,6 +38,7 @@ import { FeeService } from './services/fee.service';
     LayoutModule,
     IconsModule,
     FontAwesomeModule,
+    RouterModule
   ],
   exports: [
     FeeCalendarComponent,

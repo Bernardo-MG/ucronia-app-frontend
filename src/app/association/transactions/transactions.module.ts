@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CoreModule } from '@app/core/core.module';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { MenuModule } from '@app/shared/menu/menu.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FundsBalanceChartComponent } from './components/funds-balance-chart/funds-balance-chart.component';
 import { FundsCalendarComponent } from './components/funds-calendar/funds-calendar.component';
 import { FundsCurrentBalanceComponent } from './components/funds-current-balance/funds-current-balance.component';
@@ -24,7 +32,25 @@ import { TransactionService } from './service/transaction.service';
     FundsCurrentBalanceComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreModule,
+    ScheduleModule,
+    PaginationModule,
+    LayoutModule,
+    FontAwesomeModule,
+    MenuModule,
+    IconsModule,
+  ],
+  exports: [
+    TransactionCreateComponent,
+    TransactionDetailsComponent,
+    FundsCalendarComponent,
+    TransactionFormComponent,
+    TransactionInfoComponent,
+    FundsBalanceChartComponent,
+    FundsCurrentBalanceComponent
   ],
   providers: [
     BalanceService,

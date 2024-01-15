@@ -1,10 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Sort } from '@app/core/api/models/sort';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
-import { Direction } from '@app/core/api/models/direction';
-import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'assoc-member-list',
