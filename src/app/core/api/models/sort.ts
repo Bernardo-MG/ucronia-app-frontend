@@ -1,11 +1,12 @@
 import { Direction } from "./direction";
 
-export class Sort<T> {
+export class Sort {
 
-  constructor(prop: keyof T) {
+  constructor(prop: string) {
     this.property = prop;
   }
 
-  property: keyof T;
+  property: string;
   direction = Direction.Ascending;
+
 }

@@ -44,7 +44,7 @@ export class PaginationRouteOrderButtonComponent implements OnInit {
     });
   }
 
-  public onChangeDirection(sort: Sort<any>) {
+  public onChangeDirection(sort: Sort) {
     if (sort.direction === Direction.Unsorted) {
       this.routeActuator.removeOrder(this.property);
     } else {

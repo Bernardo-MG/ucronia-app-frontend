@@ -5,8 +5,8 @@ import { PaginatedQuery } from "@app/core/api/models/paginated-query";
 import { AngularRequest } from "@app/core/api/request/angular-request";
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
-import { MonthlyBalance } from "../funds/models/monthly-balance";
-import { Member } from "../membership/models/member";
+import { Member } from "../members/models/member";
+import { MemberBalance } from "../members/models/member-balance";
 
 export class MemberApi extends CrudApi<Member> {
 
@@ -16,7 +16,7 @@ export class MemberApi extends CrudApi<Member> {
     super(() => new AngularRequest(this.http, environment.apiUrl + '/member'))
   }
 
-  public readMonthly(query: PaginatedQuery<MonthlyBalance>): Observable<ApiResponse<MonthlyBalance[]>> {
+  public readMonthly(query: PaginatedQuery<MemberBalance>): Observable<ApiResponse<MemberBalance[]>> {
     const request = this.requestWithQuery(query);
 
     request.appendRoute('/monthly');

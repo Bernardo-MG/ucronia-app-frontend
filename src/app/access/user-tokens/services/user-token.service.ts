@@ -21,9 +21,9 @@ export class UserTokenService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<UserToken[]>> {
-    const sortDate = new Sort<UserToken>('creationDate');
+    const sortDate = new Sort('creationDate');
     sortDate.direction = Direction.Descending;
-    const sortUsername = new Sort<UserToken>('username');
+    const sortUsername = new Sort('username');
     sortUsername.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<UserToken>();

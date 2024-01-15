@@ -1,0 +1,13 @@
+<layout-article title="Edit transaction">
+  <div class="col-md-6 offset-md-3">
+    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
+      <!-- Form -->
+      <assoc-transaction-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="transaction" [failures]="failures"
+        (save)="onSave($event)">
+      </assoc-transaction-form>
+      <!-- Info -->
+      <assoc-transaction-info id="info" [transaction]="transaction"></assoc-transaction-info>
+    </layout-edition-wrapper>
+  </div>
+</layout-article>

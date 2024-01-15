@@ -22,7 +22,7 @@ export class AccessRoleSelectionListComponent  implements OnInit {
 
   public currentPage = 0;
 
-  private sort: Sort<Permission>[] = [];
+  private sort: Sort[] = [];
 
   constructor(
     private service: AccessRoleService
@@ -32,7 +32,7 @@ export class AccessRoleSelectionListComponent  implements OnInit {
     this.load(undefined);
   }
 
-  public onChangeDirection(sort: Sort<Permission>) {
+  public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
     if (index < 0) {
       // New property to sort

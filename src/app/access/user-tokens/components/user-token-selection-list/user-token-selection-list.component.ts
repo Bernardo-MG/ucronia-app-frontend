@@ -21,7 +21,7 @@ export class UserTokenSelectionListComponent implements OnInit {
 
   public currentPage = 0;
 
-  private sort: Sort<UserToken>[] = [];
+  private sort: Sort[] = [];
 
   constructor(
     private service: UserTokenService
@@ -31,7 +31,7 @@ export class UserTokenSelectionListComponent implements OnInit {
     this.load(undefined);
   }
 
-  public onChangeDirection(sort: Sort<UserToken>) {
+  public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
     if (index < 0) {
       // New property to sort

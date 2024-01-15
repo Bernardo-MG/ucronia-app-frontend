@@ -21,7 +21,7 @@ export class AccessUserSelectionListComponent implements OnInit {
 
   public currentPage = 0;
 
-  private sort: Sort<User>[] = [];
+  private sort: Sort[] = [];
 
   constructor(
     private service: AccessUserService
@@ -31,7 +31,7 @@ export class AccessUserSelectionListComponent implements OnInit {
     this.load(undefined);
   }
 
-  public onChangeDirection(sort: Sort<User>) {
+  public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
     if (index < 0) {
       // New property to sort
