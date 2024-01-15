@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MonthlyBalance } from '@app/association/transactions/models/monthly-balance';
+import { TransactionMonthlyBalance } from '@app/association/transactions/models/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
@@ -9,7 +9,7 @@ import { TransactionBalanceService } from '../../service/transaction-balance.ser
 })
 export class FundsBalanceChartComponent implements OnInit {
 
-  public balance: MonthlyBalance[] = [];
+  public balance: TransactionMonthlyBalance[] = [];
 
   public months: string[] = [];
 
@@ -31,7 +31,7 @@ export class FundsBalanceChartComponent implements OnInit {
     // Read balance range
     this.readingRange = true;
     this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => v.month);
+      this.months = b.map(v => v.date);
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
       this.readingRange = false;
@@ -67,7 +67,7 @@ export class FundsBalanceChartComponent implements OnInit {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.month)
+    const labels = this.balance.map(b => b.date)
     const totals = this.balance.map(b => b.total)
     const results = this.balance.map(b => b.results)
 

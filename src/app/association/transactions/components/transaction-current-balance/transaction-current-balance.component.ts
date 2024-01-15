@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrentBalance } from '../../models/current-balance';
+import { TransactionCurrentBalance } from '../../models/transaction-current-balance';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
@@ -10,7 +10,7 @@ export class FundsCurrentBalanceComponent implements OnInit {
 
   public readingBalance = false;
 
-  public balance = new CurrentBalance();
+  public balance = new TransactionCurrentBalance();
 
   constructor(
     private balanceService: TransactionBalanceService

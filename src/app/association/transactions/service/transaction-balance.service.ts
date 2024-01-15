@@ -5,8 +5,8 @@ import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
 import { Observable, map } from 'rxjs';
-import { CurrentBalance } from '../models/current-balance';
-import { MonthlyBalance } from '../models/monthly-balance';
+import { TransactionCurrentBalance } from '../models/transaction-current-balance';
+import { TransactionMonthlyBalance } from '../models/transaction-monthly-balance';
 
 @Injectable()
 export class TransactionBalanceService {
@@ -17,15 +17,15 @@ export class TransactionBalanceService {
     private http: HttpClient
   ) { }
 
-  public current(): Observable<CurrentBalance> {
+  public current(): Observable<TransactionCurrentBalance> {
     return this.balanceApi.current().pipe(map(r => r.content));
   }
 
-  public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MonthlyBalance[]> {
+  public monthly(startDate: string | undefined, endDate: string | undefined): Observable<TransactionMonthlyBalance[]> {
     const defaultSortDate = new Sort('month');
     defaultSortDate.direction = Direction.Ascending;
 
-    const query = new PaginatedQuery<MonthlyBalance>();
+    const query = new PaginatedQuery<TransactionMonthlyBalance>();
     query.defaultSort = [defaultSortDate];
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
