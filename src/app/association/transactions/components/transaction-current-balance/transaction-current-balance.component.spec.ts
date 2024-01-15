@@ -1,25 +1,27 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
-import { FundsBalanceChartComponent } from './funds-balance-chart.component';
+import { FundsCurrentBalanceComponent } from './transaction-current-balance.component';
 
-describe('FundsBalanceChartComponent', () => {
-  let component: FundsBalanceChartComponent;
-  let fixture: ComponentFixture<FundsBalanceChartComponent>;
+describe('FundsCurrentBalanceComponent', () => {
+  let component: FundsCurrentBalanceComponent;
+  let fixture: ComponentFixture<FundsCurrentBalanceComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        LayoutModule
       ],
       declarations: [
-        FundsBalanceChartComponent
+        FundsCurrentBalanceComponent
       ],
       providers: [
         TransactionBalanceService
       ]
     });
-    fixture = TestBed.createComponent(FundsBalanceChartComponent);
+    fixture = TestBed.createComponent(FundsCurrentBalanceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

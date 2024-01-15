@@ -6,8 +6,8 @@ import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
-  selector: 'assoc-funds-calendar',
-  templateUrl: './funds-calendar.component.html'
+  selector: 'assoc-transaction-calendar',
+  templateUrl: './transaction-calendar.component.html'
 })
 export class FundsCalendarComponent {
 

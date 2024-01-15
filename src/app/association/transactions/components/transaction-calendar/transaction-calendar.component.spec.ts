@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
-import { FundsCalendarComponent } from './funds-calendar.component';
+import { FundsCalendarComponent } from './transaction-calendar.component';
 
 describe('FundsCalendarComponent', () => {
   let component: FundsCalendarComponent;

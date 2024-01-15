@@ -3,8 +3,8 @@ import { CurrentBalance } from '../../models/current-balance';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
-  selector: 'assoc-funds-current-balance',
-  templateUrl: './funds-current-balance.component.html'
+  selector: 'assoc-transaction-current-balance',
+  templateUrl: './transaction-current-balance.component.html'
 })
 export class FundsCurrentBalanceComponent implements OnInit {
 

@@ -4,8 +4,8 @@ import Chart from 'chart.js/auto';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
-  selector: 'assoc-funds-balance-chart',
-  templateUrl: './funds-balance-chart.component.html'
+  selector: 'assoc-transaction-balance-chart',
+  templateUrl: './transaction-balance-chart.component.html'
 })
 export class FundsBalanceChartComponent implements OnInit {
 
