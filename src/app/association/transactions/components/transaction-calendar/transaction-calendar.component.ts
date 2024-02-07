@@ -28,7 +28,8 @@ export class FundsCalendarComponent {
   public ngOnInit(): void {
     // Read range
     this.calendarService.getRange().subscribe(months => {
-      this.months = months;
+      // To show in the selection box we have to reverse the order
+      this.months = months.reverse();
       // TODO: What happens if this date is not in the range?
       if (!this.readingCalendar) {
         const date = new Date();
