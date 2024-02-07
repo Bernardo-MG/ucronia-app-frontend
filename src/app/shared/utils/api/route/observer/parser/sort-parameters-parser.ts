@@ -9,11 +9,11 @@ import { Direction } from "@app/core/api/models/direction";
  * The parameters used to parse are:
  * - sort, containing a key-value properties in a 'key,value' format. There may be multiple sort arguments.
  */
-export class SortParametersParser implements ParametersParser<Sort<any>[]> {
+export class SortParametersParser implements ParametersParser<Sort[]> {
 
-  public parse(params: ParamMap): Sort<any>[] | undefined {
-    let pageSort: Sort<any> | undefined;
-    let pageSorts: Sort<any>[] | undefined;
+  public parse(params: ParamMap): Sort[] | undefined {
+    let pageSort: Sort | undefined;
+    let pageSorts: Sort[] | undefined;
     let pageSortValues: string[] | null;
 
     // Only builds the sort when there is at least one sort parameter
@@ -45,8 +45,8 @@ export class SortParametersParser implements ParametersParser<Sort<any>[]> {
    * @param pair key-value pair
    * @returns the equivalent sort, or undefined if it is invalid
    */
-  private parseFromPair(pair: string): Sort<any> | undefined {
-    let sort: Sort<any> | undefined;
+  private parseFromPair(pair: string): Sort | undefined {
+    let sort: Sort | undefined;
     let direction: string;
 
     // Acquire the property and check it is not empty
@@ -54,7 +54,7 @@ export class SortParametersParser implements ParametersParser<Sort<any>[]> {
     const property: string = splitPair[0];
     if (property.length > 0) {
       // Contains a property
-      sort = new Sort<any>(property);
+      sort = new Sort(property);
 
       if (splitPair.length > 1) {
         // It contains a direction

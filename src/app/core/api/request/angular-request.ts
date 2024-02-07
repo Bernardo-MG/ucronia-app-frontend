@@ -1,13 +1,14 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
-import { Direction } from '../models/direction';
-import { FailureResponse } from '../models/failure-response';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, catchError } from 'rxjs';
 import { Sort } from '../models/sort';
+import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
 
 export class AngularRequest implements Request {
 
   private _route = '';
+
+  private errorInteceptor = new AngularErrorRequestInterceptor();
 
   protected options: {
     params?: HttpParams
@@ -22,7 +23,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorInteceptor.handle)
       );
   }
 
@@ -30,7 +31,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorInteceptor.handle)
       );
   }
 
@@ -38,7 +39,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorInteceptor.handle)
       );
   }
 
@@ -46,7 +47,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorInteceptor.handle)
       );
   }
 
@@ -54,7 +55,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl(this._route);
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.handleError)
+        catchError(this.errorInteceptor.handle)
       );
   }
 
@@ -84,7 +85,7 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort<T>(sort: Sort<T>[]): AngularRequest {
+  public sort(sort: Sort[]): AngularRequest {
     for (let i = 0; i < sort.length; i += 1) {
       const fieldSort = sort[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
@@ -104,29 +105,6 @@ export class AngularRequest implements Request {
     }
 
     return params;
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    let response: any;
-
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-      response = new Error('Something bad happened; please try again later.');
-    } else if (error.error.failures) {
-      // Failures response
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-      response = new FailureResponse(error.error.failures);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-      response = new Error('Something bad happened; please try again later.');
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(() => response);
   }
 
   private getFinalUrl(route: string) {

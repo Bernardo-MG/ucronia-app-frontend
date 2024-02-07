@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Active } from '@app/association/membership/models/active';
+import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 
 

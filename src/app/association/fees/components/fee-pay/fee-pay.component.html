@@ -1,0 +1,24 @@
+<layout-article title="Pay fee">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <ng-container [ngSwitch]="selectedMember">
+          <ng-container *ngSwitchCase="true">
+            <!-- Form -->
+            <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+              [member]="member" (save)="onSave($event)">
+            </assoc-fee-pay-form>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Member selection -->
+            <layout-waiting-wrapper [waiting]="readingMembers">
+              <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)"
+                [current]="membersPage" [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
+              </assoc-member-selection>
+            </layout-waiting-wrapper>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</layout-article>

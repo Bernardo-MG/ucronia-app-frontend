@@ -1,0 +1,44 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Member -->
+  <div class="row mb-2">
+    <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Member</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="fee.member.fullName" id="fullNameInput" readonly="true" class="form-control"
+        aria-describedby="fullNameLabel">
+    </div>
+  </div>
+  <!-- Date -->
+  <div class="row mb-2">
+    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="month" id="dateInput" formControlName="date" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Paid -->
+  <div class="row mb-2">
+    <label id="activeLabel" class="col-sm-2 col-form-label">Paid</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="fee.paid"></icon-success>
+      <icon-failure *ngIf="!fee.paid"></icon-failure>
+    </div>
+  </div>
+  <!-- Payment date -->
+  <div class="row mb-2">
+    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Payment date</label>
+    <div class="col-sm-10">
+      <input type="date" [value]="fee.transaction.date" id="paymentDateInput" [readonly]="true" class="form-control"
+        aria-describedby="paymentDateLabel">
+    </div>
+  </div>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
+    </div>
+  </div>
+</form>

@@ -39,7 +39,7 @@ export class FormComponent<Data> {
   @Input() public failures = new FieldFailures();
 
   @Input() public set data(value: Data) {
-    this.form.patchValue(value as any);
+    this.loadData(value);
   }
 
   public get data() {
@@ -96,6 +96,15 @@ export class FormComponent<Data> {
    */
   public isFormDisabled() {
     return this.form.disabled;
+  }
+
+  /**
+   * Loads the received data into the form.
+   *
+   * @param data data to load
+   */
+  protected loadData(data: Data) {
+    this.form.patchValue(data as any);
   }
 
   /**

@@ -50,7 +50,7 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
-    const sort = new Sort<any>('property');
+    const sort = new Sort('property');
     sort.direction = Direction.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -65,7 +65,7 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
-    const sort = new Sort<any>('property');
+    const sort = new Sort('property');
     sort.direction = Direction.Descending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -81,7 +81,7 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
-    const sort = new Sort<any>('property');
+    const sort = new Sort('property');
     sort.direction = Direction.Unsorted;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -98,7 +98,7 @@ describe('PaginationOrderButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
-    const sort = new Sort<any>('property');
+    const sort = new Sort('property');
     sort.direction = Direction.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });

@@ -24,7 +24,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public totalPages = 0;
 
-  private sort: Sort<Role>[] = [];
+  private sort: Sort[] = [];
 
   constructor(
     private service: AccessUserService
@@ -40,7 +40,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.load({ page, sort: this.sort });
   }
 
-  public onChangeDirection(sort: Sort<Role>) {
+  public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
     if (index < 0) {
       // New property to sort

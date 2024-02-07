@@ -1,0 +1,50 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Index -->
+  <div class="row mb-2">
+    <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Index</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="transaction.index" id="indexInput" [readonly]="true" class="form-control"
+        aria-describedby="indexLabel">
+    </div>
+  </div>
+  <!-- Description -->
+  <div class="row mb-2">
+    <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Description</label>
+    <div class="col-sm-10">
+      <input type="text" id="descriptionInput" formControlName="description" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('description') }" aria-describedby="descriptionLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('description')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Date -->
+  <div class="row mb-2">
+    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" id="dateInput" formControlName="date" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Amount -->
+  <div class="row mb-2">
+    <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Amount</label>
+    <div class="col-sm-10">
+      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }" aria-describedby="amountLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('amount')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+        (action)="onSave()"></layout-waiting-button>
+    </div>
+  </div>
+</form>

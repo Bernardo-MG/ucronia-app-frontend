@@ -20,7 +20,7 @@ export class AccessRoleService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort = new Sort<Role>('name');
+    const defaultSort = new Sort('name');
     defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery<Role>();
@@ -31,8 +31,8 @@ export class AccessRoleService {
   }
 
   public getPermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
-    const sortResource: Sort<Permission> = new Sort<Permission>('resource');
-    const sortAction: Sort<Permission> = new Sort<Permission>('action');
+    const sortResource: Sort = new Sort('resource');
+    const sortAction: Sort = new Sort('action');
 
     const query = new PaginatedQuery<Permission>();
     query.defaultSort = [sortResource, sortAction];
@@ -42,8 +42,8 @@ export class AccessRoleService {
   }
 
   public getAvailablePermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
-    const sortResource: Sort<Permission> = new Sort<Permission>('resource');
-    const sortAction: Sort<Permission> = new Sort<Permission>('action');
+    const sortResource: Sort = new Sort('resource');
+    const sortAction: Sort = new Sort('action');
 
     const query = new PaginatedQuery<Permission>();
     query.defaultSort = [sortResource, sortAction];

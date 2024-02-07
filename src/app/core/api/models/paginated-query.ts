@@ -4,17 +4,17 @@ import { Sort } from "./sort";
 
 export class PaginatedQuery<T> {
 
-  public _sort: Sort<T>[] = [];
+  public _sort: Sort[] = [];
 
-  public _defaultSort: Sort<T>[] = [];
+  public _defaultSort: Sort[] = [];
 
   public parameters: { [key: string]: any } = {};
 
-  public set sort(sort: Sort<T>[]) {
+  public set sort(sort: Sort[]) {
     this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
   }
 
-  public get sort(): Sort<T>[] {
+  public get sort(): Sort[] {
     let sorts;
 
     if (this._sort.length === 0) {
@@ -34,7 +34,7 @@ export class PaginatedQuery<T> {
       const defaultSort = this._sort
         .filter(s => s.direction === Direction.Unsorted)
         .filter(s => defaults.has(s.property))
-        .map(s => defaults.get(s.property) as Sort<T>);
+        .map(s => defaults.get(s.property) as Sort);
 
       sorts = directSort.concat(defaultSort);
     }
@@ -62,7 +62,7 @@ export class PaginatedQuery<T> {
     this.parameters['page'] = page - 1;
   }
 
-  public set defaultSort(defaultSort: Sort<T>[]) {
+  public set defaultSort(defaultSort: Sort[]) {
     this._defaultSort = defaultSort;
   }
 
