@@ -16,11 +16,13 @@ export class CalendarMonthComponent implements OnChanges {
 
   @Input() public months: Month[] = [];
 
+  @Input() public month = new Month(0, 0);
+
   @Output() public changeMonth = new EventEmitter<Month>();
 
   @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
 
-  public currentMonth = this.getThisMonth();
+  public currentMonth = new Month(0, 0);
 
   public activeDayIsOpen = false;
 
@@ -31,8 +33,16 @@ export class CalendarMonthComponent implements OnChanges {
   private index = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['month']) {
+      this.currentMonth = this.month;
+      this.viewDate = new Date(`${this.currentMonth.year}-${this.currentMonth.month}`);
+  
+      this.activeDayIsOpen = false;
+    }
+
     if (changes['months']) {
       // Reload index
+      this.months = this.months.reverse();
       this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
       if (this.index >= 0) {
         this.currentMonth = this.months[this.index];
