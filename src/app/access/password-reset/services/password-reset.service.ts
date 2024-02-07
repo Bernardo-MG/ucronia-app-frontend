@@ -25,7 +25,7 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(this.passwordResetRequestUrl, request)
       .pipe(
         catchError(this.errorInteceptor.handle)
-      );;
+      );
   }
 
   public resetPassword(token: string, reset: PasswordReset): Observable<ApiResponse<void>> {
@@ -34,7 +34,7 @@ export class PasswordResetService {
       .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset)
       .pipe(
         catchError(this.errorInteceptor.handle)
-      );;
+      );
   }
 
   public validateToken(token: string): Observable<ApiResponse<UserTokenStatus>> {
@@ -43,7 +43,7 @@ export class PasswordResetService {
       .get<ApiResponse<UserTokenStatus>>(`${this.passwordResetRequestUrl}/${token}`)
       .pipe(
         catchError(this.errorInteceptor.handle)
-      );;
+      );
   }
 
 }
