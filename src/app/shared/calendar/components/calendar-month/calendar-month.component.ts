@@ -32,6 +32,8 @@ export class CalendarMonthComponent implements OnChanges {
 
   private index = 0;
 
+  public selectionMonths: Month[] = [];
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['month']) {
       this.currentMonth = this.month;
@@ -42,6 +44,7 @@ export class CalendarMonthComponent implements OnChanges {
 
     if (changes['months']) {
       // Reload index
+      this.selectionMonths = this.months.slice().reverse();
       this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
       if (this.index >= 0) {
         this.currentMonth = this.months[this.index];
