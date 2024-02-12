@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ucronia-app-frontend:build:production"
+              "buildTarget": "ucronia-app-frontend:build:production"
             },
             "development": {
-              "browserTarget": "ucronia-app-frontend:build:development"
+              "buildTarget": "ucronia-app-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ucronia-app-frontend:build"
+            "buildTarget": "ucronia-app-frontend:build"
           }
         },
         "test": {
