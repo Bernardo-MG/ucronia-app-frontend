@@ -44,7 +44,7 @@ export class CalendarMonthComponent implements OnChanges {
 
     if (changes['months']) {
       // Reload index
-      this.selectionMonths = this.months.reverse();
+      this.selectionMonths = this.months.slice().reverse();
       this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
       if (this.index >= 0) {
         this.currentMonth = this.months[this.index];
