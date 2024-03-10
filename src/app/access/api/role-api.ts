@@ -38,7 +38,7 @@ export class RoleApi {
   }
 
   public readAll(query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     return request.read();
   }
@@ -51,7 +51,7 @@ export class RoleApi {
   }
 
   public readPermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     request.appendRoute(`/${role}/permission`);
 
@@ -59,7 +59,7 @@ export class RoleApi {
   }
 
   public readAvailablePermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     request.appendRoute(`/${role}/permission/available`);
 
@@ -85,23 +85,5 @@ export class RoleApi {
   private getRequest(): Request {
     return new AngularRequest(this.http, environment.apiUrl + '/security/role');
   }
-
-  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
-    const request = this.getRequest();
-
-    // Sort
-    request.sort(query.sort);
-
-    // Other parameters
-    for (const key in query.parameters) {
-      const value = query.parameters[key];
-      if (value) {
-        request.parameter(key, value);
-      }
-    }
-
-    return request;
-  }
-
 
 }

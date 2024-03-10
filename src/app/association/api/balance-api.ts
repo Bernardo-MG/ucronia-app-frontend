@@ -21,7 +21,7 @@ export class BalanceApi {
   }
 
   public readMonthly(query: PaginatedQuery<TransactionMonthlyBalance>): Observable<ApiResponse<TransactionMonthlyBalance[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     request.appendRoute('/monthly');
 
@@ -30,23 +30,6 @@ export class BalanceApi {
 
   private getRequest(): Request {
     return new AngularRequest(this.http, environment.apiUrl + '/funds/balance');
-  }
-
-  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
-    const request = this.getRequest();
-
-    // Sort
-    request.sort(query.sort);
-
-    // Other parameters
-    for (const key in query.parameters) {
-      const value = query.parameters[key];
-      if (value) {
-        request.parameter(key, value);
-      }
-    }
-
-    return request;
   }
 
 }

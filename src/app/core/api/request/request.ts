@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 
 export interface Request {
@@ -20,5 +21,7 @@ export interface Request {
   parameter(name: string, value: any): Request;
 
   sort(sort: Sort[]): Request;
+
+  query(query: PaginatedQuery<any>): Request;
 
 }

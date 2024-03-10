@@ -16,7 +16,7 @@ export class UserApi {
   ) { }
 
   public readRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     request.appendRoute(`/${user}/role`);
 
@@ -24,7 +24,7 @@ export class UserApi {
   }
 
   public readAvailableRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     request.appendRoute(`/${user}/role/available`);
 
@@ -48,7 +48,7 @@ export class UserApi {
   }
 
   public readAll(query: PaginatedQuery<User>): Observable<PaginatedResponse<User[]>> {
-    const request = this.getRequestWithQuery(query);
+    const request = this.getRequest().query(query);
 
     return request.read();
   }
@@ -84,23 +84,6 @@ export class UserApi {
 
   private getRequest(): Request {
     return new AngularRequest(this.http, environment.apiUrl + '/security/user');
-  }
-
-  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
-    const request = this.getRequest();
-
-    // Sort
-    request.sort(query.sort);
-
-    // Other parameters
-    for (const key in query.parameters) {
-      const value = query.parameters[key];
-      if (value) {
-        request.parameter(key, value);
-      }
-    }
-
-    return request;
   }
 
 }

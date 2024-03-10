@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
+import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
@@ -89,6 +90,21 @@ export class AngularRequest implements Request {
     for (let i = 0; i < sort.length; i += 1) {
       const fieldSort = sort[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
+    }
+
+    return this;
+  }
+
+  public query(query: PaginatedQuery<any>): AngularRequest {
+    // Sort
+    this.sort(query.sort);
+
+    // Other parameters
+    for (const key in query.parameters) {
+      const value = query.parameters[key];
+      if (value) {
+        this.parameter(key, value);
+      }
     }
 
     return this;
