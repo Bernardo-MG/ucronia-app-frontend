@@ -1,1 +1,32 @@
-<p>library-frontpage works!</p>
+<layout-article>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="pb-2">
+          <!-- Add -->
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="d-grid">
+                  <!-- Add button -->
+                  <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
+                    [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                    Add book
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Books list -->
+      <div class="col-md-10">
+        <div class="card">
+          <div class="card-body">
+            <h2>Books</h2>
+            <library-book-list></library-book-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </layout-article>
+  
