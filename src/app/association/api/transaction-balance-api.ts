@@ -15,17 +15,11 @@ export class TransactionBalanceApi {
   ) { }
 
   public readCurrent(): Observable<ApiResponse<TransactionCurrentBalance>> {
-    const request = this.getRequest();
-
-    return request.read();
+    return this.getRequest().read();
   }
 
   public readMonthly(query: PaginatedQuery<TransactionMonthlyBalance>): Observable<ApiResponse<TransactionMonthlyBalance[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute('/monthly');
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute('/monthly').read();
   }
 
   private getRequest(): Request {

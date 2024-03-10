@@ -15,38 +15,23 @@ export class MemberApi {
   ) { }
 
   public create(data: Member): Observable<ApiResponse<Member>> {
-    const request = this.getRequest();
-
-    return request.create(data);
+    return this.getRequest().create(data);
   }
 
   public updateById(id: any, data: Member): Observable<ApiResponse<Member>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.update(data);
+    return this.getRequest().appendRoute(`/${id}`).update(data);
   }
 
   public deleteById(id: any): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${id}`).delete();
   }
 
   public readAll(query: PaginatedQuery<Member>): Observable<PaginatedResponse<Member[]>> {
-    const request = this.getRequest().query(query);
-
-    return request.read();
+    return this.getRequest().query(query).read();
   }
 
   public readById(id: any): Observable<ApiResponse<Member>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
+    return this.getRequest().appendRoute(`/${id}`).read();
   }
 
   private getRequest(): Request {

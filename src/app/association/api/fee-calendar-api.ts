@@ -14,19 +14,11 @@ export class FeeCalendarApi {
   ) { }
 
   public readCalendarYear(year: number, query: PaginatedQuery<FeeCalendar>): Observable<ApiResponse<FeeCalendar[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute(`/${year}`);
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute(`/${year}`).read();
   }
 
   public readCalendarRange(): Observable<ApiResponse<FeeCalendarYearsRange>> {
-    const request = this.getRequest();
-
-    request.appendRoute("/range");
-
-    return request.read();
+    return this.getRequest().appendRoute("/range").read();
   }
 
   private getRequest() {

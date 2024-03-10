@@ -14,19 +14,11 @@ export class TransactionCalendarApi {
   ) { }
 
   public readCalendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${year}/${month}`);
-
-    return request.read();
+    return this.getRequest().appendRoute(`/${year}/${month}`).read();
   }
 
   public readCalendarRange(): Observable<ApiResponse<TransactionCalendarMonthsRange>> {
-    const request = this.getRequest();
-
-    request.appendRoute("/range");
-
-    return request.read();
+    return this.getRequest().appendRoute("/range").read();
   }
 
   private getRequest(): Request {

@@ -16,70 +16,39 @@ export class UserApi {
   ) { }
 
   public readAll(query: PaginatedQuery<User>): Observable<PaginatedResponse<User[]>> {
-    const request = this.getRequest().query(query);
-
-    return request.read();
+    return this.getRequest().query(query).read();
   }
 
   public readById(id: any): Observable<ApiResponse<User>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
+    return this.getRequest().appendRoute(`/${id}`).read();
   }
 
   public create(data: User): Observable<ApiResponse<User>> {
-    const request = this.getRequest();
-
-    return request.create(data);
+    return this.getRequest().create(data);
   }
 
   public updateById(id: any, data: User): Observable<ApiResponse<User>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.update(data);
+    return this.getRequest().appendRoute(`/${id}`).update(data);
   }
 
   public deleteById(id: any): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${id}`).delete();
   }
 
   public readRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute(`/${user}/role`);
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute(`/${user}/role`).read();
   }
 
   public readAvailableRoles(user: string, query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute(`/${user}/role/available`);
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute(`/${user}/role/available`).read();
   }
 
   public updateRoles(user: string, role: string): Observable<ApiResponse<Role>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${user}/role/${role}`);
-
-    return request.update({});
+    return this.getRequest().appendRoute(`/${user}/role/${role}`).update({});
   }
 
   public removeRoles(user: string, role: string): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${user}/role/${role}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${user}/role/${role}`).delete();
   }
 
   private getRequest(): Request {

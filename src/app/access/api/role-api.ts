@@ -16,70 +16,39 @@ export class RoleApi {
   ) { }
 
   public create(data: Role): Observable<ApiResponse<Role>> {
-    const request = this.getRequest();
-
-    return request.create(data);
+    return this.getRequest().create(data);
   }
 
   public updateById(id: any, data: Role): Observable<ApiResponse<Role>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.update(data);
+    return this.getRequest().appendRoute(`/${id}`).update(data);
   }
 
   public deleteById(id: any): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${id}`).delete();
   }
 
   public readAll(query: PaginatedQuery<Role>): Observable<PaginatedResponse<Role[]>> {
-    const request = this.getRequest().query(query);
-
-    return request.read();
+    return this.getRequest().query(query).read();
   }
 
   public readById(id: any): Observable<ApiResponse<Role>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
+    return this.getRequest().appendRoute(`/${id}`).read();
   }
 
   public readPermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute(`/${role}/permission`);
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute(`/${role}/permission`).read();
   }
 
   public readAvailablePermissions(role: string, query: PaginatedQuery<Permission>): Observable<PaginatedResponse<Permission[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute(`/${role}/permission/available`);
-
-    return request.read();
+    return this.getRequest().query(query).appendRoute(`/${role}/permission/available`).read();
   }
 
   public updatePermission(role: string, permission: string): Observable<ApiResponse<Permission>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${role}/permission/${permission}`);
-
-    return request.update({});
+    return this.getRequest().appendRoute(`/${role}/permission/${permission}`).update({});
   }
 
   public removePermission(role: string, permission: string): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${role}/permission/${permission}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${role}/permission/${permission}`).delete();
   }
 
   private getRequest(): Request {

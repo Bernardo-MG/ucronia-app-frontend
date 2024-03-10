@@ -14,9 +14,7 @@ export class MemberBalanceApi {
   ) { }
 
   public readMonthly(query: PaginatedQuery<MemberBalance>): Observable<ApiResponse<MemberBalance[]>> {
-    const request = this.getRequest().query(query);
-
-    return request.read();
+    return this.getRequest().query(query).read();
   }
 
   private getRequest(): Request {

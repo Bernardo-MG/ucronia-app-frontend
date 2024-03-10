@@ -13,32 +13,19 @@ export class TransactionApi {
   ) { }
 
   public create(data: Transaction): Observable<ApiResponse<Transaction>> {
-    const request = this.getRequest();
-
-    return request.create(data);
+    return this.getRequest().create(data);
   }
 
   public updateById(id: any, data: Transaction): Observable<ApiResponse<Transaction>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.update(data);
+    return this.getRequest().appendRoute(`/${id}`).update(data);
   }
 
   public deleteById(id: any): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${id}`).delete();
   }
 
   public readById(id: any): Observable<ApiResponse<Transaction>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
+    return this.getRequest().appendRoute(`/${id}`).read();
   }
 
   private getRequest(): Request {

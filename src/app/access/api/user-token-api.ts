@@ -15,70 +15,43 @@ export class UserTokenApi {
   ) { }
 
   public create(data: UserToken): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    return request.create(data);
+    return this.getRequest().create(data);
   }
 
   public update(data: UserToken): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    return request.update(data);
+    return this.getRequest().update(data);
   }
 
   public updateById(id: any, data: UserToken): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.update(data);
+    return this.getRequest().appendRoute(`/${id}`).update(data);
   }
 
   public delete(): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    return request.delete();
+    return this.getRequest().delete();
   }
 
   public deleteById(id: any): Observable<ApiResponse<boolean>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.delete();
+    return this.getRequest().appendRoute(`/${id}`).delete();
   }
 
   public patch(data: UserToken): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    return request.patch(data);
+    return this.getRequest().patch(data);
   }
 
   public patchById<P>(id: any, data: P): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-
-    return request.patch(data);
+    return this.getRequest().appendRoute(`/${id}`).patch(data);
   }
 
   public readAll(query: PaginatedQuery<UserToken>): Observable<PaginatedResponse<UserToken[]>> {
-    const request = this.getRequest().query(query);
-
-    return request.read();
+    return this.getRequest().query(query).read();
   }
 
   public readOne(): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    return request.read();
+    return this.getRequest().read();
   }
 
   public readById(id: any): Observable<ApiResponse<UserToken>> {
-    const request = this.getRequest();
-
-    request.appendRoute(`/${id}`);
-    return request.read();
+    return this.getRequest().appendRoute(`/${id}`).read();
   }
 
   private getRequest(): Request {

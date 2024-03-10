@@ -13,15 +13,11 @@ export class ConfigurationApi {
   ) { }
 
   public readOne(): Observable<ApiResponse<AssociationConfiguration>> {
-    const request = this.getRequest();
-
-    return request.read();
+    return this.getRequest().read();
   }
 
   public update(data: AssociationConfiguration): Observable<ApiResponse<AssociationConfiguration>> {
-    const request = this.getRequest();
-
-    return request.update(data);
+    return this.getRequest().update(data);
   }
 
   private getRequest(): Request {
