@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MemberApi } from '@app/association/api/member-api';
+import { MemberBalanceApi } from '@app/association/api/member-balance';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
@@ -10,7 +10,7 @@ import { MemberBalance } from '../models/member-balance';
 @Injectable()
 export class MemberBalanceService {
 
-  private memberApi = new MemberApi(this.http);
+  private memberBalanceApi = new MemberBalanceApi(this.http);
 
   constructor(
     private http: HttpClient
@@ -25,7 +25,7 @@ export class MemberBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.memberApi.readMonthly(query).pipe(map(r => r.content));
+    return this.memberBalanceApi.readMonthly(query).pipe(map(r => r.content));
   }
 
 

@@ -8,13 +8,13 @@ import { AngularRequest } from "../../core/api/request/angular-request";
 import { TransactionCurrentBalance } from "../transactions/models/transaction-current-balance";
 import { TransactionMonthlyBalance } from "../transactions/models/transaction-monthly-balance";
 
-export class BalanceApi {
+export class TransactionBalanceApi {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public current(): Observable<ApiResponse<TransactionCurrentBalance>> {
+  public readCurrent(): Observable<ApiResponse<TransactionCurrentBalance>> {
     const request = this.getRequest();
 
     return request.read();

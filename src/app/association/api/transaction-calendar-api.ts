@@ -7,13 +7,13 @@ import { Observable } from "rxjs";
 import { TransactionCalendarMonth } from "../transactions/models/transaction-calendar-month";
 import { TransactionCalendarMonthsRange } from "../transactions/models/transaction-calendar-months-range";
 
-export class FundsCalendarApi {
+export class TransactionCalendarApi {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public calendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
+  public readCalendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
     const request = this.getRequest();
 
     request.appendRoute(`/${year}/${month}`);
@@ -21,7 +21,7 @@ export class FundsCalendarApi {
     return request.read();
   }
 
-  public calendarRange(): Observable<ApiResponse<TransactionCalendarMonthsRange>> {
+  public readCalendarRange(): Observable<ApiResponse<TransactionCalendarMonthsRange>> {
     const request = this.getRequest();
 
     request.appendRoute("/range");

@@ -7,21 +7,12 @@ import { Request } from '@app/core/api/request/request';
 import { environment } from "environments/environment";
 import { Observable } from "rxjs";
 import { Member } from "../members/models/member";
-import { MemberBalance } from "../members/models/member-balance";
 
 export class MemberApi {
 
   constructor(
     private http: HttpClient
   ) { }
-
-  public readMonthly(query: PaginatedQuery<MemberBalance>): Observable<ApiResponse<MemberBalance[]>> {
-    const request = this.getRequest().query(query);
-
-    request.appendRoute('/monthly');
-
-    return request.read();
-  }
 
   public create(data: Member): Observable<ApiResponse<Member>> {
     const request = this.getRequest();

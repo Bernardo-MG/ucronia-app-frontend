@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BalanceApi } from '@app/association/api/balance-api';
+import { TransactionBalanceApi } from '@app/association/api/transaction-balance-api';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
@@ -11,14 +11,14 @@ import { TransactionMonthlyBalance } from '../models/transaction-monthly-balance
 @Injectable()
 export class TransactionBalanceService {
 
-  private balanceApi = new BalanceApi(this.http);
+  private transactionBalanceApi = new TransactionBalanceApi(this.http);
 
   constructor(
     private http: HttpClient
   ) { }
 
   public current(): Observable<TransactionCurrentBalance> {
-    return this.balanceApi.current().pipe(map(r => r.content));
+    return this.transactionBalanceApi.readCurrent().pipe(map(r => r.content));
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<TransactionMonthlyBalance[]> {
@@ -30,7 +30,7 @@ export class TransactionBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.balanceApi.readMonthly(query).pipe(map(r => r.content));
+    return this.transactionBalanceApi.readMonthly(query).pipe(map(r => r.content));
   }
 
 }
