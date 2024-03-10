@@ -14,8 +14,6 @@ export interface Request {
 
   patch<T>(body: any): Observable<T>;
 
-  route(route: string): Request;
-
   appendRoute(route: string): Request;
 
   parameter(name: string, value: any): Request;

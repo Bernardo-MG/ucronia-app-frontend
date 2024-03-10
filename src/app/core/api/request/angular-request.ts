@@ -7,7 +7,7 @@ import { Request } from './request';
 
 export class AngularRequest implements Request {
 
-  private _route = '';
+  private route = '';
 
   private errorInteceptor = new AngularErrorRequestInterceptor();
 
@@ -21,7 +21,7 @@ export class AngularRequest implements Request {
   ) { }
 
   public create<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl(this.route);
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -29,7 +29,7 @@ export class AngularRequest implements Request {
   }
 
   public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl(this.route);
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -37,7 +37,7 @@ export class AngularRequest implements Request {
   }
 
   public update<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl(this.route);
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -45,7 +45,7 @@ export class AngularRequest implements Request {
   }
 
   public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl(this.route);
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -53,21 +53,15 @@ export class AngularRequest implements Request {
   }
 
   public patch<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl(this.route);
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
       );
   }
 
-  public route(route: string): AngularRequest {
-    this._route = route;
-
-    return this;
-  }
-
   public appendRoute(route: string): AngularRequest {
-    this._route = `${this._route}${route}`;
+    this.route = `${this.route}${route}`;
 
     return this;
   }
