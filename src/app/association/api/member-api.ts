@@ -16,7 +16,7 @@ export class MemberApi {
   ) { }
 
   public readMonthly(query: PaginatedQuery<MemberBalance>): Observable<ApiResponse<MemberBalance[]>> {
-    const request = this.requestWithQuery(query);
+    const request = this.getRequestWithQuery(query);
 
     request.appendRoute('/monthly');
 
@@ -46,7 +46,7 @@ export class MemberApi {
   }
 
   public readAll(query: PaginatedQuery<Member>): Observable<PaginatedResponse<Member[]>> {
-    const request = this.requestWithQuery(query);
+    const request = this.getRequestWithQuery(query);
 
     return request.read();
   }
@@ -62,7 +62,7 @@ export class MemberApi {
     return new AngularRequest(this.http, environment.apiUrl + '/member');
   }
 
-  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
     const request = this.getRequest();
 
     // Sort

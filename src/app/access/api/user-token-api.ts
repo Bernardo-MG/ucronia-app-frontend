@@ -63,7 +63,7 @@ export class UserTokenApi {
   }
 
   public readAll(query: PaginatedQuery<UserToken>): Observable<PaginatedResponse<UserToken[]>> {
-    const request = this.requestWithQuery(query);
+    const request = this.getRequestWithQuery(query);
 
     return request.read();
   }
@@ -85,7 +85,7 @@ export class UserTokenApi {
     return new AngularRequest(this.http, environment.apiUrl + '/security/user/token');
   }
 
-  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
     const request = this.getRequest();
 
     // Sort

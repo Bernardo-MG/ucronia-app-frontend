@@ -46,7 +46,7 @@ export class FeeApi {
   }
 
   public calendarYear(year: number, query: PaginatedQuery<FeeCalendar>): Observable<ApiResponse<FeeCalendar[]>> {
-    const request = this.requestWithQuery(query);
+    const request = this.getRequestWithQuery(query);
 
     request.appendRoute(`/calendar/${year}`);
 
@@ -65,7 +65,7 @@ export class FeeApi {
     return new AngularRequest(this.http, environment.apiUrl + '/fee');
   }
 
-  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
     const request = this.getRequest();
 
     // Sort

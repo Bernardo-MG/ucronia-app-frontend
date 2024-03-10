@@ -34,7 +34,7 @@ export class FundsCalendarApi {
     return new AngularRequest(this.http, environment.apiUrl + '/funds/calendar');
   }
 
-  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
     const request = this.getRequest();
 
     // Sort

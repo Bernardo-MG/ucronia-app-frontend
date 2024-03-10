@@ -29,7 +29,7 @@ export class ConfigurationApi {
     return new AngularRequest(this.http, environment.apiUrl + '/configuration/association');
   }
 
-  protected requestWithQuery(query: PaginatedQuery<any>): Request {
+  protected getRequestWithQuery(query: PaginatedQuery<any>): Request {
     const request = this.getRequest();
 
     // Sort
