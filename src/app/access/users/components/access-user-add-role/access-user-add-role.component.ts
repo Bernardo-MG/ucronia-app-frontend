@@ -13,7 +13,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
 
   @Output() public addRole = new EventEmitter<Role>();
 
-  public response = new PaginatedResponse<Role[]>([]);
+  public page = new PaginatedResponse<Role[]>([]);
 
   public readingSelection = false;
 
@@ -37,7 +37,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
     this.readingSelection = true;
     this.service.getAvailableRoles(this.user, page).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingSelection = false;

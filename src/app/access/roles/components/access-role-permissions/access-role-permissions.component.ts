@@ -17,7 +17,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public response = new PaginatedResponse<Permission[]>([]);
+  public page = new PaginatedResponse<Permission[]>([]);
 
   public readingPermissions = false;
 
@@ -44,14 +44,14 @@ export class AccessRolePermissionsComponent implements OnChanges {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    this.load(this.page.currentPage);
   }
 
   private load(page: number) {
     this.readingPermissions = true;
     this.service.getPermissions(this.role, page, this.sort).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingPermissions = false;
