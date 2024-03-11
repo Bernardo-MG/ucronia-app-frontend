@@ -22,18 +22,11 @@ export class PaginatedQuery {
     } else {
       // Merge default sorting with the received one
 
-      // Prepare map with defaults
-      const defaults = new Map(this._defaultSort.fields.map(s => [s.property, s]));
-
-      // Keep all fields not in the default list
-      const directSortFields = this._sort.fields
-        .filter(s => !defaults.has(s.property));
-
       // Replace unsorted fields with defaults
       const sortedProperties = this._sort.fields.map(f => f.property);
       const defaultSortFields = this._defaultSort.fields.filter(f => !sortedProperties.includes(f.property));
 
-      sortFields = directSortFields.concat(defaultSortFields);
+      sortFields = this._sort.fields.concat(defaultSortFields);
     }
 
     // Sort fields alphabetically
