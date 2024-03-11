@@ -5,12 +5,24 @@ import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
 
+/**
+ * Request implementation for Angular.
+ */
 export class AngularRequest implements Request {
 
+  /**
+   * Route for the request.
+   */
   private route = '';
 
+  /**
+   * Interceptor for errors in the request. Will generate an error response.
+   */
   private errorInteceptor = new AngularErrorRequestInterceptor();
 
+  /**
+   * Request options.
+   */
   protected options: {
     params?: HttpParams
   } = {};
