@@ -1,28 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Book } from '../../models/book';
 import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'library-book-list',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
   templateUrl: './library-book-list.component.html',
   styleUrl: './library-book-list.component.sass'
 })
 export class LibraryBookListComponent implements OnInit {
 
-  public books: Book[] = [];
+  public response = new PaginatedResponse<Book[]>([]);
 
   /**
    * Loading flag.
    */
   public readingBooks = false;
 
-  public currentPage = 0;
-
-  public totalPages = 0;
-
-  public totalMembers = 0;
+  private sort = new Sort([]);
 
   constructor(
     private service: BookService
@@ -33,16 +37,23 @@ export class LibraryBookListComponent implements OnInit {
     this.load(0)
   }
 
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
+    this.load(this.response.currentPage);
+  }
+
+  public onGoTo(page: number) {
+    this.load(page);
+  }
+
   private load(page: number) {
     this.readingBooks = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
-        this.books = response.content;
+        this.response = response;
 
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
-        this.totalMembers = response.totalElements;
         // Reactivate view
         this.readingBooks = false;
       },
