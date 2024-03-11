@@ -3,6 +3,7 @@ import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '../../services/user-token.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-token-selection-list',
@@ -10,16 +11,12 @@ import { UserTokenService } from '../../services/user-token.service';
 })
 export class UserTokenSelectionListComponent implements OnInit {
 
+  public response = new PaginatedResponse<UserToken[]>([]);
+
   /**
    * Loading flag.
    */
   public readingUsers = false;
-
-  public tokens: UserToken[] = [];
-
-  public totalPages = 0;
-
-  public currentPage = 0;
 
   private sort: Sort[] = [];
 
@@ -40,16 +37,15 @@ export class UserTokenSelectionListComponent implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage });
+    this.load({ page: this.response.currentPage() });
   }
 
   private load(pagination: Pagination | undefined) {
     this.readingUsers = true;
     this.service.getAll(pagination, this.sort).subscribe({
-      next: page => {
-        this.tokens = page.content;
+      next: response => {
+        this.response = response;
 
-        this.totalPages = page.totalPages;
         // Reactivate view
         this.readingUsers = false;
       },

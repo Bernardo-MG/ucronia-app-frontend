@@ -3,6 +3,7 @@ import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { User } from '@app/core/authentication/models/user';
 import { AccessUserService } from '../../services/access-user.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-selection-list',
@@ -10,16 +11,12 @@ import { AccessUserService } from '../../services/access-user.service';
 })
 export class AccessUserSelectionListComponent implements OnInit {
 
+  public response = new PaginatedResponse<User[]>([]);
+
   /**
    * Loading flag.
    */
   public readingUsers = false;
-
-  public users: User[] = [];
-
-  public totalPages = 0;
-
-  public currentPage = 0;
 
   private sort: Sort[] = [];
 
@@ -42,16 +39,15 @@ export class AccessUserSelectionListComponent implements OnInit {
       this.sort[index] = sort;
     }
 
-    this.load({ page: this.currentPage });
+    this.load({ page: this.response.currentPage() });
   }
 
   private load(pagination: Pagination | undefined) {
     this.readingUsers = true;
     this.service.getAll(pagination, this.sort).subscribe({
-      next: page => {
-        this.users = page.content;
+      next: response => {
+        this.response = response;
 
-        this.totalPages = page.totalPages;
         // Reactivate view
         this.readingUsers = false;
       },

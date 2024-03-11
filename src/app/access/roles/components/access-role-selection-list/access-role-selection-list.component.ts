@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
-import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessRoleService } from '../../services/access-role.service';
 
@@ -9,24 +9,20 @@ import { AccessRoleService } from '../../services/access-role.service';
   selector: 'access-role-selection-list',
   templateUrl: './access-role-selection-list.component.html'
 })
-export class AccessRoleSelectionListComponent  implements OnInit {
+export class AccessRoleSelectionListComponent implements OnInit {
+
+  public response = new PaginatedResponse<Role[]>([]);
 
   /**
    * Loading flag.
    */
   public readingRoles = false;
 
-  public roles: Role[] = [];
-
-  public totalPages = 0;
-
-  public currentPage = 0;
-
   private sort: Sort[] = [];
 
   constructor(
     private service: AccessRoleService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.load(undefined);
@@ -41,18 +37,15 @@ export class AccessRoleSelectionListComponent  implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage });
+    this.load({ page: this.response.currentPage() });
   }
 
   private load(pagination: Pagination | undefined) {
     this.readingRoles = true;
     this.service.getAll(pagination, this.sort).subscribe({
-      next: page => {
+      next: response => {
+        this.response = response;
 
-        this.roles = page.content;
-
-        this.currentPage = page.page;
-        this.totalPages = page.totalPages;
         // Reactivate view
         this.readingRoles = false;
       },
