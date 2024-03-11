@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { Month } from '@app/shared/calendar/models/month';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
@@ -48,7 +48,10 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.getRangeRequest().read<ApiResponse<TransactionCalendarMonthsRange>>().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+    return this.getRangeClient()
+    .read<SimpleResponse<TransactionCalendarMonthsRange>>()
+    .pipe(map(r => r.content))
+    .pipe(map(r => r.months.map(m => {
       const date = new Date(m);
       const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
@@ -56,16 +59,18 @@ export class TransactionCalendarService {
     })));
   }
 
-  private readCalendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
-    return this.getRequest().appendRoute(`/${year}/${month}`).read();
+  private readCalendarMonth(year: number, month: number): Observable<SimpleResponse<TransactionCalendarMonth>> {
+    return this.getClient()
+    .appendRoute(`/${year}/${month}`)
+    .read<SimpleResponse<TransactionCalendarMonth>>();
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/funds/calendar');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/funds/calendar');
   }
 
-  private getRangeRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/funds/calendar/range');
+  private getRangeClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/funds/calendar/range');
   }
 
 }

@@ -3,12 +3,12 @@ import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
-import { Request } from './request';
+import { Client } from './client';
 
 /**
  * Request implementation for Angular.
  */
-export class AngularRequest implements Request {
+export class AngularClient implements Client {
 
   /**
    * Route for the request.
@@ -18,7 +18,7 @@ export class AngularRequest implements Request {
   /**
    * Interceptor for errors in the request. Will generate an error response.
    */
-  private errorInteceptor = new AngularErrorRequestInterceptor();
+  private errorInterceptor = new AngularErrorRequestInterceptor();
 
   /**
    * Request options.
@@ -36,7 +36,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -44,7 +44,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -52,7 +52,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -60,7 +60,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -68,17 +68,17 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
-  public appendRoute(route: string): AngularRequest {
+  public appendRoute(route: string): AngularClient {
     this.route = `${this.route}${route}`;
 
     return this;
   }
 
-  public parameter(name: string, value: any): AngularRequest {
+  public parameter(name: string, value: any): AngularClient {
     let params: HttpParams;
 
     if (value) {
@@ -92,16 +92,16 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort(sort: Sort[]): AngularRequest {
-    for (let i = 0; i < sort.length; i += 1) {
-      const fieldSort = sort[i];
+  public sort(toSort: Sort): AngularClient {
+    for (let i = 0; i < toSort.fields.length; i += 1) {
+      const fieldSort = toSort.fields[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
     }
 
     return this;
   }
 
-  public query(query: PaginatedQuery<any>): AngularRequest {
+  public query(query: PaginatedQuery): AngularClient {
     // Sort
     this.sort(query.sort);
 

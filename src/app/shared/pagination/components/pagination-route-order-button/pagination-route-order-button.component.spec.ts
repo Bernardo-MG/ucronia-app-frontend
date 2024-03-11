@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Direction } from '@app/core/api/models/direction';
+import { SortDirection } from '@app/core/api/models/sort-direction';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { PaginationOrderButtonComponent } from '../pagination-order-button/pagination-order-button.component';
@@ -57,7 +57,7 @@ describe('PaginationRouteOrderButtonComponent', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(Direction.Unsorted);
+    expect(component.direction).toBe(SortDirection.Unsorted);
   });
 
   it('should set disabled direction when an empty property is received', () => {
@@ -66,7 +66,7 @@ describe('PaginationRouteOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(Direction.Unsorted);
+    expect(component.direction).toBe(SortDirection.Unsorted);
   });
 
   it('should set ascending icon when receiving an ascending property', () => {
@@ -75,7 +75,7 @@ describe('PaginationRouteOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(Direction.Ascending);
+    expect(component.direction).toBe(SortDirection.Ascending);
   });
 
   it('should set descending icon when receiving a descending property', () => {
@@ -84,7 +84,7 @@ describe('PaginationRouteOrderButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(Direction.Descending);
+    expect(component.direction).toBe(SortDirection.Descending);
   });
 
 });

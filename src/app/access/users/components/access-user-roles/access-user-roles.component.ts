@@ -1,8 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
 
 @Component({
   selector: 'access-user-roles',
@@ -16,15 +17,11 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public roles: Role[] = [];
+  public response = new PaginatedResponse<Role[]>([]);
 
   public readingRoles = false;
 
-  public currentPage = 0;
-
-  public totalPages = 0;
-
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: AccessUserService
@@ -32,40 +29,35 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['user']) && (this.user.length)) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load(page);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
+    this.load(this.response.currentPage);
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.user, data.name).subscribe(p => this.load(undefined));
+    this.service.removeRole(this.user, data.name).subscribe(p => this.load(0));
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(page: number) {
     this.readingRoles = true;
-    this.service.getRoles(this.user, pagination).subscribe({
+    this.service.getRoles(this.user, page, this.sort).subscribe({
       next: response => {
-        this.roles = response.content;
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
+        this.response = response;
+
+        // Reactivate view
         this.readingRoles = false;
       },
       error: error => {
+        // Reactivate view
         this.readingRoles = false;
       }
     });
