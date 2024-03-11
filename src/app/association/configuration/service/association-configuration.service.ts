@@ -15,11 +15,15 @@ export class AssociationConfigurationService {
   ) { }
 
   public get(): Observable<AssociationConfiguration> {
-    return this.getRequest().read<SimpleResponse<AssociationConfiguration>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .read<SimpleResponse<AssociationConfiguration>>()
+      .pipe(map(r => r.content));
   }
 
   public update(data: AssociationConfiguration): Observable<AssociationConfiguration> {
-    return this.getRequest().update<SimpleResponse<AssociationConfiguration>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .update<SimpleResponse<AssociationConfiguration>>(data)
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

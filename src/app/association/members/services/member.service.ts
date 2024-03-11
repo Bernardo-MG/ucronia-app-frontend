@@ -26,23 +26,36 @@ export class MemberService {
     query.sort = sort;
     query.addParameter('status', active.toString().toUpperCase());
 
-    return this.getRequest().query(query).read();
+    return this.getRequest()
+      .query(query)
+      .read<PaginatedResponse<Member[]>>();
   }
 
   public create(data: Member): Observable<Member> {
-    return this.getRequest().create<SimpleResponse<Member>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .create<SimpleResponse<Member>>(data)
+      .pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.getRequest().appendRoute(`/${id}`).update<SimpleResponse<Member>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${id}`)
+      .update<SimpleResponse<Member>>(data)
+      .pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.getRequest().appendRoute(`/${id}`).delete<SimpleResponse<boolean>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${id}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.getRequest().appendRoute(`/${id}`).read<SimpleResponse<Member>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${id}`)
+      .read<SimpleResponse<Member>>()
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

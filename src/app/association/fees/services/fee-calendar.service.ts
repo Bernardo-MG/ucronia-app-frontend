@@ -24,12 +24,17 @@ export class FeeCalendarService {
     query.sort = new Sort([new SortField("fullName")]);
     query.addParameter('status', active.toString().toUpperCase());
 
-    return this.getRequest().query(query).appendRoute(`/${year}`).read<SimpleResponse<FeeCalendar[]>>()
+    return this.getRequest()
+      .query(query)
+      .appendRoute(`/${year}`)
+      .read<SimpleResponse<FeeCalendar[]>>()
       .pipe(map(r => r.content));
   }
 
   public getRange(): Observable<FeeCalendarYearsRange> {
-    return this.getRequest().appendRoute("/range").read<SimpleResponse<FeeCalendarYearsRange>>()
+    return this.getRequest()
+      .appendRoute("/range")
+      .read<SimpleResponse<FeeCalendarYearsRange>>()
       .pipe(map(r => r.content));
   }
 

@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
-import { SortField } from '../models/sort-field';
+import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
-import { Sort } from '../models/sort';
 
 /**
  * Request implementation for Angular.
@@ -19,7 +18,7 @@ export class AngularRequest implements Request {
   /**
    * Interceptor for errors in the request. Will generate an error response.
    */
-  private errorInteceptor = new AngularErrorRequestInterceptor();
+  private errorInterceptor = new AngularErrorRequestInterceptor();
 
   /**
    * Request options.
@@ -37,7 +36,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -45,7 +44,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -53,7 +52,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -61,7 +60,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -69,7 +68,7 @@ export class AngularRequest implements Request {
     const finalUrl = this.getFinalUrl();
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
-        catchError(this.errorInteceptor.handle)
+        catchError(this.errorInterceptor.handle)
       );
   }
 

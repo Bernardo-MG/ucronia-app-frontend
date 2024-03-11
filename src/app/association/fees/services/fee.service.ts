@@ -21,19 +21,30 @@ export class FeeService {
   ) { }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.getRequest().create<SimpleResponse<FeePayment>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .create<SimpleResponse<FeePayment>>(data)
+      .pipe(map(r => r.content));
   }
 
   public update(date: string, memberNumber: number, data: Fee): Observable<Fee> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).update<SimpleResponse<Fee>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${date}/${memberNumber}`)
+      .update<SimpleResponse<Fee>>(data)
+      .pipe(map(r => r.content));
   }
 
   public delete(date: string, memberNumber: number): Observable<boolean> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).delete<SimpleResponse<boolean>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${date}/${memberNumber}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
   }
 
   public getOne(date: string, memberNumber: number): Observable<Fee> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).read<SimpleResponse<Fee>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${date}/${memberNumber}`)
+      .read<SimpleResponse<Fee>>()
+      .pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
@@ -41,11 +52,16 @@ export class FeeService {
     query.sort = new Sort([new SortField('fullName'), new SortField('number')]);
     query.page = page;
 
-    return this.getMemberRequest().query(query).read();
+    return this.getMemberRequest()
+      .query(query)
+      .read<PaginatedResponse<Member[]>>();
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.getMemberRequest().appendRoute(`/${id}`).read<SimpleResponse<Member>>().pipe(map(r => r.content));
+    return this.getMemberRequest()
+      .appendRoute(`/${id}`)
+      .read<SimpleResponse<Member>>()
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

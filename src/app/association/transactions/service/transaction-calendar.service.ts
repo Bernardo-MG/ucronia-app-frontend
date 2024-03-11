@@ -48,7 +48,10 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.getRangeRequest().read<SimpleResponse<TransactionCalendarMonthsRange>>().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+    return this.getRangeRequest()
+    .read<SimpleResponse<TransactionCalendarMonthsRange>>()
+    .pipe(map(r => r.content))
+    .pipe(map(r => r.months.map(m => {
       const date = new Date(m);
       const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
@@ -57,7 +60,9 @@ export class TransactionCalendarService {
   }
 
   private readCalendarMonth(year: number, month: number): Observable<SimpleResponse<TransactionCalendarMonth>> {
-    return this.getRequest().appendRoute(`/${year}/${month}`).read();
+    return this.getRequest()
+    .appendRoute(`/${year}/${month}`)
+    .read<SimpleResponse<TransactionCalendarMonth>>();
   }
 
   private getRequest(): Request {

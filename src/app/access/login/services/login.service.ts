@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
 import { LoginStatus } from '@app/core/authentication/models/login-status';
 import { SecurityDetails } from '@app/core/authentication/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -10,11 +12,6 @@ import { LoginRequest } from '../models/login-request';
 
 @Injectable()
 export class LoginService {
-
-  /**
-   * Login endpoint URL.
-   */
-  private loginUrl = environment.apiUrl + "/login";
 
   constructor(
     private http: HttpClient,
@@ -31,9 +28,9 @@ export class LoginService {
    * @returns the user resulting from the login
    */
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
-    return this.http
+    return this.getRequest()
       // Login request
-      .post<SimpleResponse<LoginStatus>>(this.loginUrl, request)
+      .create<SimpleResponse<LoginStatus>>(request)
       // Get content
       .pipe(map(response => response.content))
       .pipe(map(loginStatus => {
@@ -42,6 +39,10 @@ export class LoginService {
         // Save token
         return this.authContainer.setDetails(loginStatus, rememberMe);
       }));
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/login');
   }
 
 }

@@ -27,7 +27,10 @@ export class MemberBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.getRequest().query(query).read<SimpleResponse<MemberBalance[]>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .query(query)
+      .read<SimpleResponse<MemberBalance[]>>()
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

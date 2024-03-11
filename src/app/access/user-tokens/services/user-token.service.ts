@@ -32,23 +32,37 @@ export class UserTokenService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest().query(query).read();
+    return this.getRequest()
+      .query(query)
+      .read<PaginatedResponse<UserToken[]>>();
   }
 
   public getOne(token: string): Observable<UserToken> {
-    return this.getRequest().appendRoute(`/${token}`).read<SimpleResponse<UserToken>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${token}`)
+      .read<SimpleResponse<UserToken>>()
+      .pipe(map(r => r.content));
   }
 
   public patch(token: string, data: UserToken): Observable<UserToken> {
-    return this.getRequest().appendRoute(`/${token}`).patch<SimpleResponse<UserToken>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${token}`)
+      .patch<SimpleResponse<UserToken>>(data)
+      .pipe(map(r => r.content));
   }
 
   public revoke(token: string): Observable<UserToken> {
-    return this.getRequest().appendRoute(`/${token}`).patch<SimpleResponse<UserToken>>({ revoked: true }).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${token}`)
+      .patch<SimpleResponse<UserToken>>({ revoked: true })
+      .pipe(map(r => r.content));
   }
 
   public extend(token: string, date: string): Observable<UserToken> {
-    return this.getRequest().appendRoute(`/${token}`).patch<SimpleResponse<UserToken>>({ expirationDate: date }).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${token}`)
+      .patch<SimpleResponse<UserToken>>({ expirationDate: date })
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

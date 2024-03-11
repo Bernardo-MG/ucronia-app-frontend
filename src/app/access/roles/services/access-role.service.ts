@@ -29,7 +29,9 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest().query(query).read();
+    return this.getRequest()
+      .query(query)
+      .read<PaginatedResponse<Role[]>>();
   }
 
   public getPermissions(role: string, page: number, sort: Sort): Observable<PaginatedResponse<Permission[]>> {
@@ -41,7 +43,10 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest().query(query).appendRoute(`/${role}/permission`).read();
+    return this.getRequest()
+      .query(query)
+      .appendRoute(`/${role}/permission`)
+      .read<PaginatedResponse<Permission[]>>();
   }
 
   public getAvailablePermissions(role: string, page: number, sort: Sort): Observable<PaginatedResponse<Permission[]>> {
@@ -53,31 +58,51 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest().query(query).appendRoute(`/${role}/permission/available`).read();
+    return this.getRequest()
+      .query(query)
+      .appendRoute(`/${role}/permission/available`)
+      .read<PaginatedResponse<Permission[]>>();
   }
 
   public create(data: Role): Observable<Role> {
-    return this.getRequest().create<SimpleResponse<Role>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .create<SimpleResponse<Role>>(data)
+      .pipe(map(r => r.content));
   }
 
   public update(role: string, data: Role): Observable<Role> {
-    return this.getRequest().appendRoute(`/${role}`).update<SimpleResponse<Role>>(data).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${role}`)
+      .update<SimpleResponse<Role>>(data)
+      .pipe(map(r => r.content));
   }
 
   public delete(role: string): Observable<boolean> {
-    return this.getRequest().appendRoute(`/${role}`).delete<SimpleResponse<boolean>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${role}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
   }
 
   public getOne(role: string): Observable<Role> {
-    return this.getRequest().appendRoute(`/${role}`).read<SimpleResponse<Role>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${role}`)
+      .read<SimpleResponse<Role>>()
+      .pipe(map(r => r.content));
   }
 
   public addPermission(role: string, permission: string): Observable<Permission> {
-    return this.getRequest().appendRoute(`/${role}/permission/${permission}`).update<SimpleResponse<Permission>>({}).pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${role}/permission/${permission}`)
+      .update<SimpleResponse<Permission>>({})
+      .pipe(map(r => r.content));
   }
 
   public removePermission(role: string, permission: string): Observable<boolean> {
-    return this.getRequest().appendRoute(`/${role}/permission/${permission}`).delete<SimpleResponse<boolean>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .appendRoute(`/${role}/permission/${permission}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

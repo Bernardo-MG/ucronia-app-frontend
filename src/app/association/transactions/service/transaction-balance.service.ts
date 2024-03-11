@@ -20,7 +20,9 @@ export class TransactionBalanceService {
   ) { }
 
   public current(): Observable<TransactionCurrentBalance> {
-    return this.getRequest().read<SimpleResponse<TransactionCurrentBalance>>().pipe(map(r => r.content));
+    return this.getRequest()
+      .read<SimpleResponse<TransactionCurrentBalance>>()
+      .pipe(map(r => r.content));
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<TransactionMonthlyBalance[]> {
@@ -32,7 +34,10 @@ export class TransactionBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.getMonthlyRequest().query(query).read<SimpleResponse<TransactionMonthlyBalance[]>>().pipe(map(r => r.content));
+    return this.getMonthlyRequest()
+      .query(query)
+      .read<SimpleResponse<TransactionMonthlyBalance[]>>()
+      .pipe(map(r => r.content));
   }
 
   private getRequest(): Request {
