@@ -7,12 +7,16 @@ import { LibraryBookListComponent } from '../library-book-list/library-book-list
 @Component({
   selector: 'app-library-frontpage',
   standalone: true,
-  imports: [ RouterModule, LayoutModule, LibraryBookListComponent ],
+  imports: [RouterModule, LayoutModule, LibraryBookListComponent],
   templateUrl: './library-frontpage.component.html'
 })
 export class LibraryFrontpageComponent {
 
-  public createPermission = false;
+  public createBookPermission = false;
+
+  public createBookTypePermission = false;
+
+  public createGameSystemPermission = false;
 
   constructor(
     private authContainer: AuthContainer
@@ -20,7 +24,9 @@ export class LibraryFrontpageComponent {
 
   ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
+    this.createBookPermission = this.authContainer.hasPermission("library_book", "create");
+    this.createBookTypePermission = this.authContainer.hasPermission("library_book_type", "create");
+    this.createGameSystemPermission = this.authContainer.hasPermission("library_game_system", "create");
   }
 
 }

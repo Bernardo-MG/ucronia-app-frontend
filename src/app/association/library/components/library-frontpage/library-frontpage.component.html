@@ -9,8 +9,16 @@
                 <div class="d-grid">
                   <!-- Add button -->
                   <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/books/add"
-                    [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                    [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
                     Add book
+                  </button>
+                  <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/bookTypes/add"
+                    [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
+                    Add book type
+                  </button>
+                  <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/gameSystems/add"
+                    [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
+                    Add game system
                   </button>
                 </div>
               </div>
