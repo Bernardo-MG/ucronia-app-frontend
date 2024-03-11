@@ -14,7 +14,7 @@ export class MemberListComponent implements OnChanges {
 
   @Input() public activeFilter = Active.Active;
 
-  public response = new PaginatedResponse<Member[]>([]);
+  public page = new PaginatedResponse<Member[]>([]);
 
   /**
    * Loading flag.
@@ -41,7 +41,7 @@ export class MemberListComponent implements OnChanges {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    this.load(this.page.currentPage);
   }
 
   private load(page: number) {
@@ -49,7 +49,7 @@ export class MemberListComponent implements OnChanges {
 
     this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingMembers = false;

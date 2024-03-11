@@ -17,7 +17,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public response = new PaginatedResponse<Role[]>([]);
+  public page = new PaginatedResponse<Role[]>([]);
 
   public readingRoles = false;
 
@@ -40,7 +40,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    this.load(this.page.currentPage);
   }
 
   public onRemoveRole(data: Role): void {
@@ -51,7 +51,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.readingRoles = true;
     this.service.getRoles(this.user, page, this.sort).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingRoles = false;

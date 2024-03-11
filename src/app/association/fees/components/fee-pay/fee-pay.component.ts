@@ -27,7 +27,7 @@ export class FeePayComponent implements OnInit {
 
   public createPermission = false;
 
-  public response = new PaginatedResponse<Member[]>([]);
+  public page = new PaginatedResponse<Member[]>([]);
 
   public member = new Member();
 
@@ -75,7 +75,7 @@ export class FeePayComponent implements OnInit {
     // TODO: The page correction should be done automatically
     this.service.getMembers(page).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingMembers = false;

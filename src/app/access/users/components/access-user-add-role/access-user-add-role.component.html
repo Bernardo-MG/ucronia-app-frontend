@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="response.content">
+      <ng-template ngFor let-role [ngForOf]="page.content">
         <tr role="button">
           <td>
             <button (click)="onAddRole(role)" type="button" class="btn btn-link link-dark" role="button"
@@ -25,7 +25,7 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingSelection" [current]="response.currentPage" [pages]="response.totalPages"
+  <pagination-navigation [disabled]="readingSelection" [current]="page.currentPage" [pages]="page.totalPages"
     (goTo)="loadRoleSelectionPage($event)">
   </pagination-navigation>
 </div>

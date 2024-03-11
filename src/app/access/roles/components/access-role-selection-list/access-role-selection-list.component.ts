@@ -11,7 +11,7 @@ import { Sort } from '@app/core/api/models/sort';
 })
 export class AccessRoleSelectionListComponent implements OnInit {
 
-  public response = new PaginatedResponse<Role[]>([]);
+  public page = new PaginatedResponse<Role[]>([]);
 
   /**
    * Loading flag.
@@ -31,14 +31,14 @@ export class AccessRoleSelectionListComponent implements OnInit {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    this.load(this.page.currentPage);
   }
 
   private load(page: number) {
     this.readingRoles = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingRoles = false;

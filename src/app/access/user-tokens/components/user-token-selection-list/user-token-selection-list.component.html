@@ -29,7 +29,7 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr *ngFor="let token of response.content; let rowIndex = index" role="button" routerLink="/user-tokens/{{token.token}}">
+          <tr *ngFor="let token of page.content; let rowIndex = index" role="button" routerLink="/user-tokens/{{token.token}}">
             <!-- Cells -->
             <td>
               {{token.username}}
@@ -52,7 +52,7 @@
     </layout-waiting-wrapper>
   </div>
   <div class="d-flex justify-content-center mt-1">
-    <pagination-route-navigation [disabled]="readingUsers" [totalPages]="response.totalPages">
+    <pagination-route-navigation [disabled]="readingUsers" [totalPages]="page.totalPages">
     </pagination-route-navigation>
   </div>
 </div>
