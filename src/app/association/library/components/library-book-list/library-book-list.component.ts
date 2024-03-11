@@ -14,8 +14,7 @@ import { BookService } from '../../services/book.service';
   selector: 'library-book-list',
   standalone: true,
   imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
-  templateUrl: './library-book-list.component.html',
-  styleUrl: './library-book-list.component.sass'
+  templateUrl: './library-book-list.component.html'
 })
 export class LibraryBookListComponent implements OnInit {
 

@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-library-game-system-create',
   standalone: true,
   imports: [],
-  templateUrl: './library-game-system-create.component.html',
-  styleUrl: './library-game-system-create.component.sass'
+  templateUrl: './library-game-system-create.component.html'
 })
 export class LibraryGameSystemCreateComponent {
 

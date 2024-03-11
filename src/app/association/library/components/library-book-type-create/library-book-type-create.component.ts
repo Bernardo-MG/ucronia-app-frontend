@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-library-book-type-create',
   standalone: true,
   imports: [],
-  templateUrl: './library-book-type-create.component.html',
-  styleUrl: './library-book-type-create.component.sass'
+  templateUrl: './library-book-type-create.component.html'
 })
 export class LibraryBookTypeCreateComponent {
 

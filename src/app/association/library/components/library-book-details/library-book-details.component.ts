@@ -4,8 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-library-book-details',
   standalone: true,
   imports: [],
-  templateUrl: './library-book-details.component.html',
-  styleUrl: './library-book-details.component.sass'
+  templateUrl: './library-book-details.component.html'
 })
 export class LibraryBookDetailsComponent {
 
