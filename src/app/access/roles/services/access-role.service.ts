@@ -4,7 +4,7 @@ import { ApiResponse } from '@app/core/api/models/api-response';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
@@ -20,35 +20,38 @@ export class AccessRoleService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Role[]>> {
+  public getAll(pagination: Pagination | undefined, sort: Sort[] | undefined): Observable<PaginatedResponse<Role[]>> {
     const defaultSort = new Sort('name');
     defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery();
     query.defaultSort = [defaultSort];
     query.pagination = pagination;
+    query.sort = sort;
 
     return this.getRequest().query(query).read();
   }
 
-  public getPermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+  public getPermissions(role: string, pagination: Pagination | undefined, sort: Sort[] | undefined): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort = new Sort('resource');
     const sortAction: Sort = new Sort('action');
 
     const query = new PaginatedQuery();
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
+    query.sort = sort;
 
     return this.getRequest().query(query).appendRoute(`/${role}/permission`).read();
   }
 
-  public getAvailablePermissions(role: string, pagination: PaginationRequest | undefined): Observable<PaginatedResponse<Permission[]>> {
+  public getAvailablePermissions(role: string, pagination: Pagination | undefined, sort: Sort[] | undefined): Observable<PaginatedResponse<Permission[]>> {
     const sortResource: Sort = new Sort('resource');
     const sortAction: Sort = new Sort('action');
 
     const query = new PaginatedQuery();
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
+    query.sort = sort;
 
     return this.getRequest().query(query).appendRoute(`/${role}/permission/available`).read();
   }

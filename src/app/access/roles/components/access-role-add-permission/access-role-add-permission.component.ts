@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { Permission } from '@app/core/authentication/models/permission';
 import { AccessRoleService } from '../../services/access-role.service';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
@@ -40,7 +40,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load({ page });
   }
 
   public onChangeDirection(sort: Sort) {
@@ -52,12 +52,12 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.response.currentPage(), sort: this.sort });
+    this.load({ page: this.response.currentPage() });
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(pagination: Pagination | undefined) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.role, pagination).subscribe({
+    this.service.getAvailablePermissions(this.role, pagination, this.sort).subscribe({
       next: response => {
         this.response = response;
 

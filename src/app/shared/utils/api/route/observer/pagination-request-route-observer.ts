@@ -1,10 +1,10 @@
 import { ActivatedRoute } from "@angular/router";
 import { ParamsObserver } from "@app/shared/utils/route/observer/params-observer";
 import { RouteParametersObserver } from "@app/shared/utils/route/observer/route-params-observer";
-import { PaginationRequest } from "../../../../../core/api/models/pagination-request";
+import { Pagination } from "../../../../../core/api/models/pagination";
 import { PaginationRequestParametersParser } from "./parser/pagination-request-parameters-parser";
 
-export class PaginationRequestRouteObserver implements ParamsObserver<PaginationRequest> {
+export class PaginationRequestRouteObserver implements ParamsObserver<Pagination> {
 
   private wrappedObserver;
 

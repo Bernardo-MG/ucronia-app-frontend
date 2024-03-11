@@ -1,7 +1,6 @@
 import { Sort } from "@app/core/api/models/sort";
 
-export class PaginationRequest {
+export class Pagination {
   page?: number;
   size?: number;
-  sort?: Sort[];
 }

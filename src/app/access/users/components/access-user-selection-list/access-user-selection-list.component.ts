@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { User } from '@app/core/authentication/models/user';
 import { AccessUserService } from '../../services/access-user.service';
@@ -33,6 +33,7 @@ export class AccessUserSelectionListComponent implements OnInit {
 
   public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
+
     if (index < 0) {
       // New property to sort
       this.sort.push(sort);
@@ -40,12 +41,13 @@ export class AccessUserSelectionListComponent implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage, sort: this.sort });
+
+    this.load({ page: this.currentPage });
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(pagination: Pagination | undefined) {
     this.readingUsers = true;
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(pagination, this.sort).subscribe({
       next: page => {
         this.users = page.content;
 

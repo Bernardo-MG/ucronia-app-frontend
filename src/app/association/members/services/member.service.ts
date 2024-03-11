@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
@@ -19,10 +19,11 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
+  public getAll(pagination: Pagination | undefined, sort: Sort[] | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = [new Sort('fullName'), new Sort('number')];
     query.pagination = pagination;
+    query.sort = sort;
     if (active === Active.Active) {
       query.addParameter('status', 'ACTIVE');
     } else if (active === Active.Inactive) {

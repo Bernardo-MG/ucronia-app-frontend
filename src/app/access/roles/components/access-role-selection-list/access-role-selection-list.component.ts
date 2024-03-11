@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
@@ -41,12 +41,12 @@ export class AccessRoleSelectionListComponent  implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage, sort: this.sort });
+    this.load({ page: this.currentPage });
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(pagination: Pagination | undefined) {
     this.readingRoles = true;
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(pagination, this.sort).subscribe({
       next: page => {
 
         this.roles = page.content;

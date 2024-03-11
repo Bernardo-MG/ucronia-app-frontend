@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
@@ -35,11 +35,12 @@ export class MemberListComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load({ page });
   }
 
   public onChangeDirection(sort: Sort) {
     const index = this.sort.findIndex(s => s.property === sort.property);
+
     if (index < 0) {
       // New property to sort
       this.sort.push(sort);
@@ -47,13 +48,14 @@ export class MemberListComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.response.currentPage(), sort: this.sort });
+
+    this.load({ page: this.response.currentPage() });
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(pagination: Pagination | undefined) {
     this.readingMembers = true;
 
-    this.service.getAll(pagination, this.activeFilter).subscribe({
+    this.service.getAll(pagination, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.response = response;
 

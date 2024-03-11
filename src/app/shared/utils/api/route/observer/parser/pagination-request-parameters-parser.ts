@@ -1,28 +1,28 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
-import { PaginationRequest } from "../../../../../../core/api/models/pagination-request";
+import { Pagination } from "../../../../../../core/api/models/pagination";
 import { SortParametersParser } from "./sort-parameters-parser";
 
 /**
- * Parses a {@link PaginationRequest} from the route parameters.
+ * Parses a {@link Pagination} from the route parameters.
  * 
  * The parameters used to parse are:
  * - page, containing the page number. Optional.
  * - size, containing the page size. Optional.
  * - sort, delegated to {@link SortParametersParser}. Optional.
  */
-export class PaginationRequestParametersParser implements ParametersParser<PaginationRequest> {
+export class PaginationRequestParametersParser implements ParametersParser<Pagination> {
 
   /**
    * Parsing the sort object is delegated to this parser.
    */
   private sortParser = new SortParametersParser();
 
-  public parse(params: ParamMap): PaginationRequest | undefined {
+  public parse(params: ParamMap): Pagination | undefined {
     let request;
 
     if ((params.has('page')) || (params.has('size')) || (params.has('sort'))) {
-      request = new PaginationRequest();
+      request = new Pagination();
 
       if (params.has('page')) {
         request.page = Number(params.get('page'));

@@ -1,5 +1,5 @@
 import { Direction } from "./direction";
-import { PaginationRequest } from "./pagination-request";
+import { Pagination } from "./pagination";
 import { Sort } from "./sort";
 
 export class PaginatedQuery {
@@ -10,8 +10,10 @@ export class PaginatedQuery {
 
   public parameters: { [key: string]: any } = {};
 
-  public set sort(sort: Sort[]) {
-    this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
+  public set sort(sort: Sort[] | undefined) {
+    if (sort) {
+      this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
+    }
   }
 
   public get sort(): Sort[] {
@@ -66,16 +68,13 @@ export class PaginatedQuery {
     this._defaultSort = defaultSort;
   }
 
-  public set pagination(pagination: PaginationRequest | undefined) {
+  public set pagination(pagination: Pagination | undefined) {
     if (pagination) {
       if (pagination.page) {
         this.page = pagination.page;
       }
       if (pagination.size) {
         this.size = pagination.size;
-      }
-      if (pagination.sort) {
-        this._sort = pagination.sort;
       }
     }
   }

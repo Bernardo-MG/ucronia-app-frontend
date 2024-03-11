@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { Sort } from '@app/core/api/models/sort';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { Pagination } from '@app/core/api/models/pagination';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
@@ -34,7 +34,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load({ page });
   }
 
   public onChangeDirection(sort: Sort) {
@@ -46,16 +46,16 @@ export class AccessUserRoleFormComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.response.currentPage(), sort: this.sort });
+    this.load({ page: this.response.currentPage() });
   }
 
   public onRemoveRole(data: Role): void {
     this.service.removeRole(this.user, data.name).subscribe(p => this.load(undefined));
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(pagination: Pagination | undefined) {
     this.readingRoles = true;
-    this.service.getRoles(this.user, pagination).subscribe({
+    this.service.getRoles(this.user, pagination, this.sort).subscribe({
       next: response => {
         this.response = response;
 
