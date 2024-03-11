@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { TransactionBalanceApi } from '@app/association/api/transaction-balance-api';
+import { ApiResponse } from '@app/core/api/models/api-response';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
+import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '../models/transaction-current-balance';
 import { TransactionMonthlyBalance } from '../models/transaction-monthly-balance';
@@ -11,14 +14,12 @@ import { TransactionMonthlyBalance } from '../models/transaction-monthly-balance
 @Injectable()
 export class TransactionBalanceService {
 
-  private transactionBalanceApi = new TransactionBalanceApi(this.http);
-
   constructor(
     private http: HttpClient
   ) { }
 
   public current(): Observable<TransactionCurrentBalance> {
-    return this.transactionBalanceApi.readCurrent().pipe(map(r => r.content));
+    return this.getRequest().read<ApiResponse<TransactionCurrentBalance>>().pipe(map(r => r.content));
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<TransactionMonthlyBalance[]> {
@@ -30,7 +31,15 @@ export class TransactionBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.transactionBalanceApi.readMonthly(query).pipe(map(r => r.content));
+    return this.getMonthlyRequest().query(query).read<ApiResponse<TransactionMonthlyBalance[]>>().pipe(map(r => r.content));
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/funds/balance');
+  }
+
+  private getMonthlyRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/funds/balance/monthly');
   }
 
 }
