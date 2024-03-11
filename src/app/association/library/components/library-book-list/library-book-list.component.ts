@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BookService } from '../../services/book.service';
 import { Book } from '../../models/book';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'library-book-list',
@@ -31,13 +30,13 @@ export class LibraryBookListComponent implements OnInit {
 
   public ngOnInit(): void {
     // Load books
-    this.load(undefined)
+    this.load(0)
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(page: number) {
     this.readingBooks = true;
 
-    this.service.getAll(pagination).subscribe({
+    this.service.getAll(page).subscribe({
       next: response => {
         this.books = response.content;
 
