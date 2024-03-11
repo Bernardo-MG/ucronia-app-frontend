@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SortField } from '@app/core/api/models/sort-field';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Direction } from '../../../../core/api/models/direction';
+import { SortDirection } from '../../../../core/api/models/sort-direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted
@@ -14,7 +14,7 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   @Input() public property = '';
 
-  @Input() public direction = Direction.Unsorted;
+  @Input() public direction = SortDirection.Unsorted;
 
   @Input() public disabled = false;
 
@@ -33,15 +33,15 @@ export class PaginationOrderButtonComponent implements OnChanges {
   }
 
   public onChangeDirection() {
-    if (this.direction === Direction.Ascending) {
+    if (this.direction === SortDirection.Ascending) {
       // Ascending -> descending
-      this.direction = Direction.Descending;
-    } else if (this.direction === Direction.Descending) {
+      this.direction = SortDirection.Descending;
+    } else if (this.direction === SortDirection.Descending) {
       // Descending -> unsorted
-      this.direction = Direction.Unsorted;
+      this.direction = SortDirection.Unsorted;
     } else {
       // Unsorted -> ascending
-      this.direction = Direction.Ascending;
+      this.direction = SortDirection.Ascending;
     }
 
     const previousDirection = this.direction;
@@ -54,10 +54,10 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   private updateDirection() {
     switch (this.direction) {
-      case Direction.Ascending:
+      case SortDirection.Ascending:
         this.directionIcon = this.ascendingIcon;
         break;
-      case Direction.Descending:
+      case SortDirection.Descending:
         this.directionIcon = this.descendingIcon;
         break;
       default:

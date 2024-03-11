@@ -1,6 +1,6 @@
-import { ApiResponse } from "./api-response";
+import { SimpleResponse } from "./simple-response";
 
-export class PaginatedResponse<T> extends ApiResponse<T> {
+export class PaginatedResponse<T> extends SimpleResponse<T> {
   page = 0;
   size = 0;
   elementsInPage = 0;

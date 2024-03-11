@@ -1,4 +1,4 @@
-import { Direction } from "./direction";
+import { SortDirection } from "./sort-direction";
 import { SortField } from "./sort-field";
 
 export class Sort {
@@ -10,7 +10,7 @@ export class Sort {
   }
 
   public addField(field: SortField) {
-    if (field.direction !== Direction.Unsorted) {
+    if (field.direction !== SortDirection.Unsorted) {
       const index = this.fields.findIndex(s => s.property === field.property);
 
       // TODO: remove if it is unsorted

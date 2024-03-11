@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
 import { environment } from 'environments/environment';
@@ -36,7 +36,7 @@ export class AccountService {
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
-    const resp: Observable<ApiResponse<PasswordChangeStatus>> = this.operations.update(data);
+    const resp: Observable<SimpleResponse<PasswordChangeStatus>> = this.operations.update(data);
     return resp.pipe(map(r => r.content));
   }
 

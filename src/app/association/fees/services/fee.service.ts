@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { AngularRequest } from '@app/core/api/request/angular-request';
@@ -21,19 +21,19 @@ export class FeeService {
   ) { }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.getRequest().create<ApiResponse<FeePayment>>(data).pipe(map(r => r.content));
+    return this.getRequest().create<SimpleResponse<FeePayment>>(data).pipe(map(r => r.content));
   }
 
   public update(date: string, memberNumber: number, data: Fee): Observable<Fee> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).update<ApiResponse<Fee>>(data).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).update<SimpleResponse<Fee>>(data).pipe(map(r => r.content));
   }
 
   public delete(date: string, memberNumber: number): Observable<boolean> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).delete<ApiResponse<boolean>>().pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).delete<SimpleResponse<boolean>>().pipe(map(r => r.content));
   }
 
   public getOne(date: string, memberNumber: number): Observable<Fee> {
-    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).read<ApiResponse<Fee>>().pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).read<SimpleResponse<Fee>>().pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
@@ -45,7 +45,7 @@ export class FeeService {
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.getMemberRequest().appendRoute(`/${id}`).read<ApiResponse<Member>>().pipe(map(r => r.content));
+    return this.getMemberRequest().appendRoute(`/${id}`).read<SimpleResponse<Member>>().pipe(map(r => r.content));
   }
 
   private getRequest(): Request {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
 import { Month } from '@app/shared/calendar/models/month';
@@ -48,7 +48,7 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.getRangeRequest().read<ApiResponse<TransactionCalendarMonthsRange>>().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+    return this.getRangeRequest().read<SimpleResponse<TransactionCalendarMonthsRange>>().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
       const date = new Date(m);
       const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
@@ -56,7 +56,7 @@ export class TransactionCalendarService {
     })));
   }
 
-  private readCalendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
+  private readCalendarMonth(year: number, month: number): Observable<SimpleResponse<TransactionCalendarMonth>> {
     return this.getRequest().appendRoute(`/${year}/${month}`).read();
   }
 

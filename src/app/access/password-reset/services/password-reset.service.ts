@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { ApiResponse } from '@app/core/api/models/api-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { AngularErrorRequestInterceptor } from '@app/core/api/request/angular-error-request-interceptor';
 import { environment } from 'environments/environment';
 import { Observable, catchError } from 'rxjs';
@@ -19,28 +19,28 @@ export class PasswordResetService {
     private http: HttpClient
   ) { }
 
-  public requestResetPassword(request: PasswordResetRequest): Observable<ApiResponse<void>> {
+  public requestResetPassword(request: PasswordResetRequest): Observable<SimpleResponse<void>> {
     return this.http
       // Reset password request
-      .post<ApiResponse<void>>(this.passwordResetRequestUrl, request)
+      .post<SimpleResponse<void>>(this.passwordResetRequestUrl, request)
       .pipe(
         catchError(this.errorInteceptor.handle)
       );
   }
 
-  public resetPassword(token: string, reset: PasswordReset): Observable<ApiResponse<void>> {
+  public resetPassword(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
     return this.http
       // Validate token request
-      .post<ApiResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset)
+      .post<SimpleResponse<void>>(`${this.passwordResetRequestUrl}/${token}`, reset)
       .pipe(
         catchError(this.errorInteceptor.handle)
       );
   }
 
-  public validateToken(token: string): Observable<ApiResponse<UserTokenStatus>> {
+  public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
     return this.http
       // Validate token request
-      .get<ApiResponse<UserTokenStatus>>(`${this.passwordResetRequestUrl}/${token}`)
+      .get<SimpleResponse<UserTokenStatus>>(`${this.passwordResetRequestUrl}/${token}`)
       .pipe(
         catchError(this.errorInteceptor.handle)
       );

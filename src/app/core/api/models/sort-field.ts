@@ -1,4 +1,4 @@
-import { Direction } from "./direction";
+import { SortDirection } from "./sort-direction";
 
 export class SortField {
 
@@ -7,6 +7,6 @@ export class SortField {
   }
 
   property: string;
-  direction = Direction.Ascending;
+  direction = SortDirection.Ascending;
 
 }

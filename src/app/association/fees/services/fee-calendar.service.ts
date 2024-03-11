@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
 import { Active } from '@app/association/members/models/active';
-import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { AngularRequest } from '@app/core/api/request/angular-request';
@@ -24,12 +24,12 @@ export class FeeCalendarService {
     query.sort = new Sort([new SortField("fullName")]);
     query.addParameter('status', active.toString().toUpperCase());
 
-    return this.getRequest().query(query).appendRoute(`/${year}`).read<ApiResponse<FeeCalendar[]>>()
+    return this.getRequest().query(query).appendRoute(`/${year}`).read<SimpleResponse<FeeCalendar[]>>()
       .pipe(map(r => r.content));
   }
 
   public getRange(): Observable<FeeCalendarYearsRange> {
-    return this.getRequest().appendRoute("/range").read<ApiResponse<FeeCalendarYearsRange>>()
+    return this.getRequest().appendRoute("/range").read<SimpleResponse<FeeCalendarYearsRange>>()
       .pipe(map(r => r.content));
   }
 

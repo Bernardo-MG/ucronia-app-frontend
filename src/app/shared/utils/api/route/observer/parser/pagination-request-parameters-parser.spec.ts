@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
-import { Direction } from '@app/core/api/models/direction';
+import { SortDirection } from '@app/core/api/models/sort-direction';
 import { PaginationRequestParametersParser } from './pagination-request-parameters-parser';
 
 describe('PaginationRequestParametersParser', () => {

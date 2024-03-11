@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiResponse } from '@app/core/api/models/api-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { LoginStatus } from '@app/core/authentication/models/login-status';
 import { SecurityDetails } from '@app/core/authentication/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -33,7 +33,7 @@ export class LoginService {
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
     return this.http
       // Login request
-      .post<ApiResponse<LoginStatus>>(this.loginUrl, request)
+      .post<SimpleResponse<LoginStatus>>(this.loginUrl, request)
       // Get content
       .pipe(map(response => response.content))
       .pipe(map(loginStatus => {

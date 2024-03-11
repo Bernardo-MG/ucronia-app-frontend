@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Direction } from '../../../../core/api/models/direction';
+import { SortDirection } from '../../../../core/api/models/sort-direction';
 import { PaginationOrderButtonComponent } from './pagination-order-button.component';
 import { SortField } from '@app/core/api/models/sort-field';
 
@@ -51,7 +51,7 @@ describe('PaginationOrderButtonComponent', () => {
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
     const sort = new SortField('property');
-    sort.direction = Direction.Ascending;
+    sort.direction = SortDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -66,7 +66,7 @@ describe('PaginationOrderButtonComponent', () => {
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
     const sort = new SortField('property');
-    sort.direction = Direction.Descending;
+    sort.direction = SortDirection.Descending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -82,7 +82,7 @@ describe('PaginationOrderButtonComponent', () => {
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
     const sort = new SortField('property');
-    sort.direction = Direction.Unsorted;
+    sort.direction = SortDirection.Unsorted;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -99,7 +99,7 @@ describe('PaginationOrderButtonComponent', () => {
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
     const sort = new SortField('property');
-    sort.direction = Direction.Ascending;
+    sort.direction = SortDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -140,7 +140,7 @@ describe('PaginationOrderButtonComponent', () => {
   // **************************************************************************
 
   it('should change to unsorted icon when receiving the unsorted direction', () => {
-    component.direction = Direction.Unsorted;
+    component.direction = SortDirection.Unsorted;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });
@@ -150,7 +150,7 @@ describe('PaginationOrderButtonComponent', () => {
   });
 
   it('should change to sort up icon when receiving the ascending direction', () => {
-    component.direction = Direction.Ascending;
+    component.direction = SortDirection.Ascending;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });
@@ -160,7 +160,7 @@ describe('PaginationOrderButtonComponent', () => {
   });
 
   it('should change to sort down icon when receiving the descending direction', () => {
-    component.direction = Direction.Descending;
+    component.direction = SortDirection.Descending;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });

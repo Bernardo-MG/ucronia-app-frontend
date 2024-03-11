@@ -1,7 +1,7 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
 import { SortField } from "../../../../../../core/api/models/sort-field";
-import { Direction } from "@app/core/api/models/direction";
+import { SortDirection } from "@app/core/api/models/sort-direction";
 
 /**
  * Parses a {@link SortField} from the route parameters.
@@ -61,15 +61,15 @@ export class SortParametersParser implements ParametersParser<SortField[]> {
         direction = splitPair[1];
         if (direction === 'desc') {
           // Valid direction
-          sort.direction = Direction.Descending;
+          sort.direction = SortDirection.Descending;
         } else {
           // Default or invalid direction
-          sort.direction = Direction.Ascending;
+          sort.direction = SortDirection.Ascending;
         }
       } else {
         // No direction
         // Applies default direction
-        sort.direction = Direction.Ascending;
+        sort.direction = SortDirection.Ascending;
       }
     } else {
       // No property
