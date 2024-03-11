@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FundsCalendarApi } from '@app/association/api/funds-calendar-api';
+import { ApiResponse } from '@app/core/api/models/api-response';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
 import { Month } from '@app/shared/calendar/models/month';
+import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../models/transaction';
+import { TransactionCalendarMonth } from '../models/transaction-calendar-month';
+import { TransactionCalendarMonthsRange } from '../models/transaction-calendar-months-range';
 
 @Injectable()
 export class TransactionCalendarService {
-
-  private fundsCalendarApi = new FundsCalendarApi(this.http);
 
   constructor(
     private http: HttpClient
@@ -34,9 +37,9 @@ export class TransactionCalendarService {
       nextMonth = 1;
     }
 
-    const previousMonthQuery = this.fundsCalendarApi.calendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
-    const thisMonthQuery = this.fundsCalendarApi.calendarMonth(year, month).pipe(map(r => r.content));
-    const nextMonthQuery = this.fundsCalendarApi.calendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
+    const previousMonthQuery = this.readCalendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
+    const thisMonthQuery = this.readCalendarMonth(year, month).pipe(map(r => r.content));
+    const nextMonthQuery = this.readCalendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
 
     return concat(previousMonthQuery, thisMonthQuery, nextMonthQuery).pipe(
       mergeMap((data) => data.transactions), // Flatten the arrays emitted by each observable
@@ -45,12 +48,24 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.fundsCalendarApi.calendarRange().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
+    return this.getRangeRequest().read<ApiResponse<TransactionCalendarMonthsRange>>().pipe(map(r => r.content)).pipe(map(r => r.months.map(m => {
       const date = new Date(m);
       const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
       return month;
     })));
+  }
+
+  private readCalendarMonth(year: number, month: number): Observable<ApiResponse<TransactionCalendarMonth>> {
+    return this.getRequest().appendRoute(`/${year}/${month}`).read();
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/funds/calendar');
+  }
+
+  private getRangeRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/funds/calendar/range');
   }
 
 }

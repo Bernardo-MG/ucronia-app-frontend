@@ -1,40 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FeeApi } from '@app/association/api/fee-api';
-import { MemberApi } from '@app/association/api/member-api';
+import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
+import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { Member } from '../../members/models/member';
 import { Fee } from '../models/fee';
 import { FeePayment } from '../models/fee-payment';
-import { Member } from '../../members/models/member';
 
 @Injectable()
 export class FeeService {
-
-  private feeApi = new FeeApi(this.http);
-
-  private memberApi = new MemberApi(this.http);
 
   constructor(
     private http: HttpClient
   ) { }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.feeApi.pay(data).pipe(map(r => r.content));
+    return this.getRequest().create<ApiResponse<FeePayment>>(data).pipe(map(r => r.content));
   }
 
   public update(date: string, memberNumber: number, data: Fee): Observable<Fee> {
-    return this.feeApi.updateById(date, memberNumber, data).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).update<ApiResponse<Fee>>(data).pipe(map(r => r.content));
   }
 
   public delete(date: string, memberNumber: number): Observable<boolean> {
-    return this.feeApi.deleteById(date, memberNumber).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).delete<ApiResponse<boolean>>().pipe(map(r => r.content));
   }
 
   public getOne(date: string, memberNumber: number): Observable<Fee> {
-    return this.feeApi.readById(date, memberNumber).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${date}/${memberNumber}`).read<ApiResponse<Fee>>().pipe(map(r => r.content));
   }
 
   public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
@@ -42,11 +40,19 @@ export class FeeService {
     query.sort = [new Sort('fullName'), new Sort('number')];
     query.page = page;
 
-    return this.memberApi.readAll(query);
+    return this.getMemberRequest().query(query).read();
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.memberApi.readById(id).pipe(map(r => r.content));
+    return this.getMemberRequest().appendRoute(`/${id}`).read<ApiResponse<Member>>().pipe(map(r => r.content));
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/fee');
+  }
+
+  private getMemberRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/member');
   }
 
 }
