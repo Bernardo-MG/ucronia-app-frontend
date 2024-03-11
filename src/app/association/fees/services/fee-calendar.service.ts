@@ -5,6 +5,7 @@ import { Active } from '@app/association/members/models/active';
 import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
 import { environment } from 'environments/environment';
@@ -20,12 +21,8 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
     const query = new PaginatedQuery();
-    query.sort = [new Sort("fullName")];
-    if (active === Active.Active) {
-      query.addParameter("status", 'ACTIVE');
-    } else if (active === Active.Inactive) {
-      query.addParameter("status", 'INACTIVE');
-    }
+    query.sort = new Sort([new SortField("fullName")]);
+    query.addParameter('status', active.toString().toUpperCase());
 
     return this.getRequest().query(query).appendRoute(`/${year}`).read<ApiResponse<FeeCalendar[]>>()
       .pipe(map(r => r.content));

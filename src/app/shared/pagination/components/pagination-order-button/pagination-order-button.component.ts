@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { Direction } from '../../../../core/api/models/direction';
 
@@ -18,7 +18,7 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<Sort>();
+  @Output() public directionChange = new EventEmitter<SortField>();
 
   private ascendingIcon = faSortUp;
   private descendingIcon = faSortDown;
@@ -47,7 +47,7 @@ export class PaginationOrderButtonComponent implements OnChanges {
     const previousDirection = this.direction;
     this.updateDirection();
 
-    const sort = new Sort(this.property);
+    const sort = new SortField(this.property);
     sort.direction = previousDirection;
     this.directionChange.emit(sort);
   }

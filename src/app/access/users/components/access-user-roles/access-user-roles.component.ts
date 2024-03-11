@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
 
@@ -20,7 +21,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public readingRoles = false;
 
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: AccessUserService
@@ -36,15 +37,9 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.load(page);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
     this.load(this.response.currentPage);
   }
 

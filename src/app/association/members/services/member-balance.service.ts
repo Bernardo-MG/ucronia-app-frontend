@@ -4,6 +4,7 @@ import { ApiResponse } from '@app/core/api/models/api-response';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
 import { environment } from 'environments/environment';
@@ -18,11 +19,11 @@ export class MemberBalanceService {
   ) { }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
-    const defaultSortDate = new Sort('month');
+    const defaultSortDate = new SortField('month');
     defaultSortDate.direction = Direction.Ascending;
 
     const query = new PaginatedQuery();
-    query.defaultSort = [defaultSortDate];
+    query.defaultSort = new Sort([defaultSortDate]);
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 

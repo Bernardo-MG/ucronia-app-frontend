@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '../../services/user-token.service';
+import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'access-user-token-selection-list',
@@ -17,7 +18,7 @@ export class UserTokenSelectionListComponent implements OnInit {
    */
   public readingUsers = false;
 
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: UserTokenService
@@ -27,15 +28,9 @@ export class UserTokenSelectionListComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
     this.load(this.response.currentPage);
   }
 

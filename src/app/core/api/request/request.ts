@@ -65,7 +65,7 @@ export interface Request {
    * 
    * @param sort sorting to apply
    */
-  sort(sort: Sort[]): Request;
+  sort(sort: Sort): Request;
 
   /**
    * Adds a pagination query and returns an updated Request.

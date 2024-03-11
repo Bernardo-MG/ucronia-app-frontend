@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
 import { Direction } from '../../../../core/api/models/direction';
@@ -44,7 +44,7 @@ export class PaginationRouteOrderButtonComponent implements OnInit {
     });
   }
 
-  public onChangeDirection(sort: Sort) {
+  public onChangeDirection(sort: SortField) {
     if (sort.direction === Direction.Unsorted) {
       this.routeActuator.removeOrder(this.property);
     } else {

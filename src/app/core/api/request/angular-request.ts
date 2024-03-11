@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
-import { Sort } from '../models/sort';
+import { SortField } from '../models/sort-field';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
+import { Sort } from '../models/sort';
 
 /**
  * Request implementation for Angular.
@@ -92,9 +93,9 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort(sort: Sort[]): AngularRequest {
-    for (let i = 0; i < sort.length; i += 1) {
-      const fieldSort = sort[i];
+  public sort(sort: Sort): AngularRequest {
+    for (let i = 0; i < sort.fields.length; i += 1) {
+      const fieldSort = sort.fields[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
     }
 
