@@ -10,14 +10,12 @@ import { FeesModule } from '../fees/fees.module';
 import { MembersModule } from '../members/members.module';
 import { MembershipFrontpageComponent } from './components/membership-frontpage/membership-frontpage.component';
 import { MembershipRoutingModule } from './membership-routing.module';
-import { FeeFrontpageComponent } from './components/fee-frontpage/fee-frontpage.component';
 
 
 
 @NgModule({
   declarations: [
-    MembershipFrontpageComponent,
-    FeeFrontpageComponent
+    MembershipFrontpageComponent
   ],
   imports: [
     CommonModule,
