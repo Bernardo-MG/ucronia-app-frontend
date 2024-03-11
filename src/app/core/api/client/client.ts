@@ -5,7 +5,7 @@ import { Sort } from '../models/sort';
 /**
  * Sets up and executes requests.
  */
-export interface Request {
+export interface Client {
 
   /**
    * Execute a create request.
@@ -50,7 +50,7 @@ export interface Request {
    * 
    * @param route route to append
    */
-  appendRoute(route: string): Request;
+  appendRoute(route: string): Client;
 
   /**
    * Adds a request parameter and returns an updated Request.
@@ -58,20 +58,20 @@ export interface Request {
    * @param name parameter name
    * @param value parameter value
    */
-  parameter(name: string, value: any): Request;
+  parameter(name: string, value: any): Client;
 
   /**
    * Adds sorting and returns an updated Request.
    * 
    * @param sort sorting to apply
    */
-  sort(sort: Sort[]): Request;
+  sort(sort: Sort): Client;
 
   /**
    * Adds a pagination query and returns an updated Request.
    * 
    * @param sort pagination query to apply
    */
-  query(query: PaginatedQuery<any>): Request;
+  query(query: PaginatedQuery): Client;
 
 }

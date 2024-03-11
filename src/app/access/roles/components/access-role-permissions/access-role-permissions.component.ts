@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Direction } from '@app/core/api/models/direction';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { Sort } from '@app/core/api/models/sort';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { SortField } from '@app/core/api/models/sort-field';
 import { Permission } from '@app/core/authentication/models/permission';
 import { AccessRoleService } from '../../services/access-role.service';
+import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'access-role-permissions',
@@ -17,15 +17,11 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public permissions: Permission[] = [];
+  public response = new PaginatedResponse<Permission[]>([]);
 
   public readingPermissions = false;
 
-  public currentPage = 0;
-
-  public totalPages = 0;
-
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: AccessRoleService
@@ -33,42 +29,35 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['role']) && (this.role.length)) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
   public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(undefined));
+    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(0));
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load(page);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
+    this.load(this.response.currentPage);
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(page: number) {
     this.readingPermissions = true;
-    this.service.getPermissions(this.role, pagination).subscribe({
+    this.service.getPermissions(this.role, page, this.sort).subscribe({
       next: response => {
-        this.permissions = response.content;
+        this.response = response;
 
-        this.currentPage = response.page + 1;
-
-        this.totalPages = response.totalPages;
+        // Reactivate view
         this.readingPermissions = false;
       },
       error: error => {
+        // Reactivate view
         this.readingPermissions = false;
       }
     });
