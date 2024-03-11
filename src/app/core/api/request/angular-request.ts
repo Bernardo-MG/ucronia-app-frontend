@@ -21,7 +21,7 @@ export class AngularRequest implements Request {
   ) { }
 
   public create<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this.route);
+    const finalUrl = this.getFinalUrl();
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -29,7 +29,7 @@ export class AngularRequest implements Request {
   }
 
   public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this.route);
+    const finalUrl = this.getFinalUrl();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -37,7 +37,7 @@ export class AngularRequest implements Request {
   }
 
   public update<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this.route);
+    const finalUrl = this.getFinalUrl();
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -45,7 +45,7 @@ export class AngularRequest implements Request {
   }
 
   public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this.route);
+    const finalUrl = this.getFinalUrl();
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -53,7 +53,7 @@ export class AngularRequest implements Request {
   }
 
   public patch<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this.route);
+    const finalUrl = this.getFinalUrl();
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -117,8 +117,8 @@ export class AngularRequest implements Request {
     return params;
   }
 
-  private getFinalUrl(route: string) {
-    return `${this.rootUrl}${route}`;
+  private getFinalUrl() {
+    return `${this.rootUrl}${this.route}`;
   }
 
 }
