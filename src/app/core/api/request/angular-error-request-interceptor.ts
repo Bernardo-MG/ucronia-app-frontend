@@ -2,6 +2,11 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
 import { FailureResponse } from "../models/failure-response";
 
+/**
+ * Request interceptor which returns an error response on error.
+ * 
+ * If there is a list of failures, then the response will be a failure response.
+ */
 export class AngularErrorRequestInterceptor {
 
     public handle(error: HttpErrorResponse) {

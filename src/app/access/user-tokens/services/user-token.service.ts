@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserTokenApi } from '@app/access/api/user-token-api';
+import { ApiResponse } from '@app/core/api/models/api-response';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
 import { UserToken } from '@app/core/authentication/models/user-token';
+import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserTokenService {
-
-  private userTokenApi = new UserTokenApi(this.http);
 
   constructor(
     private http: HttpClient
@@ -30,23 +31,27 @@ export class UserTokenService {
     query.defaultSort = [sortDate, sortUsername];
     query.pagination = pagination;
 
-    return this.userTokenApi.readAll(query);
+    return this.getRequest().query(query).read();
   }
 
   public getOne(token: string): Observable<UserToken> {
-    return this.userTokenApi.readById(token).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${token}`).read<ApiResponse<UserToken>>().pipe(map(r => r.content));
   }
 
   public patch(token: string, data: UserToken): Observable<UserToken> {
-    return this.userTokenApi.patchById(token, data).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${token}`).patch<ApiResponse<UserToken>>(data).pipe(map(r => r.content));
   }
 
   public revoke(token: string): Observable<UserToken> {
-    return this.userTokenApi.patchById(token, { revoked: true }).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${token}`).patch<ApiResponse<UserToken>>({ revoked: true }).pipe(map(r => r.content));
   }
 
   public extend(token: string, date: string): Observable<UserToken> {
-    return this.userTokenApi.patchById(token, { expirationDate: date }).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${token}`).patch<ApiResponse<UserToken>>({ expirationDate: date }).pipe(map(r => r.content));
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/security/user/token');
   }
 
 }

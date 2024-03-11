@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MemberApi } from '@app/association/api/member-api';
+import { ApiResponse } from '@app/core/api/models/api-response';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
 import { Sort } from '@app/core/api/models/sort';
+import { AngularRequest } from '@app/core/api/request/angular-request';
+import { Request } from '@app/core/api/request/request';
+import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
 import { Member } from '../models/member';
 
 @Injectable()
 export class MemberService {
-
-  private memberApi = new MemberApi(this.http);
 
   constructor(
     private http: HttpClient
@@ -28,23 +29,27 @@ export class MemberService {
       query.addParameter('status', 'INACTIVE');
     }
 
-    return this.memberApi.readAll(query);
+    return this.getRequest().query(query).read();
   }
 
   public create(data: Member): Observable<Member> {
-    return this.memberApi.create(data).pipe(map(r => r.content));
+    return this.getRequest().create<ApiResponse<Member>>(data).pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.memberApi.updateById(id, data).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${id}`).update<ApiResponse<Member>>(data).pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.memberApi.deleteById(id).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${id}`).delete<ApiResponse<boolean>>().pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.memberApi.readById(id).pipe(map(r => r.content));
+    return this.getRequest().appendRoute(`/${id}`).read<ApiResponse<Member>>().pipe(map(r => r.content));
+  }
+
+  private getRequest(): Request {
+    return new AngularRequest(this.http, environment.apiUrl + '/member');
   }
 
 }

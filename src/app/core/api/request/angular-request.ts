@@ -1,15 +1,28 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
+import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Request } from './request';
 
+/**
+ * Request implementation for Angular.
+ */
 export class AngularRequest implements Request {
 
-  private _route = '';
+  /**
+   * Route for the request.
+   */
+  private route = '';
 
+  /**
+   * Interceptor for errors in the request. Will generate an error response.
+   */
   private errorInteceptor = new AngularErrorRequestInterceptor();
 
+  /**
+   * Request options.
+   */
   protected options: {
     params?: HttpParams
   } = {};
@@ -20,7 +33,7 @@ export class AngularRequest implements Request {
   ) { }
 
   public create<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl();
     return this.http.post<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -28,7 +41,7 @@ export class AngularRequest implements Request {
   }
 
   public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl();
     return this.http.get<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -36,7 +49,7 @@ export class AngularRequest implements Request {
   }
 
   public update<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl();
     return this.http.put<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -44,7 +57,7 @@ export class AngularRequest implements Request {
   }
 
   public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl();
     return this.http.delete<T>(finalUrl, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
@@ -52,21 +65,15 @@ export class AngularRequest implements Request {
   }
 
   public patch<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl(this._route);
+    const finalUrl = this.getFinalUrl();
     return this.http.patch<T>(finalUrl, body, this.options)
       .pipe(
         catchError(this.errorInteceptor.handle)
       );
   }
 
-  public route(route: string): AngularRequest {
-    this._route = route;
-
-    return this;
-  }
-
   public appendRoute(route: string): AngularRequest {
-    this._route = `${this._route}${route}`;
+    this.route = `${this.route}${route}`;
 
     return this;
   }
@@ -94,6 +101,21 @@ export class AngularRequest implements Request {
     return this;
   }
 
+  public query(query: PaginatedQuery<any>): AngularRequest {
+    // Sort
+    this.sort(query.sort);
+
+    // Other parameters
+    for (const key in query.parameters) {
+      const value = query.parameters[key];
+      if (value) {
+        this.parameter(key, value);
+      }
+    }
+
+    return this;
+  }
+
   private getHttpParams(): HttpParams {
     let params: HttpParams;
 
@@ -107,8 +129,8 @@ export class AngularRequest implements Request {
     return params;
   }
 
-  private getFinalUrl(route: string) {
-    return `${this.rootUrl}${route}`;
+  private getFinalUrl() {
+    return `${this.rootUrl}${this.route}`;
   }
 
 }
