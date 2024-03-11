@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-permission [ngForOf]="permissions">
+      <ng-template ngFor let-permission [ngForOf]="response.content">
         <tr>
           <td>
             <button (click)="onAddPermission(permission)" type="button"
@@ -28,7 +28,7 @@
   </table>
   <!-- Permissions navigation -->
   <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="currentPage" [pages]="totalPages" (goTo)="onGoTo($event)">
+    <pagination-navigation [current]="response.currentPage()" [pages]="response.totalPages" (goTo)="onGoTo($event)">
     </pagination-navigation>
   </div>
 </layout-waiting-wrapper>

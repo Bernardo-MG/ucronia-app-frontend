@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-add-role',
@@ -12,13 +13,9 @@ export class AccessUserAddRoleComponent implements OnChanges {
 
   @Output() public addRole = new EventEmitter<Role>();
 
-  public roleSelection: Role[] = [];
+  public response = new PaginatedResponse<Role[]>([]);
 
   public readingSelection = false;
-
-  public roleSelectionPage = 0;
-
-  public roleSelectionTotalPages = 0;
 
   constructor(
     private service: AccessUserService
@@ -40,12 +37,13 @@ export class AccessUserAddRoleComponent implements OnChanges {
     this.readingSelection = true;
     this.service.getAvailableRoles(this.user, { page }).subscribe({
       next: response => {
-        this.roleSelection = response.content;
-        this.roleSelectionPage = response.page + 1;
-        this.roleSelectionTotalPages = response.totalPages;
+        this.response = response;
+
+        // Reactivate view
         this.readingSelection = false;
       },
       error: error => {
+        // Reactivate view
         this.readingSelection = false;
       }
     });

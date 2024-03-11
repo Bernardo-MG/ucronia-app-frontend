@@ -4,6 +4,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'assoc-member-list',
@@ -13,18 +14,12 @@ export class MemberListComponent implements OnChanges {
 
   @Input() public activeFilter = Active.Active;
 
-  public members: Member[] = [];
+  public response = new PaginatedResponse<Member[]>([]);
 
   /**
    * Loading flag.
    */
   public readingMembers = false;
-
-  public currentPage = 0;
-
-  public totalPages = 0;
-
-  public totalMembers = 0;
 
   private sort: Sort[] = [];
 
@@ -52,7 +47,7 @@ export class MemberListComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage, sort: this.sort });
+    this.load({ page: this.response.currentPage(), sort: this.sort });
   }
 
   private load(pagination: PaginationRequest | undefined) {
@@ -60,11 +55,8 @@ export class MemberListComponent implements OnChanges {
 
     this.service.getAll(pagination, this.activeFilter).subscribe({
       next: response => {
-        this.members = response.content;
+        this.response = response;
 
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
-        this.totalMembers = response.totalElements;
         // Reactivate view
         this.readingMembers = false;
       },

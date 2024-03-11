@@ -8,6 +8,7 @@ import { FeePayment } from '../../models/fee-payment';
 import { Member } from '../../../members/models/member';
 import { FeeService } from '../../services/fee.service';
 import { FeePaymentMember } from '../../models/fee-payment-member';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'assoc-fee-create',
@@ -26,13 +27,9 @@ export class FeePayComponent implements OnInit {
 
   public createPermission = false;
 
-  public members: Member[] = [];
+  public response = new PaginatedResponse<Member[]>([]);
 
   public member = new Member();
-
-  public membersPage = 0;
-
-  public membersTotalPages = 0;
 
   public failures = new FieldFailures();
 
@@ -78,12 +75,13 @@ export class FeePayComponent implements OnInit {
     // TODO: The page correction should be done automatically
     this.service.getMembers(page).subscribe({
       next: response => {
-        this.members = response.content;
-        this.membersPage = response.page + 1;
-        this.membersTotalPages = response.totalPages;
+        this.response = response;
+
+        // Reactivate view
         this.readingMembers = false;
       },
       error: error => {
+        // Reactivate view
         this.readingMembers = false;
       }
     });

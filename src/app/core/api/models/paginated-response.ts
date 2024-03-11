@@ -8,4 +8,9 @@ export class PaginatedResponse<T> extends ApiResponse<T> {
   totalPages = 0;
   first = false;
   last = false;
+
+  public currentPage() {
+    return this.page + 1;
+  }
+
 }

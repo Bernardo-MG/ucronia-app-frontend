@@ -3,6 +3,7 @@ import { Permission } from '@app/core/authentication/models/permission';
 import { AccessRoleService } from '../../services/access-role.service';
 import { Sort } from '@app/core/api/models/sort';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-role-add-permission',
@@ -14,13 +15,9 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
-  public permissions: Permission[] = [];
+  public response = new PaginatedResponse<Permission[]>([]);
 
   public readingPermissions = false;
-
-  public currentPage = 0;
-
-  public totalPages = 0;
 
   public data = new Permission();
 
@@ -55,21 +52,20 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage, sort: this.sort });
+    this.load({ page: this.response.currentPage(), sort: this.sort });
   }
 
   private load(pagination: PaginationRequest | undefined) {
     this.readingPermissions = true;
     this.service.getAvailablePermissions(this.role, pagination).subscribe({
       next: response => {
-        this.permissions = response.content;
+        this.response = response;
 
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
-
+        // Reactivate view
         this.readingPermissions = false;
       },
       error: error => {
+        // Reactivate view
         this.readingPermissions = false;
       }
     });

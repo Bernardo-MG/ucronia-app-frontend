@@ -3,6 +3,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserService } from '../../services/access-user.service';
 import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-roles',
@@ -16,13 +17,9 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public deletable = false;
 
-  public roles: Role[] = [];
+  public response = new PaginatedResponse<Role[]>([]);
 
   public readingRoles = false;
-
-  public currentPage = 0;
-
-  public totalPages = 0;
 
   private sort: Sort[] = [];
 
@@ -49,7 +46,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.currentPage, sort: this.sort });
+    this.load({ page: this.response.currentPage(), sort: this.sort });
   }
 
   public onRemoveRole(data: Role): void {
@@ -60,12 +57,13 @@ export class AccessUserRoleFormComponent implements OnChanges {
     this.readingRoles = true;
     this.service.getRoles(this.user, pagination).subscribe({
       next: response => {
-        this.roles = response.content;
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
+        this.response = response;
+
+        // Reactivate view
         this.readingRoles = false;
       },
       error: error => {
+        // Reactivate view
         this.readingRoles = false;
       }
     });

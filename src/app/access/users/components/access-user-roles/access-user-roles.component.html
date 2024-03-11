@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="roles">
+      <ng-template ngFor let-role [ngForOf]="response.content">
         <tr>
           <td>
             <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark"
@@ -26,7 +26,7 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingRoles" [current]="currentPage" [pages]="totalPages"
+  <pagination-navigation [disabled]="readingRoles" [current]="response.currentPage()" [pages]="response.totalPages"
     (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>
