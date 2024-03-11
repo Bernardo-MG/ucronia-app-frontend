@@ -28,12 +28,12 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['role']) && (this.role.length)) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
   public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(undefined));
+    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(0));
   }
 
   public onGoTo(page: number) {
@@ -52,9 +52,9 @@ export class AccessRolePermissionsComponent implements OnChanges {
     this.load(this.response.currentPage());
   }
 
-  private load(page: number | undefined) {
+  private load(page: number) {
     this.readingPermissions = true;
-    this.service.getPermissions(this.role, { page }, this.sort).subscribe({
+    this.service.getPermissions(this.role, page, this.sort).subscribe({
       next: response => {
         this.response = response;
 

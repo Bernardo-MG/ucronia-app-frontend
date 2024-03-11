@@ -28,7 +28,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['role']) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
@@ -54,9 +54,9 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     this.load(this.response.currentPage());
   }
 
-  private load(page: number | undefined) {
+  private load(page: number) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.role, { page }, this.sort).subscribe({
+    this.service.getAvailablePermissions(this.role, page, this.sort).subscribe({
       next: response => {
         this.response = response;
 

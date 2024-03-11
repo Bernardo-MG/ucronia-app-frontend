@@ -28,7 +28,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['user']) && (this.user.length)) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
@@ -49,12 +49,12 @@ export class AccessUserRoleFormComponent implements OnChanges {
   }
 
   public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.user, data.name).subscribe(p => this.load(undefined));
+    this.service.removeRole(this.user, data.name).subscribe(p => this.load(0));
   }
 
-  private load(page: number | undefined) {
+  private load(page: number) {
     this.readingRoles = true;
-    this.service.getRoles(this.user, { page }, this.sort).subscribe({
+    this.service.getRoles(this.user, page, this.sort).subscribe({
       next: response => {
         this.response = response;
 

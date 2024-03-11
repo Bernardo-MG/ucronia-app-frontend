@@ -4,7 +4,6 @@ import { ApiResponse } from '@app/core/api/models/api-response';
 import { Direction } from '@app/core/api/models/direction';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Pagination } from '@app/core/api/models/pagination';
 import { Sort } from '@app/core/api/models/sort';
 import { AngularRequest } from '@app/core/api/request/angular-request';
 import { Request } from '@app/core/api/request/request';
@@ -20,35 +19,35 @@ export class AccessUserService {
     private http: HttpClient
   ) { }
 
-  public getAll(pagination: Pagination | undefined, sort: Sort[] | undefined): Observable<PaginatedResponse<User[]>> {
+  public getAll(page: number, sort: Sort[] | undefined): Observable<PaginatedResponse<User[]>> {
     const defaultSort = new Sort('name');
     defaultSort.direction = Direction.Ascending;
 
     const query = new PaginatedQuery();
     query.defaultSort = [defaultSort];
-    query.pagination = pagination;
+    query.pagination = { page };
     query.sort = sort;
 
     return this.getRequest().query(query).read();
   }
 
-  public getRoles(username: string, pagination: Pagination | undefined, sort: Sort[] | undefined): Observable<PaginatedResponse<Role[]>> {
+  public getRoles(username: string, page: number, sort: Sort[] | undefined): Observable<PaginatedResponse<Role[]>> {
     const defaultSort: Sort = new Sort('name');
 
     const query = new PaginatedQuery();
     query.defaultSort = [defaultSort];
-    query.pagination = pagination;
+    query.pagination = { page };
     query.sort = sort;
 
     return this.getRequest().query(query).appendRoute(`/${username}/role`).read();
   }
 
-  public getAvailableRoles(username: string, pagination: Pagination | undefined): Observable<PaginatedResponse<Role[]>> {
+  public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
     const defaultSort: Sort = new Sort('name');
 
     const query = new PaginatedQuery();
     query.defaultSort = [defaultSort];
-    query.pagination = pagination;
+    query.pagination = { page };
 
     return this.getRequest().query(query).appendRoute(`/${username}/role/available`).read();
   }

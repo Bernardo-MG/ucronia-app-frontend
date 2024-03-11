@@ -24,7 +24,7 @@ export class AccessRoleSelectionListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.load(undefined);
+    this.load(0);
   }
 
   public onChangeDirection(sort: Sort) {
@@ -39,9 +39,9 @@ export class AccessRoleSelectionListComponent implements OnInit {
     this.load(this.response.currentPage());
   }
 
-  private load(page: number | undefined) {
+  private load(page: number) {
     this.readingRoles = true;
-    this.service.getAll({ page }, this.sort).subscribe({
+    this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.response = response;
 

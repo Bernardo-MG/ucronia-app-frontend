@@ -29,7 +29,7 @@ export class MemberListComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['activeFilter']) {
       this.sort = [];
-      this.load(undefined);
+      this.load(0);
     }
   }
 
@@ -51,10 +51,10 @@ export class MemberListComponent implements OnChanges {
     this.load(this.response.currentPage());
   }
 
-  private load(page: number | undefined) {
+  private load(page: number) {
     this.readingMembers = true;
 
-    this.service.getAll({ page }, this.sort, this.activeFilter).subscribe({
+    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.response = response;
 
