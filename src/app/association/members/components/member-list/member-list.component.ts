@@ -1,10 +1,9 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Pagination } from '@app/core/api/models/pagination';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'assoc-member-list',
@@ -35,7 +34,7 @@ export class MemberListComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page });
+    this.load(page);
   }
 
   public onChangeDirection(sort: Sort) {
@@ -49,13 +48,13 @@ export class MemberListComponent implements OnChanges {
       this.sort[index] = sort;
     }
 
-    this.load({ page: this.response.currentPage() });
+    this.load(this.response.currentPage());
   }
 
-  private load(pagination: Pagination | undefined) {
+  private load(page: number | undefined) {
     this.readingMembers = true;
 
-    this.service.getAll(pagination, this.sort, this.activeFilter).subscribe({
+    this.service.getAll({ page }, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.response = response;
 

@@ -1,10 +1,8 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Direction } from '@app/core/api/models/direction';
-import { Pagination } from '@app/core/api/models/pagination';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { Permission } from '@app/core/authentication/models/permission';
 import { AccessRoleService } from '../../services/access-role.service';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-role-permissions',
@@ -39,7 +37,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page });
+    this.load(page);
   }
 
   public onChangeDirection(sort: Sort) {
@@ -51,12 +49,12 @@ export class AccessRolePermissionsComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.response.currentPage() });
+    this.load(this.response.currentPage());
   }
 
-  private load(pagination: Pagination | undefined) {
+  private load(page: number | undefined) {
     this.readingPermissions = true;
-    this.service.getPermissions(this.role, pagination, this.sort).subscribe({
+    this.service.getPermissions(this.role, { page }, this.sort).subscribe({
       next: response => {
         this.response = response;
 

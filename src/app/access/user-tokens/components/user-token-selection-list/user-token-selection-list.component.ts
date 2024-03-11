@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Pagination } from '@app/core/api/models/pagination';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '../../services/user-token.service';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-token-selection-list',
@@ -37,12 +36,12 @@ export class UserTokenSelectionListComponent implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load({ page: this.response.currentPage() });
+    this.load(this.response.currentPage());
   }
 
-  private load(pagination: Pagination | undefined) {
+  private load(page: number | undefined) {
     this.readingUsers = true;
-    this.service.getAll(pagination, this.sort).subscribe({
+    this.service.getAll({ page }, this.sort).subscribe({
       next: response => {
         this.response = response;
 
