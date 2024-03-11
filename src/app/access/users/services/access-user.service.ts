@@ -6,8 +6,8 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { environment } from 'environments/environment';
@@ -29,7 +29,7 @@ export class AccessUserService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .read();
   }
@@ -42,7 +42,7 @@ export class AccessUserService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .appendRoute(`/${username}/role`)
       .read<PaginatedResponse<Role[]>>();
@@ -55,55 +55,55 @@ export class AccessUserService {
     query.defaultSort = new Sort([defaultSort]);
     query.pagination = { page };
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .appendRoute(`/${username}/role/available`)
       .read<PaginatedResponse<Role[]>>();
   }
 
   public create(data: User): Observable<User> {
-    return this.getRequest()
+    return this.getClient()
       .create<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(username: string, data: User): Observable<User> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${username}`)
       .update<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
   }
 
   public delete(username: string): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${username}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
   public getOne(username: string): Observable<User> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${username}`)
       .read<SimpleResponse<User>>()
       .pipe(map(r => r.content));
   }
 
   public addRole(username: string, role: string): Observable<Role> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${username}/role/${role}`)
       .update<SimpleResponse<Role>>({})
       .pipe(map(r => r.content));
   }
 
   public removeRole(username: string, role: string): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${username}/role/${role}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/security/user');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/security/user');
   }
 
 }

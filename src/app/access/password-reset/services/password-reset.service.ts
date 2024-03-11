@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { PasswordReset } from '../models/password-reset';
@@ -17,27 +17,27 @@ export class PasswordResetService {
   ) { }
 
   public requestResetPassword(request: PasswordResetRequest): Observable<SimpleResponse<void>> {
-    return this.getRequest()
+    return this.getClient()
       // Reset password request
       .create(request);
   }
 
   public resetPassword(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
-    return this.getRequest()
+    return this.getClient()
       // Reset password
       .appendRoute(`/${token}`)
       .create(reset);
   }
 
   public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
-    return this.getRequest()
+    return this.getClient()
       // Validate token request
       .appendRoute(`/${token}`)
       .read<SimpleResponse<UserTokenStatus>>();
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/password/reset');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/password/reset');
   }
 
 }

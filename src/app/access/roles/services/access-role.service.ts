@@ -6,8 +6,8 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
 import { environment } from 'environments/environment';
@@ -29,7 +29,7 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .read<PaginatedResponse<Role[]>>();
   }
@@ -43,7 +43,7 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .appendRoute(`/${role}/permission`)
       .read<PaginatedResponse<Permission[]>>();
@@ -58,55 +58,55 @@ export class AccessRoleService {
     query.pagination = { page };
     query.sort = sort;
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .appendRoute(`/${role}/permission/available`)
       .read<PaginatedResponse<Permission[]>>();
   }
 
   public create(data: Role): Observable<Role> {
-    return this.getRequest()
+    return this.getClient()
       .create<SimpleResponse<Role>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(role: string, data: Role): Observable<Role> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${role}`)
       .update<SimpleResponse<Role>>(data)
       .pipe(map(r => r.content));
   }
 
   public delete(role: string): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${role}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
   public getOne(role: string): Observable<Role> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${role}`)
       .read<SimpleResponse<Role>>()
       .pipe(map(r => r.content));
   }
 
   public addPermission(role: string, permission: string): Observable<Permission> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${role}/permission/${permission}`)
       .update<SimpleResponse<Permission>>({})
       .pipe(map(r => r.content));
   }
 
   public removePermission(role: string, permission: string): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${role}/permission/${permission}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/security/role');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/security/role');
   }
 
 }

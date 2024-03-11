@@ -5,8 +5,8 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberBalance } from '../models/member-balance';
@@ -27,14 +27,14 @@ export class MemberBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .read<SimpleResponse<MemberBalance[]>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/member/monthly');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/member/monthly');
   }
 
 }

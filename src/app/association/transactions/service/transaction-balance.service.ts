@@ -5,8 +5,8 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '../models/transaction-current-balance';
@@ -20,7 +20,7 @@ export class TransactionBalanceService {
   ) { }
 
   public current(): Observable<TransactionCurrentBalance> {
-    return this.getRequest()
+    return this.getClient()
       .read<SimpleResponse<TransactionCurrentBalance>>()
       .pipe(map(r => r.content));
   }
@@ -34,18 +34,18 @@ export class TransactionBalanceService {
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);
 
-    return this.getMonthlyRequest()
+    return this.getMonthlyClient()
       .query(query)
       .read<SimpleResponse<TransactionMonthlyBalance[]>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/funds/balance');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/funds/balance');
   }
 
-  private getMonthlyRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/funds/balance/monthly');
+  private getMonthlyClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/funds/balance/monthly');
   }
 
 }

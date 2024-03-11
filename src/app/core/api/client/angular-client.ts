@@ -3,12 +3,12 @@ import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
-import { Request } from './request';
+import { Client } from './client';
 
 /**
  * Request implementation for Angular.
  */
-export class AngularRequest implements Request {
+export class AngularClient implements Client {
 
   /**
    * Route for the request.
@@ -72,13 +72,13 @@ export class AngularRequest implements Request {
       );
   }
 
-  public appendRoute(route: string): AngularRequest {
+  public appendRoute(route: string): AngularClient {
     this.route = `${this.route}${route}`;
 
     return this;
   }
 
-  public parameter(name: string, value: any): AngularRequest {
+  public parameter(name: string, value: any): AngularClient {
     let params: HttpParams;
 
     if (value) {
@@ -92,7 +92,7 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public sort(toSort: Sort): AngularRequest {
+  public sort(toSort: Sort): AngularClient {
     for (let i = 0; i < toSort.fields.length; i += 1) {
       const fieldSort = toSort.fields[i];
       this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
@@ -101,7 +101,7 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public query(query: PaginatedQuery): AngularRequest {
+  public query(query: PaginatedQuery): AngularClient {
     // Sort
     this.sort(query.sort);
 

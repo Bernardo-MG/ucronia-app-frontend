@@ -5,8 +5,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Member } from '../../members/models/member';
@@ -21,27 +21,27 @@ export class FeeService {
   ) { }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.getRequest()
+    return this.getClient()
       .create<SimpleResponse<FeePayment>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(date: string, memberNumber: number, data: Fee): Observable<Fee> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${date}/${memberNumber}`)
       .update<SimpleResponse<Fee>>(data)
       .pipe(map(r => r.content));
   }
 
   public delete(date: string, memberNumber: number): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${date}/${memberNumber}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
   public getOne(date: string, memberNumber: number): Observable<Fee> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${date}/${memberNumber}`)
       .read<SimpleResponse<Fee>>()
       .pipe(map(r => r.content));
@@ -52,24 +52,24 @@ export class FeeService {
     query.sort = new Sort([new SortField('fullName'), new SortField('number')]);
     query.page = page;
 
-    return this.getMemberRequest()
+    return this.getMemberClient()
       .query(query)
       .read<PaginatedResponse<Member[]>>();
   }
 
   public getOneMember(id: number): Observable<Member> {
-    return this.getMemberRequest()
+    return this.getMemberClient()
       .appendRoute(`/${id}`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/fee');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/fee');
   }
 
-  private getMemberRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/member');
+  private getMemberClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }

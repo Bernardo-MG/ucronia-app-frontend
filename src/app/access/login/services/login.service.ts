@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { LoginStatus } from '@app/core/authentication/models/login-status';
 import { SecurityDetails } from '@app/core/authentication/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -28,7 +28,7 @@ export class LoginService {
    * @returns the user resulting from the login
    */
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
-    return this.getRequest()
+    return this.getClient()
       // Login request
       .create<SimpleResponse<LoginStatus>>(request)
       // Get content
@@ -41,8 +41,8 @@ export class LoginService {
       }));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/login');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/login');
   }
 
 }

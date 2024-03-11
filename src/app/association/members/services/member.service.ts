@@ -5,8 +5,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
@@ -26,40 +26,40 @@ export class MemberService {
     query.sort = sort;
     query.addParameter('status', active.toString().toUpperCase());
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .read<PaginatedResponse<Member[]>>();
   }
 
   public create(data: Member): Observable<Member> {
-    return this.getRequest()
+    return this.getClient()
       .create<SimpleResponse<Member>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(id: number, data: Member): Observable<Member> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${id}`)
       .update<SimpleResponse<Member>>(data)
       .pipe(map(r => r.content));
   }
 
   public delete(id: number): Observable<boolean> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${id}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
   public getOne(id: number): Observable<Member> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute(`/${id}`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/member');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -30,13 +30,13 @@ export class AccountService {
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
-    return this.getRequest()
+    return this.getClient()
       .update<SimpleResponse<PasswordChangeStatus>>(data)
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + "/password/change");
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + "/password/change");
   }
 
 

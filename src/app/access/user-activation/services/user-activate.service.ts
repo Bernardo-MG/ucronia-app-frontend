@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -16,21 +16,21 @@ export class AccessUserActivateService {
   ) { }
 
   public activateUser(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
-    return this.getRequest()
+    return this.getClient()
       // Validate token request
       .appendRoute(`/${token}`)
       .create(reset);
   }
 
   public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
-    return this.getRequest()
+    return this.getClient()
       // Validate token request
       .appendRoute(`/${token}`)
       .read();
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/security/user/activate');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/security/user/activate');
   }
 
 }

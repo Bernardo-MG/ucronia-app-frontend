@@ -6,8 +6,8 @@ import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { AngularRequest } from '@app/core/api/request/angular-request';
-import { Request } from '@app/core/api/request/request';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { FeeCalendar } from '../models/fee-calendar';
@@ -24,7 +24,7 @@ export class FeeCalendarService {
     query.sort = new Sort([new SortField("fullName")]);
     query.addParameter('status', active.toString().toUpperCase());
 
-    return this.getRequest()
+    return this.getClient()
       .query(query)
       .appendRoute(`/${year}`)
       .read<SimpleResponse<FeeCalendar[]>>()
@@ -32,14 +32,14 @@ export class FeeCalendarService {
   }
 
   public getRange(): Observable<FeeCalendarYearsRange> {
-    return this.getRequest()
+    return this.getClient()
       .appendRoute("/range")
       .read<SimpleResponse<FeeCalendarYearsRange>>()
       .pipe(map(r => r.content));
   }
 
-  private getRequest(): Request {
-    return new AngularRequest(this.http, environment.apiUrl + '/fee/calendar');
+  private getClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/fee/calendar');
   }
 
 }
