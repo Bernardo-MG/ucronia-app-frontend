@@ -9,7 +9,7 @@ export class PaginatedResponse<T> extends ApiResponse<T> {
   first = false;
   last = false;
 
-  public currentPage() {
+  public get currentPage() {
     return this.page + 1;
   }
 

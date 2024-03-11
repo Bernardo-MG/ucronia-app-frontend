@@ -38,7 +38,7 @@ export class AccessUserSelectionListComponent implements OnInit {
       this.sort[index] = sort;
     }
 
-    this.load(this.response.currentPage());
+    this.load(this.response.currentPage);
   }
 
   private load(page: number) {

@@ -48,7 +48,7 @@ export class MemberListComponent implements OnChanges {
       this.sort[index] = sort;
     }
 
-    this.load(this.response.currentPage());
+    this.load(this.response.currentPage);
   }
 
   private load(page: number) {

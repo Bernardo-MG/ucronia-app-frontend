@@ -36,7 +36,7 @@ export class UserTokenSelectionListComponent implements OnInit {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load(this.response.currentPage());
+    this.load(this.response.currentPage);
   }
 
   private load(page: number) {

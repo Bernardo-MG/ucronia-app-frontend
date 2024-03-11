@@ -13,7 +13,7 @@
             <!-- Member selection -->
             <layout-waiting-wrapper [waiting]="readingMembers">
               <assoc-member-selection [members]="response.content" (selectMember)="onSelectMember($event)"
-                [current]="response.currentPage()" [pages]="response.totalPages" (goToPage)="onGoToMembersPage($event)">
+                [current]="response.currentPage" [pages]="response.totalPages" (goToPage)="onGoToMembersPage($event)">
               </assoc-member-selection>
             </layout-waiting-wrapper>
           </ng-container>

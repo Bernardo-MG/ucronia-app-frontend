@@ -45,7 +45,7 @@ export class AccessUserRoleFormComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load(this.response.currentPage());
+    this.load(this.response.currentPage);
   }
 
   public onRemoveRole(data: Role): void {

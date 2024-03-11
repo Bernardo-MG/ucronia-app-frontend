@@ -51,7 +51,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
       // Replace property
       this.sort[index] = sort;
     }
-    this.load(this.response.currentPage());
+    this.load(this.response.currentPage);
   }
 
   private load(page: number) {
