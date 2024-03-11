@@ -27,7 +27,7 @@ export class UserTokenService {
     const sortUsername = new Sort('username');
     sortUsername.direction = Direction.Ascending;
 
-    const query = new PaginatedQuery<UserToken>();
+    const query = new PaginatedQuery();
     query.defaultSort = [sortDate, sortUsername];
     query.pagination = pagination;
 

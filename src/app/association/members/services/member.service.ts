@@ -20,7 +20,7 @@ export class MemberService {
   ) { }
 
   public getAll(pagination: PaginationRequest | undefined, active: Active): Observable<PaginatedResponse<Member[]>> {
-    const query = new PaginatedQuery<Member>();
+    const query = new PaginatedQuery();
     query.defaultSort = [new Sort('fullName'), new Sort('number')];
     query.pagination = pagination;
     if (active === Active.Active) {

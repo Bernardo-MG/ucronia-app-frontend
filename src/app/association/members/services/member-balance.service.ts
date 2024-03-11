@@ -21,7 +21,7 @@ export class MemberBalanceService {
     const defaultSortDate = new Sort('month');
     defaultSortDate.direction = Direction.Ascending;
 
-    const query = new PaginatedQuery<MemberBalance>();
+    const query = new PaginatedQuery();
     query.defaultSort = [defaultSortDate];
     query.addParameter("startDate", startDate);
     query.addParameter("endDate", endDate);

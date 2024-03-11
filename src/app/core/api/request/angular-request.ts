@@ -101,7 +101,7 @@ export class AngularRequest implements Request {
     return this;
   }
 
-  public query(query: PaginatedQuery<any>): AngularRequest {
+  public query(query: PaginatedQuery): AngularRequest {
     // Sort
     this.sort(query.sort);
 

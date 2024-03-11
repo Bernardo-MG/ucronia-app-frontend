@@ -72,6 +72,6 @@ export interface Request {
    * 
    * @param sort pagination query to apply
    */
-  query(query: PaginatedQuery<any>): Request;
+  query(query: PaginatedQuery): Request;
 
 }

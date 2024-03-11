@@ -24,7 +24,7 @@ export class AccessRoleService {
     const defaultSort = new Sort('name');
     defaultSort.direction = Direction.Ascending;
 
-    const query = new PaginatedQuery<Role>();
+    const query = new PaginatedQuery();
     query.defaultSort = [defaultSort];
     query.pagination = pagination;
 
@@ -35,7 +35,7 @@ export class AccessRoleService {
     const sortResource: Sort = new Sort('resource');
     const sortAction: Sort = new Sort('action');
 
-    const query = new PaginatedQuery<Permission>();
+    const query = new PaginatedQuery();
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
 
@@ -46,7 +46,7 @@ export class AccessRoleService {
     const sortResource: Sort = new Sort('resource');
     const sortAction: Sort = new Sort('action');
 
-    const query = new PaginatedQuery<Permission>();
+    const query = new PaginatedQuery();
     query.defaultSort = [sortResource, sortAction];
     query.pagination = pagination;
 

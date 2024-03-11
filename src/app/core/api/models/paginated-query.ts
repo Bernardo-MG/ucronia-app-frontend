@@ -2,7 +2,7 @@ import { Direction } from "./direction";
 import { PaginationRequest } from "./pagination-request";
 import { Sort } from "./sort";
 
-export class PaginatedQuery<T> {
+export class PaginatedQuery {
 
   public _sort: Sort[] = [];
 
