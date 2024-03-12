@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { LibraryBookTypeCreateFormComponent } from '../library-book-type-create-form/library-book-type-create-form.component';
 import { Router } from '@angular/router';
-import { Member } from '@app/association/members/models/member';
-import { MemberService } from '@app/association/members/services/member.service';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { throwError } from 'rxjs';
-import { BookTypeService } from '../../services/book-type.service';
 import { BookType } from '../../models/book-type';
+import { BookTypeService } from '../../services/book-type.service';
+import { LibraryBookTypeCreateFormComponent } from '../library-book-type-create-form/library-book-type-create-form.component';
 
 @Component({
   selector: 'app-library-book-type-create',
