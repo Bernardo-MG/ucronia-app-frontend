@@ -6,16 +6,20 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <div class="d-grid">
+                <div class="d-grid pb-2">
                   <!-- Add button -->
                   <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/books/add"
                     [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
                     Add book
                   </button>
+                </div>
+                <div class="d-grid pb-2">
                   <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/bookTypes/add"
                     [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
                     Add book type
                   </button>
+                </div>
+                <div class="d-grid pb-2">
                   <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/gameSystems/add"
                     [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
                     Add game system
