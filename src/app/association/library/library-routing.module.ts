@@ -11,12 +11,12 @@ import { LibraryGameSystemDetailsComponent } from './components/library-game-sys
 
 const routes: Routes = [
   { path: '', component: LibraryFrontpageComponent },
-  { path: 'books/add', component: LibraryBookCreateComponent },
-  { path: 'bookTypes/add', component: LibraryBookTypeCreateComponent },
-  { path: 'gameSystems/add', component: LibraryGameSystemCreateComponent },
-  { path: 'books/:isbn', component: LibraryBookDetailsComponent },
-  { path: 'bookTypes/:name', component: LibraryBookTypeDetailsComponent },
-  { path: 'gameSystems/:name', component: LibraryGameSystemDetailsComponent }
+  { path: 'book/add', component: LibraryBookCreateComponent },
+  { path: 'bookType/add', component: LibraryBookTypeCreateComponent },
+  { path: 'gameSystem/add', component: LibraryGameSystemCreateComponent },
+  { path: 'book/:isbn', component: LibraryBookDetailsComponent },
+  { path: 'bookType/:name', component: LibraryBookTypeDetailsComponent },
+  { path: 'gameSystem/:name', component: LibraryGameSystemDetailsComponent }
 ];
 
 @NgModule({
