@@ -1,1 +1,11 @@
-<p>library-book-create works!</p>
+<layout-article title="Register member">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-body">
+          <!-- Form -->
+          <library-book-create-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+          </library-book-create-form>
+        </div>
+      </div>
+    </div>
+  </layout-article>

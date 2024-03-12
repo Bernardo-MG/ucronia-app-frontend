@@ -4,10 +4,11 @@ import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Book } from '../models/book';
 
 @Injectable({
@@ -18,6 +19,12 @@ export class BookService {
   constructor(
     private http: HttpClient
   ) { }
+
+  public create(data: Book): Observable<Book> {
+    return this.getClient()
+      .create<SimpleResponse<Book>>(data)
+      .pipe(map(r => r.content));
+  }
 
   public getAll(page: number): Observable<PaginatedResponse<Book[]>> {
     const query = new PaginatedQuery();
