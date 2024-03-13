@@ -8,7 +8,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
 import { AccessUserRoleFormComponent } from '../../components/access-user-roles/access-user-roles.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserEditFormComponent } from '../access-user-edit-form/access-user-edit-form.component';
+import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserDetailsComponent } from './access-user-details.component';
 
 describe('AccessUserDetailsComponent', () => {
@@ -27,7 +27,7 @@ describe('AccessUserDetailsComponent', () => {
       ],
       declarations: [
         AccessUserDetailsComponent,
-        AccessUserEditFormComponent,
+        AccessUserFormComponent,
         AccessUserRoleFormComponent,
         AccessUserInfoComponent
       ],

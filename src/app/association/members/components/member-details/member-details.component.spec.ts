@@ -6,7 +6,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberInfoComponent } from '../../components/member-info/member-info.component';
 import { MemberService } from '../../services/member.service';
-import { MemberEditionFormComponent } from '../member-edit-form/member-edit-form.component';
+import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberDetailsComponent } from './member-details.component';
 
 describe('MemberDetailsComponent', () => {
@@ -24,7 +24,7 @@ describe('MemberDetailsComponent', () => {
       ],
       declarations: [
         MemberDetailsComponent,
-        MemberEditionFormComponent,
+        MemberFormComponent,
         MemberInfoComponent
       ],
       providers: [
