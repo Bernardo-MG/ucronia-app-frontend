@@ -6,14 +6,14 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { throwError } from 'rxjs';
 import { BookType } from '../../models/book-type';
-import { LibraryGameSystemEditFormComponent } from '../library-game-system-edit-form/library-game-system-edit-form.component';
-import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
 import { BookTypeService } from '../../services/book-type.service';
+import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
+import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
 
 @Component({
   selector: 'app-library-game-system-details',
   standalone: true,
-  imports: [ LayoutModule, LibraryGameSystemEditFormComponent, LibraryGameSystemInfoComponent ],
+  imports: [ LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent ],
   templateUrl: './library-game-system-details.component.html'
 })
 export class LibraryGameSystemDetailsComponent {

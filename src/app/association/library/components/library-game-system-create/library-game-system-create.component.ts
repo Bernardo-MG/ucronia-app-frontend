@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { LibraryGameSystemCreateFormComponent } from '../library-game-system-create-form/library-game-system-create-form.component';
+import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
 import { Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
@@ -11,7 +11,7 @@ import { GameSystemService } from '../../services/game-system.service';
 @Component({
   selector: 'app-library-game-system-create',
   standalone: true,
-  imports: [ LayoutModule, LibraryGameSystemCreateFormComponent ],
+  imports: [ LayoutModule, LibraryGameSystemFormComponent ],
   templateUrl: './library-game-system-create.component.html'
 })
 export class LibraryGameSystemCreateComponent {

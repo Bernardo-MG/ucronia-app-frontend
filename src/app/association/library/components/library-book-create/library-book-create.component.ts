@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { LibraryBookCreateFormComponent } from '../library-book-create-form/library-book-create-form.component';
+import { LibraryBookFormComponent } from '../library-book-form/library-book-form.component';
 import { Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
@@ -11,7 +11,7 @@ import { BookService } from '../../services/book.service';
 @Component({
   selector: 'app-library-book-create',
   standalone: true,
-  imports: [ LayoutModule, LibraryBookCreateFormComponent ],
+  imports: [ LayoutModule, LibraryBookFormComponent ],
   templateUrl: './library-book-create.component.html'
 })
 export class LibraryBookCreateComponent {

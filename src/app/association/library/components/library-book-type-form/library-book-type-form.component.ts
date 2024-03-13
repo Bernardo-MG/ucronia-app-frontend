@@ -6,12 +6,12 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 
 @Component({
-  selector: 'library-book-type-create-form',
+  selector: 'library-book-type-form',
   standalone: true,
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, LayoutModule ],
-  templateUrl: './library-book-type-create-form.component.html'
+  templateUrl: './library-book-type-form.component.html'
 })
-export class LibraryBookTypeCreateFormComponent extends FormComponent<BookType> {
+export class LibraryBookTypeFormComponent extends FormComponent<BookType> {
 
   constructor(
     fb: FormBuilder

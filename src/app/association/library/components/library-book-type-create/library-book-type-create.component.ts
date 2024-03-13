@@ -6,12 +6,12 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { throwError } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { BookTypeService } from '../../services/book-type.service';
-import { LibraryBookTypeCreateFormComponent } from '../library-book-type-create-form/library-book-type-create-form.component';
+import { LibraryBookTypeFormComponent } from '../library-book-type-form/library-book-type-form.component';
 
 @Component({
   selector: 'app-library-book-type-create',
   standalone: true,
-  imports: [ LayoutModule, LibraryBookTypeCreateFormComponent ],
+  imports: [ LayoutModule, LibraryBookTypeFormComponent ],
   templateUrl: './library-book-type-create.component.html'
 })
 export class LibraryBookTypeCreateComponent {

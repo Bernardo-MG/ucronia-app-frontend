@@ -3,15 +3,15 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { Book } from '../../models/book';
+import { GameSystem } from '../../models/game-system';
 
 @Component({
-  selector: 'library-book-create-form',
+  selector: 'library-game-system-form',
   standalone: true,
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, LayoutModule ],
-  templateUrl: './library-book-create-form.component.html'
+  templateUrl: './library-game-system-form.component.html'
 })
-export class LibraryBookCreateFormComponent extends FormComponent<Book> {
+export class LibraryGameSystemFormComponent extends FormComponent<GameSystem> {
 
   constructor(
     fb: FormBuilder
@@ -19,9 +19,7 @@ export class LibraryBookCreateFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      isbn: [''],
-      title: [''],
-      language: ['']
+      name: ['']
     });
   }
 

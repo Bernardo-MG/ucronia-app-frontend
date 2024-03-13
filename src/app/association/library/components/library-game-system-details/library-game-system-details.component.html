@@ -3,9 +3,9 @@
     <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <library-game-system-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="bookType"
+      <library-game-system-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="bookType"
         [failures]="failures" (save)="onSave($event)">
-      </library-game-system-edit-form>
+      </library-game-system-form>
       <!-- Info -->
       <library-game-system-info id="info" [bookType]="bookType"></library-game-system-info>
     </layout-edition-wrapper>
