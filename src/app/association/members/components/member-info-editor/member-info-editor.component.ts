@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 
@@ -12,9 +10,7 @@ import { MemberService } from '../../services/member.service';
   selector: 'assoc-member-info-editor',
   templateUrl: './member-info-editor.component.html'
 })
-export class MemberInfoEditorComponent extends InfoEditorComponent implements OnInit {
-
-  public member = new Member();
+export class MemberInfoEditorComponent extends InfoEditorComponent<Member> implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +18,7 @@ export class MemberInfoEditorComponent extends InfoEditorComponent implements On
     private service: MemberService,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new Member());
   }
 
   public ngOnInit(): void {
@@ -36,33 +32,12 @@ export class MemberInfoEditorComponent extends InfoEditorComponent implements On
     });
   }
 
-  public onSave(toSave: Member): void {
-    this.saving = true;
-    this.service.update(this.member.number, toSave).subscribe({
-      next: d => {
-        this.member = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
-    });
+  protected save(toSave: Member): Observable<Member>{
+    return this.service.update(this.data.number, toSave);
   }
 
   public onDelete(): void {
-    this.service.delete(this.member.number).subscribe(r => {
+    this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
@@ -74,7 +49,7 @@ export class MemberInfoEditorComponent extends InfoEditorComponent implements On
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.member = d;
+            this.data = d;
             this.reading = false;
           },
           error: error => {

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
@@ -12,9 +12,7 @@ import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/i
   selector: 'assoc-fee-info-editor',
   templateUrl: './fee-info-editor.component.html'
 })
-export class FeeInfoEditorComponent extends InfoEditorComponent implements OnInit, AfterContentInit {
-
-  public fee = new Fee();
+export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements OnInit, AfterContentInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -23,10 +21,10 @@ export class FeeInfoEditorComponent extends InfoEditorComponent implements OnIni
     private cdRef: ChangeDetectorRef,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new Fee());
   }
 
-  ngAfterContentInit(): void {
+  public ngAfterContentInit(): void {
     // TODO: What is this for?
     this.cdRef.detectChanges();
   }
@@ -42,33 +40,12 @@ export class FeeInfoEditorComponent extends InfoEditorComponent implements OnIni
     });
   }
 
-  public onSave(toSave: Fee): void {
-    this.saving = true;
-    this.service.update(this.fee.date, this.fee.member.number, toSave).subscribe({
-      next: d => {
-        this.fee = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
-    });
+  protected override save(toSave: Fee): Observable<Fee> {
+    return this.service.update(this.data.date, this.data.member.number, toSave);
   }
 
   public onDelete(): void {
-    this.service.delete(this.fee.date, this.fee.member.number).subscribe(r => {
+    this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
@@ -80,7 +57,7 @@ export class FeeInfoEditorComponent extends InfoEditorComponent implements OnIni
       this.service.getOne(date, identifier)
         .subscribe({
           next: d => {
-            this.fee = d;
+            this.data = d;
             this.reading = false;
           },
           error: error => {

@@ -1,21 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-info-editor',
   templateUrl: './access-user-info-editor.component.html'
 })
-export class AccessUserInfoEditorComponent extends InfoEditorComponent implements OnInit {
-
-  public data = new User();
+export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
 
   public view = 'list';
 
@@ -25,7 +21,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent implement
     private service: AccessUserService,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new User());
   }
 
   ngOnInit(): void {
@@ -39,29 +35,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent implement
     });
   }
 
-  public onSave(toSave: User): void {
-    this.saving = true;
-    this.service.update(toSave.username, toSave).subscribe({
-      next: d => {
-        this.data = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
-    });
+  protected override save(toSave: User): Observable<User> {
+    return this.service.update(toSave.username, toSave);
   }
 
   public onDelete(): void {

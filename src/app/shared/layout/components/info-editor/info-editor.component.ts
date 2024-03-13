@@ -1,13 +1,8 @@
-import { Component } from '@angular/core';
+import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { Observable, throwError } from 'rxjs';
 
-@Component({
-  selector: 'app-info-editor',
-  standalone: true,
-  imports: [],
-  templateUrl: './info-editor.component.html'
-})
-export class InfoEditorComponent {
+export abstract class InfoEditorComponent<Data> {
 
   /**
    * Reading flag.
@@ -29,8 +24,37 @@ export class InfoEditorComponent {
 
   public failures = new FieldFailures();
 
+  constructor(
+    public data: Data
+  ) {}
+
   public onStartEditing(): void {
     this.editing = true;
+  }
+
+  public onSave(toSave: Data): void {
+    this.saving = true;
+    this.save(toSave).subscribe({
+      next: d => {
+        this.data = d;
+
+        this.failures.clear();
+        // Reactivate view
+        this.saving = false;
+        this.editing = false;
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          this.failures.clear();
+        }
+        // Reactivate view
+        this.saving = false;
+
+        return throwError(() => error);
+      }
+    });
   }
 
   public isAbleToEdit() {
@@ -48,5 +72,7 @@ export class InfoEditorComponent {
   public isWaiting() {
     return this.reading || this.saving;
   }
+
+  protected abstract save(toSave: Data): Observable<Data>;
 
 }

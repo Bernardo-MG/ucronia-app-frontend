@@ -2,22 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
   selector: 'access-user-token-info-editor',
   templateUrl: './user-token-info-editor.component.html'
 })
-export class UserTokenInfoEditorComponent extends InfoEditorComponent implements OnInit {
+export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken> implements OnInit {
 
   public token = "";
-
-  public data = new UserToken();
 
   public extendExpirationForm;
 
@@ -27,7 +24,7 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
     private service: UserTokenService,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new UserToken());
 
     this.extendExpirationForm = fb.group({
       expirationDate: ['', Validators.required]
@@ -42,6 +39,10 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
     this.route.paramMap.subscribe(params => {
       this.load(params.get('token'));
     });
+  }
+
+  protected override save(toSave: UserToken): Observable<UserToken> {
+    throw new Error('Method not implemented.');
   }
 
   public onRevoke(): void {

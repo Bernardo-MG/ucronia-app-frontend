@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
 
@@ -11,15 +9,13 @@ import { AssociationConfigurationService } from '../../service/association-confi
   selector: 'assoc-configuration-info-editor',
   templateUrl: './configuration-info-editor.component.html'
 })
-export class ConfigurationInfoEditorComponent extends InfoEditorComponent implements OnInit {
-
-  public data = new AssociationConfiguration();
+export class ConfigurationInfoEditorComponent extends InfoEditorComponent<AssociationConfiguration> implements OnInit {
 
   constructor(
     private service: AssociationConfigurationService,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new AssociationConfiguration());
   }
 
   ngOnInit(): void {
@@ -29,33 +25,8 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent implem
     this.load();
   }
 
-  public onSave(toSave: AssociationConfiguration): void {
-    this.saving = true;
-    this.service.update(toSave).subscribe({
-      next: d => {
-        this.data = d;
-
-        this.failures.clear();
-
-        // Reload data
-        this.load();
-
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
-    });
+  protected override save(toSave: AssociationConfiguration): Observable<AssociationConfiguration> {
+    return this.service.update(toSave);
   }
 
   private load() {

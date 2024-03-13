@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { Observable } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
   selector: 'assoc-transaction-info-editor',
   templateUrl: './transaction-info-editor.component.html'
 })
-export class TransactionInfoEditorComponent extends InfoEditorComponent implements OnInit {
-
-  public transaction = new Transaction();
+export class TransactionInfoEditorComponent extends InfoEditorComponent<Transaction> implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +18,7 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent implemen
     private service: TransactionService,
     private authContainer: AuthContainer
   ) {
-    super();
+    super(new Transaction());
   }
 
   public ngOnInit(): void {
@@ -36,33 +32,12 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent implemen
     });
   }
 
-  public onSave(toSave: Transaction): void {
-    this.saving = true;
-    this.service.update(this.transaction.index, toSave).subscribe({
-      next: d => {
-        this.transaction = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
-    });
+  protected override save(toSave: Transaction): Observable<Transaction> {
+    return this.service.update(this.data.index, toSave);
   }
 
   public onDelete(): void {
-    this.service.delete(this.transaction.index).subscribe(r => {
+    this.service.delete(this.data.index).subscribe(r => {
       this.router.navigate([`/funds`]);
     });
   }
@@ -74,7 +49,7 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent implemen
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.transaction = d;
+            this.data = d;
             this.reading = false;
           },
           error: error => {
