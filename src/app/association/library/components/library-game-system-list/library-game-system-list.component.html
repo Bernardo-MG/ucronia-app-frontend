@@ -1,28 +1,28 @@
 <layout-waiting-wrapper [waiting]="readingBooks">
-    <!-- List -->
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <!-- Headers -->
-          <th scope="col">
-            Title<pagination-order-button property="title"
-              (directionChange)="onChangeDirection($event)"></pagination-order-button>
-          </th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr *ngFor="let gameSystem of response.content; let rowIndex = index" role="button"
-          routerLink="/library/gameSystem/{{gameSystem.name}}">
-          <!-- Cells -->
-          <td>
-            {{gameSystem.name}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </layout-waiting-wrapper>
-  <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="response.currentPage" [pages]="response.totalPages" [disabled]="readingBooks"
-      (goTo)="onGoTo($event)">
-    </pagination-navigation>
-  </div>
+  <!-- List -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Title<pagination-order-button property="title"
+            (directionChange)="onChangeDirection($event)"></pagination-order-button>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let gameSystem of response.content; let rowIndex = index" role="button"
+        routerLink="/library/gameSystem/{{gameSystem.name}}">
+        <!-- Cells -->
+        <td>
+          {{gameSystem.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [current]="response.currentPage" [pages]="response.totalPages" [disabled]="readingBooks"
+    (goTo)="onGoTo($event)">
+  </pagination-navigation>
+</div>
