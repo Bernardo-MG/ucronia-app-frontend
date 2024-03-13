@@ -57,6 +57,23 @@ export abstract class InfoEditorComponent<Data> {
     });
   }
 
+  protected load(id: string | null): void {
+    if (id) {
+      this.reading = true;
+      this.read(id)
+        .subscribe({
+          next: d => {
+            this.data = d;
+            this.reading = false;
+          },
+          error: error => {
+            this.reading = false;
+            this.error = true;
+          }
+        });
+    }
+  }
+
   public isAbleToEdit() {
     return (!this.error) && (!this.reading) && this.editable && !this.editing;
   }
@@ -74,5 +91,7 @@ export abstract class InfoEditorComponent<Data> {
   }
 
   protected abstract save(toSave: Data): Observable<Data>;
+
+  protected abstract read(id: string): Observable<Data>;
 
 }

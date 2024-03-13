@@ -42,22 +42,9 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
     });
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      this.reading = true;
-      const identifier = Number(id);
-      this.service.getOne(identifier)
-        .subscribe({
-          next: d => {
-            this.data = d;
-            this.reading = false;
-          },
-          error: error => {
-            this.reading = false;
-            this.error = true;
-          }
-        });
-    }
+  protected read(id: string) {
+    const identifier = Number(id);
+    return this.service.getOne(identifier);
   }
 
 }

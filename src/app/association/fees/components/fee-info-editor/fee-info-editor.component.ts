@@ -14,6 +14,8 @@ import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/i
 })
 export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements OnInit, AfterContentInit {
 
+  private date: string = "";
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,7 +38,13 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('date'), params.get('memberNumber'));
+      const dateParam = params.get('date');
+      if(dateParam){
+        this.date = dateParam;
+      } else {
+        this.date = '';
+      }
+      this.load(params.get('memberNumber'));
     });
   }
 
@@ -50,22 +58,9 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
     });
   }
 
-  private load(date: string | null, memberNumber: string | null): void {
-    if (date && memberNumber) {
-      this.reading = true;
-      const identifier = Number(memberNumber);
-      this.service.getOne(date, identifier)
-        .subscribe({
-          next: d => {
-            this.data = d;
-            this.reading = false;
-          },
-          error: error => {
-            this.reading = false;
-            this.error = true;
-          }
-        });
-    }
+  protected read(id: string) {
+    const identifier = Number(id);
+    return this.service.getOne(this.date, identifier);
   }
 
   public goToTransaction(index: number) {

@@ -101,23 +101,8 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     return super.isAbleToEdit() && (!this.data.revoked);
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      this.token = id;
-      this.reading = true;
-      this.service.getOne(id)
-        .subscribe({
-          next: response => {
-            this.data = response;
-            this.extendExpirationForm.patchValue(this.data as any);
-            this.reading = false;
-          },
-          error: error => {
-            this.error = true;
-            this.reading = false;
-          }
-        });
-    }
+  protected read(id: string) {
+    return this.service.getOne(id);
   }
 
 }

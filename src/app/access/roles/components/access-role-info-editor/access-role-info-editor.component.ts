@@ -55,29 +55,15 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     this.permissionView = 'list';
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      this.role = id;
-      this.reading = true;
-      this.service.getOne(id)
-        .subscribe({
-          next: response => {
-            this.data = response;
-            this.reading = false;
-          },
-          error: error => {
-            this.error = true;
-            this.reading = false;
-          }
-        });
-    }
+  protected read(id: string) {
+    return this.service.getOne(id);
   }
 
   public isAbleToAddPermission() {
     return true;
   }
 
-  public onAddPermission(permission: Permission) {
+  public onAddPermission() {
     this.permissionView = 'list';
   }
 

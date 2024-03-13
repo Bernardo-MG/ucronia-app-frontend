@@ -57,21 +57,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     this.view = "list";
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      this.reading = true;
-      this.service.getOne(id)
-        .subscribe({
-          next: d => {
-            this.data = d;
-            this.reading = false;
-          },
-          error: error => {
-            this.reading = false;
-            this.error = true;
-          }
-        });
-    }
+  protected read(id: string) {
+    return this.service.getOne(id);
   }
 
 }
