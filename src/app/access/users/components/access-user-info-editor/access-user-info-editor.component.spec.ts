@@ -5,15 +5,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
-import { AccessUserRoleFormComponent } from '../../components/access-user-roles/access-user-roles.component';
+import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
+import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-roles.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
-import { AccessUserDetailsComponent } from './access-user-details.component';
+import { AccessUserInfoEditorComponent } from './access-user-info-editor.component';
 
-describe('AccessUserDetailsComponent', () => {
-  let component: AccessUserDetailsComponent;
-  let fixture: ComponentFixture<AccessUserDetailsComponent>;
+describe('AccessUserInfoEditorComponent', () => {
+  let component: AccessUserInfoEditorComponent;
+  let fixture: ComponentFixture<AccessUserInfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,7 +26,7 @@ describe('AccessUserDetailsComponent', () => {
         IconsModule
       ],
       declarations: [
-        AccessUserDetailsComponent,
+        AccessUserInfoEditorComponent,
         AccessUserFormComponent,
         AccessUserRoleFormComponent,
         AccessUserInfoComponent
@@ -37,7 +37,7 @@ describe('AccessUserDetailsComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserDetailsComponent);
+    fixture = TestBed.createComponent(AccessUserInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

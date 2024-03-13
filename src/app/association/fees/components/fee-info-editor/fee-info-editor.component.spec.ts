@@ -6,15 +6,15 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EMPTY } from 'rxjs';
-import { FeeInfoComponent } from '../../components/fee-info/fee-info.component';
+import { FeeInfoComponent } from '../fee-info/fee-info.component';
 import { FeeService } from '../../services/fee.service';
 import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
 import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
-import { FeeDetailsComponent } from './fee-details.component';
+import { FeeInfoEditorComponent } from './fee-info-editor.component';
 
-describe('FeeDetailsComponent', () => {
-  let component: FeeDetailsComponent;
-  let fixture: ComponentFixture<FeeDetailsComponent>;
+describe('FeeInfoEditorComponent', () => {
+  let component: FeeInfoEditorComponent;
+  let fixture: ComponentFixture<FeeInfoEditorComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -33,7 +33,7 @@ describe('FeeDetailsComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        FeeDetailsComponent,
+        FeeInfoEditorComponent,
         FeeMemberSelectionComponent,
         FeeEditFormComponent,
         FeeInfoComponent
@@ -44,7 +44,7 @@ describe('FeeDetailsComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeDetailsComponent);
+    fixture = TestBed.createComponent(FeeInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

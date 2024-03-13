@@ -2,45 +2,48 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { Role } from '@app/core/authentication/models/role';
+import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
-import { Transaction } from '../../models/transaction';
-import { TransactionService } from '../../service/transaction.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { throwError } from 'rxjs';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'assoc-transaction-details',
-  templateUrl: './transaction-details.component.html'
+  selector: 'access-user-info-editor',
+  templateUrl: './access-user-info-editor.component.html'
 })
-export class TransactionDetailsComponent extends InfoEditorComponent implements OnInit {
+export class AccessUserInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
-  public transaction = new Transaction();
+  public data = new User();
+
+  public view = 'list';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: TransactionService,
+    private service: AccessUserService,
     private authContainer: AuthContainer
   ) {
     super();
   }
 
-  public ngOnInit(): void {
+  ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("transaction", "update");
-    this.deletable = this.authContainer.hasPermission("transaction", "delete");
+    this.editable = this.authContainer.hasPermission("user", "update");
+    this.deletable = this.authContainer.hasPermission("user", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      this.load(params.get('user'));
     });
   }
 
-  public onSave(toSave: Transaction): void {
+  public onSave(toSave: User): void {
     this.saving = true;
-    this.service.update(this.transaction.index, toSave).subscribe({
+    this.service.update(toSave.username, toSave).subscribe({
       next: d => {
-        this.transaction = d;
+        this.data = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -62,19 +65,30 @@ export class TransactionDetailsComponent extends InfoEditorComponent implements 
   }
 
   public onDelete(): void {
-    this.service.delete(this.transaction.index).subscribe(r => {
-      this.router.navigate([`/funds`]);
+    this.service.delete(this.data.username).subscribe(r => {
+      this.router.navigate([`/users`]);
     });
+  }
+
+  public onAddRole(data: Role): void {
+    this.view = "list";
+  }
+
+  public onShowAddRole() {
+    this.view = "add";
+  }
+
+  public onCancelAddRole() {
+    this.view = "list";
   }
 
   private load(id: string | null): void {
     if (id) {
       this.reading = true;
-      const identifier = Number(id);
-      this.service.getOne(identifier)
+      this.service.getOne(id)
         .subscribe({
           next: d => {
-            this.transaction = d;
+            this.data = d;
             this.reading = false;
           },
           error: error => {

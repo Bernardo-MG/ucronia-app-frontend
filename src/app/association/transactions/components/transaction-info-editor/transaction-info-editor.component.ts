@@ -3,23 +3,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
-import { Member } from '../../models/member';
-import { MemberService } from '../../services/member.service';
+import { Transaction } from '../../models/transaction';
+import { TransactionService } from '../../service/transaction.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
-  selector: 'assoc-member-details',
-  templateUrl: './member-details.component.html'
+  selector: 'assoc-transaction-info-editor',
+  templateUrl: './transaction-info-editor.component.html'
 })
-export class MemberDetailsComponent extends InfoEditorComponent implements OnInit {
+export class TransactionInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
-  public member = new Member();
+  public transaction = new Transaction();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: MemberService,
+    private service: TransactionService,
     private authContainer: AuthContainer
   ) {
     super();
@@ -27,20 +27,20 @@ export class MemberDetailsComponent extends InfoEditorComponent implements OnIni
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("member", "update");
-    this.deletable = this.authContainer.hasPermission("member", "delete");
+    this.editable = this.authContainer.hasPermission("transaction", "update");
+    this.deletable = this.authContainer.hasPermission("transaction", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('number'));
+      this.load(params.get('id'));
     });
   }
 
-  public onSave(toSave: Member): void {
+  public onSave(toSave: Transaction): void {
     this.saving = true;
-    this.service.update(this.member.number, toSave).subscribe({
+    this.service.update(this.transaction.index, toSave).subscribe({
       next: d => {
-        this.member = d;
+        this.transaction = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -62,8 +62,8 @@ export class MemberDetailsComponent extends InfoEditorComponent implements OnIni
   }
 
   public onDelete(): void {
-    this.service.delete(this.member.number).subscribe(r => {
-      this.router.navigate([`/membership`]);
+    this.service.delete(this.transaction.index).subscribe(r => {
+      this.router.navigate([`/funds`]);
     });
   }
 
@@ -74,7 +74,7 @@ export class MemberDetailsComponent extends InfoEditorComponent implements OnIni
       this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.member = d;
+            this.transaction = d;
             this.reading = false;
           },
           error: error => {

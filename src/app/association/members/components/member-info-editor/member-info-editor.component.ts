@@ -1,52 +1,46 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
-import { Fee } from '../../models/fee';
-import { FeeService } from '../../services/fee.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { throwError } from 'rxjs';
+import { Member } from '../../models/member';
+import { MemberService } from '../../services/member.service';
 
 @Component({
-  selector: 'assoc-fee-details',
-  templateUrl: './fee-details.component.html'
+  selector: 'assoc-member-info-editor',
+  templateUrl: './member-info-editor.component.html'
 })
-export class FeeDetailsComponent extends InfoEditorComponent implements OnInit, AfterContentInit {
+export class MemberInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
-  public fee = new Fee();
+  public member = new Member();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: FeeService,
-    private cdRef: ChangeDetectorRef,
+    private service: MemberService,
     private authContainer: AuthContainer
   ) {
     super();
   }
 
-  ngAfterContentInit(): void {
-    // TODO: What is this for?
-    this.cdRef.detectChanges();
-  }
-
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("fee", "update");
-    this.deletable = this.authContainer.hasPermission("fee", "delete");
+    this.editable = this.authContainer.hasPermission("member", "update");
+    this.deletable = this.authContainer.hasPermission("member", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('date'), params.get('memberNumber'));
+      this.load(params.get('number'));
     });
   }
 
-  public onSave(toSave: Fee): void {
+  public onSave(toSave: Member): void {
     this.saving = true;
-    this.service.update(this.fee.date, this.fee.member.number, toSave).subscribe({
+    this.service.update(this.member.number, toSave).subscribe({
       next: d => {
-        this.fee = d;
+        this.member = d;
 
         this.failures = new FieldFailures();
         // Reactivate view
@@ -68,19 +62,19 @@ export class FeeDetailsComponent extends InfoEditorComponent implements OnInit, 
   }
 
   public onDelete(): void {
-    this.service.delete(this.fee.date, this.fee.member.number).subscribe(r => {
+    this.service.delete(this.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
 
-  private load(date: string | null, memberNumber: string | null): void {
-    if (date && memberNumber) {
+  private load(id: string | null): void {
+    if (id) {
       this.reading = true;
-      const identifier = Number(memberNumber);
-      this.service.getOne(date, identifier)
+      const identifier = Number(id);
+      this.service.getOne(identifier)
         .subscribe({
           next: d => {
-            this.fee = d;
+            this.member = d;
             this.reading = false;
           },
           error: error => {
@@ -89,10 +83,6 @@ export class FeeDetailsComponent extends InfoEditorComponent implements OnInit, 
           }
         });
     }
-  }
-
-  public goToTransaction(index: number) {
-    this.router.navigate([`funds/transaction/${index}`]);
   }
 
 }

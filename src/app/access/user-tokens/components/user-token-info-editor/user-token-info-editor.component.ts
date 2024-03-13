@@ -10,10 +10,10 @@ import { throwError } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
-  selector: 'access-user-token-details',
-  templateUrl: './user-token-details.component.html'
+  selector: 'access-user-token-info-editor',
+  templateUrl: './user-token-info-editor.component.html'
 })
-export class UserTokenDetailsComponent extends InfoEditorComponent implements OnInit {
+export class UserTokenInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
   public token = "";
 

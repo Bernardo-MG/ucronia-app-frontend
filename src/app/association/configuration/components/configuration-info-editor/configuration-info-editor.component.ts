@@ -8,10 +8,10 @@ import { AssociationConfiguration } from '../../models/association-configuration
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
 
 @Component({
-  selector: 'assoc-configuration-details',
-  templateUrl: './configuration-details.component.html'
+  selector: 'assoc-configuration-info-editor',
+  templateUrl: './configuration-info-editor.component.html'
 })
-export class ConfigurationDetailsComponent extends InfoEditorComponent implements OnInit {
+export class ConfigurationInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
   public data = new AssociationConfiguration();
 

@@ -2,27 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
-import { AccessUserService } from '../../services/access-user.service';
+import { AccessRoleService } from '../../services/access-role.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
-  selector: 'access-user-details',
-  templateUrl: './access-user-details.component.html'
+  selector: 'access-role-info-editor',
+  templateUrl: './access-role-info-editor.component.html'
 })
-export class AccessUserDetailsComponent extends InfoEditorComponent implements OnInit {
+export class AccessRoleInfoEditorComponent extends InfoEditorComponent implements OnInit {
 
-  public data = new User();
+  public permissionView = 'list';
 
-  public view = 'list';
+  public role = "";
+
+  public data = new Role();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: AccessUserService,
+    private service: AccessRoleService,
     private authContainer: AuthContainer
   ) {
     super();
@@ -35,13 +37,13 @@ export class AccessUserDetailsComponent extends InfoEditorComponent implements O
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('user'));
+      this.load(params.get('role'));
     });
   }
 
-  public onSave(toSave: User): void {
+  public onSave(toSave: Role): void {
     this.saving = true;
-    this.service.update(toSave.username, toSave).subscribe({
+    this.service.update(toSave.name, toSave).subscribe({
       next: d => {
         this.data = d;
 
@@ -57,7 +59,7 @@ export class AccessUserDetailsComponent extends InfoEditorComponent implements O
           this.failures = new FieldFailures();
         }
         // Reactivate view
-        this.saving = false;
+        this.editing = false;
 
         return throwError(() => error);
       }
@@ -65,38 +67,43 @@ export class AccessUserDetailsComponent extends InfoEditorComponent implements O
   }
 
   public onDelete(): void {
-    this.service.delete(this.data.username).subscribe(r => {
-      this.router.navigate([`/users`]);
+    this.service.delete(this.data.name).subscribe(r => {
+      this.router.navigate([`/roles`]);
     });
   }
 
-  public onAddRole(data: Role): void {
-    this.view = "list";
+  public onShowAddPermission() {
+    this.permissionView = 'add';
   }
 
-  public onShowAddRole() {
-    this.view = "add";
-  }
-
-  public onCancelAddRole() {
-    this.view = "list";
+  public onCancelAddPermission() {
+    this.permissionView = 'list';
   }
 
   private load(id: string | null): void {
     if (id) {
+      this.role = id;
       this.reading = true;
       this.service.getOne(id)
         .subscribe({
-          next: d => {
-            this.data = d;
+          next: response => {
+            this.data = response;
             this.reading = false;
           },
           error: error => {
-            this.reading = false;
             this.error = true;
+            this.reading = false;
           }
         });
     }
+  }
+
+  public isAbleToAddPermission() {
+    return true;
+  }
+
+  public onAddPermission(permission: Permission) {
+    this.permissionView = 'list';
   }
 
 }

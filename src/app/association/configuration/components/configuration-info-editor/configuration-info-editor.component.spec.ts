@@ -5,11 +5,11 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
 import { ConfigurationFormComponent } from '../configuration-form/configuration-form.component';
 import { ConfigurationInfoComponent } from '../configuration-info/configuration-info.component';
-import { ConfigurationDetailsComponent } from './configuration-details.component';
+import { ConfigurationInfoEditorComponent } from './configuration-info-editor.component';
 
-describe('ConfigurationDetailsComponent', () => {
-  let component: ConfigurationDetailsComponent;
-  let fixture: ComponentFixture<ConfigurationDetailsComponent>;
+describe('ConfigurationInfoEditorComponent', () => {
+  let component: ConfigurationInfoEditorComponent;
+  let fixture: ComponentFixture<ConfigurationInfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('ConfigurationDetailsComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        ConfigurationDetailsComponent,
+        ConfigurationInfoEditorComponent,
         ConfigurationFormComponent,
         ConfigurationInfoComponent
       ],
@@ -30,7 +30,7 @@ describe('ConfigurationDetailsComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ConfigurationDetailsComponent);
+    fixture = TestBed.createComponent(ConfigurationInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
