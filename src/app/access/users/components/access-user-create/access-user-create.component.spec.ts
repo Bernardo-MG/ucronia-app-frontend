@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserCreateFormComponent } from '../access-user-create-form/access-user-create-form.component';
+import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserCreateComponent } from './access-user-create.component';
 
 describe('AccessUserCreateComponent', () => {
@@ -19,7 +19,7 @@ describe('AccessUserCreateComponent', () => {
       ],
       declarations: [
         AccessUserCreateComponent,
-        AccessUserCreateFormComponent
+        AccessUserFormComponent
       ],
       providers: [
         AccessUserService
