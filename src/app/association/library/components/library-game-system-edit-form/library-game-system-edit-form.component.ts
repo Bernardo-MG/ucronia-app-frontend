@@ -1,13 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Member } from '@app/association/members/models/member';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { BookType } from '../../models/book-type';
 
 @Component({
   selector: 'library-game-system-edit-form',
   standalone: true,
-  imports: [],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule ],
   templateUrl: './library-game-system-edit-form.component.html'
 })
 export class LibraryGameSystemEditFormComponent extends FormComponent<BookType> {
