@@ -4,10 +4,10 @@ import { User } from '@app/core/authentication/models/user';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 
 @Component({
-  selector: 'access-user-create-form',
-  templateUrl: './access-user-create-form.component.html'
+  selector: 'access-user-form',
+  templateUrl: './access-user-form.component.html'
 })
-export class AccessUserCreateFormComponent extends FormComponent<User> {
+export class AccessUserFormComponent extends FormComponent<User> {
 
   constructor(
     fb: FormBuilder
