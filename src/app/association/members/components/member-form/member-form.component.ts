@@ -4,10 +4,10 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { Member } from '../../models/member';
 
 @Component({
-  selector: 'assoc-member-edit-form',
-  templateUrl: './member-edit-form.component.html'
+  selector: 'assoc-member-form',
+  templateUrl: './member-form.component.html'
 })
-export class MemberEditionFormComponent extends FormComponent<Member> {
+export class MemberFormComponent extends FormComponent<Member> {
 
   constructor(
     fb: FormBuilder
