@@ -19,7 +19,9 @@ export class LibraryBookCreateFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      name: ['']
+      isbn: [''],
+      title: [''],
+      language: ['']
     });
   }
 
