@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { Member } from '../../models/member';
@@ -8,13 +8,6 @@ import { Member } from '../../models/member';
   templateUrl: './member-edit-form.component.html'
 })
 export class MemberEditionFormComponent extends FormComponent<Member> {
-
-  @Input() public override set data(value: Member) {
-    super.data = value;
-    this.member = value;
-  }
-
-  public member = new Member();
 
   constructor(
     fb: FormBuilder

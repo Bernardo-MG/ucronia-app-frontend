@@ -42,7 +42,7 @@ export class FormComponent<Data> {
     this.loadData(value);
   }
 
-  public get data() {
+  public get data(): Data | undefined {
     return this.form.value;
   }
 

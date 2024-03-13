@@ -9,13 +9,6 @@ import { Transaction } from '../../models/transaction';
 })
 export class TransactionFormComponent extends FormComponent<Transaction> {
 
-  @Input() public override set data(value: Transaction) {
-    super.data = value;
-    this.transaction = value;
-  }
-
-  public transaction = new Transaction();
-
   constructor(
     fb: FormBuilder
   ) {
