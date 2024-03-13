@@ -12,6 +12,8 @@ import { MemberService } from '../../services/member.service';
 })
 export class MemberInfoEditorComponent extends InfoEditorComponent<Member> implements OnInit {
 
+  private number = -1;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,12 +30,12 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('number'));
+      const numParam = params.get('number');
+      if(numParam){
+        this.number = Number(numParam);
+      }
+      this.load();
     });
-  }
-
-  protected save(toSave: Member): Observable<Member>{
-    return this.service.update(this.data.number, toSave);
   }
 
   public onDelete(): void {
@@ -42,9 +44,12 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
     });
   }
 
-  protected read(id: string) {
-    const identifier = Number(id);
-    return this.service.getOne(identifier);
+  protected save(toSave: Member): Observable<Member>{
+    return this.service.update(this.data.number, toSave);
+  }
+
+  protected read() {
+    return this.service.getOne(this.number);
   }
 
 }

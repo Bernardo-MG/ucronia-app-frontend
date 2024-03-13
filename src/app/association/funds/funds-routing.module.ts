@@ -8,7 +8,7 @@ import { TransactionInfoEditorComponent } from '../transactions/components/trans
 const routes: Routes = [
   { path: '', component: FundsFrontpageComponent },
   { path: 'add', component: TransactionCreateComponent },
-  { path: 'transaction/:id', component: TransactionInfoEditorComponent }
+  { path: 'transaction/:index', component: TransactionInfoEditorComponent }
 ];
 
 @NgModule({

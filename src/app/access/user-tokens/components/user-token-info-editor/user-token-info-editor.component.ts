@@ -14,9 +14,9 @@ import { UserTokenService } from '../../services/user-token.service';
 })
 export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken> implements OnInit {
 
-  public token = "";
-
   public extendExpirationForm;
+
+  private token = "";
 
   constructor(
     fb: FormBuilder,
@@ -37,7 +37,11 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('token'));
+      const tokenParam = params.get('token');
+      if(tokenParam) {
+        this.token = tokenParam;
+      }
+      this.load();
     });
   }
 
@@ -101,8 +105,8 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     return super.isAbleToEdit() && (!this.data.revoked);
   }
 
-  protected read(id: string) {
-    return this.service.getOne(id);
+  protected read() {
+    return this.service.getOne(this.token);
   }
 
 }

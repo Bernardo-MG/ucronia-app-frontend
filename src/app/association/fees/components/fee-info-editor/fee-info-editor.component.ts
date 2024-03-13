@@ -1,12 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Observable, throwError } from 'rxjs';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { Observable } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
   selector: 'assoc-fee-info-editor',
@@ -15,6 +13,8 @@ import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/i
 export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements OnInit, AfterContentInit {
 
   private date: string = "";
+
+  private memberNumber = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +44,11 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
       } else {
         this.date = '';
       }
-      this.load(params.get('memberNumber'));
+      const memberNumberParam = params.get('memberNumber');
+      if(memberNumberParam){
+        this.memberNumber = Number(memberNumberParam);
+      }
+      this.load();
     });
   }
 
@@ -58,9 +62,8 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
     });
   }
 
-  protected read(id: string) {
-    const identifier = Number(id);
-    return this.service.getOne(this.date, identifier);
+  protected read() {
+    return this.service.getOne(this.date, this.memberNumber);
   }
 
   public goToTransaction(index: number) {

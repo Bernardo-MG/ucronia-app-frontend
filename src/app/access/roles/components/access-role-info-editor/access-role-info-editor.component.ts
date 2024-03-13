@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Permission } from '@app/core/authentication/models/permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
@@ -15,7 +14,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
 
   public permissionView = 'list';
 
-  public role = "";
+  private role = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -33,7 +32,11 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('role'));
+      const roleParam = params.get('role');
+      if(roleParam) {
+        this.role = roleParam;
+      }
+      this.load();
     });
   }
 
@@ -55,8 +58,8 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     this.permissionView = 'list';
   }
 
-  protected read(id: string) {
-    return this.service.getOne(id);
+  protected read() {
+    return this.service.getOne(this.role);
   }
 
   public isAbleToAddPermission() {

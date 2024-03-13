@@ -12,6 +12,8 @@ import { TransactionService } from '../../service/transaction.service';
 })
 export class TransactionInfoEditorComponent extends InfoEditorComponent<Transaction> implements OnInit {
 
+  private index = -1;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,7 +30,11 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent<Transact
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('id'));
+      const indexParam = params.get('index');
+      if(indexParam){
+        this.index = Number(indexParam);
+      }
+      this.load();
     });
   }
 
@@ -42,9 +48,8 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent<Transact
     });
   }
 
-  protected read(id: string) {
-    const identifier = Number(id);
-    return this.service.getOne(identifier);
+  protected read() {
+    return this.service.getOne(this.index);
   }
 
 }

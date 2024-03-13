@@ -22,14 +22,14 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent<Associ
     // Check permissions
     this.editable = this.authContainer.hasPermission("association_configuration", "update");
 
-    this.load(null);
+    this.load();
   }
 
   protected override save(toSave: AssociationConfiguration): Observable<AssociationConfiguration> {
     return this.service.update(toSave);
   }
 
-  protected read(id: string) {
+  protected read() {
     return this.service.get();
   }
 

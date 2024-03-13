@@ -15,6 +15,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public view = 'list';
 
+  private username = '';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,7 +33,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('user'));
+      const usernameParam = params.get('user');
+      if(usernameParam) {
+        this.username = usernameParam;
+      }
+      this.load();
     });
   }
 
@@ -57,8 +63,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     this.view = "list";
   }
 
-  protected read(id: string) {
-    return this.service.getOne(id);
+  protected read() {
+    return this.service.getOne(this.username);
   }
 
 }

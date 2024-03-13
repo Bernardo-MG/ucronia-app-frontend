@@ -34,7 +34,7 @@
               </ng-container>
               <ng-container *ngSwitchCase="'add'">
                 <!-- Add permissions -->
-                <access-role-add-permission [role]="role"
+                <access-role-add-permission [role]="data.name"
                   (addPermission)="onAddPermission()"></access-role-add-permission>
                 <div class="d-grid">
                   <!-- Cancel button -->
