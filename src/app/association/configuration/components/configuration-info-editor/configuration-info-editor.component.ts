@@ -29,7 +29,7 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent<Associ
     return this.service.update(toSave);
   }
 
-  protected read() {
+  protected override read(): Observable<AssociationConfiguration> {
     return this.service.get();
   }
 

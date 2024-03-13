@@ -45,10 +45,6 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     });
   }
 
-  protected override save(toSave: UserToken): Observable<UserToken> {
-    throw new Error('Method not implemented.');
-  }
-
   public onRevoke(): void {
     this.saving = true;
     this.service.revoke(this.data.token).subscribe({
@@ -105,7 +101,11 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     return super.isAbleToEdit() && (!this.data.revoked);
   }
 
-  protected read() {
+  protected override save(toSave: UserToken): Observable<UserToken> {
+    throw new Error('Method not implemented.');
+  }
+
+  protected override read(): Observable<UserToken> {
     return this.service.getOne(this.token);
   }
 

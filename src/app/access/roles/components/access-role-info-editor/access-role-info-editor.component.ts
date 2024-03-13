@@ -33,15 +33,11 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     // Get id
     this.route.paramMap.subscribe(params => {
       const roleParam = params.get('role');
-      if(roleParam) {
+      if (roleParam) {
         this.role = roleParam;
       }
       this.load();
     });
-  }
-
-  protected override save(toSave: Role): Observable<Role> {
-    return this.service.update(toSave.name, toSave);
   }
 
   public onDelete(): void {
@@ -58,16 +54,20 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     this.permissionView = 'list';
   }
 
-  protected read() {
-    return this.service.getOne(this.role);
-  }
-
   public isAbleToAddPermission() {
     return true;
   }
 
   public onAddPermission() {
     this.permissionView = 'list';
+  }
+
+  protected override save(toSave: Role): Observable<Role> {
+    return this.service.update(toSave.name, toSave);
+  }
+
+  protected override read(): Observable<Role> {
+    return this.service.getOne(this.role);
   }
 
 }

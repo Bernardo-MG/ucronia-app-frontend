@@ -31,7 +31,7 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
     // Get id
     this.route.paramMap.subscribe(params => {
       const numParam = params.get('number');
-      if(numParam){
+      if (numParam) {
         this.number = Number(numParam);
       }
       this.load();
@@ -44,11 +44,11 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
     });
   }
 
-  protected save(toSave: Member): Observable<Member>{
+  protected override save(toSave: Member): Observable<Member> {
     return this.service.update(this.data.number, toSave);
   }
 
-  protected read() {
+  protected override read(): Observable<Member> {
     return this.service.getOne(this.number);
   }
 
