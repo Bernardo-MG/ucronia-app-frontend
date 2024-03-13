@@ -48,7 +48,7 @@ export class FeeInfoEditorComponent extends InfoEditorComponent implements OnIni
       next: d => {
         this.fee = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -57,7 +57,7 @@ export class FeeInfoEditorComponent extends InfoEditorComponent implements OnIni
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;

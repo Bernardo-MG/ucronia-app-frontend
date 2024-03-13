@@ -42,7 +42,7 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent implemen
       next: d => {
         this.transaction = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -51,7 +51,7 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent implemen
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;

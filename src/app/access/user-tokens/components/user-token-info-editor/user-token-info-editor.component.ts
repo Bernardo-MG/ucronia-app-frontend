@@ -50,7 +50,7 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
       next: d => {
         this.data = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
       },
@@ -58,7 +58,7 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;
@@ -77,7 +77,7 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
           this.data = d;
           this.extendExpirationForm.patchValue(this.data.expirationDate as any);
 
-          this.failures = new FieldFailures();
+          this.failures.clear();
           // Reactivate view
           this.saving = false;
         },
@@ -85,7 +85,7 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent implements
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
-            this.failures = new FieldFailures();
+            this.failures.clear();
           }
           // Reactivate view
           this.saving = false;

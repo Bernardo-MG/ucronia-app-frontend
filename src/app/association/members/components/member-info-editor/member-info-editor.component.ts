@@ -42,7 +42,7 @@ export class MemberInfoEditorComponent extends InfoEditorComponent implements On
       next: d => {
         this.member = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -51,7 +51,7 @@ export class MemberInfoEditorComponent extends InfoEditorComponent implements On
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;

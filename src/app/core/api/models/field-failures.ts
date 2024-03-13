@@ -10,6 +10,13 @@ export class FieldFailures {
   }
 
   /**
+   * Removes all the stored failures.
+   */
+  public clear() {
+    this.propertyFailures = {};
+  }
+
+  /**
    * Returns the failures for a property.
    * 
    * @param property property to search for failures

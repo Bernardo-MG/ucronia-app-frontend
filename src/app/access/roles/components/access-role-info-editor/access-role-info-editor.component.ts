@@ -47,7 +47,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent implement
       next: d => {
         this.data = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
         this.editing = false;
@@ -56,7 +56,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent implement
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.editing = false;

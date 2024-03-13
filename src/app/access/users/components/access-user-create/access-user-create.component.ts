@@ -29,7 +29,7 @@ export class AccessUserCreateComponent {
     this.service.create(data).subscribe({
       next: d => {
         this.router.navigate([`/users/${d.username}`]);
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
       },
@@ -37,7 +37,7 @@ export class AccessUserCreateComponent {
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;

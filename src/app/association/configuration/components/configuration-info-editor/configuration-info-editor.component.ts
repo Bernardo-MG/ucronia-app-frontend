@@ -35,7 +35,7 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent implem
       next: d => {
         this.data = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
 
         // Reload data
         this.load();
@@ -48,7 +48,7 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent implem
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;
