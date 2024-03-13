@@ -5,34 +5,15 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { AccessUserService } from '../../services/access-user.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-details',
   templateUrl: './access-user-details.component.html'
 })
-export class AccessUserDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
-
-  public error = false;
-
-  public failures = new FieldFailures();
+export class AccessUserDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public data = new User();
 
@@ -43,7 +24,9 @@ export class AccessUserDetailsComponent implements OnInit {
     private router: Router,
     private service: AccessUserService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     // Check permissions
@@ -87,10 +70,6 @@ export class AccessUserDetailsComponent implements OnInit {
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
   public onAddRole(data: Role): void {
     this.view = "list";
   }
@@ -101,14 +80,6 @@ export class AccessUserDetailsComponent implements OnInit {
 
   public onCancelAddRole() {
     this.view = "list";
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
   }
 
   private load(id: string | null): void {
@@ -126,14 +97,6 @@ export class AccessUserDetailsComponent implements OnInit {
           }
         });
     }
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
 }

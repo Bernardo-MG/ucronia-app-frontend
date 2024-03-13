@@ -6,41 +6,24 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { throwError } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
   selector: 'assoc-transaction-details',
   templateUrl: './transaction-details.component.html'
 })
-export class TransactionDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
-
-  public error = false;
+export class TransactionDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public transaction = new Transaction();
-
-  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: TransactionService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
     // Check permissions
@@ -84,18 +67,6 @@ export class TransactionDetailsComponent implements OnInit {
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
-
   private load(id: string | null): void {
     if (id) {
       this.reading = true;
@@ -112,14 +83,6 @@ export class TransactionDetailsComponent implements OnInit {
           }
         });
     }
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
 }

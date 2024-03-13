@@ -7,45 +7,28 @@ import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { throwError } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
   selector: 'access-role-details',
   templateUrl: './access-role-details.component.html'
 })
-export class AccessRoleDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
+export class AccessRoleDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public permissionView = 'list';
 
   public role = "";
 
-  public error = false;
-
   public data = new Role();
-
-  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: AccessRoleService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     // Check permissions
@@ -89,24 +72,12 @@ export class AccessRoleDetailsComponent implements OnInit {
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
   public onShowAddPermission() {
     this.permissionView = 'add';
   }
 
   public onCancelAddPermission() {
     this.permissionView = 'list';
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
   }
 
   private load(id: string | null): void {
@@ -129,14 +100,6 @@ export class AccessRoleDetailsComponent implements OnInit {
 
   public isAbleToAddPermission() {
     return true;
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
   public onAddPermission(permission: Permission) {

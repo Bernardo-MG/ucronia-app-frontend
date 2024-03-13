@@ -6,34 +6,15 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { throwError } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 
 @Component({
   selector: 'assoc-fee-details',
   templateUrl: './fee-details.component.html'
 })
-export class FeeDetailsComponent implements OnInit, AfterContentInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
-
-  public error = false;
+export class FeeDetailsComponent extends InfoEditorComponent implements OnInit, AfterContentInit {
 
   public fee = new Fee();
-
-  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +22,9 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     private service: FeeService,
     private cdRef: ChangeDetectorRef,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   ngAfterContentInit(): void {
     // TODO: What is this for?
@@ -90,18 +73,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
-
   private load(date: string | null, memberNumber: string | null): void {
     if (date && memberNumber) {
       this.reading = true;
@@ -118,14 +89,6 @@ export class FeeDetailsComponent implements OnInit, AfterContentInit {
           }
         });
     }
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
   public goToTransaction(index: number) {

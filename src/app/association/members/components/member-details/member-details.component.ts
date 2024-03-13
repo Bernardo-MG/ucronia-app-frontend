@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
@@ -11,36 +12,18 @@ import { MemberService } from '../../services/member.service';
   selector: 'assoc-member-details',
   templateUrl: './member-details.component.html'
 })
-export class MemberDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
-
-  public error = false;
+export class MemberDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public member = new Member();
-
-  public failures = new FieldFailures();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: MemberService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   public ngOnInit(): void {
     // Check permissions
@@ -84,18 +67,6 @@ export class MemberDetailsComponent implements OnInit {
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
-
   private load(id: string | null): void {
     if (id) {
       this.reading = true;
@@ -112,14 +83,6 @@ export class MemberDetailsComponent implements OnInit {
           }
         });
     }
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
@@ -10,29 +11,16 @@ import { AssociationConfigurationService } from '../../service/association-confi
   selector: 'assoc-configuration-details',
   templateUrl: './configuration-details.component.html'
 })
-export class ConfigurationDetailsComponent implements OnInit {
-
-  /**
-   * Loading flag.
-   */
-  public reading = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public saving = false;
-
-  public error = false;
-
-  public failures = new FieldFailures();
+export class ConfigurationDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public data = new AssociationConfiguration();
 
   constructor(
     private service: AssociationConfigurationService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     // Check permissions
@@ -68,22 +56,6 @@ export class ConfigurationDetailsComponent implements OnInit {
         return throwError(() => error);
       }
     });
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public onStartEditing(): void {
-    this.editing = true;
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
   private load() {

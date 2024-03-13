@@ -5,6 +5,7 @@ import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { throwError } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
@@ -12,27 +13,11 @@ import { UserTokenService } from '../../services/user-token.service';
   selector: 'access-user-token-details',
   templateUrl: './user-token-details.component.html'
 })
-export class UserTokenDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editable = false;
+export class UserTokenDetailsComponent extends InfoEditorComponent implements OnInit {
 
   public token = "";
 
-  public error = false;
-
   public data = new UserToken();
-
-  public failures = new FieldFailures();
 
   public extendExpirationForm;
 
@@ -42,6 +27,7 @@ export class UserTokenDetailsComponent implements OnInit {
     private service: UserTokenService,
     private authContainer: AuthContainer
   ) {
+    super();
 
     this.extendExpirationForm = fb.group({
       expirationDate: ['', Validators.required]
@@ -110,12 +96,8 @@ export class UserTokenDetailsComponent implements OnInit {
     }
   }
 
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && (this.editable) && (!this.data.revoked);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
+  public override isAbleToEdit() {
+    return super.isAbleToEdit() && (!this.data.revoked);
   }
 
   private load(id: string | null): void {
