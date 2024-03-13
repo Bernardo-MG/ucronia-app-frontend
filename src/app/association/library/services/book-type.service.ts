@@ -26,6 +26,27 @@ export class BookTypeService {
       .pipe(map(r => r.content));
   }
 
+  public update(name: string, data: BookType): Observable<BookType> {
+    return this.getClient()
+      .appendRoute(`/${name}`)
+      .update<SimpleResponse<BookType>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public getOne(name: string): Observable<BookType> {
+    return this.getClient()
+      .appendRoute(`/${name}`)
+      .read<SimpleResponse<BookType>>()
+      .pipe(map(r => r.content));
+  }
+
+  public delete(name: string): Observable<boolean> {
+    return this.getClient()
+      .appendRoute(`/${name}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
+  }
+
   public getAll(page: number): Observable<PaginatedResponse<BookType[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortField('name')]);
