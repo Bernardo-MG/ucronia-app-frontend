@@ -8,8 +8,8 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeeCalendarComponent } from './components/fee-calendar/fee-calendar.component';
-import { FeeDetailsComponent } from './components/fee-details/fee-details.component';
 import { FeeEditFormComponent } from './components/fee-edit-form/fee-edit-form.component';
+import { FeeInfoEditorComponent } from './components/fee-info-editor/fee-info-editor.component';
 import { FeeInfoComponent } from './components/fee-info/fee-info.component';
 import { FeeMemberSelectionComponent } from './components/fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from './components/fee-pay-form/fee-pay-form.component';
@@ -22,7 +22,7 @@ import { FeeService } from './services/fee.service';
 @NgModule({
   declarations: [
     FeeCalendarComponent,
-    FeeDetailsComponent,
+    FeeInfoEditorComponent,
     FeeMemberSelectionComponent,
     FeeEditFormComponent,
     FeePayFormComponent,
@@ -42,7 +42,7 @@ import { FeeService } from './services/fee.service';
   ],
   exports: [
     FeeCalendarComponent,
-    FeeDetailsComponent,
+    FeeInfoEditorComponent,
     FeeMemberSelectionComponent,
     FeeEditFormComponent,
     FeePayFormComponent,

@@ -2,39 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { Observable, throwError } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
-  selector: 'access-user-token-details',
-  templateUrl: './user-token-details.component.html'
+  selector: 'access-user-token-info-editor',
+  templateUrl: './user-token-info-editor.component.html'
 })
-export class UserTokenDetailsComponent implements OnInit {
-
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editable = false;
-
-  public token = "";
-
-  public error = false;
-
-  public data = new UserToken();
-
-  public failures = new FieldFailures();
+export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken> implements OnInit {
 
   public extendExpirationForm;
+
+  private token = "";
 
   constructor(
     fb: FormBuilder,
@@ -42,6 +24,7 @@ export class UserTokenDetailsComponent implements OnInit {
     private service: UserTokenService,
     private authContainer: AuthContainer
   ) {
+    super(new UserToken());
 
     this.extendExpirationForm = fb.group({
       expirationDate: ['', Validators.required]
@@ -54,7 +37,11 @@ export class UserTokenDetailsComponent implements OnInit {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('token'));
+      const tokenParam = params.get('token');
+      if(tokenParam) {
+        this.token = tokenParam;
+      }
+      this.load();
     });
   }
 
@@ -64,7 +51,7 @@ export class UserTokenDetailsComponent implements OnInit {
       next: d => {
         this.data = d;
 
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
       },
@@ -72,7 +59,7 @@ export class UserTokenDetailsComponent implements OnInit {
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;
@@ -91,7 +78,7 @@ export class UserTokenDetailsComponent implements OnInit {
           this.data = d;
           this.extendExpirationForm.patchValue(this.data.expirationDate as any);
 
-          this.failures = new FieldFailures();
+          this.failures.clear();
           // Reactivate view
           this.saving = false;
         },
@@ -99,7 +86,7 @@ export class UserTokenDetailsComponent implements OnInit {
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
-            this.failures = new FieldFailures();
+            this.failures.clear();
           }
           // Reactivate view
           this.saving = false;
@@ -110,31 +97,20 @@ export class UserTokenDetailsComponent implements OnInit {
     }
   }
 
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && (this.editable) && (!this.data.revoked);
+  public override isAbleToEdit() {
+    return super.isAbleToEdit() && (!this.data.revoked);
   }
 
-  public isWaiting() {
-    return this.reading || this.saving;
+  protected override delete(): void {
+    throw new Error('Method not implemented.');
   }
 
-  private load(id: string | null): void {
-    if (id) {
-      this.token = id;
-      this.reading = true;
-      this.service.getOne(id)
-        .subscribe({
-          next: response => {
-            this.data = response;
-            this.extendExpirationForm.patchValue(this.data as any);
-            this.reading = false;
-          },
-          error: error => {
-            this.error = true;
-            this.reading = false;
-          }
-        });
-    }
+  protected override read(): Observable<UserToken> {
+    return this.service.getOne(this.token);
+  }
+
+  protected override save(toSave: UserToken): Observable<UserToken> {
+    throw new Error('Method not implemented.');
   }
 
 }

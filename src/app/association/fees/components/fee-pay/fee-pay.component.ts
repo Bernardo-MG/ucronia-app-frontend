@@ -52,7 +52,7 @@ export class FeePayComponent implements OnInit {
     this.service.pay(data).subscribe({
       next: response => {
         this.router.navigate(['/membership']);
-        this.failures = new FieldFailures();
+        this.failures.clear();
         // Reactivate view
         this.saving = false;
       },
@@ -60,7 +60,7 @@ export class FeePayComponent implements OnInit {
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.saving = false;

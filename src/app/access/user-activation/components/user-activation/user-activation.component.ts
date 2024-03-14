@@ -70,7 +70,7 @@ export class UserActivationComponent implements OnInit {
   public onActivateUser(password: string): void {
     this.validating = true;
 
-    this.failures = new FieldFailures();
+    this.failures.clear();
 
     const reset = new UserActivate();
     reset.password = password;
@@ -83,7 +83,7 @@ export class UserActivationComponent implements OnInit {
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         // Reactivate view
         this.validating = false;

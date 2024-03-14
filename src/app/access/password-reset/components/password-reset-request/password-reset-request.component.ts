@@ -40,7 +40,7 @@ export class PasswordResetRequestComponent {
    */
   public onPasswordResetRequest(resetPassword: PasswordResetRequest) {
     this.reseting = true;
-    this.failures = new FieldFailures();
+    this.failures.clear();
     this.service.requestResetPassword(resetPassword)
       .subscribe({
         next: response => {
@@ -51,7 +51,7 @@ export class PasswordResetRequestComponent {
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
-            this.failures = new FieldFailures();
+            this.failures.clear();
           }
           this.reseting = false;
 

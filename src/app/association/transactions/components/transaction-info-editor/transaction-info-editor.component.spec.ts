@@ -2,16 +2,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberInfoComponent } from '../../components/member-info/member-info.component';
-import { MemberService } from '../../services/member.service';
-import { MemberFormComponent } from '../member-form/member-form.component';
-import { MemberDetailsComponent } from './member-details.component';
+import { TransactionService } from '../../service/transaction.service';
+import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
+import { TransactionInfoComponent } from '../transaction-info/transaction-info.component';
+import { TransactionInfoEditorComponent } from './transaction-info-editor.component';
 
-describe('MemberDetailsComponent', () => {
-  let component: MemberDetailsComponent;
-  let fixture: ComponentFixture<MemberDetailsComponent>;
+describe('TransactionDetailsComponent', () => {
+  let component: TransactionInfoEditorComponent;
+  let fixture: ComponentFixture<TransactionInfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,21 +18,20 @@ describe('MemberDetailsComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule,
-        IconsModule
+        LayoutModule
       ],
       declarations: [
-        MemberDetailsComponent,
-        MemberFormComponent,
-        MemberInfoComponent
+        TransactionInfoEditorComponent,
+        TransactionFormComponent,
+        TransactionInfoComponent
       ],
       providers: [
-        MemberService
+        TransactionService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberDetailsComponent);
+    fixture = TestBed.createComponent(TransactionInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

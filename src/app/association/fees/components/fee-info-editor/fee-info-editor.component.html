@@ -1,13 +1,13 @@
-<layout-article title="Edit member">
+<layout-article title="Edit fee">
   <div class="col-md-6 offset-md-3">
     <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-member-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="member"
+      <assoc-fee-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
         [failures]="failures" (save)="onSave($event)">
-      </assoc-member-form>
+      </assoc-fee-edit-form>
       <!-- Info -->
-      <assoc-member-info id="info" [member]="member"></assoc-member-info>
+      <assoc-fee-info id="info" [fee]="data" (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
     </layout-edition-wrapper>
   </div>
 </layout-article>

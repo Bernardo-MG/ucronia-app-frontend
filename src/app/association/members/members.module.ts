@@ -8,9 +8,9 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MemberBalanceChartComponent } from './components/member-balance-chart/member-balance-chart.component';
-import { MemberFormComponent } from './components/member-form/member-form.component';
 import { MemberCreateComponent } from './components/member-create/member-create.component';
-import { MemberDetailsComponent } from './components/member-details/member-details.component';
+import { MemberFormComponent } from './components/member-form/member-form.component';
+import { MemberInfoEditorComponent } from './components/member-info-editor/member-info-editor.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
 import { MemberListComponent } from './components/member-list/member-list.component';
 import { MemberBalanceService } from './services/member-balance.service';
@@ -20,7 +20,7 @@ import { MemberService } from './services/member.service';
 
 @NgModule({
   declarations: [
-    MemberDetailsComponent,
+    MemberInfoEditorComponent,
     MemberCreateComponent,
     MemberFormComponent,
     MemberInfoComponent,
@@ -39,7 +39,7 @@ import { MemberService } from './services/member.service';
     RouterModule
   ],
   exports: [
-    MemberDetailsComponent,
+    MemberInfoEditorComponent,
     MemberCreateComponent,
     MemberFormComponent,
     MemberInfoComponent,
