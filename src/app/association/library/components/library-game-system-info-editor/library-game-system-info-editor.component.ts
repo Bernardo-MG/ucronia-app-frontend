@@ -11,12 +11,12 @@ import { LibraryGameSystemFormComponent } from '../library-game-system-form/libr
 import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
 
 @Component({
-  selector: 'app-library-game-system-details',
+  selector: 'app-library-game-system-info-editor',
   standalone: true,
   imports: [ LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent ],
-  templateUrl: './library-game-system-details.component.html'
+  templateUrl: './library-game-system-info-editor.component.html'
 })
-export class LibraryGameSystemDetailsComponent {
+export class LibraryGameSystemInfoEditorComponent {
 
   /**
    * Reading flag.
