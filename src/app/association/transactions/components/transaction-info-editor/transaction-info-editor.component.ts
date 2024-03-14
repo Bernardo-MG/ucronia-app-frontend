@@ -38,18 +38,18 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent<Transact
     });
   }
 
-  public onDelete(): void {
+  protected override delete(): void {
     this.service.delete(this.data.index).subscribe(r => {
       this.router.navigate([`/funds`]);
     });
   }
 
-  protected override save(toSave: Transaction): Observable<Transaction> {
-    return this.service.update(this.data.index, toSave);
-  }
-
   protected override read(): Observable<Transaction> {
     return this.service.getOne(this.index);
+  }
+
+  protected override save(toSave: Transaction): Observable<Transaction> {
+    return this.service.update(this.data.index, toSave);
   }
 
 }

@@ -52,22 +52,22 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
     });
   }
 
-  public onDelete(): void {
+  public goToTransaction(index: number) {
+    this.router.navigate([`funds/transaction/${index}`]);
+  }
+
+  protected override delete(): void {
     this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
 
-  public goToTransaction(index: number) {
-    this.router.navigate([`funds/transaction/${index}`]);
+  protected override read(): Observable<Fee> {
+    return this.service.getOne(this.date, this.memberNumber);
   }
 
   protected override save(toSave: Fee): Observable<Fee> {
     return this.service.update(this.data.date, this.data.member.number, toSave);
-  }
-
-  protected override read(): Observable<Fee> {
-    return this.service.getOne(this.date, this.memberNumber);
   }
 
 }

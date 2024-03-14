@@ -101,12 +101,16 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     return super.isAbleToEdit() && (!this.data.revoked);
   }
 
-  protected override save(toSave: UserToken): Observable<UserToken> {
+  protected override delete(): void {
     throw new Error('Method not implemented.');
   }
 
   protected override read(): Observable<UserToken> {
     return this.service.getOne(this.token);
+  }
+
+  protected override save(toSave: UserToken): Observable<UserToken> {
+    throw new Error('Method not implemented.');
   }
 
 }

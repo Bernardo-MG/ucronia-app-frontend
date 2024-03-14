@@ -41,12 +41,6 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     });
   }
 
-  public onDelete(): void {
-    this.service.delete(this.data.username).subscribe(r => {
-      this.router.navigate([`/users`]);
-    });
-  }
-
   public onAddRole(data: Role): void {
     this.view = "list";
   }
@@ -59,12 +53,18 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     this.view = "list";
   }
 
-  protected override save(toSave: User): Observable<User> {
-    return this.service.update(toSave.username, toSave);
+  protected override delete(): void {
+    this.service.delete(this.data.username).subscribe(r => {
+      this.router.navigate([`/users`]);
+    });
   }
 
   protected override read(): Observable<User> {
     return this.service.getOne(this.username);
+  }
+
+  protected override save(toSave: User): Observable<User> {
+    return this.service.update(toSave.username, toSave);
   }
 
 }

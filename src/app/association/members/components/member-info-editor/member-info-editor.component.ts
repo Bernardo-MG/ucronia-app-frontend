@@ -38,18 +38,18 @@ export class MemberInfoEditorComponent extends InfoEditorComponent<Member> imple
     });
   }
 
-  public onDelete(): void {
+  protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate([`/membership`]);
     });
   }
 
-  protected override save(toSave: Member): Observable<Member> {
-    return this.service.update(this.data.number, toSave);
-  }
-
   protected override read(): Observable<Member> {
     return this.service.getOne(this.number);
+  }
+
+  protected override save(toSave: Member): Observable<Member> {
+    return this.service.update(this.data.number, toSave);
   }
 
 }

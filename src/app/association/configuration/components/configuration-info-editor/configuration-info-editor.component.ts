@@ -25,12 +25,16 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent<Associ
     this.load();
   }
 
-  protected override save(toSave: AssociationConfiguration): Observable<AssociationConfiguration> {
-    return this.service.update(toSave);
+  protected override delete(): void {
+    throw new Error('Method not implemented.');
   }
 
   protected override read(): Observable<AssociationConfiguration> {
     return this.service.get();
+  }
+
+  protected override save(toSave: AssociationConfiguration): Observable<AssociationConfiguration> {
+    return this.service.update(toSave);
   }
 
 }

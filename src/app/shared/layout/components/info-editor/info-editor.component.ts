@@ -26,7 +26,7 @@ export abstract class InfoEditorComponent<Data> {
 
   constructor(
     public data: Data
-  ) {}
+  ) { }
 
   public onStartEditing(): void {
     this.editing = true;
@@ -57,19 +57,8 @@ export abstract class InfoEditorComponent<Data> {
     });
   }
 
-  protected load(): void {
-      this.reading = true;
-      this.read()
-        .subscribe({
-          next: d => {
-            this.data = d;
-            this.reading = false;
-          },
-          error: error => {
-            this.reading = false;
-            this.error = true;
-          }
-        });
+  public onDelete(): void {
+    this.delete();
   }
 
   public isAbleToEdit() {
@@ -88,8 +77,25 @@ export abstract class InfoEditorComponent<Data> {
     return this.reading || this.saving;
   }
 
-  protected abstract save(toSave: Data): Observable<Data>;
+  protected load(): void {
+    this.reading = true;
+    this.read()
+      .subscribe({
+        next: d => {
+          this.data = d;
+          this.reading = false;
+        },
+        error: error => {
+          this.reading = false;
+          this.error = true;
+        }
+      });
+  }
+
+  protected abstract delete(): void;
 
   protected abstract read(): Observable<Data>;
+
+  protected abstract save(toSave: Data): Observable<Data>;
 
 }

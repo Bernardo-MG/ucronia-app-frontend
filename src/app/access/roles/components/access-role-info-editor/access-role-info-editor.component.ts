@@ -40,12 +40,6 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     });
   }
 
-  public onDelete(): void {
-    this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate([`/roles`]);
-    });
-  }
-
   public onShowAddPermission() {
     this.permissionView = 'add';
   }
@@ -62,12 +56,18 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     this.permissionView = 'list';
   }
 
-  protected override save(toSave: Role): Observable<Role> {
-    return this.service.update(toSave.name, toSave);
+  protected override delete(): void {
+    this.service.delete(this.data.name).subscribe(r => {
+      this.router.navigate([`/roles`]);
+    });
   }
 
   protected override read(): Observable<Role> {
     return this.service.getOne(this.role);
+  }
+
+  protected override save(toSave: Role): Observable<Role> {
+    return this.service.update(toSave.name, toSave);
   }
 
 }
