@@ -37,23 +37,23 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  public update(id: number, data: Member): Observable<Member> {
+  public update(number: number, data: Member): Observable<Member> {
     return this.getClient()
-      .appendRoute(`/${id}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<Member>>(data)
       .pipe(map(r => r.content));
   }
 
-  public delete(id: number): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${id}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  public getOne(id: number): Observable<Member> {
+  public getOne(number: number): Observable<Member> {
     return this.getClient()
-      .appendRoute(`/${id}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }

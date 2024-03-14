@@ -1,0 +1,13 @@
+<layout-article title="Edit member">
+  <div class="col-md-6 offset-md-3">
+    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
+      <!-- Form -->
+      <assoc-member-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+        [failures]="failures" (save)="onSave($event)">
+      </assoc-member-form>
+      <!-- Info -->
+      <assoc-member-info id="info" [member]="data"></assoc-member-info>
+    </layout-edition-wrapper>
+  </div>
+</layout-article>

@@ -65,7 +65,7 @@ export class PasswordResetComponent implements OnInit {
   public onPasswordReset(password: string): void {
     this.reseting = true;
 
-    this.failures = new FieldFailures();
+    this.failures.clear();
 
     const reset = new PasswordReset();
     reset.password = password;
@@ -78,7 +78,7 @@ export class PasswordResetComponent implements OnInit {
         if (error instanceof FailureResponse) {
           this.failures = error.failures;
         } else {
-          this.failures = new FieldFailures();
+          this.failures.clear();
         }
         this.reseting = false;
 

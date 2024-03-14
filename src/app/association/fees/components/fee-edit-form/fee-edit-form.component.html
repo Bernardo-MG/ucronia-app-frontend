@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Member</label>
     <div class="col-sm-10">
-      <input type="text" [value]="fee.member.fullName" id="fullNameInput" readonly="true" class="form-control"
+      <input type="text" [value]="data?.member?.fullName" id="fullNameInput" readonly="true" class="form-control"
         aria-describedby="fullNameLabel">
     </div>
   </div>
@@ -22,15 +22,15 @@
   <div class="row mb-2">
     <label id="activeLabel" class="col-sm-2 col-form-label">Paid</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="fee.paid"></icon-success>
-      <icon-failure *ngIf="!fee.paid"></icon-failure>
+      <icon-success *ngIf="data?.paid"></icon-success>
+      <icon-failure *ngIf="!data?.paid"></icon-failure>
     </div>
   </div>
   <!-- Payment date -->
   <div class="row mb-2">
     <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Payment date</label>
     <div class="col-sm-10">
-      <input type="date" [value]="fee.transaction.date" id="paymentDateInput" [readonly]="true" class="form-control"
+      <input type="date" [value]="data?.transaction?.date" id="paymentDateInput" [readonly]="true" class="form-control"
         aria-describedby="paymentDateLabel">
     </div>
   </div>
