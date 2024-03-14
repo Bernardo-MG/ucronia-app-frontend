@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { BookTypeService } from '../../services/book-type.service';
 import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
@@ -13,39 +12,21 @@ import { LibraryGameSystemInfoComponent } from '../library-game-system-info/libr
 @Component({
   selector: 'app-library-game-system-info-editor',
   standalone: true,
-  imports: [ LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent ],
+  imports: [LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent],
   templateUrl: './library-game-system-info-editor.component.html'
 })
-export class LibraryGameSystemInfoEditorComponent {
+export class LibraryGameSystemInfoEditorComponent extends InfoEditorComponent<BookType> implements OnInit {
 
-  /**
-   * Reading flag.
-   */
-  public reading = false;
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
-
-  public editing = false;
-
-  public editable = false;
-
-  public deletable = false;
-
-  public error = false;
-
-  public bookType = new BookType();
-
-  public failures = new FieldFailures();
+  private name = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private service: BookTypeService,
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    super(new BookType());
+  }
 
   public ngOnInit(): void {
     // Check permissions
@@ -54,76 +35,26 @@ export class LibraryGameSystemInfoEditorComponent {
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      this.load(params.get('name'));
-    });
-  }
-
-  public onSave(toSave: BookType): void {
-    this.saving = true;
-    this.service.update(this.bookType.name, toSave).subscribe({
-      next: d => {
-        this.bookType = d;
-
-        this.failures = new FieldFailures();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures = new FieldFailures();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
+      const nameParam = params.get('name');
+      if (nameParam) {
+        this.name = nameParam;
       }
+      this.load();
     });
   }
 
-  public onDelete(): void {
-    this.service.delete(this.bookType.name).subscribe(r => {
+  protected override delete(): void {
+    this.service.delete(this.data.name).subscribe(r => {
       this.router.navigate([`/library`]);
     });
   }
 
-  public onStartEditing(): void {
-    this.editing = true;
+  protected override read(): Observable<BookType> {
+    return this.service.getOne(this.name);
   }
 
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
-
-  private load(id: string | null): void {
-    if (id) {
-      this.reading = true;
-      this.service.getOne(id)
-        .subscribe({
-          next: d => {
-            this.bookType = d;
-            this.reading = false;
-          },
-          error: error => {
-            this.reading = false;
-            this.error = true;
-          }
-        });
-    }
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
+  protected override save(toSave: BookType): Observable<BookType> {
+    return this.service.update(this.data.name, toSave);
   }
 
 }
