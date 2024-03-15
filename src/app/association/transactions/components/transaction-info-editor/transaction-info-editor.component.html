@@ -3,7 +3,7 @@
     <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-transaction-form id="form" [waiting]="waiting" [readonly]="!allowEdit" [data]="data" [failures]="failures"
+      <assoc-transaction-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
         (save)="onSave($event)">
       </assoc-transaction-form>
       <!-- Info -->

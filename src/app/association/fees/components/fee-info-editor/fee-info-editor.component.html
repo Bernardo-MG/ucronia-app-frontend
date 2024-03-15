@@ -3,7 +3,7 @@
     <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-fee-edit-form id="form" [waiting]="waiting" [readonly]="!allowEdit" [data]="data"
+      <assoc-fee-edit-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
         [failures]="failures" (save)="onSave($event)">
       </assoc-fee-edit-form>
       <!-- Info -->

@@ -38,10 +38,16 @@ export abstract class InfoEditorComponent<Data> {
     return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
   }
 
-  public get allowEdit() {
+  /**
+   * Form enabled flag.
+   */
+  public get formEnabled() {
     return this.editable && this.editing && (!this.error);
   }
 
+  /**
+   * Waiting flag.
+   */
   public get waiting() {
     return this.reading || this.saving;
   }
