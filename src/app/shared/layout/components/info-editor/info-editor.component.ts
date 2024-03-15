@@ -30,11 +30,6 @@ export abstract class InfoEditorComponent<Data> {
   public deletable = false;
 
   /**
-   * Error flag. Act
-   */
-  public error = false;
-
-  /**
    * Failures after saving.
    */
   public failures = new FieldFailures();
@@ -43,21 +38,21 @@ export abstract class InfoEditorComponent<Data> {
    * Edit button active flag.
    */
   public get editEnabled() {
-    return (!this.error) && (!this.reading) && (this.editable) && (!this.editing);
+    return (!this.reading) && (this.editable) && (!this.editing);
   }
 
   /**
    * Delete button active flag.
    */
   public get deleteEnabled() {
-    return (!this.error) && (!this.reading) && (this.deletable) && (!this.editing);
+    return (!this.reading) && (this.deletable) && (!this.editing);
   }
 
   /**
    * Form enabled flag.
    */
   public get formEnabled() {
-    return (this.editable) && (this.editing) && (!this.error);
+    return (this.editable) && (this.editing);
   }
 
   /**
@@ -126,7 +121,6 @@ export abstract class InfoEditorComponent<Data> {
         },
         error: error => {
           this.reading = false;
-          this.error = true;
         }
       });
   }
