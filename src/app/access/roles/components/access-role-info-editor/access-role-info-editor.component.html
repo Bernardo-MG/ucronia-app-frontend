@@ -2,10 +2,10 @@
   <div class="col-md-6 offset-md-3">
     <!-- Role -->
     <div class="mb-1">
-      <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+      <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
         (delete)="onDelete()" (startEditing)="onStartEditing()">
         <!-- Form -->
-        <access-role-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+        <access-role-form id="form" [waiting]="waiting" [readonly]="!allowEdit" [data]="data"
           [failures]="failures" (save)="onSave($event)">
         </access-role-form>
         <!-- Info -->
@@ -23,7 +23,7 @@
             <ng-container [ngSwitch]="permissionView">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [role]="data.name" [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()">
+                <access-role-permissions [role]="data.name" [editable]="editEnabled" [deletable]="deleteEnabled">
                 </access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->

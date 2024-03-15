@@ -24,6 +24,28 @@ export abstract class InfoEditorComponent<Data> {
 
   public failures = new FieldFailures();
 
+  /**
+   * Edit button is active flag.
+   */
+  public get editEnabled() {
+    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+  }
+
+  /**
+   * Delete button is active flag.
+   */
+  public get deleteEnabled() {
+    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
+  }
+
+  public get allowEdit() {
+    return this.editable && this.editing && (!this.error);
+  }
+
+  public get waiting() {
+    return this.reading || this.saving;
+  }
+
   constructor(
     public data: Data
   ) { }
@@ -59,22 +81,6 @@ export abstract class InfoEditorComponent<Data> {
 
   public onDelete(): void {
     this.delete();
-  }
-
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
-  }
-
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
-
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
-
-  public isWaiting() {
-    return this.reading || this.saving;
   }
 
   protected load(): void {

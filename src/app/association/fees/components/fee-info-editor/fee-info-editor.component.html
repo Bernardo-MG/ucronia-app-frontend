@@ -1,9 +1,9 @@
 <layout-article title="Edit fee">
   <div class="col-md-6 offset-md-3">
-    <layout-edition-wrapper [editable]="isAbleToEdit()" [deletable]="isAbleToDelete()" [editing]="editing"
+    <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-fee-edit-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+      <assoc-fee-edit-form id="form" [waiting]="waiting" [readonly]="!allowEdit" [data]="data"
         [failures]="failures" (save)="onSave($event)">
       </assoc-fee-edit-form>
       <!-- Info -->

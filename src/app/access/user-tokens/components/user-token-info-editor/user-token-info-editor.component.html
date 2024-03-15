@@ -11,13 +11,13 @@
           <div class="row">
             <!-- Buttons -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()" name="Revoke"
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke"
                 (action)="onRevoke()"></layout-waiting-button>
             </div>
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="isWaiting()" [disabled]="!isAbleToEdit()" name="Extend expiration"
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal"
-                [attr.data-bs-target]="isAbleToEdit() ? '#extendExpirationModal' : ''"></layout-waiting-button>
+                [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''"></layout-waiting-button>
             </div>
           </div>
         </footer>

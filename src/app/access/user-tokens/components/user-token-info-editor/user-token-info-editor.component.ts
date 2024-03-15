@@ -97,8 +97,8 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
     }
   }
 
-  public override isAbleToEdit() {
-    return super.isAbleToEdit() && (!this.data.revoked);
+  public override get editEnabled() {
+    return super.editEnabled && (!this.data.revoked);
   }
 
   protected override delete(): void {
