@@ -38,14 +38,14 @@ export abstract class InfoEditorComponent<Data> {
    * Edit button active flag.
    */
   public get editEnabled() {
-    return (!this.reading) && (this.editable) && (!this.editing);
+    return (this.editable) && (!this.reading) && (!this.editing);
   }
 
   /**
    * Delete button active flag.
    */
   public get deleteEnabled() {
-    return (!this.reading) && (this.deletable) && (!this.editing);
+    return (this.deletable) && (!this.reading) && (!this.editing);
   }
 
   /**
@@ -115,8 +115,8 @@ export abstract class InfoEditorComponent<Data> {
     this.reading = true;
     this.read()
       .subscribe({
-        next: d => {
-          this.data = d;
+        next: response => {
+          this.data = response;
           this.reading = false;
         },
         error: error => {
