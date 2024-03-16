@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule,  } from '@angular/common';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -14,6 +14,10 @@ import { Book } from '../../models/book';
 })
 export class LibraryBookFormComponent extends FormComponent<Book> {
 
+  @Output() public showBookTypeSelection = new EventEmitter<void>();
+
+  @Output() public showGameSystemSelection = new EventEmitter<void>();
+
   constructor(
     fb: FormBuilder
   ) {
@@ -26,12 +30,12 @@ export class LibraryBookFormComponent extends FormComponent<Book> {
     });
   }
 
-  public showBookTypeSelection() {
-    
+  public onShowBookTypeSelection() {
+    this.showBookTypeSelection.emit();
   }
 
-  public showGameSystemSelection() {
-
+  public onShowGameSystemSelection() {
+    this.showGameSystemSelection.emit();
   }
 
 }
