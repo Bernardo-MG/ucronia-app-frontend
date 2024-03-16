@@ -23,8 +23,8 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
     });
   }
 
-  public override isSaveDisabled() {
-    return super.isSaveDisabled() || !this.isPasswordsMatching();
+  public override get saveEnabled() {
+    return super.saveEnabled || this.isPasswordsMatching();
   }
 
   /**

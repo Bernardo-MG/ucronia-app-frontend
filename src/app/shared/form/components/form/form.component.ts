@@ -51,6 +51,24 @@ export class FormComponent<Data> {
   public form: any;
 
   /**
+   * Indicates if the save action is enabled.
+   * 
+   * @returns true if the save action is enabled, false otherwise
+   */
+  public get saveEnabled() {
+    return (this.form.valid) && (!this.waiting) && (!this.readonly);
+  }
+
+  /**
+   * Indicates if the form is enabled.
+   * 
+   * @returns true if the form is enabled, false otherwise
+   */
+  public get formEnabled() {
+    return !this.form.disabled;
+  }
+
+  /**
    * Handler for the save event.
    */
   public onSave() {
@@ -78,24 +96,6 @@ export class FormComponent<Data> {
    */
   public getFailures(property: string): Failure[] {
     return this.failures.getFailures(property);
-  }
-
-  /**
-   * Indicates if the save action is disabled.
-   * 
-   * @returns true if the save action is disabled, false otherwise
-   */
-  public isSaveDisabled() {
-    return ((!this.form.valid) || (this.waiting) || (this.readonly));
-  }
-
-  /**
-   * Indicates if the form is disabled.
-   * 
-   * @returns true if the form is disabled, false otherwise
-   */
-  public isFormDisabled() {
-    return this.form.disabled;
   }
 
   /**

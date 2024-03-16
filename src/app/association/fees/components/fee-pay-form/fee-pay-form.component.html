@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="col-md-2 mb-2">
-          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="isFormDisabled()"
+          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
             (click)="removeDate(i)">
             <fa-icon [icon]="removeIcon"></fa-icon>
           </button>
@@ -30,7 +30,7 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <button type="button" class="btn btn-link link-dark" aria-label="Add date" [disabled]="isFormDisabled()"
+          <button type="button" class="btn btn-link link-dark" aria-label="Add date" [disabled]="!formEnabled"
             (click)="addDate()">
             <fa-icon [icon]="addIcon"></fa-icon>
           </button>
@@ -56,7 +56,7 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
-      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
         (action)="onSave()"></layout-waiting-button>
     </div>
   </div>
