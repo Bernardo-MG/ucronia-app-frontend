@@ -49,7 +49,7 @@ export class MemberBalanceChartComponent implements OnInit {
     this.loadBalance();
   }
 
-  public isWaiting() {
+  public get waiting() {
     return (this.readingBalance || this.readingRange);
   }
 

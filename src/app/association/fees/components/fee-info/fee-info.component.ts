@@ -7,16 +7,16 @@ import { Fee } from '../../models/fee';
 })
 export class FeeInfoComponent {
 
-  @Input() fee = new Fee();
+  @Input() data = new Fee();
 
   @Output() public goToTransaction = new EventEmitter<number>();
 
   public selectTransaction() {
-    this.goToTransaction.emit(this.fee.transaction.index);
+    this.goToTransaction.emit(this.data.transaction.index);
   }
 
   public isTransactionDisabled(): boolean {
-    return this.fee.transaction.date === null;
+    return this.data.transaction.date === null;
   }
 
 }

@@ -1,7 +1,7 @@
 <layout-article title="Configuration">
-  <layout-edition-wrapper [editable]="isAbleToEdit()" [editing]="editing" (startEditing)="onStartEditing()">
+  <layout-edition-wrapper [editable]="editEnabled" [editing]="editing" (startEditing)="onStartEditing()">
     <!-- Form -->
-    <assoc-configuration-form id="form" [waiting]="isWaiting()" [readonly]="!isEditable()" [data]="data"
+    <assoc-configuration-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
       [failures]="failures" (save)="onSave($event)">
     </assoc-configuration-form>
     <!-- Info -->
