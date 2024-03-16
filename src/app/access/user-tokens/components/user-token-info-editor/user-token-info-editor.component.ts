@@ -48,50 +48,26 @@ export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken>
   public onRevoke(): void {
     this.saving = true;
     this.service.revoke(this.data.token).subscribe({
-      next: d => {
-        this.data = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
+      next: response => {
+        this.interceptSave(response);
       },
       error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
+        this.interceptError(error);
       }
     });
   }
 
   public onExtendExpiration(): void {
-    this.saving = true;
     const expirationDate = this.extendExpirationForm.value.expirationDate;
     if (expirationDate) {
+      this.saving = true;
       this.service.extend(this.data.token, expirationDate).subscribe({
-        next: d => {
-          this.data = d;
+        next: response => {
+          this.interceptSave(response);
           this.extendExpirationForm.patchValue(this.data.expirationDate as any);
-
-          this.failures.clear();
-          // Reactivate view
-          this.saving = false;
         },
         error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          // Reactivate view
-          this.saving = false;
-  
-          return throwError(() => error);
+          this.interceptError(error);
         }
       });
     }

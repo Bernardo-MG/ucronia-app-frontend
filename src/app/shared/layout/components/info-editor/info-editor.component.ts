@@ -82,33 +82,41 @@ export abstract class InfoEditorComponent<Data> {
     this.saving = true;
     this.save(toSave).subscribe({
       next: response => {
-        this.data = response;
-
-        this.failures.clear();
-
-        // Reactivate component
-        this.saving = false;
-        this.editing = false;
+        this.interceptSave(response);
       },
       error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          // No failure response
-          // Just remove the failures
-          this.failures.clear();
-        }
-
-        // Reactivate component
-        this.saving = false;
-
-        return throwError(() => error);
+        this.interceptError(error);
       }
     });
   }
 
   public onDelete(): void {
     this.delete();
+  }
+
+  protected interceptSave(response: Data) {
+    this.data = response;
+
+    this.failures.clear();
+
+    // Reactivate component
+    this.saving = false;
+    this.editing = false;
+  }
+
+  protected interceptError(error: any) {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      // No failure response
+      // Just remove the failures
+      this.failures.clear();
+    }
+
+    // Reactivate component
+    this.saving = false;
+
+    return throwError(() => error);
   }
 
   protected load(): void {
