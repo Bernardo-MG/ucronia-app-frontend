@@ -32,7 +32,7 @@
     </ng-template>
     <ng-template #submit_button>
       <!-- Login button -->
-      <button type="submit" class="btn btn-primary" [disabled]="isSaveDisabled()" name="Reset" aria-label="Reset">
+      <button type="submit" class="btn btn-primary" [disabled]="!saveEnabled" name="Reset" aria-label="Reset">
         Reset
       </button>
     </ng-template>

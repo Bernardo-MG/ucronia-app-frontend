@@ -5,54 +5,87 @@ import { Observable, throwError } from 'rxjs';
 export abstract class InfoEditorComponent<Data> {
 
   /**
-   * Reading flag.
+   * Reading flag. Active while the data is being read.
    */
-  public reading = false;
+  protected reading = false;
 
   /**
-   * Saving flag.
+   * Saving flag. Active while the data is being saved.
    */
-  public saving = false;
+  protected saving = false;
 
-  public editing = false;
+  /**
+   * Editing flag. Active while the form is active for editing.
+   */
+  protected editing = false;
 
-  public editable = false;
+  /**
+   * Editable flag. Active if the user has permissions to edit the data.
+   */
+  protected editable = false;
 
-  public deletable = false;
+  /**
+   * Deletable flag. Active if the user has permissions to delete the data.
+   */
+  protected deletable = false;
 
-  public error = false;
+  /**
+   * Failures after saving.
+   */
+  protected failures = new FieldFailures();
 
-  public failures = new FieldFailures();
+  /**
+   * Edit button active flag.
+   */
+  public get editEnabled() {
+    return (this.editable) && (!this.reading) && (!this.editing);
+  }
+
+  /**
+   * Delete button active flag.
+   */
+  public get deleteEnabled() {
+    return (this.deletable) && (!this.reading) && (!this.editing);
+  }
+
+  /**
+   * Form enabled flag.
+   */
+  public get formEnabled() {
+    return (this.editable) && (this.editing);
+  }
+
+  /**
+   * Waiting flag.
+   */
+  public get waiting() {
+    return (this.reading) || (this.saving);
+  }
 
   constructor(
     public data: Data
   ) { }
 
+  /**
+   * Start editing template method, changes the component status accordingly.
+   */
   public onStartEditing(): void {
     this.editing = true;
   }
 
+  /**
+   * Save template method. Calls the save hook and updated the component status.
+   *
+   * @param toSave data to save
+   */
   public onSave(toSave: Data): void {
     this.saving = true;
     this.save(toSave).subscribe({
-      next: d => {
-        this.data = d;
-
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-        this.editing = false;
+      next: response => {
+        this.interceptSave(response);
       },
       error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
+        this.interceptError(error);
       }
     });
   }
@@ -61,33 +94,41 @@ export abstract class InfoEditorComponent<Data> {
     this.delete();
   }
 
-  public isAbleToEdit() {
-    return (!this.error) && (!this.reading) && this.editable && !this.editing;
+  protected interceptSave(response: Data) {
+    this.data = response;
+
+    this.failures.clear();
+
+    // Reactivate component
+    this.saving = false;
+    this.editing = false;
   }
 
-  public isAbleToDelete() {
-    return (!this.error) && (!this.reading) && this.deletable && (!this.editing);
-  }
+  protected interceptError(error: any) {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      // No failure response
+      // Just remove the failures
+      this.failures.clear();
+    }
 
-  public isEditable() {
-    return this.editable && this.editing && (!this.error);
-  }
+    // Reactivate component
+    this.saving = false;
 
-  public isWaiting() {
-    return this.reading || this.saving;
+    return throwError(() => error);
   }
 
   protected load(): void {
     this.reading = true;
     this.read()
       .subscribe({
-        next: d => {
-          this.data = d;
+        next: response => {
+          this.data = response;
           this.reading = false;
         },
         error: error => {
           this.reading = false;
-          this.error = true;
         }
       });
   }

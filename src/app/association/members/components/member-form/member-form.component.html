@@ -58,7 +58,7 @@
   <!-- Save button -->
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="isSaveDisabled()" name="Save"
+      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
         (action)="onSave()"></layout-waiting-button>
     </div>
   </div>
