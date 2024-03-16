@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryBookInfoEditorComponent } from './library-book-info-editor.component';
 
 describe('LibraryBookInfoEditorComponent', () => {
@@ -8,10 +9,14 @@ describe('LibraryBookInfoEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookInfoEditorComponent]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        LibraryBookInfoEditorComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryBookInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

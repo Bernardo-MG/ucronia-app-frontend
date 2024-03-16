@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryBookTypeInfoEditorComponent } from './library-book-type-info-editor.component';
 
 describe('LibraryBookTypeInfoEditorComponent', () => {
@@ -8,7 +9,11 @@ describe('LibraryBookTypeInfoEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookTypeInfoEditorComponent]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        LibraryBookTypeInfoEditorComponent
+      ]
     })
     .compileComponents();
     

@@ -18,7 +18,7 @@ import { GameSystemService } from '../../services/game-system.service';
 })
 export class LibraryGameSystemListComponent {
 
-  public response = new PaginatedResponse<GameSystem[]>([]);
+  public page = new PaginatedResponse<GameSystem[]>([]);
 
   /**
    * Loading flag.
@@ -39,7 +39,9 @@ export class LibraryGameSystemListComponent {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    // We are working with pages using index 0
+    // TODO: the pages should come with the correct index
+    this.load(this.page.page + 1);
   }
 
   public onGoTo(page: number) {
@@ -51,7 +53,7 @@ export class LibraryGameSystemListComponent {
 
     this.service.getAll(page).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingBooks = false;

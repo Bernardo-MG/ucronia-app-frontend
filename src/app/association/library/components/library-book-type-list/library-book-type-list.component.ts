@@ -18,7 +18,7 @@ import { BookTypeService } from '../../services/book-type.service';
 })
 export class LibraryBookTypeListComponent {
 
-  public response = new PaginatedResponse<BookType[]>([]);
+  public page = new PaginatedResponse<BookType[]>([]);
 
   /**
    * Loading flag.
@@ -39,7 +39,9 @@ export class LibraryBookTypeListComponent {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.response.currentPage);
+    // We are working with pages using index 0
+    // TODO: the pages should come with the correct index
+    this.load(this.page.page + 1);
   }
 
   public onGoTo(page: number) {
@@ -51,7 +53,7 @@ export class LibraryBookTypeListComponent {
 
     this.service.getAll(page).subscribe({
       next: response => {
-        this.response = response;
+        this.page = response;
 
         // Reactivate view
         this.readingBooks = false;
