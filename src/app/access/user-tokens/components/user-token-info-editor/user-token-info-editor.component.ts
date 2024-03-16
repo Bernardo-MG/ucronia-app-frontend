@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
