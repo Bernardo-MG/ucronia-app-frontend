@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
 import { Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
-import { throwError } from 'rxjs';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { Observable } from 'rxjs';
 import { GameSystem } from '../../models/game-system';
 import { GameSystemService } from '../../services/game-system.service';
+import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
 
 @Component({
   selector: 'app-library-game-system-create',
@@ -14,41 +13,21 @@ import { GameSystemService } from '../../services/game-system.service';
   imports: [ LayoutModule, LibraryGameSystemFormComponent ],
   templateUrl: './library-game-system-create.component.html'
 })
-export class LibraryGameSystemCreateComponent {
-
-  /**
-   * Loading flag.
-   */
-  public saving = false;
-
-  public failures = new FieldFailures();
+export class LibraryGameSystemCreateComponent extends CreateComponent<GameSystem> {
 
   constructor(
     private service: GameSystemService,
-    private router: Router
-  ) { }
+    rt: Router
+  ) {
+    super(rt);
+  }
 
-  public onSave(data: GameSystem): void {
-    this.saving = true;
-    this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/library/gameSystem/${d.name}`]);
-        this.failures = new FieldFailures();
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures = new FieldFailures();
-        }
-        // Reactivate view
-        this.saving = false;
+  protected override save(toSave: GameSystem): Observable<GameSystem> {
+    return this.service.create(toSave);
+  }
 
-        return throwError(() => error);
-      }
-    });
+  protected override getReturnRoute(saved: GameSystem): string {
+    return `/library/gameSystem/${saved.name}`;
   }
 
 }
