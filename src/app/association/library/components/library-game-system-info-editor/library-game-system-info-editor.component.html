@@ -3,11 +3,11 @@
     <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <library-game-system-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+      <assoc-library-game-system-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
         [failures]="failures" (save)="onSave($event)">
-      </library-game-system-form>
+      </assoc-library-game-system-form>
       <!-- Info -->
-      <library-game-system-info id="info" [bookType]="data"></library-game-system-info>
+      <assoc-library-game-system-info id="info" [bookType]="data"></assoc-library-game-system-info>
     </layout-edition-wrapper>
   </div>
 </layout-article>

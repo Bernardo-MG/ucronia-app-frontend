@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
