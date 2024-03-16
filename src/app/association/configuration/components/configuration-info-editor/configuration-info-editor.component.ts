@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { Observable } from 'rxjs';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
