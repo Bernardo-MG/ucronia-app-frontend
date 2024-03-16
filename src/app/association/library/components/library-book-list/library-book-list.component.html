@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let book of response.content; let rowIndex = index" role="button"
+      <tr *ngFor="let book of page.content; let rowIndex = index" role="button"
         routerLink="/library/book/{{book.isbn}}">
         <!-- Cells -->
         <td>
@@ -22,7 +22,7 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [current]="response.currentPage" [pages]="response.totalPages" [disabled]="readingBooks"
+  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingBooks"
     (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>
