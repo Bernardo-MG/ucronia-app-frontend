@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BookType } from '../../models/book-type';
+import { GameSystem } from '../../models/game-system';
 
 @Component({
   selector: 'assoc-library-game-system-info',
@@ -9,6 +9,6 @@ import { BookType } from '../../models/book-type';
 })
 export class LibraryGameSystemInfoComponent {
 
-  @Input() bookType = new BookType();
+  @Input() data = new GameSystem();
 
 }

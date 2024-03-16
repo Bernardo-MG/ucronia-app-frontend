@@ -8,6 +8,8 @@ import { BookType } from '../../models/book-type';
 import { BookTypeService } from '../../services/book-type.service';
 import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
 import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
+import { GameSystem } from '../../models/game-system';
+import { GameSystemService } from '../../services/game-system.service';
 
 @Component({
   selector: 'assoc-library-game-system-info-editor',
@@ -15,23 +17,23 @@ import { LibraryGameSystemInfoComponent } from '../library-game-system-info/libr
   imports: [LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent],
   templateUrl: './library-game-system-info-editor.component.html'
 })
-export class LibraryGameSystemInfoEditorComponent extends InfoEditorComponent<BookType> implements OnInit {
+export class LibraryGameSystemInfoEditorComponent extends InfoEditorComponent<GameSystem> implements OnInit {
 
   private name = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: BookTypeService,
+    private service: GameSystemService,
     private authContainer: AuthContainer
   ) {
-    super(new BookType());
+    super(new GameSystem());
   }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("book_type", "update");
-    this.deletable = this.authContainer.hasPermission("book_type", "delete");
+    this.editable = this.authContainer.hasPermission("game_system", "update");
+    this.deletable = this.authContainer.hasPermission("game_system", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
