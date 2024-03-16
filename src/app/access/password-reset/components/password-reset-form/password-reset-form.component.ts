@@ -23,8 +23,8 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
     });
   }
 
-  public override isSaveDisabled() {
-    return super.isSaveDisabled() || !this.isPasswordsMatching();
+  public override get saveEnabled() {
+    return super.saveEnabled && this.isPasswordsMatching();
   }
 
   /**
@@ -52,10 +52,10 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
    * @returns true if the passwords match, false otherwise
    */
   private isPasswordsMatching(): boolean {
-    const password = this.form.get('password');
-    const confirmPassword = this.form.get('confirmPassword');
+    const password = this.form.get('password').getRawValue();
+    const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password.getRawValue() === confirmPassword.getRawValue());
+    return (password === confirmPassword) && (password.length > 0);
   }
 
 }
