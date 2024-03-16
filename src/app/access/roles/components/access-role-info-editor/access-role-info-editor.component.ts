@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 

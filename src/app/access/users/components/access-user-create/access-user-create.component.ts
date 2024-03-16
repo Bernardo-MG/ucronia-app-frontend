@@ -1,50 +1,29 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { User } from '@app/core/authentication/models/user';
-import { throwError } from 'rxjs';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { Observable } from 'rxjs';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-create',
   templateUrl: './access-user-create.component.html'
 })
-export class AccessUserCreateComponent {
-
-  /**
-   * Loading flag.
-   */
-  public saving = false;
-
-  public failures = new FieldFailures();
+export class AccessUserCreateComponent extends CreateComponent<User> {
 
   constructor(
     private service: AccessUserService,
-    private router: Router
-  ) { }
+    rt: Router
+  ) {
+    super(rt);
+  }
 
-  public onSave(data: User): void {
-    this.saving = true;
-    this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/users/${d.username}`]);
-        this.failures.clear();
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
+  protected override save(toSave: User): Observable<User> {
+    return this.service.create(toSave);
+  }
 
-        return throwError(() => error);
-      }
-    });
+  protected override getReturnRoute(saved: User): string {
+    return `/users/${saved.username}`;
   }
 
 }

@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/layout/components/info-editor/info-editor.component';
+import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { Observable } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
