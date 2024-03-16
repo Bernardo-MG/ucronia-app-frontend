@@ -7,32 +7,32 @@ export abstract class InfoEditorComponent<Data> {
   /**
    * Reading flag. Active while the data is being read.
    */
-  public reading = false;
+  protected reading = false;
 
   /**
    * Saving flag. Active while the data is being saved.
    */
-  public saving = false;
+  protected saving = false;
 
   /**
    * Editing flag. Active while the form is active for editing.
    */
-  public editing = false;
+  protected editing = false;
 
   /**
    * Editable flag. Active if the user has permissions to edit the data.
    */
-  public editable = false;
+  protected editable = false;
 
   /**
    * Deletable flag. Active if the user has permissions to delete the data.
    */
-  public deletable = false;
+  protected deletable = false;
 
   /**
    * Failures after saving.
    */
-  public failures = new FieldFailures();
+  protected failures = new FieldFailures();
 
   /**
    * Edit button active flag.
