@@ -24,7 +24,7 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
   }
 
   public override get saveEnabled() {
-    return super.saveEnabled || this.isPasswordsMatching();
+    return super.saveEnabled && this.isPasswordsMatching();
   }
 
   /**
@@ -47,15 +47,15 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
   }
 
   /**
-   * Indicates if the passwords match.
+   * Indicates if the passwords match. If both are empty they are considered to not be matching.
    * 
    * @returns true if the passwords match, false otherwise
    */
   private isPasswordsMatching(): boolean {
-    const password = this.form.get('password');
-    const confirmPassword = this.form.get('confirmPassword');
+    const password = this.form.get('password').getRawValue();
+    const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password.getRawValue() === confirmPassword.getRawValue());
+    return (password === confirmPassword) && (password.length > 0);
   }
 
 }
