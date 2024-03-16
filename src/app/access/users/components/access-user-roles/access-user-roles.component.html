@@ -26,7 +26,7 @@
   </table>
 </layout-waiting-wrapper>
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingRoles" [current]="page.currentPage" [pages]="page.totalPages"
+  <pagination-navigation [disabled]="readingRoles" [current]="page.page + 1" [pages]="page.totalPages"
     (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>

@@ -22,7 +22,7 @@
       </button>
     </li>
     <!-- Center range -->
-    <ng-container *ngIf="isAbleToDrawCenterRange()">
+    <ng-container *ngIf="drawCenterRange">
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
@@ -35,7 +35,7 @@
       </li>
     </ng-container>
     <!-- Right range -->
-    <ng-container *ngIf="isAbleToDrawRightRange()">
+    <ng-container *ngIf="drawRightRange">
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
