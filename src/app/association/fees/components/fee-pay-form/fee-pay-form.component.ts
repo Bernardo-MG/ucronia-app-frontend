@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { faAdd, faMagnifyingGlass, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FeePayment } from '../../models/fee-payment';
+import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Member } from '../../../members/models/member';
+import { FeePayment } from '../../models/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',
@@ -12,8 +12,6 @@ import { Member } from '../../../members/models/member';
 export class FeePayFormComponent extends FormComponent<FeePayment> {
 
   @Input() public member = new Member();
-
-  public searchIcon = faMagnifyingGlass;
 
   public addIcon = faAdd;
 

@@ -8,5 +8,5 @@ export class Book {
   language = '';
   authors: Author[] = [];
   bookType = new BookType();
-  gameSyste = new GameSystem();
+  gameSystem = new GameSystem();
 }

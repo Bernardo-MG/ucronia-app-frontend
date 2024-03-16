@@ -23,13 +23,41 @@
   </div>
   <!-- Language -->
   <div class="row mb-2">
-    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Name</label>
+    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
     <div class="col-sm-10">
       <input type="text" id="languageInput" formControlName="language" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('language')">
         {{failure.message}}
       </div>
+    </div>
+  </div>
+  <!-- Book type -->
+  <div class="row mb-2">
+    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="data?.bookType?.name" id="bookTypeInput" [readonly]="true" class="form-control"
+        aria-describedby="bookTypeLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="showBookTypeSelection()" type="button" class="btn btn-link link-dark" role="button"
+        aria-label="Back">
+        <icon-search></icon-search>
+      </button>
+    </div>
+  </div>
+  <!-- Game system -->
+  <div class="row mb-2">
+    <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="data?.gameSystem?.name" id="gameSystemInput" [readonly]="true" class="form-control"
+        aria-describedby="gameSystemLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="showGameSystemSelection()" type="button" class="btn btn-link link-dark" role="button"
+        aria-label="Back">
+        <icon-search></icon-search>
+      </button>
     </div>
   </div>
   <!-- Save button -->
