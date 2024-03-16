@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { BookType } from '../../models/book-type';
 
 @Component({
-  selector: 'library-game-system-info',
+  selector: 'assoc-library-game-system-info',
   standalone: true,
   imports: [],
   templateUrl: './library-game-system-info.component.html'

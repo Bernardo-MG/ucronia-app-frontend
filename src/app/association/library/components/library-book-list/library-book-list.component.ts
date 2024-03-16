@@ -11,7 +11,7 @@ import { Book } from '../../models/book';
 import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'library-book-list',
+  selector: 'assoc-library-book-list',
   standalone: true,
   imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
   templateUrl: './library-book-list.component.html'

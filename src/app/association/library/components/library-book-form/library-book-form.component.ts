@@ -6,7 +6,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Book } from '../../models/book';
 
 @Component({
-  selector: 'library-book-form',
+  selector: 'assoc-library-book-form',
   standalone: true,
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, LayoutModule ],
   templateUrl: './library-book-form.component.html'

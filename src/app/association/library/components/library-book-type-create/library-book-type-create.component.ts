@@ -8,7 +8,7 @@ import { BookTypeService } from '../../services/book-type.service';
 import { LibraryBookTypeFormComponent } from '../library-book-type-form/library-book-type-form.component';
 
 @Component({
-  selector: 'app-library-book-type-create',
+  selector: 'assoc-library-book-type-create',
   standalone: true,
   imports: [ LayoutModule, LibraryBookTypeFormComponent ],
   templateUrl: './library-book-type-create.component.html'

@@ -7,7 +7,7 @@ import { LibraryBookTypeListComponent } from '../library-book-type-list/library-
 import { LibraryGameSystemListComponent } from '../library-game-system-list/library-game-system-list.component';
 
 @Component({
-  selector: 'app-library-frontpage',
+  selector: 'assoc-library-frontpage',
   standalone: true,
   imports: [ RouterModule, LayoutModule, LibraryBookListComponent, LibraryBookTypeListComponent, LibraryGameSystemListComponent ],
   templateUrl: './library-frontpage.component.html'

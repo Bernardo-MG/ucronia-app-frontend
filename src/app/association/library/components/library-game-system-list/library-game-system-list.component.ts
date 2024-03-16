@@ -11,7 +11,7 @@ import { GameSystem } from '../../models/game-system';
 import { GameSystemService } from '../../services/game-system.service';
 
 @Component({
-  selector: 'library-game-system-list',
+  selector: 'assoc-library-game-system-list',
   standalone: true,
   imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
   templateUrl: './library-game-system-list.component.html'

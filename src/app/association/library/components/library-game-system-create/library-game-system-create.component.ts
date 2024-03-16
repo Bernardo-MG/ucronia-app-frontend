@@ -8,7 +8,7 @@ import { GameSystemService } from '../../services/game-system.service';
 import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
 
 @Component({
-  selector: 'app-library-game-system-create',
+  selector: 'assoc-library-game-system-create',
   standalone: true,
   imports: [ LayoutModule, LibraryGameSystemFormComponent ],
   templateUrl: './library-game-system-create.component.html'

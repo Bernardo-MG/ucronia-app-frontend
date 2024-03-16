@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'library-book-info',
+  selector: 'assoc-library-book-info',
   standalone: true,
   imports: [],
   templateUrl: './library-book-info.component.html'

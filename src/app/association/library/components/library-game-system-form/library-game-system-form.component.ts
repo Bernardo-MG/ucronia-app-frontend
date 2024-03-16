@@ -6,7 +6,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { GameSystem } from '../../models/game-system';
 
 @Component({
-  selector: 'library-game-system-form',
+  selector: 'assoc-library-game-system-form',
   standalone: true,
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, LayoutModule ],
   templateUrl: './library-game-system-form.component.html'

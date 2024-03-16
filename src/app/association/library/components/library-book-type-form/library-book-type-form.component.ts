@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 
 @Component({
-  selector: 'library-book-type-form',
+  selector: 'assoc-library-book-type-form',
   standalone: true,
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, LayoutModule ],
   templateUrl: './library-book-type-form.component.html'
