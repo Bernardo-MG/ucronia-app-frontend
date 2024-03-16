@@ -1,0 +1,50 @@
+import { Router } from '@angular/router';
+import { FailureResponse } from '@app/core/api/models/failure-response';
+import { FieldFailures } from '@app/core/api/models/field-failures';
+import { Observable, throwError } from 'rxjs';
+
+export abstract class CreateComponent<Data> {
+
+  /**
+   * Loading flag.
+   */
+  public saving = false;
+
+  public failures = new FieldFailures();
+
+  constructor(
+    private router: Router
+  ) { }
+
+  public onSave(data: Data): void {
+    this.saving = true;
+    this.save(data).subscribe({
+      next: response => {
+        this.router.navigate([this.getReturnRoute(response)]);
+        this.failures.clear();
+
+        // Reactivate component
+        this.saving = false;
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          // No failure response
+          // Just remove the failures
+          this.failures.clear();
+        }
+
+        // Reactivate view
+        this.saving = false;
+
+        return throwError(() => error);
+      }
+    });
+  }
+
+  protected abstract save(toSave: Data): Observable<Data>;
+  
+  protected abstract getReturnRoute(saved: Data): string;
+
+}
