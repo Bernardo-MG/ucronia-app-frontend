@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryGameSystemListComponent } from './library-game-system-list.component';
 
 describe('LibraryGameSystemListComponent', () => {
@@ -8,10 +8,13 @@ describe('LibraryGameSystemListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryGameSystemListComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryGameSystemListComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryGameSystemListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

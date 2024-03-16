@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryBookCreateComponent } from './library-book-create.component';
 
 describe('LibraryBookCreateComponent', () => {
@@ -8,10 +8,13 @@ describe('LibraryBookCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookCreateComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryBookCreateComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryBookCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

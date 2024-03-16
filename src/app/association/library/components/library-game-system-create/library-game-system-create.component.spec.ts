@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryGameSystemCreateComponent } from './library-game-system-create.component';
 
 describe('LibraryGameSystemCreateComponent', () => {
@@ -8,7 +8,10 @@ describe('LibraryGameSystemCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryGameSystemCreateComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryGameSystemCreateComponent
+      ]
     })
     .compileComponents();
     
