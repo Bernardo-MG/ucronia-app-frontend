@@ -50,8 +50,28 @@ export class PaginationNavigationComponent implements OnChanges {
    */
   public invalid = false;
 
+  /**
+   * Indicates if the backward button should be disabled.
+   * 
+   * @returns true if the backward button should be disabled, false otherwise
+   */
+  public get disableBackward(): boolean {
+    return ((this.invalid) || (this.current <= 1));
+  }
+
+  /**
+   * Indicates if the forward button should be disabled.
+   * 
+   * @returns true if the forward button should be disabled, false otherwise
+   */
+  public get disableForward(): boolean {
+    return ((this.invalid) || (this.current >= this.pages));
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
+      // We are working with pages using index 0
+      // TODO: the pages should come with the correct index
       this.invalid = ((this.current < 1) || (this.current > this.pages));
 
       if (this.invalid) {
@@ -74,24 +94,6 @@ export class PaginationNavigationComponent implements OnChanges {
    */
   public onGoTo(page: number) {
     this.goTo.emit(page);
-  }
-
-  /**
-   * Indicates if the backward button should be disabled.
-   * 
-   * @returns true if the backward button should be disabled, false otherwise
-   */
-  public isBackwardDisabled(): boolean {
-    return ((this.invalid) || (this.current <= 1));
-  }
-
-  /**
-   * Indicates if the forward button should be disabled.
-   * 
-   * @returns true if the forward button should be disabled, false otherwise
-   */
-  public isForwardDisabled(): boolean {
-    return ((this.invalid) || (this.current >= this.pages));
   }
 
 }

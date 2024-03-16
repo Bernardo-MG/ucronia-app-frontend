@@ -28,7 +28,7 @@
   </table>
   <!-- Permissions navigation -->
   <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="page.currentPage" [pages]="page.totalPages" (goTo)="onGoTo($event)">
+    <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" (goTo)="onGoTo($event)">
     </pagination-navigation>
   </div>
 </layout-waiting-wrapper>

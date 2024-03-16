@@ -31,7 +31,9 @@ export class UserTokenSelectionListComponent implements OnInit {
   public onChangeDirection(field: SortField) {
     this.sort.addField(field);
 
-    this.load(this.page.currentPage);
+    // We are working with pages using index 0
+    // TODO: the pages should come with the correct index
+    this.load(this.page.page + 1);
   }
 
   private load(page: number) {
