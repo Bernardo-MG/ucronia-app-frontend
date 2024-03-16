@@ -1,1 +1,13 @@
-<p>library-book-details works!</p>
+<layout-article title="Edit member">
+    <div class="col-md-6 offset-md-3">
+      <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+        (delete)="onDelete()" (startEditing)="onStartEditing()">
+        <!-- Form -->
+        <assoc-library-book-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+          [failures]="failures" (save)="onSave($event)">
+        </assoc-library-book-form>
+        <!-- Info -->
+        <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
+      </layout-edition-wrapper>
+    </div>
+  </layout-article>

@@ -1,1 +1,10 @@
-<p>library-book-info works!</p>
+<form class="needs-validation" novalidate>
+    <!-- Title -->
+    <div class="row mb-2">
+      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
+      <div class="col-sm-10">
+        <input type="text" [value]="data.title" id="titleInput" [readonly]="true" class="form-control"
+          aria-describedby="titleLabel">
+      </div>
+    </div>
+  </form>

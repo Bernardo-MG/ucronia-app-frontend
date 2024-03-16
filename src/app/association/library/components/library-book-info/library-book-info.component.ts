@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Book } from '../../models/book';
 
 @Component({
   selector: 'assoc-library-book-info',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   templateUrl: './library-book-info.component.html'
 })
 export class LibraryBookInfoComponent {
+
+  @Input() data = new Book();
 
 }
