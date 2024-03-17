@@ -1,1 +1,8 @@
-<p>library-game-system-selection works!</p>
+<div>Pick game system</div>
+<layout-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)"></layout-button-list>
+<div class="d-flex justify-content-center mt-1">
+  <layout-waiting-wrapper [waiting]="waiting">
+    <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
+    </pagination-navigation>
+  </layout-waiting-wrapper>
+</div>

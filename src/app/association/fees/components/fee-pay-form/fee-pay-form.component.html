@@ -1,8 +1,7 @@
 <!-- Fee form -->
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-  <!-- Select member -->
+  <!-- Member -->
   <div class="row mb-2">
-    <!-- Selected member -->
     <label for="memberNameInput" class="col-sm-2 col-form-label">Member</label>
     <div class="col-sm-10">
       <input type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"

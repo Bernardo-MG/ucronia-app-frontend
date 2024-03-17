@@ -36,7 +36,7 @@
   <div class="row mb-2">
     <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
     <div class="col-sm-9">
-      <input type="text" [value]="data?.bookType?.name" id="bookTypeInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" class="form-control"
         aria-describedby="bookTypeLabel">
     </div>
     <div class="col-sm-1">
@@ -50,7 +50,7 @@
   <div class="row mb-2">
     <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
     <div class="col-sm-9">
-      <input type="text" [value]="data?.gameSystem?.name" id="gameSystemInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" class="form-control"
         aria-describedby="gameSystemLabel">
     </div>
     <div class="col-sm-1">

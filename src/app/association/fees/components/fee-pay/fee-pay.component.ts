@@ -21,7 +21,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public createPermission = false;
 
-  public page = new PaginatedResponse<Member[]>([]);
+  public memberPage = new PaginatedResponse<Member[]>([]);
 
   public member = new Member();
 
@@ -54,7 +54,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
     // TODO: The page correction should be done automatically
     this.service.getMembers(page).subscribe({
       next: response => {
-        this.page = response;
+        this.memberPage = response;
 
         // Reactivate view
         this.readingMembers = false;
