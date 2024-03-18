@@ -17,7 +17,7 @@ import { LibraryBookInfoComponent } from '../library-book-info/library-book-info
 })
 export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> implements OnInit {
 
-  private isbn = '';
+  private index = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,26 +35,26 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const nameParam = params.get('isbn');
-      if (nameParam) {
-        this.isbn = nameParam;
+      const indexParam = params.get('index');
+      if (indexParam) {
+        this.index = Number(indexParam);
       }
       this.load();
     });
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.isbn).subscribe(r => {
+    this.service.delete(this.data.index).subscribe(r => {
       this.router.navigate(['/library']);
     });
   }
 
   protected override read(): Observable<Book> {
-    return this.service.getOne(this.isbn);
+    return this.service.getOne(this.index);
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    return this.service.update(this.data.isbn, toSave);
+    return this.service.update(this.data.index, toSave);
   }
 
 }

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'book/add', component: LibraryBookCreateComponent },
   { path: 'bookType/add', component: LibraryBookTypeCreateComponent },
   { path: 'gameSystem/add', component: LibraryGameSystemCreateComponent },
-  { path: 'book/:isbn', component: LibraryBookInfoEditorComponent },
+  { path: 'book/:index', component: LibraryBookInfoEditorComponent },
   { path: 'bookType/:name', component: LibraryBookTypeInfoEditorComponent },
   { path: 'gameSystem/:name', component: LibraryGameSystemInfoEditorComponent }
 ];
