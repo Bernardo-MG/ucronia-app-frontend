@@ -26,23 +26,23 @@ export class BookService {
       .pipe(map(r => r.content));
   }
 
-  public update(index: number, data: Book): Observable<Book> {
+  public update(number: number, data: Book): Observable<Book> {
     return this.getClient()
-      .appendRoute(`/${index}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<Book>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(index: number): Observable<Book> {
+  public getOne(number: number): Observable<Book> {
     return this.getClient()
-      .appendRoute(`/${index}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<Book>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(index: number): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${index}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }

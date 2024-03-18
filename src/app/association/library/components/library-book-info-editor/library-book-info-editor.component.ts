@@ -44,7 +44,7 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.index).subscribe(r => {
+    this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library']);
     });
   }
@@ -54,7 +54,7 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    return this.service.update(this.data.index, toSave);
+    return this.service.update(this.data.number, toSave);
   }
 
 }
