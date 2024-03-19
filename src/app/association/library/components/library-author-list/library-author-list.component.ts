@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-library-author-list',
+  selector: 'assoc-library-author-list',
   standalone: true,
   imports: [],
   templateUrl: './library-author-list.component.html'

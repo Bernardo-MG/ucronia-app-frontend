@@ -5,11 +5,13 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
 import { LibraryBookTypeListComponent } from '../library-book-type-list/library-book-type-list.component';
 import { LibraryGameSystemListComponent } from '../library-game-system-list/library-game-system-list.component';
+import { LibraryAuthorListComponent } from '../library-author-list/library-author-list.component';
+import { LibraryPublisherListComponent } from '../library-publisher-list/library-publisher-list.component';
 
 @Component({
   selector: 'assoc-library-frontpage',
   standalone: true,
-  imports: [ RouterModule, LayoutModule, LibraryBookListComponent, LibraryBookTypeListComponent, LibraryGameSystemListComponent ],
+  imports: [RouterModule, LayoutModule, LibraryBookListComponent, LibraryBookTypeListComponent, LibraryGameSystemListComponent, LibraryAuthorListComponent, LibraryPublisherListComponent],
   templateUrl: './library-frontpage.component.html'
 })
 export class LibraryFrontpageComponent {

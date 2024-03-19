@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-library-publisher-info',
+  selector: 'assoc-library-publisher-info',
   standalone: true,
   imports: [],
   templateUrl: './library-publisher-info.component.html'
