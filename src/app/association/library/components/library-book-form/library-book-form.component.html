@@ -68,6 +68,34 @@
       </button>
     </div>
   </div>
+  <!-- Author -->
+  <div class="row mb-2">
+    <label for="authorInput" id="authorLabel" class="col-sm-2 col-form-label">Author</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="author" id="authorInput" [readonly]="true" class="form-control"
+        aria-describedby="authorLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
+        aria-label="Back">
+        <icon-search></icon-search>
+      </button>
+    </div>
+  </div>
+  <!-- Game system -->
+  <div class="row mb-2">
+    <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Game system</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
+        aria-describedby="publisherLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
+        aria-label="Back">
+        <icon-search></icon-search>
+      </button>
+    </div>
+  </div>
   <!-- Save button -->
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">

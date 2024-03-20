@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { GameSystem } from '../../models/game-system';
+import { Publisher } from '../../models/publisher';
 
 @Component({
-  selector: 'assoc-library-game-system-selection',
+  selector: 'app-library-publisher-selection',
   standalone: true,
   imports: [LayoutModule, PaginationModule],
-  templateUrl: './library-game-system-selection.component.html'
+  templateUrl: './library-publisher-selection.component.html'
 })
-export class LibraryGameSystemSelectionComponent {
+export class LibraryPublisherSelectionComponent {
 
   @Input() public waiting = false;
 
-  @Input() public values: GameSystem[] = [];
+  @Input() public values: Publisher[] = [];
 
   /**
    * Current page number. This is the pointer to move around the pagination.
@@ -25,11 +25,11 @@ export class LibraryGameSystemSelectionComponent {
    */
   @Input() public pages = 0;
 
-  @Output() public select = new EventEmitter<GameSystem>();
+  @Output() public select = new EventEmitter<Publisher>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  public onPick(gameSystem: GameSystem) {
+  public onPick(gameSystem: Publisher) {
     this.select.emit(gameSystem);
   }
 
@@ -37,7 +37,7 @@ export class LibraryGameSystemSelectionComponent {
     this.goToPage.emit(page);
   }
 
-  public nameRenderer(gameSystem: GameSystem) {
+  public nameRenderer(gameSystem: Publisher) {
     return gameSystem.name;
   }
 

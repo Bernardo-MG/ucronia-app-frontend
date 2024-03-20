@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association/members/models/member';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { BookType } from '../../models/book-type';
@@ -8,8 +7,7 @@ import { BookType } from '../../models/book-type';
   selector: 'assoc-library-book-type-selection',
   standalone: true,
   imports: [LayoutModule, PaginationModule],
-  templateUrl: './library-book-type-selection.component.html',
-  styleUrl: './library-book-type-selection.component.sass'
+  templateUrl: './library-book-type-selection.component.html'
 })
 export class LibraryBookTypeSelectionComponent {
 

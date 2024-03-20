@@ -1,20 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
+import { Author } from '../../models/author';
 import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { GameSystem } from '../../models/game-system';
+import { Publisher } from '../../models/publisher';
 import { BookTypeService } from '../../services/book-type.service';
 import { BookService } from '../../services/book.service';
 import { GameSystemService } from '../../services/game-system.service';
 import { LibraryBookFormComponent } from '../library-book-form/library-book-form.component';
 import { LibraryBookTypeSelectionComponent } from '../library-book-type-selection/library-book-type-selection.component';
 import { LibraryGameSystemSelectionComponent } from '../library-game-system-selection/library-game-system-selection.component';
+import { AuthorService } from '../../services/author.service';
+import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'assoc-library-book-create',
@@ -30,22 +34,40 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
 
   public selectGameSystem = false;
 
+  public selectAuthor = false;
+
+  public selectPublisher = false;
+
   public readingBookTypes = false;
 
   public readingGameSystems = false;
+
+  public readingAuthors = false;
+
+  public readingPublishers = false;
 
   public bookTypePage = new PaginatedResponse<BookType[]>([]);
 
   public gameSystemPage = new PaginatedResponse<GameSystem[]>([]);
 
+  public authorPage = new PaginatedResponse<Author[]>([]);
+
+  public publisherPage = new PaginatedResponse<Publisher[]>([]);
+
   public bookType = '';
 
   public gameSystem = '';
+
+  public author = '';
+
+  public publisher = '';
 
   constructor(
     private service: BookService,
     private bookTypeService: BookTypeService,
     private gameSystemService: GameSystemService,
+    private authorService: AuthorService,
+    private publisherService: PublisherService,
     private authContainer: AuthContainer,
     rt: Router
   ) {
@@ -93,12 +115,54 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     });
   }
 
+  public onGoToAuthorPage(page: number) {
+    this.readingAuthors = true;
+    // TODO: The page correction should be done automatically
+    this.authorService.getAll(page).subscribe({
+      next: response => {
+        this.authorPage = response;
+
+        // Reactivate view
+        this.readingAuthors = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingAuthors = false;
+      }
+    });
+  }
+
+  public onGoToPublisherPage(page: number) {
+    this.readingPublishers = true;
+    // TODO: The page correction should be done automatically
+    this.authorService.getAll(page).subscribe({
+      next: response => {
+        this.publisherPage = response;
+
+        // Reactivate view
+        this.readingPublishers = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingPublishers = false;
+      }
+    });
+  }
+
   public onShowBookTypeSelection() {
     this.selectBookType = true;
   }
 
   public onShowGameSystemSelection() {
     this.selectGameSystem = true;
+  }
+
+  public onShowAuthorSelection() {
+    this.selectAuthor = true;
+  }
+
+  public onShowPublisherSelection() {
+    this.selectPublisher = true;
   }
 
   public onSelectBookType(bookType: BookType) {
@@ -109,6 +173,16 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem.name;
     this.selectGameSystem = false;
+  }
+
+  public onSelectAuthor(author: Author) {
+    this.author = author.name;
+    this.selectAuthor = false;
+  }
+
+  public onSelectPublisher(publisher: Publisher) {
+    this.publisher = publisher.name;
+    this.selectPublisher = false;
   }
 
   protected override save(toSave: Book): Observable<Book> {

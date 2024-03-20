@@ -18,9 +18,17 @@ export class LibraryBookFormComponent extends FormComponent<Book> {
 
   @Input() public gameSystem = '';
 
+  @Input() public author = '';
+
+  @Input() public publisher = '';
+
   @Output() public showBookTypeSelection = new EventEmitter<void>();
 
   @Output() public showGameSystemSelection = new EventEmitter<void>();
+
+  @Output() public showAuthorSelection = new EventEmitter<void>();
+
+  @Output() public showPublisherSelection = new EventEmitter<void>();
 
   constructor(
     fb: FormBuilder
@@ -40,6 +48,14 @@ export class LibraryBookFormComponent extends FormComponent<Book> {
 
   public onShowGameSystemSelection() {
     this.showGameSystemSelection.emit();
+  }
+
+  public onShowAuthorSelection() {
+    this.showAuthorSelection.emit();
+  }
+
+  public onShowPublisherSelection() {
+    this.showPublisherSelection.emit();
   }
 
 }
