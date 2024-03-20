@@ -1,1 +1,11 @@
-<p>library-author-create works!</p>
+<layout-article title="Register member">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <!-- Form -->
+        <assoc-library-author-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+        </assoc-library-author-form>
+      </div>
+    </div>
+  </div>
+</layout-article>

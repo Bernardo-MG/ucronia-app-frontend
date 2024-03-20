@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Author } from '../../models/author';
 
 @Component({
   selector: 'assoc-library-author-info',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   templateUrl: './library-author-info.component.html'
 })
 export class LibraryAuthorInfoComponent {
+
+  @Input() data = new Author();
 
 }

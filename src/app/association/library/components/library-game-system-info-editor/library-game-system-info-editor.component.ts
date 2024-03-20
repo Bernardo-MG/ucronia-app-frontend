@@ -5,11 +5,10 @@ import { InfoEditorComponent } from '@app/shared/form/components/info-editor/inf
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
-import { BookTypeService } from '../../services/book-type.service';
-import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
-import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
 import { GameSystem } from '../../models/game-system';
 import { GameSystemService } from '../../services/game-system.service';
+import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
+import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
 
 @Component({
   selector: 'assoc-library-game-system-info-editor',

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Publisher } from '../../models/publisher';
 
 @Component({
   selector: 'assoc-library-publisher-info',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   templateUrl: './library-publisher-info.component.html'
 })
 export class LibraryPublisherInfoComponent {
+
+  @Input() data = new Publisher();
 
 }
