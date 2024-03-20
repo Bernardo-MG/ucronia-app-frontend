@@ -5,17 +5,17 @@
       <tr>
         <!-- Headers -->
         <th scope="col">
-          Name<pagination-order-button property="title"
+          Name<pagination-order-button property="name"
             (directionChange)="onChangeDirection($event)"></pagination-order-button>
         </th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let bookType of page.content; let rowIndex = index" role="button"
-        routerLink="/library/bookType/{{bookType.name}}">
+      <tr *ngFor="let publisher of page.content; let rowIndex = index" role="button"
+        routerLink="/library/publisher/{{publisher.name}}">
         <!-- Cells -->
         <td>
-          {{bookType.name}}
+          {{publisher.name}}
         </td>
       </tr>
     </tbody>

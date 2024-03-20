@@ -49,7 +49,7 @@ export class PublisherService {
 
   public getAll(page: number): Observable<PaginatedResponse<Publisher[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('title')]);
+    query.defaultSort = new Sort([new SortField('name')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();

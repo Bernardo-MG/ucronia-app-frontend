@@ -5,34 +5,34 @@ import { InfoEditorComponent } from '@app/shared/form/components/info-editor/inf
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
-import { GameSystem } from '../../models/game-system';
-import { GameSystemService } from '../../services/game-system.service';
-import { LibraryGameSystemFormComponent } from '../library-game-system-form/library-game-system-form.component';
-import { LibraryGameSystemInfoComponent } from '../library-game-system-info/library-game-system-info.component';
+import { Author } from '../../models/author';
+import { AuthorService } from '../../services/author.service';
+import { LibraryAuthorFormComponent } from '../library-author-form/library-author-form.component';
+import { LibraryAuthorInfoComponent } from '../library-author-info/library-author-info.component';
 
 @Component({
   selector: 'assoc-library-author-info-editor',
   standalone: true,
-  imports: [LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent],
+  imports: [LayoutModule, LibraryAuthorFormComponent, LibraryAuthorInfoComponent],
   templateUrl: './library-author-info-editor.component.html'
 })
-export class LibraryAuthorInfoEditorComponent extends InfoEditorComponent<GameSystem> implements OnInit {
+export class LibraryAuthorInfoEditorComponent extends InfoEditorComponent<Author> implements OnInit {
 
   private name = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: GameSystemService,
+    private service: AuthorService,
     private authContainer: AuthContainer
   ) {
-    super(new GameSystem());
+    super(new Author());
   }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("game_system", "update");
-    this.deletable = this.authContainer.hasPermission("game_system", "delete");
+    this.editable = this.authContainer.hasPermission("author", "update");
+    this.deletable = this.authContainer.hasPermission("author", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

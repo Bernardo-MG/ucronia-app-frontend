@@ -49,7 +49,7 @@ export class AuthorService {
 
   public getAll(page: number): Observable<PaginatedResponse<Author[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('title')]);
+    query.defaultSort = new Sort([new SortField('name')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();
