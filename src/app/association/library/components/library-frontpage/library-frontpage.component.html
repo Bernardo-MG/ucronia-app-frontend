@@ -6,23 +6,39 @@
         <div class="card">
           <div class="card-body">
             <div class="row">
+              <!-- Add book -->
               <div class="d-grid pb-2">
-                <!-- Add button -->
                 <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/book/add"
                   [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
                   Add book
                 </button>
               </div>
+              <!-- Add book type -->
               <div class="d-grid pb-2">
                 <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/bookType/add"
                   [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
                   Add book type
                 </button>
               </div>
+              <!-- Add game system -->
               <div class="d-grid pb-2">
                 <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/gameSystem/add"
                   [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
                   Add game system
+                </button>
+              </div>
+              <!-- Add author -->
+              <div class="d-grid pb-2">
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/author/add"
+                  [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
+                  Add author
+                </button>
+              </div>
+              <!-- Add publisher -->
+              <div class="d-grid pb-2">
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/publisher/add"
+                  [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
+                  Add publisher
                 </button>
               </div>
             </div>

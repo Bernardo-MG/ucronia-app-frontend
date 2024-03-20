@@ -22,6 +22,10 @@ export class LibraryFrontpageComponent {
 
   public createGameSystemPermission = false;
 
+  public createAuthorPermission = false;
+
+  public createPublisherPermission = false;
+
   constructor(
     private authContainer: AuthContainer
   ) { }
@@ -31,6 +35,8 @@ export class LibraryFrontpageComponent {
     this.createBookPermission = this.authContainer.hasPermission("library_book", "create");
     this.createBookTypePermission = this.authContainer.hasPermission("library_book_type", "create");
     this.createGameSystemPermission = this.authContainer.hasPermission("library_game_system", "create");
+    this.createAuthorPermission = this.authContainer.hasPermission("library_author", "create");
+    this.createPublisherPermission = this.authContainer.hasPermission("library_publisher", "create");
   }
 
 }
