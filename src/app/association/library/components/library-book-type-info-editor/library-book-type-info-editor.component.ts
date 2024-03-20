@@ -30,8 +30,8 @@ export class LibraryBookTypeInfoEditorComponent extends InfoEditorComponent<Book
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("book_type", "update");
-    this.deletable = this.authContainer.hasPermission("book_type", "delete");
+    this.editable = false;
+    this.deletable = this.authContainer.hasPermission("library_book_type", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

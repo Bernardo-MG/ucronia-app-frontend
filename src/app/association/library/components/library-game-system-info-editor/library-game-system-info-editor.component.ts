@@ -31,8 +31,8 @@ export class LibraryGameSystemInfoEditorComponent extends InfoEditorComponent<Ga
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("game_system", "update");
-    this.deletable = this.authContainer.hasPermission("game_system", "delete");
+    this.editable = false;
+    this.deletable = this.authContainer.hasPermission("library_game_system", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

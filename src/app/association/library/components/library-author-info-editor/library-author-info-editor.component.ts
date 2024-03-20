@@ -31,7 +31,7 @@ export class LibraryAuthorInfoEditorComponent extends InfoEditorComponent<Author
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_author", "update");
+    this.editable = false;
     this.deletable = this.authContainer.hasPermission("library_author", "delete");
 
     // Get id
