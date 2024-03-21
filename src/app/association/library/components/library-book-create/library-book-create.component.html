@@ -3,14 +3,12 @@
     <div class="card">
       <div class="card-body">
         <!-- Form -->
-        <ng-template [ngIf]="!selectBookType && !selectGameSystem && !selectAuthor && !selectPublisher">
-          <assoc-library-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-            [bookType]="bookType" [gameSystem]="gameSystem" [author]="author" [publisher]="publisher"
-            (save)="onSave($event)" (showBookTypeSelection)="onShowBookTypeSelection()"
-            (showGameSystemSelection)="onShowGameSystemSelection()" (showAuthorSelection)="onShowAuthorSelection()"
-            (showPublisherSelection)="onShowPublisherSelection()">
-          </assoc-library-book-form>
-        </ng-template>
+        <assoc-library-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+          [bookType]="bookType" [gameSystem]="gameSystem" [author]="author" [publisher]="publisher"
+          (save)="onSave($event)" (showBookTypeSelection)="onShowBookTypeSelection()"
+          (showGameSystemSelection)="onShowGameSystemSelection()" (showAuthorSelection)="onShowAuthorSelection()"
+          (showPublisherSelection)="onShowPublisherSelection()">
+        </assoc-library-book-form>
         <!-- Select book type -->
         <ng-template [ngIf]="selectBookType">
           <assoc-library-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
