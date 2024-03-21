@@ -25,14 +25,14 @@ export class LibraryAuthorSelectionComponent {
    */
   @Input() public pages = 0;
 
-  @Output() public select = new EventEmitter<Author>();
+  @Output() public choose = new EventEmitter<Author>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
   @Output() public cancel = new EventEmitter<void>();
 
   public onPick(gameSystem: Author) {
-    this.select.emit(gameSystem);
+    this.choose.emit(gameSystem);
   }
 
   public onGoToPage(page: number) {

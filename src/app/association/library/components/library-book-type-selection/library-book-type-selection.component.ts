@@ -25,14 +25,14 @@ export class LibraryBookTypeSelectionComponent {
    */
   @Input() public pages = 0;
 
-  @Output() public select = new EventEmitter<BookType>();
+  @Output() public choose = new EventEmitter<BookType>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
   @Output() public cancel = new EventEmitter<void>();
 
   public onPick(bookType: BookType) {
-    this.select.emit(bookType);
+    this.choose.emit(bookType);
   }
 
   public onGoToPage(page: number) {

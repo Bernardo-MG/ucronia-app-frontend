@@ -25,14 +25,14 @@ export class LibraryGameSystemSelectionComponent {
    */
   @Input() public pages = 0;
 
-  @Output() public select = new EventEmitter<GameSystem>();
+  @Output() public choose = new EventEmitter<GameSystem>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
   @Output() public cancel = new EventEmitter<void>();
 
   public onPick(gameSystem: GameSystem) {
-    this.select.emit(gameSystem);
+    this.choose.emit(gameSystem);
   }
 
   public onGoToPage(page: number) {

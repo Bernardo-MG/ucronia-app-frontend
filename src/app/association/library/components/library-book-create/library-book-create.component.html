@@ -12,27 +12,27 @@
         <!-- Select book type -->
         <ng-template [ngIf]="selectBookType">
           <assoc-library-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
-            [pages]="bookTypePage.totalPages" (select)="onSelectBookType($event)"
+            [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
             (goToPage)="onGoToBookTypePage($event)"
             (cancel)="onCancelBookTypeSelection()"></assoc-library-book-type-selection>
         </ng-template>
         <!-- Select game system -->
         <ng-template [ngIf]="selectGameSystem">
           <assoc-library-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
-            [pages]="gameSystemPage.totalPages" (select)="onSelectGameSystem($event)"
+            [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
             (goToPage)="onGoToGameSystemPage($event)"
             (cancel)="onCancelGameSystemSelection()"></assoc-library-game-system-selection>
         </ng-template>
         <!-- Select authors -->
         <ng-template [ngIf]="selectAuthor">
           <assoc-library-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
-            [pages]="authorPage.totalPages" (select)="onSelectAuthor($event)" (goToPage)="onGoToAuthorPage($event)"
+            [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)" (goToPage)="onGoToAuthorPage($event)"
             (cancel)="onCancelAuthorSelection()"></assoc-library-author-selection>
         </ng-template>
         <!-- Select publisher -->
         <ng-template [ngIf]="selectPublisher">
           <assoc-library-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
-            [pages]="publisherPage.totalPages" (select)="onSelectPublisher($event)"
+            [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
             (goToPage)="onGoToPublisherPage($event)"
             (cancel)="onCancelPublisherSelection()"></assoc-library-publisher-selection>
         </ng-template>
