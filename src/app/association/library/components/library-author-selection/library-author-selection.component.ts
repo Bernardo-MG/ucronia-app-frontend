@@ -29,12 +29,18 @@ export class LibraryAuthorSelectionComponent {
 
   @Output() public goToPage = new EventEmitter<number>();
 
+  @Output() public cancel = new EventEmitter<void>();
+
   public onPick(gameSystem: Author) {
     this.select.emit(gameSystem);
   }
 
   public onGoToPage(page: number) {
     this.goToPage.emit(page);
+  }
+
+  public onCancel() {
+    this.cancel.emit();
   }
 
   public nameRenderer(gameSystem: Author) {

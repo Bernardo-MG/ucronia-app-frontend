@@ -169,6 +169,22 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     this.selectPublisher = true;
   }
 
+  public onCancelBookTypeSelection() {
+    this.selectBookType = false;
+  }
+
+  public onCancelGameSystemSelection() {
+    this.selectGameSystem = false;
+  }
+
+  public onCancelAuthorSelection() {
+    this.selectAuthor = false;
+  }
+
+  public onCancelPublisherSelection() {
+    this.selectPublisher = false;
+  }
+
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType.name;
     this.selectBookType = false;
