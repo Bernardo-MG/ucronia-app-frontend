@@ -11,19 +11,21 @@ import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { GameSystem } from '../../models/game-system';
 import { Publisher } from '../../models/publisher';
+import { AuthorService } from '../../services/author.service';
 import { BookTypeService } from '../../services/book-type.service';
 import { BookService } from '../../services/book.service';
 import { GameSystemService } from '../../services/game-system.service';
+import { PublisherService } from '../../services/publisher.service';
+import { LibraryAuthorSelectionComponent } from '../library-author-selection/library-author-selection.component';
 import { LibraryBookFormComponent } from '../library-book-form/library-book-form.component';
 import { LibraryBookTypeSelectionComponent } from '../library-book-type-selection/library-book-type-selection.component';
 import { LibraryGameSystemSelectionComponent } from '../library-game-system-selection/library-game-system-selection.component';
-import { AuthorService } from '../../services/author.service';
-import { PublisherService } from '../../services/publisher.service';
+import { LibraryPublisherSelectionComponent } from '../library-publisher-selection/library-publisher-selection.component';
 
 @Component({
   selector: 'assoc-library-book-create',
   standalone: true,
-  imports: [CommonModule, LayoutModule, LibraryBookFormComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent],
+  imports: [CommonModule, LayoutModule, LibraryBookFormComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent],
   templateUrl: './library-book-create.component.html'
 })
 export class LibraryBookCreateComponent extends CreateComponent<Book> implements OnInit {
@@ -79,6 +81,8 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     this.createPermission = this.authContainer.hasPermission("fee", "create");
     this.onGoToBookTypePage(0);
     this.onGoToGameSystemPage(0);
+    this.onGoToAuthorPage(0);
+    this.onGoToPublisherPage(0);
   }
 
   public onGoToBookTypePage(page: number) {
@@ -135,7 +139,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   public onGoToPublisherPage(page: number) {
     this.readingPublishers = true;
     // TODO: The page correction should be done automatically
-    this.authorService.getAll(page).subscribe({
+    this.publisherService.getAll(page).subscribe({
       next: response => {
         this.publisherPage = response;
 

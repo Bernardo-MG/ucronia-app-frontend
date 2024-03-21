@@ -4,7 +4,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Publisher } from '../../models/publisher';
 
 @Component({
-  selector: 'app-library-publisher-selection',
+  selector: 'assoc-library-publisher-selection',
   standalone: true,
   imports: [LayoutModule, PaginationModule],
   templateUrl: './library-publisher-selection.component.html'

@@ -18,9 +18,9 @@
       </div>
     </div>
   </div>
-  <!-- Name -->
+  <!-- Title -->
   <div class="row mb-2">
-    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Name</label>
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
     <div class="col-sm-10">
       <input type="text" id="titleInput" formControlName="title" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('title') }" aria-describedby="titleLabel">
@@ -82,9 +82,9 @@
       </button>
     </div>
   </div>
-  <!-- Game system -->
+  <!-- Publisher -->
   <div class="row mb-2">
-    <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Game system</label>
+    <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
     <div class="col-sm-9">
       <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
         aria-describedby="publisherLabel">

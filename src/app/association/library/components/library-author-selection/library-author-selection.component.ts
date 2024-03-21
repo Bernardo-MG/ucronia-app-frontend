@@ -4,7 +4,7 @@ import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Author } from '../../models/author';
 
 @Component({
-  selector: 'app-library-author-selection',
+  selector: 'assoc-library-author-selection',
   standalone: true,
   imports: [LayoutModule, PaginationModule],
   templateUrl: './library-author-selection.component.html'
