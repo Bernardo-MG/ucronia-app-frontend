@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryAuthorListComponent } from './library-author-list.component';
 
 describe('LibraryAuthorListComponent', () => {
@@ -8,7 +8,10 @@ describe('LibraryAuthorListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryAuthorListComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryAuthorListComponent
+      ]
     })
     .compileComponents();
     
