@@ -206,6 +206,8 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   }
 
   protected override save(toSave: Book): Observable<Book> {
+    toSave.publisher = new Publisher();
+    toSave.publisher.name = this.publisher;
     toSave.bookType = new BookType();
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
