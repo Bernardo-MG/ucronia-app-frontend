@@ -27,7 +27,7 @@ export class MemberCreateComponent extends CreateComponent<Member> {
   }
 
   protected override getReturnRoute(saved: Member): string {
-    return `/membership/member/${saved.number}`;
+    return `/members/member/${saved.number}`;
   }
 
 }

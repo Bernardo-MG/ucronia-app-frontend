@@ -4,11 +4,12 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Active } from '../../models/active';
 import { MemberBalanceChartComponent } from '../member-balance-chart/member-balance-chart.component';
 import { MemberListComponent } from '../member-list/member-list.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-member-frontpage',
   standalone: true,
-  imports: [LayoutModule, MemberBalanceChartComponent, MemberListComponent],
+  imports: [RouterModule, LayoutModule, MemberBalanceChartComponent, MemberListComponent],
   templateUrl: './member-frontpage.component.html'
 })
 export class MemberFrontpageComponent implements OnInit {
