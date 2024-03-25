@@ -21,13 +21,11 @@ describe('FeePayComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LayoutModule,
-        PaginationModule
-      ],
-      declarations: [
         FeePayComponent,
         FeeMemberSelectionComponent,
-        FeePayFormComponent
+        FeePayFormComponent,
+        LayoutModule,
+        PaginationModule
       ],
       providers: [
         { provide: FeeService, useValue: service }

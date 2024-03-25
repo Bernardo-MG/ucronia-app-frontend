@@ -13,10 +13,8 @@ describe('FeePayFormComponent', () => {
       imports: [
         ReactiveFormsModule,
         FontAwesomeModule,
+        FeePayFormComponent,
         LayoutModule
-      ],
-      declarations: [
-        FeePayFormComponent
       ]
     })
       .compileComponents();

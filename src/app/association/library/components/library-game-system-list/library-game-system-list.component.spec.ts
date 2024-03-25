@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryGameSystemListComponent } from './library-game-system-list.component';
+import { GameSystemService } from '../../services/game-system.service';
 
 describe('LibraryGameSystemListComponent', () => {
   let component: LibraryGameSystemListComponent;
@@ -11,6 +12,9 @@ describe('LibraryGameSystemListComponent', () => {
       imports: [
         HttpClientTestingModule,
         LibraryGameSystemListComponent
+      ],
+      providers: [
+        GameSystemService
       ]
     })
       .compileComponents();

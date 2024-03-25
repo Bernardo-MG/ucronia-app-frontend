@@ -9,10 +9,8 @@ describe('FeeInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FeeInfoComponent,
         IconsModule
-      ],
-      declarations: [
-        FeeInfoComponent
       ]
     })
       .compileComponents();

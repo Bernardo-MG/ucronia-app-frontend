@@ -16,11 +16,9 @@ describe('FeeCalendarComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
+        FeeCalendarComponent,
         IconsModule,
         LayoutModule
-      ],
-      declarations: [
-        FeeCalendarComponent
       ],
       providers: [
         FeeCalendarService

@@ -1,27 +1,29 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LibraryPublisherInfoEditorComponent } from './library-publisher-info-editor.component';
-import { PublisherService } from '../../services/publisher.service';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeService } from '../../services/fee.service';
+import { FeeFrontpageComponent } from './fee-frontpage.component';
 
-describe('LibraryPublisherInfoEditorComponent', () => {
-  let component: LibraryPublisherInfoEditorComponent;
-  let fixture: ComponentFixture<LibraryPublisherInfoEditorComponent>;
+describe('FeeFrontpageComponent', () => {
+  let component: FeeFrontpageComponent;
+  let fixture: ComponentFixture<FeeFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        LibraryPublisherInfoEditorComponent
+        RouterTestingModule,
+        FeeFrontpageComponent
       ],
       providers: [
-        PublisherService
+        FeeCalendarService,
+        FeeService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryPublisherInfoEditorComponent);
+    fixture = TestBed.createComponent(FeeFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

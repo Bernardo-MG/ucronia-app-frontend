@@ -1,13 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { Fee } from '../../models/fee';
 import { FeeService } from '../../services/fee.service';
+import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '../fee-info/fee-info.component';
 
 @Component({
   selector: 'assoc-fee-info-editor',
+  standalone: true,
+  imports: [CommonModule, LayoutModule, FeeEditFormComponent, FeeInfoComponent],
   templateUrl: './fee-info-editor.component.html'
 })
 export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements OnInit, AfterContentInit {

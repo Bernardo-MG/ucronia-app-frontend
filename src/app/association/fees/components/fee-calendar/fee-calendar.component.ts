@@ -1,12 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Active } from '@app/association/members/models/active';
+import { RouterModule } from '@angular/router';
 import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
-import { FeeCalendarMonth } from '../../models/fee-month';
+import { Active } from '@app/association/members/models/active';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendar } from '../../models/fee-calendar';
+import { FeeCalendarMonth } from '../../models/fee-month';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar',
+  standalone: true,
+  imports: [CommonModule, RouterModule, LayoutModule, IconsModule],
   templateUrl: './fee-calendar.component.html'
 })
 export class FeeCalendarComponent implements OnInit, OnChanges {

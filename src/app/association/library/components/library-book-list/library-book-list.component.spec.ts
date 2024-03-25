@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryBookListComponent } from './library-book-list.component';
+import { BookService } from '../../services/book.service';
 
 describe('LibraryBookListComponent', () => {
   let component: LibraryBookListComponent;
@@ -11,6 +12,9 @@ describe('LibraryBookListComponent', () => {
       imports: [
         HttpClientTestingModule,
         LibraryBookListComponent
+      ],
+      providers: [
+        BookService
       ]
     })
       .compileComponents();

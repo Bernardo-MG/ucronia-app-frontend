@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BookTypeService } from '../../services/book-type.service';
 import { LibraryBookTypeListComponent } from './library-book-type-list.component';
 
 describe('LibraryBookTypeListComponent', () => {
@@ -11,6 +12,9 @@ describe('LibraryBookTypeListComponent', () => {
       imports: [
         HttpClientTestingModule,
         LibraryBookTypeListComponent
+      ],
+      providers: [
+        BookTypeService
       ]
     })
       .compileComponents();

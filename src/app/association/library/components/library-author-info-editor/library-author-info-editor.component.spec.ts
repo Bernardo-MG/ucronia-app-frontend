@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryAuthorInfoEditorComponent } from './library-author-info-editor.component';
+import { AuthorService } from '../../services/author.service';
 
 describe('LibraryAuthorInfoEditorComponent', () => {
   let component: LibraryAuthorInfoEditorComponent;
@@ -13,6 +14,9 @@ describe('LibraryAuthorInfoEditorComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         LibraryAuthorInfoEditorComponent
+      ],
+      providers: [
+        AuthorService
       ]
     })
     .compileComponents();

@@ -1,16 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { Member } from '../../../members/models/member';
 import { FeePayment } from '../../models/fee-payment';
 import { FeePaymentMember } from '../../models/fee-payment-member';
 import { FeeService } from '../../services/fee.service';
+import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
+import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 
 @Component({
   selector: 'assoc-fee-create',
+  standalone: true,
+  imports: [CommonModule, LayoutModule, FeePayFormComponent, FeeMemberSelectionComponent],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
@@ -46,7 +52,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   }
 
   protected override getReturnRoute(saved: FeePayment): string {
-    return '/membership';
+    return '/fees';
   }
 
   public onGoToMembersPage(page: number) {

@@ -27,16 +27,14 @@ describe('FeeInfoEditorComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        FeeInfoEditorComponent,
+        FeeMemberSelectionComponent,
+        FeeEditFormComponent,
+        FeeInfoComponent,
         IconsModule,
         LayoutModule,
         HttpClientTestingModule,
         FontAwesomeModule
-      ],
-      declarations: [
-        FeeInfoEditorComponent,
-        FeeMemberSelectionComponent,
-        FeeEditFormComponent,
-        FeeInfoComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }
