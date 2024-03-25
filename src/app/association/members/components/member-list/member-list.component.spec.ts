@@ -13,11 +13,9 @@ describe('MemberListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        MemberListComponent,
         LayoutModule,
         PaginationModule
-      ],
-      declarations: [
-        MemberListComponent
       ],
       providers: [
         MemberService

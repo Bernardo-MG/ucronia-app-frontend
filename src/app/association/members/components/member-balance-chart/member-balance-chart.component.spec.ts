@@ -10,9 +10,7 @@ describe('MemberBalanceChartComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
-      ],
-      declarations: [
+        HttpClientTestingModule,
         MemberBalanceChartComponent
       ],
       providers: [

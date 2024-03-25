@@ -16,16 +16,14 @@ describe('MemberInfoEditorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        MemberInfoEditorComponent,
+        MemberFormComponent,
+        MemberInfoComponent,
         RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
         LayoutModule,
         IconsModule
-      ],
-      declarations: [
-        MemberInfoEditorComponent,
-        MemberFormComponent,
-        MemberInfoComponent
       ],
       providers: [
         MemberService

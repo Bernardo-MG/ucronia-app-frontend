@@ -9,10 +9,8 @@ describe('MemberInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        MemberInfoComponent,
         IconsModule
-      ],
-      declarations: [
-        MemberInfoComponent
       ]
     })
       .compileComponents();
