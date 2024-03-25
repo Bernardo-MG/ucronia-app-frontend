@@ -4,7 +4,7 @@
       <div class="card-body">
         <!-- Form -->
         <assoc-library-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-          [bookType]="bookType" [gameSystem]="gameSystem" [author]="author" [publisher]="publisher"
+          [bookType]="bookType" [gameSystem]="gameSystem" [authors]="authors" [publisher]="publisher"
           (save)="onSave($event)" (showBookTypeSelection)="onShowBookTypeSelection()"
           (showGameSystemSelection)="onShowGameSystemSelection()" (showAuthorSelection)="onShowAuthorSelection()"
           (showPublisherSelection)="onShowPublisherSelection()">

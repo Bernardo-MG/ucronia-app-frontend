@@ -60,7 +60,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
 
   public gameSystem = '';
 
-  public author = '';
+  public authors: string[] = [];
 
   public publisher = '';
 
@@ -79,6 +79,8 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("fee", "create");
+
+    // Load initial data
     this.onGoToBookTypePage(0);
     this.onGoToGameSystemPage(0);
     this.onGoToAuthorPage(0);
@@ -196,7 +198,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   }
 
   public onSelectAuthor(author: Author) {
-    this.author = author.name;
+    this.authors.push(author.name);
     this.selectAuthor = false;
   }
 
@@ -212,6 +214,11 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
+    toSave.authors = this.authors.map(a => {
+      let author = new Author();
+      author.name = a;
+      return author;
+    });
     return this.service.create(toSave);
   }
 

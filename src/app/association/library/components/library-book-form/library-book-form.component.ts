@@ -5,11 +5,12 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Book } from '../../models/book';
+import { LibraryBookAuthorsComponent } from '../library-book-authors/library-book-authors.component';
 
 @Component({
   selector: 'assoc-library-book-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule, IconsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule, IconsModule, LibraryBookAuthorsComponent],
   templateUrl: './library-book-form.component.html'
 })
 export class LibraryBookFormComponent extends FormComponent<Book> {
@@ -18,9 +19,9 @@ export class LibraryBookFormComponent extends FormComponent<Book> {
 
   @Input() public gameSystem = '';
 
-  @Input() public author = '';
-
   @Input() public publisher = '';
+
+  @Input() public authors: string[] = [];
 
   @Output() public showBookTypeSelection = new EventEmitter<void>();
 

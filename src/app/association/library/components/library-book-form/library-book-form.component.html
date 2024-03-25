@@ -68,20 +68,6 @@
       </button>
     </div>
   </div>
-  <!-- Author -->
-  <div class="row mb-2">
-    <label for="authorInput" id="authorLabel" class="col-sm-2 col-form-label">Author</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="author" id="authorInput" [readonly]="true" class="form-control"
-        aria-describedby="authorLabel">
-    </div>
-    <div class="col-sm-1">
-      <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Back">
-        <icon-search></icon-search>
-      </button>
-    </div>
-  </div>
   <!-- Publisher -->
   <div class="row mb-2">
     <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
@@ -91,6 +77,33 @@
     </div>
     <div class="col-sm-1">
       <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
+        aria-label="Back">
+        <icon-search></icon-search>
+      </button>
+    </div>
+  </div>
+  <!-- Authors -->
+  <div class="row mb-2">
+    <div class="col-sm-11">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+              Author
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <ng-template ngFor let-author [ngForOf]="authors">
+            <tr>
+              <td>{{author}}</td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
         aria-label="Back">
         <icon-search></icon-search>
       </button>

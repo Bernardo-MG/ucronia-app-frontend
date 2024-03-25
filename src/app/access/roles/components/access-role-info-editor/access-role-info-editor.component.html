@@ -23,7 +23,7 @@
             <ng-container [ngSwitch]="permissionView">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [role]="data.name" [editable]="editEnabled" [deletable]="deleteEnabled">
+                <access-role-permissions [role]="data.name" [deletable]="deleteEnabled">
                 </access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
