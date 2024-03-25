@@ -1,0 +1,11 @@
+<layout-article title="Register book type">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <!-- Form -->
+        <assoc-library-book-type-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+        </assoc-library-book-type-form>
+      </div>
+    </div>
+  </div>
+</layout-article>

@@ -23,7 +23,7 @@
             <ng-container [ngSwitch]="permissionView">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [role]="data.name" [editable]="editEnabled" [deletable]="deleteEnabled">
+                <access-role-permissions [role]="data.name" [deletable]="deleteEnabled">
                 </access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
@@ -38,7 +38,7 @@
                   (addPermission)="onAddPermission()"></access-role-add-permission>
                 <div class="d-grid">
                   <!-- Cancel button -->
-                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddPermission()">
+                  <button type="button" class="btn btn-primary" aria-label="Cancel" (click)="onCancelAddPermission()">
                     Cancel
                   </button>
                 </div>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '../../../members/models/member';
 
 @Component({
@@ -10,7 +10,7 @@ export class FeeMemberSelectionComponent {
 
   @Input() public waiting = false;
 
-  @Input() public members: Member[] = [];
+  @Input() public values: Member[] = [];
 
   /**
    * Current page number. This is the pointer to move around the pagination.

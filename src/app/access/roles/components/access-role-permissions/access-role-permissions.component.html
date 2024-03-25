@@ -1,4 +1,4 @@
-<layout-waiting-wrapper [waiting]="readingPermissions">
+<layout-waiting-wrapper [waiting]="reading">
   <table class="table">
     <thead>
       <tr>
@@ -15,7 +15,7 @@
       <ng-template ngFor let-permission [ngForOf]="page.content">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemovePermission(permission)" type="button"
+            <button [disabled]="!deletable" (click)="onRemove(permission)" type="button"
               class="btn btn-link link-dark" role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>

@@ -1,0 +1,28 @@
+<layout-waiting-wrapper [waiting]="readingBooks">
+  <!-- List -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Name<pagination-order-button property="name"
+            (directionChange)="onChangeDirection($event)"></pagination-order-button>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let author of page.content; let rowIndex = index" role="button"
+        routerLink="/library/author/{{author.name}}">
+        <!-- Cells -->
+        <td>
+          {{author.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingBooks"
+    (goTo)="onGoTo($event)">
+  </pagination-navigation>
+</div>

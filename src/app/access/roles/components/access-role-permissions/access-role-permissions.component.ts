@@ -13,13 +13,11 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public role = "";
 
-  @Input() public editable = false;
-
   @Input() public deletable = false;
 
   public page = new PaginatedResponse<Permission[]>([]);
 
-  public readingPermissions = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -33,7 +31,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
     }
   }
 
-  public onRemovePermission(permission: Permission): void {
+  public onRemove(permission: Permission): void {
     this.service.removePermission(this.role, permission.name).subscribe(p => this.load(0));
   }
 
@@ -50,17 +48,17 @@ export class AccessRolePermissionsComponent implements OnChanges {
   }
 
   private load(page: number) {
-    this.readingPermissions = true;
+    this.reading = true;
     this.service.getPermissions(this.role, page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingPermissions = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingPermissions = false;
+        this.reading = false;
       }
     });
   }

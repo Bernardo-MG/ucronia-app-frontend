@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
-const membershipModule = () => import('@app/association/membership/membership.module').then(m => m.MembershipModule);
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
+const membershipModule = () => import('@app/association/membership/membership.module').then(m => m.MembershipModule);
+const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
 
 const routes: Routes = [
@@ -19,6 +20,11 @@ const routes: Routes = [
         path: 'membership',
         canActivate: [ResourceGuard("membership")],
         loadChildren: membershipModule
+      },
+      {
+        path: 'library',
+        canActivate: [ResourceGuard("library")],
+        loadChildren: libraryModule
       },
       {
         path: 'configuration',
