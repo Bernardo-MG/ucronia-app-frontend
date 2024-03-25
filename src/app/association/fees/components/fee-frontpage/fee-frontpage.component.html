@@ -1,0 +1,52 @@
+<layout-article>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="pb-2">
+          <!-- Register member -->
+          <div class="card">
+            <div class="card-body">
+              <div class="d-grid">
+                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
+                  [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+                  Pay fee
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Filter -->
+        <div class="pb-2">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-4">
+                  Filters
+                </div>
+                <div class="col-8">
+                  <select class="form-select form-select-sm" aria-label="Filter member status"
+                    (change)="onChangeActiveFilter($event)">
+                    <option [selected]="activeFilter === 'active'" value="Active">Active</option>
+                    <option [selected]="activeFilter === 'inactive'" value="Inactive">Inactive</option>
+                    <option [selected]="activeFilter === 'all'" value="All">All</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Fee calendar -->
+            <div class="card">
+              <div class="card-body">
+                <h2>Fees</h2>
+                <assoc-fee-calendar [activeFilter]="activeFilter"></assoc-fee-calendar>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </layout-article>

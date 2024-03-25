@@ -1,12 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Member } from '../../../members/models/member';
 import { FeePayment } from '../../models/fee-payment';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 @Component({
   selector: 'assoc-fee-pay-form',
+  standalone: true,
+  imports: [CommonModule, FontAwesomeModule, LayoutModule, FormsModule, ReactiveFormsModule],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
