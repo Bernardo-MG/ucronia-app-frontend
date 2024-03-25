@@ -11,10 +11,8 @@ describe('MemberFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        MemberFormComponent,
         LayoutModule
-      ],
-      declarations: [
-        MemberFormComponent
       ]
     })
       .compileComponents();

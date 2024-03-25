@@ -18,11 +18,9 @@ describe('MemberCreateComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
         MemberCreateComponent,
-        MemberFormComponent
+        MemberFormComponent,
+        LayoutModule
       ]
     })
       .compileComponents();
