@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryGameSystemInfoEditorComponent } from './library-game-system-info-editor.component';
+import { GameSystemService } from '../../services/game-system.service';
 
 describe('LibraryGameSystemInfoEditorComponent', () => {
   let component: LibraryGameSystemInfoEditorComponent;
@@ -13,6 +14,9 @@ describe('LibraryGameSystemInfoEditorComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         LibraryGameSystemInfoEditorComponent
+      ],
+      providers: [
+        GameSystemService
       ]
     })
     .compileComponents();

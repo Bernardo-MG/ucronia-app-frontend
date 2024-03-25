@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthorService } from '../../services/author.service';
 import { LibraryAuthorListComponent } from './library-author-list.component';
 
 describe('LibraryAuthorListComponent', () => {
@@ -11,6 +12,9 @@ describe('LibraryAuthorListComponent', () => {
       imports: [
         HttpClientTestingModule,
         LibraryAuthorListComponent
+      ],
+      providers: [
+        AuthorService
       ]
     })
     .compileComponents();

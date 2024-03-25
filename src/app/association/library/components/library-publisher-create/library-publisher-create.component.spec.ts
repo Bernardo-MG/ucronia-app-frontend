@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryPublisherCreateComponent } from './library-publisher-create.component';
+import { PublisherService } from '../../services/publisher.service';
 
 describe('LibraryPublisherCreateComponent', () => {
   let component: LibraryPublisherCreateComponent;
@@ -11,6 +12,9 @@ describe('LibraryPublisherCreateComponent', () => {
       imports: [
         HttpClientTestingModule,
         LibraryPublisherCreateComponent
+      ],
+      providers: [
+        PublisherService
       ]
     })
     .compileComponents();

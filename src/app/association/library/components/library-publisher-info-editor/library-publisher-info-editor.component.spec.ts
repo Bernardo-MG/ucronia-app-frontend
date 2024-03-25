@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryPublisherInfoEditorComponent } from './library-publisher-info-editor.component';
+import { PublisherService } from '../../services/publisher.service';
 
 describe('LibraryPublisherInfoEditorComponent', () => {
   let component: LibraryPublisherInfoEditorComponent;
@@ -12,10 +13,14 @@ describe('LibraryPublisherInfoEditorComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LibraryPublisherInfoEditorComponent]
+        LibraryPublisherInfoEditorComponent
+      ],
+      providers: [
+        PublisherService
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryPublisherInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

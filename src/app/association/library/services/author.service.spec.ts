@@ -9,6 +9,9 @@ describe('AuthorService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule
+      ],
+      providers: [
+        AuthorService
       ]
     });
     service = TestBed.inject(AuthorService);

@@ -12,11 +12,9 @@ describe('FeeEditFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
+        FeeEditFormComponent,
         LayoutModule,
         IconsModule
-      ],
-      declarations: [
-        FeeEditFormComponent
       ]
     })
       .compileComponents();

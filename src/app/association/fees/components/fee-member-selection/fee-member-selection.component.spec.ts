@@ -10,11 +10,9 @@ describe('FeeMemberSelectionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FeeMemberSelectionComponent,
         PaginationModule,
         LayoutModule
-      ],
-      declarations: [
-        FeeMemberSelectionComponent
       ]
     })
       .compileComponents();
