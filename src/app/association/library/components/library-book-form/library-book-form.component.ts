@@ -5,12 +5,11 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Book } from '../../models/book';
-import { LibraryBookAuthorsComponent } from '../library-book-authors/library-book-authors.component';
 
 @Component({
   selector: 'assoc-library-book-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule, IconsModule, LibraryBookAuthorsComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule, IconsModule],
   templateUrl: './library-book-form.component.html'
 })
 export class LibraryBookFormComponent extends FormComponent<Book> {
