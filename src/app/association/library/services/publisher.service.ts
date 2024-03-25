@@ -11,9 +11,7 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Publisher } from '../models/publisher';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PublisherService {
 
   constructor(

@@ -7,13 +7,9 @@ import { MemberService } from './services/member.service';
 
 
 @NgModule({
-  declarations: [
-  ],
   imports: [
     CommonModule,
     MembersRoutingModule
-  ],
-  exports: [
   ],
   providers: [
     MemberService,
