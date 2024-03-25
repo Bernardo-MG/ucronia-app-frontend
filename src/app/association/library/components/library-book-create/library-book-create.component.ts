@@ -215,7 +215,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
     toSave.authors = this.authors.map(a => {
-      let author = new Author();
+      const author = new Author();
       author.name = a;
       return author;
     });
