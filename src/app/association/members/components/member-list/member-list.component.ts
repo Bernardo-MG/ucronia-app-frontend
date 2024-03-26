@@ -1,15 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
-import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-list',
@@ -17,57 +15,27 @@ import { MemberService } from '../../services/member.service';
   imports: [CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule],
   templateUrl: './member-list.component.html'
 })
-export class MemberListComponent implements OnChanges {
+export class MemberListComponent {
 
   @Input() public activeFilter = Active.Active;
 
-  public page = new PaginatedResponse<Member[]>([]);
+  @Input() public page = new PaginatedResponse<Member[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingMembers = false;
+  @Input() public waiting = false;
 
-  private sort = new Sort([]);
+  @Output() public changeDirection = new EventEmitter<SortField>();
 
-  constructor(
-    private service: MemberService
-  ) { }
+  @Output() public goTo = new EventEmitter<number>();
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['activeFilter']) {
-      this.sort = new Sort([]);
-      this.load(0);
-    }
+  public onChangeDirection(field: SortField) {
+    this.changeDirection.emit(field);
   }
 
   public onGoTo(page: number) {
-    this.load(page);
-  }
-
-  public onChangeDirection(field: SortField) {
-    this.sort.addField(field);
-
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
-  }
-
-  private load(page: number) {
-    this.readingMembers = true;
-
-    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
-      next: response => {
-        this.page = response;
-
-        // Reactivate view
-        this.readingMembers = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingMembers = false;
-      }
-    });
+    this.goTo.emit(page);
   }
 
 }
