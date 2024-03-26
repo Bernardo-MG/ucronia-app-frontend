@@ -26,6 +26,10 @@ export class LayoutService {
     return 'AR Ucronía';
   }
 
+  public showConfigurationLink(): boolean {
+    return this.authContainer.hasPermission('association_configuration', 'view');
+  }
+
   /**
    * Get the menus dynamically based on MENU_OPTIONS.
    * 

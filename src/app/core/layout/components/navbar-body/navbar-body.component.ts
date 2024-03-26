@@ -19,6 +19,8 @@ export class NavbarBodyComponent implements OnInit {
 
   public loggedIn = false;
 
+  public showConfigMenu = false;
+
   public menus: Menu[] = [];
 
   constructor(
@@ -30,6 +32,7 @@ export class NavbarBodyComponent implements OnInit {
     this.authContainer.getDetails().subscribe(u => { this.loggedIn = u.logged });
     this.title = this.layoutService.getTitle();
     this.menus = this.layoutService.getMenus();
+    this.showConfigMenu = this.layoutService.showConfigurationLink();
   }
 
 }
