@@ -48,6 +48,7 @@ export class MemberFrontpageComponent implements OnInit {
   public onChangeActiveFilter(event: any) {
     const value = event.target.value as 'Active' | 'Inactive' | 'All';
     this.activeFilter = (Active[value] as Active);
+    this.load(0);
   }
 
   public onChangeDirection(field: SortField) {
