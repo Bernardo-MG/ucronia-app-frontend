@@ -5,6 +5,9 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 import { MENU_OPTIONS } from './menu-options';
 
+/**
+ * Service responsible for managing layout-related functionality, such as retrieving menu options.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,33 +17,45 @@ export class LayoutService {
     private authContainer: AuthContainer
   ) { }
 
+  /**
+   * Get the title for the layout.
+   * 
+   * @returns The title for the layout.
+   */
   public getTitle(): string {
     return 'AR Ucronía';
   }
 
+  /**
+   * Get the menus dynamically based on MENU_OPTIONS.
+   * 
+   * @returns An array of menu objects.
+   */
   public getMenus(): Menu[] {
     const menus: Menu[] = [];
 
-    if (MENU_OPTIONS['association']) {
-      const associationLinks = this.filterNodes(MENU_OPTIONS['association']);
-      if (associationLinks.length > 0) {
-        menus.push({ title: 'Association', links: associationLinks });
-      }
-    }
-
-    if (MENU_OPTIONS['security']) {
-      const securityLinks = this.filterNodes(MENU_OPTIONS['security']);
-      if (securityLinks.length > 0) {
-        menus.push({ title: 'Security', links: securityLinks });
+    // Iterate through each section in MENU_OPTIONS
+    for (const sectionKey of Object.keys(MENU_OPTIONS)) {
+      const section = MENU_OPTIONS[sectionKey];
+      const filteredLinks = this.filterNodes(section.links);
+      // Only add the section if it has filtered links
+      if (filteredLinks.length > 0) {
+        menus.push({ title: section.title, links: filteredLinks });
       }
     }
 
     return menus;
   }
 
+  /**
+   * Filter menu links based on permissions.
+   * 
+   * @param links - The list of menu links to filter.
+   * @returns The filtered list of menu links based on permissions.
+   */
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
-      // Only links the user has permissions for
+      // Only include links the user has permissions for
       .filter(link => this.authContainer.hasPermission(link.resource, 'view'))
       // Map to MenuLink objects
       .map(link => ({ title: link.title, path: link.path }));
