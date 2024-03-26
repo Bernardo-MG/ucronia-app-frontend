@@ -5,7 +5,8 @@ import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'layout-navbar-body',
-  templateUrl: './navbar-body.component.html'
+  templateUrl: './navbar-body.component.html',
+  styleUrls: ['./navbar-body.component.sass']
 })
 export class NavbarBodyComponent implements OnInit {
 
