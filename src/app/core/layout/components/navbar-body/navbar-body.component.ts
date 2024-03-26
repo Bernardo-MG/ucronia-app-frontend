@@ -1,10 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { LayoutService } from '../../services/layout.service';
 import { Menu } from '@app/shared/menu/models/menu';
+import { LayoutService } from '../../services/layout.service';
+import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
   selector: 'layout-navbar-body',
+  standalone: true,
+  imports: [CommonModule, RouterModule, NavbarComponent],
   templateUrl: './navbar-body.component.html',
   styleUrls: ['./navbar-body.component.sass']
 })

@@ -8,10 +8,15 @@
       <!-- Sidebar -->
       <aside class="col-2 sidebar">
         <div class="sidenav">
-          <a href="#" class="list-group-item list-group-item-action menu-item">Link 1</a>
-          <a href="#" class="list-group-item list-group-item-action menu-item">Link 2</a>
-          <a href="#" class="list-group-item list-group-item-action menu-item">Link 3</a>
-          <!-- Add more links as needed -->
+          <!-- Iterate over menu options and display each section -->
+          <ng-container *ngFor="let menu of menus">
+            <h3>{{ menu.title }}</h3>
+            <!-- Iterate over links within each section and display them -->
+            <a *ngFor="let link of menu.links" [routerLink]="link.path"
+              class="list-group-item list-group-item-action menu-item">
+              {{ link.title }}
+            </a>
+          </ng-container>
         </div>
       </aside>
       <!-- Main content area -->
