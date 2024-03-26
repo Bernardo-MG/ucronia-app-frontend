@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberBalanceChartComponent } from '../member-balance-chart/member-balance-chart.component';
+import { MemberBalanceChartWidgetComponent } from '../member-balance-chart-widget/member-balance-chart-widget.component';
 import { MemberListComponent } from '../member-list/member-list.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -15,7 +15,7 @@ import { SortField } from '@app/core/api/models/sort-field';
 @Component({
   selector: 'app-member-frontpage',
   standalone: true,
-  imports: [RouterModule, LayoutModule, MemberBalanceChartComponent, MemberListComponent, IconsModule],
+  imports: [RouterModule, LayoutModule, MemberBalanceChartWidgetComponent, MemberListComponent, IconsModule],
   templateUrl: './member-frontpage.component.html'
 })
 export class MemberFrontpageComponent implements OnInit {
