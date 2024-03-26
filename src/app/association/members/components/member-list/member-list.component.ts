@@ -17,8 +17,6 @@ import { Member } from '../../models/member';
 })
 export class MemberListComponent {
 
-  @Input() public activeFilter = Active.Active;
-
   @Input() public page = new PaginatedResponse<Member[]>([]);
 
   /**
