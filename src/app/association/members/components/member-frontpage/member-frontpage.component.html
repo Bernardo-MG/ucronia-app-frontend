@@ -28,7 +28,7 @@
             </select>
           </div>
         </div>
-        <assoc-member-list [waiting]="readingMembers" [page]="page">
+        <assoc-member-list [waiting]="readingMembers" [page]="page" (changeDirection)="onChangeDirection($event)">
         </assoc-member-list>
         <div class="col-md-2 offset-md-5">
           <div class="d-grid pb-2">
