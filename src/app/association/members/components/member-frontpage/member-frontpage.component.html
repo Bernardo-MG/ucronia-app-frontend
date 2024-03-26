@@ -6,34 +6,6 @@
   </div>
   <div class="row">
     <!-- Member List -->
-    <div class="card">
-      <div class="card-body">
-        <h2>Members</h2>
-        <p>Total: {{page.totalElements}}</p>
-        <div class="row">
-          <div class="col-md-1">
-            status
-          </div>
-          <div class="col-md-2">
-            <select class="form-select form-select-sm" aria-label="Filter member status"
-              (change)="onChangeActiveFilter($event)">
-              <option [selected]="activeFilter === 'active'" value="Active">Active</option>
-              <option [selected]="activeFilter === 'inactive'" value="Inactive">Inactive</option>
-              <option [selected]="activeFilter === 'all'" value="All">All</option>
-            </select>
-          </div>
-        </div>
-        <assoc-member-list [waiting]="readingMembers" [page]="page" (changeDirection)="onChangeDirection($event)">
-        </assoc-member-list>
-        <div class="col-md-2 offset-md-5">
-          <div class="d-grid pb-2">
-            <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
-              [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-              <icon-add></icon-add>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <assoc-member-list-widget></assoc-member-list-widget>
   </div>
 </layout-article>
