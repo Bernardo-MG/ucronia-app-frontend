@@ -13,10 +13,7 @@ describe('NavbarBodyComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
-        NavbarBodyComponent,
+        HttpClientTestingModule,
         NavbarComponent
       ],
       providers: [

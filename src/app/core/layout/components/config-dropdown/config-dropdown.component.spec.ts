@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ConfigDropdownComponent } from './config-dropdown.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ConfigDropdownComponent', () => {
   let component: ConfigDropdownComponent;
@@ -8,10 +8,13 @@ describe('ConfigDropdownComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ConfigDropdownComponent]
+      imports: [
+        RouterTestingModule,
+        ConfigDropdownComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ConfigDropdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
