@@ -7,7 +7,7 @@ import { MemberListWidgetComponent } from '../member-list-widget/member-list-wid
 @Component({
   selector: 'assoc-member-frontpage',
   standalone: true,
-  imports: [RouterModule, LayoutModule, MemberBalanceChartWidgetComponent, MemberListWidgetComponent],
+  imports: [LayoutModule, MemberBalanceChartWidgetComponent, MemberListWidgetComponent],
   templateUrl: './member-frontpage.component.html'
 })
 export class MemberFrontpageComponent {

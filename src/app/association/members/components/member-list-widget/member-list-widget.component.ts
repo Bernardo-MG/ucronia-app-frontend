@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
@@ -12,7 +13,7 @@ import { MemberListComponent } from '../member-list/member-list.component';
 @Component({
   selector: 'assoc-member-list-widget',
   standalone: true,
-  imports: [MemberListComponent, IconsModule],
+  imports: [RouterModule, MemberListComponent, IconsModule],
   templateUrl: './member-list-widget.component.html'
 })
 export class MemberListWidgetComponent implements OnInit {
