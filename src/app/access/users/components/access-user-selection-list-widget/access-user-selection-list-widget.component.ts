@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
+import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [IconsModule, AccessUserSelectionListComponent],
+  imports: [IconsModule, RouterModule, AccessUserSelectionListComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {

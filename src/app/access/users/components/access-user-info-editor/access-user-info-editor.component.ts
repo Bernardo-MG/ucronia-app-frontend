@@ -1,14 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { Observable } from 'rxjs';
 import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
+import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
+import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
+import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-roles.component';
 
 @Component({
   selector: 'access-user-info-editor',
+  standalone: true,
+  imports: [CommonModule, LayoutModule, AccessUserFormComponent, AccessUserInfoComponent, AccessUserRoleFormComponent, AccessUserAddRoleComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
