@@ -23,9 +23,7 @@ describe('AccessUserInfoEditorComponent', () => {
         ReactiveFormsModule,
         CoreModule,
         LayoutModule,
-        IconsModule
-      ],
-      declarations: [
+        IconsModule,
         AccessUserInfoEditorComponent,
         AccessUserFormComponent,
         AccessUserRoleFormComponent,

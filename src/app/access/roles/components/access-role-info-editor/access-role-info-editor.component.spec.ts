@@ -22,9 +22,7 @@ describe('AccessRoleInfoEditorComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         PaginationModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessRoleInfoEditorComponent,
         AccessRoleFormComponent,
         AccessRolePermissionsComponent,

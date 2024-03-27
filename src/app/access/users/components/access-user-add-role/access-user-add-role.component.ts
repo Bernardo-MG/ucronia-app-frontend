@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
@@ -9,7 +10,7 @@ import { AccessUserService } from '../../services/access-user.service';
 @Component({
   selector: 'access-user-add-role',
   standalone: true,
-  imports: [LayoutModule, IconsModule, PaginationModule],
+  imports: [CommonModule, LayoutModule, IconsModule, PaginationModule],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnChanges {

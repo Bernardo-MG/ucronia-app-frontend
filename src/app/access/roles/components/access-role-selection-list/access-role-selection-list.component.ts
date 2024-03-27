@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -11,7 +12,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 @Component({
   selector: 'access-role-selection-list',
   standalone: true,
-  imports: [LayoutModule, PaginationModule, RouterModule],
+  imports: [CommonModule, LayoutModule, PaginationModule, RouterModule],
   templateUrl: './access-role-selection-list.component.html'
 })
 export class AccessRoleSelectionListComponent implements OnInit {

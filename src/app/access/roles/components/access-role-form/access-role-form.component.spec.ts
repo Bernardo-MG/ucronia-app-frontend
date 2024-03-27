@@ -11,9 +11,7 @@ describe('AccessRoleFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessRoleFormComponent
       ]
     })

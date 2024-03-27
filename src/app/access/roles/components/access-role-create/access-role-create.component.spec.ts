@@ -15,9 +15,7 @@ describe('AccessRoleCreateComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessRoleCreateComponent,
         AccessRoleFormComponent
       ],

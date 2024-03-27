@@ -15,9 +15,7 @@ describe('AccessRolePermissionsComponent', () => {
       imports: [
         HttpClientTestingModule,
         PaginationModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessRolePermissionsComponent,
         AccessRoleAddPermissionComponent
       ],

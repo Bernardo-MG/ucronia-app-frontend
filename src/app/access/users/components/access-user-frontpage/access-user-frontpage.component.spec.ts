@@ -17,9 +17,7 @@ describe('AccessFrontpageComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         PaginationModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessFrontpageComponent,
         AccessUserSelectionListComponent
       ],

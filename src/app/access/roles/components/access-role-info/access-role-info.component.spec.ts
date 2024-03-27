@@ -7,7 +7,7 @@ describe('AccessRoleInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         AccessRoleInfoComponent
       ]
     })

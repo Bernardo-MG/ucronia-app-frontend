@@ -14,9 +14,7 @@ describe('AccessRoleSelectionListComponent', () => {
       imports: [
         HttpClientTestingModule,
         LayoutModule,
-        PaginationModule
-      ],
-      declarations: [
+        PaginationModule,
         AccessRoleSelectionListComponent
       ],
       providers: [

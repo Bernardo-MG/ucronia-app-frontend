@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
@@ -11,7 +12,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 @Component({
   selector: 'access-role-add-permission',
   standalone: true,
-  imports: [LayoutModule, PaginationModule, IconsModule],
+  imports: [CommonModule, LayoutModule, PaginationModule, IconsModule],
   templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {

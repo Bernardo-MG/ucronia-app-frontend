@@ -16,9 +16,7 @@ describe('AccessUserSelectionListComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         LayoutModule,
-        PaginationModule
-      ],
-      declarations: [
+        PaginationModule,
         AccessUserSelectionListComponent
       ],
       providers: [

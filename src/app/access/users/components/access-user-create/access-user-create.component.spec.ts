@@ -15,9 +15,7 @@ describe('AccessUserCreateComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessUserCreateComponent,
         AccessUserFormComponent
       ],

@@ -14,9 +14,7 @@ describe('AccessUserAddRoleComponent', () => {
       imports: [
         HttpClientTestingModule,
         LayoutModule,
-        PaginationModule
-      ],
-      declarations: [
+        PaginationModule,
         AccessUserAddRoleComponent
       ],
       providers: [

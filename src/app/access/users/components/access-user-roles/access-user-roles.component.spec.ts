@@ -14,9 +14,7 @@ describe('AccessUserRoleFormComponent', () => {
       imports: [
         HttpClientTestingModule,
         CoreModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         AccessUserRoleFormComponent
       ],
       providers: [

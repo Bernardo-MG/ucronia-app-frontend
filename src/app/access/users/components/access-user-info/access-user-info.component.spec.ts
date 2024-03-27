@@ -9,9 +9,7 @@ describe('AccessUserInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
-      ],
-      declarations: [
+        IconsModule,
         AccessUserInfoComponent
       ]
     })
