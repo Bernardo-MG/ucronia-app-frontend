@@ -1,17 +1,15 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FeeCalendarWidgetComponent } from '../fee-calendar-widget/fee-calendar-widget.component';
+import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 
 @Component({
-  selector: 'assoc-fee-frontpage',
+  selector: 'assoc-fee-calendar-widget',
   standalone: true,
-  imports: [RouterModule, LayoutModule, FeeCalendarWidgetComponent],
-  templateUrl: './fee-frontpage.component.html'
+  imports: [FeeCalendarComponent],
+  templateUrl: './fee-calendar-widget.component.html'
 })
-export class FeeFrontpageComponent {
+export class FeeCalendarWidgetComponent implements OnInit {
 
   public createPermission = false;
 
