@@ -2,8 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarComponent } from './fee-calendar.component';
 
@@ -16,9 +14,7 @@ describe('FeeCalendarComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        FeeCalendarComponent,
-        IconsModule,
-        LayoutModule
+        FeeCalendarComponent
       ],
       providers: [
         FeeCalendarService

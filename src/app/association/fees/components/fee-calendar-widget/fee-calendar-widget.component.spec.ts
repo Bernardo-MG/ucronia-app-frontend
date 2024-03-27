@@ -1,5 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarWidgetComponent } from './fee-calendar-widget.component';
 
 describe('FeeCalendarWidgetComponent', () => {
@@ -8,7 +10,14 @@ describe('FeeCalendarWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeeCalendarWidgetComponent]
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        FeeCalendarWidgetComponent
+      ],
+      providers: [
+        FeeCalendarService
+      ]
     })
     .compileComponents();
     

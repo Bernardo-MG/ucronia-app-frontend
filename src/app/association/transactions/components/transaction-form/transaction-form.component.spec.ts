@@ -11,9 +11,7 @@ describe('TransactionFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         TransactionFormComponent
       ]
     })

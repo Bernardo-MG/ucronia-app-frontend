@@ -12,9 +12,7 @@ describe('FundsCurrentBalanceComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         FundsCurrentBalanceComponent
       ],
       providers: [

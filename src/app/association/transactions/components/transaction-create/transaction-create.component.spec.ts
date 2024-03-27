@@ -15,9 +15,7 @@ describe('TransactionCreateComponent', () => {
       imports: [
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         TransactionCreateComponent,
         TransactionFormComponent
       ],

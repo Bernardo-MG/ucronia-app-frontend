@@ -10,9 +10,7 @@ describe('TransactionBalanceChartComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
-      ],
-      declarations: [
+        HttpClientTestingModule,
         TransactionBalanceChartComponent
       ],
       providers: [

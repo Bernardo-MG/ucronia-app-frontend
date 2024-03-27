@@ -12,9 +12,7 @@ describe('TransactionCalendarComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ScheduleModule
-      ],
-      declarations: [
+        ScheduleModule,
         TransactionCalendarComponent
       ],
       providers: [

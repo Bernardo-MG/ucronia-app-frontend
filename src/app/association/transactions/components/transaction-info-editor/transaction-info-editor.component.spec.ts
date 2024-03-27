@@ -18,9 +18,7 @@ describe('TransactionDetailsComponent', () => {
         RouterTestingModule,
         HttpClientTestingModule,
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         TransactionInfoEditorComponent,
         TransactionFormComponent,
         TransactionInfoComponent
