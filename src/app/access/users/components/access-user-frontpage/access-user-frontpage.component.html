@@ -1,25 +1,8 @@
 <layout-article title="Users">
   <div class="row">
-    <div class="col-md-2">
-      <div class="pb-2">
-        <!-- Add -->
-        <div class="card">
-          <div class="card-body">
-            <div class="d-grid">
-              <!-- Add button -->
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/users/add"
-                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-                Add user
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-10">
       <!-- List -->
-      <access-user-selection-list>
-      </access-user-selection-list>
+      <access-user-selection-list-widget></access-user-selection-list-widget>
     </div>
   </div>
 </layout-article>
