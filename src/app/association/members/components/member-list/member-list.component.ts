@@ -6,7 +6,6 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
-import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 
 @Component({
