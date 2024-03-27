@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
@@ -7,9 +8,11 @@ import { TransactionCalendarService } from '../../service/transaction-calendar.s
 
 @Component({
   selector: 'assoc-transaction-calendar',
+  standalone: true,
+  imports: [ScheduleModule],
   templateUrl: './transaction-calendar.component.html'
 })
-export class FundsCalendarComponent implements OnInit {
+export class TransactionCalendarComponent implements OnInit {
 
   public months: Month[] = [];
 

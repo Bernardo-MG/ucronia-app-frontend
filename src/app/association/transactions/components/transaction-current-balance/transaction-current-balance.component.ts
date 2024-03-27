@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionCurrentBalance } from '../../models/transaction-current-balance';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 
 @Component({
   selector: 'assoc-transaction-current-balance',
+  standalone: true,
+  imports: [LayoutModule],
   templateUrl: './transaction-current-balance.component.html'
 })
 export class FundsCurrentBalanceComponent implements OnInit {

@@ -2,11 +2,11 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
-import { FundsCalendarComponent } from './transaction-calendar.component';
+import { TransactionCalendarComponent } from './transaction-calendar.component';
 
-describe('FundsCalendarComponent', () => {
-  let component: FundsCalendarComponent;
-  let fixture: ComponentFixture<FundsCalendarComponent>;
+describe('TransactionCalendarComponent', () => {
+  let component: TransactionCalendarComponent;
+  let fixture: ComponentFixture<TransactionCalendarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,7 +15,7 @@ describe('FundsCalendarComponent', () => {
         ScheduleModule
       ],
       declarations: [
-        FundsCalendarComponent
+        TransactionCalendarComponent
       ],
       providers: [
         TransactionCalendarService
@@ -23,7 +23,7 @@ describe('FundsCalendarComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FundsCalendarComponent);
+    fixture = TestBed.createComponent(TransactionCalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

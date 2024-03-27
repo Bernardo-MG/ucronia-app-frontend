@@ -8,13 +8,6 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MenuModule } from '@app/shared/menu/menu.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FundsBalanceChartComponent } from './components/transaction-balance-chart/transaction-balance-chart.component';
-import { FundsCalendarComponent } from './components/transaction-calendar/transaction-calendar.component';
-import { TransactionCreateComponent } from './components/transaction-create/transaction-create.component';
-import { FundsCurrentBalanceComponent } from './components/transaction-current-balance/transaction-current-balance.component';
-import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
-import { TransactionInfoEditorComponent } from './components/transaction-info-editor/transaction-info-editor.component';
-import { TransactionInfoComponent } from './components/transaction-info/transaction-info.component';
 import { TransactionBalanceService } from './service/transaction-balance.service';
 import { TransactionCalendarService } from './service/transaction-calendar.service';
 import { TransactionService } from './service/transaction.service';
@@ -22,15 +15,6 @@ import { TransactionService } from './service/transaction.service';
 
 
 @NgModule({
-  declarations: [
-    TransactionCreateComponent,
-    TransactionInfoEditorComponent,
-    FundsCalendarComponent,
-    TransactionFormComponent,
-    TransactionInfoComponent,
-    FundsBalanceChartComponent,
-    FundsCurrentBalanceComponent
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -42,15 +26,6 @@ import { TransactionService } from './service/transaction.service';
     FontAwesomeModule,
     MenuModule,
     IconsModule,
-  ],
-  exports: [
-    TransactionCreateComponent,
-    TransactionInfoEditorComponent,
-    FundsCalendarComponent,
-    TransactionFormComponent,
-    TransactionInfoComponent,
-    FundsBalanceChartComponent,
-    FundsCurrentBalanceComponent
   ],
   providers: [
     TransactionBalanceService,

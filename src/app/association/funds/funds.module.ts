@@ -15,9 +15,6 @@ import { FundsRoutingModule } from './funds-routing.module';
 
 
 @NgModule({
-  declarations: [
-    FundsFrontpageComponent
-  ],
   imports: [
     CommonModule,
     FundsRoutingModule,
