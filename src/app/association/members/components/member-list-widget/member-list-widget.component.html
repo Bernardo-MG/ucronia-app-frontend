@@ -1,9 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <h2>Members</h2>
-    <p>Total: {{page.totalElements}}</p>
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-1 offset-md-9">
         status
       </div>
       <div class="col-md-2">
@@ -17,6 +15,11 @@
     </div>
     <assoc-member-list [waiting]="readingMembers" [page]="page" (changeDirection)="onChangeDirection($event)">
     </assoc-member-list>
+    <div class="row">
+      <div class="col-md-1">
+        <p>Total: {{page.totalElements}}</p>
+      </div>
+    </div>
     <div class="col-md-2 offset-md-5">
       <div class="d-grid pb-2">
         <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
