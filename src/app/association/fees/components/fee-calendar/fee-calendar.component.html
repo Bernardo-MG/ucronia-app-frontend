@@ -7,7 +7,7 @@
   </button>
   <div class="w-25 px-3">
     <!-- Current year -->
-    <select class="form-select" aria-label="Select year" [disabled]="readingCalendar" (change)="onGoTo($event)">
+    <select class="form-select" aria-label="Select year" [disabled]="waiting" (change)="onGoTo($event)">
       <option *ngFor="let selectionYear of range.years.slice().reverse()" [selected]="selectionYear === year"
         [value]="selectionYear">
         {{selectionYear}}</option>
@@ -20,7 +20,7 @@
   </button>
 </div>
 <!-- Table -->
-<layout-waiting-wrapper [waiting]="readingCalendar">
+<layout-waiting-wrapper [waiting]="waiting">
   <table class="table table-sm table-hover">
     <thead class="thead-light">
       <tr>
