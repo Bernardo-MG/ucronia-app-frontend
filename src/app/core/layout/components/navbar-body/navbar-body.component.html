@@ -6,8 +6,8 @@
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <aside class="col-2 sidebar">
-        <div class="sidenav">
+      <div class="col-md-2">
+        <aside class="sidebar mt-2 p-2">
           <!-- Iterate over menu options and display each section -->
           <ng-container *ngFor="let menu of menus">
             <h3>{{ menu.title }}</h3>
@@ -17,10 +17,10 @@
               {{ link.title }}
             </a>
           </ng-container>
-        </div>
-      </aside>
+        </aside>
+      </div>
       <!-- Main content area -->
-      <main class="col-10">
+      <main class="col-md-10">
         <!-- Your router-outlet where your Angular components will be rendered -->
         <router-outlet></router-outlet>
       </main>
