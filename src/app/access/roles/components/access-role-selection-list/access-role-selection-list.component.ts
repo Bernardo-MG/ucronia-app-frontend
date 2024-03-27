@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessRoleService } from '../../services/access-role.service';
-import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'access-role-selection-list',
+  standalone: true,
+  imports: [LayoutModule, PaginationModule, RouterModule],
   templateUrl: './access-role-selection-list.component.html'
 })
 export class AccessRoleSelectionListComponent implements OnInit {
