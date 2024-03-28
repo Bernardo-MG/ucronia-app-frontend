@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -11,7 +12,7 @@ import { UserTokenService } from '../../services/user-token.service';
 @Component({
   selector: 'access-user-token-selection-list',
   standalone: true,
-  imports: [RouterModule, LayoutModule, PaginationModule],
+  imports: [CommonModule, RouterModule, LayoutModule, PaginationModule],
   templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent implements OnInit {

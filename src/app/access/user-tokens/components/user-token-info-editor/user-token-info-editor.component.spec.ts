@@ -18,9 +18,7 @@ describe('UserTokenInfoEditorComponent', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         LayoutModule,
-        IconsModule
-      ],
-      declarations: [
+        IconsModule,
         UserTokenInfoEditorComponent,
         UserTokenInfoComponent
       ]

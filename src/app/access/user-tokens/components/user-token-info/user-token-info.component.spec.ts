@@ -11,9 +11,7 @@ describe('UserTokenInfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        IconsModule
-      ],
-      declarations: [
+        IconsModule,
         UserTokenInfoComponent
       ]
     });

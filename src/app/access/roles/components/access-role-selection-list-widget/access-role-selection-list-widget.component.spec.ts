@@ -1,5 +1,7 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
+import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleSelectionListWidgetComponent } from './access-role-selection-list-widget.component';
 
 describe('AccessRoleSelectionListWidgetComponent', () => {
@@ -8,7 +10,14 @@ describe('AccessRoleSelectionListWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccessRoleSelectionListWidgetComponent]
+      imports: [
+        HttpClientTestingModule,
+        RouterTestingModule,
+        AccessRoleSelectionListWidgetComponent
+      ],
+      providers: [
+        AccessRoleService
+      ]
     })
     .compileComponents();
     

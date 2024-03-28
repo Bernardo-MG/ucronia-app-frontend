@@ -16,9 +16,7 @@ describe('UserTokenFrontpageComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         LayoutModule,
-        PaginationModule
-      ],
-      declarations: [
+        PaginationModule,
         UserTokenFrontpageComponent,
         UserTokenSelectionListComponent
       ]
