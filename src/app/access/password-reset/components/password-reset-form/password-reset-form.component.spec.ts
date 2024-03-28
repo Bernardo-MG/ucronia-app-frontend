@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PasswordResetFormComponent } from './password-reset-form.component';
 
 describe('PasswordResetFormComponent', () => {
@@ -11,7 +10,6 @@ describe('PasswordResetFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        LayoutModule,
         PasswordResetFormComponent
       ]
     })

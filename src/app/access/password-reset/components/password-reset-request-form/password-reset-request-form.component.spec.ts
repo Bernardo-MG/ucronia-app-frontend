@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { PasswordResetRequestFormComponent } from './password-reset-request-form.component';
 
 describe('PasswordResetRequestFormComponent', () => {
@@ -9,7 +8,6 @@ describe('PasswordResetRequestFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         PasswordResetRequestFormComponent
       ]
     })

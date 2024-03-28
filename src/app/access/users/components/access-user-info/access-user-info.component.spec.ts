@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccessUserInfoComponent } from './access-user-info.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
 
 describe('AccessUserInfoComponent', () => {
   let component: AccessUserInfoComponent;
@@ -9,7 +8,6 @@ describe('AccessUserInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule,
         AccessUserInfoComponent
       ]
     })

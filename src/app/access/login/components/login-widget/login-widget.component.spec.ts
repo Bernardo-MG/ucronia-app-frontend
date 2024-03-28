@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from '../../services/login.service';
-import { LoginFormComponent } from '../login-form/login-form.component';
 import { LoginWidgetComponent } from './login-widget.component';
 
 describe('LoginWidgetComponent', () => {
@@ -15,8 +14,7 @@ describe('LoginWidgetComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        LoginWidgetComponent,
-        LoginFormComponent
+        LoginWidgetComponent
       ],
       providers: [
         LoginService

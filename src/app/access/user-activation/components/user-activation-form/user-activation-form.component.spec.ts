@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { UserActivationFormComponent } from './user-activation-form.component';
 
 describe('UserActivationFormComponent', () => {
@@ -9,7 +8,6 @@ describe('UserActivationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         UserActivationFormComponent
       ]
     })

@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccessUserFormComponent } from './access-user-form.component';
 
 describe('AccessUserFormComponent', () => {
@@ -11,7 +10,6 @@ describe('AccessUserFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        LayoutModule,
         AccessUserFormComponent
       ]
     })
