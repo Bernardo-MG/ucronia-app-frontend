@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
+import { LayoutModule } from '@app/shared/layout/layout.module';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { UserTokenService } from '../../services/user-token.service';
-import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'access-user-token-selection-list',
+  standalone: true,
+  imports: [RouterModule, LayoutModule, PaginationModule],
   templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent implements OnInit {
