@@ -11,13 +11,11 @@ describe('PasswordResetRequestComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        PasswordResetRequestComponent,
-        PasswordResetRequestFormComponent
-      ],
       imports: [
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        PasswordResetRequestComponent,
+        PasswordResetRequestFormComponent
       ],
       providers: [
         PasswordResetService

@@ -17,9 +17,7 @@ describe('UserActivationComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         UserActivationComponent,
         UserActivationFormComponent
       ],

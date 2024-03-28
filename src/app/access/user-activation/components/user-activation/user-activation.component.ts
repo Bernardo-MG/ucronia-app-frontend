@@ -5,6 +5,9 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
 import { throwError } from 'rxjs';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
+import { UserActivationFormComponent } from '../user-activation-form/user-activation-form.component';
+import { CommonModule } from '@angular/common';
+import { LayoutModule } from '@app/shared/layout/layout.module';
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
@@ -13,6 +16,8 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  */
 @Component({
   selector: 'access-user-activation',
+  standalone: true,
+  imports: [CommonModule, LayoutModule, UserActivationFormComponent],
   templateUrl: './user-activation.component.html'
 })
 export class UserActivationComponent implements OnInit {

@@ -17,9 +17,7 @@ describe('PasswordResetComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         PasswordResetComponent,
         PasswordResetFormComponent
       ],

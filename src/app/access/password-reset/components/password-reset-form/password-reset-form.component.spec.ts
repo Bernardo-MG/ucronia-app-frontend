@@ -11,9 +11,7 @@ describe('PasswordResetFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
+        LayoutModule,
         PasswordResetFormComponent
       ]
     })

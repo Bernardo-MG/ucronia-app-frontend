@@ -9,9 +9,7 @@ describe('UserActivationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule
-      ],
-      declarations: [
+        ReactiveFormsModule,
         UserActivationFormComponent
       ]
     })
