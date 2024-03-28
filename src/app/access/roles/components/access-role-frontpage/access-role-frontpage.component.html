@@ -1,25 +1,4 @@
 <layout-article title="Roles">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="pb-2">
-        <!-- Add -->
-        <div class="card">
-          <div class="card-body">
-            <div class="d-grid">
-              <!-- Add button -->
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/roles/add"
-                [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-                Add role
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-10">
-      <!-- List -->
-      <access-role-selection-list>
-      </access-role-selection-list>
-    </div>
-  </div>
+  <!-- List -->
+  <access-role-selection-list-widget></access-role-selection-list-widget>
 </layout-article>

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutModule } from '@app/shared/layout/layout.module';
-import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
+import { AccessRoleSelectionListWidgetComponent } from '../access-role-selection-list-widget/access-role-selection-list-widget.component';
 
 @Component({
   selector: 'access-role-frontpage',
   standalone: true,
-  imports: [LayoutModule, AccessRoleSelectionListComponent],
+  imports: [LayoutModule, AccessRoleSelectionListWidgetComponent],
   templateUrl: './access-role-frontpage.component.html'
 })
 export class AccessFrontpageComponent implements OnInit {
