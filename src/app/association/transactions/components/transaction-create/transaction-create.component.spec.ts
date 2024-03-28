@@ -1,9 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 import { TransactionCreateComponent } from './transaction-create.component';
 
 describe('TransactionCreateComponent', () => {
@@ -14,10 +11,7 @@ describe('TransactionCreateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ReactiveFormsModule,
-        LayoutModule,
-        TransactionCreateComponent,
-        TransactionFormComponent
+        TransactionCreateComponent
       ],
       providers: [
         TransactionService

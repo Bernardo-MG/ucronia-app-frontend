@@ -1,12 +1,5 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { MemberInfoComponent } from '../member-info/member-info.component';
 import { MemberService } from '../../services/member.service';
-import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberInfoEditorComponent } from './member-info-editor.component';
 
 describe('MemberInfoEditorComponent', () => {
@@ -16,14 +9,7 @@ describe('MemberInfoEditorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberInfoEditorComponent,
-        MemberFormComponent,
-        MemberInfoComponent,
-        RouterTestingModule,
-        HttpClientTestingModule,
-        ReactiveFormsModule,
-        LayoutModule,
-        IconsModule
+        MemberInfoEditorComponent
       ],
       providers: [
         MemberService

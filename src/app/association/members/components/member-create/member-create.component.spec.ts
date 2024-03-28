@@ -1,9 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberService } from '../../services/member.service';
-import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberCreateComponent } from './member-create.component';
 
 describe('MemberCreateComponent', () => {
@@ -17,10 +14,7 @@ describe('MemberCreateComponent', () => {
       ],
       imports: [
         HttpClientTestingModule,
-        ReactiveFormsModule,
-        MemberCreateComponent,
-        MemberFormComponent,
-        LayoutModule
+        MemberCreateComponent
       ]
     })
       .compileComponents();
