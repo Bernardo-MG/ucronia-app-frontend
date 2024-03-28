@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LoginFormUser } from '../../models/login-form-user';
+import { UserLogin } from '../../models/user-login';
 
 /**
  * Login form component. Dumb component for just handling the form.
@@ -43,7 +43,7 @@ export class LoginFormComponent {
   /**
    * Login event. Sent when the user accepts the data in the form.
    */
-  @Output() public login = new EventEmitter<LoginFormUser>();
+  @Output() public login = new EventEmitter<UserLogin>();
 
   /**
    * Remember me event. Sent when the user changes the remember me flag.
@@ -68,7 +68,7 @@ export class LoginFormComponent {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const user = new LoginFormUser();
+      const user = new UserLogin();
       if (this.form.value.username) {
         user.username = this.form.value.username;
       }

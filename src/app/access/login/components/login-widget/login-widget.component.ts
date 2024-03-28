@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginFormUser } from '../../models/login-form-user';
+import { UserLogin } from '../../models/user-login';
 import { LoginService } from '../../services/login.service';
 import { LoginFormComponent } from '../login-form/login-form.component';
 
@@ -64,7 +64,7 @@ export class LoginWidgetComponent implements OnInit {
    * 
    * @param login user login info
    */
-  public onLogin(login: LoginFormUser) {
+  public onLogin(login: UserLogin) {
     // Login request
 
     // Mark the form as loading
