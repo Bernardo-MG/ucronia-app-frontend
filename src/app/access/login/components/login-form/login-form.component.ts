@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { LoginFormUser } from '../../models/login-form-user';
 
 /**
@@ -9,6 +11,8 @@ import { LoginFormUser } from '../../models/login-form-user';
  */
 @Component({
   selector: 'login-login-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
