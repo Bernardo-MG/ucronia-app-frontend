@@ -2,7 +2,7 @@ import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Month } from '../../models/month';
@@ -19,8 +19,8 @@ describe('CalendarMonthComponent', () => {
           provide: DateAdapter,
           useFactory: adapterFactory,
         }),
-        LayoutModule,
-        IconsModule
+        IconsModule,
+        WaitingWrapperComponent
       ],
       declarations: [CalendarMonthComponent]
     })

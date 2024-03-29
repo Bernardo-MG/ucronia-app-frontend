@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { HighlightsComponent } from './highlights.component';
 
@@ -13,8 +12,8 @@ describe('HighlightsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LayoutModule,
-        PaginationModule
+        PaginationModule,
+        ArticleComponent
       ],
       declarations: [
         HighlightsComponent,
