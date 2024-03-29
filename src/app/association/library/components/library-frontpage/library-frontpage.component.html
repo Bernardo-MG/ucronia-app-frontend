@@ -1,87 +1,9 @@
 <layout-article title="Library">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="pb-2">
-        <!-- Add -->
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <!-- Add book -->
-              <div class="d-grid pb-2">
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/book/add"
-                  [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
-                  Add book
-                </button>
-              </div>
-              <!-- Add book type -->
-              <div class="d-grid pb-2">
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/bookType/add"
-                  [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
-                  Add book type
-                </button>
-              </div>
-              <!-- Add game system -->
-              <div class="d-grid pb-2">
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/gameSystem/add"
-                  [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
-                  Add game system
-                </button>
-              </div>
-              <!-- Add author -->
-              <div class="d-grid pb-2">
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/author/add"
-                  [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
-                  Add author
-                </button>
-              </div>
-              <!-- Add publisher -->
-              <div class="d-grid pb-2">
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/publisher/add"
-                  [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
-                  Add publisher
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-10">
-      <!-- Books list -->
-      <div class="card">
-        <div class="card-body">
-          <h2>Books</h2>
-          <assoc-library-book-list></assoc-library-book-list>
-        </div>
-      </div>
-      <!-- Book types list -->
-      <div class="card">
-        <div class="card-body">
-          <h2>Book types</h2>
-          <assoc-library-book-type-list></assoc-library-book-type-list>
-        </div>
-      </div>
-      <!-- Game systems list -->
-      <div class="card">
-        <div class="card-body">
-          <h2>Game systems</h2>
-          <assoc-library-game-system-list></assoc-library-game-system-list>
-        </div>
-      </div>
-      <!-- Publisher list -->
-      <div class="card">
-        <div class="card-body">
-          <h2>Publishers</h2>
-          <assoc-library-publisher-list></assoc-library-publisher-list>
-        </div>
-      </div>
-      <!-- Author list -->
-      <div class="card">
-        <div class="card-body">
-          <h2>Authors</h2>
-          <assoc-library-author-list></assoc-library-author-list>
-        </div>
-      </div>
+  <!-- Books list -->
+  <div class="card">
+    <div class="card-body">
+      <h2>Books</h2>
+      <assoc-library-book-list></assoc-library-book-list>
     </div>
   </div>
 </layout-article>

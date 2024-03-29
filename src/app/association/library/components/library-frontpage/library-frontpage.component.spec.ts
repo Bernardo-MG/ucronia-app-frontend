@@ -1,11 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthorService } from '../../services/author.service';
-import { BookTypeService } from '../../services/book-type.service';
 import { BookService } from '../../services/book.service';
-import { GameSystemService } from '../../services/game-system.service';
-import { PublisherService } from '../../services/publisher.service';
 import { LibraryFrontpageComponent } from './library-frontpage.component';
 
 describe('LibraryFrontpageComponent', () => {
@@ -20,11 +16,7 @@ describe('LibraryFrontpageComponent', () => {
         LibraryFrontpageComponent
       ],
       providers: [
-        BookService,
-        BookTypeService,
-        GameSystemService,
-        AuthorService,
-        PublisherService
+        BookService
       ]
     })
       .compileComponents();
