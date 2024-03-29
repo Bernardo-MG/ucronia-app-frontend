@@ -1,27 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Menu } from '@app/shared/menu/models/menu';
 import { LayoutService } from '../../services/layout.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  selector: 'layout-main-navigation',
+  selector: 'layout-header-navigation-wrapper',
   standalone: true,
-  imports: [CommonModule, RouterModule, NavbarComponent],
-  templateUrl: './main-navigation-layout.component.html',
-  styleUrls: ['./main-navigation-layout.component.sass']
+  imports: [CommonModule, NavbarComponent],
+  templateUrl: './header-navigation-wrapper.component.html'
 })
-export class MainNavigationLayoutComponent implements OnInit {
+export class HeaderNavigationWrapperComponent implements OnInit {
 
   public title = '';
 
   public loggedIn = false;
 
   public showConfigMenu = false;
-
-  public menus: Menu[] = [];
 
   constructor(
     private authContainer: AuthContainer,
@@ -31,7 +26,6 @@ export class MainNavigationLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.authContainer.getDetails().subscribe(u => { this.loggedIn = u.logged });
     this.title = this.layoutService.getTitle();
-    this.menus = this.layoutService.getMenus();
     this.showConfigMenu = this.layoutService.showConfigurationLink();
   }
 

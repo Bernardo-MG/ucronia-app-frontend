@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from '@app/shared/menu/models/menu';
 import { AccountMenuComponent } from '../account-dropdown/account-dropdown.component';
 import { ConfigDropdownComponent } from '../config-dropdown/config-dropdown.component';
 
@@ -17,8 +16,6 @@ export class NavbarComponent {
 
   @Input() public loggedIn = false;
   
-  @Input() public menus: Menu[] = [];
-
   @Input() public showConfigMenu = false;
 
 }

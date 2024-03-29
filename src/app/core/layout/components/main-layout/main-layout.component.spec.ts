@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
-import { MainNavigationLayoutComponent } from './main-navigation-layout.component';
+import { MainLayoutComponent } from './main-layout.component';
 
-describe('MainNavigationLayoutComponent', () => {
-  let component: MainNavigationLayoutComponent;
-  let fixture: ComponentFixture<MainNavigationLayoutComponent>;
+describe('MainLayoutComponent', () => {
+  let component: MainLayoutComponent;
+  let fixture: ComponentFixture<MainLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,7 +22,7 @@ describe('MainNavigationLayoutComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MainNavigationLayoutComponent);
+    fixture = TestBed.createComponent(MainLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
