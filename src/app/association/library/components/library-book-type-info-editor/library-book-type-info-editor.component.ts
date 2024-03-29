@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { BookTypeService } from '../../services/book-type.service';
@@ -12,7 +13,7 @@ import { LibraryBookTypeInfoComponent } from '../library-book-type-info/library-
 @Component({
   selector: 'assoc-library-book-type-info-editor',
   standalone: true,
-  imports: [LayoutModule, LibraryBookTypeFormComponent, LibraryBookTypeInfoComponent],
+  imports: [LibraryBookTypeFormComponent, LibraryBookTypeInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './library-book-type-info-editor.component.html'
 })
 export class LibraryBookTypeInfoEditorComponent extends InfoEditorComponent<BookType> implements OnInit {

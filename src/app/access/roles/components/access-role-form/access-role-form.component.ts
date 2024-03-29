@@ -3,12 +3,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Role } from '@app/core/authentication/models/role';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
   selector: 'access-role-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent],
   templateUrl: './access-role-form.component.html'
 })
 export class AccessRoleFormComponent extends FormComponent<Role> {

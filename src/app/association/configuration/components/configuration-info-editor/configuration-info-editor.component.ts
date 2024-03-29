@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { AssociationConfiguration } from '../../models/association-configuration';
 import { AssociationConfigurationService } from '../../service/association-configuration.service';
@@ -11,7 +12,7 @@ import { ConfigurationInfoComponent } from '../configuration-info/configuration-
 @Component({
   selector: 'assoc-configuration-info-editor',
   standalone: true,
-  imports: [LayoutModule, ConfigurationFormComponent, ConfigurationInfoComponent],
+  imports: [ConfigurationFormComponent, ConfigurationInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './configuration-info-editor.component.html'
 })
 export class ConfigurationInfoEditorComponent extends InfoEditorComponent<AssociationConfiguration> implements OnInit {

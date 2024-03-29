@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
@@ -10,7 +10,7 @@ import { AccessRoleFormComponent } from '../access-role-form/access-role-form.co
 @Component({
   selector: 'access-role-create',
   standalone: true,
-  imports: [LayoutModule, AccessRoleFormComponent],
+  imports: [AccessRoleFormComponent, ArticleComponent],
   templateUrl: './access-role-create.component.html'
 })
 export class AccessRoleCreateComponent extends CreateComponent<Role> {

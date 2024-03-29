@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
@@ -10,7 +10,7 @@ import { AccessUserFormComponent } from '../access-user-form/access-user-form.co
 @Component({
   selector: 'access-user-create',
   standalone: true,
-  imports: [LayoutModule, AccessUserFormComponent],
+  imports: [AccessUserFormComponent, ArticleComponent],
   templateUrl: './access-user-create.component.html'
 })
 export class AccessUserCreateComponent extends CreateComponent<User> {

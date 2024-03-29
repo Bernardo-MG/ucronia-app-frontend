@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
@@ -5,6 +6,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'layout-button-list',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './button-list.component.html'
 })
 export class ButtonListComponent {

@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { BookType } from '../../models/book-type';
 
 @Component({
   selector: 'assoc-library-book-type-selection',
   standalone: true,
-  imports: [LayoutModule, PaginationModule],
+  imports: [PaginationModule, ButtonListComponent, WaitingWrapperComponent],
   templateUrl: './library-book-type-selection.component.html'
 })
 export class LibraryBookTypeSelectionComponent {

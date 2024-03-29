@@ -5,14 +5,14 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { Permission } from '@app/core/authentication/models/permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-permissions',
   standalone: true,
-  imports: [CommonModule, LayoutModule, PaginationModule, IconsModule],
+  imports: [CommonModule, PaginationModule, IconsModule, WaitingWrapperComponent],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {

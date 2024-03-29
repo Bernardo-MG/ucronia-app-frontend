@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
 import { Book } from '../../models/book';
@@ -25,7 +25,7 @@ import { LibraryPublisherSelectionComponent } from '../library-publisher-selecti
 @Component({
   selector: 'assoc-library-book-create',
   standalone: true,
-  imports: [CommonModule, LayoutModule, LibraryBookFormComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent],
+  imports: [CommonModule, LibraryBookFormComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent, ArticleComponent],
   templateUrl: './library-book-create.component.html'
 })
 export class LibraryBookCreateComponent extends CreateComponent<Book> implements OnInit {

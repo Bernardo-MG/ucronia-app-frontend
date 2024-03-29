@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { GameSystem } from '../../models/game-system';
@@ -13,7 +14,7 @@ import { LibraryGameSystemInfoComponent } from '../library-game-system-info/libr
 @Component({
   selector: 'assoc-library-game-system-info-editor',
   standalone: true,
-  imports: [LayoutModule, LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent],
+  imports: [LibraryGameSystemFormComponent, LibraryGameSystemInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './library-game-system-info-editor.component.html'
 })
 export class LibraryGameSystemInfoEditorComponent extends InfoEditorComponent<GameSystem> implements OnInit {

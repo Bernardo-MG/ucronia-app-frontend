@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
 import { Book } from '../../models/book';
@@ -26,7 +27,7 @@ import { LibraryPublisherSelectionComponent } from '../library-publisher-selecti
 @Component({
   selector: 'assoc-library-book-info-editor',
   standalone: true,
-  imports: [CommonModule, LayoutModule, LibraryBookFormComponent, LibraryBookInfoComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent],
+  imports: [CommonModule, LibraryBookFormComponent, LibraryBookInfoComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './library-book-info-editor.component.html'
 })
 export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> implements OnInit {

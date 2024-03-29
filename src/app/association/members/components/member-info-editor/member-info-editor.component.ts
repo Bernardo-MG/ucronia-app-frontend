@@ -2,17 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberInfoComponent } from '../member-info/member-info.component';
 
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [LayoutModule, MemberFormComponent, MemberInfoComponent],
+  imports: [MemberFormComponent, MemberInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorComponent<Member> implements OnInit {

@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Book } from '../../models/book';
 
 @Component({
   selector: 'assoc-library-book-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, LayoutModule, IconsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent],
   templateUrl: './library-book-form.component.html'
 })
 export class LibraryBookFormComponent extends FormComponent<Book> {

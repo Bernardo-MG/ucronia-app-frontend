@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { GameSystem } from '../../models/game-system';
 import { GameSystemService } from '../../services/game-system.service';
@@ -13,7 +13,7 @@ import { GameSystemService } from '../../services/game-system.service';
 @Component({
   selector: 'assoc-library-game-system-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
+  imports: [ CommonModule, RouterModule, PaginationModule, IconsModule, WaitingWrapperComponent ],
   templateUrl: './library-game-system-list.component.html'
 })
 export class LibraryGameSystemListComponent {

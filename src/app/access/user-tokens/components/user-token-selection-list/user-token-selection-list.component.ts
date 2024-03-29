@@ -5,14 +5,14 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
   selector: 'access-user-token-selection-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, LayoutModule, PaginationModule],
+  imports: [CommonModule, RouterModule, PaginationModule, WaitingWrapperComponent],
   templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent implements OnInit {

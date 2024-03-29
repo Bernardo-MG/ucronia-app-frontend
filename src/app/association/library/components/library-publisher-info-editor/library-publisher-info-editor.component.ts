@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { Publisher } from '../../models/publisher';
@@ -13,7 +14,7 @@ import { LibraryPublisherInfoComponent } from '../library-publisher-info/library
 @Component({
   selector: 'assoc-library-publisher-info-editor',
   standalone: true,
-  imports: [LayoutModule, LibraryPublisherFormComponent, LibraryPublisherInfoComponent],
+  imports: [LibraryPublisherFormComponent, LibraryPublisherInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './library-publisher-info-editor.component.html'
 })
 export class LibraryPublisherInfoEditorComponent extends InfoEditorComponent<Publisher> implements OnInit {

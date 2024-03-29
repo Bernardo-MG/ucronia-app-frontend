@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
@@ -12,7 +13,7 @@ import { TransactionInfoComponent } from '../transaction-info/transaction-info.c
 @Component({
   selector: 'assoc-transaction-info-editor',
   standalone: true,
-  imports: [LayoutModule, TransactionFormComponent, TransactionInfoComponent],
+  imports: [TransactionFormComponent, TransactionInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './transaction-info-editor.component.html'
 })
 export class TransactionInfoEditorComponent extends InfoEditorComponent<Transaction> implements OnInit {

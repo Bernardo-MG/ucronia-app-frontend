@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Member } from '../../models/member';
 
 @Component({
   selector: 'assoc-member-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule],
+  imports: [CommonModule, RouterModule, PaginationModule, IconsModule, WaitingWrapperComponent],
   templateUrl: './member-list.component.html'
 })
 export class MemberListComponent {

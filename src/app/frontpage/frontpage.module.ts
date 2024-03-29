@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { FrontpageRoutingModule } from './frontpage-routing.module';
 import { HighlightsComponent } from './highlights/highlights.component';
 
@@ -13,7 +13,7 @@ import { HighlightsComponent } from './highlights/highlights.component';
   imports: [
     CommonModule,
     FrontpageRoutingModule,
-    LayoutModule
+    ArticleComponent
   ]
 })
 export class FrontpageModule { }

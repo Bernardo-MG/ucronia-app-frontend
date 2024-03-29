@@ -3,14 +3,14 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-add-role',
   standalone: true,
-  imports: [CommonModule, LayoutModule, IconsModule, PaginationModule],
+  imports: [CommonModule, IconsModule, PaginationModule, WaitingWrapperComponent],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnChanges {

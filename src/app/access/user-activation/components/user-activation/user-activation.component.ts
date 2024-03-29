@@ -1,13 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { throwError } from 'rxjs';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
 import { UserActivationFormComponent } from '../user-activation-form/user-activation-form.component';
-import { CommonModule } from '@angular/common';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
@@ -17,7 +17,7 @@ import { LayoutModule } from '@app/shared/layout/layout.module';
 @Component({
   selector: 'access-user-activation',
   standalone: true,
-  imports: [CommonModule, LayoutModule, UserActivationFormComponent],
+  imports: [CommonModule, UserActivationFormComponent, WaitingWrapperComponent],
   templateUrl: './user-activation.component.html'
 })
 export class UserActivationComponent implements OnInit {
