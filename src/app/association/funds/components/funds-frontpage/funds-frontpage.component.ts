@@ -1,21 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Component } from '@angular/core';
+import { TransactionBalanceChartComponent } from '@app/association/transactions/components/transaction-balance-chart/transaction-balance-chart.component';
+import { TransactionCalendarWidgetComponent } from '@app/association/transactions/components/transaction-calendar-widget/transaction-calendar-widget.component';
+import { FundsCurrentBalanceComponent } from '@app/association/transactions/components/transaction-current-balance/transaction-current-balance.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 
 @Component({
   selector: 'app-transaction-frontpage',
+  standalone: true,
+  imports: [IconsModule, TransactionBalanceChartComponent, FundsCurrentBalanceComponent, TransactionCalendarWidgetComponent, ArticleComponent],
   templateUrl: './funds-frontpage.component.html'
 })
-export class FundsFrontpageComponent implements OnInit {
-
-  public createPermission = false;
-
-  constructor(
-    private authContainer: AuthContainer
-  ) { }
-
-  public ngOnInit(): void {
-    // Check permissions
-    this.createPermission = this.authContainer.hasPermission("transaction", "create");
-  }
+export class FundsFrontpageComponent {
 
 }

@@ -1,0 +1,106 @@
+<layout-article title="Library Admin">
+  <ul class="nav nav-tabs pb-2">
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button" (click)="onChangeView('books')">Books</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button" (click)="onChangeView('authors')">Authors</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button" (click)="onChangeView('publishers')">Publishers</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button" (click)="onChangeView('book_types')">Book types</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button" (click)="onChangeView('game_systems')">Game systems</a>
+    </li>
+  </ul>
+  <ng-container [ngSwitch]="view">
+    <!-- Books -->
+    <ng-container *ngSwitchCase="'books'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Books</h2>
+          <assoc-library-book-list></assoc-library-book-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/book/add"
+                [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Authors -->
+    <ng-container *ngSwitchCase="'authors'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Authors</h2>
+          <assoc-library-author-list></assoc-library-author-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/publisher/add"
+                [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Publishers -->
+    <ng-container *ngSwitchCase="'publishers'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Publishers</h2>
+          <assoc-library-publisher-list></assoc-library-publisher-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/author/add"
+                [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Book types -->
+    <ng-container *ngSwitchCase="'book_types'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Book types</h2>
+          <assoc-library-book-type-list></assoc-library-book-type-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/bookType/add"
+                [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Game systems -->
+    <ng-container *ngSwitchCase="'game_systems'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Game systems</h2>
+          <assoc-library-game-system-list></assoc-library-game-system-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/gameSystem/add"
+                [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</layout-article>

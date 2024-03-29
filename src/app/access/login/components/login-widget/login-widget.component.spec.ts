@@ -1,14 +1,12 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from '../../services/login.service';
-import { LoginFormComponent } from '../login-form/login-form.component';
-import { LoginComponent } from './login.component';
+import { LoginWidgetComponent } from './login-widget.component';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('LoginWidgetComponent', () => {
+  let component: LoginWidgetComponent;
+  let fixture: ComponentFixture<LoginWidgetComponent>;
   let loginService: LoginService;
 
   beforeEach(async () => {
@@ -16,11 +14,7 @@ describe('LoginComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ReactiveFormsModule
-      ],
-      declarations: [
-        LoginComponent,
-        LoginFormComponent
+        LoginWidgetComponent
       ],
       providers: [
         LoginService
@@ -32,7 +26,7 @@ describe('LoginComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(LoginWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

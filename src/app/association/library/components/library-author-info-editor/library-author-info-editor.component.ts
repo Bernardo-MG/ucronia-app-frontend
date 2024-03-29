@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
-import { BookType } from '../../models/book-type';
 import { Author } from '../../models/author';
+import { BookType } from '../../models/book-type';
 import { AuthorService } from '../../services/author.service';
 import { LibraryAuthorFormComponent } from '../library-author-form/library-author-form.component';
 import { LibraryAuthorInfoComponent } from '../library-author-info/library-author-info.component';
@@ -13,7 +14,7 @@ import { LibraryAuthorInfoComponent } from '../library-author-info/library-autho
 @Component({
   selector: 'assoc-library-author-info-editor',
   standalone: true,
-  imports: [LayoutModule, LibraryAuthorFormComponent, LibraryAuthorInfoComponent],
+  imports: [LibraryAuthorFormComponent, LibraryAuthorInfoComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './library-author-info-editor.component.html'
 })
 export class LibraryAuthorInfoEditorComponent extends InfoEditorComponent<Author> implements OnInit {

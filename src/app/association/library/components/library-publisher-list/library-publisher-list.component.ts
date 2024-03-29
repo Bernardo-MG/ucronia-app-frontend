@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { Publisher } from '../../models/publisher';
 import { PublisherService } from '../../services/publisher.service';
@@ -13,7 +13,7 @@ import { PublisherService } from '../../services/publisher.service';
 @Component({
   selector: 'assoc-library-publisher-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, LayoutModule, PaginationModule, IconsModule ],
+  imports: [ CommonModule, RouterModule, PaginationModule, IconsModule, WaitingWrapperComponent ],
   templateUrl: './library-publisher-list.component.html'
 })
 export class LibraryPublisherListComponent {

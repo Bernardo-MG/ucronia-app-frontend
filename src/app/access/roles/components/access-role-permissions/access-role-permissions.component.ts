@@ -1,12 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { Permission } from '@app/core/authentication/models/permission';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 import { AccessRoleService } from '../../services/access-role.service';
-import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'access-role-permissions',
+  standalone: true,
+  imports: [CommonModule, PaginationModule, IconsModule, WaitingWrapperComponent],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {

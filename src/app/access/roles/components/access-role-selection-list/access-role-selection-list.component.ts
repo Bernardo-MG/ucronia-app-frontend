@@ -1,55 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
-import { Sort } from '@app/core/api/models/sort';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { PaginationModule } from '@app/shared/pagination/pagination.module';
 
 @Component({
   selector: 'access-role-selection-list',
+  standalone: true,
+  imports: [CommonModule, RouterModule, PaginationModule, WaitingWrapperComponent],
   templateUrl: './access-role-selection-list.component.html'
 })
-export class AccessRoleSelectionListComponent implements OnInit {
+export class AccessRoleSelectionListComponent {
 
-  public page = new PaginatedResponse<Role[]>([]);
+  @Input() public page = new PaginatedResponse<Role[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingRoles = false;
+  @Input() public waiting = false;
 
-  private sort = new Sort([]);
+  @Output() public changeDirection = new EventEmitter<SortField>();
 
-  constructor(
-    private service: AccessRoleService
-  ) { }
-
-  ngOnInit(): void {
-    this.load(0);
-  }
+  constructor() { }
 
   public onChangeDirection(field: SortField) {
-    this.sort.addField(field);
-
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
-  }
-
-  private load(page: number) {
-    this.readingRoles = true;
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.page = response;
-
-        // Reactivate view
-        this.readingRoles = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingRoles = false;
-      }
-    });
+    this.changeDirection.emit(field);
   }
 
 }

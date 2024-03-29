@@ -1,15 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { Observable, throwError } from 'rxjs';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { Observable } from 'rxjs';
 import { UserTokenService } from '../../services/user-token.service';
+import { UserTokenInfoComponent } from '../user-token-info/user-token-info.component';
 
 @Component({
   selector: 'access-user-token-info-editor',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent],
   templateUrl: './user-token-info-editor.component.html'
 })
 export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken> implements OnInit {

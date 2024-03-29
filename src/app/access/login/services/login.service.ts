@@ -8,7 +8,7 @@ import { SecurityDetails } from '@app/core/authentication/models/security-detail
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { LoginRequest } from '../models/login-request';
+import { UserLogin } from '../models/user-login';
 
 @Injectable()
 export class LoginService {
@@ -27,7 +27,7 @@ export class LoginService {
    * @param request login request
    * @returns the user resulting from the login
    */
-  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
+  public login(request: UserLogin, rememberMe: boolean): Observable<SecurityDetails> {
     return this.getClient()
       // Login request
       .create<SimpleResponse<LoginStatus>>(request)

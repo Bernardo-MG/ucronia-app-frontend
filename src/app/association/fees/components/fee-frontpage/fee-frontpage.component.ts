@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
-import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { FeeCalendarWidgetComponent } from '../fee-calendar-widget/fee-calendar-widget.component';
 
 @Component({
-  selector: 'app-fee-frontpage',
+  selector: 'assoc-fee-frontpage',
   standalone: true,
-  imports: [RouterModule, LayoutModule, FeeCalendarComponent],
+  imports: [RouterModule, FeeCalendarWidgetComponent, ArticleComponent],
   templateUrl: './fee-frontpage.component.html'
 })
 export class FeeFrontpageComponent {

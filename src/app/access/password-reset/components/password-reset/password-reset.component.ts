@@ -1,10 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { throwError } from 'rxjs';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
+import { PasswordResetFormComponent } from '../password-reset-form/password-reset-form.component';
 
 /**
  * Password reset. Changes the password for an existing user, identified by a token.
@@ -13,6 +16,8 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset',
+  standalone: true,
+  imports: [CommonModule, PasswordResetFormComponent, WaitingWrapperComponent],
   templateUrl: './password-reset.component.html'
 })
 export class PasswordResetComponent implements OnInit {

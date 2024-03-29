@@ -1,7 +1,7 @@
 /**
- * User login request. Used to attempt a login, for this reason it contains the user credentials.
+ * User login. Used to attempt a login, for this reason it contains the user credentials.
  */
-export class LoginRequest {
+export class UserLogin {
   /**
    * Username for the login attempt.
    */

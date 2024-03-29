@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../../members/models/member';
 import { FeePayment } from '../../models/fee-payment';
@@ -16,7 +17,7 @@ import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, LayoutModule, FeePayFormComponent, FeeMemberSelectionComponent],
+  imports: [CommonModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingWrapperComponent],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {

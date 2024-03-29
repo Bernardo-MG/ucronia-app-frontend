@@ -5,12 +5,12 @@ import { MemberBalance } from '../../models/member-balance';
 import { MemberBalanceService } from '../../services/member-balance.service';
 
 @Component({
-  selector: 'assoc-member-balance-chart',
+  selector: 'assoc-member-balance-chart-widget',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './member-balance-chart.component.html'
+  templateUrl: './member-balance-chart-widget.component.html'
 })
-export class MemberBalanceChartComponent implements OnInit {
+export class MemberBalanceChartWidgetComponent implements OnInit {
 
   public balance: MemberBalance[] = [];
 

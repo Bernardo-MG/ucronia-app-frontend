@@ -1,4 +1,4 @@
-<layout-article>
+<layout-article title="Funds">
   <div class="row pb-2">
     <div class="col-md-3 offset-md-3 pb-2">
       <div class="card">
@@ -17,33 +17,6 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-2">
-      <div class="pb-2">
-        <!-- Add -->
-        <div class="card">
-          <div class="card-body">
-            <div class="row">
-              <div class="d-grid">
-                <!-- Add button -->
-                <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
-                  [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-                  Add transaction
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Funds calendar -->
-    <div class="col-md-10">
-      <div class="card">
-        <div class="card-body">
-          <h2>Transactions</h2>
-          <assoc-transaction-calendar></assoc-transaction-calendar>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Funds calendar -->
+  <assoc-transaction-calendar-widget></assoc-transaction-calendar-widget>
 </layout-article>

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
 import { AuthorService } from '../../services/author.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { LibraryAuthorFormComponent } from '../library-author-form/library-author-form.component';
 
 @Component({
   selector: 'assoc-library-author-create',
   standalone: true,
-  imports: [LayoutModule, LibraryAuthorFormComponent],
+  imports: [LibraryAuthorFormComponent, ArticleComponent],
   templateUrl: './library-author-create.component.html'
 })
 export class LibraryAuthorCreateComponent extends CreateComponent<Author> {

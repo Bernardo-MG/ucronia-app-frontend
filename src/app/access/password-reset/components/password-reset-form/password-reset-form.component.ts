@@ -1,13 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'login-password-reset-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {

@@ -1,11 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionService } from '../../service/transaction.service';
-import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
-import { TransactionInfoComponent } from '../transaction-info/transaction-info.component';
 import { TransactionInfoEditorComponent } from './transaction-info-editor.component';
 
 describe('TransactionDetailsComponent', () => {
@@ -17,13 +13,7 @@ describe('TransactionDetailsComponent', () => {
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        ReactiveFormsModule,
-        LayoutModule
-      ],
-      declarations: [
-        TransactionInfoEditorComponent,
-        TransactionFormComponent,
-        TransactionInfoComponent
+        TransactionInfoEditorComponent
       ],
       providers: [
         TransactionService

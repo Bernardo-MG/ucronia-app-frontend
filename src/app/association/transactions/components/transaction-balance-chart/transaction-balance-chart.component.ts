@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/association/transactions/models/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
@@ -5,9 +6,11 @@ import { TransactionBalanceService } from '../../service/transaction-balance.ser
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './transaction-balance-chart.component.html'
 })
-export class FundsBalanceChartComponent implements OnInit {
+export class TransactionBalanceChartComponent implements OnInit {
 
   public balance: TransactionMonthlyBalance[] = [];
 

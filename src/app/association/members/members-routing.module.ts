@@ -8,7 +8,7 @@ import { MemberInfoEditorComponent } from './components/member-info-editor/membe
 const routes: Routes = [
   { path: '', component: MemberFrontpageComponent },
   { path: 'register', component: MemberCreateComponent },
-  { path: 'member/:number', component: MemberInfoEditorComponent }
+  { path: ':number', component: MemberInfoEditorComponent }
 ];
 
 @NgModule({

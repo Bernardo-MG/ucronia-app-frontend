@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'layout-edition-wrapper',
+  standalone: true,
+  imports: [CommonModule, IconsModule],
   templateUrl: './edition-wrapper.component.html'
 })
 export class EditionWrapperComponent {

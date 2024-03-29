@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LibraryAdminFrontpageComponent } from './components/library-admin-frontpage/library-admin-frontpage.component';
 import { LibraryAuthorCreateComponent } from './components/library-author-create/library-author-create.component';
 import { LibraryAuthorInfoEditorComponent } from './components/library-author-info-editor/library-author-info-editor.component';
 import { LibraryBookCreateComponent } from './components/library-book-create/library-book-create.component';
@@ -15,6 +16,7 @@ import { LibraryPublisherInfoEditorComponent } from './components/library-publis
 
 const routes: Routes = [
   { path: '', component: LibraryFrontpageComponent },
+  { path: 'admin', component: LibraryAdminFrontpageComponent },
   { path: 'author/add', component: LibraryAuthorCreateComponent },
   { path: 'book/add', component: LibraryBookCreateComponent },
   { path: 'bookType/add', component: LibraryBookTypeCreateComponent },

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { GameSystem } from '../../models/game-system';
 import { GameSystemService } from '../../services/game-system.service';
@@ -10,7 +10,7 @@ import { LibraryGameSystemFormComponent } from '../library-game-system-form/libr
 @Component({
   selector: 'assoc-library-game-system-create',
   standalone: true,
-  imports: [ LayoutModule, LibraryGameSystemFormComponent ],
+  imports: [ LibraryGameSystemFormComponent, ArticleComponent ],
   templateUrl: './library-game-system-create.component.html'
 })
 export class LibraryGameSystemCreateComponent extends CreateComponent<GameSystem> {

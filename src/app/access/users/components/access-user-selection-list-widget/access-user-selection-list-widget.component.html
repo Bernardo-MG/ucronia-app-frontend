@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <access-user-selection-list [page]="page"
+      (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
+    <div class="row">
+      <div class="col-md-1">
+        <p>Total: {{page.totalElements}}</p>
+      </div>
+    </div>
+    <div class="col-md-2 offset-md-5">
+      <div class="d-grid">
+        <button type="button" class="btn btn-primary" aria-label="register" routerLink="/users/add"
+          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+          <icon-add></icon-add>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

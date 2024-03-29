@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Publisher } from '../../models/publisher';
 import { PublisherService } from '../../services/publisher.service';
@@ -10,7 +10,7 @@ import { LibraryPublisherFormComponent } from '../library-publisher-form/library
 @Component({
   selector: 'assoc-library-publisher-create',
   standalone: true,
-  imports: [ LayoutModule, LibraryPublisherFormComponent ],
+  imports: [ LibraryPublisherFormComponent, ArticleComponent ],
   templateUrl: './library-publisher-create.component.html'
 })
 export class LibraryPublisherCreateComponent extends CreateComponent<Publisher> {

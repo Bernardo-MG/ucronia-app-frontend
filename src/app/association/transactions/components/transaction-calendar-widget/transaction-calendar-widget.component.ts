@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 
 @Component({
-  selector: 'assoc-transaction-calendar',
-  templateUrl: './transaction-calendar.component.html'
+  selector: 'assoc-transaction-calendar-widget',
+  standalone: true,
+  imports: [IconsModule, ScheduleModule],
+  templateUrl: './transaction-calendar-widget.component.html'
 })
-export class FundsCalendarComponent implements OnInit {
+export class TransactionCalendarWidgetComponent implements OnInit {
 
   public months: Month[] = [];
 
@@ -20,14 +25,20 @@ export class FundsCalendarComponent implements OnInit {
    */
   public readingCalendar = false;
 
+  public createPermission = false;
+
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   constructor(
+    private authContainer: AuthContainer,
     private calendarService: TransactionCalendarService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authContainer.hasPermission("transaction", "create");
+    
     // Read range
     this.calendarService.getRange().subscribe(months => {
       // To show in the selection box we have to reverse the order
@@ -51,16 +62,6 @@ export class FundsCalendarComponent implements OnInit {
         this.load();
       }
     });
-  }
-
-  public onChangeMonth(date: Month) {
-    // Corrects month value
-    this.month = date;
-    this.load();
-  }
-
-  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
-    this.router.navigate([`/funds/transaction/${event.meta?.transactionId}`]);
   }
 
   private load() {
@@ -99,6 +100,16 @@ export class FundsCalendarComponent implements OnInit {
     const month = new Month(date.getFullYear(), date.getMonth() + 1);
 
     return month;
+  }
+
+  public onChangeMonth(date: Month) {
+    // Corrects month value
+    this.month = date;
+    this.load();
+  }
+
+  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
+    this.router.navigate([`/funds/transaction/${event.meta?.transactionId}`]);
   }
 
 }
