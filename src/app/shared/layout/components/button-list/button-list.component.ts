@@ -14,7 +14,7 @@ export class ButtonListComponent {
    */
   @Input() public values: any[] = [];
   
-  @Input() public renderer: (d: any) => string = (a) => '';
+  @Input() public renderer: (d: any) => string = (a) => a;
 
   @Output() public pick = new EventEmitter<any>();
 
