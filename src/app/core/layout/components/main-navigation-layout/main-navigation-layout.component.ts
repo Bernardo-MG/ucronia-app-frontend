@@ -7,13 +7,13 @@ import { LayoutService } from '../../services/layout.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
-  selector: 'layout-navbar-body',
+  selector: 'layout-main-navigation',
   standalone: true,
   imports: [CommonModule, RouterModule, NavbarComponent],
-  templateUrl: './navbar-body.component.html',
-  styleUrls: ['./navbar-body.component.sass']
+  templateUrl: './main-navigation-layout.component.html',
+  styleUrls: ['./main-navigation-layout.component.sass']
 })
-export class NavbarBodyComponent implements OnInit {
+export class MainNavigationLayoutComponent implements OnInit {
 
   public title = '';
 

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { NavbarBodyComponent } from './core/layout/components/navbar-body/navbar-body.component';
+import { MainNavigationLayoutComponent } from './core/layout/components/main-navigation-layout/main-navigation-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -22,47 +22,47 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         path: 'password/reset',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
       // Role
       {
         path: 'roles',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         loadChildren: rolesModule,
         canActivate: [ResourceGuard("role")]
       },
       // User
       {
         path: 'users',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         loadChildren: userModule,
         canActivate: [ResourceGuard("user")]
       },
       // User tokens
       {
         path: 'user-tokens',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         loadChildren: userTokenModule,
         canActivate: [ResourceGuard("user_token")]
       },
       // Activate user
       {
         path: 'users/activate',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },
       {
         path: '',
-        component: NavbarBodyComponent,
+        component: MainNavigationLayoutComponent,
         canActivate: [LoggedInGuard],
         children: [
           // Association
