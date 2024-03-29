@@ -9,9 +9,7 @@ describe('CenteredFrameComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
-      ],
-      declarations: [
+        RouterTestingModule,
         CenteredFrameComponent
       ]
     })

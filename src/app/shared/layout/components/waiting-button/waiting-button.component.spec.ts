@@ -12,9 +12,7 @@ describe('WaitingButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
-      ],
-      declarations: [
+        IconsModule,
         WaitingButtonComponent
       ]
     }).compileComponents();

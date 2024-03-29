@@ -16,8 +16,7 @@ describe('HighlightsComponent', () => {
         ArticleComponent
       ],
       declarations: [
-        HighlightsComponent,
-        ArticleComponent
+        HighlightsComponent
       ]
     })
       .compileComponents();
