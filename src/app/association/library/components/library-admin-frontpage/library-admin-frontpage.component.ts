@@ -1,20 +1,24 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { LibraryAuthorListComponent } from '../library-author-list/library-author-list.component';
 import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
 import { LibraryBookTypeListComponent } from '../library-book-type-list/library-book-type-list.component';
 import { LibraryGameSystemListComponent } from '../library-game-system-list/library-game-system-list.component';
 import { LibraryPublisherListComponent } from '../library-publisher-list/library-publisher-list.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [RouterModule, LibraryBookListComponent, LibraryBookTypeListComponent, LibraryGameSystemListComponent, LibraryAuthorListComponent, LibraryPublisherListComponent, ArticleComponent],
+  imports: [CommonModule, RouterModule, IconsModule, LibraryBookListComponent, LibraryBookTypeListComponent, LibraryGameSystemListComponent, LibraryAuthorListComponent, LibraryPublisherListComponent, ArticleComponent],
   templateUrl: './library-admin-frontpage.component.html'
 })
 export class LibraryAdminFrontpageComponent {
+
+  public view: 'books' | 'authors' | 'publishers' | 'book_types' | 'game_systems' = 'books';
 
   public createBookPermission = false;
 
@@ -37,6 +41,10 @@ export class LibraryAdminFrontpageComponent {
     this.createGameSystemPermission = this.authContainer.hasPermission("library_game_system", "create");
     this.createAuthorPermission = this.authContainer.hasPermission("library_author", "create");
     this.createPublisherPermission = this.authContainer.hasPermission("library_publisher", "create");
+  }
+
+  public onChangeView(newView: 'books' | 'authors' | 'publishers' | 'book_types' | 'game_systems' = 'books') {
+    this.view = newView;
   }
 
 }
