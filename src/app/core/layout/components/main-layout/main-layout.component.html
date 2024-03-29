@@ -3,17 +3,7 @@
     <div class="row">
       <!-- Sidebar -->
       <div class="col-md-2">
-        <aside class="sidebar bg-light mt-2 p-2 border rounded">
-          <!-- Iterate over menu options and display each section -->
-          <ng-container *ngFor="let menu of menus">
-            <h3>{{ menu.title }}</h3>
-            <!-- Iterate over links within each section and display them -->
-            <a *ngFor="let link of menu.links" [routerLink]="link.path"
-              class="list-group-item list-group-item-action menu-item mb-2">
-              {{ link.title }}
-            </a>
-          </ng-container>
-        </aside>
+        <layout-side-menu [menus]="menus"></layout-side-menu>
       </div>
       <!-- Main content area -->
       <main class="col-md-10">
