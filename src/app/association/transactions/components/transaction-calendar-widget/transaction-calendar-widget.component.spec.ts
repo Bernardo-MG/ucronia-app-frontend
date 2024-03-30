@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 import { TransactionCalendarService } from '../../service/transaction-calendar.service';
 import { TransactionCalendarWidgetComponent } from './transaction-calendar-widget.component';
@@ -12,6 +13,7 @@ describe('TransactionCalendarWidgetComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        RouterTestingModule,
         TransactionCalendarWidgetComponent
       ],
       providers: [
