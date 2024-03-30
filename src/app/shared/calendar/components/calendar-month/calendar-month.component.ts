@@ -78,7 +78,7 @@ export class CalendarMonthComponent implements OnChanges {
     });
   }
 
-  public onPickDate({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (this.activeDayIsOpen && (isSameDay(this.viewDate, date)) || events.length === 0) {
         this.activeDayIsOpen = false;
@@ -107,9 +107,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   private getThisMonth() {
     const date = new Date();
-    const month = new Month(date.getFullYear(), date.getMonth() + 1);
-
-    return month;
+    return new Month(date.getFullYear(), date.getMonth() + 1);
   }
 
 }
