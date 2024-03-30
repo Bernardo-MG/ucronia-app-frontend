@@ -7,13 +7,13 @@ import { Permission } from '@app/core/authentication/models/permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { PaginationOrderButtonComponent } from '@app/shared/pagination/components/pagination-order-button/pagination-order-button.component';
+import { OrderButtonComponent } from '@app/shared/order/sorting-button/sorting-button.component';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-add-permission',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, PaginationOrderButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingWrapperComponent, OrderButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {

@@ -6,14 +6,14 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { PaginationOrderButtonComponent } from '@app/shared/pagination/components/pagination-order-button/pagination-order-button.component';
+import { OrderButtonComponent } from '@app/shared/order/sorting-button/sorting-button.component';
 import { PaginationRouteNavigationComponent } from '@app/shared/pagination/components/pagination-route-navigation/pagination-route-navigation.component';
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
   selector: 'access-user-token-selection-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, WaitingWrapperComponent, PaginationOrderButtonComponent, PaginationRouteNavigationComponent],
+  imports: [CommonModule, RouterModule, WaitingWrapperComponent, OrderButtonComponent, PaginationRouteNavigationComponent],
   templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent implements OnInit {
