@@ -97,6 +97,10 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
   }
 
   protected override save(toSave: Book): Observable<Book> {
+    toSave.publisher = this.data.publisher;
+    toSave.bookType = this.data.bookType;
+    toSave.gameSystem = this.data.gameSystem;
+    toSave.authors = this.data.authors;
     return this.service.update(this.data.number, toSave);
   }
 
