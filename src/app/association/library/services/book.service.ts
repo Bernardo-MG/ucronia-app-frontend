@@ -18,30 +18,10 @@ export class BookService {
     private http: HttpClient
   ) { }
 
-  public create(data: Book): Observable<Book> {
-    return this.getClient()
-      .create<SimpleResponse<Book>>(data)
-      .pipe(map(r => r.content));
-  }
-
-  public update(number: number, data: Book): Observable<Book> {
-    return this.getClient()
-      .appendRoute(`/${number}`)
-      .update<SimpleResponse<Book>>(data)
-      .pipe(map(r => r.content));
-  }
-
   public getOne(number: number): Observable<Book> {
     return this.getClient()
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Book>>()
-      .pipe(map(r => r.content));
-  }
-
-  public delete(number: number): Observable<boolean> {
-    return this.getClient()
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 

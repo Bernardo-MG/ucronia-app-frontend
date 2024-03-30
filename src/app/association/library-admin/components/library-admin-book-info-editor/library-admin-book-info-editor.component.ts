@@ -30,8 +30,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorComponent<Boo
 
   private index = -1;
 
-  public createPermission = false;
-
   public readingBookTypes = false;
 
   public readingGameSystems = false;
