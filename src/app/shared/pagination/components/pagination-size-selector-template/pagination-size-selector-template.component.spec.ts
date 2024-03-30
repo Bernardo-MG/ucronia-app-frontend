@@ -19,9 +19,17 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     fixture.detectChanges();
   });
 
+  // **************************************************************************
+  // General tests
+  // **************************************************************************
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // **************************************************************************
+  // Sizes selection values
+  // **************************************************************************
 
   it('should create no option when no values were received', () => {
     component.sizes = [];
@@ -75,6 +83,10 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
 
     expect(size).toEqual(2);
   });
+
+  // **************************************************************************
+  // Disabled
+  // **************************************************************************
 
   it('should disable the input when the component is disabled', () => {
     component.disabled = true;
