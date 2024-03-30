@@ -5,6 +5,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
@@ -13,7 +14,7 @@ import { MemberListComponent } from '../member-list/member-list.component';
 @Component({
   selector: 'assoc-member-list-widget',
   standalone: true,
-  imports: [RouterModule, MemberListComponent, IconsModule],
+  imports: [RouterModule, IconsModule, MemberListComponent, PaginationNavigationComponent],
   templateUrl: './member-list-widget.component.html'
 })
 export class MemberListWidgetComponent implements OnInit {
@@ -57,7 +58,7 @@ export class MemberListWidgetComponent implements OnInit {
     this.load(this.page.page + 1);
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.readingMembers = true;
 
     this.service.getAll(page, this.sort, this.activeFilter).subscribe({

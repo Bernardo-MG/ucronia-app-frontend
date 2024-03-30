@@ -6,13 +6,14 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
 
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [IconsModule, RouterModule, AccessRoleSelectionListComponent],
+  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationNavigationComponent],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {
@@ -48,7 +49,7 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
     this.load(this.page.page + 1);
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.readingRoles = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {

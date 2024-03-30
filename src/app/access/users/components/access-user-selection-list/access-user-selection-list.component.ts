@@ -6,12 +6,11 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
-import { PaginationRouteNavigationComponent } from '@app/shared/pagination/components/pagination-route-navigation/pagination-route-navigation.component';
 
 @Component({
   selector: 'access-user-selection-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, WaitingWrapperComponent, SortingButtonComponent, PaginationRouteNavigationComponent],
+  imports: [CommonModule, RouterModule, WaitingWrapperComponent, SortingButtonComponent],
   templateUrl: './access-user-selection-list.component.html'
 })
 export class AccessUserSelectionListComponent {

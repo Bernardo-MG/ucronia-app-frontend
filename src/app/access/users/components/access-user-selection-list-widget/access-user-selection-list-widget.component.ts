@@ -6,13 +6,14 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [IconsModule, RouterModule, AccessUserSelectionListComponent],
+  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationNavigationComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {
@@ -48,7 +49,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
     this.load(this.page.page + 1);
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.readingUsers = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
