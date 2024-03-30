@@ -23,10 +23,24 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   @Output() public directionChange = new EventEmitter<SortField>();
 
+  /**
+   * Ascending order icon.
+   */
   private ascendingIcon = faSortUp;
+  
+  /**
+   * Descending order icon.
+   */
   private descendingIcon = faSortDown;
+  
+  /**
+   * Default order icon.
+   */
   private defaultIcon = faSort;
 
+  /**
+   * Current order icon.
+   */
   public directionIcon = this.defaultIcon;
 
   ngOnChanges(changes: SimpleChanges) {
