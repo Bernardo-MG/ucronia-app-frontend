@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
@@ -11,7 +12,7 @@ import { TransactionCalendarService } from '../../service/transaction-calendar.s
 @Component({
   selector: 'assoc-transaction-calendar-widget',
   standalone: true,
-  imports: [IconsModule, ScheduleModule],
+  imports: [CommonModule, RouterModule, IconsModule, ScheduleModule],
   templateUrl: './transaction-calendar-widget.component.html'
 })
 export class TransactionCalendarWidgetComponent implements OnInit {
