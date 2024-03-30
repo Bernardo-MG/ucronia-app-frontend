@@ -1,50 +1,33 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
-import { throwError } from 'rxjs';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { Observable } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
+import { TransactionFormComponent } from '../transaction-form/transaction-form.component';
 
 @Component({
   selector: 'assoc-transaction-create',
+  standalone: true,
+  imports: [ArticleComponent, TransactionFormComponent],
   templateUrl: './transaction-create.component.html'
 })
-export class TransactionCreateComponent {
-
-  /**
-   * Loading flag.
-   */
-  public saving = false;
-
-  public failures = new FieldFailures();
+export class TransactionCreateComponent extends CreateComponent<Transaction> {
 
   constructor(
     private service: TransactionService,
-    private router: Router
-  ) { }
+    rt: Router
+  ) {
+    super(rt);
+  }
 
-  public onSave(data: Transaction): void {
-    this.saving = true;
-    this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/funds/transaction/${d.index}`]);
-        this.failures = new FieldFailures();
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures = new FieldFailures();
-        }
-        // Reactivate view
-        this.saving = false;
+  protected override save(toSave: Transaction): Observable<Transaction> {
+    return this.service.create(toSave);
+  }
 
-        return throwError(() => error);
-      }
-    });
+  protected override getReturnRoute(saved: Transaction): string {
+    return `/funds/transaction/${saved.index}`;
   }
 
 }

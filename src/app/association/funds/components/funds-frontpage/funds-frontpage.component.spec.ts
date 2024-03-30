@@ -1,12 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ScheduleModule } from '@app/shared/calendar/calendar.module';
-import { LayoutModule } from '@app/shared/layout/layout.module';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TransactionBalanceService } from '../../../transactions/service/transaction-balance.service';
 import { TransactionCalendarService } from '../../../transactions/service/transaction-calendar.service';
-import { FundsBalanceChartComponent } from '../../../transactions/components/transaction-balance-chart/transaction-balance-chart.component';
-import { FundsCalendarComponent } from '../../../transactions/components/transaction-calendar/transaction-calendar.component';
-import { FundsCurrentBalanceComponent } from '../../../transactions/components/transaction-current-balance/transaction-current-balance.component';
 import { FundsFrontpageComponent } from './funds-frontpage.component';
 
 describe('FundsFrontpageComponent', () => {
@@ -17,14 +13,8 @@ describe('FundsFrontpageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ScheduleModule,
-        LayoutModule
-      ],
-      declarations: [
-        FundsFrontpageComponent,
-        FundsCalendarComponent,
-        FundsBalanceChartComponent,
-        FundsCurrentBalanceComponent
+        RouterTestingModule,
+        FundsFrontpageComponent
       ],
       providers: [
         TransactionCalendarService,

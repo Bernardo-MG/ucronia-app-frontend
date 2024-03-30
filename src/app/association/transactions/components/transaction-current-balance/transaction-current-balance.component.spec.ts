@@ -1,6 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { TransactionBalanceService } from '../../service/transaction-balance.service';
 import { FundsCurrentBalanceComponent } from './transaction-current-balance.component';
 
@@ -12,9 +11,6 @@ describe('FundsCurrentBalanceComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LayoutModule
-      ],
-      declarations: [
         FundsCurrentBalanceComponent
       ],
       providers: [

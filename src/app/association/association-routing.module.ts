@@ -2,8 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
-const membershipModule = () => import('@app/association/membership/membership.module').then(m => m.MembershipModule);
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
+const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
+const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
+const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
+const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
 const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
 
 const routes: Routes = [
@@ -16,9 +19,24 @@ const routes: Routes = [
         loadChildren: fundsModule
       },
       {
-        path: 'membership',
-        canActivate: [ResourceGuard("membership")],
-        loadChildren: membershipModule
+        path: 'members',
+        canActivate: [ResourceGuard("member")],
+        loadChildren: membersModule
+      },
+      {
+        path: 'fees',
+        canActivate: [ResourceGuard("fee")],
+        loadChildren: feesModule
+      },
+      {
+        path: 'library',
+        canActivate: [ResourceGuard("library")],
+        loadChildren: libraryModule
+      },
+      {
+        path: 'library/admin',
+        canActivate: [ResourceGuard("library_admin")],
+        loadChildren: libraryAdminModule
       },
       {
         path: 'configuration',

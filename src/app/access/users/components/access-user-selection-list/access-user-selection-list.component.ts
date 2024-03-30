@@ -1,63 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { Sort } from '@app/core/api/models/sort';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { SortField } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
-import { AccessUserService } from '../../services/access-user.service';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'access-user-selection-list',
+  standalone: true,
+  imports: [CommonModule, RouterModule, WaitingWrapperComponent, SortingButtonComponent],
   templateUrl: './access-user-selection-list.component.html'
 })
-export class AccessUserSelectionListComponent implements OnInit {
+export class AccessUserSelectionListComponent {
+
+  @Input() public page = new PaginatedResponse<User[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingUsers = false;
+  @Input() public readingUsers = false;
 
-  public users: User[] = [];
+  @Output() public changeDirection = new EventEmitter<SortField>();
 
-  public totalPages = 0;
-
-  public currentPage = 0;
-
-  private sort: Sort[] = [];
-
-  constructor(
-    private service: AccessUserService
-  ) { }
-
-  ngOnInit(): void {
-    this.load(undefined);
-  }
-
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
-  }
-
-  private load(pagination: PaginationRequest | undefined) {
-    this.readingUsers = true;
-    this.service.getAll(pagination).subscribe({
-      next: page => {
-        this.users = page.content;
-
-        this.totalPages = page.totalPages;
-        // Reactivate view
-        this.readingUsers = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingUsers = false;
-      }
-    });
+  public onChangeDirection(field: SortField) {
+    this.changeDirection.emit(field);
   }
 
 }

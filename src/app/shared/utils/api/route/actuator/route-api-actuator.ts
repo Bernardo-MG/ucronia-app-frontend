@@ -1,8 +1,8 @@
 import { Router } from "@angular/router";
 import { RouteParametersActuator } from "@app/shared/utils/route/actuator/route-parameters-actuator";
 import { UrlParamsExtractor } from "@app/shared/utils/route/actuator/url-parameters-extractor";
-import { PaginationRequest } from "../../../../../core/api/models/pagination-request";
-import { Sort } from "../../../../../core/api/models/sort";
+import { Pagination } from "../../../../../core/api/models/pagination";
+import { SortField } from "../../../../../core/api/models/sort-field";
 import { UrlParamsProcessor } from "./url-params-processor";
 
 export class RouteApiActuator {
@@ -19,7 +19,7 @@ export class RouteApiActuator {
     this.wrappedActuator = new RouteParametersActuator(router);
   }
 
-  public setPagination(pagination: PaginationRequest): void {
+  public setPagination(pagination: Pagination): void {
     this.wrappedActuator.addParameters(pagination);
   }
 
@@ -31,7 +31,7 @@ export class RouteApiActuator {
     this.wrappedActuator.addParameters({ size });
   }
 
-  public setOrder(sort: Sort): void {
+  public setOrder(sort: SortField): void {
     const value = `${String(sort.property)},${sort.direction}`
     let parameters = this.urlExtractor.getUrlParams(this.router.url);
 

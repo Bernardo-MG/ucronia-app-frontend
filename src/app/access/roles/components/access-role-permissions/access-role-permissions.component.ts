@@ -1,31 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Direction } from '@app/core/api/models/direction';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
+import { SortField } from '@app/core/api/models/sort-field';
 import { Permission } from '@app/core/authentication/models/permission';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-permissions',
+  standalone: true,
+  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {
 
   @Input() public role = "";
 
-  @Input() public editable = false;
-
   @Input() public deletable = false;
 
-  public permissions: Permission[] = [];
+  public page = new PaginatedResponse<Permission[]>([]);
 
-  public readingPermissions = false;
+  public reading = false;
 
-  public currentPage = 0;
-
-  public totalPages = 0;
-
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: AccessRoleService
@@ -33,43 +34,38 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['role']) && (this.role.length)) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
-  public onRemovePermission(permission: Permission): void {
-    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(undefined));
+  public onRemove(permission: Permission): void {
+    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(0));
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load(page);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
+    // We are working with pages using index 0
+    // TODO: the pages should come with the correct index
+    this.load(this.page.page + 1);
   }
 
-  private load(pagination: PaginationRequest | undefined) {
-    this.readingPermissions = true;
-    this.service.getPermissions(this.role, pagination).subscribe({
+  private load(page: number) {
+    this.reading = true;
+    this.service.getPermissions(this.role, page, this.sort).subscribe({
       next: response => {
-        this.permissions = response.content;
+        this.page = response;
 
-        this.currentPage = response.page + 1;
-
-        this.totalPages = response.totalPages;
-        this.readingPermissions = false;
+        // Reactivate view
+        this.reading = false;
       },
       error: error => {
-        this.readingPermissions = false;
+        // Reactivate view
+        this.reading = false;
       }
     });
   }

@@ -1,13 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 /**
  * User activation form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'access-user-activation-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
@@ -23,8 +27,8 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
     });
   }
 
-  public override isSaveDisabled() {
-    return super.isSaveDisabled() || !this.isPasswordsMatching();
+  public override get saveEnabled() {
+    return super.saveEnabled && this.isPasswordsMatching();
   }
 
   /**
@@ -47,15 +51,15 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
   }
 
   /**
-   * Indicates if the passwords match.
+   * Indicates if the passwords match. If both are empty they are considered to not be matching.
    * 
    * @returns true if the passwords match, false otherwise
    */
   private isPasswordsMatching(): boolean {
-    const password = this.form.get('password');
-    const confirmPassword = this.form.get('confirmPassword');
+    const password = this.form.get('password').getRawValue();
+    const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password.getRawValue() === confirmPassword.getRawValue());
+    return (password === confirmPassword) && (password.length > 0);
   }
 
 }

@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from '@app/account/services/account.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccountProfileViewComponent } from './account-profile.component';
 
 describe('AccountProfileViewComponent', () => {
@@ -11,10 +10,7 @@ describe('AccountProfileViewComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LayoutModule,
-        HttpClientTestingModule
-      ],
-      declarations: [
+        HttpClientTestingModule,
         AccountProfileViewComponent
       ],
       providers: [

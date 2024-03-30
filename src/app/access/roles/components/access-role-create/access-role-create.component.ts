@@ -1,50 +1,33 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Role } from '@app/core/authentication/models/role';
-import { throwError } from 'rxjs';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
 
 @Component({
   selector: 'access-role-create',
+  standalone: true,
+  imports: [AccessRoleFormComponent, ArticleComponent],
   templateUrl: './access-role-create.component.html'
 })
-export class AccessRoleCreateComponent {
-
-  /**
-   * Loading flag.
-   */
-  public saving = false;
-
-  public failures = new FieldFailures();
+export class AccessRoleCreateComponent extends CreateComponent<Role> {
 
   constructor(
     private service: AccessRoleService,
-    private router: Router
-  ) { }
+    rt: Router
+  ) {
+    super(rt);
+  }
 
-  public onSave(data: Role): void {
-    this.saving = true;
-    this.service.create(data).subscribe({
-      next: d => {
-        this.router.navigate([`/roles/${d.name}`]);
-        this.failures = new FieldFailures();
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures = new FieldFailures();
-        }
-        // Reactivate view
-        this.saving = false;
+  protected override save(toSave: Role): Observable<Role> {
+    return this.service.create(toSave);
+  }
 
-        return throwError(() => error);
-      }
-    });
+  protected override getReturnRoute(saved: Role): string {
+    return `/roles/${saved.name}`;
   }
 
 }

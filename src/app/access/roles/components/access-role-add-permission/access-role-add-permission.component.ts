@@ -1,11 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Permission } from '@app/core/authentication/models/permission';
-import { AccessRoleService } from '../../services/access-role.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
+import { SortField } from '@app/core/api/models/sort-field';
+import { Permission } from '@app/core/authentication/models/permission';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-add-permission',
+  standalone: true,
+  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
@@ -14,17 +22,13 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public addPermission = new EventEmitter<Permission>();
 
-  public permissions: Permission[] = [];
+  public page = new PaginatedResponse<Permission[]>([]);
 
   public readingPermissions = false;
 
-  public currentPage = 0;
-
-  public totalPages = 0;
-
   public data = new Permission();
 
-  private sort: Sort[] = [];
+  private sort = new Sort([]);
 
   constructor(
     private service: AccessRoleService
@@ -32,7 +36,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['role']) {
-      this.load(undefined);
+      this.load(0);
     }
   }
 
@@ -43,33 +47,28 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onGoTo(page: number) {
-    this.load({ page, sort: this.sort });
+    this.load(page);
   }
 
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
+  public onChangeDirection(field: SortField) {
+    this.sort.addField(field);
+
+    // We are working with pages using index 0
+    // TODO: the pages should come with the correct index
+    this.load(this.page.page + 1);
   }
 
-  private load(pagination: PaginationRequest | undefined) {
+  private load(page: number) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.role, pagination).subscribe({
+    this.service.getAvailablePermissions(this.role, page, this.sort).subscribe({
       next: response => {
-        this.permissions = response.content;
+        this.page = response;
 
-        this.currentPage = response.page + 1;
-        this.totalPages = response.totalPages;
-
+        // Reactivate view
         this.readingPermissions = false;
       },
       error: error => {
+        // Reactivate view
         this.readingPermissions = false;
       }
     });

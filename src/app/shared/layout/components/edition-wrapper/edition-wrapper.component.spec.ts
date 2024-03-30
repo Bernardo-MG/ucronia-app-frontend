@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditionWrapperComponent } from './edition-wrapper.component';
 
 describe('EditionWrapperComponent', () => {
@@ -8,9 +7,11 @@ describe('EditionWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditionWrapperComponent ]
+      imports: [
+        EditionWrapperComponent
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(EditionWrapperComponent);
     component = fixture.componentInstance;

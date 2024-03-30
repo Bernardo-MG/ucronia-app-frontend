@@ -1,24 +1,26 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { throwError } from 'rxjs';
-import { FeePayment } from '../../models/fee-payment';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { Observable } from 'rxjs';
 import { Member } from '../../../members/models/member';
-import { FeeService } from '../../services/fee.service';
+import { FeePayment } from '../../models/fee-payment';
 import { FeePaymentMember } from '../../models/fee-payment-member';
+import { FeeService } from '../../services/fee.service';
+import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
+import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 
 @Component({
   selector: 'assoc-fee-create',
+  standalone: true,
+  imports: [CommonModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingWrapperComponent],
   templateUrl: './fee-pay.component.html'
 })
-export class FeePayComponent implements OnInit {
-
-  /**
-   * Saving flag.
-   */
-  public saving = false;
+export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
 
   public readingMembers = false;
 
@@ -26,21 +28,17 @@ export class FeePayComponent implements OnInit {
 
   public createPermission = false;
 
-  public members: Member[] = [];
+  public memberPage = new PaginatedResponse<Member[]>([]);
 
   public member = new Member();
 
-  public membersPage = 0;
-
-  public membersTotalPages = 0;
-
-  public failures = new FieldFailures();
-
   constructor(
     private service: FeeService,
-    private router: Router,
-    private authContainer: AuthContainer
-  ) { }
+    private authContainer: AuthContainer,
+    rt: Router
+  ) {
+    super(rt);
+  }
 
   public ngOnInit(): void {
     // Check permissions
@@ -48,29 +46,14 @@ export class FeePayComponent implements OnInit {
     this.onGoToMembersPage(0);
   }
 
-  public onSave(data: FeePayment): void {
-    this.saving = true;
-    data.member = new FeePaymentMember();
-    data.member.number = this.member.number;
-    this.service.pay(data).subscribe({
-      next: response => {
-        this.router.navigate(['/membership']);
-        this.failures = new FieldFailures();
-        // Reactivate view
-        this.saving = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures = new FieldFailures();
-        }
-        // Reactivate view
-        this.saving = false;
+  protected override save(toSave: FeePayment): Observable<FeePayment> {
+    toSave.member = new FeePaymentMember();
+    toSave.member.number = this.member.number;
+    return this.service.pay(toSave);
+  }
 
-        return throwError(() => error);
-      }
-    });
+  protected override getReturnRoute(saved: FeePayment): string {
+    return '/fees';
   }
 
   public onGoToMembersPage(page: number) {
@@ -78,12 +61,13 @@ export class FeePayComponent implements OnInit {
     // TODO: The page correction should be done automatically
     this.service.getMembers(page).subscribe({
       next: response => {
-        this.members = response.content;
-        this.membersPage = response.page + 1;
-        this.membersTotalPages = response.totalPages;
+        this.memberPage = response;
+
+        // Reactivate view
         this.readingMembers = false;
       },
       error: error => {
+        // Reactivate view
         this.readingMembers = false;
       }
     });

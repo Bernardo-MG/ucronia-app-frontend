@@ -1,20 +1,17 @@
-import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Transaction } from '../../models/transaction';
 
 @Component({
   selector: 'assoc-transaction-form',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent],
   templateUrl: './transaction-form.component.html'
 })
 export class TransactionFormComponent extends FormComponent<Transaction> {
-
-  @Input() public override set data(value: Transaction) {
-    super.data = value;
-    this.transaction = value;
-  }
-
-  public transaction = new Transaction();
 
   constructor(
     fb: FormBuilder

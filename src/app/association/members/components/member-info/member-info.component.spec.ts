@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { MemberInfoComponent } from './member-info.component';
 
 describe('MemberInfoComponent', () => {
@@ -9,9 +8,6 @@ describe('MemberInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
-      ],
-      declarations: [
         MemberInfoComponent
       ]
     })

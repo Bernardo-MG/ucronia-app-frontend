@@ -1,10 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountChangePasswordFormComponent } from '@app/account/components/account-change-password-form/account-change-password-form.component';
 import { AccountService } from '@app/account/services/account.service';
-import { LayoutModule } from '@app/shared/layout/layout.module';
 import { AccountPasswordChangeComponent } from './account-password-change.component';
 
 describe('AccountPasswordChangeComponent', () => {
@@ -16,15 +14,11 @@ describe('AccountPasswordChangeComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        ReactiveFormsModule,
-        LayoutModule
+        AccountPasswordChangeComponent,
+        AccountChangePasswordFormComponent
       ],
       providers: [
         AccountService
-      ],
-      declarations: [
-        AccountPasswordChangeComponent,
-        AccountChangePasswordFormComponent
       ]
     })
       .compileComponents();

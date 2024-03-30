@@ -1,7 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'pagination-size-selector-template',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './pagination-size-selector-template.component.html'
 })
 export class PaginationSizeSelectorTemplateComponent {

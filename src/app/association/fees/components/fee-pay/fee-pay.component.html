@@ -12,8 +12,9 @@
           <ng-container *ngSwitchCase="false">
             <!-- Member selection -->
             <layout-waiting-wrapper [waiting]="readingMembers">
-              <assoc-member-selection [members]="members" (selectMember)="onSelectMember($event)"
-                [current]="membersPage" [pages]="membersTotalPages" (goToPage)="onGoToMembersPage($event)">
+              <assoc-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
+                [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
+                (goToPage)="onGoToMembersPage($event)">
               </assoc-member-selection>
             </layout-waiting-wrapper>
           </ng-container>

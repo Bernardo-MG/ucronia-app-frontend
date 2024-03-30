@@ -7,7 +7,9 @@ describe('WaitingWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WaitingWrapperComponent]
+      imports: [
+        WaitingWrapperComponent
+      ]
     })
       .compileComponents();
 

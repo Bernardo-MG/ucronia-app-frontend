@@ -1,45 +1,36 @@
-import { Direction } from "./direction";
-import { PaginationRequest } from "./pagination-request";
+import { Pagination } from "./pagination";
 import { Sort } from "./sort";
 
-export class PaginatedQuery<T> {
+export class PaginatedQuery {
 
-  public _sort: Sort[] = [];
+  public _sort = new Sort([]);
 
-  public _defaultSort: Sort[] = [];
+  public _defaultSort = new Sort([]);
 
   public parameters: { [key: string]: any } = {};
 
-  public set sort(sort: Sort[]) {
-    this._sort = sort.filter(s => s.direction !== Direction.Unsorted);
+  public set sort(sort: Sort) {
+    this._sort = sort;
   }
 
-  public get sort(): Sort[] {
-    let sorts;
+  public get sort(): Sort {
+    let sortFields;
 
-    if (this._sort.length === 0) {
+    if (this._sort.fields.length === 0) {
       // Use default sorts if no sorting was received
-      sorts = this._defaultSort;
+      sortFields = this._defaultSort.fields;
     } else {
       // Merge default sorting with the received one
 
-      // Prepare map with defaults
-      const defaults = new Map(this._defaultSort.map(s => [s.property, s]));
-
-      // Keep all fields sorted or not in the default list
-      const directSort = this._sort
-        .filter(s => (s.direction !== Direction.Unsorted) || (!defaults.has(s.property)));
-
       // Replace unsorted fields with defaults
-      const defaultSort = this._sort
-        .filter(s => s.direction === Direction.Unsorted)
-        .filter(s => defaults.has(s.property))
-        .map(s => defaults.get(s.property) as Sort);
+      const sortedProperties = this._sort.fields.map(f => f.property);
+      const defaultSortFields = this._defaultSort.fields.filter(f => !sortedProperties.includes(f.property));
 
-      sorts = directSort.concat(defaultSort);
+      sortFields = this._sort.fields.concat(defaultSortFields);
     }
 
-    const sorted = sorts.sort((a, b) => {
+    // Sort fields alphabetically
+    const sortedFields = sortFields.sort((a, b) => {
       let direction;
 
       if (a.property.toString() < b.property.toString()) {
@@ -51,7 +42,7 @@ export class PaginatedQuery<T> {
       return direction;
     });
 
-    return sorted;
+    return new Sort(sortedFields);
   }
 
   public set size(size: number) {
@@ -62,20 +53,17 @@ export class PaginatedQuery<T> {
     this.parameters['page'] = page - 1;
   }
 
-  public set defaultSort(defaultSort: Sort[]) {
+  public set defaultSort(defaultSort: Sort) {
     this._defaultSort = defaultSort;
   }
 
-  public set pagination(pagination: PaginationRequest | undefined) {
+  public set pagination(pagination: Pagination | undefined) {
     if (pagination) {
       if (pagination.page) {
         this.page = pagination.page;
       }
       if (pagination.size) {
         this.size = pagination.size;
-      }
-      if (pagination.sort) {
-        this._sort = pagination.sort;
       }
     }
   }

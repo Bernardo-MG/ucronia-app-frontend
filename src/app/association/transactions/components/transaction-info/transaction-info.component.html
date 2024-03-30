@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Index</label>
     <div class="col-sm-10">
-      <input type="text" [value]="transaction.index" id="indexInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data.index" id="indexInput" [readonly]="true" class="form-control"
         aria-describedby="indexLabel">
     </div>
   </div>
@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Name</label>
     <div class="col-sm-10">
-      <input type="text" [value]="transaction.description" id="descriptionInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data.description" id="descriptionInput" [readonly]="true" class="form-control"
         aria-describedby="descriptionLabel">
     </div>
   </div>
@@ -19,7 +19,7 @@
   <div class="row mb-2">
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
-      <input type="date" [value]="transaction.date" id="dateInput" [readonly]="true" class="form-control"
+      <input type="date" [value]="data.date" id="dateInput" [readonly]="true" class="form-control"
         aria-describedby="dateLabel">
     </div>
   </div>
@@ -27,7 +27,7 @@
   <div class="row mb-2">
     <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Amount</label>
     <div class="col-sm-10">
-      <input type="number" step="any" [value]="transaction.amount" id="amountInput" [readonly]="true" class="form-control"
+      <input type="number" step="any" [value]="data.amount" id="amountInput" [readonly]="true" class="form-control"
         aria-describedby="amountLabel">
     </div>
   </div>

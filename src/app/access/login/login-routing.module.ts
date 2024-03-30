@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CenteredFrameComponent } from '@app/shared/layout/components/centered-frame/centered-frame.component';
-import { LoginComponent } from './components/login/login.component';
+import { LoginWidgetComponent } from './components/login-widget/login-widget.component';
 
 
 const routes: Routes = [
@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     component: CenteredFrameComponent,
     children: [
-      { path: '', component: LoginComponent }
+      { path: '', component: LoginWidgetComponent }
     ]
   }
 ];

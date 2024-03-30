@@ -1,28 +1,20 @@
 <!-- Controls -->
-<div class="d-flex justify-content-center pb-2">
-  <!-- To previous month button -->
-  <button *ngIf="isAbleToGoPrevious()" id="previousMonthButton" class="page-link" (click)="onGoPrevious()"
-    [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()">
-    <icon-backward></icon-backward>
-  </button>
-  <div class="w-25 px-3">
-    <!-- Current month -->
-    <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
-      <option *ngFor="let selectionMonth of selectionMonths" [selected]="selectionMonth === currentMonth"
-        [value]="selectionMonth.year + '-' + selectionMonth.month">
-        {{getMonthName(selectionMonth)}}</option>
-    </select>
+<div class="row">
+  <div class="col-md-2 offset-md-5">
+    <div class="row">
+      <!-- Current month -->
+      <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
+        <option *ngFor="let selectionMonth of selectionMonths" [selected]="selectionMonth === currentMonth"
+          [value]="selectionMonth.year + '-' + selectionMonth.month">
+          {{getMonthName(selectionMonth)}}</option>
+      </select>
+    </div>
   </div>
-  <!-- To next month button -->
-  <button *ngIf="isAbleToGoNext()" id="nextMonthButton" class="page-link" (click)="onGoNext()"
-    [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()">
-    <icon-forward></icon-forward>
-  </button>
 </div>
 <!-- Table -->
 <layout-waiting-wrapper [waiting]="waiting">
-  <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
-    (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="onPickDate($event.day)"
-    (eventClicked)="onSelectEvent($event)">
+  <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events"
+    [activeDayIsOpen]="activeDayIsOpen" (beforeViewRender)="beforeMonthViewRender($event)"
+    (dayClicked)="onSelectDay($event.day)" (eventClicked)="onSelectEvent($event)">
   </mwl-calendar-month-view>
 </layout-waiting-wrapper>

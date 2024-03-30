@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
-import { PaginationNavigationComponent } from './pagination-navigation.component';
 import { SimpleChange } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PaginationNavigationComponent } from './pagination-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;
@@ -9,9 +8,8 @@ describe('PaginationNavigationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        PaginationNavigationComponent,
-        PaginationNavigationTemplateComponent
+      imports: [
+        PaginationNavigationComponent
       ]
     })
       .compileComponents();
@@ -52,32 +50,46 @@ describe('PaginationNavigationComponent', () => {
   // Moving buttons
   // **************************************************************************
 
-  it('should disable backward button when the current page is 1', () => {
+  it('should disable backward button when the current page is the first', () => {
     component.current = 1;
     component.pages = 10;
 
-    expect(component.isBackwardDisabled()).toEqual(true);
+    expect(component.disableBackward).toEqual(true);
   });
 
-  it('should enable backward button when the current page is above 1', () => {
+  it('should enable backward button when the current page is above the first', () => {
     component.current = 2;
     component.pages = 10;
 
-    expect(component.isBackwardDisabled()).toEqual(false);
+    expect(component.disableBackward).toEqual(false);
   });
 
-  it('should disable forward button when the current page is equal to the number of pages', () => {
+  it('should disable forward button when the current page is the last', () => {
     component.current = 10;
     component.pages = 10;
 
-    expect(component.isForwardDisabled()).toEqual(true);
+    expect(component.disableForward).toEqual(true);
   });
 
-  it('should enable forward button when the current page is below the number of pages', () => {
+  it('should enable forward button when the current page is just before the last', () => {
     component.current = 9;
     component.pages = 10;
 
-    expect(component.isForwardDisabled()).toEqual(false);
+    expect(component.disableForward).toEqual(false);
+  });
+
+  it('should disable backward button when the current page is the only one', () => {
+    component.current = 1;
+    component.pages = 1;
+
+    expect(component.disableBackward).toEqual(true);
+  });
+
+  it('should disable forward button when the current page is the only one', () => {
+    component.current = 1;
+    component.pages = 1;
+
+    expect(component.disableForward).toEqual(true);
   });
 
   // **************************************************************************

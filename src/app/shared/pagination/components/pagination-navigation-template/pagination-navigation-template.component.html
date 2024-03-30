@@ -1,15 +1,15 @@
 <nav aria-label="Page navigation">
   <ul class="pagination pagination-sm">
     <!-- Backward buttons -->
-    <li class="page-item" [class.disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()">
-      <button type="button" class="page-link" (click)="onGoToFirst()" [class.disabled]="isBackwardDisabled()"
-        [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()" aria-label="Previous page">
+    <li class="page-item" [class.disabled]="blockBackward" [attr.aria-disabled]="blockBackward">
+      <button type="button" class="page-link" (click)="onGoToFirst()" [class.disabled]="blockBackward"
+        [disabled]="blockBackward" [attr.aria-disabled]="blockBackward" aria-label="Previous page">
         &laquo;
       </button>
     </li>
-    <li class="page-item" [class.disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()">
-      <button type="button" class="page-link" (click)="onBackward()" [class.disabled]="isBackwardDisabled()"
-        [disabled]="isBackwardDisabled()" [attr.aria-disabled]="isBackwardDisabled()" aria-label="First page">
+    <li class="page-item" [class.disabled]="blockBackward" [attr.aria-disabled]="blockBackward">
+      <button type="button" class="page-link" (click)="onBackward()" [class.disabled]="blockBackward"
+        [disabled]="blockBackward" [attr.aria-disabled]="blockBackward" aria-label="First page">
         &lsaquo;
       </button>
     </li>
@@ -22,7 +22,7 @@
       </button>
     </li>
     <!-- Center range -->
-    <ng-container *ngIf="isAbleToDrawCenterRange()">
+    <ng-container *ngIf="drawCenterRange">
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
@@ -35,7 +35,7 @@
       </li>
     </ng-container>
     <!-- Right range -->
-    <ng-container *ngIf="isAbleToDrawRightRange()">
+    <ng-container *ngIf="drawRightRange">
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
@@ -48,15 +48,15 @@
       </li>
     </ng-container>
     <!-- Forward buttons -->
-    <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
-      <button type="button" class="page-link" (click)="onForward()" [class.disabled]="isForwardDisabled()"
-        [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Next page">
+    <li class="page-item" [class.disabled]="blockForward" [attr.aria-disabled]="blockForward">
+      <button type="button" class="page-link" (click)="onForward()" [class.disabled]="blockForward"
+        [disabled]="blockForward" [attr.aria-disabled]="blockForward" aria-label="Next page">
         &rsaquo;
       </button>
     </li>
-    <li class="page-item" [class.disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()">
-      <button type="button" class="page-link" (click)="onGoToLast()" [class.disabled]="isForwardDisabled()"
-        [disabled]="isForwardDisabled()" [attr.aria-disabled]="isForwardDisabled()" aria-label="Last page">
+    <li class="page-item" [class.disabled]="blockForward" [attr.aria-disabled]="blockForward">
+      <button type="button" class="page-link" (click)="onGoToLast()" [class.disabled]="blockForward"
+        [disabled]="blockForward" [attr.aria-disabled]="blockForward" aria-label="Last page">
         &raquo;
       </button>
     </li>

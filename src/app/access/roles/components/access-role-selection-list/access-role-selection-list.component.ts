@@ -1,66 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PaginationRequest } from '@app/core/api/models/pagination-request';
-import { Sort } from '@app/core/api/models/sort';
-import { Permission } from '@app/core/authentication/models/permission';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { SortField } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessRoleService } from '../../services/access-role.service';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'access-role-selection-list',
+  standalone: true,
+  imports: [CommonModule, RouterModule, WaitingWrapperComponent, SortingButtonComponent],
   templateUrl: './access-role-selection-list.component.html'
 })
-export class AccessRoleSelectionListComponent  implements OnInit {
+export class AccessRoleSelectionListComponent {
+
+  @Input() public page = new PaginatedResponse<Role[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingRoles = false;
+  @Input() public waiting = false;
 
-  public roles: Role[] = [];
+  @Output() public changeDirection = new EventEmitter<SortField>();
 
-  public totalPages = 0;
+  constructor() { }
 
-  public currentPage = 0;
-
-  private sort: Sort[] = [];
-
-  constructor(
-    private service: AccessRoleService
-  ) {}
-
-  ngOnInit(): void {
-    this.load(undefined);
-  }
-
-  public onChangeDirection(sort: Sort) {
-    const index = this.sort.findIndex(s => s.property === sort.property);
-    if (index < 0) {
-      // New property to sort
-      this.sort.push(sort);
-    } else {
-      // Replace property
-      this.sort[index] = sort;
-    }
-    this.load({ page: this.currentPage, sort: this.sort });
-  }
-
-  private load(pagination: PaginationRequest | undefined) {
-    this.readingRoles = true;
-    this.service.getAll(pagination).subscribe({
-      next: page => {
-
-        this.roles = page.content;
-
-        this.currentPage = page.page;
-        this.totalPages = page.totalPages;
-        // Reactivate view
-        this.readingRoles = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingRoles = false;
-      }
-    });
+  public onChangeDirection(field: SortField) {
+    this.changeDirection.emit(field);
   }
 
 }

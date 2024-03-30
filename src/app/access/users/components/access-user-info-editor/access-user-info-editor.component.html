@@ -1,0 +1,49 @@
+<layout-article title="Edit user">
+  <div class="col-md-6 offset-md-3">
+    <!-- User -->
+    <div class="mb-1">
+      <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+        (delete)="onDelete()" (startEditing)="onStartEditing()">
+        <!-- Form -->
+        <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+          [failures]="failures" (save)="onSave($event)">
+        </access-user-form>
+        <!-- Info -->
+        <access-user-info id="info" [data]="data"></access-user-info>
+      </layout-edition-wrapper>
+    </div>
+    <article class="p-4">
+      <header>
+        <h2 class="border-bottom">Roles</h2>
+      </header>
+      <!-- Roles -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <ng-container [ngSwitch]="view">
+              <ng-container *ngSwitchCase="'list'">
+                <access-user-roles [user]="data.username" [editable]="editEnabled" [deletable]="deleteEnabled">
+                </access-user-roles>
+                <div class="d-grid">
+                  <!-- Add button -->
+                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
+                    Add
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container *ngSwitchCase="'add'">
+                <access-user-add-role [user]="data.username" (addRole)="onAddRole($event)"></access-user-add-role>
+                <div class="d-grid">
+                  <!-- Cancel button -->
+                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">
+                    Cancel
+                  </button>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</layout-article>

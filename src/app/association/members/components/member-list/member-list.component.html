@@ -1,22 +1,23 @@
-<h2>Members</h2>
-<p>Total: {{totalMembers}}</p>
-<layout-waiting-wrapper [waiting]="readingMembers">
+<layout-waiting-wrapper [waiting]="waiting">
   <!-- List -->
   <table class="table table-hover">
     <thead>
       <tr>
         <!-- Headers -->
         <th scope="col">
-          Name<pagination-order-button property="fullName" (directionChange)="onChangeDirection($event)"></pagination-order-button>
+          Name<sorting-button property="fullName"
+            (directionChange)="onChangeDirection($event)"></sorting-button>
         </th>
         <th scope="col">
-          Active<pagination-order-button property="active" (directionChange)="onChangeDirection($event)"></pagination-order-button>
+          Active<sorting-button property="active"
+            (directionChange)="onChangeDirection($event)"></sorting-button>
         </th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let member of members; let rowIndex = index" [ngClass]="{ 'table-warning': member.active === false }"
-        role="button" routerLink="/membership/member/{{member.number}}">
+      <tr *ngFor="let member of page.content; let rowIndex = index"
+        [ngClass]="{ 'table-warning': member.active === false }" role="button"
+        routerLink="/members/{{member.number}}">
         <!-- Cells -->
         <td>
           {{member.name.fullName}}
@@ -37,8 +38,3 @@
     </tbody>
   </table>
 </layout-waiting-wrapper>
-<div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [current]="currentPage" [pages]="totalPages" [disabled]="readingMembers"
-    (goTo)="onGoTo($event)">
-  </pagination-navigation>
-</div>

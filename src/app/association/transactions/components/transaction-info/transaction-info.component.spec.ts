@@ -7,7 +7,7 @@ describe('TransactionInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         TransactionInfoComponent
       ]
     })

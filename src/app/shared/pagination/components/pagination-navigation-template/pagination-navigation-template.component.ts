@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
@@ -11,6 +12,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'pagination-navigation-template',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './pagination-navigation-template.component.html'
 })
 export class PaginationNavigationTemplateComponent {
@@ -66,6 +69,42 @@ export class PaginationNavigationTemplateComponent {
   @Output() public goTo = new EventEmitter<number>();
 
   /**
+   * Indicates if the backward button should be disabled.
+   * 
+   * @returns true if the backward button should be disabled, false otherwise
+   */
+  public get blockBackward(): boolean {
+    return ((this.disableBackward) || (this.disabled));
+  }
+
+  /**
+   * Indicates if the forward button should be disabled.
+   * 
+   * @returns true if the forward button should be disabled, false otherwise
+   */
+  public get blockForward(): boolean {
+    return ((this.disableForward) || (this.disabled));
+  }
+
+  /**
+   * Indicates if the center range should be drawn. This depends on both the left and center range having values.
+   * 
+   * @returns true if the center range should be drawn, false otherwise
+   */
+  public get drawCenterRange() {
+    return ((this.left.length > 0) && (this.center.length > 0));
+  }
+
+  /**
+   * Indicates if the right range should be drawn. This depends on both the left and right range having values.
+   * 
+   * @returns true if the right range should be drawn, false otherwise
+   */
+  public get drawRightRange() {
+    return ((this.left.length > 0) && (this.right.length > 0));
+  }
+
+  /**
    * Sends a "go to page" event for the first page.
    */
   public onGoToFirst() {
@@ -100,42 +139,6 @@ export class PaginationNavigationTemplateComponent {
     if (this.current != page) {
       this.goTo.emit(page);
     }
-  }
-
-  /**
-   * Indicates if the backward button should be disabled.
-   * 
-   * @returns true if the backward button should be disabled, false otherwise
-   */
-  public isBackwardDisabled(): boolean {
-    return ((this.disableBackward) || (this.disabled));
-  }
-
-  /**
-   * Indicates if the forward button should be disabled.
-   * 
-   * @returns true if the forward button should be disabled, false otherwise
-   */
-  public isForwardDisabled(): boolean {
-    return ((this.disableForward) || (this.disabled));
-  }
-
-  /**
-   * Indicates if the center range should be drawn. This depends on both the left and center range having values.
-   * 
-   * @returns true if the center range should be drawn, false otherwise
-   */
-  public isAbleToDrawCenterRange() {
-    return ((this.left.length > 0) && (this.center.length > 0));
-  }
-
-  /**
-   * Indicates if the right range should be drawn. This depends on both the left and right range having values.
-   * 
-   * @returns true if the right range should be drawn, false otherwise
-   */
-  public isAbleToDrawRightRange() {
-    return ((this.left.length > 0) && (this.right.length > 0));
   }
 
   /**

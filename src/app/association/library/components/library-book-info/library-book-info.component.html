@@ -1,0 +1,77 @@
+<form class="needs-validation" novalidate>
+  <!-- Index -->
+  <div class="row mb-2">
+    <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Number</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.number" id="numberInput" [readonly]="true" class="form-control"
+        aria-describedby="numberLabel">
+    </div>
+  </div>
+  <!-- ISBN -->
+  <div class="row mb-2">
+    <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.isbn" id="isbnInput" [readonly]="true" class="form-control"
+        aria-describedby="isbnLabel">
+    </div>
+  </div>
+  <!-- Title -->
+  <div class="row mb-2">
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.title" id="titleInput" [readonly]="true" class="form-control"
+        aria-describedby="titleLabel">
+    </div>
+  </div>
+  <!-- Language -->
+  <div class="row mb-2">
+    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.language" id="languageInput" [readonly]="true" class="form-control"
+        aria-describedby="languageLabel">
+    </div>
+  </div>
+  <!-- Publisher -->
+  <div class="row mb-2">
+    <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.publisher.name" id="publisherInput" [readonly]="true" class="form-control"
+        aria-describedby="publisherLabel">
+    </div>
+  </div>
+  <!-- Book type -->
+  <div class="row mb-2">
+    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.bookType.name" id="bookTypeInput" [readonly]="true" class="form-control"
+        aria-describedby="bookTypeLabel">
+    </div>
+  </div>
+  <!-- Game system -->
+  <div class="row mb-2">
+    <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.gameSystem.name" id="gameSystemInput" [readonly]="true" class="form-control"
+        aria-describedby="gameSystemLabel">
+    </div>
+  </div>
+  <!-- Authors -->
+  <div class="row mb-2">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">
+            Name
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <ng-template ngFor let-author [ngForOf]="data.authors">
+          <tr>
+            <td>{{author.name}}</td>
+          </tr>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</form>
