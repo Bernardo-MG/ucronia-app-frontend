@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SortField } from '@app/core/api/models/sort-field';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { SortDirection } from '../../../../core/api/models/sort-direction';
 
@@ -8,6 +9,8 @@ import { SortDirection } from '../../../../core/api/models/sort-direction';
  */
 @Component({
   selector: 'pagination-order-button',
+  standalone: true,
+  imports: [FontAwesomeModule],
   templateUrl: './pagination-order-button.component.html'
 })
 export class PaginationOrderButtonComponent implements OnChanges {

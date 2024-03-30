@@ -2,9 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
+import { PaginationNavigationComponent } from '../pagination-navigation/pagination-navigation.component';
 
 @Component({
   selector: 'pagination-route-navigation',
+  standalone: true,
+  imports: [PaginationNavigationComponent],
   templateUrl: './pagination-route-navigation.component.html'
 })
 export class PaginationRouteNavigationComponent implements OnInit {
