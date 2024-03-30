@@ -7,14 +7,14 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { OrderButtonComponent } from '@app/shared/order/sorting-button/sorting-button.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 import { BookType } from '../../models/book-type';
 import { BookTypeService } from '../../services/book-type.service';
 
 @Component({
   selector: 'assoc-library-book-type-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, OrderButtonComponent, PaginationNavigationComponent ],
+  imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent ],
   templateUrl: './library-book-type-list.component.html'
 })
 export class LibraryBookTypeListComponent {

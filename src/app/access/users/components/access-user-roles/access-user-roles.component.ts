@@ -7,13 +7,13 @@ import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { OrderButtonComponent } from '@app/shared/order/sorting-button/sorting-button.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-roles',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, OrderButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRoleFormComponent implements OnChanges {
