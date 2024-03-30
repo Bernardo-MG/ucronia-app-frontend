@@ -34,13 +34,7 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
 
   private index = -1;
 
-  public selectBookType = false;
-
-  public selectGameSystem = false;
-
-  public selectAuthor = false;
-
-  public selectPublisher = false;
+  public createPermission = false;
 
   public readingBookTypes = false;
 
@@ -57,16 +51,6 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
   public authorPage = new PaginatedResponse<Author[]>([]);
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
-
-  public authorsPage = new PaginatedResponse<Author[]>([]);
-
-  public bookType = '';
-
-  public gameSystem = '';
-
-  public authors: string[] = [];
-
-  public publisher = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -113,29 +97,7 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = new Publisher();
-    toSave.publisher.name = this.publisher;
-    toSave.bookType = new BookType();
-    toSave.bookType.name = this.bookType;
-    toSave.gameSystem = new GameSystem();
-    toSave.gameSystem.name = this.gameSystem;
-    toSave.authors = this.authors.map(a => {
-      const author = new Author();
-      author.name = a;
-      return author;
-    });
     return this.service.update(this.data.number, toSave);
-  }
-
-  private loadAuthors(page: number) {
-    this.reading = true;
-    this.authorService.getAll(page).subscribe({
-      next: response => {
-        this.authorsPage = response;
-      },
-      error: error => {
-      }
-    });
   }
 
   public onGoToBookTypePage(page: number) {
@@ -206,56 +168,27 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
     });
   }
 
-  public onShowBookTypeSelection() {
-    this.selectBookType = true;
+  public onSelectBookType(bookType: string) {
+    this.data.bookType = new BookType();
+    this.data.bookType.name = bookType;
   }
 
-  public onShowGameSystemSelection() {
-    this.selectGameSystem = true;
+  public onSelectGameSystem(gameSystem: string) {
+    this.data.gameSystem = new GameSystem();
+    this.data.gameSystem.name = gameSystem;
   }
 
-  public onShowAuthorSelection() {
-    this.selectAuthor = true;
+  public onSelectAuthor(authors: string[]) {
+    this.data.authors = authors.map(a => {
+      const author = new Author();
+      author.name = a;
+      return author;
+    });
   }
 
-  public onShowPublisherSelection() {
-    this.selectPublisher = true;
-  }
-
-  public onCancelBookTypeSelection() {
-    this.selectBookType = false;
-  }
-
-  public onCancelGameSystemSelection() {
-    this.selectGameSystem = false;
-  }
-
-  public onCancelAuthorSelection() {
-    this.selectAuthor = false;
-  }
-
-  public onCancelPublisherSelection() {
-    this.selectPublisher = false;
-  }
-
-  public onSelectBookType(bookType: BookType) {
-    this.bookType = bookType.name;
-    this.selectBookType = false;
-  }
-
-  public onSelectGameSystem(gameSystem: GameSystem) {
-    this.gameSystem = gameSystem.name;
-    this.selectGameSystem = false;
-  }
-
-  public onSelectAuthor(author: Author) {
-    this.authors.push(author.name);
-    this.selectAuthor = false;
-  }
-
-  public onSelectPublisher(publisher: Publisher) {
-    this.publisher = publisher.name;
-    this.selectPublisher = false;
+  public onSelectPublisher(publisher: string) {
+    this.data.publisher = new Publisher();
+    this.data.publisher.name = publisher;
   }
 
 }

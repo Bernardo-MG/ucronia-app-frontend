@@ -1,119 +1,146 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-  <!-- Index -->
-  <div *ngIf="data?.number" class="row mb-2">
-    <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Index</label>
-    <div class="col-sm-10">
-      <input type="text" [value]="data?.number" id="indexInput" [readonly]="true" class="form-control"
-        aria-describedby="indexLabel">
-    </div>
-  </div>
-  <!-- ISBN -->
-  <div class="row mb-2">
-    <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
-    <div class="col-sm-10">
-      <input type="text" id="isbnInput" formControlName="isbn" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('isbn') }" aria-describedby="isbnLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('isbn')">
-        {{failure.message}}
+<ng-container>
+  <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+    <!-- Index -->
+    <div *ngIf="data?.number" class="row mb-2">
+      <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Index</label>
+      <div class="col-sm-10">
+        <input type="text" [value]="data?.number" id="indexInput" [readonly]="true" class="form-control"
+          aria-describedby="indexLabel">
       </div>
     </div>
-  </div>
-  <!-- Title -->
-  <div class="row mb-2">
-    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
-    <div class="col-sm-10">
-      <input type="text" id="titleInput" formControlName="title" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('title') }" aria-describedby="titleLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('title')">
-        {{failure.message}}
+    <!-- ISBN -->
+    <div class="row mb-2">
+      <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
+      <div class="col-sm-10">
+        <input type="text" id="isbnInput" formControlName="isbn" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('isbn') }" aria-describedby="isbnLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('isbn')">
+          {{failure.message}}
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Language -->
-  <div class="row mb-2">
-    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
-    <div class="col-sm-10">
-      <input type="text" id="languageInput" formControlName="language" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('language')">
-        {{failure.message}}
+    <!-- Title -->
+    <div class="row mb-2">
+      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
+      <div class="col-sm-10">
+        <input type="text" id="titleInput" formControlName="title" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('title') }" aria-describedby="titleLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('title')">
+          {{failure.message}}
+        </div>
       </div>
     </div>
-  </div>
-  <!-- Book type -->
-  <div class="row mb-2">
-    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" class="form-control"
-        aria-describedby="bookTypeLabel">
+    <!-- Language -->
+    <div class="row mb-2">
+      <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
+      <div class="col-sm-10">
+        <input type="text" id="languageInput" formControlName="language" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('language')">
+          {{failure.message}}
+        </div>
+      </div>
     </div>
-    <div class="col-sm-1">
-      <button (click)="onShowBookTypeSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Back">
-        <icon-search></icon-search>
-      </button>
+    <!-- Book type -->
+    <div class="row mb-2">
+      <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
+      <div class="col-sm-9">
+        <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" class="form-control"
+          aria-describedby="bookTypeLabel">
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowBookTypeSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
     </div>
-  </div>
-  <!-- Game system -->
-  <div class="row mb-2">
-    <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" class="form-control"
-        aria-describedby="gameSystemLabel">
+    <!-- Game system -->
+    <div class="row mb-2">
+      <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
+      <div class="col-sm-9">
+        <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" class="form-control"
+          aria-describedby="gameSystemLabel">
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowGameSystemSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
     </div>
-    <div class="col-sm-1">
-      <button (click)="onShowGameSystemSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Back">
-        <icon-search></icon-search>
-      </button>
+    <!-- Publisher -->
+    <div class="row mb-2">
+      <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
+      <div class="col-sm-9">
+        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
+          aria-describedby="publisherLabel">
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
     </div>
-  </div>
-  <!-- Publisher -->
-  <div class="row mb-2">
-    <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
-        aria-describedby="publisherLabel">
-    </div>
-    <div class="col-sm-1">
-      <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Back">
-        <icon-search></icon-search>
-      </button>
-    </div>
-  </div>
-  <!-- Authors -->
-  <div class="row mb-2">
-    <div class="col-sm-11">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">
-              Author
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <ng-template ngFor let-author [ngForOf]="authors">
+    <!-- Authors -->
+    <div class="row mb-2">
+      <div class="col-sm-11">
+        <table class="table">
+          <thead>
             <tr>
-              <td>{{author}}</td>
+              <th scope="col">
+                Author
+              </th>
             </tr>
-          </ng-template>
-        </tbody>
-      </table>
+          </thead>
+          <tbody class="table-group-divider">
+            <ng-template ngFor let-author [ngForOf]="authors">
+              <tr>
+                <td>{{author}}</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
     </div>
-    <div class="col-sm-1">
-      <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Back">
-        <icon-search></icon-search>
-      </button>
+    <!-- Save button -->
+    <div class="row">
+      <div class="col-sm-2 d-grid gap-2">
+        <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
+          (action)="onSave()"></layout-waiting-button>
+      </div>
     </div>
-  </div>
-  <!-- Save button -->
-  <div class="row">
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()"></layout-waiting-button>
-    </div>
-  </div>
-</form>
+  </form>
+  <!-- Select book type -->
+  <ng-template [ngIf]="selector === 'book_type'">
+    <assoc-library-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
+      [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)" (goToPage)="onGoToBookTypePage($event)"
+      (cancel)="onCancelSelection()"></assoc-library-book-type-selection>
+  </ng-template>
+  <!-- Select game system -->
+  <ng-template [ngIf]="selector === 'game_system'">
+    <assoc-library-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
+      [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
+      (goToPage)="onGoToGameSystemPage($event)"
+      (cancel)="onCancelSelection()"></assoc-library-game-system-selection>
+  </ng-template>
+  <!-- Select authors -->
+  <ng-template [ngIf]="selector === 'author'">
+    <assoc-library-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
+      [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)" (goToPage)="onGoToAuthorPage($event)"
+      (cancel)="onCancelSelection()"></assoc-library-author-selection>
+  </ng-template>
+  <!-- Select publisher -->
+  <ng-template [ngIf]="selector === 'publisher'">
+    <assoc-library-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
+      [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)" (goToPage)="onGoToPublisherPage($event)"
+      (cancel)="onCancelSelection()"></assoc-library-publisher-selection>
+  </ng-template>
+</ng-container>
