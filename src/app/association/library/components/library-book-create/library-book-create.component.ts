@@ -175,7 +175,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   }
 
   protected override getReturnRoute(saved: Book): string {
-    return `/library/book/${saved.number}`;
+    return '/library/admin';
   }
 
 }

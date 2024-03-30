@@ -27,7 +27,7 @@ export class LibraryAuthorCreateComponent extends CreateComponent<Author> {
   }
 
   protected override getReturnRoute(saved: Author): string {
-    return `/library/author/${saved.name}`;
+    return '/library/admin';
   }
 
 }

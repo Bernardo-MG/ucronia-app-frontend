@@ -27,7 +27,7 @@ export class LibraryGameSystemCreateComponent extends CreateComponent<GameSystem
   }
 
   protected override getReturnRoute(saved: GameSystem): string {
-    return `/library/gameSystem/${saved.name}`;
+    return '/library/admin';
   }
 
 }
