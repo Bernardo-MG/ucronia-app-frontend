@@ -50,7 +50,7 @@
             <td>
               <ng-container *ngIf="hasMonth(row.months, month)" [ngSwitch]="getMonth(row.months, month)?.fee?.paid">
                 <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="/membership/fee/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
+                  routerLink="/fees/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
                   <ng-container *ngSwitchCase="true">
                     <!-- Paid month -->
                     <icon-success class="text-success"></icon-success>
