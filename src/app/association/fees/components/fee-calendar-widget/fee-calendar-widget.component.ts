@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
-import { FeeCalendarYearsRange } from '../../models/fee-calendar-years-range';
 import { FeeCalendar } from '../../models/fee-calendar';
+import { FeeCalendarYearsRange } from '../../models/fee-calendar-years-range';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 
 @Component({
   selector: 'assoc-fee-calendar-widget',
   standalone: true,
-  imports: [FeeCalendarComponent],
+  imports: [RouterModule, FeeCalendarComponent],
   templateUrl: './fee-calendar-widget.component.html'
 })
 export class FeeCalendarWidgetComponent implements OnInit {
