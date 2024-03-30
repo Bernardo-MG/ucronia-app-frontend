@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CenteredLayoutComponent } from './centered-layout.component';
+import { FullLayoutComponent } from './full-layout.component';
 
-describe('CenteredLayoutComponent', () => {
-  let component: CenteredLayoutComponent;
-  let fixture: ComponentFixture<CenteredLayoutComponent>;
+describe('FullLayoutComponent', () => {
+  let component: FullLayoutComponent;
+  let fixture: ComponentFixture<FullLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CenteredLayoutComponent]
+      imports: [FullLayoutComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CenteredLayoutComponent);
+    fixture = TestBed.createComponent(FullLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

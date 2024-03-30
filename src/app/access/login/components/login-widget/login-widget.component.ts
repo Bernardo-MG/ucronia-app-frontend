@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserLogin } from '../../models/user-login';
 import { LoginService } from '../../services/login.service';
 import { LoginFormComponent } from '../login-form/login-form.component';
@@ -23,7 +23,7 @@ import { LoginFormComponent } from '../login-form/login-form.component';
 @Component({
   selector: 'login-widget',
   standalone: true,
-  imports: [LoginFormComponent],
+  imports: [RouterModule, LoginFormComponent],
   templateUrl: './login-widget.component.html'
 })
 export class LoginWidgetComponent implements OnInit {

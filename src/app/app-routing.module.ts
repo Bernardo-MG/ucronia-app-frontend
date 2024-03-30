@@ -4,7 +4,7 @@ import { AccountLayoutComponent } from './account/components/account-layout/acco
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { CenteredLayoutComponent } from './core/layout/components/centered-layout/centered-layout.component';
+import { FullLayoutComponent } from './core/layout/components/full-layout/full-layout.component';
 import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
@@ -24,13 +24,13 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: CenteredLayoutComponent,
+        component: FullLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         path: 'password/reset',
-        component: MainLayoutComponent,
+        component: FullLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
@@ -58,7 +58,7 @@ const routes: Routes = [
       // Activate user
       {
         path: 'users/activate',
-        component: MainLayoutComponent,
+        component: FullLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },
