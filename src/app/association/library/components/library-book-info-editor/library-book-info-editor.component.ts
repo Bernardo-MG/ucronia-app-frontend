@@ -12,22 +12,13 @@ import { Book } from '../../models/book';
 import { BookType } from '../../models/book-type';
 import { GameSystem } from '../../models/game-system';
 import { Publisher } from '../../models/publisher';
-import { AuthorService } from '../../services/author.service';
-import { BookTypeService } from '../../services/book-type.service';
 import { BookService } from '../../services/book.service';
-import { GameSystemService } from '../../services/game-system.service';
-import { PublisherService } from '../../services/publisher.service';
-import { LibraryAuthorSelectionComponent } from '../library-author-selection/library-author-selection.component';
-import { LibraryBookFormComponent } from '../library-book-form/library-book-form.component';
 import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
-import { LibraryBookTypeSelectionComponent } from '../library-book-type-selection/library-book-type-selection.component';
-import { LibraryGameSystemSelectionComponent } from '../library-game-system-selection/library-game-system-selection.component';
-import { LibraryPublisherSelectionComponent } from '../library-publisher-selection/library-publisher-selection.component';
 
 @Component({
   selector: 'assoc-library-book-info-editor',
   standalone: true,
-  imports: [CommonModule, LibraryBookFormComponent, LibraryBookInfoComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, ArticleComponent, EditionWrapperComponent, LibraryBookInfoComponent],
   templateUrl: './library-book-info-editor.component.html'
 })
 export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> implements OnInit {
@@ -56,10 +47,6 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
     private route: ActivatedRoute,
     private router: Router,
     private service: BookService,
-    private bookTypeService: BookTypeService,
-    private gameSystemService: GameSystemService,
-    private authorService: AuthorService,
-    private publisherService: PublisherService,
     private authContainer: AuthContainer
   ) {
     super(new Book());
@@ -78,12 +65,6 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
       }
       this.load();
     });
-
-    // Load initial data
-    this.onGoToBookTypePage(0);
-    this.onGoToGameSystemPage(0);
-    this.onGoToAuthorPage(0);
-    this.onGoToPublisherPage(0);
   }
 
   protected override delete(): void {
@@ -102,74 +83,6 @@ export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> im
     toSave.gameSystem = this.data.gameSystem;
     toSave.authors = this.data.authors;
     return this.service.update(this.data.number, toSave);
-  }
-
-  public onGoToBookTypePage(page: number) {
-    this.readingBookTypes = true;
-    // TODO: The page correction should be done automatically
-    this.bookTypeService.getAll(page).subscribe({
-      next: response => {
-        this.bookTypePage = response;
-
-        // Reactivate view
-        this.readingBookTypes = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingBookTypes = false;
-      }
-    });
-  }
-
-  public onGoToGameSystemPage(page: number) {
-    this.readingGameSystems = true;
-    // TODO: The page correction should be done automatically
-    this.gameSystemService.getAll(page).subscribe({
-      next: response => {
-        this.gameSystemPage = response;
-
-        // Reactivate view
-        this.readingGameSystems = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingGameSystems = false;
-      }
-    });
-  }
-
-  public onGoToAuthorPage(page: number) {
-    this.readingAuthors = true;
-    // TODO: The page correction should be done automatically
-    this.authorService.getAll(page).subscribe({
-      next: response => {
-        this.authorPage = response;
-
-        // Reactivate view
-        this.readingAuthors = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingAuthors = false;
-      }
-    });
-  }
-
-  public onGoToPublisherPage(page: number) {
-    this.readingPublishers = true;
-    // TODO: The page correction should be done automatically
-    this.publisherService.getAll(page).subscribe({
-      next: response => {
-        this.publisherPage = response;
-
-        // Reactivate view
-        this.readingPublishers = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingPublishers = false;
-      }
-    });
   }
 
   public onSelectBookType(bookType: string) {
