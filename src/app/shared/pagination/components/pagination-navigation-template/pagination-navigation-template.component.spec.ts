@@ -7,7 +7,7 @@ describe('PaginationNavigationTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         PaginationNavigationTemplateComponent
       ]
     })

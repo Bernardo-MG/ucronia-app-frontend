@@ -2,10 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
+import { PaginationSizeSelectorTemplateComponent } from '../pagination-size-selector-template/pagination-size-selector-template.component';
 
 @Component({
-  selector: 'pagination-size-selector',
-  templateUrl: './pagination-size-selector.component.html'
+  selector: 'pagination-route-size-selector',
+  standalone: true,
+  imports: [PaginationSizeSelectorTemplateComponent],
+  templateUrl: './pagination-route-size-selector.component.html'
 })
 export class PaginationSizeSelectorComponent implements OnInit {
 

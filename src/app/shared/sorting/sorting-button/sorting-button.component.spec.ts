@@ -3,28 +3,26 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { SortDirection } from '../../../../core/api/models/sort-direction';
-import { PaginationOrderButtonComponent } from './pagination-order-button.component';
+import { SortDirection } from '../../../core/api/models/sort-direction';
+import { SortingButtonComponent } from './sorting-button.component';
 import { SortField } from '@app/core/api/models/sort-field';
 
-describe('PaginationOrderButtonComponent', () => {
-  let component: PaginationOrderButtonComponent;
-  let fixture: ComponentFixture<PaginationOrderButtonComponent>;
+describe('SortingButtonComponent', () => {
+  let component: SortingButtonComponent;
+  let fixture: ComponentFixture<SortingButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
-        PaginationOrderButtonComponent
+        FontAwesomeModule,
+        SortingButtonComponent
       ]
     })
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationOrderButtonComponent);
+    fixture = TestBed.createComponent(SortingButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

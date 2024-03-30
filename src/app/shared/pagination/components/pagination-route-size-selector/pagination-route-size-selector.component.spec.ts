@@ -1,27 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationNavigationComponent } from '../../components/pagination-navigation/pagination-navigation.component';
+import { PaginationSizeSelectorComponent as PaginationRouteSizeSelectorComponent } from './pagination-route-size-selector.component';
 
-describe('PaginationNavigationComponent', () => {
-  let component: PaginationNavigationComponent;
-  let fixture: ComponentFixture<PaginationNavigationComponent>;
+describe('PaginationRouteSizeSelectorComponent', () => {
+  let component: PaginationRouteSizeSelectorComponent;
+  let fixture: ComponentFixture<PaginationRouteSizeSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         FontAwesomeModule,
-        IconsModule,
-        PaginationNavigationComponent
+        PaginationRouteSizeSelectorComponent
       ]
     })
       .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PaginationNavigationComponent);
+    fixture = TestBed.createComponent(PaginationRouteSizeSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,14 +6,15 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
 import { Publisher } from '../../models/publisher';
 import { PublisherService } from '../../services/publisher.service';
 
 @Component({
   selector: 'assoc-library-publisher-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, PaginationModule, IconsModule, WaitingWrapperComponent ],
+  imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent ],
   templateUrl: './library-publisher-list.component.html'
 })
 export class LibraryPublisherListComponent {

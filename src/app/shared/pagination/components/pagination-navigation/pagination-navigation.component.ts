@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PaginationRanges } from '../../models/range/pagination-ranges';
+import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
 
 /**
  * Pagination component. Wraps the generic pagination template, and makes use of PaginationRanges to build the ranges.
  */
 @Component({
   selector: 'pagination-navigation',
+  standalone: true,
+  imports: [PaginationNavigationTemplateComponent],
   templateUrl: './pagination-navigation.component.html'
 })
 export class PaginationNavigationComponent implements OnChanges {

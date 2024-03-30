@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { PaginationModule } from '@app/shared/pagination/pagination.module';
+import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Member } from '../../../members/models/member';
 
 @Component({
   selector: 'assoc-member-selection',
   standalone: true,
-  imports: [PaginationModule, ButtonListComponent, WaitingWrapperComponent],
+  imports: [ButtonListComponent, WaitingWrapperComponent, PaginationNavigationComponent],
   templateUrl: './fee-member-selection.component.html',
   styleUrls: ['./fee-member-selection.component.sass']
 })

@@ -1,16 +1,19 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { SortField } from '@app/core/api/models/sort-field';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { SortDirection } from '../../../../core/api/models/sort-direction';
+import { SortDirection } from '../../../core/api/models/sort-direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-  selector: 'pagination-order-button',
-  templateUrl: './pagination-order-button.component.html'
+  selector: 'sorting-button',
+  standalone: true,
+  imports: [FontAwesomeModule],
+  templateUrl: './sorting-button.component.html'
 })
-export class PaginationOrderButtonComponent implements OnChanges {
+export class SortingButtonComponent implements OnChanges {
 
   @Input() public property = '';
 
@@ -20,10 +23,24 @@ export class PaginationOrderButtonComponent implements OnChanges {
 
   @Output() public directionChange = new EventEmitter<SortField>();
 
+  /**
+   * Ascending order icon.
+   */
   private ascendingIcon = faSortUp;
+  
+  /**
+   * Descending order icon.
+   */
   private descendingIcon = faSortDown;
+  
+  /**
+   * Default order icon.
+   */
   private defaultIcon = faSort;
 
+  /**
+   * Current order icon.
+   */
   public directionIcon = this.defaultIcon;
 
   ngOnChanges(changes: SimpleChanges) {
