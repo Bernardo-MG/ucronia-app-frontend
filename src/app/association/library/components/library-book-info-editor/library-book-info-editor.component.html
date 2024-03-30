@@ -1,41 +1,19 @@
-<layout-article title="Edit member">
+<layout-article title="Book info">
   <div class="col-md-6 offset-md-3">
     <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
-      <assoc-library-book-form id="form" [data]="data" [waiting]="saving" [failures]="failures" [readonly]="!formEnabled"
-        [bookType]="bookType" [gameSystem]="gameSystem" [authors]="authors" [publisher]="publisher"
-        (save)="onSave($event)" (showBookTypeSelection)="onShowBookTypeSelection()"
-        (showGameSystemSelection)="onShowGameSystemSelection()" (showAuthorSelection)="onShowAuthorSelection()"
-        (showPublisherSelection)="onShowPublisherSelection()">
+        <assoc-library-book-form id="form" [data]="data" [waiting]="saving" 
+        [failures]="failures" [readonly]="!formEnabled"
+        [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+        (save)="onSave($event)" (goToBookTypePage)="onGoToBookTypePage($event)"
+        (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+        (goToPublisherPage)="onGoToPublisherPage($event)" (selectBookType)="onSelectBookType($event)"
+        (selectGameSystem)="onSelectGameSystem($event)" (selectAuthor)="onSelectAuthor($event)"
+        (selectPublisher)="onSelectPublisher($event)">
       </assoc-library-book-form>
       <!-- Info -->
       <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
     </layout-edition-wrapper>
-    <!-- Select book type -->
-    <ng-template [ngIf]="selectBookType">
-      <assoc-library-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
-        [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)" (goToPage)="onGoToBookTypePage($event)"
-        (cancel)="onCancelBookTypeSelection()"></assoc-library-book-type-selection>
-    </ng-template>
-    <!-- Select game system -->
-    <ng-template [ngIf]="selectGameSystem">
-      <assoc-library-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
-        [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
-        (goToPage)="onGoToGameSystemPage($event)"
-        (cancel)="onCancelGameSystemSelection()"></assoc-library-game-system-selection>
-    </ng-template>
-    <!-- Select authors -->
-    <ng-template [ngIf]="selectAuthor">
-      <assoc-library-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
-        [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)" (goToPage)="onGoToAuthorPage($event)"
-        (cancel)="onCancelAuthorSelection()"></assoc-library-author-selection>
-    </ng-template>
-    <!-- Select publisher -->
-    <ng-template [ngIf]="selectPublisher">
-      <assoc-library-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
-        [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)" (goToPage)="onGoToPublisherPage($event)"
-        (cancel)="onCancelPublisherSelection()"></assoc-library-publisher-selection>
-    </ng-template>
   </div>
 </layout-article>

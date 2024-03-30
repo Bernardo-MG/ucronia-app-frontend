@@ -16,29 +16,17 @@ import { BookTypeService } from '../../services/book-type.service';
 import { BookService } from '../../services/book.service';
 import { GameSystemService } from '../../services/game-system.service';
 import { PublisherService } from '../../services/publisher.service';
-import { LibraryAuthorSelectionComponent } from '../library-author-selection/library-author-selection.component';
 import { LibraryBookFormComponent } from '../library-book-form/library-book-form.component';
-import { LibraryBookTypeSelectionComponent } from '../library-book-type-selection/library-book-type-selection.component';
-import { LibraryGameSystemSelectionComponent } from '../library-game-system-selection/library-game-system-selection.component';
-import { LibraryPublisherSelectionComponent } from '../library-publisher-selection/library-publisher-selection.component';
 
 @Component({
   selector: 'assoc-library-book-create',
   standalone: true,
-  imports: [CommonModule, LibraryBookFormComponent, LibraryGameSystemSelectionComponent, LibraryBookTypeSelectionComponent, LibraryPublisherSelectionComponent, LibraryAuthorSelectionComponent, ArticleComponent],
+  imports: [CommonModule, LibraryBookFormComponent, ArticleComponent],
   templateUrl: './library-book-create.component.html'
 })
 export class LibraryBookCreateComponent extends CreateComponent<Book> implements OnInit {
 
   public createPermission = false;
-
-  public selectBookType = false;
-
-  public selectGameSystem = false;
-
-  public selectAuthor = false;
-
-  public selectPublisher = false;
 
   public readingBookTypes = false;
 
@@ -155,56 +143,20 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
     });
   }
 
-  public onShowBookTypeSelection() {
-    this.selectBookType = true;
+  public onSelectBookType(bookType: string) {
+    this.bookType = bookType;
   }
 
-  public onShowGameSystemSelection() {
-    this.selectGameSystem = true;
+  public onSelectGameSystem(gameSystem: string) {
+    this.gameSystem = gameSystem;
   }
 
-  public onShowAuthorSelection() {
-    this.selectAuthor = true;
+  public onSelectAuthor(authors: string[]) {
+    this.authors = authors;
   }
 
-  public onShowPublisherSelection() {
-    this.selectPublisher = true;
-  }
-
-  public onCancelBookTypeSelection() {
-    this.selectBookType = false;
-  }
-
-  public onCancelGameSystemSelection() {
-    this.selectGameSystem = false;
-  }
-
-  public onCancelAuthorSelection() {
-    this.selectAuthor = false;
-  }
-
-  public onCancelPublisherSelection() {
-    this.selectPublisher = false;
-  }
-
-  public onSelectBookType(bookType: BookType) {
-    this.bookType = bookType.name;
-    this.selectBookType = false;
-  }
-
-  public onSelectGameSystem(gameSystem: GameSystem) {
-    this.gameSystem = gameSystem.name;
-    this.selectGameSystem = false;
-  }
-
-  public onSelectAuthor(author: Author) {
-    this.authors.push(author.name);
-    this.selectAuthor = false;
-  }
-
-  public onSelectPublisher(publisher: Publisher) {
-    this.publisher = publisher.name;
-    this.selectPublisher = false;
+  public onSelectPublisher(publisher: string) {
+    this.publisher = publisher;
   }
 
   protected override save(toSave: Book): Observable<Book> {
@@ -223,7 +175,7 @@ export class LibraryBookCreateComponent extends CreateComponent<Book> implements
   }
 
   protected override getReturnRoute(saved: Book): string {
-    return `/library/book/${saved.number}`;
+    return '/library/admin';
   }
 
 }
