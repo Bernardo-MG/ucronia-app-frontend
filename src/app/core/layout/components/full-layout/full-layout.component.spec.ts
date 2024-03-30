@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing';
 import { FullLayoutComponent } from './full-layout.component';
 
 describe('FullLayoutComponent', () => {
@@ -8,10 +8,13 @@ describe('FullLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FullLayoutComponent]
+      imports: [
+        RouterTestingModule,
+        FullLayoutComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(FullLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
