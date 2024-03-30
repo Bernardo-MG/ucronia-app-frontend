@@ -65,31 +65,11 @@ export class CalendarMonthComponent implements OnChanges {
     }
   }
 
-  public onGoPrevious() {
-    this.index = this.index - 1;
-    this.currentMonth = this.months[this.index];
-    this.goToMonth();
-  }
-
-  public onGoNext() {
-    this.index = this.index + 1;
-    this.currentMonth = this.months[this.index];
-    this.goToMonth();
-  }
-
   public onGoTo(event: any) {
     const date = event.target.value.split('-');
     this.currentMonth = new Month(Number(date[0]), Number(date[1]));
     this.index = this.months.findIndex(d => (d.year === this.currentMonth.year) && (d.month === (this.currentMonth.month)));
     this.goToMonth();
-  }
-
-  public isAbleToGoNext() {
-    return ((!this.waiting) && ((this.index >= 0) && ((this.index + 1) < this.months.length)));
-  }
-
-  public isAbleToGoPrevious() {
-    return ((!this.waiting) && (this.index > 0));
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
