@@ -5,10 +5,10 @@ import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pa
 import { PaginationSizeSelectorTemplateComponent } from '../pagination-size-selector-template/pagination-size-selector-template.component';
 
 @Component({
-  selector: 'pagination-size-selector',
+  selector: 'pagination-route-size-selector',
   standalone: true,
   imports: [PaginationSizeSelectorTemplateComponent],
-  templateUrl: './pagination-size-selector.component.html'
+  templateUrl: './pagination-route-size-selector.component.html'
 })
 export class PaginationSizeSelectorComponent implements OnInit {
 
