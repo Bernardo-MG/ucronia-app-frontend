@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LibraryBookInfoEditorComponent } from './components/library-book-info-editor/library-book-info-editor.component';
+import { LibraryBookInfoWidgetComponent } from './components/library-book-info-widget/library-book-info-widget.component';
 import { LibraryFrontpageComponent } from './components/library-frontpage/library-frontpage.component';
 
 
 const routes: Routes = [
   { path: '', component: LibraryFrontpageComponent },
-  { path: 'book/:index', component: LibraryBookInfoEditorComponent }
+  { path: 'book/:index', component: LibraryBookInfoWidgetComponent }
 ];
 
 @NgModule({

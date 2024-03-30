@@ -5,7 +5,6 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
 import { Book } from '../../models/book';
@@ -16,12 +15,12 @@ import { BookService } from '../../services/book.service';
 import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
 
 @Component({
-  selector: 'assoc-library-book-info-editor',
+  selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, EditionWrapperComponent, LibraryBookInfoComponent],
-  templateUrl: './library-book-info-editor.component.html'
+  imports: [CommonModule, ArticleComponent, LibraryBookInfoComponent],
+  templateUrl: './library-book-info-widget.component.html'
 })
-export class LibraryBookInfoEditorComponent extends InfoEditorComponent<Book> implements OnInit {
+export class LibraryBookInfoWidgetComponent extends InfoEditorComponent<Book> implements OnInit {
 
   private index = -1;
 
