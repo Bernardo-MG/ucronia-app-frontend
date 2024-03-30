@@ -1,19 +1,24 @@
 <layout-article title="Library Admin">
   <ul class="nav nav-tabs pb-2">
     <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button" (click)="onChangeView('books')">Books</a>
+      <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button"
+        (click)="onChangeView('books')">Books</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button" (click)="onChangeView('authors')">Authors</a>
+      <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button"
+        (click)="onChangeView('authors')">Authors</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button" (click)="onChangeView('publishers')">Publishers</a>
+      <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button"
+        (click)="onChangeView('publishers')">Publishers</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button" (click)="onChangeView('book_types')">Book types</a>
+      <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button"
+        (click)="onChangeView('book_types')">Book types</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button" (click)="onChangeView('game_systems')">Game systems</a>
+      <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
+        (click)="onChangeView('game_systems')">Game systems</a>
     </li>
   </ul>
   <ng-container [ngSwitch]="view">
@@ -42,8 +47,8 @@
           <assoc-library-author-list></assoc-library-author-list>
           <div class="col-md-2 offset-md-5">
             <div class="d-grid">
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/publisher/add"
-                [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/author/add"
+                [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
                 <icon-add></icon-add>
               </button>
             </div>
@@ -59,8 +64,8 @@
           <assoc-library-publisher-list></assoc-library-publisher-list>
           <div class="col-md-2 offset-md-5">
             <div class="d-grid">
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/author/add"
-                [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/publisher/add"
+                [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
                 <icon-add></icon-add>
               </button>
             </div>
