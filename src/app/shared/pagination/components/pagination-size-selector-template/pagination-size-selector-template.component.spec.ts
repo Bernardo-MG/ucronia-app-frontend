@@ -8,7 +8,9 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PaginationSizeSelectorTemplateComponent]
+      imports: [
+        PaginationSizeSelectorTemplateComponent
+      ]
     })
       .compileComponents();
 

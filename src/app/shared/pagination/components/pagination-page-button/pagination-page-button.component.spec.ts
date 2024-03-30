@@ -7,7 +7,9 @@ describe('PaginationButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageButtonComponent]
+      imports: [
+        PageButtonComponent
+      ]
     })
       .compileComponents();
 

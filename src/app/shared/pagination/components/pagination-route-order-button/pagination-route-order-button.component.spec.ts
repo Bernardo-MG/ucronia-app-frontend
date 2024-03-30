@@ -4,7 +4,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
-import { PaginationOrderButtonComponent } from '../pagination-order-button/pagination-order-button.component';
 import { PaginationRouteOrderButtonComponent } from './pagination-route-order-button.component';
 
 describe('PaginationRouteOrderButtonComponent', () => {
@@ -16,11 +15,8 @@ describe('PaginationRouteOrderButtonComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule
-      ],
-      declarations: [
-        PaginationRouteOrderButtonComponent,
-        PaginationOrderButtonComponent
+        FontAwesomeModule,
+        PaginationRouteOrderButtonComponent
       ],
       providers: [
         {

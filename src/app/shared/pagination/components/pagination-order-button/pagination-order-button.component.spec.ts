@@ -14,9 +14,7 @@ describe('PaginationOrderButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
+        FontAwesomeModule,
         PaginationOrderButtonComponent
       ]
     })
