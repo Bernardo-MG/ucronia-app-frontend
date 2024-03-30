@@ -41,6 +41,20 @@
         </div>
       </div>
     </div>
+    <!-- Publisher -->
+    <div class="row mb-2">
+      <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
+      <div class="col-sm-9">
+        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
+          aria-describedby="publisherLabel">
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
+    </div>
     <!-- Book type -->
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
@@ -64,20 +78,6 @@
       </div>
       <div class="col-sm-1">
         <button (click)="onShowGameSystemSelection()" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Back">
-          <icon-search></icon-search>
-        </button>
-      </div>
-    </div>
-    <!-- Publisher -->
-    <div class="row mb-2">
-      <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
-      <div class="col-sm-9">
-        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
-          aria-describedby="publisherLabel">
-      </div>
-      <div class="col-sm-1">
-        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
           aria-label="Back">
           <icon-search></icon-search>
         </button>
