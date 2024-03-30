@@ -1,0 +1,17 @@
+<layout-article title="Register book">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <!-- Form -->
+        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+          [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+          (save)="onSave($event)" (goToBookTypePage)="onGoToBookTypePage($event)"
+          (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+          (goToPublisherPage)="onGoToPublisherPage($event)" (selectBookType)="onSelectBookType($event)"
+          (selectGameSystem)="onSelectGameSystem($event)" (selectAuthor)="onSelectAuthor($event)"
+          (selectPublisher)="onSelectPublisher($event)">
+        </assoc-library-admin-book-form>
+      </div>
+    </div>
+  </div>
+</layout-article>

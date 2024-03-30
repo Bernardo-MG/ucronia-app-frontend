@@ -1,0 +1,19 @@
+<layout-article title="Book info">
+  <div class="col-md-6 offset-md-3">
+    <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+      (delete)="onDelete()" (startEditing)="onStartEditing()">
+      <!-- Form -->
+        <assoc-library-admin-book-form id="form" [data]="data" [waiting]="saving" 
+        [failures]="failures" [readonly]="!formEnabled"
+        [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+        (save)="onSave($event)" (goToBookTypePage)="onGoToBookTypePage($event)"
+        (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+        (goToPublisherPage)="onGoToPublisherPage($event)" (selectBookType)="onSelectBookType($event)"
+        (selectGameSystem)="onSelectGameSystem($event)" (selectAuthor)="onSelectAuthor($event)"
+        (selectPublisher)="onSelectPublisher($event)">
+      </assoc-library-admin-book-form>
+      <!-- Info -->
+      <assoc-library-admin-book-info id="info" [data]="data"></assoc-library-admin-book-info>
+    </layout-edition-wrapper>
+  </div>
+</layout-article>
