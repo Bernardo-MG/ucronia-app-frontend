@@ -58,7 +58,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   }
 
   public onRemoveRole(role: Role): void {
-    this.data.roles = this.data.roles.filter(r => role.name != role.name);
+    this.data.roles = this.data.roles.filter(r => r.name != role.name);
     this.onSave(this.data);
   }
 
