@@ -8,5 +8,4 @@ export class PaginatedResponse<T> extends SimpleResponse<T> {
   totalPages = 0;
   first = false;
   last = false;
-
 }
