@@ -90,6 +90,13 @@ export abstract class InfoEditorComponent<Data> {
     });
   }
 
+  /**
+   * Cancel editing template method. Sets the component back to showing info.
+   */
+  public onCancel(): void {
+    this.editing = false;
+  }
+
   public onDelete(): void {
     this.delete();
   }

@@ -6,7 +6,7 @@
         (delete)="onDelete()" (startEditing)="onStartEditing()">
         <!-- Form -->
         <access-role-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-          (save)="onSave($event)">
+          [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
         </access-role-form>
         <!-- Info -->
         <access-role-info id="info" [data]="data"></access-role-info>
@@ -23,9 +23,7 @@
             <ng-container [ngSwitch]="view">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-                  [waiting]="waiting" (remove)="onRemovePermission($event)">
-                </access-role-permissions>
+                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"></access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
                   <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddPermission()">

@@ -6,7 +6,7 @@
         (delete)="onDelete()" (startEditing)="onStartEditing()">
         <!-- Form -->
         <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-          (save)="onSave($event)">
+          [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
         </access-user-form>
         <!-- Info -->
         <access-user-info id="info" [data]="data"></access-user-info>
