@@ -81,7 +81,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   }
 
   protected override save(toSave: User): Observable<User> {
-    const updated: UserUpdate = { ...toSave, roles: toSave.roles.map(r => r.name) };
+    const updated: UserUpdate = { ...this.data, ...toSave, roles: this.data.roles.map(r => r.name) };
 
     return this.service.update(toSave.username, updated);
   }
