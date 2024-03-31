@@ -17,9 +17,9 @@ export class AccessRolePermissionsComponent {
 
   @Input() public deletable = false;
 
-  @Output() public remove = new EventEmitter<ResourcePermission>();
+  @Input() public waiting = false;
 
-  public waiting = false;
+  @Output() public remove = new EventEmitter<ResourcePermission>();
 
   public onRemove(permission: ResourcePermission): void {
     this.remove.emit(permission);

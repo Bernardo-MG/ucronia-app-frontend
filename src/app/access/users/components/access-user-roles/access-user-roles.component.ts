@@ -24,9 +24,9 @@ export class AccessUserRoleFormComponent {
 
   @Input() public deletable = false;
 
-  @Output() public remove = new EventEmitter<Role>();
+  @Input() public waiting = false;
 
-  public readingRoles = false;
+  @Output() public remove = new EventEmitter<Role>();
 
   constructor() { }
 

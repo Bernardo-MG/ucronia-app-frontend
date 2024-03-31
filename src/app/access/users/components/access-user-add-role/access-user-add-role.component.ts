@@ -17,9 +17,9 @@ export class AccessUserAddRoleComponent implements OnChanges {
 
   @Input() public user = "";
 
-  @Output() public addRole = new EventEmitter<Role>();
+  @Input() public page = new PaginatedResponse<Role[]>([]);
 
-  public page = new PaginatedResponse<Role[]>([]);
+  @Output() public addRole = new EventEmitter<Role>();
 
   public readingSelection = false;
 

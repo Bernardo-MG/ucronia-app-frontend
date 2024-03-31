@@ -5,8 +5,8 @@
       <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
         (delete)="onDelete()" (startEditing)="onStartEditing()">
         <!-- Form -->
-        <access-role-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-          [failures]="failures" (save)="onSave($event)">
+        <access-role-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+          (save)="onSave($event)">
         </access-role-form>
         <!-- Info -->
         <access-role-info id="info" [data]="data"></access-role-info>
@@ -23,7 +23,8 @@
             <ng-container [ngSwitch]="view">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled" (remove)="onRemovePermission($event)">
+                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+                  [waiting]="waiting" (remove)="onRemovePermission($event)">
                 </access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
