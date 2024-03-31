@@ -9,13 +9,13 @@ import { AccessRoleSelectionListWidgetComponent } from '../access-role-selection
   imports: [AccessRoleSelectionListWidgetComponent, ArticleComponent],
   templateUrl: './access-role-frontpage.component.html'
 })
-export class AccessFrontpageComponent implements OnInit {
+export class AccessRoleFrontpageComponent implements OnInit {
 
   public createPermission = false;
 
   constructor(
     private authContainer: AuthContainer
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Check permissions

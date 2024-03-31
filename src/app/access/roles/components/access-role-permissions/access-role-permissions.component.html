@@ -15,8 +15,8 @@
       <ng-template ngFor let-permission [ngForOf]="permissions">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemove(permission)" type="button"
-              class="btn btn-link link-dark" role="button" aria-label="Back">
+            <button [disabled]="!deletable" (click)="onRemove(permission)" type="button" class="btn btn-link link-dark"
+              role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>

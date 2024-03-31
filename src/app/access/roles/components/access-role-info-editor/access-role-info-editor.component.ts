@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
@@ -12,7 +13,6 @@ import { AccessRoleAddPermissionComponent } from '../access-role-add-permission/
 import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
 import { AccessRoleInfoComponent } from '../access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../access-role-permissions/access-role-permissions.component';
-import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 
 @Component({
   selector: 'access-role-info-editor',
