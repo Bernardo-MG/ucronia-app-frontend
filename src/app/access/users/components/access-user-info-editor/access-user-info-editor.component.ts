@@ -13,6 +13,7 @@ import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
 import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-roles.component';
+import { UserUpdate } from '../../models/user-update';
 
 @Component({
   selector: 'access-user-info-editor',
@@ -43,15 +44,22 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     // Get id
     this.route.paramMap.subscribe(params => {
       const usernameParam = params.get('user');
-      if(usernameParam) {
+      if (usernameParam) {
         this.username = usernameParam;
       }
       this.load();
     });
   }
 
-  public onAddRole(data: Role): void {
+  public onAddRole(role: Role): void {
+    this.data.roles.push(role);
+    this.onSave(this.data);
     this.view = "list";
+  }
+
+  public onRemoveRole(role: Role): void {
+    this.data.roles = this.data.roles.filter(r => role.name != role.name);
+    this.onSave(this.data);
   }
 
   public onShowAddRole() {
@@ -73,7 +81,9 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   }
 
   protected override save(toSave: User): Observable<User> {
-    return this.service.update(toSave.username, toSave);
+    const updated: UserUpdate = { ...toSave, roles: toSave.roles.map(r => r.name) };
+
+    return this.service.update(toSave.username, updated);
   }
 
 }

@@ -34,9 +34,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
   }
 
   public onAddRole(data: Role): void {
-    this.service.addRole(this.user, data.name).subscribe(p => {
-      this.addRole.emit(data);
-    });
+    this.addRole.emit(data);
   }
 
   public loadRoleSelectionPage(page: number) {

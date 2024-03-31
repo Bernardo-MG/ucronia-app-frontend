@@ -5,16 +5,15 @@
       <tr>
         <th scope="col"></th>
         <th scope="col">
-          Name<sorting-button property="name"
-            (directionChange)="onChangeDirection($event)"></sorting-button>
+          Name
         </th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="page.content">
+      <ng-template ngFor let-role [ngForOf]="roles">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark"
+            <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
               role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
@@ -25,8 +24,3 @@
     </tbody>
   </table>
 </layout-waiting-wrapper>
-<div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingRoles" [current]="page.page + 1" [pages]="page.totalPages"
-    (goTo)="onGoTo($event)">
-  </pagination-navigation>
-</div>

@@ -12,6 +12,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
+import { UserUpdate } from '../models/user-update';
 
 @Injectable()
 export class AccessUserService {
@@ -34,20 +35,6 @@ export class AccessUserService {
       .read();
   }
 
-  public getRoles(username: string, page: number, sort: Sort): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: SortField = new SortField('name');
-
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSort]);
-    query.pagination = { page };
-    query.sort = sort;
-
-    return this.getClient()
-      .query(query)
-      .appendRoute(`/${username}/role`)
-      .read<PaginatedResponse<Role[]>>();
-  }
-
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
     const defaultSort: SortField = new SortField('name');
 
@@ -67,7 +54,7 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public update(username: string, data: User): Observable<User> {
+  public update(username: string, data: UserUpdate): Observable<User> {
     return this.getClient()
       .appendRoute(`/${username}`)
       .update<SimpleResponse<User>>(data)
@@ -85,13 +72,6 @@ export class AccessUserService {
     return this.getClient()
       .appendRoute(`/${username}`)
       .read<SimpleResponse<User>>()
-      .pipe(map(r => r.content));
-  }
-
-  public addRole(username: string, role: string): Observable<Role> {
-    return this.getClient()
-      .appendRoute(`/${username}/role/${role}`)
-      .update<SimpleResponse<Role>>({})
       .pipe(map(r => r.content));
   }
 

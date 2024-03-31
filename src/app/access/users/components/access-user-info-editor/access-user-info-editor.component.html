@@ -21,8 +21,9 @@
         <div class="card">
           <div class="card-body">
             <ng-container [ngSwitch]="view">
+              <!-- List -->
               <ng-container *ngSwitchCase="'list'">
-                <access-user-roles [user]="data.username" [editable]="editEnabled" [deletable]="deleteEnabled">
+                <access-user-roles [roles]="data.roles" [editable]="editEnabled" [deletable]="deleteEnabled" (remove)="onRemoveRole($event)">
                 </access-user-roles>
                 <div class="d-grid">
                   <!-- Add button -->
@@ -31,6 +32,7 @@
                   </button>
                 </div>
               </ng-container>
+              <!-- Add -->
               <ng-container *ngSwitchCase="'add'">
                 <access-user-add-role [user]="data.username" (addRole)="onAddRole($event)"></access-user-add-role>
                 <div class="d-grid">
