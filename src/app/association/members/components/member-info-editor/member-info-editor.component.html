@@ -4,7 +4,7 @@
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
       <assoc-member-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-        [failures]="failures" (save)="onSave($event)">
+        [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
       </assoc-member-form>
       <!-- Info -->
       <assoc-member-info id="info" [data]="data"></assoc-member-info>
