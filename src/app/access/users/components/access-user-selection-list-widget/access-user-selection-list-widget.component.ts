@@ -37,7 +37,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("user", "create");
-    
+
     this.load(0);
   }
 

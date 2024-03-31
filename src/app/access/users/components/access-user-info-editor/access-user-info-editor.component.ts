@@ -8,12 +8,12 @@ import { InfoEditorComponent } from '@app/shared/form/components/info-editor/inf
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
+import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
 import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-roles.component';
-import { UserUpdate } from '../../models/user-update';
 
 @Component({
   selector: 'access-user-info-editor',
