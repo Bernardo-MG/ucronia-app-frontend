@@ -9,12 +9,13 @@
         </div>
         <footer class="card-footer">
           <div class="row">
-            <!-- Buttons -->
+            <!-- Revoke button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke"
               data-bs-toggle="modal"
               [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''"></layout-waiting-button>
             </div>
+            <!-- Extend expiration button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal"

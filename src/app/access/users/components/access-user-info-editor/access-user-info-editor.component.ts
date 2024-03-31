@@ -7,6 +7,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
 import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
@@ -18,7 +19,7 @@ import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-ro
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, AccessUserRoleFormComponent, AccessUserAddRoleComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, AccessUserRoleFormComponent, AccessUserAddRoleComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
@@ -68,6 +69,18 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public onCancelAddRole() {
     this.view = "list";
+  }
+
+  public onDisable() {
+    const user = this.data;
+    user.enabled = false;
+    this.onSave(user);
+  }
+
+  public onEnable() {
+    const user = this.data;
+    user.enabled = true;
+    this.onSave(user);
   }
 
   protected override delete(): void {
