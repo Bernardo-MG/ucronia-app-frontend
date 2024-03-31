@@ -1,73 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
-import { Permission } from '@app/core/authentication/models/permission';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
-import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-permissions',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent],
   templateUrl: './access-role-permissions.component.html'
 })
-export class AccessRolePermissionsComponent implements OnChanges {
+export class AccessRolePermissionsComponent {
 
-  @Input() public role = "";
+  @Input() public permissions: ResourcePermission[] = [];
 
   @Input() public deletable = false;
 
-  public page = new PaginatedResponse<Permission[]>([]);
+  @Output() public remove = new EventEmitter<ResourcePermission>();
 
-  public reading = false;
+  public waiting = false;
 
-  private sort = new Sort([]);
-
-  constructor(
-    private service: AccessRoleService
-  ) { }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['role']) && (this.role.length)) {
-      this.load(0);
-    }
-  }
-
-  public onRemove(permission: Permission): void {
-    this.service.removePermission(this.role, permission.name).subscribe(p => this.load(0));
-  }
-
-  public onGoTo(page: number) {
-    this.load(page);
-  }
-
-  public onChangeDirection(field: SortField) {
-    this.sort.addField(field);
-
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
-  }
-
-  private load(page: number) {
-    this.reading = true;
-    this.service.getPermissions(this.role, page, this.sort).subscribe({
-      next: response => {
-        this.page = response;
-
-        // Reactivate view
-        this.reading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.reading = false;
-      }
-    });
+  public onRemove(permission: ResourcePermission): void {
+    this.remove.emit(permission);
   }
 
 }

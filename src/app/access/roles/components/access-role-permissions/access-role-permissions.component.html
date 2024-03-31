@@ -1,18 +1,18 @@
-<layout-waiting-wrapper [waiting]="reading">
+<layout-waiting-wrapper [waiting]="waiting">
   <table class="table">
     <thead>
       <tr>
         <th scope="col"></th>
         <th scope="col">
-          Resource<sorting-button property="resource" (directionChange)="onChangeDirection($event)"></sorting-button>
+          Resource
         </th>
         <th scope="col">
-          Action<sorting-button property="action" (directionChange)="onChangeDirection($event)"></sorting-button>
+          Action
         </th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-permission [ngForOf]="page.content">
+      <ng-template ngFor let-permission [ngForOf]="permissions">
         <tr>
           <td>
             <button [disabled]="!deletable" (click)="onRemove(permission)" type="button"
@@ -26,9 +26,4 @@
       </ng-template>
     </tbody>
   </table>
-  <!-- Permissions navigation -->
-  <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" (goTo)="onGoTo($event)">
-    </pagination-navigation>
-  </div>
 </layout-waiting-wrapper>

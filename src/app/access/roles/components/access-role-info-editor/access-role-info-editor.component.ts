@@ -12,6 +12,7 @@ import { AccessRoleAddPermissionComponent } from '../access-role-add-permission/
 import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
 import { AccessRoleInfoComponent } from '../access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../access-role-permissions/access-role-permissions.component';
+import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 
 @Component({
   selector: 'access-role-info-editor',
@@ -21,7 +22,7 @@ import { AccessRolePermissionsComponent } from '../access-role-permissions/acces
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> implements OnInit {
 
-  public permissionView = 'list';
+  public view = 'list';
 
   private role = '';
 
@@ -49,20 +50,27 @@ export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> imp
     });
   }
 
+  public onAddPermission(permission: ResourcePermission): void {
+    this.data.permissions.push(permission);
+    this.onSave(this.data);
+    this.view = "list";
+  }
+
+  public onRemovePermission(permission: ResourcePermission): void {
+    this.data.permissions = this.data.permissions.filter(r => r.name != permission.name);
+    this.onSave(this.data);
+  }
+
   public onShowAddPermission() {
-    this.permissionView = 'add';
+    this.view = 'add';
   }
 
   public onCancelAddPermission() {
-    this.permissionView = 'list';
+    this.view = 'list';
   }
 
   public isAbleToAddPermission() {
     return true;
-  }
-
-  public onAddPermission() {
-    this.permissionView = 'list';
   }
 
   protected override delete(): void {

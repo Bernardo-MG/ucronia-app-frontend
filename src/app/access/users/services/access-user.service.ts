@@ -75,13 +75,6 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public removeRole(username: string, role: string): Observable<boolean> {
-    return this.getClient()
-      .appendRoute(`/${username}/role/${role}`)
-      .delete<SimpleResponse<boolean>>()
-      .pipe(map(r => r.content));
-  }
-
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/security/user');
   }
