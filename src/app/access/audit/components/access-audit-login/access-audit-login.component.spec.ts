@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AccessAuditLoginService } from '../../services/access-audit-login.service';
 import { AccessAuditLoginComponent } from './access-audit-login.component';
 
 describe('AccessAuditLoginComponent', () => {
@@ -8,7 +9,13 @@ describe('AccessAuditLoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccessAuditLoginComponent]
+      imports: [
+        HttpClientTestingModule,
+        AccessAuditLoginComponent
+      ],
+      providers: [
+        AccessAuditLoginService
+      ]
     })
     .compileComponents();
     
