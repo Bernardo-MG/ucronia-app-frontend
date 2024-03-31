@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
@@ -12,7 +13,7 @@ import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorti
   imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-user-roles.component.html'
 })
-export class AccessUserRoleFormComponent {
+export class AccessUserRoleFormComponent implements OnChanges {
 
   @Input() public roles: Role[] = [];
 
@@ -24,10 +25,26 @@ export class AccessUserRoleFormComponent {
 
   @Output() public remove = new EventEmitter<Role>();
 
-  constructor() { }
+  public page = new ListPaginatedResponse<Role>([], 0, 0);
+
+  private pageSize = 10;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['roles']) {
+      this.page = this.buildPage(0);
+    }
+  }
+
+  public onGoToPage(page: number) {
+    this.page = this.buildPage(page - 1);
+  }
 
   public onRemove(role: Role): void {
     this.remove.emit(role);
+  }
+
+  private buildPage(page: number) {
+    return new ListPaginatedResponse<Role>(this.roles, page, this.pageSize);
   }
 
 }
