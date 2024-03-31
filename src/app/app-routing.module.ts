@@ -16,6 +16,7 @@ const userTokenModule = () => import('@app/access/user-tokens/user-tokens.module
 const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
 const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
 const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
+const securityAuditModule = () => import('@app/access/audit/audit.module').then(m => m.AuditModule);
 
 const routes: Routes = [
   // Main app
@@ -54,6 +55,13 @@ const routes: Routes = [
         component: MainLayoutComponent,
         loadChildren: userTokenModule,
         canActivate: [ResourceGuard("user_token")]
+      },
+      // Security audit
+      {
+        path: 'security/audit',
+        component: MainLayoutComponent,
+        loadChildren: securityAuditModule,
+        canActivate: [ResourceGuard("user")]
       },
       // Activate user
       {
