@@ -3,41 +3,34 @@ import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { User } from '@app/core/authentication/models/user';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
+import { LoginRegister } from '../../models/login-register';
+import { AccessAuditLoginService } from '../../services/access-audit-login.service';
+import { AccessAuditLoginListComponent } from '../access-audit-login-list/access-audit-login-list.component';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
+  selector: 'access-audit-login',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationNavigationComponent],
-  templateUrl: './access-user-selection-list-widget.component.html'
+  imports: [RouterModule, IconsModule, AccessAuditLoginListComponent, PaginationNavigationComponent],
+  templateUrl: './access-audit-login.component.html'
 })
-export class AccessUserSelectionListWidgetComponent implements OnInit {
+export class AccessAuditLoginComponent implements OnInit {
 
-  public createPermission = false;
-
-  public page = new PaginatedResponse<User[]>([]);
+  public page = new PaginatedResponse<LoginRegister[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingUsers = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: AccessUserService
+    private service: AccessAuditLoginService
   ) { }
 
   ngOnInit(): void {
-    // Check permissions
-    this.createPermission = this.authContainer.hasPermission("user", "create");
-
     this.load(0);
   }
 
@@ -50,17 +43,17 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingUsers = true;
+    this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingUsers = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingUsers = false;
+        this.reading = false;
       }
     });
   }

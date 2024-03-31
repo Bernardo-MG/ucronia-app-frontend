@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { Permission } from '@app/core/authentication/models/permission';
+import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
@@ -20,13 +20,13 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Input() public role = "";
 
-  @Output() public addPermission = new EventEmitter<Permission>();
+  @Output() public addPermission = new EventEmitter<ResourcePermission>();
 
-  public page = new PaginatedResponse<Permission[]>([]);
+  public page = new PaginatedResponse<ResourcePermission[]>([]);
 
   public readingPermissions = false;
 
-  public data = new Permission();
+  public data = new ResourcePermission();
 
   private sort = new Sort([]);
 
@@ -40,10 +40,8 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     }
   }
 
-  public onAddPermission(permission: Permission): void {
-    this.service.addPermission(this.role, permission.name).subscribe(p => {
-      this.addPermission.emit(permission);
-    });
+  public onAddPermission(permission: ResourcePermission): void {
+    this.addPermission.emit(permission);
   }
 
   public onGoTo(page: number) {

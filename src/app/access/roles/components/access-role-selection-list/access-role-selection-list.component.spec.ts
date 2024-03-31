@@ -1,6 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from './access-role-selection-list.component';
 
 describe('AccessRoleSelectionListComponent', () => {
@@ -12,9 +11,6 @@ describe('AccessRoleSelectionListComponent', () => {
       imports: [
         HttpClientTestingModule,
         AccessRoleSelectionListComponent
-      ],
-      providers: [
-        AccessRoleService
       ]
     })
       .compileComponents();

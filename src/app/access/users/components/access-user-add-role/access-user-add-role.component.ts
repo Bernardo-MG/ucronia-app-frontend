@@ -17,9 +17,9 @@ export class AccessUserAddRoleComponent implements OnChanges {
 
   @Input() public user = "";
 
-  @Output() public addRole = new EventEmitter<Role>();
+  @Input() public page = new PaginatedResponse<Role[]>([]);
 
-  public page = new PaginatedResponse<Role[]>([]);
+  @Output() public addRole = new EventEmitter<Role>();
 
   public readingSelection = false;
 
@@ -34,9 +34,7 @@ export class AccessUserAddRoleComponent implements OnChanges {
   }
 
   public onAddRole(data: Role): void {
-    this.service.addRole(this.user, data.name).subscribe(p => {
-      this.addRole.emit(data);
-    });
+    this.addRole.emit(data);
   }
 
   public loadRoleSelectionPage(page: number) {

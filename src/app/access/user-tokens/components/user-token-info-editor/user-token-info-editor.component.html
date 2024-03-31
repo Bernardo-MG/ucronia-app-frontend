@@ -9,11 +9,13 @@
         </div>
         <footer class="card-footer">
           <div class="row">
-            <!-- Buttons -->
+            <!-- Revoke button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke"
-                (action)="onRevoke()"></layout-waiting-button>
+              data-bs-toggle="modal"
+              [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''"></layout-waiting-button>
             </div>
+            <!-- Extend expiration button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal"
@@ -41,6 +43,23 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-secondary" (click)="onExtendExpiration()"
           data-bs-dismiss="modal">Accept</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmation for revoking -->
+<div id="revokeModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to revoke the token?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onRevoke()" data-bs-dismiss="modal">Revoke</button>
       </div>
     </div>
   </div>

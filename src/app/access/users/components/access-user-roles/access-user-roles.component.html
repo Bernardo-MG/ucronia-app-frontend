@@ -1,12 +1,11 @@
-<layout-waiting-wrapper [waiting]="readingRoles">
+<layout-waiting-wrapper [waiting]="waiting">
   <!-- Roles -->
   <table class="table">
     <thead>
       <tr>
         <th scope="col"></th>
         <th scope="col">
-          Name<sorting-button property="name"
-            (directionChange)="onChangeDirection($event)"></sorting-button>
+          Name
         </th>
       </tr>
     </thead>
@@ -14,7 +13,7 @@
       <ng-template ngFor let-role [ngForOf]="page.content">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemoveRole(role)" type="button" class="btn btn-link link-dark"
+            <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
               role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
@@ -25,8 +24,9 @@
     </tbody>
   </table>
 </layout-waiting-wrapper>
+<!-- Page navigation -->
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [disabled]="readingRoles" [current]="page.page + 1" [pages]="page.totalPages"
-    (goTo)="onGoTo($event)">
+  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
+    (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

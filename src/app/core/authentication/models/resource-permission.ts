@@ -1,4 +1,4 @@
-export class Permission {
+export class ResourcePermission {
   name = '';
   resource = '';
   action = '';

@@ -20,10 +20,10 @@
       <div class="mb-3">
         <div class="card">
           <div class="card-body">
-            <ng-container [ngSwitch]="permissionView">
+            <ng-container [ngSwitch]="view">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [role]="data.name" [deletable]="deleteEnabled"></access-role-permissions>
+                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"></access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
                   <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddPermission()">
@@ -34,7 +34,7 @@
               <ng-container *ngSwitchCase="'add'">
                 <!-- Add permissions -->
                 <access-role-add-permission [role]="data.name"
-                  (addPermission)="onAddPermission()"></access-role-add-permission>
+                  (addPermission)="onAddPermission($event)"></access-role-add-permission>
                 <div class="d-grid">
                   <!-- Cancel button -->
                   <button type="button" class="btn btn-primary" aria-label="Cancel" (click)="onCancelAddPermission()">
