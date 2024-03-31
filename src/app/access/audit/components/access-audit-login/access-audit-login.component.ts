@@ -10,7 +10,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
 import { AccessAuditLoginListComponent } from '../access-audit-login-list/access-audit-login-list.component';
 
 @Component({
-  selector: 'audit-login',
+  selector: 'access-audit-login',
   standalone: true,
   imports: [RouterModule, IconsModule, AccessAuditLoginListComponent, PaginationNavigationComponent],
   templateUrl: './access-audit-login.component.html'
