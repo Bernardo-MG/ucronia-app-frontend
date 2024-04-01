@@ -10,14 +10,13 @@ import { EditionWrapperComponent } from '@app/shared/layout/components/edition-w
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from '../access-role-add-permission/access-role-add-permission.component';
-import { AccessRoleFormComponent } from '../access-role-form/access-role-form.component';
 import { AccessRoleInfoComponent } from '../access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../access-role-permissions/access-role-permissions.component';
 
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessRoleFormComponent, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, EditionWrapperComponent],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> implements OnInit {

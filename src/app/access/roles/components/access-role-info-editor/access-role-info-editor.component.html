@@ -2,15 +2,11 @@
   <div class="col-md-6 offset-md-3">
     <!-- Role -->
     <div class="mb-1">
-      <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
-        (delete)="onDelete()" (startEditing)="onStartEditing()">
-        <!-- Form -->
-        <access-role-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-          [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-        </access-role-form>
-        <!-- Info -->
-        <access-role-info id="info" [data]="data"></access-role-info>
-      </layout-edition-wrapper>
+      <div class="card">
+        <div class="card-body">
+          <access-role-info id="info" [data]="data"></access-role-info>
+        </div>
+      </div>
     </div>
     <article class="p-4">
       <header>
