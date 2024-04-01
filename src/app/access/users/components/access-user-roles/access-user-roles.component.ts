@@ -1,14 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
-import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-roles',
@@ -18,58 +15,36 @@ import { AccessUserService } from '../../services/access-user.service';
 })
 export class AccessUserRoleFormComponent implements OnChanges {
 
-  @Input() public user = "";
+  @Input() public roles: Role[] = [];
 
   @Input() public editable = false;
 
   @Input() public deletable = false;
 
-  public page = new PaginatedResponse<Role[]>([]);
+  @Input() public waiting = false;
 
-  public readingRoles = false;
+  @Output() public remove = new EventEmitter<Role>();
 
-  private sort = new Sort([]);
+  public page = new ListPaginatedResponse<Role>([], 0, 0);
 
-  constructor(
-    private service: AccessUserService
-  ) { }
+  private pageSize = 10;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['user']) && (this.user.length)) {
-      this.load(0);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['roles']) {
+      this.page = this.buildPage(0);
     }
   }
 
-  public onGoTo(page: number) {
-    this.load(page);
+  public onGoToPage(page: number) {
+    this.page = this.buildPage(page - 1);
   }
 
-  public onChangeDirection(field: SortField) {
-    this.sort.addField(field);
-
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
+  public onRemove(role: Role): void {
+    this.remove.emit(role);
   }
 
-  public onRemoveRole(data: Role): void {
-    this.service.removeRole(this.user, data.name).subscribe(p => this.load(0));
-  }
-
-  private load(page: number) {
-    this.readingRoles = true;
-    this.service.getRoles(this.user, page, this.sort).subscribe({
-      next: response => {
-        this.page = response;
-
-        // Reactivate view
-        this.readingRoles = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingRoles = false;
-      }
-    });
+  private buildPage(page: number) {
+    return new ListPaginatedResponse<Role>(this.roles, page, this.pageSize);
   }
 
 }

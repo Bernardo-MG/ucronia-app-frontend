@@ -1,13 +1,13 @@
-<layout-waiting-wrapper [waiting]="reading">
+<layout-waiting-wrapper [waiting]="waiting">
   <table class="table">
     <thead>
       <tr>
         <th scope="col"></th>
         <th scope="col">
-          Resource<sorting-button property="resource" (directionChange)="onChangeDirection($event)"></sorting-button>
+          Resource
         </th>
         <th scope="col">
-          Action<sorting-button property="action" (directionChange)="onChangeDirection($event)"></sorting-button>
+          Action
         </th>
       </tr>
     </thead>
@@ -15,8 +15,8 @@
       <ng-template ngFor let-permission [ngForOf]="page.content">
         <tr>
           <td>
-            <button [disabled]="!deletable" (click)="onRemove(permission)" type="button"
-              class="btn btn-link link-dark" role="button" aria-label="Back">
+            <button [disabled]="!deletable" (click)="onRemove(permission)" type="button" class="btn btn-link link-dark"
+              role="button" aria-label="Back">
               <icon-delete></icon-delete>
             </button>
           </td>
@@ -26,9 +26,10 @@
       </ng-template>
     </tbody>
   </table>
-  <!-- Permissions navigation -->
-  <div class="d-flex justify-content-center mt-1">
-    <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" (goTo)="onGoTo($event)">
-    </pagination-navigation>
-  </div>
 </layout-waiting-wrapper>
+<!-- Page navigation -->
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
+    (goTo)="onGoToPage($event)">
+  </pagination-navigation>
+</div>

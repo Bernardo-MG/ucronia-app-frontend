@@ -9,6 +9,11 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
 export class FormComponent<Data> {
 
   /**
+   * Allows cancelling flag.
+   */
+  @Input() cancellable = false;
+
+  /**
    * Read only flag. Disables the inputs.
    */
   public _readonly = false;
@@ -48,6 +53,8 @@ export class FormComponent<Data> {
 
   @Output() public save = new EventEmitter<Data>();
 
+  @Output() public cancel = new EventEmitter<void>();
+
   public form: any;
 
   /**
@@ -57,6 +64,15 @@ export class FormComponent<Data> {
    */
   public get saveEnabled() {
     return (this.form.valid) && (!this.waiting) && (!this.readonly);
+  }
+
+  /**
+   * Indicates if the cancel action is enabled.
+   * 
+   * @returns true if the cancel action is enabled, false otherwise
+   */
+  public get cancelEnabled() {
+    return (this.cancellable) && (!this.waiting) && (!this.readonly);
   }
 
   /**
@@ -76,6 +92,13 @@ export class FormComponent<Data> {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }
+  }
+
+  /**
+   * Handler for the cancel event.
+   */
+  public onCancel() {
+    this.cancel.emit();
   }
 
   /**
