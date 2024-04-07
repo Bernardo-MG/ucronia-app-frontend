@@ -65,8 +65,10 @@
             <div class="card">
               <div class="card-body">
                 <access-user-roles-editor [editable]="editEnabled" [deletable]="deleteEnabled"
-                  [username]="data.username" [waiting]="waiting" [roles]="data.roles" (add)="onAddRole($event)"
-                  (remove)="onRemoveRole($event)"></access-user-roles-editor>
+                  [username]="data.username" [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection"
+                  [roles]="data.roles" [rolesSelection]="rolesSelection" (add)="onAddRole($event)"
+                  (remove)="onRemoveRole($event)"
+                  (goToSelectionPage)="onGoToRoleSelectionPage($event)"></access-user-roles-editor>
               </div>
             </div>
           </div>

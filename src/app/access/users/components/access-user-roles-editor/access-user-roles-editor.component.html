@@ -14,7 +14,8 @@
   </ng-container>
   <!-- Add -->
   <ng-container *ngSwitchCase="'add'">
-    <access-user-add-role [user]="username" (addRole)="onAddRole($event)"></access-user-add-role>
+    <access-user-add-role [roles]="rolesSelection" [waiting]="waitingRolesSelection" (addRole)="onAddRole($event)"
+      (goToPage)="onGoToSelectionPage($event)"></access-user-add-role>
     <div class="d-grid">
       <!-- Cancel button -->
       <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">

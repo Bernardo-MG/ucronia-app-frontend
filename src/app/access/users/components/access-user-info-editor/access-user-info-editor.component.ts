@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -28,6 +29,10 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   private username = '';
 
+  public readingRoleSelection = false;
+
+  public rolesSelection = new PaginatedResponse<Role[]>([]);
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -49,6 +54,21 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
         this.username = usernameParam;
       }
       this.load();
+    });
+  }
+  public onGoToRoleSelectionPage(page: number) {
+    this.readingRoleSelection = true;
+    this.service.getAvailableRoles(this.username, page).subscribe({
+      next: response => {
+        this.rolesSelection = response;
+
+        // Reactivate view
+        this.readingRoleSelection = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingRoleSelection = false;
+      }
     });
   }
 
