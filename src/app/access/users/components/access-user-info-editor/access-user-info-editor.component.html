@@ -1,77 +1,95 @@
 <layout-article title="Edit user">
   <div class="col-md-6 offset-md-3">
-    <!-- User -->
-    <div class="mb-1">
-      <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
-        (delete)="onDelete()" (startEditing)="onStartEditing()">
-        <!-- Form -->
-        <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-          [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-        </access-user-form>
-        <!-- Info -->
-        <access-user-info id="info" [data]="data"></access-user-info>
-      </layout-edition-wrapper>
-    </div>
-    <div class="mb-1">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <!-- Enable button -->
-            <ng-template [ngIf]="!data.enabled">
-              <div class="col-sm-2 d-grid gap-2">
-                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
-                  data-bs-toggle="modal"
-                  [attr.data-bs-target]="editEnabled ? '#enableModal' : ''"></layout-waiting-button>
+    <ul class="nav nav-tabs pb-2">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
+          (click)="onChangeView('user')">User</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'roles'" aria-current="page" role="button"
+          (click)="onChangeView('roles')">Roles</a>
+      </li>
+    </ul>
+    <ng-container [ngSwitch]="view">
+      <!-- User -->
+      <ng-container *ngSwitchCase="'user'">
+        <div class="mb-1">
+          <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+            (delete)="onDelete()" (startEditing)="onStartEditing()">
+            <!-- Form -->
+            <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </access-user-form>
+            <!-- Info -->
+            <access-user-info id="info" [data]="data"></access-user-info>
+          </layout-edition-wrapper>
+        </div>
+        <!-- Enable/disable button -->
+        <div class="mb-1">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <!-- Enable button -->
+                <ng-template [ngIf]="!data.enabled">
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''"></layout-waiting-button>
+                  </div>
+                </ng-template>
+                <ng-template [ngIf]="data.enabled">
+                  <!-- Disable button -->
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''"></layout-waiting-button>
+                  </div>
+                </ng-template>
               </div>
-            </ng-template>
-            <ng-template [ngIf]="data.enabled">
-              <!-- Disable button -->
-              <div class="col-sm-2 d-grid gap-2">
-                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
-                  data-bs-toggle="modal"
-                  [attr.data-bs-target]="editEnabled ? '#disableModal' : ''"></layout-waiting-button>
-              </div>
-            </ng-template>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <article class="p-4">
-      <header>
-        <h2 class="border-bottom">Roles</h2>
-      </header>
+      </ng-container>
       <!-- Roles -->
-      <div class="mb-1">
-        <div class="card">
-          <div class="card-body">
-            <ng-container [ngSwitch]="view">
-              <!-- List -->
-              <ng-container *ngSwitchCase="'list'">
-                <access-user-roles [roles]="data.roles" [editable]="editEnabled" [deletable]="deleteEnabled"
-                  [waiting]="waiting" (remove)="onRemoveRole($event)">
-                </access-user-roles>
-                <div class="d-grid">
-                  <!-- Add button -->
-                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
-                    Add
-                  </button>
-                </div>
-              </ng-container>
-              <!-- Add -->
-              <ng-container *ngSwitchCase="'add'">
-                <access-user-add-role [user]="data.username" (addRole)="onAddRole($event)"></access-user-add-role>
-                <div class="d-grid">
-                  <!-- Cancel button -->
-                  <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">
-                    Cancel
-                  </button>
-                </div>
-              </ng-container>
-            </ng-container>
+      <ng-container *ngSwitchCase="'roles'">
+        <article class="p-4">
+          <header>
+            <h2 class="border-bottom">Roles</h2>
+          </header>
+          <!-- Roles -->
+          <div class="mb-1">
+            <div class="card">
+              <div class="card-body">
+                <ng-container [ngSwitch]="roleView">
+                  <!-- List -->
+                  <ng-container *ngSwitchCase="'list'">
+                    <access-user-roles [roles]="data.roles" [editable]="editEnabled" [deletable]="deleteEnabled"
+                      [waiting]="waiting" (remove)="onRemoveRole($event)">
+                    </access-user-roles>
+                    <div class="d-grid">
+                      <!-- Add button -->
+                      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
+                        Add
+                      </button>
+                    </div>
+                  </ng-container>
+                  <!-- Add -->
+                  <ng-container *ngSwitchCase="'add'">
+                    <access-user-add-role [user]="data.username" (addRole)="onAddRole($event)"></access-user-add-role>
+                    <div class="d-grid">
+                      <!-- Cancel button -->
+                      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">
+                        Cancel
+                      </button>
+                    </div>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </article>
+        </article>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>
 

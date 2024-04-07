@@ -24,7 +24,9 @@ import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-ro
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
 
-  public view = 'list';
+  public view: 'user' | 'roles' = 'user';
+
+  public roleView = 'list';
 
   private username = '';
 
@@ -55,7 +57,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   public onAddRole(role: Role): void {
     this.data.roles.push(role);
     this.onSave(this.data);
-    this.view = "list";
+    this.roleView = "list";
   }
 
   public onRemoveRole(role: Role): void {
@@ -64,11 +66,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   }
 
   public onShowAddRole() {
-    this.view = "add";
+    this.roleView = "add";
   }
 
   public onCancelAddRole() {
-    this.view = "list";
+    this.roleView = "list";
   }
 
   public onDisable() {
@@ -81,6 +83,10 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     const user = this.data;
     user.enabled = true;
     this.onSave(user);
+  }
+
+  public onChangeView(newView: 'user' | 'roles') {
+    this.view = newView;
   }
 
   protected override delete(): void {
