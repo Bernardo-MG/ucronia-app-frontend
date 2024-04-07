@@ -13,17 +13,18 @@ import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
+import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
 
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
 
-  public view: 'user' | 'roles' = 'user';
+  public view: 'user' | 'roles' | 'member' = 'user';
 
   private username = '';
 
@@ -73,7 +74,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     this.onSave(user);
   }
 
-  public onChangeView(newView: 'user' | 'roles') {
+  public onChangeView(newView: 'user' | 'roles' | 'member') {
     this.view = newView;
   }
 

@@ -26,11 +26,11 @@ export class AccessUserRolesEditorComponent {
 
   @Output() public add = new EventEmitter<Role>();
 
-  public roleView = 'list';
+  public view: 'list' | 'add' = 'list';
 
   public onAddRole(role: Role): void {
     this.add.emit(role);
-    this.roleView = "list";
+    this.view = "list";
   }
 
   public onRemoveRole(role: Role): void {
@@ -38,11 +38,11 @@ export class AccessUserRolesEditorComponent {
   }
 
   public onShowAddRole() {
-    this.roleView = "add";
+    this.view = "add";
   }
 
   public onCancelAddRole() {
-    this.roleView = "list";
+    this.view = "list";
   }
 
 }

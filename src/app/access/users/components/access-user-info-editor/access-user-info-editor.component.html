@@ -9,6 +9,10 @@
         <a class="nav-link" [class.active]="view === 'roles'" aria-current="page" role="button"
           (click)="onChangeView('roles')">Roles</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'member'" aria-current="page" role="button"
+          (click)="onChangeView('member')">Member</a>
+      </li>
     </ul>
     <ng-container [ngSwitch]="view">
       <!-- User -->
@@ -63,6 +67,22 @@
                 <access-user-roles-editor [editable]="editEnabled" [deletable]="deleteEnabled"
                   [username]="data.username" [waiting]="waiting" [roles]="data.roles" (add)="onAddRole($event)"
                   (remove)="onRemoveRole($event)"></access-user-roles-editor>
+              </div>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+      <!-- Member -->
+      <ng-container *ngSwitchCase="'member'">
+        <article class="p-4">
+          <header>
+            <h2 class="border-bottom">Member</h2>
+          </header>
+          <!-- Member -->
+          <div class="mb-1">
+            <div class="card">
+              <div class="card-body">
+                <access-user-member-editor [editable]="editable"></access-user-member-editor>
               </div>
             </div>
           </div>
