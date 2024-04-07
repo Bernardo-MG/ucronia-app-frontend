@@ -8,6 +8,10 @@ export class Account {
    */
   username = '';
   /**
+   * User name.
+   */
+  name = '';
+  /**
    * User email.
    */
   email = '';
