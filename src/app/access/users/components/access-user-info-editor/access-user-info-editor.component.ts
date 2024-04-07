@@ -11,22 +11,19 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 import { Observable } from 'rxjs';
 import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
 import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
-import { AccessUserRoleFormComponent } from '../access-user-roles/access-user-roles.component';
+import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
 
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, AccessUserRoleFormComponent, AccessUserAddRoleComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
 
   public view: 'user' | 'roles' = 'user';
-
-  public roleView = 'list';
 
   private username = '';
 
@@ -57,20 +54,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   public onAddRole(role: Role): void {
     this.data.roles.push(role);
     this.onSave(this.data);
-    this.roleView = "list";
   }
 
   public onRemoveRole(role: Role): void {
     this.data.roles = this.data.roles.filter(r => r.name != role.name);
     this.onSave(this.data);
-  }
-
-  public onShowAddRole() {
-    this.roleView = "add";
-  }
-
-  public onCancelAddRole() {
-    this.roleView = "list";
   }
 
   public onDisable() {

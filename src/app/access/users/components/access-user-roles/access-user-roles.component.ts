@@ -13,7 +13,7 @@ import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorti
   imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-user-roles.component.html'
 })
-export class AccessUserRoleFormComponent implements OnChanges {
+export class AccessUserRolesComponent implements OnChanges {
 
   @Input() public roles: Role[] = [];
 
