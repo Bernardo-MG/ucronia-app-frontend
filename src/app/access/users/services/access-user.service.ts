@@ -88,6 +88,13 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
+  public assignMember(username: string, member: Member): Observable<Member> {
+    return this.getClient()
+    .appendRoute(`/${username}/member/${member.number}`)
+      .create<SimpleResponse<Member>>(null)
+      .pipe(map(r => r.content));
+  }
+
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/security/user');
   }

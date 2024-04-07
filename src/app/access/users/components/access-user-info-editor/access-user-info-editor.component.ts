@@ -28,8 +28,6 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public view: 'user' | 'roles' | 'member' = 'user';
 
-  private username = '';
-
   public readingRoleSelection = false;
 
   public readingMemberSelection = false;
@@ -37,6 +35,10 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   public rolesSelection = new PaginatedResponse<Role[]>([]);
 
   public membersSelection = new PaginatedResponse<Member[]>([]);
+
+  public member = new Member();
+
+  private username = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -100,6 +102,16 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
   }
 
   public onSelectMember(member: Member): void {
+    this.service.assignMember(this.username, member).subscribe({
+      next: response => {
+        this.member = response;
+
+        // Reactivate view
+      },
+      error: error => {
+        // Reactivate view
+      }
+    });
   }
 
   public onRemoveRole(role: Role): void {
