@@ -21,5 +21,11 @@
   </ng-container>
   <ng-container *ngSwitchCase="'select'">
     <access-user-select-member></access-user-select-member>
+    <div class="d-grid">
+      <!-- Cancel button -->
+      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">
+        Cancel
+      </button>
+    </div>
   </ng-container>
 </ng-container>

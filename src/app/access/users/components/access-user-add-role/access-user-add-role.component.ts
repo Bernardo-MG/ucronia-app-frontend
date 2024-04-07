@@ -26,7 +26,7 @@ export class AccessUserAddRoleComponent implements OnInit {
     this.onGoToPage(0);
   }
 
-  public onAddRole(data: Role): void {
+  public onAdd(data: Role): void {
     this.addRole.emit(data);
   }
 

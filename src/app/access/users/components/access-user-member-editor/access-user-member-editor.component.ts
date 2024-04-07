@@ -20,4 +20,8 @@ export class AccessUserMemberEditorComponent {
     this.view = "select";
   }
 
+  public onCancelSelectMember() {
+    this.view = "member";
+  }
+
 }
