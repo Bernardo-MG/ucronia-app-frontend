@@ -20,7 +20,8 @@
     </div>
   </ng-container>
   <ng-container *ngSwitchCase="'select'">
-    <access-user-select-member></access-user-select-member>
+    <access-user-select-member [members]="membersSelection" [waiting]="waitingMembersSelection"
+      (selectMember)="onSelectMember($event)" (goToPage)="onGoToSelectionPage($event)"></access-user-select-member>
     <div class="d-grid">
       <!-- Cancel button -->
       <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">

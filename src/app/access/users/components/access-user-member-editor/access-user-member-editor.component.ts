@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Member } from '@app/association/members/models/member';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 
 @Component({
   selector: 'access-user-member-editor',
@@ -14,6 +16,14 @@ export class AccessUserMemberEditorComponent {
 
   @Input() editable = false;
 
+  @Input() waitingMembersSelection = false;
+
+  @Input() public membersSelection = new PaginatedResponse<Member[]>([]);
+
+  @Output() public goToSelectionPage = new EventEmitter<number>();
+
+  @Output() public selectMember = new EventEmitter<Member>();
+
   public view: 'member' | 'select' = 'member';
 
   public onShowSelectMember() {
@@ -22,6 +32,15 @@ export class AccessUserMemberEditorComponent {
 
   public onCancelSelectMember() {
     this.view = "member";
+  }
+
+  public onSelectMember(member: Member): void {
+    this.selectMember.emit(member);
+    this.view = "member";
+  }
+
+  public onGoToSelectionPage(page: number): void {
+    this.goToSelectionPage.emit(page);
   }
 
 }

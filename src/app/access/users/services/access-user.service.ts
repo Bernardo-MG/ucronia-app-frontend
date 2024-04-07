@@ -13,6 +13,7 @@ import { User } from '@app/core/authentication/models/user';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
+import { Member } from '@app/association/members/models/member';
 
 @Injectable()
 export class AccessUserService {
@@ -48,6 +49,18 @@ export class AccessUserService {
       .read<PaginatedResponse<Role[]>>();
   }
 
+  public getAvailableMembers(page: number): Observable<PaginatedResponse<Member[]>> {
+    const defaultSort: SortField = new SortField('name');
+
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([defaultSort]);
+    query.pagination = { page };
+
+    return this.getMembersClient()
+      .query(query)
+      .read<PaginatedResponse<Member[]>>();
+  }
+
   public create(data: User): Observable<User> {
     return this.getClient()
       .create<SimpleResponse<User>>(data)
@@ -77,6 +90,10 @@ export class AccessUserService {
 
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/security/user');
+  }
+
+  private getMembersClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }

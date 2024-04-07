@@ -16,6 +16,7 @@ import { AccessUserFormComponent } from '../access-user-form/access-user-form.co
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
+import { Member } from '@app/association/members/models/member';
 
 @Component({
   selector: 'access-user-info-editor',
@@ -31,7 +32,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public readingRoleSelection = false;
 
+  public readingMemberSelection = false;
+
   public rolesSelection = new PaginatedResponse<Role[]>([]);
+
+  public membersSelection = new PaginatedResponse<Member[]>([]);
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +61,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
       this.load();
     });
   }
+
   public onGoToRoleSelectionPage(page: number) {
     this.readingRoleSelection = true;
     this.service.getAvailableRoles(this.username, page).subscribe({
@@ -72,9 +78,28 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     });
   }
 
+  public onGoToMemberSelectionPage(page: number) {
+    this.readingMemberSelection = true;
+    this.service.getAvailableMembers(page).subscribe({
+      next: response => {
+        this.membersSelection = response;
+
+        // Reactivate view
+        this.readingMemberSelection = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingMemberSelection = false;
+      }
+    });
+  }
+
   public onAddRole(role: Role): void {
     this.data.roles.push(role);
     this.onSave(this.data);
+  }
+
+  public onSelectMember(member: Member): void {
   }
 
   public onRemoveRole(role: Role): void {

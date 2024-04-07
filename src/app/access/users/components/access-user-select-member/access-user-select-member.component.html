@@ -10,15 +10,15 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="members.content">
+      <ng-template ngFor let-member [ngForOf]="members.content">
         <tr role="button">
           <td>
-            <button (click)="onSelect(role)" type="button" class="btn btn-link link-dark" role="button"
+            <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
               aria-label="Back">
               <icon-add></icon-add>
             </button>
           </td>
-          <td>{{role.name}}</td>
+          <td>{{member.name.fullName}}</td>
         </tr>
       </ng-template>
     </tbody>

@@ -84,7 +84,9 @@
           <div class="mb-1">
             <div class="card">
               <div class="card-body">
-                <access-user-member-editor [editable]="editable"></access-user-member-editor>
+                <access-user-member-editor [editable]="editable" [waitingMembersSelection]="readingMemberSelection"
+                  [membersSelection]="membersSelection" (goToSelectionPage)="onGoToMemberSelectionPage($event)"
+                  (selectMember)="onSelectMember($event)"></access-user-member-editor>
               </div>
             </div>
           </div>
