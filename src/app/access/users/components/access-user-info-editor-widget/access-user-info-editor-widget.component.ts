@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
@@ -16,15 +17,14 @@ import { AccessUserFormComponent } from '../access-user-form/access-user-form.co
 import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
-import { Member } from '@app/association/members/models/member';
 
 @Component({
-  selector: 'access-user-info-editor',
+  selector: 'access-user-info-editor-widget',
   standalone: true,
   imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
-  templateUrl: './access-user-info-editor.component.html'
+  templateUrl: './access-user-info-editor-widget.component.html'
 })
-export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
+export class AccessUserInfoEditorWidgetComponent extends InfoEditorComponent<User> implements OnInit {
 
   public view: 'user' | 'roles' | 'member' = 'user';
 

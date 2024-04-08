@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserInfoEditorComponent } from './access-user-info-editor.component';
+import { AccessUserInfoEditorWidgetComponent } from './access-user-info-editor-widget.component';
 
-describe('AccessUserInfoEditorComponent', () => {
-  let component: AccessUserInfoEditorComponent;
-  let fixture: ComponentFixture<AccessUserInfoEditorComponent>;
+describe('AccessUserInfoEditorWidgetComponent', () => {
+  let component: AccessUserInfoEditorWidgetComponent;
+  let fixture: ComponentFixture<AccessUserInfoEditorWidgetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        AccessUserInfoEditorComponent
+        AccessUserInfoEditorWidgetComponent
       ],
       providers: [
         AccessUserService
@@ -21,7 +21,7 @@ describe('AccessUserInfoEditorComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserInfoEditorComponent);
+    fixture = TestBed.createComponent(AccessUserInfoEditorWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
