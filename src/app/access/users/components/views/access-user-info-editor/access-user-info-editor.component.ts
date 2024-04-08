@@ -11,20 +11,20 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
-import { UserUpdate } from '../../models/user-update';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
-import { AccessUserInfoComponent } from '../access-user-info/access-user-info.component';
-import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
-import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
+import { UserUpdate } from '../../../models/user-update';
+import { AccessUserService } from '../../../services/access-user.service';
+import { AccessUserFormComponent } from '../../form/access-user-form/access-user-form.component';
+import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
+import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
+import { AccessUserInfoComponent } from '../../info/access-user-info/access-user-info.component';
 
 @Component({
-  selector: 'access-user-info-editor-widget',
+  selector: 'access-user-info-editor',
   standalone: true,
   imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
-  templateUrl: './access-user-info-editor-widget.component.html'
+  templateUrl: './access-user-info-editor.component.html'
 })
-export class AccessUserInfoEditorWidgetComponent extends InfoEditorComponent<User> implements OnInit {
+export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
 
   public view: 'user' | 'roles' | 'member' = 'user';
 

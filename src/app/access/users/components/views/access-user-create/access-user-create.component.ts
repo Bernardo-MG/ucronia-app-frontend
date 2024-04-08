@@ -4,8 +4,8 @@ import { User } from '@app/core/authentication/models/user';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserFormComponent } from '../access-user-form/access-user-form.component';
+import { AccessUserService } from '../../../services/access-user.service';
+import { AccessUserFormComponent } from '../../form/access-user-form/access-user-form.component';
 
 @Component({
   selector: 'access-user-create',

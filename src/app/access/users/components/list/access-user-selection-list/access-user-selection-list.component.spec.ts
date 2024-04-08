@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from './access-user-selection-list.component';
 
 describe('AccessUserSelectionListComponent', () => {

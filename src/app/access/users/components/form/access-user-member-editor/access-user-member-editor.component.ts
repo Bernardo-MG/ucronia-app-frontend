@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/association/members/models/member';
-import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({
   selector: 'access-user-member-editor',

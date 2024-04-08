@@ -1,19 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessFrontpageComponent } from './access-user-frontpage.component';
+import { AccessUserService } from '../../../services/access-user.service';
+import { AccessUserRolesComponent } from './access-user-roles.component';
 
-describe('AccessFrontpageComponent', () => {
-  let component: AccessFrontpageComponent;
-  let fixture: ComponentFixture<AccessFrontpageComponent>;
+describe('AccessUserRolesComponent', () => {
+  let component: AccessUserRolesComponent;
+  let fixture: ComponentFixture<AccessUserRolesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule,
-        AccessFrontpageComponent
+        AccessUserRolesComponent
       ],
       providers: [
         AccessUserService
@@ -21,7 +19,7 @@ describe('AccessFrontpageComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessFrontpageComponent);
+    fixture = TestBed.createComponent(AccessUserRolesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
