@@ -82,7 +82,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public onGoToMemberSelectionPage(page: number) {
     this.readingMemberSelection = true;
-    this.service.getAvailableMembers(page).subscribe({
+    this.service.getAvailableMembers(this.username, page).subscribe({
       next: response => {
         this.membersSelection = response;
 

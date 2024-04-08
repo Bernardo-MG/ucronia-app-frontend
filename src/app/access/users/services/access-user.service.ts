@@ -49,14 +49,15 @@ export class AccessUserService {
       .read<PaginatedResponse<Role[]>>();
   }
 
-  public getAvailableMembers(page: number): Observable<PaginatedResponse<Member[]>> {
+  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
     const defaultSort: SortField = new SortField('name');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);
     query.pagination = { page };
 
-    return this.getMembersClient()
+    return this.getClient()
+      .appendRoute(`/${username}/member/available`)
       .query(query)
       .read<PaginatedResponse<Member[]>>();
   }
@@ -97,10 +98,6 @@ export class AccessUserService {
 
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/security/user');
-  }
-
-  private getMembersClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }
