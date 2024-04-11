@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from '@app/account/services/account.service';
-import { AccountProfileViewComponent } from './account-profile.component';
+import { AccountProfileInfoComponent } from './account-profile-info.component';
 
-describe('AccountProfileViewComponent', () => {
-  let component: AccountProfileViewComponent;
-  let fixture: ComponentFixture<AccountProfileViewComponent>;
+describe('AccountProfileInfoComponent', () => {
+  let component: AccountProfileInfoComponent;
+  let fixture: ComponentFixture<AccountProfileInfoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        AccountProfileViewComponent
+        AccountProfileInfoComponent
       ],
       providers: [
         AccountService
@@ -19,7 +19,7 @@ describe('AccountProfileViewComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountProfileViewComponent);
+    fixture = TestBed.createComponent(AccountProfileInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
