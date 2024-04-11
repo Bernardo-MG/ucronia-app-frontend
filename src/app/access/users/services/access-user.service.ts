@@ -56,8 +56,7 @@ export class AccessUserService {
     query.defaultSort = new Sort([defaultSort]);
     query.pagination = { page };
 
-    return this.getClient()
-      .appendRoute(`/${username}/member/available`)
+    return this.getMemberClient()
       .query(query)
       .read<PaginatedResponse<Member[]>>();
   }
@@ -98,6 +97,10 @@ export class AccessUserService {
 
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/security/user');
+  }
+
+  private getMemberClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }
