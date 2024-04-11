@@ -5,8 +5,8 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Member } from '../../../members/models/member';
-import { FeePayment } from '../../models/fee-payment';
+import { Member } from '../../../../members/models/member';
+import { FeePayment } from '../../../models/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',

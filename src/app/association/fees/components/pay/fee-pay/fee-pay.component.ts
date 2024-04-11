@@ -7,11 +7,11 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { Observable } from 'rxjs';
-import { Member } from '../../../members/models/member';
-import { FeePayment } from '../../models/fee-payment';
-import { FeePaymentMember } from '../../models/fee-payment-member';
-import { FeeService } from '../../services/fee.service';
-import { FeeMemberSelectionComponent } from '../fee-member-selection/fee-member-selection.component';
+import { Member } from '../../../../members/models/member';
+import { FeePayment } from '../../../models/fee-payment';
+import { FeePaymentMember } from '../../../models/fee-payment-member';
+import { FeeService } from '../../../services/fee.service';
+import { FeeMemberSelectionComponent } from '../../edit/fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 
 @Component({

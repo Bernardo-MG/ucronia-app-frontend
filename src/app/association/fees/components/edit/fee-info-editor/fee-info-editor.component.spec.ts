@@ -1,12 +1,12 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../services/fee.service';
-import { FeePayComponent } from './fee-pay.component';
+import { FeeService } from '../../../services/fee.service';
+import { FeeInfoEditorComponent } from './fee-info-editor.component';
 
-describe('FeePayComponent', () => {
-  let component: FeePayComponent;
-  let fixture: ComponentFixture<FeePayComponent>;
+describe('FeeInfoEditorComponent', () => {
+  let component: FeeInfoEditorComponent;
+  let fixture: ComponentFixture<FeeInfoEditorComponent>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -16,8 +16,8 @@ describe('FeePayComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        FeePayComponent
+        RouterTestingModule,
+        FeeInfoEditorComponent
       ],
       providers: [
         { provide: FeeService, useValue: service }
@@ -25,7 +25,7 @@ describe('FeePayComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeePayComponent);
+    fixture = TestBed.createComponent(FeeInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

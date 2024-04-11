@@ -5,8 +5,8 @@ import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar
 import { Active } from '@app/association/members/models/active';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { FeeCalendar } from '../../models/fee-calendar';
-import { FeeCalendarMonth } from '../../models/fee-month';
+import { FeeCalendar } from '../../../models/fee-calendar';
+import { FeeCalendarMonth } from '../../../models/fee-month';
 
 @Component({
   selector: 'assoc-fee-calendar',

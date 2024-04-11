@@ -6,8 +6,8 @@ import { InfoEditorComponent } from '@app/shared/form/components/info-editor/inf
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
-import { Fee } from '../../models/fee';
-import { FeeService } from '../../services/fee.service';
+import { Fee } from '../../../models/fee';
+import { FeeService } from '../../../services/fee.service';
 import { FeeEditFormComponent } from '../fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from '../fee-info/fee-info.component';
 
