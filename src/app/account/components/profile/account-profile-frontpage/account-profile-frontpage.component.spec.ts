@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { AccountService } from '@app/account/services/account.service';
 import { AccountProfileFrontpageComponent } from './account-profile-frontpage.component';
 
 describe('AccountProfileFrontpageComponent', () => {
@@ -8,7 +9,13 @@ describe('AccountProfileFrontpageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccountProfileFrontpageComponent]
+      imports: [
+        HttpClientTestingModule,
+        AccountProfileFrontpageComponent
+      ],
+      providers: [
+        AccountService
+      ]
     })
     .compileComponents();
     

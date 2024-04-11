@@ -1,6 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccountService } from '@app/account/services/account.service';
 import { AccountProfileInfoComponent } from './account-profile-info.component';
 
 describe('AccountProfileInfoComponent', () => {
@@ -10,11 +8,7 @@ describe('AccountProfileInfoComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         AccountProfileInfoComponent
-      ],
-      providers: [
-        AccountService
       ]
     })
       .compileComponents();
