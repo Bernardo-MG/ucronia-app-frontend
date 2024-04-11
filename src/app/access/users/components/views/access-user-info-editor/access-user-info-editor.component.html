@@ -1,0 +1,129 @@
+<layout-article title="Edit user">
+  <div class="col-md-6 offset-md-3">
+    <ul class="nav nav-tabs pb-2">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
+          (click)="onChangeView('user')">User</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'roles'" aria-current="page" role="button"
+          (click)="onChangeView('roles')">Roles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="view === 'member'" aria-current="page" role="button"
+          (click)="onChangeView('member')">Member</a>
+      </li>
+    </ul>
+    <ng-container [ngSwitch]="view">
+      <!-- User -->
+      <ng-container *ngSwitchCase="'user'">
+        <div class="mb-1">
+          <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+            (delete)="onDelete()" (startEditing)="onStartEditing()">
+            <!-- Form -->
+            <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </access-user-form>
+            <!-- Info -->
+            <access-user-info id="info" [data]="data"></access-user-info>
+          </layout-edition-wrapper>
+        </div>
+        <!-- Enable/disable button -->
+        <div class="mb-1">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <!-- Enable button -->
+                <ng-template [ngIf]="!data.enabled">
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''"></layout-waiting-button>
+                  </div>
+                </ng-template>
+                <ng-template [ngIf]="data.enabled">
+                  <!-- Disable button -->
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''"></layout-waiting-button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Roles -->
+      <ng-container *ngSwitchCase="'roles'">
+        <article class="p-4">
+          <header>
+            <h2 class="border-bottom">Roles</h2>
+          </header>
+          <!-- Roles -->
+          <div class="mb-1">
+            <div class="card">
+              <div class="card-body">
+                <access-user-roles-editor [editable]="editEnabled" [deletable]="deleteEnabled"
+                  [username]="data.username" [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection"
+                  [roles]="data.roles" [rolesSelection]="rolesSelection" (add)="onAddRole($event)"
+                  (remove)="onRemoveRole($event)"
+                  (goToSelectionPage)="onGoToRoleSelectionPage($event)"></access-user-roles-editor>
+              </div>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+      <!-- Member -->
+      <ng-container *ngSwitchCase="'member'">
+        <article class="p-4">
+          <header>
+            <h2 class="border-bottom">Member</h2>
+          </header>
+          <!-- Member -->
+          <div class="mb-1">
+            <div class="card">
+              <div class="card-body">
+                <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waitingMembersSelection]="readingMemberSelection"
+                  [membersSelection]="membersSelection" (goToSelectionPage)="onGoToMemberSelectionPage($event)"
+                  (selectMember)="onSelectMember($event)"></access-user-member-editor>
+              </div>
+            </div>
+          </div>
+        </article>
+      </ng-container>
+    </ng-container>
+  </div>
+</layout-article>
+
+<!-- Modal confirmation for disabling -->
+<div id="disableModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to disable the user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onDisable()" data-bs-dismiss="modal">Disable</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal confirmation for enabling -->
+<div id="enableModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to enable the user?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onEnable()" data-bs-dismiss="modal">Enable</button>
+      </div>
+    </div>
+  </div>
+</div>
