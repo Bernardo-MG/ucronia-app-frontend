@@ -4,7 +4,7 @@ import { FeeReportService } from '@app/association/fees/services/fee-report.serv
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'fee-payment-chart-widget',
+  selector: 'assoc-fee-payment-chart-widget',
   standalone: true,
   imports: [],
   templateUrl: './fee-payment-chart-widget.component.html'
