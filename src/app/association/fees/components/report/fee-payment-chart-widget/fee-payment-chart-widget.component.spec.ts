@@ -1,5 +1,6 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FeeReportService } from '@app/association/fees/services/fee-report.service';
 import { FeePaymentChartWidgetComponent } from './fee-payment-chart-widget.component';
 
 describe('FeePaymentChartWidgetComponent', () => {
@@ -8,10 +9,16 @@ describe('FeePaymentChartWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeePaymentChartWidgetComponent]
+      imports: [
+        HttpClientTestingModule,
+        FeePaymentChartWidgetComponent
+      ],
+      providers: [
+        FeeReportService
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(FeePaymentChartWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
