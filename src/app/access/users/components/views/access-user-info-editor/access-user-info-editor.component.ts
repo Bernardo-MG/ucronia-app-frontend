@@ -32,6 +32,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
 
   public readingMemberSelection = false;
 
+  public readingMember = false;
+
   public rolesSelection = new PaginatedResponse<Role[]>([]);
 
   public membersSelection = new PaginatedResponse<Member[]>([]);
@@ -61,6 +63,20 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
         this.username = usernameParam;
       }
       this.load();
+    });
+
+    // Load member
+    this.service.getMember(this.username).subscribe({
+      next: response => {
+        this.member = response;
+
+        // Reactivate view
+        this.readingMember = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingMember = false;
+      }
     });
   }
 
