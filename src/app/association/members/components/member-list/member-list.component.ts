@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
+import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { Member } from '../../models/member';
 
 @Component({

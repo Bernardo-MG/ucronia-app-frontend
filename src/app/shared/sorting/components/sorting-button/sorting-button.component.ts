@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { SortField } from '@app/core/api/models/sort-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { SortDirection } from '../../../core/api/models/sort-direction';
+import { SortDirection } from '../../../../core/api/models/sort-direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted

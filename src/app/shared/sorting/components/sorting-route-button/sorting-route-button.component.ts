@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SortField } from '@app/core/api/models/sort-field';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
-import { SortDirection } from '../../../core/api/models/sort-direction';
+import { SortDirection } from '../../../../core/api/models/sort-direction';
 import { SortingButtonComponent } from '../sorting-button/sorting-button.component';
 
 @Component({
