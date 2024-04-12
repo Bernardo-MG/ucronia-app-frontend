@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { FeeCalendar } from '../../models/fee-calendar';
-import { FeeCalendarYearsRange } from '../../models/fee-calendar-years-range';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeCalendar } from '../../../models/fee-calendar';
+import { FeeCalendarYearsRange } from '../../../models/fee-calendar-years-range';
+import { FeeCalendarService } from '../../../services/fee-calendar.service';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 
 @Component({

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FeeFrontpageComponent } from './components/fee-frontpage/fee-frontpage.component';
-import { FeeInfoEditorComponent } from './components/fee-info-editor/fee-info-editor.component';
-import { FeePayComponent } from './components/fee-pay/fee-pay.component';
+import { FeeFrontpageComponent } from './components/frontpage/fee-frontpage/fee-frontpage.component';
+import { FeeInfoEditorComponent } from './components/edit/fee-info-editor/fee-info-editor.component';
+import { FeePayComponent } from './components/pay/fee-pay/fee-pay.component';
 
 
 const routes: Routes = [

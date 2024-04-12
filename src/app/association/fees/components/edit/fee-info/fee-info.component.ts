@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { Fee } from '../../models/fee';
+import { Fee } from '../../../models/fee';
 import { CommonModule } from '@angular/common';
 
 @Component({

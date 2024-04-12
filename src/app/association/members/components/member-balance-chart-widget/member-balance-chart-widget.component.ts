@@ -70,8 +70,8 @@ export class MemberBalanceChartWidgetComponent implements OnInit {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.date)
-    const totals = this.balance.map(b => b.total)
+    const labels = this.balance.map(b => b.date);
+    const totals = this.balance.map(b => b.total);
 
     const data = {
       labels: labels,

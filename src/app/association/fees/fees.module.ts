@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FeesRoutingModule } from './fees-routing.module';
 import { FeeCalendarService } from './services/fee-calendar.service';
+import { FeeReportService } from './services/fee-report.service';
 import { FeeService } from './services/fee.service';
 
 
@@ -11,7 +12,8 @@ import { FeeService } from './services/fee.service';
   ],
   providers: [
     FeeCalendarService,
-    FeeService
+    FeeService,
+    FeeReportService
   ]
 })
 export class FeesModule { }
