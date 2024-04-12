@@ -68,7 +68,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> imp
     // Load member
     this.service.getMember(this.username).subscribe({
       next: response => {
-        this.member = response;
+        if(response){
+          this.member = response;
+        } else {
+          this.member = new Member();
+        }
 
         // Reactivate view
         this.readingMember = false;
