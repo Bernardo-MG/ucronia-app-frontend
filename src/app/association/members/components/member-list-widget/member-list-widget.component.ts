@@ -10,11 +10,12 @@ import { Active } from '../../models/active';
 import { Member } from '../../models/member';
 import { MemberService } from '../../services/member.service';
 import { MemberListComponent } from '../member-list/member-list.component';
+import { MemberStatusSelectComponent } from '../member-status-select/member-status-select.component';
 
 @Component({
   selector: 'assoc-member-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, MemberListComponent, PaginationNavigationComponent],
+  imports: [RouterModule, IconsModule, MemberListComponent, PaginationNavigationComponent, MemberStatusSelectComponent],
   templateUrl: './member-list-widget.component.html'
 })
 export class MemberListWidgetComponent implements OnInit {
@@ -44,9 +45,8 @@ export class MemberListWidgetComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeActiveFilter(event: any) {
-    const value = event.target.value as 'Active' | 'Inactive' | 'All';
-    this.activeFilter = (Active[value] as Active);
+  public onChangeActiveFilter(active: Active) {
+    this.activeFilter = active;
     this.load(0);
   }
 

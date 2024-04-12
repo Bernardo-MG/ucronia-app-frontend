@@ -6,12 +6,7 @@
         status
       </div>
       <div class="col-md-2">
-        <select class="form-select form-select-sm" aria-label="Filter member status"
-          (change)="onChangeActiveFilter($event)">
-          <option [selected]="activeFilter === 'active'" value="Active">Active</option>
-          <option [selected]="activeFilter === 'inactive'" value="Inactive">Inactive</option>
-          <option [selected]="activeFilter === 'all'" value="All">All</option>
-        </select>
+        <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
       </div>
     </div>
     <!-- List -->

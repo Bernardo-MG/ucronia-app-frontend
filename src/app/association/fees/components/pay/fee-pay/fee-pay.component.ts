@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MemberStatusSelectComponent } from '@app/association/members/components/member-status-select/member-status-select.component';
+import { Active } from '@app/association/members/models/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -17,7 +19,7 @@ import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingWrapperComponent],
+  imports: [CommonModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingWrapperComponent, MemberStatusSelectComponent],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
@@ -32,6 +34,8 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public member = new Member();
 
+  public activeFilter = Active.Active;
+
   constructor(
     private service: FeeService,
     private authContainer: AuthContainer,
@@ -43,6 +47,11 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("fee", "create");
+    this.onGoToMembersPage(0);
+  }
+
+  public onChangeActiveFilter(active: Active) {
+    this.activeFilter = active;
     this.onGoToMembersPage(0);
   }
 
@@ -59,7 +68,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
     // TODO: The page correction should be done automatically
-    this.service.getMembers(page).subscribe({
+    this.service.getMembers(page, this.activeFilter).subscribe({
       next: response => {
         this.memberPage = response;
 
