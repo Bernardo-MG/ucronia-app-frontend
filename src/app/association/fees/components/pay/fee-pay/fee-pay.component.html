@@ -12,6 +12,8 @@
           <ng-container *ngSwitchCase="false">
             <!-- Member selection -->
             <layout-waiting-wrapper [waiting]="readingMembers">
+              <div>Pick member</div>
+              <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
               <assoc-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
                 [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
                 (goToPage)="onGoToMembersPage($event)">

@@ -12,6 +12,7 @@ import { map, Observable } from 'rxjs';
 import { Member } from '../../members/models/member';
 import { Fee } from '../models/fee';
 import { FeePayment } from '../models/fee-payment';
+import { Active } from '@app/association/members/models/active';
 
 @Injectable()
 export class FeeService {
@@ -47,10 +48,11 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
+  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
     query.sort = new Sort([new SortField('fullName'), new SortField('number')]);
     query.page = page;
+    query.addParameter('status', active.toString().toUpperCase());
 
     return this.getMemberClient()
       .query(query)
