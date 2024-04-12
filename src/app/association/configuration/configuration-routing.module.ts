@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurationInfoEditorComponent } from './components/configuration-info-editor/configuration-info-editor.component';
+import { ConfigurationInfoEditorComponent } from './components/views/configuration-info-editor/configuration-info-editor.component';
 
 
 const routes: Routes = [

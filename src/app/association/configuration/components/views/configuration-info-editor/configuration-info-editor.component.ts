@@ -4,10 +4,10 @@ import { InfoEditorComponent } from '@app/shared/form/components/info-editor/inf
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
-import { AssociationConfiguration } from '../../models/association-configuration';
-import { AssociationConfigurationService } from '../../service/association-configuration.service';
-import { ConfigurationFormComponent } from '../configuration-form/configuration-form.component';
-import { ConfigurationInfoComponent } from '../configuration-info/configuration-info.component';
+import { AssociationConfiguration } from '../../../models/association-configuration';
+import { AssociationConfigurationService } from '../../../service/association-configuration.service';
+import { ConfigurationFormComponent } from '../../form/configuration-form/configuration-form.component';
+import { ConfigurationInfoComponent } from '../../info/configuration-info/configuration-info.component';
 
 @Component({
   selector: 'assoc-configuration-info-editor',

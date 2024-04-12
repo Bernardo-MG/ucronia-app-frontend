@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AssociationConfiguration } from '../../models/association-configuration';
+import { AssociationConfiguration } from '../../../models/association-configuration';
 
 @Component({
   selector: 'assoc-configuration-info',
