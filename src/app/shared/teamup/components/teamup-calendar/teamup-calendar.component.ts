@@ -18,13 +18,13 @@ export class TeamupCalendarComponent implements OnChanges {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
-  constructor(
-    private sanitizer: DomSanitizer
-  ) {}
-
   public get waiting() {
     return this.url.length === 0;
   }
+
+  constructor(
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id']) {
