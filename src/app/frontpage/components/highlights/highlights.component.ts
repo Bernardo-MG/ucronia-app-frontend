@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { TeamupCalendarComponent } from '../../../shared/teamup/components/teamup-calendar/teamup-calendar.component';
+import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 
 @Component({
   selector: 'app-frontpage-highlights',
