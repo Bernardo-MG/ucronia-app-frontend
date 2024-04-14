@@ -4,7 +4,7 @@ import { AccountLayoutComponent } from './account/components/layout/account-layo
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { FullLayoutComponent } from './core/layout/components/layout/full-layout/full-layout.component';
+import { PublicLayoutComponent } from './core/layout/components/layout/public-layout/public-layout.component';
 import { SidebarLayoutComponent } from './core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
@@ -25,13 +25,13 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         path: 'password/reset',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
@@ -66,7 +66,7 @@ const routes: Routes = [
       // Activate user
       {
         path: 'users/activate',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },

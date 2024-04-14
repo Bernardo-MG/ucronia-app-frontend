@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FullLayoutComponent } from './full-layout.component';
+import { PublicLayoutComponent } from './public-layout.component';
 
-describe('FullLayoutComponent', () => {
-  let component: FullLayoutComponent;
-  let fixture: ComponentFixture<FullLayoutComponent>;
+describe('PublicLayoutComponent', () => {
+  let component: PublicLayoutComponent;
+  let fixture: ComponentFixture<PublicLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FullLayoutComponent
+        PublicLayoutComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FullLayoutComponent);
+    fixture = TestBed.createComponent(PublicLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
