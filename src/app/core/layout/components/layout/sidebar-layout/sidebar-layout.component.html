@@ -1,4 +1,8 @@
-<layout-header-navigation-wrapper>
+<body>
+  <header>
+    <layout-navbar title="{{title}}" [loggedIn]="true" [showConfigMenu]="showConfigMenu">
+    </layout-navbar>
+  </header>
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
@@ -11,4 +15,4 @@
       </main>
     </div>
   </div>
-</layout-header-navigation-wrapper>
+</body>

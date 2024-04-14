@@ -4,8 +4,8 @@ import { AccountLayoutComponent } from './account/components/layout/account-layo
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { FullLayoutComponent } from './core/layout/components/full-layout/full-layout.component';
-import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
+import { PublicLayoutComponent } from './core/layout/components/layout/public-layout/public-layout.component';
+import { SidebarLayoutComponent } from './core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -25,48 +25,48 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         path: 'password/reset',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
       // Role
       {
         path: 'roles',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: rolesModule,
         canActivate: [ResourceGuard("role")]
       },
       // User
       {
         path: 'users',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: userModule,
         canActivate: [ResourceGuard("user")]
       },
       // User tokens
       {
         path: 'user-tokens',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: userTokenModule,
         canActivate: [ResourceGuard("user_token")]
       },
       // Security audit
       {
         path: 'security/audit',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: securityAuditModule,
         canActivate: [ResourceGuard("user")]
       },
       // Activate user
       {
         path: 'users/activate',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },
@@ -79,7 +79,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         canActivate: [LoggedInGuard],
         children: [
           // Association
