@@ -13,6 +13,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 })
 export class ConfigurationValuesEditorComponent {
 
+  @Input() public disabled = false;
+
   @Input() public configurations: Configuration[] = [];
 
   @Output() public save = new EventEmitter<Configuration>();

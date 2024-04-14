@@ -1,11 +1,8 @@
 <layout-article title="Configuration">
-  <layout-edition-wrapper [editable]="editEnabled" [editing]="editing" (startEditing)="onStartEditing()">
-    <!-- Form -->
-    <assoc-configuration-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true" [data]="data"
-      [failures]="failures" (save)="onSave($event)" (cancel)="onCancel()">
-    </assoc-configuration-form>
-    <!-- Info -->
-    <assoc-configuration-info id="info" [data]="data"></assoc-configuration-info>
-  </layout-edition-wrapper>
-  <assoc-configuration-values-editor [configurations]="configurations" (save)="onSaveConfig($event)"></assoc-configuration-values-editor>
+  <div class="card">
+    <div class="card-body">
+      <assoc-configuration-values-editor [disabled]="!editable" [configurations]="configurations"
+        (save)="onSaveConfig($event)"></assoc-configuration-values-editor>
+    </div>
+  </div>
 </layout-article>
