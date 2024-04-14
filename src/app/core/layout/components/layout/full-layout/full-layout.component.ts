@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HeaderNavigationWrapperComponent } from '../header-navigation-wrapper/header-navigation-wrapper.component';
+import { HeaderNavigationWrapperComponent } from '../../header/header-navigation-wrapper/header-navigation-wrapper.component';
 import { RouterModule } from '@angular/router';
 
 @Component({

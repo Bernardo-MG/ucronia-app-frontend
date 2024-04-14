@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HeaderNavigationWrapperComponent } from '@app/core/layout/components/header-navigation-wrapper/header-navigation-wrapper.component';
-import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
+import { HeaderNavigationWrapperComponent } from '@app/core/layout/components/header/header-navigation-wrapper/header-navigation-wrapper.component';
+import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 

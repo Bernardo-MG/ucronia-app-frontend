@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@app/shared/menu/models/menu';
-import { LayoutService } from '../../services/layout.service';
-import { HeaderNavigationWrapperComponent } from '../header-navigation-wrapper/header-navigation-wrapper.component';
-import { SideMenuComponent } from '../side-menu/side-menu.component';
+import { LayoutService } from '../../../services/layout.service';
+import { HeaderNavigationWrapperComponent } from '../../header/header-navigation-wrapper/header-navigation-wrapper.component';
+import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
 
 @Component({
   selector: 'layout-main',

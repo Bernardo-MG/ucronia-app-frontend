@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { LayoutService } from '../../services/layout.service';
+import { LayoutService } from '../../../services/layout.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 
 @Component({
