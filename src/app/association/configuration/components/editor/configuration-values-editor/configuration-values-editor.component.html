@@ -1,0 +1,21 @@
+<form class="needs-validation" novalidate *ngFor="let configuration of configurations">
+  <div class="row mb-2">
+    <label for="{{configuration.key + 'Input'}}" id="{{configuration.key + 'Label'}}"
+      class="col-sm-2 col-form-label">{{configuration.key}}</label>
+    <div class="col-sm-9">
+      <input type="number" step="any" id="{{configuration.key + 'Input'}}" formControlName="{{configuration.key}}"
+        class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.key') }"
+        attr.aria-describedby="{{configuration.key + 'Label'}}">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.key')">
+        {{failure.message}}
+      </div>
+    </div>
+    <div class="col-sm-1">
+      <div class="btn-group me-2" role="group">
+        <button type="button" class="btn btn-link link-dark" aria-label="Edit">
+          <icon-edit></icon-edit>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

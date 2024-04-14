@@ -6,6 +6,7 @@ import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { AssociationConfiguration } from '../models/association-configuration';
+import { Configuration } from '../models/configuration';
 
 @Injectable()
 export class AssociationConfigurationService {
@@ -20,6 +21,12 @@ export class AssociationConfigurationService {
       .pipe(map(r => r.content));
   }
 
+  public getAll(): Observable<Configuration[]> {
+    return this.getConfigurationClient()
+      .read<SimpleResponse<Configuration[]>>()
+      .pipe(map(r => r.content));
+  }
+
   public update(data: AssociationConfiguration): Observable<AssociationConfiguration> {
     return this.getClient()
       .update<SimpleResponse<AssociationConfiguration>>(data)
@@ -28,6 +35,10 @@ export class AssociationConfigurationService {
 
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/configuration/association');
+  }
+
+  private getConfigurationClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/configuration');
   }
 
 }
