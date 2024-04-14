@@ -6,12 +6,12 @@ import { HeaderNavigationWrapperComponent } from '../../header/header-navigation
 import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
 
 @Component({
-  selector: 'layout-main',
+  selector: 'layout-sidebar',
   standalone: true,
   imports: [RouterModule, HeaderNavigationWrapperComponent, SideMenuComponent],
-  templateUrl: './main-layout.component.html'
+  templateUrl: './sidebar-layout.component.html'
 })
-export class MainLayoutComponent implements OnInit {
+export class SidebarLayoutComponent implements OnInit {
 
   public menus: Menu[] = [];
 

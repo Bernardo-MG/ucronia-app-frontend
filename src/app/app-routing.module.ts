@@ -5,7 +5,7 @@ import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
 import { FullLayoutComponent } from './core/layout/components/layout/full-layout/full-layout.component';
-import { MainLayoutComponent } from './core/layout/components/layout/main-layout/main-layout.component';
+import { SidebarLayoutComponent } from './core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -38,28 +38,28 @@ const routes: Routes = [
       // Role
       {
         path: 'roles',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: rolesModule,
         canActivate: [ResourceGuard("role")]
       },
       // User
       {
         path: 'users',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: userModule,
         canActivate: [ResourceGuard("user")]
       },
       // User tokens
       {
         path: 'user-tokens',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: userTokenModule,
         canActivate: [ResourceGuard("user_token")]
       },
       // Security audit
       {
         path: 'security/audit',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         loadChildren: securityAuditModule,
         canActivate: [ResourceGuard("user")]
       },
@@ -79,7 +79,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        component: MainLayoutComponent,
+        component: SidebarLayoutComponent,
         canActivate: [LoggedInGuard],
         children: [
           // Association
