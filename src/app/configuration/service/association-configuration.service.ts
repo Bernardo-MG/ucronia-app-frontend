@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { AssociationConfiguration } from '../models/association-configuration';
+import { Configuration } from '../models/configuration';
 
 @Injectable()
 export class AssociationConfigurationService {
@@ -14,20 +14,21 @@ export class AssociationConfigurationService {
     private http: HttpClient
   ) { }
 
-  public get(): Observable<AssociationConfiguration> {
+  public getAll(): Observable<Configuration[]> {
     return this.getClient()
-      .read<SimpleResponse<AssociationConfiguration>>()
+      .read<SimpleResponse<Configuration[]>>()
       .pipe(map(r => r.content));
   }
 
-  public update(data: AssociationConfiguration): Observable<AssociationConfiguration> {
+  public update(code: string, configuration: Configuration): Observable<Configuration> {
     return this.getClient()
-      .update<SimpleResponse<AssociationConfiguration>>(data)
+      .appendRoute(`/${code}`)
+      .update<SimpleResponse<Configuration>>(configuration)
       .pipe(map(r => r.content));
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/configuration/association');
+    return new AngularClient(this.http, environment.apiUrl + '/configuration');
   }
 
 }

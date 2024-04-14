@@ -1,0 +1,13 @@
+<layout-article>
+  <div class="d-grid gap-2">
+    <div class="card">
+      <div class="card-body">
+        <layout-waiting-wrapper [waiting]="readingCalendarId">
+          <app-teamup-calendar [id]="calendarId" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+            [showViewSelector]="true" [showMenu]="true" [showAgendaHeader]="true"
+            [showYearViewHeader]="true"></app-teamup-calendar>
+        </layout-waiting-wrapper>
+      </div>
+    </div>
+  </div>
+</layout-article>

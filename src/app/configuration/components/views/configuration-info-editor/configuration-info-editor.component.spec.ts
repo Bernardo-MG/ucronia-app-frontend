@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AssociationConfigurationService } from '../../service/association-configuration.service';
+import { AssociationConfigurationService } from '@app/configuration/service/association-configuration.service';
 import { ConfigurationInfoEditorComponent } from './configuration-info-editor.component';
 
 describe('ConfigurationInfoEditorComponent', () => {

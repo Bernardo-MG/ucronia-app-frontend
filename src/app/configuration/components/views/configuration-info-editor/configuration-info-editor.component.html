@@ -1,0 +1,8 @@
+<layout-article title="Configuration">
+  <div class="card">
+    <div class="card-body">
+      <assoc-configuration-values-editor [disabled]="!editable" [configurations]="configurations"
+        (save)="onSaveConfig($event)"></assoc-configuration-values-editor>
+    </div>
+  </div>
+</layout-article>
