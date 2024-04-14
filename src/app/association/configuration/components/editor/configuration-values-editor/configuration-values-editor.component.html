@@ -3,16 +3,16 @@
     <label for="{{configuration.key + 'Input'}}" id="{{configuration.key + 'Label'}}"
       class="col-sm-2 col-form-label">{{configuration.key}}</label>
     <div class="col-sm-9">
-      <input type="number" step="any" id="{{configuration.key + 'Input'}}" formControlName="{{configuration.key}}"
+      <input type="number" step="any" id="{{configuration.key + 'Input'}}"
         class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.key') }"
-        attr.aria-describedby="{{configuration.key + 'Label'}}">
+        attr.aria-describedby="{{configuration.key + 'Label'}}" [disabled]="isEditing(configuration.key)">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.key')">
         {{failure.message}}
       </div>
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">
-        <button type="button" class="btn btn-link link-dark" aria-label="Edit">
+        <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(configuration.key)" [disabled]="!isEditing(configuration.key)">
           <icon-edit></icon-edit>
         </button>
       </div>
