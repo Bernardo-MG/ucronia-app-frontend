@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Configuration } from '@app/association/configuration/models/configuration';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
@@ -15,9 +16,9 @@ export class FrontpageService {
 
   public getCalendarCode(): Observable<string> {
     return this.getClient()
-      .appendRoute('/calendar-id')
-      .read<SimpleResponse<string>>()
-      .pipe(map(r => r.content));
+      .appendRoute('/social.teamup.id')
+      .read<SimpleResponse<Configuration>>()
+      .pipe(map(r => r.content.value));
   }
 
   private getClient(): Client {
