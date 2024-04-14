@@ -33,7 +33,7 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent<Associ
     this.editable = this.authContainer.hasPermission("association_configuration", "update");
 
     this.load();
-    
+
     this.service.getAll()
       .subscribe({
         next: response => {
@@ -42,6 +42,15 @@ export class ConfigurationInfoEditorComponent extends InfoEditorComponent<Associ
         error: error => {
         }
       });
+  }
+
+  public onSaveConfig(config: Configuration) {
+    return this.service.updateConfig(config.code, config).subscribe({
+      next: response => {
+      },
+      error: error => {
+      }
+    });
   }
 
   protected override delete(): void {

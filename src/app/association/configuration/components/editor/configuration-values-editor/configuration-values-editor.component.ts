@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Configuration } from '@app/association/configuration/models/configuration';
 import { Failure } from '@app/core/api/models/failure';
@@ -15,6 +15,8 @@ export class ConfigurationValuesEditorComponent {
 
   @Input() public configurations: Configuration[] = [];
 
+  @Output() public save = new EventEmitter<Configuration>();
+
   public activeConfig = '';
 
   public isFieldInvalid(property: string): boolean {
@@ -25,12 +27,22 @@ export class ConfigurationValuesEditorComponent {
     return [];
   }
 
-  public onEdit(key: string){
-    this.activeConfig = key;
+  public onEdit(code: string) {
+    this.activeConfig = code;
   }
 
-  public isEditing(key: string): boolean {
-    return this.activeConfig !== key;
+  public onSave(config: Configuration, event: any) {
+    this.activeConfig = '';
+
+    const configuration = new Configuration();
+    configuration.code = config.code;
+    configuration.type = config.type;
+    configuration.value = event.target[config.code].value;
+    this.save.emit(configuration);
+  }
+
+  public isEditing(code: string): boolean {
+    return this.activeConfig === code;
   }
 
 }

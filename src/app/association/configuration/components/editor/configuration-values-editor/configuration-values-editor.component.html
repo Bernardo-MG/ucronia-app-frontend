@@ -1,11 +1,13 @@
-<form class="needs-validation" novalidate *ngFor="let configuration of configurations">
+<form class="needs-validation" novalidate (ngSubmit)="onSave(configuration, $event)"
+  *ngFor="let configuration of configurations">
   <div class="row mb-2">
     <label for="{{configuration.code + 'Input'}}" id="{{configuration.code + 'Label'}}"
       class="col-sm-2 col-form-label">{{configuration.code}}</label>
     <div class="col-sm-9">
-      <input type="{{configuration.type}}" step="any" id="{{configuration.code + 'Input'}}" class="form-control"
+      <input name="{{configuration.code}}" type="{{configuration.type}}" step="any"
+        id="{{configuration.code + 'Input'}}" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.code') }" [value]="configuration.value"
-        attr.aria-describedby="{{configuration.code + 'Label'}}" [disabled]="isEditing(configuration.code)">
+        attr.aria-describedby="{{configuration.code + 'Label'}}" [disabled]="!isEditing(configuration.code)">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.code')">
         {{failure.message}}
       </div>
@@ -13,7 +15,7 @@
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">
         <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(configuration.code)"
-          [disabled]="!isEditing(configuration.code)">
+          [disabled]="isEditing(configuration.code)">
           <icon-edit></icon-edit>
         </button>
       </div>

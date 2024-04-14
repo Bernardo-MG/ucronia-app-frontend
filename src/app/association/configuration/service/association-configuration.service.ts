@@ -33,6 +33,13 @@ export class AssociationConfigurationService {
       .pipe(map(r => r.content));
   }
 
+  public updateConfig(code: string, configuration: Configuration): Observable<Configuration> {
+    return this.getConfigurationClient()
+      .appendRoute(`/${code}`)
+      .update<SimpleResponse<Configuration>>(configuration)
+      .pipe(map(r => r.content));
+  }
+
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/configuration/association');
   }
