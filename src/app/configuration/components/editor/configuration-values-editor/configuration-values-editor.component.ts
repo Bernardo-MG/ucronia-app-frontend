@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Configuration } from '@app/association/configuration/models/configuration';
+import { Configuration } from '@app/configuration/models/configuration';
 import { Failure } from '@app/core/api/models/failure';
 import { IconsModule } from '@app/shared/icons/icons.module';
 

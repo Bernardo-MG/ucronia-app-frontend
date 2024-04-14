@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Configuration } from '@app/association/configuration/models/configuration';
+import { Configuration } from '@app/configuration/models/configuration';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
@@ -21,7 +21,7 @@ export class ConfigurationInfoEditorComponent implements OnInit {
   constructor(
     private service: AssociationConfigurationService,
     private authContainer: AuthContainer
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Check permissions

@@ -7,7 +7,7 @@ const feesModule = () => import('@app/association/fees/fees.module').then(m => m
 const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
-const configurationModule = () => import('@app/association/configuration/configuration.module').then(m => m.ConfigurationModule);
+const configurationModule = () => import('@app/configuration/configuration.module').then(m => m.ConfigurationModule);
 
 const routes: Routes = [
   {
