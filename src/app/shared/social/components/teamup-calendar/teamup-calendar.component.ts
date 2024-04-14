@@ -12,6 +12,26 @@ export class TeamupCalendarComponent implements OnChanges {
 
   @Input() public id = '';
 
+  @Input() public showLogo = false;
+
+  @Input() public showSearch = false;
+
+  @Input() public showProfile = false;
+
+  @Input() public showSidePanel = false;
+
+  @Input() public disableSidePanel = false;
+
+  @Input() public showViewSelector = false;
+
+  @Input() public showMenu = false;
+
+  @Input() public showAgendaHeader = false;
+
+  @Input() public showAgendaDetails = false;
+
+  @Input() public showYearViewHeader = false;
+
   public url = '';
 
   public get sanitizedUrl() {
@@ -28,8 +48,20 @@ export class TeamupCalendarComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['id']) {
-      this.url = `https://teamup.com/${this.id}?showLogo=0&showSearch=1&showProfileAndInfo=0&showSidepanel=1&disableSidepanel=0&showViewSelector=1&showMenu=1&showAgendaHeader=1&showAgendaDetails=0&showYearViewHeader=1`;
+      this.url = `https://teamup.com/${this.id}?showLogo=${this.convert(this.showLogo)}&showSearch=${this.convert(this.showSearch)}&showProfileAndInfo=${this.convert(this.showProfile)}&showSidepanel=${this.convert(this.showSidePanel)}&disableSidepanel=${this.convert(this.disableSidePanel)}&showViewSelector=${this.convert(this.showViewSelector)}&showMenu=${this.convert(this.showMenu)}&showAgendaHeader=${this.convert(this.showAgendaHeader)}&showAgendaDetails=${this.convert(this.showAgendaDetails)}&showYearViewHeader=${this.convert(this.showYearViewHeader)}`;
     }
+  }
+
+  private convert(flag: boolean) {
+    let value;
+
+    if (flag) {
+      value = '1';
+    } else {
+      value = '0';
+    }
+
+    return value;
   }
 
 }
