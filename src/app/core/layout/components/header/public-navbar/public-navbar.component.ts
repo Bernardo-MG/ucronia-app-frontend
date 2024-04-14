@@ -5,15 +5,13 @@ import { AccountMenuComponent } from '../account-dropdown/account-dropdown.compo
 import { ConfigDropdownComponent } from '../config-dropdown/config-dropdown.component';
 
 @Component({
-  selector: 'layout-navbar',
+  selector: 'layout-public-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule, AccountMenuComponent, ConfigDropdownComponent],
-  templateUrl: './navbar.component.html'
+  templateUrl: './public-navbar.component.html'
 })
-export class NavbarComponent {
+export class PublicNavbarComponent {
 
   @Input() public title = '';
-
-  @Input() public showConfigMenu = false;
 
 }

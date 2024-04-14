@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { NavbarComponent } from '../../header/navbar/navbar.component';
+import { PublicNavbarComponent } from '../../header/public-navbar/public-navbar.component';
 
 @Component({
   selector: 'app-public-layout',
   standalone: true,
-  imports: [RouterModule, NavbarComponent],
+  imports: [RouterModule, PublicNavbarComponent],
   templateUrl: './public-layout.component.html'
 })
 export class PublicLayoutComponent {
