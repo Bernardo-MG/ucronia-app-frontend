@@ -1,4 +1,5 @@
 export class Configuration {
-  key = '';
+  code = '';
   value = '';
+  type = '';
 }

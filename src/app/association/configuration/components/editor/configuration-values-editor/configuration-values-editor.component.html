@@ -1,18 +1,19 @@
 <form class="needs-validation" novalidate *ngFor="let configuration of configurations">
   <div class="row mb-2">
-    <label for="{{configuration.key + 'Input'}}" id="{{configuration.key + 'Label'}}"
-      class="col-sm-2 col-form-label">{{configuration.key}}</label>
+    <label for="{{configuration.code + 'Input'}}" id="{{configuration.code + 'Label'}}"
+      class="col-sm-2 col-form-label">{{configuration.code}}</label>
     <div class="col-sm-9">
-      <input type="number" step="any" id="{{configuration.key + 'Input'}}"
-        class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.key') }"
-        attr.aria-describedby="{{configuration.key + 'Label'}}" [disabled]="isEditing(configuration.key)">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.key')">
+      <input type="{{configuration.type}}" step="any" id="{{configuration.code + 'Input'}}" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.code') }" [value]="configuration.value"
+        attr.aria-describedby="{{configuration.code + 'Label'}}" [disabled]="isEditing(configuration.code)">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.code')">
         {{failure.message}}
       </div>
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">
-        <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(configuration.key)" [disabled]="!isEditing(configuration.key)">
+        <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(configuration.code)"
+          [disabled]="!isEditing(configuration.code)">
           <icon-edit></icon-edit>
         </button>
       </div>
