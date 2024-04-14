@@ -15,7 +15,7 @@ export class NavbarComponent {
   @Input() public title = '';
 
   @Input() public loggedIn = false;
-  
+
   @Input() public showConfigMenu = false;
 
 }
