@@ -4,7 +4,6 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { LayoutService } from '../../../services/layout.service';
 import { NavbarComponent } from '../../header/navbar/navbar.component';
 import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 
 @Component({
   selector: 'layout-sidebar',

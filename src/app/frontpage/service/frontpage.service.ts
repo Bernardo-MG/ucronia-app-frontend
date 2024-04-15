@@ -22,7 +22,7 @@ export class FrontpageService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/configuration');
+    return new AngularClient(this.http, environment.apiUrl + '/configuration/public');
   }
 
 }
