@@ -23,76 +23,86 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      // Public routes
       {
+        // Logged out frontpage
+        path: '',
+        component: PublicLayoutComponent,
+        canMatch: [LoggedOutGuard],
+        canActivate: [LoggedOutGuard],
+        loadChildren: frontpageModule
+      },
+      {
+        // Log in form
         path: 'login',
         component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
+        // Password reset form
         path: 'password/reset',
         component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
-      // Role
       {
-        path: 'roles',
-        component: SidebarLayoutComponent,
-        loadChildren: rolesModule,
-        canActivate: [ResourceGuard("role")]
-      },
-      // User
-      {
-        path: 'users',
-        component: SidebarLayoutComponent,
-        loadChildren: userModule,
-        canActivate: [ResourceGuard("user")]
-      },
-      // User tokens
-      {
-        path: 'user-tokens',
-        component: SidebarLayoutComponent,
-        loadChildren: userTokenModule,
-        canActivate: [ResourceGuard("user_token")]
-      },
-      // Security audit
-      {
-        path: 'security/audit',
-        component: SidebarLayoutComponent,
-        loadChildren: securityAuditModule,
-        canActivate: [ResourceGuard("user")]
-      },
-      // Activate user
-      {
+        // Activate user form
         path: 'users/activate',
         component: PublicLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },
-      // Account
+      // Private routes
       {
+        // Logged in frontpage
+        path: '',
+        component: SidebarLayoutComponent,
+        loadChildren: frontpageModule,
+        canMatch: [LoggedInGuard],
+        canActivate: [LoggedInGuard]
+      },
+      {
+        // Roles
+        path: 'roles',
+        component: SidebarLayoutComponent,
+        loadChildren: rolesModule,
+        canActivate: [ResourceGuard("role")]
+      },
+      {
+        // Users
+        path: 'users',
+        component: SidebarLayoutComponent,
+        loadChildren: userModule,
+        canActivate: [ResourceGuard("user")]
+      },
+      {
+        // User tokens
+        path: 'user-tokens',
+        component: SidebarLayoutComponent,
+        loadChildren: userTokenModule,
+        canActivate: [ResourceGuard("user_token")]
+      },
+      {
+        // Security audit
+        path: 'security/audit',
+        component: SidebarLayoutComponent,
+        loadChildren: securityAuditModule,
+        canActivate: [ResourceGuard("user")]
+      },
+      {
+        // Account
         path: 'account',
         component: AccountLayoutComponent,
         loadChildren: accountModule,
         canActivate: [LoggedInGuard]
       },
       {
+        // Association
         path: '',
         component: SidebarLayoutComponent,
-        canActivate: [LoggedInGuard],
-        children: [
-          // Association
-          {
-            path: '',
-            children: [
-              // Front page
-              { path: '', loadChildren: frontpageModule },
-              // Association
-              { path: '', loadChildren: associationModule }
-            ]
-          }
-        ]
+        loadChildren: associationModule,
+        canActivate: [LoggedInGuard]
       }
     ]
   }
