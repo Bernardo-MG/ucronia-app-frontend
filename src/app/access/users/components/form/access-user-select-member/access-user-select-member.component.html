@@ -1,0 +1,31 @@
+<layout-waiting-wrapper [waiting]="waiting">
+  <!-- Add role -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">
+          Name
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <ng-template ngFor let-member [ngForOf]="members.content">
+        <tr role="button">
+          <td>
+            <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
+              aria-label="Back">
+              <icon-add></icon-add>
+            </button>
+          </td>
+          <td>{{member.name.fullName}}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</layout-waiting-wrapper>
+<div class="d-flex justify-content-center mt-1">
+  <pagination-navigation [disabled]="waiting" [current]="members.page + 1" [pages]="members.totalPages"
+    (goTo)="onGoToPage($event)">
+  </pagination-navigation>
+</div>

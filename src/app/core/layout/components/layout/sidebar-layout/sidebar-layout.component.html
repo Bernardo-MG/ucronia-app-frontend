@@ -1,0 +1,18 @@
+<body>
+  <header>
+    <layout-navbar title="{{title}}" [showConfigMenu]="showConfigMenu">
+    </layout-navbar>
+  </header>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-2">
+        <layout-side-menu [menus]="menus"></layout-side-menu>
+      </div>
+      <!-- Main content area -->
+      <main class="col-md-10">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</body>

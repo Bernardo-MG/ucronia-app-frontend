@@ -6,7 +6,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
-import { SortingButtonComponent } from '@app/shared/sorting/sorting-button/sorting-button.component';
+import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { PaginationRouteNavigationComponent } from '@app/shared/pagination/components/pagination-route-navigation/pagination-route-navigation.component';
 import { UserTokenService } from '../../services/user-token.service';
 

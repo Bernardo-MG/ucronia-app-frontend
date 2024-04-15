@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountLayoutComponent } from './account/components/account-layout/account-layout.component';
+import { AccountLayoutComponent } from './account/components/layout/account-layout/account-layout.component';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { FullLayoutComponent } from './core/layout/components/full-layout/full-layout.component';
-import { MainLayoutComponent } from './core/layout/components/main-layout/main-layout.component';
+import { PublicLayoutComponent } from './core/layout/components/layout/public-layout/public-layout.component';
+import { SidebarLayoutComponent } from './core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -23,76 +23,86 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      // Public routes
       {
+        // Logged out frontpage
+        path: '',
+        component: PublicLayoutComponent,
+        canMatch: [LoggedOutGuard],
+        canActivate: [LoggedOutGuard],
+        loadChildren: frontpageModule
+      },
+      {
+        // Log in form
         path: 'login',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
+        // Password reset form
         path: 'password/reset',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
-      // Role
       {
-        path: 'roles',
-        component: MainLayoutComponent,
-        loadChildren: rolesModule,
-        canActivate: [ResourceGuard("role")]
-      },
-      // User
-      {
-        path: 'users',
-        component: MainLayoutComponent,
-        loadChildren: userModule,
-        canActivate: [ResourceGuard("user")]
-      },
-      // User tokens
-      {
-        path: 'user-tokens',
-        component: MainLayoutComponent,
-        loadChildren: userTokenModule,
-        canActivate: [ResourceGuard("user_token")]
-      },
-      // Security audit
-      {
-        path: 'security/audit',
-        component: MainLayoutComponent,
-        loadChildren: securityAuditModule,
-        canActivate: [ResourceGuard("user")]
-      },
-      // Activate user
-      {
+        // Activate user form
         path: 'users/activate',
-        component: FullLayoutComponent,
+        component: PublicLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },
-      // Account
+      // Private routes
       {
+        // Logged in frontpage
+        path: '',
+        component: SidebarLayoutComponent,
+        loadChildren: frontpageModule,
+        canMatch: [LoggedInGuard],
+        canActivate: [LoggedInGuard]
+      },
+      {
+        // Roles
+        path: 'roles',
+        component: SidebarLayoutComponent,
+        loadChildren: rolesModule,
+        canActivate: [ResourceGuard("role")]
+      },
+      {
+        // Users
+        path: 'users',
+        component: SidebarLayoutComponent,
+        loadChildren: userModule,
+        canActivate: [ResourceGuard("user")]
+      },
+      {
+        // User tokens
+        path: 'user-tokens',
+        component: SidebarLayoutComponent,
+        loadChildren: userTokenModule,
+        canActivate: [ResourceGuard("user_token")]
+      },
+      {
+        // Security audit
+        path: 'security/audit',
+        component: SidebarLayoutComponent,
+        loadChildren: securityAuditModule,
+        canActivate: [ResourceGuard("user")]
+      },
+      {
+        // Account
         path: 'account',
         component: AccountLayoutComponent,
         loadChildren: accountModule,
         canActivate: [LoggedInGuard]
       },
       {
+        // Association
         path: '',
-        component: MainLayoutComponent,
-        canActivate: [LoggedInGuard],
-        children: [
-          // Association
-          {
-            path: '',
-            children: [
-              // Front page
-              { path: '', loadChildren: frontpageModule },
-              // Association
-              { path: '', loadChildren: associationModule }
-            ]
-          }
-        ]
+        component: SidebarLayoutComponent,
+        loadChildren: associationModule,
+        canActivate: [LoggedInGuard]
       }
     ]
   }

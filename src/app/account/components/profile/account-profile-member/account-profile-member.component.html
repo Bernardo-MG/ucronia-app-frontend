@@ -1,0 +1,42 @@
+<form class="needs-validation" novalidate>
+  <!-- Number -->
+  <div class="row mb-2">
+    <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Number</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.number" id="numberInput" [readonly]="true" class="form-control"
+        aria-describedby="numberLabel">
+    </div>
+  </div>
+  <!-- Name -->
+  <div class="row mb-2">
+    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.name.firstName" id="nameInput" [readonly]="true" class="form-control"
+        aria-describedby="nameLabel">
+    </div>
+  </div>
+  <!-- Surname -->
+  <div class="row mb-2">
+    <label for="surnameInput" id="surnameLabel" class="col-sm-2 col-form-label">Surname</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.name.lastName" id="surnameInput" [readonly]="true" class="form-control"
+        aria-describedby="surnameLabel">
+    </div>
+  </div>
+  <!-- Identifier -->
+  <div class="row mb-2">
+    <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">Identifier</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.identifier" id="identifierInput" [readonly]="true" class="form-control"
+        aria-describedby="identifierLabel">
+    </div>
+  </div>
+  <!-- Phone -->
+  <div class="row mb-2">
+    <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Phone</label>
+    <div class="col-sm-10">
+      <input type="text" [value]="data.phone" id="phoneInput" class="form-control" [readonly]="true"
+        aria-describedby="phoneLabel">
+    </div>
+  </div>
+</form>
