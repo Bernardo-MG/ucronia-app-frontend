@@ -21,7 +21,7 @@ export const LoggedInGuard = (route: ActivatedRouteSnapshot, state: RouterStateS
 
     // Prepare URL redirection for successful login
     let params;
-    if ((state.url.length) && (state.url.split('?')[0] !== loginRoute)) {
+    if ((state.url) && (state.url.length) && (state.url.split('?')[0] !== loginRoute)) {
       params = { queryParams: { returnUrl: state.url } };
     } else {
       params = {};
