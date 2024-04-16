@@ -8,8 +8,7 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
       { title: 'Members', path: '/members', resource: 'member' },
       { title: 'Fees', path: '/fees', resource: 'fee' },
       { title: 'Funds', path: '/funds', resource: 'funds' },
-      { title: 'Library', path: '/library', resource: 'library' },
-      { title: 'Library Admin', path: '/library/admin', resource: 'library_admin' }
+      { title: 'Library', path: '/library', resource: 'library' }
     ]
   },
   security: {
