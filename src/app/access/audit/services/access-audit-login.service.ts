@@ -20,7 +20,7 @@ export class AccessAuditLoginService {
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<LoginRegister[]>> {
     const defaultSort = new SortField('date');
-    defaultSort.direction = SortDirection.Ascending;
+    defaultSort.direction = SortDirection.Descending;
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);
