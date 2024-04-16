@@ -65,7 +65,7 @@ export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements 
 
   protected override delete(): void {
     this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
-      this.router.navigate([`/membership`]);
+      this.router.navigate([`/fees`]);
     });
   }
 
