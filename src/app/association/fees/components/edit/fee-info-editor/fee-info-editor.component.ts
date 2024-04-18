@@ -3,7 +3,7 @@ import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Fee } from '../../../models/fee';

@@ -7,7 +7,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
 import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
