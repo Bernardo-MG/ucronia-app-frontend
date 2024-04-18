@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Member } from '../../models/member';
-import { MemberService } from '../../services/member.service';
+import { Member } from '../../../models/member';
+import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../member-form/member-form.component';
 
 @Component({

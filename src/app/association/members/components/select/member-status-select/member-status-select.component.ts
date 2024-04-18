@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { Active } from '../../models/active';
+import { Active } from '../../../models/active';
 
 @Component({
   selector: 'assoc-member-status-select',

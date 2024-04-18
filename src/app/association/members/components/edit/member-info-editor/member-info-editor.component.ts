@@ -7,8 +7,8 @@ import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor
 import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Member } from '../../models/member';
-import { MemberService } from '../../services/member.service';
+import { Member } from '../../../models/member';
+import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../member-form/member-form.component';
 import { MemberInfoComponent } from '../member-info/member-info.component';
 

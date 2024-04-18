@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MemberStatusSelectComponent } from '@app/association/members/components/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';

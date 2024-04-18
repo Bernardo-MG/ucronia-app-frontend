@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { MemberBalance } from '../../models/member-balance';
-import { MemberBalanceService } from '../../services/member-balance.service';
+import { MemberBalance } from '../../../models/member-balance';
+import { MemberBalanceService } from '../../../services/member-balance.service';
 
 @Component({
   selector: 'assoc-member-balance-chart-widget',

@@ -6,11 +6,11 @@ import { SortField } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { Active } from '../../models/active';
-import { Member } from '../../models/member';
-import { MemberService } from '../../services/member.service';
+import { Active } from '../../../models/active';
+import { Member } from '../../../models/member';
+import { MemberService } from '../../../services/member.service';
 import { MemberListComponent } from '../member-list/member-list.component';
-import { MemberStatusSelectComponent } from '../member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '../../select/member-status-select/member-status-select.component';
 
 @Component({
   selector: 'assoc-member-list-widget',

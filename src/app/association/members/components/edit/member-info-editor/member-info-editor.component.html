@@ -4,13 +4,13 @@
       (startEditing)="onStartEditing()">
       <!-- Form -->
       <form-info-editor-form>
-        <assoc-member-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+        <assoc-member-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
           [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
         </assoc-member-form>
       </form-info-editor-form>
       <!-- Info -->
       <form-info-editor-info>
-        <assoc-member-info id="info" [data]="data"></assoc-member-info>
+        <assoc-member-info [data]="data"></assoc-member-info>
       </form-info-editor-info>
     </form-info-editor>
   </div>
