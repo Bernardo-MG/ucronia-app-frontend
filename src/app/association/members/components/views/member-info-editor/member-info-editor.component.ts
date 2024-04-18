@@ -9,8 +9,8 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
-import { MemberFormComponent } from '../member-form/member-form.component';
-import { MemberInfoComponent } from '../member-info/member-info.component';
+import { MemberFormComponent } from '../../edit/member-form/member-form.component';
+import { MemberInfoComponent } from '../../edit/member-info/member-info.component';
 
 @Component({
   selector: 'assoc-member-info-editor',
