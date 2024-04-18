@@ -20,16 +20,16 @@ export class InfoEditorComponent {
 
   @Output() public startEditing = new EventEmitter<void>();
 
+  public get showMenu() {
+    return this.editable || this.deletable;
+  }
+
   public onStartEditing(): void {
     this.startEditing.emit();
   }
 
   public onDelete(): void {
     this.delete.emit();
-  }
-
-  public showMenu() {
-    return this.editable || this.deletable;
   }
 
 }
