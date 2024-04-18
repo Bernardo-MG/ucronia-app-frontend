@@ -1,13 +1,24 @@
 <layout-article title="Transaction info">
   <div class="col-md-6 offset-md-3">
-    <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
-      (delete)="onDelete()" (startEditing)="onStartEditing()">
-      <!-- Form -->
-      <assoc-transaction-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-        [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-      </assoc-transaction-form>
-      <!-- Info -->
-      <assoc-transaction-info id="info" [data]="data"></assoc-transaction-info>
-    </layout-edition-wrapper>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="showMenu">
+          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-editor-header>
+        </div>
+        <ng-container [ngSwitch]="editing">
+          <!-- Form -->
+          <ng-container *ngSwitchCase="true">
+            <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-transaction-form>
+          </ng-container>
+          <!-- Info -->
+          <ng-container *ngSwitchCase="false">
+            <assoc-transaction-info [data]="data"></assoc-transaction-info>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </layout-article>

@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../models/transaction';
 import { TransactionService } from '../../service/transaction.service';
@@ -13,10 +14,10 @@ import { TransactionInfoComponent } from '../transaction-info/transaction-info.c
 @Component({
   selector: 'assoc-transaction-info-editor',
   standalone: true,
-  imports: [TransactionFormComponent, TransactionInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent],
   templateUrl: './transaction-info-editor.component.html'
 })
-export class TransactionInfoEditorComponent extends InfoEditorComponent<Transaction> implements OnInit {
+export class TransactionInfoEditorComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {
 
   private index = -1;
 
@@ -37,7 +38,7 @@ export class TransactionInfoEditorComponent extends InfoEditorComponent<Transact
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('index');
-      if(indexParam){
+      if (indexParam) {
         this.index = Number(indexParam);
       }
       this.load();

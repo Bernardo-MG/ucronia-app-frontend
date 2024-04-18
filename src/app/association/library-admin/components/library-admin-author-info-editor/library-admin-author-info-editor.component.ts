@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
 import { BookType } from '../../models/book-type';
@@ -14,10 +15,10 @@ import { LibraryAdminAuthorInfoComponent } from '../library-admin-author-info/li
 @Component({
   selector: 'assoc-library-admin-author-info-editor',
   standalone: true,
-  imports: [LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ArticleComponent],
   templateUrl: './library-admin-author-info-editor.component.html'
 })
-export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorComponent<Author> implements OnInit {
+export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {
 
   private name = '';
 

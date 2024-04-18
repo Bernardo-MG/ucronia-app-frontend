@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
@@ -13,10 +14,10 @@ import { LibraryAdminBookTypeInfoComponent } from '../library-admin-book-type-in
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
   standalone: true,
-  imports: [LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ArticleComponent],
   templateUrl: './library-admin-book-type-info-editor.component.html'
 })
-export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorComponent<BookType> implements OnInit {
+export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {
 
   private name = '';
 

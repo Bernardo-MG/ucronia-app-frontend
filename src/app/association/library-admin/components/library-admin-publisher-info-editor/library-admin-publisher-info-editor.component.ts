@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { Publisher } from '../../models/publisher';
@@ -14,10 +15,10 @@ import { LibraryAdminPublisherInfoComponent } from '../library-admin-publisher-i
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ArticleComponent],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
-export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorComponent<Publisher> implements OnInit {
+export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {
 
   private name = '';
 

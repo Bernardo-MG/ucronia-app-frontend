@@ -1,4 +1,4 @@
-<layout-article title="Game system info">
+<layout-article title="Member info">
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
@@ -9,12 +9,13 @@
         <ng-container [ngSwitch]="editing">
           <!-- Form -->
           <ng-container *ngSwitchCase="true">
-            <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" (save)="onSave($event)"></assoc-library-admin-game-system-form>
+            <assoc-member-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-member-form>
           </ng-container>
           <!-- Info -->
           <ng-container *ngSwitchCase="false">
-            <assoc-library-admin-game-system-info [data]="data"></assoc-library-admin-game-system-info>
+            <assoc-member-info [data]="data"></assoc-member-info>
           </ng-container>
         </ng-container>
       </div>

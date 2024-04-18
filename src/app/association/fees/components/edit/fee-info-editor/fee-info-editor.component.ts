@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Fee } from '../../../models/fee';
 import { FeeService } from '../../../services/fee.service';
@@ -14,10 +14,10 @@ import { FeeInfoComponent } from '../fee-info/fee-info.component';
 @Component({
   selector: 'assoc-fee-info-editor',
   standalone: true,
-  imports: [CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent],
   templateUrl: './fee-info-editor.component.html'
 })
-export class FeeInfoEditorComponent extends InfoEditorComponent<Fee> implements OnInit, AfterContentInit {
+export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
 
   private date: string = "";
 

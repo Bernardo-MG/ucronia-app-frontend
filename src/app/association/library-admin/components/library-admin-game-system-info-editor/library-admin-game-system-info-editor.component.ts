@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { GameSystem } from '../../models/game-system';
@@ -14,10 +15,10 @@ import { LibraryAdminGameSystemInfoComponent } from '../library-admin-game-syste
 @Component({
   selector: 'assoc-library-admin-game-system-info-editor',
   standalone: true,
-  imports: [LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [CommonModule, FormModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ArticleComponent],
   templateUrl: './library-admin-game-system-info-editor.component.html'
 })
-export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorComponent<GameSystem> implements OnInit {
+export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusComponent<GameSystem> implements OnInit {
 
   private name = '';
 

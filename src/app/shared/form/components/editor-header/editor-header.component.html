@@ -1,0 +1,30 @@
+<!-- Buttons -->
+<div class="btn-group me-2" role="group">
+  <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="!editable"
+    aria-label="Edit">
+    <icon-edit></icon-edit>
+  </button>
+</div>
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-link link-dark" aria-label="Delete" [disabled]="!deletable"
+    data-bs-toggle="modal" data-bs-target="#deleteModal">
+    <icon-delete></icon-delete>
+  </button>
+</div>
+
+<!-- Modal confirmation for delete -->
+<div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Are you sure you want to delete the data?</p>
+        <p class="text-warning"><small>This action cannot be undone.</small></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

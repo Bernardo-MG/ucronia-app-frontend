@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MemberCreateComponent } from './components/member-create/member-create.component';
-import { MemberFrontpageComponent } from './components/member-frontpage/member-frontpage.component';
-import { MemberInfoEditorComponent } from './components/member-info-editor/member-info-editor.component';
+import { MemberCreateComponent } from './components/views/member-create/member-create.component';
+import { MemberInfoEditorComponent } from './components/views/member-info-editor/member-info-editor.component';
+import { MemberFrontpageComponent } from './components/views/member-frontpage/member-frontpage.component';
 
 
 const routes: Routes = [
