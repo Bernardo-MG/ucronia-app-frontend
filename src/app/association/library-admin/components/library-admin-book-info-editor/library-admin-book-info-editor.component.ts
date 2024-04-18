@@ -3,11 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { EditorHeaderComponent } from '@app/shared/form/components/editor-header/editor-header.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
-import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
@@ -26,7 +23,7 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, InfoEditorComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, EditorHeaderComponent, InfoEditorFormDirective, InfoEditorInfoDirective],
+  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {

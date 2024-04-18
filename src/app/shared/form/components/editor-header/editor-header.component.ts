@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'form-editor-header',
-  standalone: true,
-  imports: [IconsModule],
   templateUrl: './editor-header.component.html'
 })
 export class EditorHeaderComponent {

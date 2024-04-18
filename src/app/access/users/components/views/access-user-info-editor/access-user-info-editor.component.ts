@@ -6,11 +6,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { EditorHeaderComponent } from '@app/shared/form/components/editor-header/editor-header.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
-import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
-import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
@@ -24,7 +21,7 @@ import { AccessUserInfoComponent } from '../../info/access-user-info/access-user
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, InfoEditorComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, InfoEditorFormDirective, InfoEditorInfoDirective, EditorHeaderComponent],
+  imports: [CommonModule, FormModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {
