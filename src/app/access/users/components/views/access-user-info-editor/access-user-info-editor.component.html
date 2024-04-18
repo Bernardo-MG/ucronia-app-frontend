@@ -24,18 +24,18 @@
                 <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
                   (delete)="onDelete()"></form-editor-header>
               </div>
-              <form-info-editor [editing]="editing">
+              <ng-container [ngSwitch]="editing">
                 <!-- Form -->
-                <form-info-editor-form>
+                <ng-container *ngSwitchCase="true">
                   <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
                     [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
                   </access-user-form>
-                </form-info-editor-form>
+                </ng-container>
                 <!-- Info -->
-                <form-info-editor-info>
+                <ng-container *ngSwitchCase="false">
                   <access-user-info [data]="data"></access-user-info>
-                </form-info-editor-info>
-              </form-info-editor>
+                </ng-container>
+              </ng-container>
             </div>
           </div>
         </div>

@@ -6,18 +6,18 @@
           <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
             (delete)="onDelete()"></form-editor-header>
         </div>
-        <form-info-editor [editing]="editing">
+        <ng-container [ngSwitch]="editing">
           <!-- Form -->
-          <form-info-editor-form>
+          <ng-container *ngSwitchCase="true">
             <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
               [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
             </assoc-transaction-form>
-          </form-info-editor-form>
+          </ng-container>
           <!-- Info -->
-          <form-info-editor-info>
+          <ng-container *ngSwitchCase="false">
             <assoc-transaction-info [data]="data"></assoc-transaction-info>
-          </form-info-editor-info>
-        </form-info-editor>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>
