@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditorHeaderComponent } from './editor-header.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 describe('EditorHeaderComponent', () => {
   let component: EditorHeaderComponent;
@@ -8,10 +9,15 @@ describe('EditorHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EditorHeaderComponent]
+      imports: [
+        IconsModule
+      ],
+      declarations: [
+        EditorHeaderComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(EditorHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
