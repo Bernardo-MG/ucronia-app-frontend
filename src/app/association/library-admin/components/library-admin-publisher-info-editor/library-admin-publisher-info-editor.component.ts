@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorWrapperComponent } from '@app/shared/form/components/info-editor-wrapper/info-editor-wrapper.component';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/form/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
 import { Publisher } from '../../models/publisher';
@@ -14,7 +14,7 @@ import { LibraryAdminPublisherInfoComponent } from '../library-admin-publisher-i
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ArticleComponent, EditionWrapperComponent],
+  imports: [LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ArticleComponent, InfoEditorWrapperComponent],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
 export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorComponent<Publisher> implements OnInit {

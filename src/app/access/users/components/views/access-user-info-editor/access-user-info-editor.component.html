@@ -18,7 +18,7 @@
       <!-- User -->
       <ng-container *ngSwitchCase="'user'">
         <div class="mb-1">
-          <layout-edition-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+          <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
             (delete)="onDelete()" (startEditing)="onStartEditing()">
             <!-- Form -->
             <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
@@ -26,7 +26,7 @@
             </access-user-form>
             <!-- Info -->
             <access-user-info id="info" [data]="data"></access-user-info>
-          </layout-edition-wrapper>
+          </layout-info-editor-wrapper>
         </div>
         <!-- Enable/disable button -->
         <div class="mb-1">

@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Configuration } from '@app/configuration/models/configuration';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { InfoEditorWrapperComponent } from '@app/shared/form/components/info-editor-wrapper/info-editor-wrapper.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/form/components/edition-wrapper/edition-wrapper.component';
 import { AssociationConfigurationService } from '../../../service/association-configuration.service';
 import { ConfigurationValuesEditorComponent } from '../../editor/configuration-values-editor/configuration-values-editor.component';
 
 @Component({
   selector: 'assoc-configuration-info-editor',
   standalone: true,
-  imports: [ArticleComponent, EditionWrapperComponent, ConfigurationValuesEditorComponent],
+  imports: [ArticleComponent, InfoEditorWrapperComponent, ConfigurationValuesEditorComponent],
   templateUrl: './configuration-info-editor.component.html'
 })
 export class ConfigurationInfoEditorComponent implements OnInit {

@@ -3,12 +3,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'layout-edition-wrapper',
+  selector: 'layout-info-editor-wrapper',
   standalone: true,
   imports: [CommonModule, IconsModule],
-  templateUrl: './edition-wrapper.component.html'
+  templateUrl: './info-editor-wrapper.component.html'
 })
-export class EditionWrapperComponent {
+export class InfoEditorWrapperComponent {
 
   @Input() public editable = false;
 
