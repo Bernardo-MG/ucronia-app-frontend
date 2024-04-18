@@ -6,7 +6,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
+import { EditionWrapperComponent } from '@app/shared/form/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from '../access-role-add-permission/access-role-add-permission.component';

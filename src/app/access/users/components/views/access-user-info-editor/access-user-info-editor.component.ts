@@ -8,7 +8,7 @@ import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
+import { EditionWrapperComponent } from '@app/shared/form/components/edition-wrapper/edition-wrapper.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
 import { UserUpdate } from '../../../models/user-update';

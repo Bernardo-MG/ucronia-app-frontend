@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
+import { EditionWrapperComponent } from '@app/shared/form/components/edition-wrapper/edition-wrapper.component';
 import { Observable } from 'rxjs';
 import { Fee } from '../../../models/fee';
 import { FeeService } from '../../../services/fee.service';
