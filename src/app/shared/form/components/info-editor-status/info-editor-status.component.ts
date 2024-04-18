@@ -62,6 +62,10 @@ export abstract class InfoEditorStatusComponent<Data> {
     return (this.reading) || (this.saving);
   }
 
+  public get showMenu() {
+    return this.editable || this.deletable;
+  }
+
   constructor(
     public data: Data
   ) { }

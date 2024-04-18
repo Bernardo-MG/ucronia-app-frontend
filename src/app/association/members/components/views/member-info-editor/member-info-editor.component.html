@@ -1,17 +1,24 @@
 <layout-article title="Member info">
   <div class="col-md-6 offset-md-3">
-    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing" (delete)="onDelete()"
-      (startEditing)="onStartEditing()">
-      <!-- Form -->
-      <form-info-editor-form>
-        <assoc-member-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-          [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-        </assoc-member-form>
-      </form-info-editor-form>
-      <!-- Info -->
-      <form-info-editor-info>
-        <assoc-member-info [data]="data"></assoc-member-info>
-      </form-info-editor-info>
-    </form-info-editor>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="showMenu">
+          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-editor-header>
+        </div>
+        <form-info-editor [editing]="editing">
+          <!-- Form -->
+          <form-info-editor-form>
+            <assoc-member-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-member-form>
+          </form-info-editor-form>
+          <!-- Info -->
+          <form-info-editor-info>
+            <assoc-member-info [data]="data"></assoc-member-info>
+          </form-info-editor-info>
+        </form-info-editor>
+      </div>
+    </div>
   </div>
 </layout-article>

@@ -1,8 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { EditorHeaderComponent } from '@app/shared/form/components/editor-header/editor-header.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
+import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { BookType } from '../../models/book-type';
@@ -14,7 +18,7 @@ import { LibraryAdminGameSystemInfoComponent } from '../library-admin-game-syste
 @Component({
   selector: 'assoc-library-admin-game-system-info-editor',
   standalone: true,
-  imports: [LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ArticleComponent, InfoEditorComponent],
+  imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ArticleComponent, InfoEditorComponent, EditorHeaderComponent, InfoEditorFormDirective, InfoEditorInfoDirective],
   templateUrl: './library-admin-game-system-info-editor.component.html'
 })
 export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusComponent<GameSystem> implements OnInit {

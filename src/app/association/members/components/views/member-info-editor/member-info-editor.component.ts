@@ -1,6 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { EditorHeaderComponent } from '@app/shared/form/components/editor-header/editor-header.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
 import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
@@ -15,7 +17,7 @@ import { MemberInfoComponent } from '../../edit/member-info/member-info.componen
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [MemberFormComponent, MemberInfoComponent, ArticleComponent, InfoEditorComponent, InfoEditorFormDirective, InfoEditorInfoDirective],
+  imports: [CommonModule, MemberFormComponent, MemberInfoComponent, ArticleComponent, InfoEditorComponent, InfoEditorFormDirective, InfoEditorInfoDirective, EditorHeaderComponent],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {

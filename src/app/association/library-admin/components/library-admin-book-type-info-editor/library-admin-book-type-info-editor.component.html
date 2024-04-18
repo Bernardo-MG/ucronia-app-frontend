@@ -1,12 +1,23 @@
 <layout-article title="Book type info">
   <div class="col-md-6 offset-md-3">
-    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
-      (delete)="onDelete()" (startEditing)="onStartEditing()">
-      <!-- Form -->
-      <assoc-library-admin-book-type-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-        [failures]="failures" (save)="onSave($event)"></assoc-library-admin-book-type-form>
-      <!-- Info -->
-      <assoc-library-admin-book-type-info id="info" [data]="data"></assoc-library-admin-book-type-info>
-    </form-info-editor>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="showMenu">
+          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-editor-header>
+        </div>
+        <form-info-editor [editing]="editing">
+          <!-- Form -->
+          <form-info-editor-form>
+            <assoc-library-admin-book-type-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" (save)="onSave($event)"></assoc-library-admin-book-type-form>
+          </form-info-editor-form>
+          <!-- Info -->
+          <form-info-editor-info>
+            <assoc-library-admin-book-type-info [data]="data"></assoc-library-admin-book-type-info>
+          </form-info-editor-info>
+        </form-info-editor>
+      </div>
+    </div>
   </div>
 </layout-article>

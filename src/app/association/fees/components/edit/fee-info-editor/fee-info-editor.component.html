@@ -1,13 +1,24 @@
 <layout-article title="Fee info">
   <div class="col-md-6 offset-md-3">
-    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
-      (delete)="onDelete()" (startEditing)="onStartEditing()">
-      <!-- Form -->
-      <assoc-fee-edit-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-        [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-      </assoc-fee-edit-form>
-      <!-- Info -->
-      <assoc-fee-info id="info" [data]="data" (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
-    </form-info-editor>
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="showMenu">
+          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-editor-header>
+        </div>
+        <form-info-editor [editing]="editing">
+          <!-- Form -->
+          <form-info-editor-form>
+            <assoc-fee-edit-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-fee-edit-form>
+          </form-info-editor-form>
+          <!-- Info -->
+          <form-info-editor-info>
+            <assoc-fee-info [data]="data" (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
+          </form-info-editor-info>
+        </form-info-editor>
+      </div>
+    </div>
   </div>
 </layout-article>
