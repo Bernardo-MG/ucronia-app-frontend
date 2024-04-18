@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorWrapperComponent } from '@app/shared/form/components/info-editor-wrapper/info-editor-wrapper.component';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../models/author';
@@ -23,10 +23,10 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, InfoEditorWrapperComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent],
+  imports: [CommonModule, ArticleComponent, InfoEditorComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
-export class LibraryAdminBookInfoEditorComponent extends InfoEditorComponent<Book> implements OnInit {
+export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
 
   private index = -1;
 

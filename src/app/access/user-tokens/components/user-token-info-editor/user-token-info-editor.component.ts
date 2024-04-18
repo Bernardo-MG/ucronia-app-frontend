@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
@@ -17,7 +17,7 @@ import { UserTokenInfoComponent } from '../user-token-info/user-token-info.compo
   imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent],
   templateUrl: './user-token-info-editor.component.html'
 })
-export class UserTokenInfoEditorComponent extends InfoEditorComponent<UserToken> implements OnInit {
+export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<UserToken> implements OnInit {
 
   public extendExpirationForm;
 

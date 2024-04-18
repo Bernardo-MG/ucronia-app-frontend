@@ -1,12 +1,12 @@
 <layout-article title="Author info">
   <div class="col-md-6 offset-md-3">
-    <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
       <assoc-library-admin-author-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
         [failures]="failures" (save)="onSave($event)"></assoc-library-admin-author-form>
       <!-- Info -->
       <assoc-library-admin-author-info id="info" [data]="data"></assoc-library-admin-author-info>
-    </layout-info-editor-wrapper>
+    </form-info-editor>
   </div>
 </layout-article>

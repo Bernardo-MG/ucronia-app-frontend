@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
@@ -18,7 +18,7 @@ import { AccessRolePermissionsComponent } from '../access-role-permissions/acces
   imports: [CommonModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
   templateUrl: './access-role-info-editor.component.html'
 })
-export class AccessRoleInfoEditorComponent extends InfoEditorComponent<Role> implements OnInit {
+export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
 
   public view = 'list';
 

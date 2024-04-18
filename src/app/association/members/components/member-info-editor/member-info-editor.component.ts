@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorWrapperComponent } from '@app/shared/form/components/info-editor-wrapper/info-editor-wrapper.component';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../models/member';
@@ -13,10 +13,10 @@ import { MemberInfoComponent } from '../member-info/member-info.component';
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [MemberFormComponent, MemberInfoComponent, ArticleComponent, InfoEditorWrapperComponent],
+  imports: [MemberFormComponent, MemberInfoComponent, ArticleComponent, InfoEditorComponent],
   templateUrl: './member-info-editor.component.html'
 })
-export class MemberInfoEditorComponent extends InfoEditorComponent<Member> implements OnInit {
+export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
 
   private number = -1;
 

@@ -1,149 +1,35 @@
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
-import { Observable, throwError } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
-export abstract class InfoEditorComponent<Data> {
+@Component({
+  selector: 'form-info-editor',
+  standalone: true,
+  imports: [CommonModule, IconsModule],
+  templateUrl: './info-editor.component.html'
+})
+export class InfoEditorComponent {
 
-  /**
-   * Reading flag. Active while the data is being read.
-   */
-  protected reading = false;
+  @Input() public editable = false;
 
-  /**
-   * Saving flag. Active while the data is being saved.
-   */
-  protected saving = false;
+  @Input() public editing = false;
 
-  /**
-   * Editing flag. Active while the form is active for editing.
-   */
-  protected editing = false;
+  @Input() public deletable = false;
 
-  /**
-   * Editable flag. Active if the user has permissions to edit the data.
-   */
-  protected editable = false;
+  @Output() public delete = new EventEmitter<void>();
 
-  /**
-   * Deletable flag. Active if the user has permissions to delete the data.
-   */
-  protected deletable = false;
+  @Output() public startEditing = new EventEmitter<void>();
 
-  /**
-   * Failures after saving.
-   */
-  protected failures = new FieldFailures();
-
-  /**
-   * Edit button active flag.
-   */
-  public get editEnabled() {
-    return (this.editable) && (!this.reading) && (!this.editing);
-  }
-
-  /**
-   * Delete button active flag.
-   */
-  public get deleteEnabled() {
-    return (this.deletable) && (!this.reading) && (!this.editing);
-  }
-
-  /**
-   * Form enabled flag.
-   */
-  public get formEnabled() {
-    return (this.editable) && (this.editing);
-  }
-
-  /**
-   * Waiting flag.
-   */
-  public get waiting() {
-    return (this.reading) || (this.saving);
-  }
-
-  constructor(
-    public data: Data
-  ) { }
-
-  /**
-   * Start editing template method, changes the component status accordingly.
-   */
   public onStartEditing(): void {
-    this.editing = true;
-  }
-
-  /**
-   * Save template method. Calls the save hook and updated the component status.
-   *
-   * @param toSave data to save
-   */
-  public onSave(toSave: Data): void {
-    this.saving = true;
-    this.save(toSave).subscribe({
-      next: response => {
-        this.interceptSave(response);
-      },
-      error: error => {
-        this.interceptError(error);
-      }
-    });
-  }
-
-  /**
-   * Cancel editing template method. Sets the component back to showing info.
-   */
-  public onCancel(): void {
-    this.editing = false;
+    this.startEditing.emit();
   }
 
   public onDelete(): void {
-    this.delete();
+    this.delete.emit();
   }
 
-  protected interceptSave(response: Data) {
-    this.data = response;
-
-    this.failures.clear();
-
-    // Reactivate component
-    this.saving = false;
-    this.editing = false;
+  public showMenu() {
+    return this.editable || this.deletable;
   }
-
-  protected interceptError(error: any) {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      // No failure response
-      // Just remove the failures
-      this.failures.clear();
-    }
-
-    // Reactivate component
-    this.saving = false;
-
-    return throwError(() => error);
-  }
-
-  protected load(): void {
-    this.reading = true;
-    this.read()
-      .subscribe({
-        next: response => {
-          this.data = response;
-          this.reading = false;
-        },
-        error: error => {
-          this.reading = false;
-        }
-      });
-  }
-
-  protected abstract delete(): void;
-
-  protected abstract read(): Observable<Data>;
-
-  protected abstract save(toSave: Data): Observable<Data>;
 
 }

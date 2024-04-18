@@ -1,6 +1,6 @@
 <layout-article title="Publisher info">
   <div class="col-md-6 offset-md-3">
-    <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
       <assoc-library-admin-publisher-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
@@ -8,6 +8,6 @@
       </assoc-library-admin-publisher-form>
       <!-- Info -->
       <assoc-library-admin-publisher-info id="info" [data]="data"></assoc-library-admin-publisher-info>
-    </layout-info-editor-wrapper>
+    </form-info-editor>
   </div>
 </layout-article>

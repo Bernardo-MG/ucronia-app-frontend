@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InfoEditorWrapperComponent } from './info-editor-wrapper.component';
+import { InfoEditorComponent } from './info-editor.component';
 
 describe('InfoEditorWrapperComponent', () => {
-  let component: InfoEditorWrapperComponent;
-  let fixture: ComponentFixture<InfoEditorWrapperComponent>;
+  let component: InfoEditorComponent;
+  let fixture: ComponentFixture<InfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        InfoEditorWrapperComponent
+        InfoEditorComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(InfoEditorWrapperComponent);
+    fixture = TestBed.createComponent(InfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

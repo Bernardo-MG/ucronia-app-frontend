@@ -1,6 +1,6 @@
 <layout-article title="Transaction info">
   <div class="col-md-6 offset-md-3">
-    <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+    <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
       (delete)="onDelete()" (startEditing)="onStartEditing()">
       <!-- Form -->
       <assoc-transaction-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
@@ -8,6 +8,6 @@
       </assoc-transaction-form>
       <!-- Info -->
       <assoc-transaction-info id="info" [data]="data"></assoc-transaction-info>
-    </layout-info-editor-wrapper>
+    </form-info-editor>
   </div>
 </layout-article>

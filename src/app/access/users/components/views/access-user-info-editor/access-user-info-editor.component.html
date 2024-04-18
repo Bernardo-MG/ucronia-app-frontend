@@ -18,19 +18,19 @@
       <!-- User -->
       <ng-container *ngSwitchCase="'user'">
         <div class="mb-1">
-          <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
+          <form-info-editor [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
             (delete)="onDelete()" (startEditing)="onStartEditing()">
             <!-- Form -->
-            <layout-info-editor-wrapper-form>
+            <form-info-editor-form>
               <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
                 [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
               </access-user-form>
-            </layout-info-editor-wrapper-form>
+            </form-info-editor-form>
             <!-- Info -->
-            <layout-info-editor-wrapper-info>
+            <form-info-editor-info>
               <access-user-info [data]="data"></access-user-info>
-            </layout-info-editor-wrapper-info>
-          </layout-info-editor-wrapper>
+            </form-info-editor-info>
+          </form-info-editor>
         </div>
         <!-- Enable/disable button -->
         <div class="mb-1">
