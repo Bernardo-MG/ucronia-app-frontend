@@ -21,11 +21,11 @@
           <layout-info-editor-wrapper [editable]="editEnabled" [deletable]="deleteEnabled" [editing]="editing"
             (delete)="onDelete()" (startEditing)="onStartEditing()">
             <!-- Form -->
-            <access-user-form id="form" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            <access-user-form layout-info-editor-wrapper-form [waiting]="waiting" [readonly]="!formEnabled"
+              [data]="data" [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
             </access-user-form>
             <!-- Info -->
-            <access-user-info id="info" [data]="data"></access-user-info>
+            <access-user-info layout-info-editor-wrapper-info [data]="data"></access-user-info>
           </layout-info-editor-wrapper>
         </div>
         <!-- Enable/disable button -->

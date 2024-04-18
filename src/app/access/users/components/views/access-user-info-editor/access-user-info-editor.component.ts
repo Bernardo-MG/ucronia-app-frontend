@@ -8,6 +8,8 @@ import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorWrapperComponent } from '@app/shared/form/components/info-editor-wrapper/info-editor-wrapper.component';
 import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorFormDirective } from '@app/shared/form/directives/info-editor-form.directive';
+import { InfoEditorInfoDirective } from '@app/shared/form/directives/info-editor-info.directive';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
@@ -21,7 +23,7 @@ import { AccessUserInfoComponent } from '../../info/access-user-info/access-user
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, InfoEditorWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, InfoEditorWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, InfoEditorFormDirective, InfoEditorInfoDirective],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
