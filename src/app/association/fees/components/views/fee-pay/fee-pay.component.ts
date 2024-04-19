@@ -14,7 +14,7 @@ import { FeePayment } from '../../../models/fee-payment';
 import { FeePaymentMember } from '../../../models/fee-payment-member';
 import { FeeService } from '../../../services/fee.service';
 import { FeeMemberSelectionComponent } from '../../edit/fee-member-selection/fee-member-selection.component';
-import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
+import { FeePayFormComponent } from '../../pay/fee-pay-form/fee-pay-form.component';
 
 @Component({
   selector: 'assoc-fee-create',
