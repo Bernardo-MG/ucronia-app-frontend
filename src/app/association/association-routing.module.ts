@@ -15,32 +15,32 @@ const routes: Routes = [
     children: [
       {
         path: 'funds',
-        canActivate: [ResourceGuard("funds")],
+        canActivate: [ResourceGuard("funds", "view")],
         loadChildren: fundsModule
       },
       {
         path: 'members',
-        canActivate: [ResourceGuard("member")],
+        canActivate: [ResourceGuard("member", "view")],
         loadChildren: membersModule
       },
       {
         path: 'fees',
-        canActivate: [ResourceGuard("fee")],
+        canActivate: [ResourceGuard("fee", "view")],
         loadChildren: feesModule
       },
       {
         path: 'library',
-        canActivate: [ResourceGuard("library")],
+        canActivate: [ResourceGuard("library", "view")],
         loadChildren: libraryModule
       },
       {
         path: 'library/admin',
-        canActivate: [ResourceGuard("library_admin")],
+        canActivate: [ResourceGuard("library_admin", "view")],
         loadChildren: libraryAdminModule
       },
       {
         path: 'configuration',
-        canActivate: [ResourceGuard("association_configuration")],
+        canActivate: [ResourceGuard("association_configuration", "view")],
         loadChildren: configurationModule
       }
     ]
