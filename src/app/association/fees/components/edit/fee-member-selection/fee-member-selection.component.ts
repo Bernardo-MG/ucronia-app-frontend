@@ -8,8 +8,7 @@ import { Member } from '../../../../members/models/member';
   selector: 'assoc-member-selection',
   standalone: true,
   imports: [ButtonListComponent, WaitingWrapperComponent, PaginationNavigationComponent],
-  templateUrl: './fee-member-selection.component.html',
-  styleUrls: ['./fee-member-selection.component.sass']
+  templateUrl: './fee-member-selection.component.html'
 })
 export class FeeMemberSelectionComponent {
 
