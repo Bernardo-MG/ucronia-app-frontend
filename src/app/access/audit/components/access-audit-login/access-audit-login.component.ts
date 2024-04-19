@@ -4,6 +4,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
@@ -12,7 +13,7 @@ import { AccessAuditLoginListComponent } from '../access-audit-login-list/access
 @Component({
   selector: 'access-audit-login',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessAuditLoginListComponent, PaginationNavigationComponent],
+  imports: [RouterModule, IconsModule, AccessAuditLoginListComponent, PaginationNavigationComponent, WaitingWrapperComponent],
   templateUrl: './access-audit-login.component.html'
 })
 export class AccessAuditLoginComponent implements OnInit {

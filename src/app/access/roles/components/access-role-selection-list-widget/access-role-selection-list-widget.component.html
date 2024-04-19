@@ -1,8 +1,10 @@
 <div class="card">
   <div class="card-body">
     <!-- List -->
-    <access-role-selection-list [page]="page" [waiting]="readingRoles"
-      (changeDirection)="onChangeDirection($event)"></access-role-selection-list>
+    <layout-waiting-wrapper [waiting]="readingRoles">
+      <access-role-selection-list [page]="page"
+        (changeDirection)="onChangeDirection($event)"></access-role-selection-list>
+    </layout-waiting-wrapper>
     <!-- Total -->
     <div class="row">
       <div class="col-md-1">

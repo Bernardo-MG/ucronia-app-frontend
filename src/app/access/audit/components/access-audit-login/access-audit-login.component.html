@@ -1,8 +1,9 @@
 <div class="card">
   <div class="card-body">
     <!-- List -->
-    <access-audit-login-list [page]="page"
-      (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
+    <layout-waiting-wrapper [waiting]="reading">
+      <access-audit-login-list [page]="page" (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
+    </layout-waiting-wrapper>
     <!-- Total -->
     <div class="row">
       <div class="col-md-1">

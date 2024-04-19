@@ -10,8 +10,10 @@
       </div>
     </div>
     <!-- List -->
-    <assoc-member-list [waiting]="readingMembers" [page]="page" (changeDirection)="onChangeDirection($event)">
-    </assoc-member-list>
+    <layout-waiting-wrapper [waiting]="readingMembers">
+      <assoc-member-list [page]="page" (changeDirection)="onChangeDirection($event)">
+      </assoc-member-list>
+    </layout-waiting-wrapper>
     <!-- Total -->
     <div class="row">
       <div class="col-md-1">
