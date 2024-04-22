@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Transaction } from '@app/association/funds/models/transaction';
+import { TransactionService } from '@app/association/funds/service/transaction.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Transaction } from '../../../models/transaction';
-import { TransactionService } from '../../../service/transaction.service';
 import { TransactionFormComponent } from '../../data/transaction-form/transaction-form.component';
 
 @Component({

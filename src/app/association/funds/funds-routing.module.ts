@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { TransactionCreateComponent } from '../transactions/components/views/transaction-create/transaction-create.component';
-import { TransactionInfoEditorComponent } from '../transactions/components/views/transaction-info-editor/transaction-info-editor.component';
+import { TransactionCreateComponent } from './components/views/transaction-create/transaction-create.component';
+import { TransactionInfoEditorComponent } from './components/views/transaction-info-editor/transaction-info-editor.component';
 import { FundsFrontpageComponent } from './components/views/funds-frontpage/funds-frontpage.component';
 
 

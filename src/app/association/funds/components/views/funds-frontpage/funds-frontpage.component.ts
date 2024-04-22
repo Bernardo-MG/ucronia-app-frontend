@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { TransactionBalanceChartWidgetComponent } from '@app/association/transactions/components/chart/transaction-balance-chart-widget/transaction-balance-chart-widget.component';
-import { TransactionCalendarWidgetComponent } from '@app/association/transactions/components/calendar/transaction-calendar-widget/transaction-calendar-widget.component';
-import { FundsCurrentBalanceComponent } from '@app/association/transactions/components/balance/transaction-current-balance/transaction-current-balance.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { FundsCurrentBalanceComponent } from '../../balance/transaction-current-balance/transaction-current-balance.component';
+import { TransactionCalendarWidgetComponent } from '../../calendar/transaction-calendar-widget/transaction-calendar-widget.component';
+import { TransactionBalanceChartWidgetComponent } from '../../chart/transaction-balance-chart-widget/transaction-balance-chart-widget.component';
 
 @Component({
   selector: 'app-transaction-frontpage',

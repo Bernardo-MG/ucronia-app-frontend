@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Transaction } from '@app/association/funds/models/transaction';
+import { TransactionService } from '@app/association/funds/service/transaction.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Transaction } from '../../../models/transaction';
-import { TransactionService } from '../../../service/transaction.service';
 import { TransactionFormComponent } from '../../data/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../data/transaction-info/transaction-info.component';
 
