@@ -67,28 +67,28 @@ const routes: Routes = [
         path: 'roles',
         component: SidebarLayoutComponent,
         loadChildren: rolesModule,
-        canActivate: [ResourceGuard("role")]
+        canActivate: [ResourceGuard("role", "view")]
       },
       {
         // Users
         path: 'users',
         component: SidebarLayoutComponent,
         loadChildren: userModule,
-        canActivate: [ResourceGuard("user")]
+        canActivate: [ResourceGuard("user", "view")]
       },
       {
         // User tokens
         path: 'user-tokens',
         component: SidebarLayoutComponent,
         loadChildren: userTokenModule,
-        canActivate: [ResourceGuard("user_token")]
+        canActivate: [ResourceGuard("user_token", "view")]
       },
       {
         // Security audit
         path: 'security/audit',
         component: SidebarLayoutComponent,
         loadChildren: securityAuditModule,
-        canActivate: [ResourceGuard("user")]
+        canActivate: [ResourceGuard("user", "view")]
       },
       {
         // Account

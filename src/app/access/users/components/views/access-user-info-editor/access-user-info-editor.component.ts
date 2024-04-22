@@ -6,9 +6,9 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { InfoEditorComponent } from '@app/shared/form/components/info-editor/info-editor.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { EditionWrapperComponent } from '@app/shared/layout/components/edition-wrapper/edition-wrapper.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
 import { UserUpdate } from '../../../models/user-update';
@@ -21,10 +21,10 @@ import { AccessUserInfoComponent } from '../../info/access-user-info/access-user
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, EditionWrapperComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
+  imports: [CommonModule, FormModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent],
   templateUrl: './access-user-info-editor.component.html'
 })
-export class AccessUserInfoEditorComponent extends InfoEditorComponent<User> implements OnInit {
+export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {
 
   public view: 'user' | 'roles' | 'member' = 'user';
 
