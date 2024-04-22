@@ -5,7 +5,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
-import { MemberFormComponent } from '../../edit/member-form/member-form.component';
+import { MemberFormComponent } from '../../data/member-form/member-form.component';
 
 @Component({
   selector: 'assoc-member-create',

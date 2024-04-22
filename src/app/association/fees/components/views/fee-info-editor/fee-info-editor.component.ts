@@ -8,8 +8,8 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { Observable } from 'rxjs';
 import { Fee } from '../../../models/fee';
 import { FeeService } from '../../../services/fee.service';
-import { FeeEditFormComponent } from '../../edit/fee-edit-form/fee-edit-form.component';
-import { FeeInfoComponent } from '../../edit/fee-info/fee-info.component';
+import { FeeEditFormComponent } from '../../data/fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '../../data/fee-info/fee-info.component';
 
 @Component({
   selector: 'assoc-fee-info-editor',
