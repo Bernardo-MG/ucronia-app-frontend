@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TransactionService } from '../../../../transactions/service/transaction.service';
+import { TransactionService } from '@app/association/funds/service/transaction.service';
 import { TransactionCreateComponent } from './transaction-create.component';
 
 describe('TransactionCreateComponent', () => {
