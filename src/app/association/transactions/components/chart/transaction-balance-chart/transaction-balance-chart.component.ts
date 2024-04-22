@@ -41,7 +41,7 @@ export class TransactionBalanceChartComponent implements OnChanges {
     this.endMonthChange.emit(event.target.value);
   }
 
-  private loadChart() {
+  public loadChart() {
     if (this.chart) {
       this.chart.destroy();
     }

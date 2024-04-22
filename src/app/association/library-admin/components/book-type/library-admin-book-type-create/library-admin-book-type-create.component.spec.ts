@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BookTypeAdminService } from '@app/association/library-admin/services/book-type-admin.service';
 import { LibraryAdminBookTypeCreateComponent } from './library-admin-book-type-create.component';
-import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 describe('LibraryAdminBookTypeCreateComponent', () => {
   let component: LibraryAdminBookTypeCreateComponent;
