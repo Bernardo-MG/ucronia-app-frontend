@@ -5,7 +5,7 @@ import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { throwError } from 'rxjs';
-import { AccountChangePasswordFormComponent } from '../account-change-password-form/account-change-password-form.component';
+import { AccountChangePasswordFormComponent } from '../../password-change/account-change-password-form/account-change-password-form.component';
 
 @Component({
   selector: 'account-password-change',

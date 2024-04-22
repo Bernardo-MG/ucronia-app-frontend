@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountPasswordChangeComponent } from './components/password-change/account-password-change/account-password-change.component';
-import { AccountProfileFrontpageComponent } from './components/profile/account-profile-frontpage/account-profile-frontpage.component';
+import { AccountPasswordChangeComponent } from './components/views/account-password-change/account-password-change.component';
+import { AccountProfileFrontpageComponent } from './components/views/account-profile-frontpage/account-profile-frontpage.component';
 
 
 const routes: Routes = [
