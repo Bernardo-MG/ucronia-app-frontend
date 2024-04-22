@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
 import { MemberBalance } from '../../../models/member-balance';
 import { MemberBalanceService } from '../../../services/member-balance.service';
+import { MemberBalanceChartComponent } from '../member-balance-chart/member-balance-chart.component';
 
 @Component({
   selector: 'assoc-member-balance-chart-widget',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MemberBalanceChartComponent],
   templateUrl: './member-balance-chart-widget.component.html'
 })
 export class MemberBalanceChartWidgetComponent implements OnInit {
@@ -16,15 +16,35 @@ export class MemberBalanceChartWidgetComponent implements OnInit {
 
   public months: string[] = [];
 
-  public chart: any;
+  private _startMonth = '';
 
-  public readingBalance = false;
+  public get startMonth() {
+    return this._startMonth;
+  }
 
-  public readingRange = false;
+  public set startMonth(month: string) {
+    this._startMonth = month;
+    this.loadBalance();
+  }
 
-  public startMonth: string | undefined;
+  private _endMonth = '';
 
-  public endMonth: string | undefined;
+  public get endMonth() {
+    return this._endMonth;
+  }
+
+  public get waiting() {
+    return (this.readingBalance || this.readingRange);
+  }
+
+  public set endMonth(month: string) {
+    this._endMonth = month;
+    this.loadBalance();
+  }
+
+  private readingBalance = false;
+
+  private readingRange = false;
 
   constructor(
     private memberBalanceService: MemberBalanceService
@@ -42,54 +62,11 @@ export class MemberBalanceChartWidgetComponent implements OnInit {
     });
   }
 
-  public onSelectStartMonth(event: any) {
-    this.startMonth = event.target.value;
-    this.loadBalance();
-  }
-
-  public onSelectEndMonth(event: any) {
-    this.endMonth = event.target.value;
-    this.loadBalance();
-  }
-
-  public get waiting() {
-    return (this.readingBalance || this.readingRange);
-  }
-
   private loadBalance() {
     this.readingBalance = true;
     this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.balance = b;
       this.readingBalance = false;
-      this.loadChart();
-    });
-  }
-
-  private loadChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-
-    const labels = this.balance.map(b => b.date);
-    const totals = this.balance.map(b => b.total);
-
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Members',
-          data: totals,
-          borderColor: 'rgba(200, 99, 132, .7)',
-          borderWidth: 2,
-        },
-      ],
-    };
-    this.chart = new Chart('memberBalanceChart', {
-      type: 'line',
-      data,
-      options: {
-        responsive: true,
-      }
     });
   }
 

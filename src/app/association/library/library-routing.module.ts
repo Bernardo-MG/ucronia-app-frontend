@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { LibraryBookInfoWidgetComponent } from './components/library-book-info-widget/library-book-info-widget.component';
-import { LibraryFrontpageComponent } from './components/library-frontpage/library-frontpage.component';
+import { LibraryBookInfoWidgetComponent } from './components/info/library-book-info-widget/library-book-info-widget.component';
+import { LibraryFrontpageComponent } from './components/views/library-frontpage/library-frontpage.component';
 
 
 const routes: Routes = [

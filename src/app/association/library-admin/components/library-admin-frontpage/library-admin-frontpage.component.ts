@@ -1,14 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { LibraryAdminAuthorListComponent } from '../library-admin-author-list/library-admin-author-list.component';
-import { LibraryAdminBookListComponent } from '../library-admin-book-list/library-admin-book-list.component';
-import { LibraryAdminBookTypeListComponent } from '../library-admin-book-type-list/library-admin-book-type-list.component';
-import { LibraryAdminGameSystemListComponent } from '../library-admin-game-system-list/library-admin-game-system-list.component';
-import { LibraryAdminPublisherListComponent } from '../library-admin-publisher-list/library-admin-publisher-list.component';
-import { CommonModule } from '@angular/common';
+import { LibraryAdminAuthorListComponent } from '../author/library-admin-author-list/library-admin-author-list.component';
+import { LibraryAdminBookTypeListComponent } from '../book-type/library-admin-book-type-list/library-admin-book-type-list.component';
+import { LibraryAdminBookListComponent } from '../book/library-admin-book-list/library-admin-book-list.component';
+import { LibraryAdminGameSystemListComponent } from '../game-system/library-admin-game-system-list/library-admin-game-system-list.component';
+import { LibraryAdminPublisherListComponent } from '../publisher/library-admin-publisher-list/library-admin-publisher-list.component';
 
 @Component({
   selector: 'assoc-library-admin-frontpage',

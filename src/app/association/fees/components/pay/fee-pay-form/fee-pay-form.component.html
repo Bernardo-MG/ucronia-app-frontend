@@ -23,7 +23,7 @@
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
             (click)="removeDate(i)">
-            <fa-icon [icon]="removeIcon"></fa-icon>
+            <icon-delete></icon-delete>
           </button>
         </div>
       </div>
@@ -31,7 +31,7 @@
         <div class="col-md-12">
           <button type="button" class="btn btn-link link-dark" aria-label="Add date" [disabled]="!formEnabled"
             (click)="addDate()">
-            <fa-icon [icon]="addIcon"></fa-icon>
+            <icon-add></icon-add>
           </button>
         </div>
       </div>

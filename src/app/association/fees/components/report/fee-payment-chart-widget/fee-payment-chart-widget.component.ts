@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FeePaymentReport } from '@app/association/fees/models/fee-payment-report';
 import { FeeReportService } from '@app/association/fees/services/fee-report.service';
-import Chart from 'chart.js/auto';
+import { FeePaymentChartComponent } from '../fee-payment-chart/fee-payment-chart.component';
 
 @Component({
   selector: 'assoc-fee-payment-chart-widget',
   standalone: true,
-  imports: [],
+  imports: [FeePaymentChartComponent],
   templateUrl: './fee-payment-chart-widget.component.html'
 })
 export class FeePaymentChartWidgetComponent implements OnInit {
 
-  private data = new FeePaymentReport();
-
-  public chart: any;
+  public report = new FeePaymentReport();
 
   constructor(
     private feeReportService: FeeReportService
@@ -22,35 +20,10 @@ export class FeePaymentChartWidgetComponent implements OnInit {
   ngOnInit(): void {
     this.feeReportService.getPaymentReport().subscribe({
       next: response => {
-        this.data = response;
-        this.loadChart();
+        this.report = response;
       },
       error: error => {
       }
-    });
-  }
-
-  private loadChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
-
-    const labels = ['paid', 'unpaid'];
-    const payments = [this.data.paid, this.data.unpaid];
-
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Paid/unpaid',
-          data: payments,
-          backgroundColor: ["#51EAEA", "#FCDDB0"]
-        },
-      ],
-    };
-    this.chart = new Chart('feePaymentChart', {
-      type: 'pie',
-      data
     });
   }
 
