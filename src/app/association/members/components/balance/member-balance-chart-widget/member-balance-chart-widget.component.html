@@ -1,30 +1,7 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Timeline</h5>
-    <canvas id="memberBalanceChart"></canvas>
-    <div class="row pt-2">
-      <div class="col-4">
-        Start
-      </div>
-      <div class="col-8">
-        <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting"
-          (change)="onSelectStartMonth($event)">
-          <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === startMonth"
-            [value]="selectionMonth">
-            {{selectionMonth}}</option>
-        </select>
-      </div>
-      <div class="col-4">
-        End
-      </div>
-      <div class="col-8">
-        <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting"
-          (change)="onSelectEndMonth($event)">
-          <option *ngFor="let selectionMonth of months" [selected]="selectionMonth === endMonth"
-            [value]="selectionMonth">
-            {{selectionMonth}}</option>
-        </select>
-      </div>
-    </div>
+    <assoc-member-balance-chart [waiting]="waiting" [balance]="balance" [(startMonth)]="startMonth"
+    [(endMonth)]="endMonth" [months]="months"></assoc-member-balance-chart>
   </div>
 </div>
