@@ -4,12 +4,12 @@ import { TransactionCurrentBalance } from '../../../models/transaction-current-b
 import { TransactionBalanceService } from '../../../service/transaction-balance.service';
 
 @Component({
-  selector: 'assoc-transaction-current-balance',
+  selector: 'assoc-transaction-current-balance-widget',
   standalone: true,
   imports: [WaitingWrapperComponent],
-  templateUrl: './transaction-current-balance.component.html'
+  templateUrl: './transaction-current-balance-widget.component.html'
 })
-export class FundsCurrentBalanceComponent implements OnInit {
+export class FundsCurrentBalanceWidgetComponent implements OnInit {
 
   public readingBalance = false;
 
