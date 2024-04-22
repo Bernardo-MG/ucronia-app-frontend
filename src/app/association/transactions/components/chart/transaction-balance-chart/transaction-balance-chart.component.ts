@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/association/transactions/models/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
-import { TransactionBalanceService } from '../../../service/transaction-balance.service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
@@ -10,59 +9,36 @@ import { TransactionBalanceService } from '../../../service/transaction-balance.
   imports: [CommonModule],
   templateUrl: './transaction-balance-chart.component.html'
 })
-export class TransactionBalanceChartComponent implements OnInit {
+export class TransactionBalanceChartComponent implements OnChanges {
 
-  public balance: TransactionMonthlyBalance[] = [];
+  @Input() public waiting = false;
 
-  public months: string[] = [];
+  @Input() public balance: TransactionMonthlyBalance[] = [];
+
+  @Input() public startMonth = '';
+
+  @Input() public endMonth = '';
+
+  @Input() public months: string[] = [];
+
+  @Output() public startMonthChange = new EventEmitter<string>();
+
+  @Output() public endMonthChange = new EventEmitter<string>();
 
   public chart: any;
 
-  public readingBalance = false;
-
-  public readingRange = false;
-
-  public startMonth: string | undefined;
-
-  public endMonth: string | undefined;
-
-  constructor(
-    private balanceService: TransactionBalanceService
-  ) { }
-
-  ngOnInit(): void {
-    // Read balance range
-    this.readingRange = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => v.date);
-      this.startMonth = this.months[0];
-      this.endMonth = this.months[this.months.length - 1];
-      this.readingRange = false;
-      this.loadBalance();
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['balance']) {
+      this.loadChart();
+    }
   }
 
   public onSelectStartMonth(event: any) {
-    this.startMonth = event.target.value;
-    this.loadBalance();
+    this.startMonthChange.emit(event.target.value);
   }
 
   public onSelectEndMonth(event: any) {
-    this.endMonth = event.target.value;
-    this.loadBalance();
-  }
-
-  public get waiting() {
-    return (this.readingBalance || this.readingRange);
-  }
-
-  private loadBalance() {
-    this.readingBalance = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.balance = b;
-      this.readingBalance = false;
-      this.loadChart();
-    });
+    this.endMonthChange.emit(event.target.value);
   }
 
   private loadChart() {
