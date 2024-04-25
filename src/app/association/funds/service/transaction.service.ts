@@ -7,7 +7,9 @@ import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Transaction } from '../models/transaction';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class TransactionService {
 
   constructor(

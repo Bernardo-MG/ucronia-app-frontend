@@ -10,7 +10,9 @@ import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserLogin } from '../models/user-login';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class LoginService {
 
   constructor(

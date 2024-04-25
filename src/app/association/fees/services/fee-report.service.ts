@@ -7,7 +7,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { FeePaymentReport } from '../models/fee-payment-report';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class FeeReportService {
 
   constructor(

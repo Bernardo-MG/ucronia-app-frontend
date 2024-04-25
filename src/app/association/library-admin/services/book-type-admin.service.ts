@@ -11,7 +11,9 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class BookTypeAdminService {
 
   constructor(

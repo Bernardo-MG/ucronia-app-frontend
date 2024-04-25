@@ -9,7 +9,9 @@ import { Account } from '../models/account';
 import { PasswordChange } from '../models/password-change';
 import { PasswordChangeStatus } from '../models/password-change-status';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccountService {
 
   constructor(

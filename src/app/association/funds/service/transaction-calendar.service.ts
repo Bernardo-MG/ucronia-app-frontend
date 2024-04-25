@@ -10,7 +10,9 @@ import { Transaction } from '../models/transaction';
 import { TransactionCalendarMonth } from '../models/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '../models/transaction-calendar-months-range';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class TransactionCalendarService {
 
   constructor(

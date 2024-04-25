@@ -9,7 +9,9 @@ import { Observable } from 'rxjs';
 import { PasswordReset } from '../models/password-reset';
 import { PasswordResetRequest } from '../models/password-reset-request';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class PasswordResetService {
 
   constructor(

@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { GameSystem } from '../models/game-system';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class GameSystemAdminService {
 
   constructor(
