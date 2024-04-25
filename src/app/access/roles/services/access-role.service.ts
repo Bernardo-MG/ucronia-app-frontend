@@ -13,7 +13,9 @@ import { Role } from '@app/core/authentication/models/role';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccessRoleService {
 
   constructor(

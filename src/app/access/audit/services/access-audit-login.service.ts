@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { LoginRegister } from '../models/login-register';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccessAuditLoginService {
 
   constructor(

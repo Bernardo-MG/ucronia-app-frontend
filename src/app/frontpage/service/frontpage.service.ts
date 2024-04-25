@@ -7,7 +7,9 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class FrontpageService {
 
   constructor(

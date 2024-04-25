@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Book } from '../models/book';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class BookService {
 
   constructor(

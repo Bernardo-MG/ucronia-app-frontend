@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberBalance } from '../models/member-balance';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class MemberBalanceService {
 
   constructor(

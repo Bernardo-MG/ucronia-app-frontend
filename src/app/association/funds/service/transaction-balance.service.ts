@@ -12,7 +12,9 @@ import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '../models/transaction-current-balance';
 import { TransactionMonthlyBalance } from '../models/transaction-monthly-balance';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class TransactionBalanceService {
 
   constructor(
