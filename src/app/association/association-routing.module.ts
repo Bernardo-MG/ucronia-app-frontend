@@ -30,8 +30,8 @@ const routes: Routes = [
         loadChildren: feesModule
       },
       {
-        path: 'userFees',
-        canActivate: [ResourceGuard("userFee", "view")],
+        path: 'myFees',
+        canActivate: [ResourceGuard("user_fee", "view")],
         loadChildren: userFeesModule
       },
       {

@@ -14,7 +14,7 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
     title: 'Association',
     links: [
       { title: 'Library', path: '/library', resource: 'library' },
-      { title: 'Fees', path: '/userFees', resource: 'user_fee' }
+      { title: 'Fees', path: '/myFees', resource: 'user_fee' }
     ]
   },
   security: {
