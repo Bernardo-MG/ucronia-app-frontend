@@ -30,9 +30,6 @@ export class AccountLayoutComponent {
 
     // Show config link
     this.showConfigMenu = this.layoutService.showConfigurationLink();
-
-    // Load menus
-    this.menus = this.layoutService.getMenus();
   }
 
 }
