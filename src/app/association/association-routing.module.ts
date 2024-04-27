@@ -4,6 +4,7 @@ import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
+const userFeesModule = () => import('@app/association/user-fees/user-fees.module').then(m => m.UserFeesModule);
 const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
@@ -27,6 +28,11 @@ const routes: Routes = [
         path: 'fees',
         canActivate: [ResourceGuard("fee", "view")],
         loadChildren: feesModule
+      },
+      {
+        path: 'myFees',
+        canActivate: [ResourceGuard("user_fee", "view")],
+        loadChildren: userFeesModule
       },
       {
         path: 'library',
