@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { LoginRegister } from '../models/login-register';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccessAuditLoginService {
 
   constructor(
@@ -20,7 +22,7 @@ export class AccessAuditLoginService {
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<LoginRegister[]>> {
     const defaultSort = new SortField('date');
-    defaultSort.direction = SortDirection.Ascending;
+    defaultSort.direction = SortDirection.Descending;
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);

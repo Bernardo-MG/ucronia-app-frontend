@@ -11,7 +11,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Author } from '../models/author';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AuthorAdminService {
 
   constructor(

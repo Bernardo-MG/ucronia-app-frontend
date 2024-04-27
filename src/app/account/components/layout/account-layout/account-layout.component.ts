@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AccountLayoutService } from '@app/account/services/account-layout.service';
 import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
 import { Menu } from '@app/shared/menu/models/menu';
-import { MenuLink } from '@app/shared/menu/models/menu-link';
 
 @Component({
   selector: 'account-layout',
@@ -18,10 +18,11 @@ export class AccountLayoutComponent {
 
   public showConfigMenu = false;
 
-  public menus: Menu[] = [new Menu([new MenuLink('Profile', '/account/profile'), new MenuLink('Password', '/account/password')], "Setting")];
+  public menus: Menu[] = [];
 
   constructor(
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private accountLayoutService: AccountLayoutService
   ) { }
 
   ngOnInit(): void {
@@ -31,8 +32,8 @@ export class AccountLayoutComponent {
     // Show config link
     this.showConfigMenu = this.layoutService.showConfigurationLink();
 
-    // Load menus
-    this.menus = this.layoutService.getMenus();
+    // Load menu
+    this.menus = this.accountLayoutService.getMenus();
   }
 
 }

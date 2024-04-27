@@ -7,7 +7,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Configuration } from '../models/configuration';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AssociationConfigurationService {
 
   constructor(

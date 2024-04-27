@@ -8,7 +8,9 @@ import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccessUserActivateService {
 
   constructor(

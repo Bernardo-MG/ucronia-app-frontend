@@ -12,7 +12,9 @@ import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
 import { Member } from '../models/member';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class MemberService {
 
   constructor(

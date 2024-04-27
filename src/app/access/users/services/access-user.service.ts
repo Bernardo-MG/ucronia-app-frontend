@@ -15,7 +15,9 @@ import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class AccessUserService {
 
   constructor(

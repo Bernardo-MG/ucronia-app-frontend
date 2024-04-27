@@ -12,7 +12,9 @@ import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { FeeCalendar } from '../models/fee-calendar';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class FeeCalendarService {
 
   constructor(

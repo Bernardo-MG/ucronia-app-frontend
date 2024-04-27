@@ -9,7 +9,7 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
       { title: 'Fees', path: '/fees', resource: 'fee' },
       { title: 'Funds', path: '/funds', resource: 'funds' },
       { title: 'Library', path: '/library', resource: 'library' },
-      { title: 'Library Admin', path: '/library/admin', resource: 'library_admin' }
+      { title: 'My fees', path: '/myFees', resource: 'user_fee' }
     ]
   },
   security: {

@@ -1,0 +1,24 @@
+<layout-article title="Fee info">
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="showMenu">
+          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-editor-header>
+        </div>
+        <ng-container [ngSwitch]="editing">
+          <!-- Form -->
+          <ng-container *ngSwitchCase="true">
+            <assoc-fee-edit-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-fee-edit-form>
+          </ng-container>
+          <!-- Info -->
+          <ng-container *ngSwitchCase="false">
+            <assoc-fee-info [data]="data" (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</layout-article>

@@ -14,7 +14,9 @@ import { Fee } from '../models/fee';
 import { FeePayment } from '../models/fee-payment';
 import { Active } from '@app/association/members/models/active';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class FeeService {
 
   constructor(
