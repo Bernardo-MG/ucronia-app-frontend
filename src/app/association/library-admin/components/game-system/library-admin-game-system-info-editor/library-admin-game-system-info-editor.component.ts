@@ -48,7 +48,7 @@ export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusC
 
   protected override delete(): void {
     this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate(['/library']);
+      this.router.navigate(['/library/admin']);
     });
   }
 
