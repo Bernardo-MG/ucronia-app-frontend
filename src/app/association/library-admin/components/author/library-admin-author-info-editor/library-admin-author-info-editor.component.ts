@@ -7,7 +7,6 @@ import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Author } from '../../../models/author';
-import { BookType } from '../../../models/book-type';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/library-admin-author-form.component';
 import { LibraryAdminAuthorInfoComponent } from '../library-admin-author-info/library-admin-author-info.component';
@@ -52,11 +51,11 @@ export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusCompo
     });
   }
 
-  protected override read(): Observable<BookType> {
+  protected override read(): Observable<Author> {
     return this.service.getOne(this.name);
   }
 
-  protected override save(toSave: BookType): Observable<BookType> {
+  protected override save(toSave: Author): Observable<Author> {
     return this.service.update(this.data.name, toSave);
   }
 
