@@ -5,17 +5,16 @@
       <tr>
         <!-- Headers -->
         <th scope="col">
-          Title<sorting-button property="title"
-            (directionChange)="onChangeDirection($event)"></sorting-button>
+          Name<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
         </th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let gameSystem of page.content; let rowIndex = index" role="button"
-        routerLink="/library/gameSystem/{{gameSystem.name}}">
+      <tr *ngFor="let donor of page.content; let rowIndex = index" role="button"
+        routerLink="/library/donor/{{donor.name}}">
         <!-- Cells -->
         <td>
-          {{gameSystem.name}}
+          {{donor.name}}
         </td>
       </tr>
     </tbody>

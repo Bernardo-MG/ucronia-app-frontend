@@ -20,6 +20,10 @@
       <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
         (click)="onChangeView('game_systems')">Game systems</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="view === 'donors'" aria-current="page" role="button"
+        (click)="onChangeView('donors')">Donors</a>
+    </li>
   </ul>
   <ng-container [ngSwitch]="view">
     <!-- Books -->
@@ -100,6 +104,23 @@
             <div class="d-grid">
               <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/gameSystem/add"
                 [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
+                <icon-add></icon-add>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <!-- Donors -->
+    <ng-container *ngSwitchCase="'donors'">
+      <div class="card">
+        <div class="card-body">
+          <h2>Donors</h2>
+          <assoc-library-admin-donor-list></assoc-library-admin-donor-list>
+          <div class="col-md-2 offset-md-5">
+            <div class="d-grid">
+              <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/donor/add"
+                [disabled]="!createDonorPermission" [attr.aria-disabled]="!createDonorPermission">
                 <icon-add></icon-add>
               </button>
             </div>

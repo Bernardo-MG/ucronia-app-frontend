@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
@@ -17,14 +17,14 @@ import { AuthorAdminService } from '../../../services/author-admin.service';
   imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent ],
   templateUrl: './library-admin-author-list.component.html'
 })
-export class LibraryAdminAuthorListComponent {
+export class LibraryAdminAuthorListComponent implements OnInit {
 
   public page = new PaginatedResponse<Author[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingBooks = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -50,18 +50,18 @@ export class LibraryAdminAuthorListComponent {
   }
 
   private load(page: number) {
-    this.readingBooks = true;
+    this.reading = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       }
     });
   }

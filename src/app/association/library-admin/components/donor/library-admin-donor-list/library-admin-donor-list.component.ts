@@ -1,25 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Donor } from '@app/association/library-admin/models/donor';
+import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { GameSystem } from '../../../models/game-system';
-import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-list',
+  selector: 'assoc-library-admin-donor-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent ],
-  templateUrl: './library-admin-game-system-list.component.html'
+  imports: [ CommonModule, RouterModule, SortingButtonComponent, WaitingWrapperComponent, PaginationNavigationComponent ],
+  templateUrl: './library-admin-donor-list.component.html'
 })
-export class LibraryAdminGameSystemListComponent implements OnInit {
-
-  public page = new PaginatedResponse<GameSystem[]>([]);
+export class LibraryAdminDonorListComponent {
+  
+  public page = new PaginatedResponse<Donor[]>([]);
 
   /**
    * Loading flag.
@@ -29,7 +28,7 @@ export class LibraryAdminGameSystemListComponent implements OnInit {
   private sort = new Sort([]);
 
   constructor(
-    private service: GameSystemAdminService
+    private service: DonorAdminService
   ) { }
 
   public ngOnInit(): void {
