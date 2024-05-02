@@ -32,8 +32,8 @@ export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusCompon
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = false;
-    this.deletable = this.authContainer.hasPermission("library_author", "delete");
+    this.editable = this.authContainer.hasPermission("inventory_donor", "update");
+    this.deletable = this.authContainer.hasPermission("inventory_donor", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
