@@ -26,23 +26,23 @@ export class DonorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(name: string, data: Donor): Observable<Donor> {
+  public update(number: number, data: Donor): Observable<Donor> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<Donor>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(name: string): Observable<Donor> {
+  public getOne(number: number): Observable<Donor> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<Donor>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(name: string): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
@@ -56,7 +56,7 @@ export class DonorAdminService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/publisher');
+    return new AngularClient(this.http, environment.apiUrl + '/inventory/donor');
   }
 
 }

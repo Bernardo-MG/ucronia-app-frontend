@@ -19,7 +19,7 @@ import { LibraryAdminDonorInfoComponent } from '../library-admin-donor-info/libr
 })
 export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Donor> implements OnInit {
 
-  private name = '';
+  private number = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,26 +37,26 @@ export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusCompon
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const nameParam = params.get('name');
-      if (nameParam) {
-        this.name = nameParam;
+      const numParam = params.get('number');
+      if (numParam) {
+        this.number = Number(numParam);
       }
       this.load();
     });
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.name).subscribe(r => {
+    this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library/admin']);
     });
   }
 
   protected override read(): Observable<Donor> {
-    return this.service.getOne(this.name);
+    return this.service.getOne(this.number);
   }
 
   protected override save(toSave: Donor): Observable<Donor> {
-    return this.service.update(this.data.name, toSave);
+    return this.service.update(this.data.number, toSave);
   }
 
 }

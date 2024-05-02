@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'bookType/:name', component: LibraryAdminBookTypeInfoEditorComponent, canActivate: [ResourceGuard("library_book_type", "read")] },
   { path: 'gameSystem/:name', component: LibraryAdminGameSystemInfoEditorComponent, canActivate: [ResourceGuard("library_game_system", "read")] },
   { path: 'publisher/:name', component: LibraryAdminPublisherInfoEditorComponent, canActivate: [ResourceGuard("library_publisher", "read")] },
-  { path: 'donor/:name', component: LibraryAdminDonorInfoEditorComponent, canActivate: [ResourceGuard("inventory_donor", "read")] }
+  { path: 'donor/:number', component: LibraryAdminDonorInfoEditorComponent, canActivate: [ResourceGuard("inventory_donor", "read")] }
 ];
 
 @NgModule({
