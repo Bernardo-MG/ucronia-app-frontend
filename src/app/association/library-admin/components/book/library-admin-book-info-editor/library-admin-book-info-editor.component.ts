@@ -102,6 +102,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     toSave.publisher = this.data.publisher;
     toSave.bookType = this.data.bookType;
     toSave.gameSystem = this.data.gameSystem;
+    toSave.donor = this.data.donor;
     toSave.authors = this.data.authors;
     return this.service.update(this.data.number, toSave);
   }

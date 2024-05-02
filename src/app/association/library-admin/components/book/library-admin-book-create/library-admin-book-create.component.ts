@@ -197,6 +197,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
+    toSave.donor = new Donor();
+    toSave.donor.number = this.donor;
     toSave.authors = this.authors.map(a => {
       const author = new Author();
       author.name = a;
