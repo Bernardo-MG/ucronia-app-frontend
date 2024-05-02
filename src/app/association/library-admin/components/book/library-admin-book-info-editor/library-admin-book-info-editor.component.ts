@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Donor } from '@app/association/library-admin/models/donor';
+import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -38,6 +40,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public readingPublishers = false;
 
+  public readingDonors = false;
+
   public bookTypePage = new PaginatedResponse<BookType[]>([]);
 
   public gameSystemPage = new PaginatedResponse<GameSystem[]>([]);
@@ -45,6 +49,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public authorPage = new PaginatedResponse<Author[]>([]);
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
+
+  public donorPage = new PaginatedResponse<Donor[]>([]);
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +60,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     private gameSystemService: GameSystemAdminService,
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
+    private donorService: DonorAdminService,
     private authContainer: AuthContainer
   ) {
     super(new Book());
@@ -78,6 +85,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToGameSystemPage(0);
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
+    this.onGoToDonorPage(0);
   }
 
   protected override delete(): void {
@@ -166,6 +174,23 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     });
   }
 
+  public onGoToDonorPage(page: number) {
+    this.readingDonors = true;
+    // TODO: The page correction should be done automatically
+    this.donorService.getAll(page).subscribe({
+      next: response => {
+        this.donorPage = response;
+
+        // Reactivate view
+        this.readingDonors = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingDonors = false;
+      }
+    });
+  }
+
   public onSelectBookType(bookType: string) {
     this.data.bookType = new BookType();
     this.data.bookType.name = bookType;
@@ -187,6 +212,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onSelectPublisher(publisher: string) {
     this.data.publisher = new Publisher();
     this.data.publisher.name = publisher;
+  }
+
+  public onSelectDonor(donor: number) {
+    this.data.donor = new Donor();
+    this.data.donor.number = donor;
   }
 
 }

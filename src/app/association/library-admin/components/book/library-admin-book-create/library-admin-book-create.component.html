@@ -4,12 +4,13 @@
       <div class="card-body">
         <!-- Form -->
         <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-          [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-          (save)="onSave($event)" (goToBookTypePage)="onGoToBookTypePage($event)"
-          (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
-          (goToPublisherPage)="onGoToPublisherPage($event)" (selectBookType)="onSelectBookType($event)"
-          (selectGameSystem)="onSelectGameSystem($event)" (selectAuthor)="onSelectAuthor($event)"
-          (selectPublisher)="onSelectPublisher($event)">
+          [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage"
+          [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
+          (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
+          (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
+          (selectBookType)="onSelectBookType($event)" (selectGameSystem)="onSelectGameSystem($event)"
+          (selectAuthor)="onSelectAuthor($event)" (selectPublisher)="onSelectPublisher($event)"
+          (selectDonor)="onSelectDonor($event)">
         </assoc-library-admin-book-form>
       </div>
     </div>

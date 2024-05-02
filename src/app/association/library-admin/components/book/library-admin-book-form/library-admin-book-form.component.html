@@ -55,6 +55,20 @@
         </button>
       </div>
     </div>
+    <!-- Donor -->
+    <div class="row mb-2">
+      <label for="donorInput" id="donorLabel" class="col-sm-2 col-form-label">Donor</label>
+      <div class="col-sm-9">
+        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" class="form-control"
+          aria-describedby="donorLabel">
+      </div>
+      <div class="col-sm-1">
+        <button (click)="onShowDonorSelection()" type="button" class="btn btn-link link-dark" role="button"
+          aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
+    </div>
     <!-- Book type -->
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
@@ -149,5 +163,11 @@
     <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
       [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)" (goToPage)="onGoToPublisherPage($event)"
       (cancel)="onCancelSelection()"></assoc-library-admin-publisher-selection>
+  </ng-template>
+  <!-- Select donor -->
+  <ng-template [ngIf]="selector === 'donor'">
+    <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
+      [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)" (goToPage)="onGoToDonorPage($event)"
+      (cancel)="onCancelSelection()"></assoc-library-admin-donor-selection>
   </ng-template>
 </ng-container>

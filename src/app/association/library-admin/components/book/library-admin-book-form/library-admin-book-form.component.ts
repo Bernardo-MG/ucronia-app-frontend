@@ -1,6 +1,7 @@
 import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Donor } from '@app/association/library-admin/models/donor';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -12,13 +13,14 @@ import { GameSystem } from '../../../models/game-system';
 import { Publisher } from '../../../models/publisher';
 import { LibraryAdminAuthorSelectionComponent } from '../../author/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '../../book-type/library-admin-book-type-selection/library-admin-book-type-selection.component';
+import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '../../game-system/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '../../publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-book-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, LibraryAdminDonorSelectionComponent],
   templateUrl: './library-admin-book-form.component.html'
 })
 export class LibraryAdminBookFormComponent extends FormComponent<Book> {
@@ -30,12 +32,15 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   @Input() public authorPage = new PaginatedResponse<Author[]>([]);
 
   @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
+
+  @Input() public donorPage = new PaginatedResponse<Publisher[]>([]);
   
   @Input() public override set data(value: Book) {
     this.loadData(value);
     this.bookType = value.bookType.name;
     this.gameSystem = value.gameSystem.name;
     this.publisher = value.publisher.name;
+    this.donor = value.donor.number;
     this.authors = value.authors.map(a => a.name);
   }
 
@@ -47,6 +52,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Output() public selectPublisher = new EventEmitter<string>();
 
+  @Output() public selectDonor = new EventEmitter<number>();
+
   @Output() public goToBookTypePage = new EventEmitter<number>();
 
   @Output() public goToGameSystemPage = new EventEmitter<number>();
@@ -55,6 +62,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Output() public goToPublisherPage = new EventEmitter<number>();
 
+  @Output() public goToDonorPage = new EventEmitter<number>();
+
   public selector = '';
 
   public bookType = '';
@@ -62,6 +71,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public gameSystem = '';
 
   public publisher = '';
+
+  public donor = -1;
+
+  public donorName = '';
 
   public authors: string[] = [];
 
@@ -93,6 +106,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.selector = 'publisher';
   }
 
+  public onShowDonorSelection() {
+    this.selector = 'donor';
+  }
+
   public onCancelSelection() {
     this.selector = '';
   }
@@ -121,6 +138,13 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.selectPublisher.emit(this.publisher);
   }
 
+  public onSelectDonor(donor: Donor) {
+    this.donor = donor.number;
+    this.donorName = donor.name;
+    this.selector = '';
+    this.selectDonor.emit(this.donor);
+  }
+
   public onGoToBookTypePage(page: number) {
     this.goToBookTypePage.emit(page);
   }
@@ -135,6 +159,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onGoToPublisherPage(page: number) {
     this.goToPublisherPage.emit(page);
+  }
+
+  public onGoToDonorPage(page: number) {
+    this.goToDonorPage.emit(page);
   }
 
 }
