@@ -7,6 +7,7 @@ import { ResourceGuard } from './core/authentication/guards/resource.guard';
 import { PublicLayoutComponent } from './core/layout/components/layout/public-layout/public-layout.component';
 import { SidebarLayoutComponent } from './core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 import { SecurityLayoutComponent } from './access/layout/components/security-layout/security-layout.component';
+import { AssociationLayoutComponent } from './association/layout/components/association-layout/association-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -58,11 +59,12 @@ const routes: Routes = [
       {
         // Logged in frontpage
         path: '',
-        component: SidebarLayoutComponent,
+        component: AssociationLayoutComponent,
         loadChildren: frontpageModule,
         canMatch: [LoggedInGuard],
         canActivate: [LoggedInGuard]
       },
+      // Security
       {
         // Roles
         path: 'roles',
@@ -98,10 +100,10 @@ const routes: Routes = [
         loadChildren: accountModule,
         canActivate: [LoggedInGuard]
       },
+      // Association
       {
-        // Association
         path: '',
-        component: SidebarLayoutComponent,
+        component: AssociationLayoutComponent,
         loadChildren: associationModule,
         canActivate: [LoggedInGuard]
       }
