@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityLayoutComponent } from '@app/access/layout/components/security-layout/security-layout.component';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { SecurityLayoutComponent } from './layout/components/security-layout/security-layout.component';
 
 const userModule = () => import('@app/security/users/users.module').then(m => m.UsersModule);
 const userTokenModule = () => import('@app/security/user-tokens/user-tokens.module').then(m => m.UserTokensModule);
