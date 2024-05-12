@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryAdminDonorCreateComponent } from './library-admin-donor-create.component';
 
 describe('LibraryAdminDonorCreateComponent', () => {
@@ -8,7 +8,10 @@ describe('LibraryAdminDonorCreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryAdminDonorCreateComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryAdminDonorCreateComponent
+      ]
     })
     .compileComponents();
     
