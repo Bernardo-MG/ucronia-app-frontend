@@ -33,7 +33,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  @Input() public donorPage = new PaginatedResponse<Publisher[]>([]);
+  @Input() public donorPage = new PaginatedResponse<Donor[]>([]);
   
   @Input() public override set data(value: Book) {
     this.loadData(value);
@@ -140,7 +140,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onSelectDonor(donor: Donor) {
     this.donor = donor.number;
-    this.donorName = donor.name;
+    this.donorName = donor.name.fullName;
     this.selector = '';
     this.selectDonor.emit(this.donor);
   }

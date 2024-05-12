@@ -1,7 +1,6 @@
-import { Member } from "@app/association/members/models/member";
+import { DonorName } from "./donor-name";
 
 export class Donor {
-  name = '';
   number = -1;
-  member = new Member();
+  name = new DonorName();
 }

@@ -15,7 +15,7 @@ export class LibraryAdminDonorSelectionComponent {
 
   @Input() public waiting = false;
 
-  @Input() public values: Publisher[] = [];
+  @Input() public values: Donor[] = [];
 
   /**
    * Current page number. This is the pointer to move around the pagination.
@@ -46,7 +46,7 @@ export class LibraryAdminDonorSelectionComponent {
   }
 
   public nameRenderer(donor: Donor) {
-    return donor.name;
+    return donor.name.fullName;
   }
 
 }
