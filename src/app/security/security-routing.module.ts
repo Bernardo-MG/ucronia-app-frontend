@@ -16,8 +16,8 @@ const routes: Routes = [
       {
         // Root
         path: '',
-        canActivate: [ResourceGuard("user", "view")],
-        loadChildren: userModule
+        redirectTo: 'users',
+        pathMatch: 'full'
       },
       {
         // Roles
