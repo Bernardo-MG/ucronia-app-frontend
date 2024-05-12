@@ -66,6 +66,13 @@ const routes: Routes = [
       },
       // Security
       {
+        // Root
+        path: 'security',
+        component: SecurityLayoutComponent,
+        loadChildren: userModule,
+        canActivate: [ResourceGuard("user", "view")]
+      },
+      {
         // Roles
         path: 'roles',
         component: SecurityLayoutComponent,

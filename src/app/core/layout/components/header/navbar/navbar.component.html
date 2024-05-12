@@ -7,6 +7,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
+        <li class="nav-item">
+          <a routerLink="/security" class="nav-link">
+            Security
+          </a>
+        </li>
         <ng-template [ngIf]="showConfigMenu">
           <layout-config-dropdown></layout-config-dropdown>
         </ng-template>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@app/shared/menu/models/menu';
 import { LayoutService } from '../../../services/layout.service';
@@ -11,27 +11,12 @@ import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
   imports: [RouterModule, SideMenuComponent, NavbarComponent],
   templateUrl: './sidebar-layout.component.html'
 })
-export class SidebarLayoutComponent implements OnInit {
+export class SidebarLayoutComponent {
 
-  public title = '';
+  @Input() public title = '';
 
-  public showConfigMenu = false;
+  @Input() public showConfigMenu = false;
 
-  public menus: Menu[] = [];
-
-  constructor(
-    private layoutService: LayoutService
-  ) { }
-
-  ngOnInit(): void {
-    // App title
-    this.title = this.layoutService.getTitle();
-
-    // Show config link
-    this.showConfigMenu = this.layoutService.showConfigurationLink();
-
-    // Load menus
-    this.menus = this.layoutService.getMenus();
-  }
+  @Input() public menus: Menu[] = [];
 
 }
