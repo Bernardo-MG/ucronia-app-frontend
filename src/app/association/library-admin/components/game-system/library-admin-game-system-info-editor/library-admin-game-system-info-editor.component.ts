@@ -48,15 +48,15 @@ export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusC
 
   protected override delete(): void {
     this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate(['/library']);
+      this.router.navigate(['/library/admin']);
     });
   }
 
-  protected override read(): Observable<BookType> {
+  protected override read(): Observable<GameSystem> {
     return this.service.getOne(this.name);
   }
 
-  protected override save(toSave: BookType): Observable<BookType> {
+  protected override save(toSave: GameSystem): Observable<GameSystem> {
     return this.service.update(this.data.name, toSave);
   }
 

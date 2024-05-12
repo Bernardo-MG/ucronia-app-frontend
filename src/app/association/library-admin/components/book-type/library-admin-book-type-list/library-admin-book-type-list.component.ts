@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookTypeAdminService } from '@app/association/library-admin/services/book-type-admin.service';
 import { BookType } from '@app/association/library/models/book-type';
@@ -17,14 +17,14 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
   imports: [ CommonModule, RouterModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent ],
   templateUrl: './library-admin-book-type-list.component.html'
 })
-export class LibraryAdminBookTypeListComponent {
+export class LibraryAdminBookTypeListComponent implements OnInit {
 
   public page = new PaginatedResponse<BookType[]>([]);
 
   /**
    * Loading flag.
    */
-  public readingBooks = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -50,18 +50,18 @@ export class LibraryAdminBookTypeListComponent {
   }
 
   private load(page: number) {
-    this.readingBooks = true;
+    this.reading = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       }
     });
   }

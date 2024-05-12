@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Donor } from '@app/association/library-admin/models/donor';
+import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -12,8 +14,8 @@ import { BookType } from '../../../models/book-type';
 import { GameSystem } from '../../../models/game-system';
 import { Publisher } from '../../../models/publisher';
 import { AuthorAdminService } from '../../../services/author-admin.service';
-import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { BookAdminService } from '../../../services/book-admin.service';
+import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
@@ -36,6 +38,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public readingPublishers = false;
 
+  public readingDonors = false;
+
   public bookTypePage = new PaginatedResponse<BookType[]>([]);
 
   public gameSystemPage = new PaginatedResponse<GameSystem[]>([]);
@@ -43,6 +47,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public authorPage = new PaginatedResponse<Author[]>([]);
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
+
+  public donorPage = new PaginatedResponse<Donor[]>([]);
 
   public bookType = '';
 
@@ -52,12 +58,15 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public publisher = '';
 
+  public donor = -1;
+
   constructor(
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
     private gameSystemService: GameSystemAdminService,
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
+    private donorService: DonorAdminService,
     private authContainer: AuthContainer,
     rt: Router
   ) {
@@ -73,6 +82,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.onGoToGameSystemPage(0);
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
+    this.onGoToDonorPage(0);
   }
 
   public onGoToBookTypePage(page: number) {
@@ -143,6 +153,23 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     });
   }
 
+  public onGoToDonorPage(page: number) {
+    this.readingDonors = true;
+    // TODO: The page correction should be done automatically
+    this.donorService.getAll(page).subscribe({
+      next: response => {
+        this.donorPage = response;
+
+        // Reactivate view
+        this.readingDonors = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingDonors = false;
+      }
+    });
+  }
+
   public onSelectBookType(bookType: string) {
     this.bookType = bookType;
   }
@@ -159,6 +186,10 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.publisher = publisher;
   }
 
+  public onSelectDonor(donor: number) {
+    this.donor = donor;
+  }
+
   protected override save(toSave: Book): Observable<Book> {
     toSave.publisher = new Publisher();
     toSave.publisher.name = this.publisher;
@@ -166,6 +197,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
+    toSave.donor = new Donor();
+    toSave.donor.number = this.donor;
     toSave.authors = this.authors.map(a => {
       const author = new Author();
       author.name = a;
