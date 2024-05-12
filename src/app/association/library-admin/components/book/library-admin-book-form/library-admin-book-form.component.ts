@@ -1,5 +1,5 @@
 import { CommonModule, } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Donor } from '@app/association/library-admin/models/donor';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -64,6 +64,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Output() public goToDonorPage = new EventEmitter<number>();
 
+  @ViewChild('pickCloseButton') pickCloseButton: any;
+  
   public selector = '';
 
   public bookType = '';
@@ -110,32 +112,32 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.selector = 'donor';
   }
 
-  public onCancelSelection() {
-    this.selector = '';
-  }
-
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType.name;
     this.selector = '';
     this.selectBookType.emit(this.bookType);
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem.name;
     this.selector = '';
     this.selectGameSystem.emit(this.gameSystem);
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onSelectAuthor(author: Author) {
     this.authors.push(author.name);
     this.selector = '';
     this.selectAuthor.emit(this.authors);
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onSelectPublisher(publisher: Publisher) {
     this.publisher = publisher.name;
     this.selector = '';
     this.selectPublisher.emit(this.publisher);
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onSelectDonor(donor: Donor) {
@@ -143,6 +145,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.donorName = donor.name.fullName;
     this.selector = '';
     this.selectDonor.emit(this.donor);
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onGoToBookTypePage(page: number) {

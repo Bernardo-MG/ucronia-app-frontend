@@ -31,18 +31,12 @@ export class LibraryAdminDonorSelectionComponent {
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  @Output() public cancel = new EventEmitter<void>();
-
   public onPick(gameSystem: Donor) {
     this.choose.emit(gameSystem);
   }
 
   public onGoToPage(page: number) {
     this.goToPage.emit(page);
-  }
-
-  public onCancel() {
-    this.cancel.emit();
   }
 
   public nameRenderer(donor: Donor) {
