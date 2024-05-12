@@ -3,10 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { SecurityLayoutComponent } from '@app/access/layout/components/security-layout/security-layout.component';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
-const userModule = () => import('@app/access/users/users.module').then(m => m.UsersModule);
-const userTokenModule = () => import('@app/access/user-tokens/user-tokens.module').then(m => m.UserTokensModule);
-const rolesModule = () => import('@app/access/roles/roles.module').then(m => m.RolesModule);
-const securityAuditModule = () => import('@app/access/audit/audit.module').then(m => m.AuditModule);
+const userModule = () => import('@app/security/users/users.module').then(m => m.UsersModule);
+const userTokenModule = () => import('@app/security/user-tokens/user-tokens.module').then(m => m.UserTokensModule);
+const rolesModule = () => import('@app/security/roles/roles.module').then(m => m.RolesModule);
+const securityAuditModule = () => import('@app/security/audit/audit.module').then(m => m.AuditModule);
 
 const routes: Routes = [
   {
