@@ -5,8 +5,8 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
   settings: {
     title: 'Settings',
     links: [
-      { title: 'Profile', path: '/account/profile', resource: 'member' },
-      { title: 'Password', path: '/account/password', resource: 'fee' }
+      new AuthMenuLink('Profile', '/account/profile', 'member'),
+      new AuthMenuLink('Password', '/account/password', 'fee')
     ]
   }
 };

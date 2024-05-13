@@ -5,11 +5,11 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
   association: {
     title: 'Association',
     links: [
-      { title: 'Members', path: '/members', resource: 'member' },
-      { title: 'Fees', path: '/fees', resource: 'fee' },
-      { title: 'Funds', path: '/funds', resource: 'funds' },
-      { title: 'Library', path: '/library', resource: 'library' },
-      { title: 'My fees', path: '/myFees', resource: 'user_fee' }
+      new AuthMenuLink('Members', '/members', 'member'),
+      new AuthMenuLink('Fees', '/fees', 'fee'),
+      new AuthMenuLink('Funds', '/funds', 'funds'),
+      new AuthMenuLink('Library', '/library', 'library'),
+      new AuthMenuLink('My fees', '/myFees', 'user_fee')
     ]
   }
 };
