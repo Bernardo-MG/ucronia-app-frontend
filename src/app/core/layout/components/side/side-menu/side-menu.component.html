@@ -5,6 +5,9 @@
     <!-- Iterate over links within each section and display them -->
     <a *ngFor="let link of menu.links" [routerLink]="link.path"
       class="list-group-item list-group-item-action menu-item mb-2">
+      <ng-container *ngIf="link.icon">
+        <ng-container *ngComponentOutlet="link.icon" />
+      </ng-container>
       {{ link.title }}
     </a>
   </ng-container>

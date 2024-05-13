@@ -28,7 +28,7 @@ export class SecurityLayoutService {
       const filteredLinks = this.filterNodes(section.links);
       // Only add the section if it has filtered links
       if (filteredLinks.length > 0) {
-        menus.push({ title: section.title, links: filteredLinks });
+        menus.push(new Menu(section.links, section.title));
       }
     }
 

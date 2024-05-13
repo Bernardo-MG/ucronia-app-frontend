@@ -18,6 +18,7 @@ import { IconSearchComponent } from './components/icon-search/icon-search.compon
 import { IconSettingsComponent } from './components/icon-settings/icon-settings.component';
 import { IconSuccessComponent } from './components/icon-success/icon-success.component';
 import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
+import { IconPersonComponent } from './components/icon-person/icon-person.component';
 
 
 
@@ -39,7 +40,8 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconSaveComponent,
     IconAddComponent,
     IconSuccessComponent,
-    IconFailureComponent
+    IconFailureComponent,
+    IconPersonComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconSaveComponent,
     IconAddComponent,
     IconSuccessComponent,
-    IconFailureComponent
+    IconFailureComponent,
+    IconPersonComponent
   ]
 })
 export class IconsModule { }

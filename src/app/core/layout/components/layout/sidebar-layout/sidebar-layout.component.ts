@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@app/shared/menu/models/menu';
-import { LayoutService } from '../../../services/layout.service';
 import { NavbarComponent } from '../../header/navbar/navbar.component';
 import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
 
