@@ -10,7 +10,7 @@ export class SecurityDetails {
   /**
    * Logged in flag. If it is true, then the user is logged in.
    */
-  logged = false;
+  logged: boolean;
   /**
    * Authentication token for the user.
    */
@@ -19,4 +19,8 @@ export class SecurityDetails {
    * User permissions.
    */
   permissions?: { [key: string]: string };
+
+  constructor(logged: boolean) {
+    this.logged = logged;
+  }
 }
