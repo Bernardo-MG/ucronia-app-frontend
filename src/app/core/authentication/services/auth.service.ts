@@ -90,8 +90,8 @@ export class AuthContainer {
     if (loginStatus.token) {
       user.token = loginStatus.token;
       const tokenData = this.jwtHelper.decodeToken(loginStatus.token);
-      if (tokenData.subject) {
-        user.username = tokenData.subject;
+      if (tokenData.sub) {
+        user.username = tokenData.sub;
       }
       if (tokenData.permissions) {
         user.permissions = tokenData.permissions;
