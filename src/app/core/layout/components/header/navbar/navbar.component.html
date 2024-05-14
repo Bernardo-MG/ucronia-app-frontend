@@ -7,12 +7,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
-        <li class="nav-item">
+        <li *ngIf="showSecurity" class="nav-item">
           <a routerLink="/security" class="nav-link" title="Security">
             <icon-shield></icon-shield>
           </a>
         </li>
-        <li *ngIf="showConfigMenu" class="nav-item">
+        <li *ngIf="showConfig" class="nav-item">
           <a routerLink="/configuration" class="nav-link" title="Configuration">
             <icon-settings></icon-settings>
           </a>

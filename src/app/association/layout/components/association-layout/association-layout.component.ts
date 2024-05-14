@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 import { SidebarLayoutComponent } from '@app/core/layout/components/layout/sidebar-layout/sidebar-layout.component';
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
-import { LayoutService } from '@app/core/layout/services/layout.service';
 import { Menu } from '@app/shared/menu/models/menu';
 import { AssociationLayoutService } from '../../services/association-layout.service';
 
@@ -15,24 +14,13 @@ import { AssociationLayoutService } from '../../services/association-layout.serv
 })
 export class AssociationLayoutComponent implements OnInit {
 
-  public title = '';
-
-  public showConfigMenu = false;
-
   public menus: Menu[] = [];
 
   constructor(
-    private layoutService: LayoutService,
     private associationLayoutService: AssociationLayoutService
   ) { }
 
   ngOnInit(): void {
-    // App title
-    this.title = this.layoutService.getTitle();
-
-    // Show config link
-    this.showConfigMenu = this.layoutService.showConfigurationLink();
-
     // Load menus
     this.menus = this.associationLayoutService.getMenus();
   }

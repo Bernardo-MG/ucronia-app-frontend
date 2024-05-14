@@ -15,6 +15,8 @@ export class NavbarComponent {
 
   @Input() public title = '';
 
-  @Input() public showConfigMenu = false;
+  @Input() public showConfig = false;
+
+  @Input() public showSecurity = false;
 
 }
