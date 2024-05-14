@@ -1,3 +1,4 @@
+import { PermissionList } from "./permission-list";
 
 /**
  * Security details for a user.
@@ -18,7 +19,7 @@ export class SecurityDetails {
   /**
    * User permissions.
    */
-  permissions?: { [key: string]: string };
+  permissions?: PermissionList;
 
   constructor(logged: boolean) {
     this.logged = logged;
