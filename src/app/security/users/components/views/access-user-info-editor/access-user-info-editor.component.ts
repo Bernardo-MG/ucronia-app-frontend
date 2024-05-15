@@ -157,7 +157,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
 
   protected override delete(): void {
     this.service.delete(this.data.username).subscribe(r => {
-      this.router.navigate([`/users`]);
+      this.router.navigate([`/security/users`]);
     });
   }
 

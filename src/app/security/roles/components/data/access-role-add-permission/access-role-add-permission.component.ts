@@ -58,18 +58,20 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   private load(page: number) {
     this.readingPermissions = true;
-    this.service.getAvailablePermissions(this.role, page, this.sort).subscribe({
-      next: response => {
-        this.page = response;
+    if (this.role) {
+      this.service.getAvailablePermissions(this.role, page, this.sort).subscribe({
+        next: response => {
+          this.page = response;
 
-        // Reactivate view
-        this.readingPermissions = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingPermissions = false;
-      }
-    });
+          // Reactivate view
+          this.readingPermissions = false;
+        },
+        error: error => {
+          // Reactivate view
+          this.readingPermissions = false;
+        }
+      });
+    }
   }
 
 }

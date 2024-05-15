@@ -3,6 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
 import { SecurityDetails } from '../models/security-details';
 import { LoginStatus } from '../models/login-status';
+import { TokenData } from '../models/token-data';
 
 /**
  * Authentication and authorization details container.
@@ -24,7 +25,7 @@ export class AuthContainer {
 
   private jwtHelper = new JwtHelperService();
 
-  private details = new SecurityDetails();
+  private details = new SecurityDetails(false);
 
   constructor() {
     // Watch for changes in the status
@@ -43,7 +44,7 @@ export class AuthContainer {
    */
   public logout() {
     // Replace local data with empty user status
-    this.detailsSubject.next(new SecurityDetails());
+    this.detailsSubject.next(new SecurityDetails(false));
 
     // Clear local storage
     localStorage.removeItem(this.detailsKey);
@@ -67,7 +68,7 @@ export class AuthContainer {
 
   /**
    * Returns the user status for the user currently in session as an observable. This allows reacting to new logins or logouts.
-   * 
+   *
    * @returns the user status for the user currently in session as an observable
    */
   public getDetails(): Observable<SecurityDetails> {
@@ -77,24 +78,24 @@ export class AuthContainer {
   /**
    * Stores the received security details. If the store flag is set, then this will be kept in the
    * local storage, to keep the session alive when reloading.
-   * 
+   *
    * @param details security details to store
    * @param store keep the details in the local storage
    */
   public setDetails(loginStatus: LoginStatus, store: boolean): SecurityDetails {
-    const user = new SecurityDetails();
-
-    user.logged = loginStatus.logged;
+    const user = new SecurityDetails(loginStatus.logged);
 
     // Try to get permissions from token
     if (loginStatus.token) {
       user.token = loginStatus.token;
-      const tokenData = this.jwtHelper.decodeToken(loginStatus.token);
-      if (tokenData.sub) {
-        user.username = tokenData.sub;
-      }
-      if (tokenData.permissions) {
-        user.permissions = tokenData.permissions;
+      const tokenData: TokenData | null = this.jwtHelper.decodeToken(loginStatus.token);
+      if (tokenData) {
+        if (tokenData.sub) {
+          user.username = tokenData.sub;
+        }
+        if (tokenData.permissions) {
+          user.permissions = tokenData.permissions;
+        }
       }
     }
 
@@ -115,7 +116,7 @@ export class AuthContainer {
 
   /**
    * Checks if the current security details contains the received permission.
-   * 
+   *
    * @param resource permission resource
    * @param action permission action
    * @returns true if the security details contains the permission, false otherwise
@@ -140,7 +141,7 @@ export class AuthContainer {
 
   /**
    * Reads the security details from the local storage.
-   * 
+   *
    * @returns the user stored in the local storage
    */
   private loadDetailsFromLocal() {
@@ -154,7 +155,7 @@ export class AuthContainer {
     } else {
       // User not found
       // Use default user
-      this.detailsSubject.next(new SecurityDetails());
+      this.detailsSubject.next(new SecurityDetails(false));
     }
   }
 
@@ -163,12 +164,13 @@ export class AuthContainer {
    * for the default ones.
    */
   private checkTokenExpired() {
+    // TODO: check before getting token
     const token = this.getToken();
 
     if ((token) && (this.jwtHelper.isTokenExpired(token))) {
-      // Token expired 
+      // Token expired
       // Use default user
-      this.detailsSubject.next(new SecurityDetails());
+      this.detailsSubject.next(new SecurityDetails(false));
     }
   }
 

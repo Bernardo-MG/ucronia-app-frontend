@@ -1,4 +1,6 @@
+import { PermissionList } from "./permission-list";
+
 export class PermissionsSet {
   username = '';
-  permissions: { [key: string]: string } = {};
+  permissions = new PermissionList();
 }
