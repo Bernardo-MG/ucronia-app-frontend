@@ -27,7 +27,7 @@ export class AccessRoleCreateComponent extends CreateComponent<Role> {
   }
 
   protected override getReturnRoute(saved: Role): string {
-    return `/roles/${saved.name}`;
+    return `/security/roles/${saved.name}`;
   }
 
 }

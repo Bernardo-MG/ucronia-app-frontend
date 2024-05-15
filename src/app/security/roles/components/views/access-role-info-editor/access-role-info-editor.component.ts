@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../../services/access-role.service';
@@ -15,14 +16,14 @@ import { AccessRolePermissionsComponent } from '../../data/access-role-permissio
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
 
-  public view = 'list';
-
   private role = '';
+
+  @ViewChild('pickCloseButton') pickCloseButton: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,7 +36,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
 
   ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("user", "update");
+    this.editable = false;
     this.deletable = this.authContainer.hasPermission("user", "delete");
 
     // Get id
@@ -51,20 +52,12 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
   public onAddPermission(permission: ResourcePermission): void {
     this.data.permissions.push(permission);
     this.onSave(this.data);
-    this.view = "list";
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onRemovePermission(permission: ResourcePermission): void {
     this.data.permissions = this.data.permissions.filter(r => r.name != permission.name);
     this.onSave(this.data);
-  }
-
-  public onShowAddPermission() {
-    this.view = 'add';
-  }
-
-  public onCancelAddPermission() {
-    this.view = 'list';
   }
 
   public isAbleToAddPermission() {
@@ -73,7 +66,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
 
   protected override delete(): void {
     this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate([`/roles`]);
+      this.router.navigate([`/security/roles`]);
     });
   }
 

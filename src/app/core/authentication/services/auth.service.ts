@@ -3,6 +3,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
 import { SecurityDetails } from '../models/security-details';
 import { LoginStatus } from '../models/login-status';
+import { TokenData } from '../models/token-data';
 
 /**
  * Authentication and authorization details container.
@@ -24,7 +25,7 @@ export class AuthContainer {
 
   private jwtHelper = new JwtHelperService();
 
-  private details = new SecurityDetails();
+  private details = new SecurityDetails(false);
 
   constructor() {
     // Watch for changes in the status
@@ -43,7 +44,7 @@ export class AuthContainer {
    */
   public logout() {
     // Replace local data with empty user status
-    this.detailsSubject.next(new SecurityDetails());
+    this.detailsSubject.next(new SecurityDetails(false));
 
     // Clear local storage
     localStorage.removeItem(this.detailsKey);
@@ -82,19 +83,19 @@ export class AuthContainer {
    * @param store keep the details in the local storage
    */
   public setDetails(loginStatus: LoginStatus, store: boolean): SecurityDetails {
-    const user = new SecurityDetails();
-
-    user.logged = loginStatus.logged;
+    const user = new SecurityDetails(loginStatus.logged);
 
     // Try to get permissions from token
     if (loginStatus.token) {
       user.token = loginStatus.token;
-      const tokenData = this.jwtHelper.decodeToken(loginStatus.token);
-      if (tokenData.subject) {
-        user.username = tokenData.subject;
-      }
-      if (tokenData.permissions) {
-        user.permissions = tokenData.permissions;
+      const tokenData: TokenData | null = this.jwtHelper.decodeToken(loginStatus.token);
+      if (tokenData) {
+        if (tokenData.sub) {
+          user.username = tokenData.sub;
+        }
+        if (tokenData.permissions) {
+          user.permissions = tokenData.permissions;
+        }
       }
     }
 
@@ -154,7 +155,7 @@ export class AuthContainer {
     } else {
       // User not found
       // Use default user
-      this.detailsSubject.next(new SecurityDetails());
+      this.detailsSubject.next(new SecurityDetails(false));
     }
   }
 
@@ -163,12 +164,13 @@ export class AuthContainer {
    * for the default ones.
    */
   private checkTokenExpired() {
+    // TODO: check before getting token
     const token = this.getToken();
 
     if ((token) && (this.jwtHelper.isTokenExpired(token))) {
       // Token expired 
       // Use default user
-      this.detailsSubject.next(new SecurityDetails());
+      this.detailsSubject.next(new SecurityDetails(false));
     }
   }
 

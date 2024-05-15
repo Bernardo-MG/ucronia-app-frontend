@@ -27,7 +27,7 @@ export class AccessUserCreateComponent extends CreateComponent<User> {
   }
 
   protected override getReturnRoute(saved: User): string {
-    return `/users/${saved.username}`;
+    return `/security/users/${saved.username}`;
   }
 
 }
