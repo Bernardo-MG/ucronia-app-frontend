@@ -10,7 +10,8 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let user of page.content; let rowIndex = index" role="button" routerLink="/security/users/{{user.username}}">
+      <tr *ngFor="let user of page.content; let rowIndex = index" role="button"
+        routerLink="/security/users/{{user.username}}">
         <!-- Cells -->
         <td>
           {{user.name}}

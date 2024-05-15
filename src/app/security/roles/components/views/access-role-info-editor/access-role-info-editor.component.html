@@ -23,7 +23,8 @@
             <ng-container [ngSwitch]="view">
               <ng-container *ngSwitchCase="'list'">
                 <!-- Permissions list -->
-                <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"></access-role-permissions>
+                <access-role-permissions [permissions]="data.permissions"
+                  [deletable]="deleteEnabled"></access-role-permissions>
                 <div class="d-grid">
                   <!-- Add button -->
                   <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddPermission()">
