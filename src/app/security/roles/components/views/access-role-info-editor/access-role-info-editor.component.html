@@ -21,8 +21,8 @@
         <div class="card">
           <div class="card-body">
             <!-- Permissions list -->
-            <access-role-permissions [permissions]="data.permissions"
-              [deletable]="deleteEnabled"></access-role-permissions>
+            <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+              (remove)="onRemovePermission($event)"></access-role-permissions>
             <div class="d-grid">
               <!-- Add button -->
               <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
