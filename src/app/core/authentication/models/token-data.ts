@@ -7,7 +7,7 @@ export class TokenData {
   /**
    * Subscriber.
    */
-  sub?: '';
+  sub?: string;
   /**
    * Permissions.
    */
