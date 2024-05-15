@@ -4,21 +4,61 @@
       <div class="card-body">
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="true">
-            <!-- Form -->
-            <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-              [member]="member" (save)="onSave($event)">
-            </assoc-fee-pay-form>
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" disabled>
+                    Pick member
+                  </button>
+                </h2>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" aria-expanded="true" disabled>
+                    Pick date
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                  <div class="accordion-body">
+                    <!-- Form -->
+                    <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+                      [member]="member" (save)="onSave($event)">
+                    </assoc-fee-pay-form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </ng-container>
           <ng-container *ngSwitchCase="false">
-            <!-- Member selection -->
-            <layout-waiting-wrapper [waiting]="readingMembers">
-              <div>Pick member</div>
-              <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
-              <assoc-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
-                [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
-                (goToPage)="onGoToMembersPage($event)">
-              </assoc-member-selection>
-            </layout-waiting-wrapper>
+            <div class="accordion" id="accordionExample">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button" type="button" aria-expanded="true" disabled>
+                    Pick member
+                  </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                  <div class="accordion-body">
+                    <layout-waiting-wrapper [waiting]="readingMembers">
+                      <div>Pick member</div>
+                      <assoc-member-status-select
+                        (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+                      <assoc-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
+                        [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
+                        (goToPage)="onGoToMembersPage($event)">
+                      </assoc-member-selection>
+                    </layout-waiting-wrapper>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" disabled>
+                    Pick date
+                  </button>
+                </h2>
+              </div>
+            </div>
           </ng-container>
         </ng-container>
       </div>
