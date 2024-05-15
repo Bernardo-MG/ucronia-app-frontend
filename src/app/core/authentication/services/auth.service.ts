@@ -164,6 +164,7 @@ export class AuthContainer {
    * for the default ones.
    */
   private checkTokenExpired() {
+    // TODO: check before getting token
     const token = this.getToken();
 
     if ((token) && (this.jwtHelper.isTokenExpired(token))) {
