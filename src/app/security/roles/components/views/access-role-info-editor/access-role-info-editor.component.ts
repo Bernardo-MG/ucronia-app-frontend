@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
@@ -21,9 +21,9 @@ import { AccessRolePermissionsComponent } from '../../data/access-role-permissio
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
 
-  public view = 'list';
-
   private role = '';
+
+  @ViewChild('pickCloseButton') pickCloseButton: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -52,20 +52,12 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
   public onAddPermission(permission: ResourcePermission): void {
     this.data.permissions.push(permission);
     this.onSave(this.data);
-    this.view = "list";
+    this.pickCloseButton.nativeElement.click();
   }
 
   public onRemovePermission(permission: ResourcePermission): void {
     this.data.permissions = this.data.permissions.filter(r => r.name != permission.name);
     this.onSave(this.data);
-  }
-
-  public onShowAddPermission() {
-    this.view = 'add';
-  }
-
-  public onCancelAddPermission() {
-    this.view = 'list';
   }
 
   public isAbleToAddPermission() {
