@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr *ngFor="let role of page.content; let rowIndex = index" role="button" routerLink="/roles/{{role.name}}">
+      <tr *ngFor="let role of page.content; let rowIndex = index" role="button" routerLink="/security/roles/{{role.name}}">
         <!-- Cells -->
         <td>
           {{role.name}}
