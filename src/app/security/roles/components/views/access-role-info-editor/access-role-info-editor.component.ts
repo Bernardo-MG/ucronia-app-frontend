@@ -5,6 +5,7 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../../services/access-role.service';
@@ -15,7 +16,7 @@ import { AccessRolePermissionsComponent } from '../../data/access-role-permissio
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
@@ -73,7 +74,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
 
   protected override delete(): void {
     this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate([`/roles`]);
+      this.router.navigate([`/security/roles`]);
     });
   }
 
