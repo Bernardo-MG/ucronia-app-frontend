@@ -68,7 +68,7 @@ export class AuthContainer {
 
   /**
    * Returns the user status for the user currently in session as an observable. This allows reacting to new logins or logouts.
-   * 
+   *
    * @returns the user status for the user currently in session as an observable
    */
   public getDetails(): Observable<SecurityDetails> {
@@ -78,7 +78,7 @@ export class AuthContainer {
   /**
    * Stores the received security details. If the store flag is set, then this will be kept in the
    * local storage, to keep the session alive when reloading.
-   * 
+   *
    * @param details security details to store
    * @param store keep the details in the local storage
    */
@@ -116,7 +116,7 @@ export class AuthContainer {
 
   /**
    * Checks if the current security details contains the received permission.
-   * 
+   *
    * @param resource permission resource
    * @param action permission action
    * @returns true if the security details contains the permission, false otherwise
@@ -141,7 +141,7 @@ export class AuthContainer {
 
   /**
    * Reads the security details from the local storage.
-   * 
+   *
    * @returns the user stored in the local storage
    */
   private loadDetailsFromLocal() {
@@ -168,7 +168,7 @@ export class AuthContainer {
     const token = this.getToken();
 
     if ((token) && (this.jwtHelper.isTokenExpired(token))) {
-      // Token expired 
+      // Token expired
       // Use default user
       this.detailsSubject.next(new SecurityDetails(false));
     }

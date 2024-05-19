@@ -26,4 +26,8 @@ export class LayoutService {
     return this.authContainer.hasPermission('association_configuration', 'view');
   }
 
+  public showSecurityLink(): boolean {
+    return this.authContainer.hasPermission('security', 'view');
+  }
+
 }

@@ -22,7 +22,7 @@ export class AccountLayoutService {
       const section = MENU_OPTIONS[sectionKey];
       // Only add the section if it has filtered links
       if (section.links.length > 0) {
-        menus.push({ title: section.title, links: section.links });
+        menus.push(new Menu(section.links, section.title));
       }
     }
 

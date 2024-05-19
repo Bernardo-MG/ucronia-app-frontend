@@ -15,10 +15,6 @@ import { SecurityLayoutService } from '../../services/security-layout.service';
 })
 export class SecurityLayoutComponent implements OnInit {
 
-  public title = '';
-
-  public showConfigMenu = false;
-
   public menus: Menu[] = [];
 
   constructor(
@@ -27,12 +23,6 @@ export class SecurityLayoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // App title
-    this.title = this.layoutService.getTitle();
-
-    // Show config link
-    this.showConfigMenu = this.layoutService.showConfigurationLink();
-
     // Load menus
     this.menus = this.securityLayoutService.getMenus();
   }

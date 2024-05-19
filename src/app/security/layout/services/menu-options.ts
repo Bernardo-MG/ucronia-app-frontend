@@ -5,10 +5,10 @@ export const MENU_OPTIONS: { [key: string]: { title: string, links: AuthMenuLink
   security: {
     title: 'Security',
     links: [
-      { title: 'Users', path: '/security/users', resource: 'user' },
-      { title: 'Roles', path: '/security/roles', resource: 'role' },
-      { title: 'User tokens', path: '/security/user-tokens', resource: 'user_token' },
-      { title: 'Audit', path: '/security/audit', resource: 'user' }
+      new AuthMenuLink('Users', '/security/users', 'user'),
+      new AuthMenuLink('Roles', '/security/roles', 'role'),
+      new AuthMenuLink('User tokens', '/security/user-tokens', 'user_token'),
+      new AuthMenuLink('Audit', '/security/audit', 'user')
     ]
   }
 };

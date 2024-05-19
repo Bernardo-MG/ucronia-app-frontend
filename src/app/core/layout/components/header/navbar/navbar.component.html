@@ -7,14 +7,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
-        <li class="nav-item">
-          <a routerLink="/security" class="nav-link">
-            Security
+        <li *ngIf="showSecurity" class="nav-item">
+          <a routerLink="/security" class="nav-link" title="Security">
+            <icon-shield></icon-shield>
           </a>
         </li>
-        <ng-template [ngIf]="showConfigMenu">
-          <layout-config-dropdown></layout-config-dropdown>
-        </ng-template>
+        <li *ngIf="showConfig" class="nav-item">
+          <a routerLink="/configuration" class="nav-link" title="Configuration">
+            <icon-settings></icon-settings>
+          </a>
+        </li>
         <!-- Account menu -->
         <layout-account-dropdown></layout-account-dropdown>
       </ul>
