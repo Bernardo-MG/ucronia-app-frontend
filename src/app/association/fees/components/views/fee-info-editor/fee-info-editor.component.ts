@@ -64,7 +64,7 @@ export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> imple
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.date, this.data.member.number).subscribe(r => {
+    this.service.delete(this.data.date, this.data.person.number).subscribe(r => {
       this.router.navigate([`/fees`]);
     });
   }
@@ -74,7 +74,7 @@ export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> imple
   }
 
   protected override save(toSave: Fee): Observable<Fee> {
-    return this.service.update(this.data.date, this.data.member.number, toSave);
+    return this.service.update(this.data.date, this.data.person.number, toSave);
   }
 
 }

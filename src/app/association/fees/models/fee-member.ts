@@ -1,4 +1,4 @@
-export class FeeMember {
+export class FeePerson {
   fullName = '';
   number = -1;
 }
