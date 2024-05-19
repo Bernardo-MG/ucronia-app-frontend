@@ -34,7 +34,7 @@
             ],
             "styles": [
               "./node_modules/angular-calendar/css/angular-calendar.css",
-              "./node_modules/bootswatch/dist/materia/bootstrap.min.css"
+              "./node_modules/bootswatch/dist/yeti/bootstrap.min.css"
             ],
             "scripts": [
               "./node_modules/@popperjs/core/dist/umd/popper.min.js",

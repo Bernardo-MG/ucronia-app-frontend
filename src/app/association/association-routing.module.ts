@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { AssociationLayoutComponent } from './layout/components/association-layout/association-layout.component';
 
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
@@ -13,6 +14,7 @@ const configurationModule = () => import('@app/configuration/configuration.modul
 const routes: Routes = [
   {
     path: '',
+    component: AssociationLayoutComponent,
     children: [
       {
         path: 'funds',

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@app/shared/menu/models/menu';
-import { LayoutService } from '../../../services/layout.service';
 import { NavbarComponent } from '../../header/navbar/navbar.component';
 import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
+import { LayoutService } from '@app/core/layout/services/layout.service';
 
 @Component({
   selector: 'layout-sidebar',
@@ -13,11 +13,13 @@ import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
 })
 export class SidebarLayoutComponent implements OnInit {
 
+  @Input() public menus: Menu[] = [];
+
   public title = '';
 
-  public showConfigMenu = false;
+  public showConfig = false;
 
-  public menus: Menu[] = [];
+  public showSecurity = false;
 
   constructor(
     private layoutService: LayoutService
@@ -27,11 +29,9 @@ export class SidebarLayoutComponent implements OnInit {
     // App title
     this.title = this.layoutService.getTitle();
 
-    // Show config link
-    this.showConfigMenu = this.layoutService.showConfigurationLink();
-
-    // Load menus
-    this.menus = this.layoutService.getMenus();
+    // Show links
+    this.showConfig = this.layoutService.showConfigurationLink();
+    this.showSecurity = this.layoutService.showSecurityLink();
   }
 
 }

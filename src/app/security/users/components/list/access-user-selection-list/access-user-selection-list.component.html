@@ -1,0 +1,22 @@
+<layout-waiting-wrapper [waiting]="readingUsers">
+  <!-- List -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Name<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let user of page.content; let rowIndex = index" role="button"
+        routerLink="/security/users/{{user.username}}">
+        <!-- Cells -->
+        <td>
+          {{user.name}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</layout-waiting-wrapper>

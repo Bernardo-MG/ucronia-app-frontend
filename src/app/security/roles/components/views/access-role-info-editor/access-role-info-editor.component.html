@@ -1,0 +1,59 @@
+<layout-article title="Edit role">
+  <div class="col-md-6 offset-md-3">
+    <!-- Role -->
+    <div class="mb-1">
+      <div class="card">
+        <div class="card-body">
+          <div *ngIf="showMenu">
+            <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+              (delete)="onDelete()"></form-editor-header>
+          </div>
+          <access-role-info id="info" [data]="data"></access-role-info>
+        </div>
+      </div>
+    </div>
+    <article class="p-4">
+      <header>
+        <h2 class="border-bottom">Permissions</h2>
+      </header>
+      <!-- Permissions -->
+      <div class="mb-3">
+        <div class="card">
+          <div class="card-body">
+            <!-- Permissions list -->
+            <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+              (remove)="onRemovePermission($event)"></access-role-permissions>
+            <div class="d-grid">
+              <!-- Add button -->
+              <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
+                data-bs-target="#pickPermissionModal">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</layout-article>
+
+
+<div class="modal fade" id="pickPermissionModal" tabindex="-1" aria-labelledby="pickPermissionModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="pickPermissionModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add permissions -->
+        <access-role-add-permission [role]="data.name"
+          (addPermission)="onAddPermission($event)"></access-role-add-permission>
+      </div>
+      <div class="modal-footer">
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

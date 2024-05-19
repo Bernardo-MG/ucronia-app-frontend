@@ -1,9 +1,12 @@
+
 export class MenuLink {
-  title = '';
-  path = '';
+  title;
+  path;
+  icon;
   
-  constructor(title: string, path: string) {
+  constructor(title: string, path: string, icon?: any) {
     this.title = title;
     this.path = path;
+    this.icon = icon;
   }
 }

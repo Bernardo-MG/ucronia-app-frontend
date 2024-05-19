@@ -24,7 +24,7 @@ export class LibraryAdminBookListComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingBooks = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -50,18 +50,18 @@ export class LibraryAdminBookListComponent implements OnInit {
   }
 
   private load(page: number) {
-    this.readingBooks = true;
+    this.reading = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       }
     });
   }
