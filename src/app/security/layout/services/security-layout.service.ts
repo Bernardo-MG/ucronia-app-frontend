@@ -37,9 +37,7 @@ export class SecurityLayoutService {
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only include links the user has permissions for
-      .filter(link => this.authContainer.hasPermission(link.resource, 'view'))
-      // Map to MenuLink objects
-      .map(link => (new MenuLink(link.title, link.path)));
+      .filter(link => this.authContainer.hasPermission(link.resource, 'view'));
   }
 
 }

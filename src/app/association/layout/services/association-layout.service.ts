@@ -37,9 +37,7 @@ export class AssociationLayoutService {
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only include links the user has permissions for
-      .filter(link => this.authContainer.hasPermission(link.resource, 'view'))
-      // Map to MenuLink objects
-      .map(link => (new MenuLink(link.title, link.path, link.icon)));
+      .filter(link => this.authContainer.hasPermission(link.resource, 'view'));
   }
 
 }
