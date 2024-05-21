@@ -5,7 +5,7 @@ import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-ca
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
-  selector: 'app-activity-calendar-widget',
+  selector: 'assoc-activity-calendar-widget',
   standalone: true,
   imports: [ArticleComponent, TeamupCalendarComponent, WaitingWrapperComponent],
   templateUrl: './activity-calendar-widget.component.html'
