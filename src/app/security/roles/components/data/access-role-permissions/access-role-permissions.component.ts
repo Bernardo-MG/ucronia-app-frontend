@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';

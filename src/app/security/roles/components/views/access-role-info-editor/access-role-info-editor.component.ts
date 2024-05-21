@@ -15,11 +15,12 @@ import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from '../../data/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../data/access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../../data/access-role-permissions/access-role-permissions.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, IconsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {

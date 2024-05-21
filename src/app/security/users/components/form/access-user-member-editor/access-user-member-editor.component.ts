@@ -4,11 +4,12 @@ import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-user-member-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserSelectMemberComponent, WaitingWrapperComponent],
+  imports: [CommonModule, IconsModule, AccessUserSelectMemberComponent, WaitingWrapperComponent],
   templateUrl: './access-user-member-editor.component.html'
 })
 export class AccessUserMemberEditorComponent {
