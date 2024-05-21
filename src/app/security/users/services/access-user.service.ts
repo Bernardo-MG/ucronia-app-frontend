@@ -84,14 +84,14 @@ export class AccessUserService {
 
   public getMember(username: string): Observable<Member> {
     return this.getClient()
-    .appendRoute(`/${username}/member`)
+    .appendRoute(`/${username}/person`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
   public assignMember(username: string, member: Member): Observable<Member> {
     return this.getClient()
-      .appendRoute(`/${username}/member/${member.number}`)
+      .appendRoute(`/${username}/person/${member.number}`)
       .create<SimpleResponse<Member>>(null)
       .pipe(map(r => r.content));
   }
@@ -104,7 +104,7 @@ export class AccessUserService {
     query.pagination = { page };
 
     return this.getClient()
-      .appendRoute(`/${username}/member/available`)
+      .appendRoute(`/${username}/person/available`)
       .query(query)
       .read<PaginatedResponse<Member[]>>();
   }
