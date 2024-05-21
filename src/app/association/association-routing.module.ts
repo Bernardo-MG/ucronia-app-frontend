@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 import { AssociationLayoutComponent } from './layout/components/association-layout/association-layout.component';
 
+const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
 const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
@@ -16,6 +17,11 @@ const routes: Routes = [
     path: '',
     component: AssociationLayoutComponent,
     children: [
+      {
+        path: 'calendar',
+        canActivate: [ResourceGuard("activity_calendar", "view")],
+        loadChildren: activityCalendarModule
+      },
       {
         path: 'funds',
         canActivate: [ResourceGuard("funds", "view")],

@@ -1,5 +1,6 @@
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { IconBookComponent } from '@app/shared/icons/components/icon-book/icon-book.component';
+import { IconCalendarComponent } from '@app/shared/icons/components/icon-calendar/icon-calendar.component';
 import { IconCoinsComponent } from '@app/shared/icons/components/icon-coins/icon-coins.component';
 import { IconPersonComponent } from '@app/shared/icons/components/icon-person/icon-person.component';
 import { IconReceiptComponent } from '@app/shared/icons/components/icon-receipt/icon-receipt.component';
@@ -10,6 +11,7 @@ export const MENU_OPTIONS: MenuOptions = {
   association: {
     title: 'Association',
     links: [
+      new AuthMenuLink('Calendar', '/calendar', 'activity_calendar', IconCalendarComponent),
       new AuthMenuLink('Members', '/members', 'member', IconPersonComponent),
       new AuthMenuLink('Fees', '/fees', 'fee', IconReceiptComponent),
       new AuthMenuLink('Funds', '/funds', 'funds', IconCoinsComponent),
