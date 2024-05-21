@@ -8,9 +8,9 @@ import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class FrontpageService {
+export class ActivityCalendarService {
 
   constructor(
     private http: HttpClient
