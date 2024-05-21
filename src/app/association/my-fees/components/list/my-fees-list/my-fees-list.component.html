@@ -9,9 +9,6 @@
       <th scope="col">
         Payment date
       </th>
-      <th scope="col">
-        Paid
-      </th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -21,11 +18,12 @@
         {{fee.date}}
       </td>
       <td>
-        {{fee.transaction.date}}
-      </td>
-      <td>
-        <icon-success *ngIf="fee.paid"></icon-success>
-        <icon-failure *ngIf="!fee.paid"></icon-failure>
+        <ng-container *ngIf="fee.paid">
+          {{fee.transaction.date}}
+        </ng-container>
+        <ng-container *ngIf="!fee.paid">
+          -
+        </ng-container>
       </td>
     </tr>
   </tbody>
