@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Fee } from '@app/association/fees/models/fee';
-import { UserFeeService } from '@app/association/user-fees/services/user-fee.service';
+import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { UserFeeListComponent } from '../../list/user-fee-list/user-fee-list.component';
+import { MyFeesListComponent } from '../../list/my-fees-list/my-fees-list.component';
 
 @Component({
-  selector: 'assoc-user-fee-list-widget',
+  selector: 'assoc-my-fees-list-widget',
   standalone: true,
-  imports: [WaitingWrapperComponent, PaginationNavigationComponent, UserFeeListComponent],
-  templateUrl: './user-fee-list-widget.component.html'
+  imports: [WaitingWrapperComponent, PaginationNavigationComponent, MyFeesListComponent],
+  templateUrl: './my-fees-list-widget.component.html'
 })
-export class UserFeeListWidgetComponent implements OnInit {
+export class MyFeesListWidgetComponent implements OnInit {
 
   public page = new PaginatedResponse<Fee[]>([]);
 
@@ -22,7 +22,7 @@ export class UserFeeListWidgetComponent implements OnInit {
   public readingFees = false;
 
   constructor(
-    private service: UserFeeService
+    private service: MyFeesService
   ) { }
 
   ngOnInit(): void {

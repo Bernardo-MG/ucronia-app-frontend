@@ -4,12 +4,12 @@ import { Fee } from '@app/association/fees/models/fee';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'assoc-user-fee-list',
+  selector: 'assoc-my-fees-list',
   standalone: true,
   imports: [CommonModule, IconsModule],
-  templateUrl: './user-fee-list.component.html'
+  templateUrl: './my-fees-list.component.html'
 })
-export class UserFeeListComponent {
+export class MyFeesListComponent {
 
   @Input() public fees: Fee[] = [];
 

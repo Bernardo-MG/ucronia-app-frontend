@@ -5,7 +5,7 @@ import { AssociationLayoutComponent } from './layout/components/association-layo
 
 const fundsModule = () => import('@app/association/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
-const userFeesModule = () => import('@app/association/user-fees/user-fees.module').then(m => m.UserFeesModule);
+const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
 const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: 'myFees',
         canActivate: [ResourceGuard("user_fee", "view")],
-        loadChildren: userFeesModule
+        loadChildren: myFeesModule
       },
       {
         path: 'library',
