@@ -1,18 +1,16 @@
-<body>
-  <div class="container-fluid min-vh-100 d-flex flex-column">
-    <div class="row flex-grow-1">
-      <!-- Sidebar -->
-      <div class="col-md-2 d-flex flex-column bd-highlight g-0">
-        <layout-side-menu class="flex-grow-1" [menus]="menus"></layout-side-menu>
-      </div>
-      <!-- Main content area -->
-      <main class="col-md-10 ps-0">
-        <header>
-          <layout-navbar title="{{title}}" [showConfig]="showConfig" [showSecurity]="showSecurity">
-          </layout-navbar>
-        </header>
-        <router-outlet></router-outlet>
-      </main>
+<body class="min-vh-100 d-flex flex-column">
+    <header>
+      <layout-navbar title="{{title}}" [showConfig]="showConfig" [showSecurity]="showSecurity">
+      </layout-navbar>
+    </header>
+  <div class="row flex-grow-1 me-0">
+    <!-- Sidebar -->
+    <div class="col-md-2 bd-highlight">
+      <layout-side-menu [menus]="menus"></layout-side-menu>
     </div>
+    <!-- Main content area -->
+    <main class="col-md-10 ps-0">
+      <router-outlet></router-outlet>
+    </main>
   </div>
 </body>
