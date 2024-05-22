@@ -1,13 +1,11 @@
 <body class="min-vh-100 d-flex flex-column">
-    <header>
-      <layout-navbar title="{{title}}" [showConfig]="showConfig" [showSecurity]="showSecurity">
-      </layout-navbar>
-    </header>
+  <header>
+    <layout-navbar title="{{title}}" [showConfig]="showConfig" [showSecurity]="showSecurity">
+    </layout-navbar>
+  </header>
   <div class="row flex-grow-1 me-0">
     <!-- Sidebar -->
-    <div class="col-md-2 bd-highlight">
-      <layout-side-menu [menus]="menus"></layout-side-menu>
-    </div>
+    <layout-side-menu class="col-md-2 bd-highlight" [menus]="menus"></layout-side-menu>
     <!-- Main content area -->
     <main class="col-md-10 ps-0">
       <router-outlet></router-outlet>
