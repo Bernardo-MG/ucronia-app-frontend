@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
   selector: 'assoc-activity-calendar-widget',
   standalone: true,
-  imports: [ArticleComponent, TeamupCalendarComponent, WaitingWrapperComponent],
+  imports: [ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent],
   templateUrl: './activity-calendar-widget.component.html'
 })
 export class ActivityCalendarWidgetComponent implements OnInit {

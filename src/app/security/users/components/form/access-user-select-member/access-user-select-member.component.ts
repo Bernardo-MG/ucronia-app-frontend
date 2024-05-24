@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 
 @Component({
   selector: 'access-user-select-member',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent],
   templateUrl: './access-user-select-member.component.html'
 })
 export class AccessUserSelectMemberComponent implements OnInit {

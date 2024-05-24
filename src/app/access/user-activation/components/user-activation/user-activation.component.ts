@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { throwError } from 'rxjs';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
@@ -17,7 +17,7 @@ import { UserActivationFormComponent } from '../user-activation-form/user-activa
 @Component({
   selector: 'access-user-activation',
   standalone: true,
-  imports: [CommonModule, UserActivationFormComponent, WaitingWrapperComponent],
+  imports: [CommonModule, UserActivationFormComponent, WaitingOverlayComponent],
   templateUrl: './user-activation.component.html'
 })
 export class UserActivationComponent implements OnInit {

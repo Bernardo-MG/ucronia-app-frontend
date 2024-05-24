@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WaitingWrapperComponent } from './waiting-wrapper.component';
+import { WaitingOverlayComponent } from './waiting-overlay.component';
 
-describe('WaitingWrapperComponent', () => {
-  let component: WaitingWrapperComponent;
-  let fixture: ComponentFixture<WaitingWrapperComponent>;
+describe('WaitingOverlayComponent', () => {
+  let component: WaitingOverlayComponent;
+  let fixture: ComponentFixture<WaitingOverlayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        WaitingWrapperComponent
+        WaitingOverlayComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(WaitingWrapperComponent);
+    fixture = TestBed.createComponent(WaitingOverlayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

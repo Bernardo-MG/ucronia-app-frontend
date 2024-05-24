@@ -6,14 +6,14 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortField } from '@app/core/api/models/sort-field';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'assoc-library-admin-donor-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, SortingButtonComponent, WaitingWrapperComponent, PaginationNavigationComponent ],
+  imports: [ CommonModule, RouterModule, SortingButtonComponent, WaitingOverlayComponent, PaginationNavigationComponent ],
   templateUrl: './library-admin-donor-list.component.html'
 })
 export class LibraryAdminDonorListComponent {

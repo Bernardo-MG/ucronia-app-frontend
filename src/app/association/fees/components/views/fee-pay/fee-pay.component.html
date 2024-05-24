@@ -8,7 +8,7 @@
         </div>
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="false">
-            <layout-waiting-wrapper [waiting]="readingMembers">
+            <layout-waiting-overlay [waiting]="readingMembers">
               <div class="row mb-2">
                 <div class="col-2">Pick member</div>
                 <div class="col-4 offset-6 d-flex">
@@ -23,7 +23,7 @@
                 [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
                 (goToPage)="onGoToMembersPage($event)">
               </assoc-member-selection>
-            </layout-waiting-wrapper>
+            </layout-waiting-overlay>
           </ng-container>
           <ng-container *ngSwitchCase="true">
             <!-- Form -->
