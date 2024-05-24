@@ -49,14 +49,6 @@ const routes: Routes = [
         canActivate: [LoggedOutGuard]
       },
       // Private routes
-      {
-        // Logged in frontpage
-        path: '',
-        component: AssociationLayoutComponent,
-        loadChildren: frontpageModule,
-        canMatch: [LoggedInGuard],
-        canActivate: [LoggedInGuard]
-      },
       // Security
       {
         // Account
