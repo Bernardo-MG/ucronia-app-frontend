@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PublicLocationWidgetComponent } from './public-location-widget.component';
 
 describe('PublicLocationWidgetComponent', () => {
@@ -8,7 +8,10 @@ describe('PublicLocationWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PublicLocationWidgetComponent]
+      imports: [
+        HttpClientTestingModule,
+        PublicLocationWidgetComponent
+      ]
     })
     .compileComponents();
     
