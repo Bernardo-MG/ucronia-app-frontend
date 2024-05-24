@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PublicNavbarComponent } from '@app/core/layout/components/header/public-navbar/public-navbar.component';
+import { PublicNavbarComponent } from '@app/frontpage/components/layout/public-navbar/public-navbar.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
 
 @Component({
