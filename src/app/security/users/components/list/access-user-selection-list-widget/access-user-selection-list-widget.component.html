@@ -1,8 +1,10 @@
 <div class="card">
   <div class="card-body">
     <!-- List -->
-    <access-user-selection-list [page]="page"
-      (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
+    <layout-waiting-overlay [waiting]="readingUsers">
+      <access-user-selection-list [page]="page"
+        (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
+    </layout-waiting-overlay>
     <!-- Total -->
     <div class="row">
       <div class="col-md-1">

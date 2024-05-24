@@ -1,4 +1,4 @@
-<layout-waiting-wrapper [waiting]="waiting">
+<layout-waiting-overlay [waiting]="waiting">
   <!-- Add role -->
   <table class="table table-hover">
     <thead>
@@ -23,7 +23,7 @@
       </ng-template>
     </tbody>
   </table>
-</layout-waiting-wrapper>
+</layout-waiting-overlay>
 <div class="d-flex justify-content-center mt-1">
   <pagination-navigation [disabled]="waiting" [current]="members.page + 1" [pages]="members.totalPages"
     (goTo)="onGoToPage($event)">

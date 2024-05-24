@@ -3,13 +3,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 
 @Component({
   selector: 'access-user-add-role',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnInit {

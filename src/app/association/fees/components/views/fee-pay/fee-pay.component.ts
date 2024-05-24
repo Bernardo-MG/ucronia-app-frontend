@@ -6,8 +6,9 @@ import { Active } from '@app/association/members/models/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../../../members/models/member';
 import { FeePayment } from '../../../models/fee-payment';
@@ -19,7 +20,7 @@ import { FeePayFormComponent } from '../../pay/fee-pay-form/fee-pay-form.compone
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingWrapperComponent, MemberStatusSelectComponent],
+  imports: [CommonModule, IconsModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingOverlayComponent, MemberStatusSelectComponent],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
@@ -35,6 +36,8 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public member = new Member();
 
   public activeFilter = Active.Active;
+
+  public filled_bar = 0;
 
   constructor(
     private service: FeeService,
@@ -81,10 +84,16 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
       }
     });
   }
+  
+  public onReturnToMembers() {
+    this.selectedMember = false;
+    this.filled_bar = 0;
+  }
 
   public onSelectMember(member: Member) {
     this.member = member;
     this.selectedMember = true;
+    this.filled_bar = 50;
   }
 
 }

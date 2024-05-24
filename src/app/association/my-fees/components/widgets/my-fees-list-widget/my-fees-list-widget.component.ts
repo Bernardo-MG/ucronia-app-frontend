@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Fee } from '@app/association/fees/models/fee';
 import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { MyFeesListComponent } from '../../list/my-fees-list/my-fees-list.component';
 
 @Component({
   selector: 'assoc-my-fees-list-widget',
   standalone: true,
-  imports: [WaitingWrapperComponent, PaginationNavigationComponent, MyFeesListComponent],
+  imports: [WaitingOverlayComponent, PaginationNavigationComponent, MyFeesListComponent],
   templateUrl: './my-fees-list-widget.component.html'
 })
 export class MyFeesListWidgetComponent implements OnInit {

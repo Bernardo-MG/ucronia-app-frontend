@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarMonthComponent } from './calendar-month.component';
@@ -19,7 +19,7 @@ describe('CalendarMonthComponent', () => {
           useFactory: adapterFactory,
         }),
         IconsModule,
-        WaitingWrapperComponent
+        WaitingOverlayComponent
       ],
       declarations: [CalendarMonthComponent]
     })
