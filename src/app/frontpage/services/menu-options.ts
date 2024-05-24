@@ -6,7 +6,8 @@ export const MENU_OPTIONS: MenuOptions = {
   association: {
     title: 'Association',
     links: [
-      new MenuLink('Activities', '/activities')
+      new MenuLink('Activities', '/activities'),
+      new MenuLink('Location', '/location')
     ]
   }
 };

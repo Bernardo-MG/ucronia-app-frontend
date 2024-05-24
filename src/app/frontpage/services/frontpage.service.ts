@@ -39,6 +39,13 @@ export class FrontpageService {
       .pipe(map(r => r.content.value));
   }
 
+  public getLocationCode(): Observable<string> {
+    return this.getConfigClient()
+      .appendRoute('/social.googleMap.id')
+      .read<SimpleResponse<Configuration>>()
+      .pipe(map(r => r.content.value));
+  }
+
   private getConfigClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/configuration/public');
   }

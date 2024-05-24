@@ -18,13 +18,13 @@ export class PublicActivityCalendarWidgetComponent implements OnInit {
     private service: FrontpageService
   ) { }
 
-  public calendarId = '';
+  public calendarCode = '';
 
   ngOnInit(): void {
     this.readingCalendarId = true;
     this.service.getCalendarCode().subscribe({
       next: response => {
-        this.calendarId = response;
+        this.calendarCode = response;
         this.readingCalendarId = false;
       },
       error: error => {
