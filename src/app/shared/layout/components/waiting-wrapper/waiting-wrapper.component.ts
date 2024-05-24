@@ -6,7 +6,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
   selector: 'layout-waiting-wrapper',
   standalone: true,
   imports: [CommonModule, IconsModule],
-  templateUrl: './waiting-wrapper.component.html'
+  templateUrl: './waiting-wrapper.component.html',
+  styleUrl: './waiting-wrapper.component.sass'
 })
 export class WaitingWrapperComponent {
 
