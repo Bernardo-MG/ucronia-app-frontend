@@ -1,21 +1,23 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConfigDropdownComponent } from './config-dropdown.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { PublicLayoutComponent } from './public-layout.component';
 
-describe('ConfigDropdownComponent', () => {
-  let component: ConfigDropdownComponent;
-  let fixture: ComponentFixture<ConfigDropdownComponent>;
+describe('PublicLayoutComponent', () => {
+  let component: PublicLayoutComponent;
+  let fixture: ComponentFixture<PublicLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        ConfigDropdownComponent
+        HttpClientTestingModule,
+        PublicLayoutComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ConfigDropdownComponent);
+    fixture = TestBed.createComponent(PublicLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

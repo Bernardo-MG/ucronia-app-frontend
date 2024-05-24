@@ -10,7 +10,7 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 })
 export class TeamupCalendarComponent implements OnChanges {
 
-  @Input() public id = '';
+  @Input() public code = '';
 
   @Input() public showLogo = false;
 
@@ -47,8 +47,8 @@ export class TeamupCalendarComponent implements OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['id']) {
-      this.url = `https://teamup.com/${this.id}?showLogo=${this.convert(this.showLogo)}&showSearch=${this.convert(this.showSearch)}&showProfileAndInfo=${this.convert(this.showProfile)}&showSidepanel=${this.convert(this.showSidePanel)}&disableSidepanel=${this.convert(this.disableSidePanel)}&showViewSelector=${this.convert(this.showViewSelector)}&showMenu=${this.convert(this.showMenu)}&showAgendaHeader=${this.convert(this.showAgendaHeader)}&showAgendaDetails=${this.convert(this.showAgendaDetails)}&showYearViewHeader=${this.convert(this.showYearViewHeader)}&showTitle=0&view=m`;
+    if (changes['code']) {
+      this.url = `https://teamup.com/${this.code}?showLogo=${this.convert(this.showLogo)}&showSearch=${this.convert(this.showSearch)}&showProfileAndInfo=${this.convert(this.showProfile)}&showSidepanel=${this.convert(this.showSidePanel)}&disableSidepanel=${this.convert(this.disableSidePanel)}&showViewSelector=${this.convert(this.showViewSelector)}&showMenu=${this.convert(this.showMenu)}&showAgendaHeader=${this.convert(this.showAgendaHeader)}&showAgendaDetails=${this.convert(this.showAgendaDetails)}&showYearViewHeader=${this.convert(this.showYearViewHeader)}&showTitle=0&view=m`;
     }
   }
 

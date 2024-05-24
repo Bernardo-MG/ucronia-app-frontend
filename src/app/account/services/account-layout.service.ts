@@ -11,7 +11,7 @@ export class AccountLayoutService {
   private menus: Menu[] = [];
 
   constructor() {
-    this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => links);
+    this.menus = new MenuLoader().load(MENU_OPTIONS);
   }
 
   /**
