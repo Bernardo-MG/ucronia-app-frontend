@@ -16,7 +16,7 @@ export class SecurityLayoutService {
   constructor(
     private authContainer: AuthContainer
   ) {
-    this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => this.filterNodes(links));
+    this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
   }
 
   /**

@@ -1,5 +1,5 @@
-import { AuthMenuLink } from "@app/core/layout/model/auth-menu-link";
+import { MenuLink } from "./menu-link";
 
 export class MenuOptions {
-    [key: string]: { title: string, links: AuthMenuLink[] }
+    [key: string]: { title: string, links: MenuLink[] }
 }

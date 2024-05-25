@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from '@app/shared/menu/models/menu';
-import { NavbarComponent } from '../../header/navbar/navbar.component';
-import { SideMenuComponent } from '../../side/side-menu/side-menu.component';
+import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
+import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
+import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
   selector: 'layout-sidebar',
