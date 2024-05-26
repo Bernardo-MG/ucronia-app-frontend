@@ -34,8 +34,11 @@
     <div class="row mb-2">
       <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
       <div class="col-sm-10">
-        <input type="text" id="languageInput" formControlName="language" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
+        <select class="form-select" aria-label="Select year" formControlName="language"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('isbn') }" aria-describedby="languageLabel">
+          <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
+            {{selectionLanguage.name}}</option>
+        </select>
         <div class="invalid-feedback" *ngFor="let failure of getFailures('language')">
           {{failure.message}}
         </div>

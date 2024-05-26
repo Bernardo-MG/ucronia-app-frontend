@@ -2,6 +2,7 @@ import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Donor } from '@app/association/library-admin/models/donor';
+import { Language } from '@app/association/library-admin/models/language';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -80,6 +81,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public authors: string[] = [];
 
+  public languages: Language[] = [];
+
   constructor(
     fb: FormBuilder
   ) {
@@ -88,8 +91,11 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form = fb.group({
       isbn: [''],
       title: ['', Validators.required],
-      language: ['']
+      language: ['', Validators.required]
     });
+
+    this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
+    this.languages = this.languages.sort((left, right) => (left.name > right.name ? -1 : 1));
   }
 
   public onShowBookTypeSelection() {
