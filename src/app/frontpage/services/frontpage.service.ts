@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Configuration } from '@app/configuration/models/configuration';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
@@ -8,6 +7,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
+import { PublicConfiguration } from '../models/public-configuration';
 import { MENU_OPTIONS } from './menu-options';
 
 @Injectable({
@@ -34,16 +34,14 @@ export class FrontpageService {
 
   public getCalendarCode(): Observable<string> {
     return this.getConfigClient()
-      .appendRoute('/social.teamup.id')
-      .read<SimpleResponse<Configuration>>()
-      .pipe(map(r => r.content.value));
+      .read<SimpleResponse<PublicConfiguration>>()
+      .pipe(map(r => r.content.calendarCode));
   }
 
-  public getLocationCode(): Observable<string> {
+  public getMapCode(): Observable<string> {
     return this.getConfigClient()
-      .appendRoute('/social.googleMap.id')
-      .read<SimpleResponse<Configuration>>()
-      .pipe(map(r => r.content.value));
+      .read<SimpleResponse<PublicConfiguration>>()
+      .pipe(map(r => r.content.mapCode));
   }
 
   private getConfigClient(): Client {

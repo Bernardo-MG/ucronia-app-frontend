@@ -21,7 +21,7 @@ export class PublicLocationWidgetComponent {
 
   ngOnInit(): void {
     this.readingLocationId = true;
-    this.service.getLocationCode().subscribe({
+    this.service.getMapCode().subscribe({
       next: response => {
         this.locationCode = response;
         this.readingLocationId = false;
