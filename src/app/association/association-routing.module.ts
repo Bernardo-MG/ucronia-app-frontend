@@ -19,7 +19,6 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [ResourceGuard("activity_calendar", "view")],
         loadChildren: activityCalendarModule
       },
       {

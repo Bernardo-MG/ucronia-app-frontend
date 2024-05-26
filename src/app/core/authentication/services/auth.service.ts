@@ -124,11 +124,10 @@ export class AuthContainer {
   public hasPermission(resource: string, action: string): boolean {
     let hasPermission;
 
-    const permissions = this.details.permissions;
-    if (permissions) {
+    if (this.details?.permissions) {
       const key = resource;
-      if (key in permissions) {
-        hasPermission = permissions[key].includes(action);
+      if (key in this.details.permissions) {
+        hasPermission = this.details.permissions[key].includes(action);
       } else {
         hasPermission = false;
       }
