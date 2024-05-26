@@ -1,0 +1,30 @@
+<!-- List -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Headers -->
+      <th scope="col">
+        Fee date
+      </th>
+      <th scope="col">
+        Payment date
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr *ngFor="let fee of fees; let rowIndex = index" [ngClass]="{ 'table-warning': fee.paid === false }">
+      <!-- Cells -->
+      <td>
+        {{fee.date}}
+      </td>
+      <td>
+        <ng-container *ngIf="fee.paid">
+          {{fee.transaction.date}}
+        </ng-container>
+        <ng-container *ngIf="!fee.paid">
+          -
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

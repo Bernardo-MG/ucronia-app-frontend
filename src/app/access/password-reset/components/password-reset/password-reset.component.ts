@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { throwError } from 'rxjs';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
@@ -17,7 +17,7 @@ import { PasswordResetFormComponent } from '../password-reset-form/password-rese
 @Component({
   selector: 'login-password-reset',
   standalone: true,
-  imports: [CommonModule, PasswordResetFormComponent, WaitingWrapperComponent],
+  imports: [CommonModule, PasswordResetFormComponent, WaitingOverlayComponent],
   templateUrl: './password-reset.component.html'
 })
 export class PasswordResetComponent implements OnInit {

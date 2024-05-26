@@ -27,7 +27,7 @@
               <!-- Add button -->
               <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
                 data-bs-target="#pickPermissionModal">
-                Add
+                <icon-add></icon-add>
               </button>
             </div>
           </div>
@@ -48,7 +48,8 @@
       </div>
       <div class="modal-body">
         <!-- Add permissions -->
-        <access-role-add-permission [role]="data.name"
+        <access-role-add-permission [permissions]="permissions" (goTo)="onLoadPermissions($event)"
+          (changeDirection)="onChangePermissionsDirection($event)"
           (addPermission)="onAddPermission($event)"></access-role-add-permission>
       </div>
       <div class="modal-footer">

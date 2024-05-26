@@ -4,11 +4,12 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { AccessUserRolesComponent } from '../../info/access-user-roles/access-user-roles.component';
 import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-user-roles-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserAddRoleComponent, AccessUserRolesComponent],
+  imports: [CommonModule, IconsModule, AccessUserAddRoleComponent, AccessUserRolesComponent],
   templateUrl: './access-user-roles-editor.component.html'
 })
 export class AccessUserRolesEditorComponent {

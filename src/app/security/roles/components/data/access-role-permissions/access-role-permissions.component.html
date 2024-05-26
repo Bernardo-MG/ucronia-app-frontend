@@ -1,4 +1,4 @@
-<layout-waiting-wrapper [waiting]="waiting">
+<layout-waiting-overlay [waiting]="waiting">
   <table class="table">
     <thead>
       <tr>
@@ -26,7 +26,7 @@
       </ng-template>
     </tbody>
   </table>
-</layout-waiting-wrapper>
+</layout-waiting-overlay>
 <!-- Page navigation -->
 <div class="d-flex justify-content-center mt-1">
   <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"

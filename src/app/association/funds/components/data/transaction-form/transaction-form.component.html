@@ -12,7 +12,7 @@
     <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Description</label>
     <div class="col-sm-10">
       <input type="text" id="descriptionInput" formControlName="description" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('description') }" aria-describedby="descriptionLabel">
+        [ngClass]="{ 'is-invalid': isFieldInvalid('description') }" aria-describedby="descriptionLabel" maxlength="200">
       <div class="invalid-feedback" *ngFor="let failure of getFailures('description')">
         {{failure.message}}
       </div>

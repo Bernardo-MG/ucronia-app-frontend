@@ -3,12 +3,11 @@ import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { AccountMenuComponent } from '../account-dropdown/account-dropdown.component';
-import { ConfigDropdownComponent } from '../config-dropdown/config-dropdown.component';
 
 @Component({
   selector: 'layout-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, AccountMenuComponent, ConfigDropdownComponent],
+  imports: [CommonModule, RouterModule, IconsModule, AccountMenuComponent],
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {

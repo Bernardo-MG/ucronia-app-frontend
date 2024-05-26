@@ -13,7 +13,7 @@
   </thead>
   <tbody class="table-group-divider">
     <tr *ngFor="let member of page.content; let rowIndex = index"
-      [ngClass]="{ 'table-warning': member.active === false }" role="button" routerLink="/members/{{member.number}}">
+      [ngClass]="{ 'table-secondary': member.active === false }" role="button" routerLink="/members/{{member.number}}">
       <!-- Cells -->
       <td>
         {{member.name.fullName}}

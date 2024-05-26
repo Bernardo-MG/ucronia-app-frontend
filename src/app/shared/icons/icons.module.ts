@@ -23,6 +23,7 @@ import { IconSettingsComponent } from './components/icon-settings/icon-settings.
 import { IconShieldComponent } from './components/icon-shield/icon-shield.component';
 import { IconSuccessComponent } from './components/icon-success/icon-success.component';
 import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
+import { IconCalendarComponent } from './components/icon-calendar/icon-calendar.component';
 
 
 
@@ -49,7 +50,8 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconCoinsComponent,
     IconReceiptComponent,
     IconBookComponent,
-    IconShieldComponent
+    IconShieldComponent,
+    IconCalendarComponent
   ],
   imports: [
     CommonModule,
@@ -77,7 +79,8 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconCoinsComponent,
     IconReceiptComponent,
     IconBookComponent,
-    IconShieldComponent
+    IconShieldComponent,
+    IconCalendarComponent
   ]
 })
 export class IconsModule { }

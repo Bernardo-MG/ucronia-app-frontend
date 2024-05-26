@@ -3,6 +3,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
+import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
 import { MENU_OPTIONS } from './menu-options';
 
 @Injectable({
@@ -10,29 +11,21 @@ import { MENU_OPTIONS } from './menu-options';
 })
 export class SecurityLayoutService {
 
+  private menus: Menu[] = [];
+
   constructor(
     private authContainer: AuthContainer
-  ) { }
+  ) {
+    this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
+  }
 
   /**
-   * Get the menus dynamically based on MENU_OPTIONS.
+   * Get the menus options.
    * 
    * @returns An array of menu objects.
    */
   public getMenus(): Menu[] {
-    const menus: Menu[] = [];
-
-    // Iterate through each section in MENU_OPTIONS
-    for (const sectionKey of Object.keys(MENU_OPTIONS)) {
-      const section = MENU_OPTIONS[sectionKey];
-      const filteredLinks = this.filterNodes(section.links);
-      // Only add the section if it has filtered links
-      if (filteredLinks.length > 0) {
-        menus.push(new Menu(section.links, section.title));
-      }
-    }
-
-    return menus;
+    return this.menus;
   }
 
   /**
@@ -44,9 +37,7 @@ export class SecurityLayoutService {
   private filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
       // Only include links the user has permissions for
-      .filter(link => this.authContainer.hasPermission(link.resource, 'view'))
-      // Map to MenuLink objects
-      .map(link => (new MenuLink(link.title, link.path)));
+      .filter(link => this.authContainer.hasPermission(link.resource, 'view'));
   }
 
 }

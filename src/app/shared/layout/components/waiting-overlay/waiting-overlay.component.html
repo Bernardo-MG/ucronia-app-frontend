@@ -1,0 +1,6 @@
+<div class="position-relative">
+  <ng-content></ng-content>
+  <div *ngIf="waiting" class="overlay d-flex justify-content-center align-items-center">
+    <icon-waiting></icon-waiting>
+  </div>
+</div>

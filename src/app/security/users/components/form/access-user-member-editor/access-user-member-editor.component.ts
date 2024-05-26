@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-user-member-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserSelectMemberComponent, WaitingWrapperComponent],
+  imports: [CommonModule, IconsModule, AccessUserSelectMemberComponent, WaitingOverlayComponent],
   templateUrl: './access-user-member-editor.component.html'
 })
 export class AccessUserMemberEditorComponent {

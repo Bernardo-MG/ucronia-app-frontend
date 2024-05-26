@@ -3,14 +3,14 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'access-user-roles',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingWrapperComponent, SortingButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {

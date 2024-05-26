@@ -4,14 +4,14 @@ import { RouterModule } from '@angular/router';
 import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
 import { Active } from '@app/association/members/models/active';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingWrapperComponent } from '@app/shared/layout/components/waiting-wrapper/waiting-wrapper.component';
+import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { FeeCalendar } from '../../../models/fee-calendar';
 import { FeeCalendarMonth } from '../../../models/fee-month';
 
 @Component({
   selector: 'assoc-fee-calendar',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, WaitingWrapperComponent],
+  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent],
   templateUrl: './fee-calendar.component.html'
 })
 export class FeeCalendarComponent implements OnChanges {

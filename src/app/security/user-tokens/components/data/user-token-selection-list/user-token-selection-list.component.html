@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <layout-waiting-wrapper [waiting]="readingUsers">
+    <layout-waiting-overlay [waiting]="readingUsers">
       <!-- List -->
       <table class="table table-hover">
         <thead>
@@ -48,7 +48,7 @@
           </tr>
         </tbody>
       </table>
-    </layout-waiting-wrapper>
+    </layout-waiting-overlay>
   </div>
   <div class="d-flex justify-content-center mt-1">
     <pagination-route-navigation [disabled]="readingUsers" [totalPages]="page.totalPages">
