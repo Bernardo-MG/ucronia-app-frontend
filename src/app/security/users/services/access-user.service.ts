@@ -8,7 +8,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { environment } from 'environments/environment';
@@ -25,7 +25,7 @@ export class AccessUserService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<User[]>> {
-    const defaultSort = new SortField('name');
+    const defaultSort = new SortProperty('name');
     defaultSort.direction = SortDirection.Ascending;
 
     const query = new PaginatedQuery();
@@ -68,7 +68,7 @@ export class AccessUserService {
   // ROLES
 
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: SortField = new SortField('name');
+    const defaultSort: SortProperty = new SortProperty('name');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);
@@ -97,7 +97,7 @@ export class AccessUserService {
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
-    const defaultSort: SortField = new SortField('name');
+    const defaultSort: SortProperty = new SortProperty('name');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);

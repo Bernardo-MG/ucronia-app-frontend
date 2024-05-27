@@ -5,7 +5,7 @@ import { BookTypeAdminService } from '@app/association/library-admin/services/bo
 import { BookType } from '@app/association/library/models/book-type';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
@@ -37,7 +37,7 @@ export class LibraryAdminBookTypeListComponent implements OnInit {
     this.load(0)
   }
 
-  public onChangeDirection(field: SortField) {
+  public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
     // We are working with pages using index 0

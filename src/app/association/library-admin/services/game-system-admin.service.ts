@@ -6,7 +6,7 @@ import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { GameSystem } from '../models/game-system';
@@ -49,7 +49,7 @@ export class GameSystemAdminService {
 
   public getAll(page: number): Observable<PaginatedResponse<GameSystem[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('name')]);
+    query.defaultSort = new Sort([new SortProperty('name')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();

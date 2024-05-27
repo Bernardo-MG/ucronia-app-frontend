@@ -9,7 +9,7 @@ import { BookType } from '../models/book-type';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 
 @Injectable({
   providedIn: "root"
@@ -49,7 +49,7 @@ export class BookTypeAdminService {
 
   public getAll(page: number): Observable<PaginatedResponse<BookType[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('name')]);
+    query.defaultSort = new Sort([new SortProperty('name')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();
