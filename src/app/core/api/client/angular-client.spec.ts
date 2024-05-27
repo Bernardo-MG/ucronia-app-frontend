@@ -105,11 +105,24 @@ describe('AngularClient', () => {
     expect(client['options'].params).toEqual(params);
   });
 
-  it('should sort correctly', () => {
+  it('should sort ascending correctly', () => {
     const sort = new Sort([{ property: 'name', direction: SortDirection.Ascending }]);
     client.sort(sort);
     const params = new HttpParams().append('sort', 'name,asc');
     expect(client['options'].params).toEqual(params);
+  });
+
+  it('should sort descending correctly', () => {
+    const sort = new Sort([{ property: 'name', direction: SortDirection.Descending }]);
+    client.sort(sort);
+    const params = new HttpParams().append('sort', 'name,desc');
+    expect(client['options'].params).toEqual(params);
+  });
+
+  it('should ignore unsorted sorting', () => {
+    const sort = new Sort([{ property: 'name', direction: SortDirection.Unsorted }]);
+    client.sort(sort);
+    expect(client['options'].params).toEqual(undefined);
   });
 
   it('should handle query parameters correctly', () => {
