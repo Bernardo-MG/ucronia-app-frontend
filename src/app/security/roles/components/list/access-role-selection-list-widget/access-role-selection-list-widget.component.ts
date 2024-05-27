@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -42,7 +42,7 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortField) {
+  public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
     // We are working with pages using index 0

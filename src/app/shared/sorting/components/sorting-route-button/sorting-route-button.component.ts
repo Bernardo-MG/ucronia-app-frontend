@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
 import { SortDirection } from '../../../../core/api/models/sort-direction';
@@ -47,7 +47,7 @@ export class SortingRouteButtonComponent implements OnInit {
     });
   }
 
-  public onChangeDirection(sort: SortField) {
+  public onChangeDirection(sort: SortProperty) {
     if (sort.direction === SortDirection.Unsorted) {
       this.routeActuator.removeOrder(this.property);
     } else {
