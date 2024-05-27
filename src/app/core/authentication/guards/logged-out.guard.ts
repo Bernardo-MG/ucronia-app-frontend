@@ -6,16 +6,5 @@ import { AuthContainer } from '../services/auth.service';
  */
 export const LoggedOutGuard = () => {
   const authContainer = inject(AuthContainer)
-  let active;
-
-  if (authContainer.isLogged()) {
-    // Logged in
-    // Redirect to home
-    active = false;
-  } else {
-    // Not logged in
-    active = true;
-  }
-
-  return active;
+  return !authContainer.isLogged();
 }

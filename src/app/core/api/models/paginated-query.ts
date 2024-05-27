@@ -16,17 +16,17 @@ export class PaginatedQuery {
   public get sort(): Sort {
     let sortFields;
 
-    if (this._sort.fields.length === 0) {
+    if (this._sort.properties.length === 0) {
       // Use default sorts if no sorting was received
-      sortFields = this._defaultSort.fields;
+      sortFields = this._defaultSort.properties;
     } else {
       // Merge default sorting with the received one
 
       // Replace unsorted fields with defaults
-      const sortedProperties = this._sort.fields.map(f => f.property);
-      const defaultSortFields = this._defaultSort.fields.filter(f => !sortedProperties.includes(f.property));
+      const sortedProperties = this._sort.properties.map(f => f.property);
+      const defaultSortFields = this._defaultSort.properties.filter(f => !sortedProperties.includes(f.property));
 
-      sortFields = this._sort.fields.concat(defaultSortFields);
+      sortFields = this._sort.properties.concat(defaultSortFields);
     }
 
     // Sort fields alphabetically

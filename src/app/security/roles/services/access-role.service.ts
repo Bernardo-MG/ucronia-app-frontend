@@ -7,7 +7,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { environment } from 'environments/environment';
@@ -23,7 +23,7 @@ export class AccessRoleService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort = new SortField('name');
+    const defaultSort = new SortProperty('name');
     defaultSort.direction = SortDirection.Ascending;
 
     const query = new PaginatedQuery();
@@ -37,8 +37,8 @@ export class AccessRoleService {
   }
 
   public getAvailablePermissions(role: string, page: number, sort: Sort): Observable<PaginatedResponse<ResourcePermission[]>> {
-    const sortResource: SortField = new SortField('resource');
-    const sortAction: SortField = new SortField('action');
+    const sortResource: SortProperty = new SortProperty('resource');
+    const sortAction: SortProperty = new SortProperty('action');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([sortResource, sortAction]);

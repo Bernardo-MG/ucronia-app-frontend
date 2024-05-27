@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { SortDirection } from '../../../../core/api/models/sort-direction';
 import { SortingButtonComponent } from './sorting-button.component';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 
 describe('SortingButtonComponent', () => {
   let component: SortingButtonComponent;
@@ -48,7 +48,7 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
-    const sort = new SortField('property');
+    const sort = new SortProperty('property');
     sort.direction = SortDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -63,7 +63,7 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
-    const sort = new SortField('property');
+    const sort = new SortProperty('property');
     sort.direction = SortDirection.Descending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -79,7 +79,7 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
-    const sort = new SortField('property');
+    const sort = new SortProperty('property');
     sort.direction = SortDirection.Unsorted;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
@@ -96,7 +96,7 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
-    const sort = new SortField('property');
+    const sort = new SortProperty('property');
     sort.direction = SortDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });

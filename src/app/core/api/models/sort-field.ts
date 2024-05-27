@@ -1,6 +1,6 @@
 import { SortDirection } from "./sort-direction";
 
-export class SortField {
+export class SortProperty {
 
   constructor(prop: string, dir?: SortDirection) {
     this.property = prop;

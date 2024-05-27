@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 import { SortDirection } from '../../../../core/api/models/sort-direction';
@@ -21,18 +21,18 @@ export class SortingButtonComponent implements OnChanges {
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<SortField>();
+  @Output() public directionChange = new EventEmitter<SortProperty>();
 
   /**
    * Ascending order icon.
    */
   private ascendingIcon = faSortUp;
-  
+
   /**
    * Descending order icon.
    */
   private descendingIcon = faSortDown;
-  
+
   /**
    * Default order icon.
    */
@@ -50,22 +50,24 @@ export class SortingButtonComponent implements OnChanges {
   }
 
   public onChangeDirection() {
-    if (this.direction === SortDirection.Ascending) {
-      // Ascending -> descending
-      this.direction = SortDirection.Descending;
-    } else if (this.direction === SortDirection.Descending) {
-      // Descending -> unsorted
-      this.direction = SortDirection.Unsorted;
-    } else {
-      // Unsorted -> ascending
-      this.direction = SortDirection.Ascending;
+    switch (this.direction) {
+      case SortDirection.Ascending:
+        // Ascending -> descending
+        this.direction = SortDirection.Descending;
+        break;
+      case SortDirection.Descending:
+        // Descending -> unsorted
+        this.direction = SortDirection.Unsorted;
+        break;
+      default:
+        // Unsorted -> ascending
+        this.direction = SortDirection.Ascending;
+        break;
     }
 
-    const previousDirection = this.direction;
     this.updateDirection();
 
-    const sort = new SortField(this.property);
-    sort.direction = previousDirection;
+    const sort = new SortProperty(this.property, this.direction);
     this.directionChange.emit(sort);
   }
 
