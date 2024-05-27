@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -83,7 +83,7 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
     });
   }
 
-  public onChangePermissionsDirection(field: SortField) {
+  public onChangePermissionsDirection(field: SortProperty) {
     this.permissionsSort.addField(field);
     this.onLoadPermissions(0);
   }

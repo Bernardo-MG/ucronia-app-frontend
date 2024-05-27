@@ -6,7 +6,7 @@ import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Active } from '../models/active';
@@ -23,7 +23,7 @@ export class MemberService {
 
   public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('fullName'), new SortField('number')]);
+    query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
     query.addParameter('status', active.toString().toUpperCase());

@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { UserToken } from '@app/core/authentication/models/user-token';
@@ -22,9 +22,9 @@ export class UserTokenService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<UserToken[]>> {
-    const sortDate = new SortField('creationDate');
+    const sortDate = new SortProperty('creationDate');
     sortDate.direction = SortDirection.Descending;
-    const sortUsername = new SortField('username');
+    const sortUsername = new SortProperty('username');
     sortUsername.direction = SortDirection.Ascending;
 
     const query = new PaginatedQuery();

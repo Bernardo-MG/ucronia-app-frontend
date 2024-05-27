@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
@@ -23,7 +23,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public goTo = new EventEmitter<number>();
 
-  @Output() public changeDirection = new EventEmitter<SortField>();
+  @Output() public changeDirection = new EventEmitter<SortProperty>();
 
   public data = new ResourcePermission();
 
@@ -41,7 +41,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     this.goTo.emit(page);
   }
 
-  public onChangeDirection(field: SortField) {
+  public onChangeDirection(field: SortProperty) {
     this.changeDirection.emit(field);
   }
 

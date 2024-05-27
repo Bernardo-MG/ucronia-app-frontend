@@ -4,6 +4,7 @@ import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
+import { SortDirection } from '../models/sort-direction';
 
 /**
  * Request implementation for Angular.
@@ -93,10 +94,8 @@ export class AngularClient implements Client {
   }
 
   public sort(toSort: Sort): AngularClient {
-    for (let i = 0; i < toSort.fields.length; i += 1) {
-      const fieldSort = toSort.fields[i];
-      this.parameter('sort', `${String(fieldSort.property)},${fieldSort.direction}`);
-    }
+    const properties = toSort.properties.filter((field) => field.direction !== SortDirection.Unsorted);
+    properties.forEach((property) => this.parameter('sort', `${String(property.property)},${property.direction}`));
 
     return this;
   }

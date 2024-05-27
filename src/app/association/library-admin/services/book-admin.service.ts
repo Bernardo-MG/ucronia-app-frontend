@@ -6,7 +6,7 @@ import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Book } from '../models/book';
@@ -49,7 +49,7 @@ export class BookAdminService {
 
   public getAll(page: number): Observable<PaginatedResponse<Book[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortField('title')]);
+    query.defaultSort = new Sort([new SortProperty('title')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();

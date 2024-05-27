@@ -1,26 +1,21 @@
-import { SortDirection } from "./sort-direction";
-import { SortField } from "./sort-field";
+import { SortProperty } from "./sort-field";
 
 export class Sort {
 
-  fields: SortField[] = [];
+  properties: SortProperty[] = [];
 
-  constructor(fields: SortField[]) {
-    this.fields = fields;
+  constructor(properties: SortProperty[]) {
+    this.properties = properties;
   }
 
-  public addField(field: SortField) {
-    if (field.direction !== SortDirection.Unsorted) {
-      const index = this.fields.findIndex(s => s.property === field.property);
-
-      // TODO: remove if it is unsorted
-      if (index < 0) {
-        // New property to sort
-        this.fields.push(field);
-      } else {
-        // Replace property
-        this.fields[index] = field;
-      }
+  public addField(field: SortProperty) {
+    const index = this.properties.findIndex(s => s.property === field.property);
+    if (index < 0) {
+      // New property to sort
+      this.properties.push(field);
+    } else {
+      // Replace property
+      this.properties[index] = field;
     }
   }
 

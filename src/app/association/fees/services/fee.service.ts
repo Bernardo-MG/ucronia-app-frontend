@@ -4,7 +4,7 @@ import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortField } from '@app/core/api/models/sort-field';
+import { SortProperty } from '@app/core/api/models/sort-field';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
@@ -52,7 +52,7 @@ export class FeeService {
 
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
-    query.sort = new Sort([new SortField('fullName'), new SortField('number')]);
+    query.sort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
     query.page = page;
     query.addParameter('status', active.toString().toUpperCase());
 
