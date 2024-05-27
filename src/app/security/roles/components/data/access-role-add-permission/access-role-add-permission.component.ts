@@ -27,8 +27,6 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   public data = new ResourcePermission();
 
-  private sort = new Sort([]);
-
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['role']) {
       this.goTo.emit(0);
@@ -44,7 +42,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   }
 
   public onChangeDirection(field: SortField) {
-    this.sort.addField(field);
+    this.changeDirection.emit(field);
   }
 
 }
