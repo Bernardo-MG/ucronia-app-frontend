@@ -38,10 +38,6 @@ export class TeamupCalendarComponent implements OnChanges {
     return this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
-  public get waiting() {
-    return this.url.length === 0;
-  }
-
   constructor(
     private sanitizer: DomSanitizer
   ) { }
