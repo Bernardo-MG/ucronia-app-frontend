@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'icon-calendar',
@@ -7,6 +7,6 @@ import { faReceipt } from '@fortawesome/free-solid-svg-icons';
 })
 export class IconCalendarComponent {
 
-  public icon = faReceipt;
+  public icon = faCalendar;
 
 }
