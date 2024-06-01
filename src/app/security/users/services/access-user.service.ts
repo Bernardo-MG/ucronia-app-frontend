@@ -68,7 +68,7 @@ export class AccessUserService {
   // ROLES
 
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: SortProperty = new SortProperty('name');
+    const defaultSort: SortProperty = new SortProperty('firstName');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);
@@ -97,7 +97,7 @@ export class AccessUserService {
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
-    const defaultSort: SortProperty = new SortProperty('name');
+    const defaultSort: SortProperty = new SortProperty('firstName');
 
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([defaultSort]);
