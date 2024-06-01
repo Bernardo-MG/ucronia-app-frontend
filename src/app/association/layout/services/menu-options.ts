@@ -16,7 +16,7 @@ export const MENU_OPTIONS: MenuOptions = {
       new AuthMenuLink('Fees', '/fees', 'fee', IconReceiptComponent),
       new AuthMenuLink('Funds', '/funds', 'funds', IconCoinsComponent),
       new AuthMenuLink('Library', '/library', 'library', IconBookComponent),
-      new AuthMenuLink('My fees', '/myFees', 'user_fee', IconReceiptComponent)
+      new AuthMenuLink('My fees', '/myFees', 'my_fees', IconReceiptComponent)
     ]
   }
 };
