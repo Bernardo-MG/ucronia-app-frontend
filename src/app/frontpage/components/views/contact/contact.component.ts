@@ -3,11 +3,11 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { PublicLocationWidgetComponent } from '../../public-location-widget/public-location-widget.component';
 
 @Component({
-  selector: 'app-location',
+  selector: 'app-contact',
   standalone: true,
   imports: [ArticleComponent, PublicLocationWidgetComponent],
-  templateUrl: './location.component.html'
+  templateUrl: './contact.component.html'
 })
-export class LocationComponent {
+export class ContactComponent {
 
 }

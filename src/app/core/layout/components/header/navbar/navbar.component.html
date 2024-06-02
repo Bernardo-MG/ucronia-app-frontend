@@ -8,12 +8,12 @@
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
         <li *ngIf="showSecurity" class="nav-item">
-          <a routerLink="/security" class="nav-link" title="Security">
+          <a routerLink="/security" class="nav-link" aria-label="Security" title="Security">
             <icon-shield></icon-shield>
           </a>
         </li>
         <li *ngIf="showConfig" class="nav-item">
-          <a routerLink="/configuration" class="nav-link" title="Configuration">
+          <a routerLink="/configuration" class="nav-link" aria-label="Configuration" title="Configuration">
             <icon-settings></icon-settings>
           </a>
         </li>
