@@ -55,17 +55,6 @@
       </div>
     </div>
   </div>
-  <!-- Active -->
-  <div class="row mb-2">
-    <label for="activeInput" id="activeLabel" class="col-sm-2 col-form-label">Active</label>
-    <div class="col-sm-10">
-      <input type="checkbox" id="activeInput" formControlName="active" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('active') }" aria-describedby="activeLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('phone')">
-        {{failure.message}}
-      </div>
-    </div>
-  </div>
   <div class="row">
     <!-- Save button -->
     <div class="col-sm-2 d-grid gap-2">
