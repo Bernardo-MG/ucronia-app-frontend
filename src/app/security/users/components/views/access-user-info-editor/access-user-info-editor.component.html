@@ -17,26 +17,24 @@
     <ng-container [ngSwitch]="view">
       <!-- User -->
       <ng-container *ngSwitchCase="'user'">
-        <div class="mb-1">
-          <div class="card">
-            <div class="card-body">
-              <div *ngIf="showMenu">
-                <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-                  (delete)="onDelete()"></form-editor-header>
-              </div>
-              <ng-container [ngSwitch]="editing">
-                <!-- Form -->
-                <ng-container *ngSwitchCase="true">
-                  <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-                    [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-                  </access-user-form>
-                </ng-container>
-                <!-- Info -->
-                <ng-container *ngSwitchCase="false">
-                  <access-user-info [data]="data"></access-user-info>
-                </ng-container>
-              </ng-container>
+        <div class="card mb-1">
+          <div class="card-body">
+            <div *ngIf="showMenu">
+              <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+                (delete)="onDelete()"></form-editor-header>
             </div>
+            <ng-container [ngSwitch]="editing">
+              <!-- Form -->
+              <ng-container *ngSwitchCase="true">
+                <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+                  [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+                </access-user-form>
+              </ng-container>
+              <!-- Info -->
+              <ng-container *ngSwitchCase="false">
+                <access-user-info [data]="data"></access-user-info>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
         <!-- Enable/disable button -->
@@ -44,20 +42,20 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <!-- Enable button -->
                 <ng-template [ngIf]="!data.enabled">
+                  <!-- Enable button -->
                   <div class="col-sm-2 d-grid gap-2">
-                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
+                    <layout-waiting-button [waiting]="changingActive" [disabled]="!editEnabled" name="Enable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''"></layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Enable</layout-waiting-button>
                   </div>
                 </ng-template>
                 <ng-template [ngIf]="data.enabled">
                   <!-- Disable button -->
                   <div class="col-sm-2 d-grid gap-2">
-                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
+                    <layout-waiting-button [waiting]="changingActive" [disabled]="!editEnabled" name="Disable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''"></layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Disable</layout-waiting-button>
                   </div>
                 </ng-template>
               </div>

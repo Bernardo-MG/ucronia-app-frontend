@@ -131,13 +131,12 @@
       <!-- Save button -->
       <div class="col-sm-2 d-grid gap-2">
         <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-          (action)="onSave()"></layout-waiting-button>
+          (action)="onSave()">Save</layout-waiting-button>
       </div>
       <!-- Cancel button -->
       <ng-template [ngIf]="cancellable">
         <div class="col-sm-2 d-grid gap-2">
-          <layout-waiting-button [waiting]="waiting" [disabled]="!cancelEnabled" name="Cancel"
-            (action)="onCancel()"></layout-waiting-button>
+          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancel</button>
         </div>
       </ng-template>
     </div>

@@ -5,6 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
@@ -14,7 +15,7 @@ import { MemberInfoComponent } from '../../data/member-info/member-info.componen
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoComponent, ArticleComponent, WaitingButtonComponent],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
@@ -43,6 +44,18 @@ export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member>
       }
       this.load();
     });
+  }
+
+  public onActivate() {
+    const user = this.data;
+    user.active = true;
+    this.onSave(user);
+  }
+
+  public onDeactivate() {
+    const user = this.data;
+    user.active = false;
+    this.onSave(user);
   }
 
   protected override delete(): void {
