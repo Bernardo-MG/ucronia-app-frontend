@@ -44,8 +44,8 @@
           <div class="card">
             <div class="card-body">
               <div class="row">
-                <!-- Enable button -->
                 <ng-template [ngIf]="!data.enabled">
+                  <!-- Enable button -->
                   <div class="col-sm-2 d-grid gap-2">
                     <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
                       data-bs-toggle="modal"
