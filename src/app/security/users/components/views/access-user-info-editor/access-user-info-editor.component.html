@@ -17,26 +17,24 @@
     <ng-container [ngSwitch]="view">
       <!-- User -->
       <ng-container *ngSwitchCase="'user'">
-        <div class="mb-1">
-          <div class="card">
-            <div class="card-body">
-              <div *ngIf="showMenu">
-                <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-                  (delete)="onDelete()"></form-editor-header>
-              </div>
-              <ng-container [ngSwitch]="editing">
-                <!-- Form -->
-                <ng-container *ngSwitchCase="true">
-                  <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-                    [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-                  </access-user-form>
-                </ng-container>
-                <!-- Info -->
-                <ng-container *ngSwitchCase="false">
-                  <access-user-info [data]="data"></access-user-info>
-                </ng-container>
-              </ng-container>
+        <div class="card mb-1">
+          <div class="card-body">
+            <div *ngIf="showMenu">
+              <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+                (delete)="onDelete()"></form-editor-header>
             </div>
+            <ng-container [ngSwitch]="editing">
+              <!-- Form -->
+              <ng-container *ngSwitchCase="true">
+                <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+                  [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+                </access-user-form>
+              </ng-container>
+              <!-- Info -->
+              <ng-container *ngSwitchCase="false">
+                <access-user-info [data]="data"></access-user-info>
+              </ng-container>
+            </ng-container>
           </div>
         </div>
         <!-- Enable/disable button -->
