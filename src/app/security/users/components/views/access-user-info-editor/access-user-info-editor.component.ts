@@ -34,6 +34,8 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
 
   public readingMember = false;
 
+  public changingActive = false;
+
   public rolesSelection = new PaginatedResponse<Role[]>([]);
 
   public membersSelection = new PaginatedResponse<Member[]>([]);
@@ -142,12 +144,14 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
   public onDisable() {
     const user = this.data;
     user.enabled = false;
+    this.changingActive = true;
     this.onSave(user);
   }
 
   public onEnable() {
     const user = this.data;
     user.enabled = true;
+    this.changingActive = true;
     this.onSave(user);
   }
 
@@ -169,6 +173,11 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
     const updated: UserUpdate = { ...this.data, ...toSave, roles: this.data.roles.map(r => r.name) };
 
     return this.service.update(toSave.username, updated);
+  }
+
+  protected override interceptSave(response: User) {
+    super.interceptSave(response);
+    this.changingActive = false;
   }
 
 }
