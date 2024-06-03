@@ -49,7 +49,7 @@
                   <div class="col-sm-2 d-grid gap-2">
                     <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''"></layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Enable</layout-waiting-button>
                   </div>
                 </ng-template>
                 <ng-template [ngIf]="data.enabled">
@@ -57,7 +57,7 @@
                   <div class="col-sm-2 d-grid gap-2">
                     <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''"></layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Disable</layout-waiting-button>
                   </div>
                 </ng-template>
               </div>

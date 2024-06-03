@@ -8,6 +8,6 @@
   <ng-template #active>
     <!-- Active button-->
     <button type='button' class="btn btn-primary" (click)="onClick()" [disabled]="disabled"
-      [attr.aria-disabled]="disabled" attr.aria-label="{{name}}">{{name}}</button>
+      [attr.aria-disabled]="disabled" attr.aria-label="{{name}}"><ng-content></ng-content></button>
   </ng-template>
 </ng-container>
