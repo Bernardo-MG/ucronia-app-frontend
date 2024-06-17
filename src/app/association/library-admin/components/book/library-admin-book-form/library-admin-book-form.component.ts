@@ -42,6 +42,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.gameSystem = value.gameSystem.name;
     this.publisher = value.publisher.name;
     this.donor = value.donor.number;
+    this.donorName = value.donor.name.fullName;
     this.authors = value.authors.map(a => a.name);
   }
 
