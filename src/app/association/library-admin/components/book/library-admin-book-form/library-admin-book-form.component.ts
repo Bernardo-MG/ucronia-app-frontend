@@ -133,9 +133,11 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onSelectAuthor(author: Author) {
-    this.authors.push(author.name);
-    this.selector = '';
-    this.selectAuthor.emit(this.authors);
+    if(!this.authors.find(a => a === author.name)){
+      this.authors.push(author.name);
+      this.selector = '';
+      this.selectAuthor.emit(this.authors);
+    }
     this.pickCloseButton.nativeElement.click();
   }
 
@@ -152,6 +154,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.selector = '';
     this.selectDonor.emit(this.donor);
     this.pickCloseButton.nativeElement.click();
+  }
+
+  public onRemoveAuthor(author: string) {
+    this.authors = this.authors.filter(a => a !== author);
   }
 
   public onGoToBookTypePage(page: number) {

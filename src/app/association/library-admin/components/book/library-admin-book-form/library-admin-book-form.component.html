@@ -48,8 +48,8 @@
     <div class="row mb-2">
       <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
       <div class="col-sm-9">
-        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
-          aria-describedby="publisherLabel">
+        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" [disabled]="!formEnabled"
+          class="form-control" aria-describedby="publisherLabel">
       </div>
       <div class="col-sm-1">
         <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
@@ -62,8 +62,8 @@
     <div class="row mb-2">
       <label for="donorInput" id="donorLabel" class="col-sm-2 col-form-label">Donor</label>
       <div class="col-sm-9">
-        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
-          aria-describedby="donorLabel">
+        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" [disabled]="!formEnabled"
+          class="form-control" aria-describedby="donorLabel">
       </div>
       <div class="col-sm-1">
         <button (click)="onShowDonorSelection()" type="button" class="btn btn-link link-dark" role="button"
@@ -76,8 +76,8 @@
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
       <div class="col-sm-9">
-        <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
-          aria-describedby="bookTypeLabel">
+        <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
+          class="form-control" aria-describedby="bookTypeLabel">
       </div>
       <div class="col-sm-1">
         <button (click)="onShowBookTypeSelection()" type="button" class="btn btn-link link-dark" role="button"
@@ -90,8 +90,8 @@
     <div class="row mb-2">
       <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
       <div class="col-sm-9">
-        <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
-          aria-describedby="gameSystemLabel">
+        <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
+          class="form-control" aria-describedby="gameSystemLabel">
       </div>
       <div class="col-sm-1">
         <button (click)="onShowGameSystemSelection()" type="button" class="btn btn-link link-dark" role="button"
@@ -102,10 +102,15 @@
     </div>
     <!-- Authors -->
     <div class="row mb-2">
-      <div class="col-sm-11">
+      <div class="col-sm-12">
+        <h2>Authors</h2>
+      </div>
+      <div class="col-sm-12">
         <table class="table">
           <thead>
             <tr>
+              <th scope="col">
+              </th>
               <th scope="col">
                 Author
               </th>
@@ -114,17 +119,25 @@
           <tbody class="table-group-divider">
             <ng-template ngFor let-author [ngForOf]="authors">
               <tr>
+                <td>
+                  <button (click)="onRemoveAuthor(author)" type="button" class="btn btn-link link-dark"
+                    role="button" aria-label="Remove author">
+                    <icon-delete></icon-delete>
+                  </button>
+                </td>
                 <td>{{author}}</td>
               </tr>
             </ng-template>
           </tbody>
         </table>
       </div>
-      <div class="col-sm-1">
-        <button (click)="onShowAuthorSelection()" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Pick author" data-bs-toggle="modal" data-bs-target="#pickModal">
-          <icon-search></icon-search>
-        </button>
+      <div class="col-md-2 offset-md-5">
+        <div class="d-grid">
+          <button (click)="onShowAuthorSelection()" type="button" class="btn btn-primary" aria-label="Add author"
+            data-bs-toggle="modal" data-bs-target="#pickModal">
+            <icon-add></icon-add>
+          </button>
+        </div>
       </div>
     </div>
     <div class="row">
