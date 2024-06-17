@@ -48,7 +48,7 @@
     <div class="row mb-2">
       <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
       <div class="col-sm-9">
-        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
           aria-describedby="publisherLabel">
       </div>
       <div class="col-sm-1">
@@ -62,7 +62,7 @@
     <div class="row mb-2">
       <label for="donorInput" id="donorLabel" class="col-sm-2 col-form-label">Donor</label>
       <div class="col-sm-9">
-        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
           aria-describedby="donorLabel">
       </div>
       <div class="col-sm-1">
@@ -76,7 +76,7 @@
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
       <div class="col-sm-9">
-        <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
           aria-describedby="bookTypeLabel">
       </div>
       <div class="col-sm-1">
@@ -90,7 +90,7 @@
     <div class="row mb-2">
       <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
       <div class="col-sm-9">
-        <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" class="form-control"
+        <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled" class="form-control"
           aria-describedby="gameSystemLabel">
       </div>
       <div class="col-sm-1">
