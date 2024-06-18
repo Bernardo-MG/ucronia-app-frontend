@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Donor } from '@app/association/library-admin/models/donor';
+import { Donor } from '@app/association/library/models/donor';
 
 @Component({
   selector: 'assoc-library-admin-donor-info',

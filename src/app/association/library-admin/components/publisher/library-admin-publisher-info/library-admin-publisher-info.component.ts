@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Publisher } from '../../../models/publisher';
+import { Publisher } from '@app/association/library/models/publisher';
 
 @Component({
   selector: 'assoc-library-admin-publisher-info',

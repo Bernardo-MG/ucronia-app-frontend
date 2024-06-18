@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GameSystem } from '../../../models/game-system';
+import { GameSystem } from '@app/association/library/models/game-system';
 
 @Component({
   selector: 'assoc-library-admin-game-system-info',

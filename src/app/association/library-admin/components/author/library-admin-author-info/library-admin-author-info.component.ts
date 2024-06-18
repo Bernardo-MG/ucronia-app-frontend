@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Author } from '../../../models/author';
+import { Author } from '@app/association/library/models/author';
 
 @Component({
   selector: 'assoc-library-admin-author-info',

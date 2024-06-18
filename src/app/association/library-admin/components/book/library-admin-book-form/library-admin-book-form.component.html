@@ -58,20 +58,6 @@
         </button>
       </div>
     </div>
-    <!-- Donor -->
-    <div class="row mb-2">
-      <label for="donorInput" id="donorLabel" class="col-sm-2 col-form-label">Donor</label>
-      <div class="col-sm-9">
-        <input type="text" [value]="donorName" id="donorInput" [readonly]="true" [disabled]="!formEnabled"
-          class="form-control" aria-describedby="donorLabel">
-      </div>
-      <div class="col-sm-1">
-        <button (click)="onShowDonorSelection()" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Pick donor" data-bs-toggle="modal" data-bs-target="#pickModal">
-          <icon-search></icon-search>
-        </button>
-      </div>
-    </div>
     <!-- Book type -->
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
@@ -98,6 +84,46 @@
           aria-label="Pick game system" data-bs-toggle="modal" data-bs-target="#pickModal">
           <icon-search></icon-search>
         </button>
+      </div>
+    </div>
+    <!-- Donors -->
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h2>Donors</h2>
+      </div>
+      <div class="col-sm-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">
+              </th>
+              <th scope="col">
+                Donor
+              </th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <ng-template ngFor let-donor let-i="index" [ngForOf]="donors">
+              <tr>
+                <td>
+                  <button (click)="onRemoveDonor(donor)" type="button" class="btn btn-link link-dark"
+                    role="button" aria-label="Remove author">
+                    <icon-delete></icon-delete>
+                  </button>
+                </td>
+                <td>{{donorNames[i]}}</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-2 offset-md-5">
+        <div class="d-grid">
+          <button (click)="onShowDonorSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+            data-bs-toggle="modal" data-bs-target="#pickModal">
+            <icon-add></icon-add>
+          </button>
+        </div>
       </div>
     </div>
     <!-- Authors -->
