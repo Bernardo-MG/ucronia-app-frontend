@@ -52,6 +52,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public donorPage = new PaginatedResponse<Donor[]>([]);
 
+  public relationships = new Book();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -88,6 +90,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToDonorPage(0);
   }
 
+  protected override onLoad(data: Book): void {
+    super.onLoad(data);
+    this.relationships = data;
+  }
+
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library/admin']);
@@ -99,11 +106,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = this.data.publisher;
-    toSave.bookType = this.data.bookType;
-    toSave.gameSystem = this.data.gameSystem;
-    toSave.donors = this.data.donors;
-    toSave.authors = this.data.authors;
+    toSave.publisher = this.relationships.publisher;
+    toSave.bookType = this.relationships.bookType;
+    toSave.gameSystem = this.relationships.gameSystem;
+    toSave.donors = this.relationships.donors;
+    toSave.authors = this.relationships.authors;
     return this.service.update(this.data.number, toSave);
   }
 
@@ -193,17 +200,17 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   public onSelectBookType(bookType: string) {
-    this.data.bookType = new BookType();
-    this.data.bookType.name = bookType;
+    this.relationships.bookType = new BookType();
+    this.relationships.bookType.name = bookType;
   }
 
   public onSelectGameSystem(gameSystem: string) {
-    this.data.gameSystem = new GameSystem();
-    this.data.gameSystem.name = gameSystem;
+    this.relationships.gameSystem = new GameSystem();
+    this.relationships.gameSystem.name = gameSystem;
   }
 
   public onSelectAuthor(authors: string[]) {
-    this.data.authors = authors.map(a => {
+    this.relationships.authors = authors.map(a => {
       const author = new Author();
       author.name = a;
       return author;
@@ -211,12 +218,12 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   public onSelectPublisher(publisher: string) {
-    this.data.publisher = new Publisher();
-    this.data.publisher.name = publisher;
+    this.relationships.publisher = new Publisher();
+    this.relationships.publisher.name = publisher;
   }
 
   public onSelectDonor(donors: number[]) {
-    this.data.donors = donors.map(d => {
+    this.relationships.donors = donors.map(d => {
       const donor = new Donor();
       donor.number = d;
       return donor;
