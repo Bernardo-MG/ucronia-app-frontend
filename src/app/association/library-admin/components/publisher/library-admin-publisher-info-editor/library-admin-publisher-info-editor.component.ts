@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Publisher } from '@app/association/library/models/publisher';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { BookType } from '../../../models/book-type';
-import { Publisher } from '../../../models/publisher';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminPublisherFormComponent } from '../library-admin-publisher-form/library-admin-publisher-form.component';
 import { LibraryAdminPublisherInfoComponent } from '../library-admin-publisher-info/library-admin-publisher-info.component';

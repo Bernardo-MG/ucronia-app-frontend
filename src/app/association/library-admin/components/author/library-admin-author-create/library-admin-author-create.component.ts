@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Author } from '@app/association/library/models/author';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Author } from '../../../models/author';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/library-admin-author-form.component';
 

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Book } from '../../../models/book';
+import { Book } from '@app/association/library/models/book';
 
 @Component({
   selector: 'assoc-library-admin-book-info',

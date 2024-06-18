@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Donor } from '@app/association/library/models/donor';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -9,7 +10,6 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Donor } from '../models/donor';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class DonorAdminService {
 
   public getAll(page: number): Observable<PaginatedResponse<Donor[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('name')]);
+    query.defaultSort = new Sort([new SortProperty('fullName')]);
     query.pagination = { page };
 
     return this.getClient().query(query).read();

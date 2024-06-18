@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Donor } from '@app/association/library-admin/models/donor';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { Donor } from '@app/association/library/models/donor';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';

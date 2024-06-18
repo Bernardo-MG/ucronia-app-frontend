@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BookType } from '@app/association/library-admin/models/book-type';
+import { BookType } from '@app/association/library/models/book-type';
 
 @Component({
   selector: 'assoc-library-admin-book-type-info',

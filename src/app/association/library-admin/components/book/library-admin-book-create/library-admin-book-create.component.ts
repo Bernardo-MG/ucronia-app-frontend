@@ -1,18 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Donor } from '@app/association/library-admin/models/donor';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { Author } from '@app/association/library/models/author';
+import { Book } from '@app/association/library/models/book';
+import { BookType } from '@app/association/library/models/book-type';
+import { Donor } from '@app/association/library/models/donor';
+import { GameSystem } from '@app/association/library/models/game-system';
+import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Author } from '../../../models/author';
-import { Book } from '../../../models/book';
-import { BookType } from '../../../models/book-type';
-import { GameSystem } from '../../../models/game-system';
-import { Publisher } from '../../../models/publisher';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookAdminService } from '../../../services/book-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
@@ -58,7 +58,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public publisher = '';
 
-  public donor = -1;
+  public donors: number[] = [];
 
   constructor(
     private service: BookAdminService,
@@ -186,8 +186,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.publisher = publisher;
   }
 
-  public onSelectDonor(donor: number) {
-    this.donor = donor;
+  public onSelectDonor(donors: number[]) {
+    this.donors = donors;
   }
 
   protected override save(toSave: Book): Observable<Book> {
@@ -197,8 +197,11 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
-    toSave.donor = new Donor();
-    toSave.donor.number = this.donor;
+    toSave.donors = this.donors.map(d => {
+      const donor = new Donor();
+      donor.number = d;
+      return donor;
+    });
     toSave.authors = this.authors.map(a => {
       const author = new Author();
       author.name = a;

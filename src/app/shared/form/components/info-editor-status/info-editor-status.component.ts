@@ -135,13 +135,17 @@ export abstract class InfoEditorStatusComponent<Data> {
     this.read()
       .subscribe({
         next: response => {
-          this.data = response;
+          this.onLoad(response);
           this.reading = false;
         },
         error: error => {
           this.reading = false;
         }
       });
+  }
+
+  protected onLoad(data: Data): void {
+    this.data = data;
   }
 
   protected abstract delete(): void;

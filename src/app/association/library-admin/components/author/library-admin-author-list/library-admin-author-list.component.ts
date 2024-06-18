@@ -8,8 +8,8 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { Author } from '../../../models/author';
 import { AuthorAdminService } from '../../../services/author-admin.service';
+import { Author } from '@app/association/library/models/author';
 
 @Component({
   selector: 'assoc-library-admin-author-list',

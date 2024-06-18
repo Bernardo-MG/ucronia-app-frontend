@@ -1,6 +1,6 @@
-import { Donor } from "@app/association/library-admin/models/donor";
 import { Author } from "./author";
 import { BookType } from "./book-type";
+import { Donor } from "./donor";
 import { GameSystem } from "./game-system";
 import { Publisher } from "./publisher";
 
@@ -13,5 +13,5 @@ export class Book {
   publisher = new Publisher();
   bookType = new BookType();
   gameSystem = new GameSystem();
-  donor = new Donor();
+  donors: Donor[] = [];
 }

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Donor } from '@app/association/library-admin/models/donor';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { Donor } from '@app/association/library/models/donor';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';

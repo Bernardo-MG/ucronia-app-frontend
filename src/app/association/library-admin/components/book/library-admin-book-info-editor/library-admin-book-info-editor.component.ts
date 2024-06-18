@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Donor } from '@app/association/library-admin/models/donor';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { Author } from '@app/association/library/models/author';
+import { Book } from '@app/association/library/models/book';
+import { BookType } from '@app/association/library/models/book-type';
+import { Donor } from '@app/association/library/models/donor';
+import { GameSystem } from '@app/association/library/models/game-system';
+import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
-import { Author } from '../../../models/author';
-import { Book } from '../../../models/book';
-import { BookType } from '../../../models/book-type';
-import { GameSystem } from '../../../models/game-system';
-import { Publisher } from '../../../models/publisher';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookAdminService } from '../../../services/book-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
@@ -52,6 +52,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public donorPage = new PaginatedResponse<Donor[]>([]);
 
+  public relationships = new Book();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -88,6 +90,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToDonorPage(0);
   }
 
+  protected override onLoad(data: Book): void {
+    super.onLoad(data);
+    this.relationships = data;
+  }
+
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library/admin']);
@@ -99,11 +106,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = this.data.publisher;
-    toSave.bookType = this.data.bookType;
-    toSave.gameSystem = this.data.gameSystem;
-    toSave.donor = this.data.donor;
-    toSave.authors = this.data.authors;
+    toSave.publisher = this.relationships.publisher;
+    toSave.bookType = this.relationships.bookType;
+    toSave.gameSystem = this.relationships.gameSystem;
+    toSave.donors = this.relationships.donors;
+    toSave.authors = this.relationships.authors;
     return this.service.update(this.data.number, toSave);
   }
 
@@ -193,17 +200,17 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   public onSelectBookType(bookType: string) {
-    this.data.bookType = new BookType();
-    this.data.bookType.name = bookType;
+    this.relationships.bookType = new BookType();
+    this.relationships.bookType.name = bookType;
   }
 
   public onSelectGameSystem(gameSystem: string) {
-    this.data.gameSystem = new GameSystem();
-    this.data.gameSystem.name = gameSystem;
+    this.relationships.gameSystem = new GameSystem();
+    this.relationships.gameSystem.name = gameSystem;
   }
 
   public onSelectAuthor(authors: string[]) {
-    this.data.authors = authors.map(a => {
+    this.relationships.authors = authors.map(a => {
       const author = new Author();
       author.name = a;
       return author;
@@ -211,13 +218,16 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   public onSelectPublisher(publisher: string) {
-    this.data.publisher = new Publisher();
-    this.data.publisher.name = publisher;
+    this.relationships.publisher = new Publisher();
+    this.relationships.publisher.name = publisher;
   }
 
-  public onSelectDonor(donor: number) {
-    this.data.donor = new Donor();
-    this.data.donor.number = donor;
+  public onSelectDonor(donors: number[]) {
+    this.relationships.donors = donors.map(d => {
+      const donor = new Donor();
+      donor.number = d;
+      return donor;
+    });
   }
 
 }
