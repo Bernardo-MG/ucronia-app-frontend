@@ -1,9 +1,14 @@
 <layout-article title="Library">
-  <!-- Books list -->
+  <!-- Books menu -->
   <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
     [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
     <icon-settings></icon-settings>
   </button>
+  <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="/library/lend"
+    [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission">
+    Lend
+  </button>
+  <!-- Books list -->
   <div class="card">
     <div class="card-body">
       <h2>Books</h2>
