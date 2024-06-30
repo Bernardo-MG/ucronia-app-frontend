@@ -5,8 +5,8 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
-import { Donor } from '@app/association/library/models/donor';
 import { GameSystem } from '@app/association/library/models/game-system';
+import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -50,7 +50,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  public donorPage = new PaginatedResponse<Donor[]>([]);
+  public donorPage = new PaginatedResponse<Person[]>([]);
 
   public relationships = new Book();
 
@@ -224,7 +224,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public onSelectDonor(donors: number[]) {
     this.relationships.donors = donors.map(d => {
-      const donor = new Donor();
+      const donor = new Person();
       donor.number = d;
       return donor;
     });

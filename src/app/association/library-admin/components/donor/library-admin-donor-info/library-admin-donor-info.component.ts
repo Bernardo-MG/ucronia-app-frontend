@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 
 @Component({
   selector: 'assoc-library-admin-donor-info',
@@ -9,6 +9,6 @@ import { Donor } from '@app/association/library/models/donor';
 })
 export class LibraryAdminDonorInfoComponent {
 
-  @Input() data = new Donor();
+  @Input() data = new Person();
 
 }

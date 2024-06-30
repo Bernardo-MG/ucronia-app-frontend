@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
@@ -14,7 +14,7 @@ export class LibraryAdminDonorSelectionComponent {
 
   @Input() public waiting = false;
 
-  @Input() public values: Donor[] = [];
+  @Input() public values: Person[] = [];
 
   /**
    * Current page number. This is the pointer to move around the pagination.
@@ -26,11 +26,11 @@ export class LibraryAdminDonorSelectionComponent {
    */
   @Input() public pages = 0;
 
-  @Output() public choose = new EventEmitter<Donor>();
+  @Output() public choose = new EventEmitter<Person>();
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  public onPick(gameSystem: Donor) {
+  public onPick(gameSystem: Person) {
     this.choose.emit(gameSystem);
   }
 
@@ -38,7 +38,7 @@ export class LibraryAdminDonorSelectionComponent {
     this.goToPage.emit(page);
   }
 
-  public nameRenderer(donor: Donor) {
+  public nameRenderer(donor: Person) {
     return donor.name.fullName;
   }
 

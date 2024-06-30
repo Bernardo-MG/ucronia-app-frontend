@@ -5,7 +5,6 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
-import { Donor } from '@app/association/library/models/donor';
 import { GameSystem } from '@app/association/library/models/game-system';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -19,6 +18,7 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
+import { Person } from '@app/association/library/models/person';
 
 @Component({
   selector: 'assoc-library-admin-book-create',
@@ -48,7 +48,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  public donorPage = new PaginatedResponse<Donor[]>([]);
+  public donorPage = new PaginatedResponse<Person[]>([]);
 
   public bookType = '';
 
@@ -198,7 +198,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
     toSave.donors = this.donors.map(d => {
-      const donor = new Donor();
+      const donor = new Person();
       donor.number = d;
       return donor;
     });

@@ -1,6 +1,13 @@
 import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Author } from '@app/association/library/models/author';
+import { Book } from '@app/association/library/models/book';
+import { BookType } from '@app/association/library/models/book-type';
+import { GameSystem } from '@app/association/library/models/game-system';
+import { Language } from '@app/association/library/models/language';
+import { Person } from '@app/association/library/models/person';
+import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -10,13 +17,6 @@ import { LibraryAdminBookTypeSelectionComponent } from '../../book-type/library-
 import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '../../game-system/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '../../publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
-import { Author } from '@app/association/library/models/author';
-import { Book } from '@app/association/library/models/book';
-import { BookType } from '@app/association/library/models/book-type';
-import { Donor } from '@app/association/library/models/donor';
-import { GameSystem } from '@app/association/library/models/game-system';
-import { Language } from '@app/association/library/models/language';
-import { Publisher } from '@app/association/library/models/publisher';
 
 @Component({
   selector: 'assoc-library-admin-book-form',
@@ -34,7 +34,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  @Input() public donorPage = new PaginatedResponse<Donor[]>([]);
+  @Input() public donorPage = new PaginatedResponse<Person[]>([]);
 
   @Input() public override set data(value: Book) {
     this.loadData(value);
@@ -149,7 +149,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.pickCloseButton.nativeElement.click();
   }
 
-  public onSelectDonor(donor: Donor) {
+  public onSelectDonor(donor: Person) {
     if (!this.donors.find(d => d === donor.number)) {
       this.donors.push(donor.number);
       this.donorNames.push(donor.name.fullName);

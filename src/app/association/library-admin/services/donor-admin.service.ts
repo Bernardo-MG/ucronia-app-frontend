@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -20,23 +20,23 @@ export class DonorAdminService {
     private http: HttpClient
   ) { }
 
-  public create(data: Donor): Observable<Donor> {
+  public create(data: Person): Observable<Person> {
     return this.getClient()
-      .create<SimpleResponse<Donor>>(data)
+      .create<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Donor): Observable<Donor> {
+  public update(number: number, data: Person): Observable<Person> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Donor>>(data)
+      .update<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(number: number): Observable<Donor> {
+  public getOne(number: number): Observable<Person> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Donor>>()
+      .read<SimpleResponse<Person>>()
       .pipe(map(r => r.content));
   }
 
@@ -47,7 +47,7 @@ export class DonorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number): Observable<PaginatedResponse<Donor[]>> {
+  public getAll(page: number): Observable<PaginatedResponse<Person[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('fullName')]);
     query.pagination = { page };
