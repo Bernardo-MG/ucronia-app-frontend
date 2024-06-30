@@ -8,6 +8,7 @@ import { Publisher } from "./publisher";
 export class Book {
   number = -1;
   title = '';
+  lent = false;
   isbn = '';
   language = '';
   authors: Author[] = [];
