@@ -7,14 +7,14 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
+import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
 
 @Component({
   selector: 'assoc-library-book-list-widget',
   standalone: true,
-  imports: [ CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent ],
+  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent, LibraryBookListComponent],
   templateUrl: './library-book-list-widget.component.html'
 })
 export class LibraryBookListWidgetComponent implements OnInit {
