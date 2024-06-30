@@ -1,9 +1,13 @@
-<layout-waiting-overlay [waiting]="readingBooks">
-  <!-- List -->
-  <assoc-library-book-list [books]="page.content"></assoc-library-book-list>
-</layout-waiting-overlay>
-<div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingBooks"
-    (goTo)="onGoTo($event)">
-  </pagination-navigation>
+<div class="card">
+  <div class="card-body">
+    <layout-waiting-overlay [waiting]="readingBooks">
+      <!-- List -->
+      <assoc-library-book-list [books]="page.content"></assoc-library-book-list>
+    </layout-waiting-overlay>
+    <div class="d-flex justify-content-center mt-1">
+      <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingBooks"
+        (goTo)="onGoTo($event)">
+      </pagination-navigation>
+    </div>
+  </div>
 </div>

@@ -1,18 +1,17 @@
 <layout-article title="Library">
-  <!-- Books menu -->
-  <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
-    [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
-    <icon-settings></icon-settings>
-  </button>
-  <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="/library/lend"
-    [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission">
-    Lend
-  </button>
-  <!-- Books list -->
-  <div class="card">
+  <div class="card mb-1">
     <div class="card-body">
-      <h2>Books</h2>
-      <assoc-library-book-list-widget></assoc-library-book-list-widget>
+      <!-- Books menu -->
+      <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
+        [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
+        <icon-settings></icon-settings> Admin
+      </button>
+      <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="/library/lend"
+        [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission">
+        Lend
+      </button>
     </div>
   </div>
+  <!-- Books list -->
+  <assoc-library-book-list-widget></assoc-library-book-list-widget>
 </layout-article>
