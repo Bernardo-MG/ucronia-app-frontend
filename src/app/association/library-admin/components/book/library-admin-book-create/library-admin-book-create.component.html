@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <!-- Form -->
-        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures"
           [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage"
           [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
           (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
