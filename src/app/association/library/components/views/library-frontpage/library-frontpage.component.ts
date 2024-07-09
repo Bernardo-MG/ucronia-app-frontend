@@ -24,7 +24,7 @@ export class LibraryFrontpageComponent {
   ngOnInit(): void {
     // Check permissions
     this.adminPermission = this.authContainer.hasPermission("library_admin", "view");
-    this.lendPermission = this.authContainer.hasPermission("library", "update");
+    this.lendPermission = this.authContainer.hasPermission("library_lending", "update");
   }
 
 }
