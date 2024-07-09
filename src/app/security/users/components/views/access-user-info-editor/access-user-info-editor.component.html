@@ -26,7 +26,7 @@
             <ng-container [ngSwitch]="editing">
               <!-- Form -->
               <ng-container *ngSwitchCase="true">
-                <access-user-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+                <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
                   [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
                 </access-user-form>
               </ng-container>

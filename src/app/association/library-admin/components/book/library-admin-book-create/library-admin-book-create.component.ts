@@ -28,8 +28,6 @@ import { LibraryAdminBookFormComponent } from '../library-admin-book-form/librar
 })
 export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {
 
-  public createPermission = false;
-
   public readingBookTypes = false;
 
   public readingGameSystems = false;
@@ -74,9 +72,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   }
 
   public ngOnInit(): void {
-    // Check permissions
-    this.createPermission = this.authContainer.hasPermission("fee", "create");
-
     // Load initial data
     this.onGoToBookTypePage(0);
     this.onGoToGameSystemPage(0);

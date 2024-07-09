@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@app/core/authentication/models/user';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
@@ -12,6 +12,8 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
   templateUrl: './access-user-form.component.html'
 })
 export class AccessUserFormComponent extends FormComponent<User> {
+
+  @Input() public create = true;
 
   constructor(
     fb: FormBuilder
