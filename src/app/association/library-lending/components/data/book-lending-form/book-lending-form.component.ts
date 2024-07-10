@@ -9,6 +9,7 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { BookLendingPersonSelectionComponent } from '../../book-lending-person-selection/book-lending-person-selection.component';
+import { BookLending } from '@app/association/library/models/book-lending';
 
 @Component({
   selector: 'assoc-book-lending-form',
@@ -16,7 +17,7 @@ import { BookLendingPersonSelectionComponent } from '../../book-lending-person-s
   imports: [ CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent, LibraryAdminBookSelectionComponent ],
   templateUrl: './book-lending-form.component.html'
 })
-export class BookLendingFormComponent extends FormComponent<Book>  {
+export class BookLendingFormComponent extends FormComponent<BookLending>  {
 
   @Input() public personPage = new PaginatedResponse<Person[]>([]);
 
@@ -40,8 +41,9 @@ export class BookLendingFormComponent extends FormComponent<Book>  {
     super();
 
     this.form = fb.group({
-      book: ['', Validators.required],
-      person: ['', Validators.required]
+      number: ['', Validators.required],
+      member: ['', Validators.required],
+      lendingDate: [null, Validators.required]
     });
   }
 
