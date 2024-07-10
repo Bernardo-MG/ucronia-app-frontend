@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Book -->
   <div class="row mb-2">
-    <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Publisher</label>
+    <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Book</label>
     <div class="col-sm-9">
       <input type="text" [value]="book" id="bookInput" [readonly]="true" [disabled]="!formEnabled"
         class="form-control" aria-describedby="bookLabel">
@@ -48,6 +48,9 @@
       <div class="modal-body">
         <!-- Select book -->
         <ng-template [ngIf]="selector === 'book'">
+          <assoc-library-admin-book-selection [values]="bookPage.content" [current]="bookPage.page + 1"
+          [pages]="bookPage.totalPages" (choose)="onSelectBook($event)"
+          (goToPage)="onGoToBookPage($event)"></assoc-library-admin-book-selection>
         </ng-template>
         <!-- Select person -->
         <ng-template [ngIf]="selector === 'person'">

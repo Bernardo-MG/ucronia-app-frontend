@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
 import { Person } from '@app/association/library/models/person';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -12,14 +13,18 @@ import { BookLendingPersonSelectionComponent } from '../../book-lending-person-s
 @Component({
   selector: 'assoc-book-lending-form',
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent ],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent, LibraryAdminBookSelectionComponent ],
   templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<Book>  {
 
   @Input() public personPage = new PaginatedResponse<Person[]>([]);
 
+  @Input() public bookPage = new PaginatedResponse<Book[]>([]);
+
   @Output() public goToPersonPage = new EventEmitter<number>();
+
+  @Output() public goToBookPage = new EventEmitter<number>();
 
   @ViewChild('pickCloseButton') pickCloseButton: any;
 
@@ -48,9 +53,18 @@ export class BookLendingFormComponent extends FormComponent<Book>  {
     this.selector = 'person';
   }
 
+  public onSelectBook(book: Book) {
+    this.book = book.title;
+    this.pickCloseButton.nativeElement.click();
+  }
+
   public onSelectPerson(person: Person) {
     this.person = person.name.fullName;
     this.pickCloseButton.nativeElement.click();
+  }
+
+  public onGoToBookPage(page: number) {
+    this.goToBookPage.emit(page);
   }
 
   public onGoToPersonPage(page: number) {
