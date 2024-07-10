@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Book -->
+  <div class="row mb-2">
+    <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Book</label>
+    <div class="col-sm-10">
+      <input type="text" id="bookInput" formControlName="book" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('book') }" aria-describedby="bookLabel" maxlength="200">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('book')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Person -->
+  <div class="row mb-2">
+    <label for="personInput" id="personLabel" class="col-sm-2 col-form-label">Person</label>
+    <div class="col-sm-10">
+      <input type="text" id="personInput" formControlName="person" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('person') }" aria-describedby="personLabel" maxlength="200">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('person')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
+        (action)="onSave()">Save</layout-waiting-button>
+    </div>
+  </div>
+</form>

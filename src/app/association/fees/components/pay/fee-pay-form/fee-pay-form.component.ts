@@ -10,7 +10,7 @@ import { FeePayment } from '../../../models/fee-payment';
 @Component({
   selector: 'assoc-fee-pay-form',
   standalone: true,
-  imports: [CommonModule, IconsModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {

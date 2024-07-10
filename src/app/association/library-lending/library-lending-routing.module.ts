@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LibraryLendingFrontpageComponent } from './components/library-lending-frontpage/library-lending-frontpage.component';
+import { LibraryLendingFrontpageComponent } from './components/views/library-lending-frontpage/library-lending-frontpage.component';
 
 
 const routes: Routes = [
