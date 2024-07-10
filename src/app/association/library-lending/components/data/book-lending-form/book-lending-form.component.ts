@@ -3,15 +3,22 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '@app/association/library/models/book';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
   selector: 'assoc-book-lending-form',
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent ],
+  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent ],
   templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<Book>  {
+
+  public selector = '';
+
+  public book = '';
+
+  public person = '';
 
   constructor(
     fb: FormBuilder
@@ -22,6 +29,10 @@ export class BookLendingFormComponent extends FormComponent<Book>  {
       book: ['', Validators.required],
       person: ['', Validators.required]
     });
+  }
+
+  public onShowBookSelection() {
+    this.selector = 'book';
   }
 
 }
