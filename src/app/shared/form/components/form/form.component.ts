@@ -6,7 +6,7 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
   selector: 'app-form',
   templateUrl: './form.component.html'
 })
-export abstract class FormComponent<Data> {
+export class FormComponent<Data> {
 
   /**
    * Allows cancelling flag.

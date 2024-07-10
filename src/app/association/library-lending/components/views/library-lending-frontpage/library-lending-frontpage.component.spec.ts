@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryLendingFrontpageComponent } from './library-lending-frontpage.component';
 
@@ -7,7 +8,10 @@ describe('LibraryLendingFrontpageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryLendingFrontpageComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryLendingFrontpageComponent
+      ]
     })
     .compileComponents();
     

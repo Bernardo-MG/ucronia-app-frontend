@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-paged-selector',
   templateUrl: './paged-selector.component.html'
 })
-export abstract class PagedSelectorComponent<Data> {
+export class PagedSelectorComponent<Data> {
 
   @Input() public waiting = false;
 
@@ -32,6 +32,8 @@ export abstract class PagedSelectorComponent<Data> {
     this.goToPage.emit(page);
   }
 
-  public abstract nameRenderer(data: Data): string
+  public nameRenderer(data: Data): string {
+    return '';
+  }
 
 }
