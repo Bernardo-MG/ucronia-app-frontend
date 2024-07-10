@@ -21,7 +21,7 @@
         class="form-control" aria-describedby="personLabel">
     </div>
     <div class="col-sm-1">
-      <button (click)="onShowBookSelection()" type="button" class="btn btn-link link-dark" role="button"
+      <button (click)="onShowPersonSelection()" type="button" class="btn btn-link link-dark" role="button"
         aria-label="Pick person" data-bs-toggle="modal" data-bs-target="#pickModal">
         <icon-search></icon-search>
       </button>
@@ -51,6 +51,9 @@
         </ng-template>
         <!-- Select person -->
         <ng-template [ngIf]="selector === 'person'">
+          <assoc-book-lending-person-selection [values]="personPage.content" [current]="personPage.page + 1"
+            [pages]="personPage.totalPages" (choose)="onSelectPerson($event)"
+            (goToPage)="onGoToPersonPage($event)"></assoc-book-lending-person-selection>
         </ng-template>
       </div>
       <div class="modal-footer">
