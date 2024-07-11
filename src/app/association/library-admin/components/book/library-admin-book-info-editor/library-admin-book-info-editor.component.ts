@@ -107,7 +107,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   protected override save(toSave: Book): Observable<Book> {
     toSave.publisher = this.relationships.publisher;
-    toSave.bookType = this.relationships.bookType;
     toSave.gameSystem = this.relationships.gameSystem;
     return this.service.update(this.data.number, toSave);
   }
@@ -195,11 +194,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
         this.readingDonors = false;
       }
     });
-  }
-
-  public onSelectBookType(bookType: string) {
-    this.relationships.bookType = new BookType();
-    this.relationships.bookType.name = bookType;
   }
 
   public onSelectGameSystem(gameSystem: string) {

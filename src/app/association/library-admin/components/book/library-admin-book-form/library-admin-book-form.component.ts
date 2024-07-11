@@ -43,8 +43,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.publisher = value.publisher.name;
   }
 
-  @Output() public selectBookType = new EventEmitter<string>();
-
   @Output() public selectGameSystem = new EventEmitter<string>();
 
   @Output() public selectPublisher = new EventEmitter<string>();
@@ -77,9 +75,15 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('donors')?.setValue(data);
   }
 
-  public selector = '';
+  public get bookType(): string {
+    return this.form.get('bookType')?.value;
+  }
 
-  public bookType = '';
+  public set bookType(data: string) {
+    this.form.get('bookType')?.setValue(data);
+  }
+
+  public selector = '';
 
   public gameSystem = '';
 
@@ -97,7 +101,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       title: ['', Validators.required],
       language: ['', Validators.required],
       authors: [[]],
-      donors: [[]]
+      donors: [[]],
+      bookType: ['']
     });
 
     this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
@@ -126,8 +131,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType.name;
-    this.selector = '';
-    this.selectBookType.emit(this.bookType);
+    this.selector = ''
     this.pickCloseButton.nativeElement.click();
   }
 
