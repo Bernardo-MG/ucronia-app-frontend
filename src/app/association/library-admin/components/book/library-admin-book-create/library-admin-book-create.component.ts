@@ -54,8 +54,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public publisher = '';
 
-  public donors: number[] = [];
-
   constructor(
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
@@ -174,10 +172,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.publisher = publisher;
   }
 
-  public onSelectDonor(donors: number[]) {
-    this.donors = donors;
-  }
-
   protected override save(toSave: Book): Observable<Book> {
     toSave.publisher = new Publisher();
     toSave.publisher.name = this.publisher;
@@ -185,11 +179,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     toSave.bookType.name = this.bookType;
     toSave.gameSystem = new GameSystem();
     toSave.gameSystem.name = this.gameSystem;
-    toSave.donors = this.donors.map(d => {
-      const donor = new Person();
-      donor.number = d;
-      return donor;
-    });
     return this.service.create(toSave);
   }
 

@@ -41,8 +41,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.bookType = value.bookType.name;
     this.gameSystem = value.gameSystem.name;
     this.publisher = value.publisher.name;
-    this.donors = value.donors.map(d => d.number);
-    this.donorNames = value.donors.map(d => d.name.fullName);
   }
 
   @Output() public selectBookType = new EventEmitter<string>();
@@ -50,8 +48,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   @Output() public selectGameSystem = new EventEmitter<string>();
 
   @Output() public selectPublisher = new EventEmitter<string>();
-
-  @Output() public selectDonor = new EventEmitter<number[]>();
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
 
@@ -73,6 +69,14 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('authors')?.setValue(data);
   }
 
+  public get donors(): Person[] {
+    return this.form.get('donors')?.value;
+  }
+
+  public set donors(data: Person[]) {
+    this.form.get('donors')?.setValue(data);
+  }
+
   public selector = '';
 
   public bookType = '';
@@ -80,10 +84,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public gameSystem = '';
 
   public publisher = '';
-
-  public donors: number[] = [];
-
-  public donorNames: string[] = [];
 
   public languages: Language[] = [];
 
@@ -96,7 +96,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       isbn: [''],
       title: ['', Validators.required],
       language: ['', Validators.required],
-      authors: [[]]
+      authors: [[]],
+      donors: [[]]
     });
 
     this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
@@ -153,11 +154,9 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onSelectDonor(donor: Person) {
-    if (!this.donors.find(d => d === donor.number)) {
-      this.donors.push(donor.number);
-      this.donorNames.push(donor.name.fullName);
+    if (!this.donors.find(d => d.number === donor.number)) {
+      this.donors.push(donor);
       this.selector = '';
-      this.selectDonor.emit(this.donors);
     }
     this.pickCloseButton.nativeElement.click();
   }
@@ -166,9 +165,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.authors = this.authors.filter(a => a.name !== author.name);
   }
 
-  public onRemoveDonor(donor: number) {
-    this.donors = this.donors.filter(d => d !== donor);
-    this.selectDonor.emit(this.donors);
+  public onRemoveDonor(donor: Person) {
+    this.donors = this.donors.filter(d => d.number !== donor.number);
   }
 
   public onGoToBookTypePage(page: number) {
