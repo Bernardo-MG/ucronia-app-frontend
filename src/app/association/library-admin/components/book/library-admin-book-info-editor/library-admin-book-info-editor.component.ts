@@ -52,8 +52,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public donorPage = new PaginatedResponse<Person[]>([]);
 
-  public relationships = new Book();
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -90,11 +88,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToDonorPage(0);
   }
 
-  protected override onLoad(data: Book): void {
-    super.onLoad(data);
-    this.relationships = data;
-  }
-
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library/admin']);
@@ -106,8 +99,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = this.relationships.publisher;
-    toSave.gameSystem = this.relationships.gameSystem;
     return this.service.update(this.data.number, toSave);
   }
 
@@ -194,16 +185,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
         this.readingDonors = false;
       }
     });
-  }
-
-  public onSelectGameSystem(gameSystem: string) {
-    this.relationships.gameSystem = new GameSystem();
-    this.relationships.gameSystem.name = gameSystem;
-  }
-
-  public onSelectPublisher(publisher: string) {
-    this.relationships.publisher = new Publisher();
-    this.relationships.publisher.name = publisher;
   }
 
 }

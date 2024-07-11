@@ -48,10 +48,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public donorPage = new PaginatedResponse<Person[]>([]);
 
-  public gameSystem = '';
-
-  public publisher = '';
-
   constructor(
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
@@ -158,20 +154,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     });
   }
 
-  public onSelectGameSystem(gameSystem: string) {
-    this.gameSystem = gameSystem;
-  }
-
-  public onSelectPublisher(publisher: string) {
-    this.publisher = publisher;
-  }
-
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = new Publisher();
-    toSave.publisher.name = this.publisher;
-    toSave.bookType = new BookType();
-    toSave.gameSystem = new GameSystem();
-    toSave.gameSystem.name = this.gameSystem;
     return this.service.create(toSave);
   }
 

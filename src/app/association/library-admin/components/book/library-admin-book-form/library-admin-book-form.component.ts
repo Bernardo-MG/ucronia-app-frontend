@@ -43,10 +43,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.publisher = value.publisher.name;
   }
 
-  @Output() public selectGameSystem = new EventEmitter<string>();
-
-  @Output() public selectPublisher = new EventEmitter<string>();
-
   @Output() public goToBookTypePage = new EventEmitter<number>();
 
   @Output() public goToGameSystemPage = new EventEmitter<number>();
@@ -83,11 +79,23 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('bookType')?.setValue(data);
   }
 
+  public get publisher(): string {
+    return this.form.get('publisher')?.value;
+  }
+
+  public set publisher(data: string) {
+    this.form.get('publisher')?.setValue(data);
+  }
+
+  public get gameSystem(): string {
+    return this.form.get('gameSystem')?.value;
+  }
+
+  public set gameSystem(data: string) {
+    this.form.get('gameSystem')?.setValue(data);
+  }
+
   public selector = '';
-
-  public gameSystem = '';
-
-  public publisher = '';
 
   public languages: Language[] = [];
 
@@ -102,7 +110,9 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       language: ['', Validators.required],
       authors: [[]],
       donors: [[]],
-      bookType: ['']
+      bookType: [''],
+      publisher: [''],
+      gameSystem: ['']
     });
 
     this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
@@ -138,7 +148,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem.name;
     this.selector = '';
-    this.selectGameSystem.emit(this.gameSystem);
     this.pickCloseButton.nativeElement.click();
   }
 
@@ -153,7 +162,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public onSelectPublisher(publisher: Publisher) {
     this.publisher = publisher.name;
     this.selector = '';
-    this.selectPublisher.emit(this.publisher);
     this.pickCloseButton.nativeElement.click();
   }
 
