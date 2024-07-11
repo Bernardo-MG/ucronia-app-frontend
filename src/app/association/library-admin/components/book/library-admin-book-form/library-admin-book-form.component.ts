@@ -154,8 +154,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public onSelectAuthor(author: Author) {
     if (!this.authors.find(a => a.name === author.name)) {
       this.authors = this.authors.concat([author]);
-      this.selector = '';
     }
+    this.selector = '';
     this.pickCloseButton.nativeElement.click();
   }
 
@@ -168,8 +168,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   public onSelectDonor(donor: Person) {
     if (!this.donors.find(d => d.number === donor.number)) {
       this.donors.push(donor);
-      this.selector = '';
     }
+    this.selector = '';
     this.pickCloseButton.nativeElement.click();
   }
 
