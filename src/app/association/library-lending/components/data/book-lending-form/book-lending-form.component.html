@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Book</label>
     <div class="col-sm-9">
-      <input type="text" [value]="book" id="bookInput" [readonly]="true" [disabled]="!formEnabled"
+      <input type="text" [value]="bookName" id="bookInput" [readonly]="true" [disabled]="!formEnabled"
         class="form-control" aria-describedby="bookLabel">
     </div>
     <div class="col-sm-1">
@@ -17,7 +17,7 @@
   <div class="row mb-2">
     <label for="personInput" id="personLabel" class="col-sm-2 col-form-label">Person</label>
     <div class="col-sm-9">
-      <input type="text" [value]="person" id="personInput" [readonly]="true" [disabled]="!formEnabled"
+      <input type="text" [value]="personName" id="personInput" [readonly]="true" [disabled]="!formEnabled"
         class="form-control" aria-describedby="personLabel">
     </div>
     <div class="col-sm-1">

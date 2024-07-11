@@ -3,21 +3,21 @@ import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
+import { BookLent } from '@app/association/library/models/book-lent';
 import { Person } from '@app/association/library/models/person';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { BookLendingPersonSelectionComponent } from '../../book-lending-person-selection/book-lending-person-selection.component';
-import { BookLending } from '@app/association/library/models/book-lending';
 
 @Component({
   selector: 'assoc-book-lending-form',
   standalone: true,
-  imports: [ CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent, LibraryAdminBookSelectionComponent ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent, LibraryAdminBookSelectionComponent],
   templateUrl: './book-lending-form.component.html'
 })
-export class BookLendingFormComponent extends FormComponent<BookLending>  {
+export class BookLendingFormComponent extends FormComponent<BookLent> {
 
   @Input() public personPage = new PaginatedResponse<Person[]>([]);
 
@@ -29,11 +29,27 @@ export class BookLendingFormComponent extends FormComponent<BookLending>  {
 
   @ViewChild('pickCloseButton') pickCloseButton: any;
 
+  public get book(): number {
+    return this.form.get('book')?.value;
+  }
+
+  public set book(data: number) {
+    this.form.get('book')?.setValue(data);
+  }
+
+  public get person(): number {
+    return this.form.get('person')?.value;
+  }
+
+  public set person(data: number) {
+    this.form.get('person')?.setValue(data);
+  }
+
+  public bookName = '';
+
+  public personName = '';
+
   public selector = '';
-
-  public book = '';
-
-  public person = '';
 
   constructor(
     fb: FormBuilder
@@ -41,9 +57,9 @@ export class BookLendingFormComponent extends FormComponent<BookLending>  {
     super();
 
     this.form = fb.group({
-      number: ['', Validators.required],
-      member: ['', Validators.required],
-      lendingDate: [null, Validators.required]
+      lendingDate: [null, Validators.required],
+      person: [-1, Validators.required],
+      book: [-1, Validators.required]
     });
   }
 
@@ -56,12 +72,14 @@ export class BookLendingFormComponent extends FormComponent<BookLending>  {
   }
 
   public onSelectBook(book: Book) {
-    this.book = book.title;
+    this.bookName = book.title;
+    this.book = book.number;
     this.pickCloseButton.nativeElement.click();
   }
 
   public onSelectPerson(person: Person) {
-    this.person = person.name.fullName;
+    this.personName = person.name.fullName;
+    this.person = person.number;
     this.pickCloseButton.nativeElement.click();
   }
 
