@@ -1,4 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Lending date -->
+  <div class="row mb-2">
+    <label for="lendingDateInput" id="lendingDateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="month" id="lendingDateInput" formControlName="lendingDate" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('lendingDate') }" aria-describedby="lendingDateLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('lendingDate')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
   <!-- Book -->
   <div class="row mb-2">
     <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Book</label>
