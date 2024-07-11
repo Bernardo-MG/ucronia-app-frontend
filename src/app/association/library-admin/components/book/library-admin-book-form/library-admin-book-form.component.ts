@@ -43,14 +43,11 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.publisher = value.publisher.name;
     this.donors = value.donors.map(d => d.number);
     this.donorNames = value.donors.map(d => d.name.fullName);
-    this.authors = value.authors.map(a => a.name);
   }
 
   @Output() public selectBookType = new EventEmitter<string>();
 
   @Output() public selectGameSystem = new EventEmitter<string>();
-
-  @Output() public selectAuthor = new EventEmitter<string[]>();
 
   @Output() public selectPublisher = new EventEmitter<string>();
 
@@ -68,6 +65,14 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @ViewChild('pickCloseButton') pickCloseButton: any;
 
+  public get authors(): Author[] {
+    return this.form.get('authors')?.value;
+  }
+
+  public set authors(data: Author[]) {
+    this.form.get('authors')?.setValue(data);
+  }
+
   public selector = '';
 
   public bookType = '';
@@ -80,8 +85,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public donorNames: string[] = [];
 
-  public authors: string[] = [];
-
   public languages: Language[] = [];
 
   constructor(
@@ -92,7 +95,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form = fb.group({
       isbn: [''],
       title: ['', Validators.required],
-      language: ['', Validators.required]
+      language: ['', Validators.required],
+      authors: [[]]
     });
 
     this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
@@ -134,10 +138,9 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onSelectAuthor(author: Author) {
-    if (!this.authors.find(a => a === author.name)) {
-      this.authors.push(author.name);
+    if (!this.authors.find(a => a.name === author.name)) {
+      this.authors = this.authors.concat([author]);
       this.selector = '';
-      this.selectAuthor.emit(this.authors);
     }
     this.pickCloseButton.nativeElement.click();
   }
@@ -159,9 +162,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.pickCloseButton.nativeElement.click();
   }
 
-  public onRemoveAuthor(author: string) {
-    this.authors = this.authors.filter(a => a !== author);
-    this.selectAuthor.emit(this.authors);
+  public onRemoveAuthor(author: Author) {
+    this.authors = this.authors.filter(a => a.name !== author.name);
   }
 
   public onRemoveDonor(donor: number) {

@@ -11,13 +11,12 @@
           <ng-container *ngSwitchCase="true">
             <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
               [readonly]="!formEnabled" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
-              [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" [cancellable]="true" (save)="onSave($event)"
-              (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+              [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" [cancellable]="true"
+              (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
               (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
               (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)"
               (selectBookType)="onSelectBookType($event)" (selectGameSystem)="onSelectGameSystem($event)"
-              (selectAuthor)="onSelectAuthor($event)" (selectPublisher)="onSelectPublisher($event)"
-              (selectDonor)="onSelectDonor($event)">
+              (selectPublisher)="onSelectPublisher($event)" (selectDonor)="onSelectDonor($event)">
             </assoc-library-admin-book-form>
           </ng-container>
           <!-- Info -->

@@ -52,8 +52,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public gameSystem = '';
 
-  public authors: string[] = [];
-
   public publisher = '';
 
   public donors: number[] = [];
@@ -65,7 +63,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    private authContainer: AuthContainer,
     rt: Router
   ) {
     super(rt);
@@ -173,10 +170,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.gameSystem = gameSystem;
   }
 
-  public onSelectAuthor(authors: string[]) {
-    this.authors = authors;
-  }
-
   public onSelectPublisher(publisher: string) {
     this.publisher = publisher;
   }
@@ -196,11 +189,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
       const donor = new Person();
       donor.number = d;
       return donor;
-    });
-    toSave.authors = this.authors.map(a => {
-      const author = new Author();
-      author.name = a;
-      return author;
     });
     return this.service.create(toSave);
   }

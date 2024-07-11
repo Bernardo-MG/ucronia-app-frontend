@@ -110,7 +110,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     toSave.bookType = this.relationships.bookType;
     toSave.gameSystem = this.relationships.gameSystem;
     toSave.donors = this.relationships.donors;
-    toSave.authors = this.relationships.authors;
     return this.service.update(this.data.number, toSave);
   }
 
@@ -207,14 +206,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onSelectGameSystem(gameSystem: string) {
     this.relationships.gameSystem = new GameSystem();
     this.relationships.gameSystem.name = gameSystem;
-  }
-
-  public onSelectAuthor(authors: string[]) {
-    this.relationships.authors = authors.map(a => {
-      const author = new Author();
-      author.name = a;
-      return author;
-    });
   }
 
   public onSelectPublisher(publisher: string) {
