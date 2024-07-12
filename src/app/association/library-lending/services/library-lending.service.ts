@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
+import { Active } from '@app/association/members/models/active';
 import { Member } from '@app/association/members/models/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
@@ -35,10 +36,11 @@ export class LibraryLendingService {
     return this.getBookClient().query(query).read();
   }
 
-  public getMembers(page: number): Observable<PaginatedResponse<Member[]>> {
+  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
-    query.pagination = { page };
+    query.sort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
+    query.page = page;
+    query.addParameter('status', active.toString().toUpperCase());
 
     return this.getMemberClient()
       .query(query)

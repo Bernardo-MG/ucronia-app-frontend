@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LibraryBookLendingComponent } from '@app/association/library-lending/components/views/library-book-lending/library-book-lending.component';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { Book } from '../../../models/book';
@@ -10,10 +13,12 @@ import { LibraryBookInfoComponent } from '../library-book-info/library-book-info
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, LibraryBookInfoComponent],
+  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {
+
+  public lendPermission = false;
 
   /**
    * Reading flag. Active while the data is being read.
@@ -26,10 +31,14 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: BookService
+    private service: BookService,
+    private authContainer: AuthContainer
   ) {}
 
   public ngOnInit(): void {
+    // Check permissions
+    this.lendPermission = this.authContainer.hasPermission("library_lending", "update");
+
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('index');

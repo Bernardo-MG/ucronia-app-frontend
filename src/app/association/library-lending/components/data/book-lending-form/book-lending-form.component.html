@@ -65,9 +65,6 @@
         </ng-template>
         <!-- Select person -->
         <ng-template [ngIf]="selector === 'person'">
-          <assoc-book-lending-person-selection [values]="personPage.content" [current]="personPage.page + 1"
-            [pages]="personPage.totalPages" (choose)="onSelectPerson($event)"
-            (goToPage)="onGoToPersonPage($event)"></assoc-book-lending-person-selection>
         </ng-template>
       </div>
       <div class="modal-footer">

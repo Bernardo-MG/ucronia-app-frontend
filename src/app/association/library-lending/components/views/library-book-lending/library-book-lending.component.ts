@@ -1,29 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LibraryLendingService } from '@app/association/library-lending/services/library-lending.service';
+import { BookLent } from '@app/association/library/models/book-lent';
 import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
+import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
 import { Observable } from 'rxjs';
-import { Member } from '../../../../members/models/member';
-import { FeePayment } from '../../../models/fee-payment';
-import { FeePaymentMember } from '../../../models/fee-payment-member';
-import { FeeService } from '../../../services/fee.service';
-import { FeeMemberSelectionComponent } from '../../data/fee-member-selection/fee-member-selection.component';
-import { FeePayFormComponent } from '../../pay/fee-pay-form/fee-pay-form.component';
 
 @Component({
-  selector: 'assoc-fee-create',
+  selector: 'assoc-library-book-lending',
   standalone: true,
-  imports: [CommonModule, IconsModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingOverlayComponent, MemberStatusSelectComponent],
-  templateUrl: './fee-pay.component.html'
+  imports: [CommonModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent],
+  templateUrl: './library-book-lending.component.html'
 })
-export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
+export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {
+
+  public filled_bar = 0;
 
   public readingMembers = false;
 
@@ -37,10 +35,8 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public activeFilter = Active.Active;
 
-  public filled_bar = 0;
-
   constructor(
-    private service: FeeService,
+    private service: LibraryLendingService,
     private authContainer: AuthContainer,
     rt: Router
   ) {
@@ -49,7 +45,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public ngOnInit(): void {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("fee", "create");
+    this.createPermission = this.authContainer.hasPermission("library_lending", "create");
     this.onGoToMembersPage(0);
   }
 
@@ -58,14 +54,11 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
     this.onGoToMembersPage(0);
   }
 
-  protected override save(toSave: FeePayment): Observable<FeePayment> {
-    toSave.member = new FeePaymentMember();
-    toSave.member.number = this.member.number;
-    return this.service.pay(toSave);
+  protected override save(toSave: BookLent): Observable<BookLent> {
+    return this.service.lend(toSave);
   }
-
-  protected override getReturnRoute(saved: FeePayment): string {
-    return '/fees';
+  protected override getReturnRoute(saved: BookLent): string {
+    return '';
   }
 
   public onGoToMembersPage(page: number) {
@@ -83,11 +76,6 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
         this.readingMembers = false;
       }
     });
-  }
-
-  public onReturnToMembers() {
-    this.selectedMember = false;
-    this.filled_bar = 0;
   }
 
   public onSelectMember(member: Member) {

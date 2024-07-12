@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Member } from '@app/association/members/models/member';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { Member } from '../../../../members/models/member';
 
 @Component({
-  selector: 'assoc-fee-member-selection',
+  selector: 'assoc-book-lending-member-selection',
   standalone: true,
   imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent],
-  templateUrl: './fee-member-selection.component.html'
+  templateUrl: './book-lending-member-selection.component.html'
 })
-export class FeeMemberSelectionComponent {
+export class BookLendingMemberSelectionComponent {
 
   @Input() public waiting = false;
 

@@ -9,6 +9,7 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
 import { BookLendingFormComponent } from '../../data/book-lending-form/book-lending-form.component';
+import { Active } from '@app/association/members/models/active';
 
 @Component({
   selector: 'assoc-library-lend-frontpage',
@@ -59,7 +60,7 @@ export class LibraryLendingFrontpageComponent extends CreateComponent<BookLent> 
   public onGoToMemberPage(page: number) {
     this.readingMembers = true;
     // TODO: The page correction should be done automatically
-    this.lendingService.getMembers(page).subscribe({
+    this.lendingService.getMembers(page, Active.Active).subscribe({
       next: response => {
         this.memberPage = response;
 

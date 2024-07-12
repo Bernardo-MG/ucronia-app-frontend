@@ -20,7 +20,10 @@ export abstract class CreateComponent<Data> {
     this.saving = true;
     this.save(data).subscribe({
       next: response => {
-        this.router.navigate([this.getReturnRoute(response)]);
+        const route = this.getReturnRoute(response);
+        if (route) {
+          this.router.navigate([route]);
+        }
         this.failures.clear();
 
         // Reactivate component
@@ -44,7 +47,7 @@ export abstract class CreateComponent<Data> {
   }
 
   protected abstract save(toSave: Data): Observable<Data>;
-  
+
   protected abstract getReturnRoute(saved: Data): string;
 
 }

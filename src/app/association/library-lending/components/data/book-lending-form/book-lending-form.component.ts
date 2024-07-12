@@ -9,12 +9,12 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { BookLendingPersonSelectionComponent } from '../../book-lending-person-selection/book-lending-person-selection.component';
+import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-book-lending-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingPersonSelectionComponent, LibraryAdminBookSelectionComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingMemberSelectionComponent, LibraryAdminBookSelectionComponent],
   templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<BookLent> {

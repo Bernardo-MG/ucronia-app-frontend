@@ -1,0 +1,26 @@
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-label="Book lending step" [style]="'width: ' + filled_bar + '%'"
+    [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
+  <ng-container [ngSwitch]="selectedMember">
+    <ng-container *ngSwitchCase="false">
+      <layout-waiting-overlay [waiting]="readingMembers">
+        <div class="row mb-2">
+          <div class="col-2">Pick member</div>
+          <div class="col-4 offset-6 d-flex">
+            <div class="me-2">
+              Status:
+            </div>
+            <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+          </div>
+        </div>
+        <assoc-book-lending-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
+          [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
+          (goToPage)="onGoToMembersPage($event)">
+        </assoc-book-lending-member-selection>
+      </layout-waiting-overlay>
+    </ng-container>
+    <ng-container *ngSwitchCase="true">
+      <!-- Form -->
+    </ng-container>
+  </ng-container>
+</div>
