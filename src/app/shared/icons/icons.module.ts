@@ -25,6 +25,8 @@ import { IconSettingsComponent } from './components/icon-settings/icon-settings.
 import { IconShieldComponent } from './components/icon-shield/icon-shield.component';
 import { IconSuccessComponent } from './components/icon-success/icon-success.component';
 import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
+import { IconTakeInComponent } from './components/icon-take-in/icon-take-in.component';
+import { IconTakeOutComponent } from './components/icon-take-out/icon-take-out.component';
 
 
 
@@ -53,7 +55,9 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconBookComponent,
     IconShieldComponent,
     IconCalendarComponent,
-    IconMailComponent
+    IconMailComponent,
+    IconTakeInComponent,
+    IconTakeOutComponent
   ],
   imports: [
     CommonModule,
@@ -83,7 +87,9 @@ import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.com
     IconBookComponent,
     IconShieldComponent,
     IconCalendarComponent,
-    IconMailComponent
+    IconMailComponent,
+    IconTakeInComponent,
+    IconTakeOutComponent
   ]
 })
 export class IconsModule { }
