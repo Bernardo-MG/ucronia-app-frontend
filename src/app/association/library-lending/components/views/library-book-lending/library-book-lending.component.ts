@@ -9,14 +9,15 @@ import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
 import { Observable } from 'rxjs';
+import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-book-lending',
   standalone: true,
-  imports: [CommonModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent],
   templateUrl: './library-book-lending.component.html'
 })
 export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {
@@ -76,6 +77,11 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
         this.readingMembers = false;
       }
     });
+  }
+
+  public onReturnToMembers() {
+    this.selectedMember = false;
+    this.filled_bar = 0;
   }
 
   public onSelectMember(member: Member) {
