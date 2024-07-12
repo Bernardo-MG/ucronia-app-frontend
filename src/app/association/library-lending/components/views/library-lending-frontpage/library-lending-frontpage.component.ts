@@ -87,7 +87,7 @@ export class LibraryLendingFrontpageComponent extends InfoEditorStatusComponent<
   }
 
   protected override save(toSave: BookLent): Observable<BookLent> {
-    throw new Error('Method not implemented.');
+    return this.lendingService.lend(toSave);
   }
 
 }
