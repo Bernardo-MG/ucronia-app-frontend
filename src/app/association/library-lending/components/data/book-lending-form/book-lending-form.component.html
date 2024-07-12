@@ -10,32 +10,12 @@
       </div>
     </div>
   </div>
-  <!-- Book -->
+  <!-- Member -->
   <div class="row mb-2">
-    <label for="bookInput" id="bookLabel" class="col-sm-2 col-form-label">Book</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="bookName" id="bookInput" [readonly]="true" [disabled]="!formEnabled"
-        class="form-control" aria-describedby="bookLabel">
-    </div>
-    <div class="col-sm-1">
-      <button (click)="onShowBookSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Pick book" data-bs-toggle="modal" data-bs-target="#pickModal">
-        <icon-search></icon-search>
-      </button>
-    </div>
-  </div>
-  <!-- Person -->
-  <div class="row mb-2">
-    <label for="personInput" id="personLabel" class="col-sm-2 col-form-label">Person</label>
-    <div class="col-sm-9">
-      <input type="text" [value]="personName" id="personInput" [readonly]="true" [disabled]="!formEnabled"
-        class="form-control" aria-describedby="personLabel">
-    </div>
-    <div class="col-sm-1">
-      <button (click)="onShowPersonSelection()" type="button" class="btn btn-link link-dark" role="button"
-        aria-label="Pick person" data-bs-toggle="modal" data-bs-target="#pickModal">
-        <icon-search></icon-search>
-      </button>
+    <label for="memberNameInput" class="col-sm-2 col-form-label">Member</label>
+    <div class="col-sm-10">
+      <input type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"
+        aria-describedby="memberNameLabel">
     </div>
   </div>
 
@@ -48,28 +28,3 @@
     </div>
   </div>
 </form>
-
-<div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="pickModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Select book -->
-        <ng-template [ngIf]="selector === 'book'">
-          <assoc-library-admin-book-selection [values]="bookPage.content" [current]="bookPage.page + 1"
-          [pages]="bookPage.totalPages" (choose)="onSelectBook($event)"
-          (goToPage)="onGoToBookPage($event)"></assoc-library-admin-book-selection>
-        </ng-template>
-        <!-- Select person -->
-        <ng-template [ngIf]="selector === 'person'">
-        </ng-template>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

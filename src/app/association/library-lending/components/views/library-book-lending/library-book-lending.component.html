@@ -23,5 +23,8 @@
     <!-- Form -->
     <button type="button" class="page-link" aria-label="Return"
       (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
+    <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
+      (save)="onSave($event)">
+    </assoc-book-lending-form>
   </ng-container>
 </ng-container>

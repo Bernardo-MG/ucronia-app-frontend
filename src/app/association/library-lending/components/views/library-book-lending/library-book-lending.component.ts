@@ -13,11 +13,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { Observable } from 'rxjs';
 import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
+import { BookLendingFormComponent } from '../../data/book-lending-form/book-lending-form.component';
 
 @Component({
   selector: 'assoc-library-book-lending',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent],
   templateUrl: './library-book-lending.component.html'
 })
 export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {

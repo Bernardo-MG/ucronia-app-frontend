@@ -2,8 +2,8 @@
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
-        <assoc-book-lending-form [waiting]="saving" [failures]="failures" [cancellable]="true" [bookPage]="bookPage"
-          [personPage]="memberPage" (save)="onSave($event)" (goToBookPage)="onGoToBookPage($event)"
+        <assoc-book-lending-form [waiting]="saving" [failures]="failures" [cancellable]="true"
+           (save)="onSave($event)" (goToBookPage)="onGoToBookPage($event)"
           (goToPersonPage)="onGoToMemberPage($event)"></assoc-book-lending-form>
       </div>
     </div>

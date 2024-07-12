@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
 import { Person } from '@app/association/library/models/person';
+import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -19,37 +20,11 @@ import { BookLendingMemberSelectionComponent } from '../../book-lending-member-s
 })
 export class BookLendingFormComponent extends FormComponent<BookLent> {
 
-  @Input() public personPage = new PaginatedResponse<Person[]>([]);
-
-  @Input() public bookPage = new PaginatedResponse<Book[]>([]);
+  @Input() public member = new Member();
 
   @Output() public goToPersonPage = new EventEmitter<number>();
 
   @Output() public goToBookPage = new EventEmitter<number>();
-
-  @ViewChild('pickCloseButton') pickCloseButton: any;
-
-  public get book(): number {
-    return this.form.get('book')?.value;
-  }
-
-  public set book(data: number) {
-    this.form.get('book')?.setValue(data);
-  }
-
-  public get person(): number {
-    return this.form.get('person')?.value;
-  }
-
-  public set person(data: number) {
-    this.form.get('person')?.setValue(data);
-  }
-
-  public bookName = '';
-
-  public personName = '';
-
-  public selector = '';
 
   constructor(
     fb: FormBuilder
@@ -61,26 +36,6 @@ export class BookLendingFormComponent extends FormComponent<BookLent> {
       person: [-1, Validators.required],
       book: [-1, Validators.required]
     });
-  }
-
-  public onShowBookSelection() {
-    this.selector = 'book';
-  }
-
-  public onShowPersonSelection() {
-    this.selector = 'person';
-  }
-
-  public onSelectBook(book: Book) {
-    this.bookName = book.title;
-    this.book = book.number;
-    this.pickCloseButton.nativeElement.click();
-  }
-
-  public onSelectPerson(person: Person) {
-    this.personName = person.name.fullName;
-    this.person = person.number;
-    this.pickCloseButton.nativeElement.click();
   }
 
   public onGoToBookPage(page: number) {
