@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LibraryLendingService } from '@app/association/library-lending/services/library-lending.service';
+import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
 import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
@@ -22,6 +23,8 @@ import { BookLendingFormComponent } from '../../data/book-lending-form/book-lend
   templateUrl: './library-book-lending.component.html'
 })
 export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {
+
+  @Input() public book = new Book();
 
   public filled_bar = 0;
 

@@ -1,16 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
-import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
-import { Person } from '@app/association/library/models/person';
 import { Member } from '@app/association/members/models/member';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
+import { Book } from '@app/association/library/models/book';
 
 @Component({
   selector: 'assoc-book-lending-form',
@@ -18,9 +16,11 @@ import { BookLendingMemberSelectionComponent } from '../../book-lending-member-s
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingMemberSelectionComponent, LibraryAdminBookSelectionComponent],
   templateUrl: './book-lending-form.component.html'
 })
-export class BookLendingFormComponent extends FormComponent<BookLent> {
+export class BookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {
 
   @Input() public member = new Member();
+
+  @Input() public book = new Book();
 
   @Output() public goToPersonPage = new EventEmitter<number>();
 
@@ -36,6 +36,15 @@ export class BookLendingFormComponent extends FormComponent<BookLent> {
       person: [-1, Validators.required],
       book: [-1, Validators.required]
     });
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['member']) {
+      this.form.get('person')?.setValue(this.member.number);
+    }
+    if (changes['book']) {
+      this.form.get('book')?.setValue(this.book.number);
+    }
   }
 
   public onGoToBookPage(page: number) {

@@ -3,7 +3,8 @@
     <div class="card">
       <div class="card-body">
         <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-          [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal" data-bs-target="#lendModal">
+          [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
+          data-bs-target="#lendModal">
           <icon-take-out></icon-take-out>Lend
         </button>
         <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
@@ -20,7 +21,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <assoc-library-book-lending></assoc-library-book-lending>
+        <assoc-library-book-lending [book]="data"></assoc-library-book-lending>
       </div>
       <div class="modal-footer">
         <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
