@@ -3,13 +3,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '../icons/icons.module';
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
-import { FormComponent } from './components/form/form.component';
 
 
 
 @NgModule({
   declarations: [
-    FormComponent,
     EditorHeaderComponent
   ],
   imports: [
@@ -19,7 +17,6 @@ import { FormComponent } from './components/form/form.component';
     IconsModule
   ],
   exports: [
-    FormComponent,
     EditorHeaderComponent
   ]
 })

@@ -5,7 +5,6 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
-import { Donor } from '@app/association/library/models/donor';
 import { GameSystem } from '@app/association/library/models/game-system';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -19,6 +18,7 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
+import { Person } from '@app/association/library/models/person';
 
 @Component({
   selector: 'assoc-library-admin-book-create',
@@ -46,17 +46,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  public donorPage = new PaginatedResponse<Donor[]>([]);
-
-  public bookType = '';
-
-  public gameSystem = '';
-
-  public authors: string[] = [];
-
-  public publisher = '';
-
-  public donors: number[] = [];
+  public donorPage = new PaginatedResponse<Person[]>([]);
 
   constructor(
     private service: BookAdminService,
@@ -65,7 +55,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    private authContainer: AuthContainer,
     rt: Router
   ) {
     super(rt);
@@ -165,43 +154,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     });
   }
 
-  public onSelectBookType(bookType: string) {
-    this.bookType = bookType;
-  }
-
-  public onSelectGameSystem(gameSystem: string) {
-    this.gameSystem = gameSystem;
-  }
-
-  public onSelectAuthor(authors: string[]) {
-    this.authors = authors;
-  }
-
-  public onSelectPublisher(publisher: string) {
-    this.publisher = publisher;
-  }
-
-  public onSelectDonor(donors: number[]) {
-    this.donors = donors;
-  }
-
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = new Publisher();
-    toSave.publisher.name = this.publisher;
-    toSave.bookType = new BookType();
-    toSave.bookType.name = this.bookType;
-    toSave.gameSystem = new GameSystem();
-    toSave.gameSystem.name = this.gameSystem;
-    toSave.donors = this.donors.map(d => {
-      const donor = new Donor();
-      donor.number = d;
-      return donor;
-    });
-    toSave.authors = this.authors.map(a => {
-      const author = new Author();
-      author.name = a;
-      return author;
-    });
     return this.service.create(toSave);
   }
 

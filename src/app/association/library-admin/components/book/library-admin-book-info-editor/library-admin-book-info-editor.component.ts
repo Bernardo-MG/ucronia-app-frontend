@@ -5,8 +5,8 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
-import { Donor } from '@app/association/library/models/donor';
 import { GameSystem } from '@app/association/library/models/game-system';
+import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -50,9 +50,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  public donorPage = new PaginatedResponse<Donor[]>([]);
-
-  public relationships = new Book();
+  public donorPage = new PaginatedResponse<Person[]>([]);
 
   constructor(
     private route: ActivatedRoute,
@@ -90,11 +88,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToDonorPage(0);
   }
 
-  protected override onLoad(data: Book): void {
-    super.onLoad(data);
-    this.relationships = data;
-  }
-
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['/library/admin']);
@@ -106,11 +99,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   protected override save(toSave: Book): Observable<Book> {
-    toSave.publisher = this.relationships.publisher;
-    toSave.bookType = this.relationships.bookType;
-    toSave.gameSystem = this.relationships.gameSystem;
-    toSave.donors = this.relationships.donors;
-    toSave.authors = this.relationships.authors;
     return this.service.update(this.data.number, toSave);
   }
 
@@ -196,37 +184,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
         // Reactivate view
         this.readingDonors = false;
       }
-    });
-  }
-
-  public onSelectBookType(bookType: string) {
-    this.relationships.bookType = new BookType();
-    this.relationships.bookType.name = bookType;
-  }
-
-  public onSelectGameSystem(gameSystem: string) {
-    this.relationships.gameSystem = new GameSystem();
-    this.relationships.gameSystem.name = gameSystem;
-  }
-
-  public onSelectAuthor(authors: string[]) {
-    this.relationships.authors = authors.map(a => {
-      const author = new Author();
-      author.name = a;
-      return author;
-    });
-  }
-
-  public onSelectPublisher(publisher: string) {
-    this.relationships.publisher = new Publisher();
-    this.relationships.publisher.name = publisher;
-  }
-
-  public onSelectDonor(donors: number[]) {
-    this.relationships.donors = donors.map(d => {
-      const donor = new Donor();
-      donor.number = d;
-      return donor;
     });
   }
 

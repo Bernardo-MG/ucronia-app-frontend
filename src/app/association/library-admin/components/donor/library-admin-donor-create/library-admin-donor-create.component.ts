@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/libr
   imports: [LibraryAdminDonorFormComponent, ArticleComponent],
   templateUrl: './library-admin-donor-create.component.html'
 })
-export class LibraryAdminDonorCreateComponent extends CreateComponent<Donor> {
+export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {
 
   constructor(
     private service: DonorAdminService,
@@ -22,11 +22,11 @@ export class LibraryAdminDonorCreateComponent extends CreateComponent<Donor> {
     super(rt);
   }
 
-  protected override save(toSave: Donor): Observable<Donor> {
+  protected override save(toSave: Person): Observable<Person> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: Donor): string {
+  protected override getReturnRoute(saved: Person): string {
     return '/library/admin';
   }
 }

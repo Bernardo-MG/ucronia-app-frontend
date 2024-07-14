@@ -12,7 +12,6 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { Observable } from 'rxjs';
 import { Member } from '../../../../members/models/member';
 import { FeePayment } from '../../../models/fee-payment';
-import { FeePaymentMember } from '../../../models/fee-payment-member';
 import { FeeService } from '../../../services/fee.service';
 import { FeeMemberSelectionComponent } from '../../data/fee-member-selection/fee-member-selection.component';
 import { FeePayFormComponent } from '../../pay/fee-pay-form/fee-pay-form.component';
@@ -59,8 +58,6 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   }
 
   protected override save(toSave: FeePayment): Observable<FeePayment> {
-    toSave.member = new FeePaymentMember();
-    toSave.member.number = this.member.number;
     return this.service.pay(toSave);
   }
 
@@ -84,7 +81,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
       }
     });
   }
-  
+
   public onReturnToMembers() {
     this.selectedMember = false;
     this.filled_bar = 0;
