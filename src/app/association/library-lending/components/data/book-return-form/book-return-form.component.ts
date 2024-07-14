@@ -9,6 +9,8 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { BookLendingMemberSelectionComponent } from '../../book-lending-member-selection/book-lending-member-selection.component';
+import { Person } from '@app/association/library/models/person';
+import { BookReturned } from '@app/association/library/models/book-returned';
 
 @Component({
   selector: 'assoc-book-return-form',
@@ -16,9 +18,9 @@ import { BookLendingMemberSelectionComponent } from '../../book-lending-member-s
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingMemberSelectionComponent, LibraryAdminBookSelectionComponent],
   templateUrl: './book-return-form.component.html'
 })
-export class BookReturnFormComponent extends FormComponent<BookLent> implements OnChanges {
+export class BookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
 
-  @Input() public member = new Member();
+  @Input() public person = new Person();
 
   @Input() public book = new Book();
 
@@ -39,8 +41,8 @@ export class BookReturnFormComponent extends FormComponent<BookLent> implements 
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['member']) {
-      this.form.get('person')?.setValue(this.member.number);
+    if (changes['person']) {
+      this.form.get('person')?.setValue(this.person.number);
     }
     if (changes['book']) {
       this.form.get('book')?.setValue(this.book.number);

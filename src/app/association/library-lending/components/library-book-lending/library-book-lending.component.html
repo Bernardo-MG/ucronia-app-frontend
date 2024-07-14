@@ -4,6 +4,7 @@
 </div>
 <ng-container [ngSwitch]="selectedMember">
   <ng-container *ngSwitchCase="false">
+    <!-- Select member -->
     <layout-waiting-overlay [waiting]="readingMembers">
       <div class="row mb-2">
         <div class="col-2">Pick member</div>
@@ -20,7 +21,7 @@
     </layout-waiting-overlay>
   </ng-container>
   <ng-container *ngSwitchCase="true">
-    <!-- Form -->
+    <!-- Lend book form -->
     <button type="button" class="page-link" aria-label="Return"
       (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
     <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"

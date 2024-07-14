@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
+import { BookReturned } from '@app/association/library/models/book-returned';
 import { Active } from '@app/association/members/models/active';
 import { Member } from '@app/association/members/models/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
@@ -25,6 +26,11 @@ export class LibraryLendingService {
 
   public lend(data: BookLent): Observable<BookLent> {
     return this.getLendClient().create<SimpleResponse<BookLent>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public return(data: BookReturned): Observable<BookReturned> {
+    return this.getLendClient().update<SimpleResponse<BookReturned>>(data)
       .pipe(map(r => r.content));
   }
 
