@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
@@ -18,7 +18,7 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 })
 export class LibraryAdminDonorListComponent {
   
-  public page = new PaginatedResponse<Donor[]>([]);
+  public page = new PaginatedResponse<Person[]>([]);
 
   /**
    * Loading flag.

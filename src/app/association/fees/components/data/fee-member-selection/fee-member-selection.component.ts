@@ -5,7 +5,7 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { Member } from '../../../../members/models/member';
 
 @Component({
-  selector: 'assoc-member-selection',
+  selector: 'assoc-fee-member-selection',
   standalone: true,
   imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent],
   templateUrl: './fee-member-selection.component.html'

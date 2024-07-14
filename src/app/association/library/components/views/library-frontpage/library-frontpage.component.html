@@ -1,13 +1,13 @@
 <layout-article title="Library">
-  <!-- Books list -->
-  <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
-    [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
-    <icon-settings></icon-settings>
-  </button>
-  <div class="card">
+  <div class="card mb-1">
     <div class="card-body">
-      <h2>Books</h2>
-      <assoc-library-book-list-widget></assoc-library-book-list-widget>
+      <!-- Books menu -->
+      <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
+        [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
+        <icon-settings></icon-settings> Admin
+      </button>
     </div>
   </div>
+  <!-- Books list -->
+  <assoc-library-book-list-widget></assoc-library-book-list-widget>
 </layout-article>

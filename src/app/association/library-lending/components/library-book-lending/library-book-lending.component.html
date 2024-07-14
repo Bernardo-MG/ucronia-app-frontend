@@ -1,0 +1,31 @@
+<div class="progress mb-2">
+  <div class="progress-bar" role="progressbar" aria-label="Fee payment step" [style]="'width: ' + filled_bar + '%'"
+    [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+<ng-container [ngSwitch]="selectedMember">
+  <ng-container *ngSwitchCase="false">
+    <!-- Select member -->
+    <layout-waiting-overlay [waiting]="readingMembers">
+      <div class="row mb-2">
+        <div class="col-2">Pick member</div>
+        <div class="col-4 offset-6 d-flex">
+          <div class="me-2">
+            Status:
+          </div>
+          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+        </div>
+      </div>
+      <assoc-book-lending-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
+        [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)" (goToPage)="onGoToMembersPage($event)">
+      </assoc-book-lending-member-selection>
+    </layout-waiting-overlay>
+  </ng-container>
+  <ng-container *ngSwitchCase="true">
+    <!-- Lend book form -->
+    <button type="button" class="page-link" aria-label="Return"
+      (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
+    <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
+      [book]="book" (save)="onSave($event)">
+    </assoc-book-lending-form>
+  </ng-container>
+</ng-container>

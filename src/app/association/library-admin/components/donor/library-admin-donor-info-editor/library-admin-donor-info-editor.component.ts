@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
-import { Donor } from '@app/association/library/models/donor';
+import { Person } from '@app/association/library/models/person';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -17,7 +17,7 @@ import { LibraryAdminDonorInfoComponent } from '../library-admin-donor-info/libr
   imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, LibraryAdminDonorInfoComponent, ArticleComponent],
   templateUrl: './library-admin-donor-info-editor.component.html'
 })
-export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Donor> implements OnInit {
+export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {
 
   private number = -1;
 
@@ -27,7 +27,7 @@ export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusCompon
     private service: DonorAdminService,
     private authContainer: AuthContainer
   ) {
-    super(new Donor());
+    super(new Person());
   }
 
   public ngOnInit(): void {
@@ -51,11 +51,11 @@ export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusCompon
     });
   }
 
-  protected override read(): Observable<Donor> {
+  protected override read(): Observable<Person> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: Donor): Observable<Donor> {
+  protected override save(toSave: Person): Observable<Person> {
     return this.service.update(this.data.number, toSave);
   }
 

@@ -1,0 +1,30 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Lending date -->
+  <div class="row mb-2">
+    <label for="lendingDateInput" id="lendingDateLabel" class="col-sm-2 col-form-label">Date</label>
+    <div class="col-sm-10">
+      <input type="date" id="lendingDateInput" formControlName="lendingDate" class="form-control"
+        [ngClass]="{ 'is-invalid': isFieldInvalid('lendingDate') }" aria-describedby="lendingDateLabel">
+      <div class="invalid-feedback" *ngFor="let failure of getFailures('lendingDate')">
+        {{failure.message}}
+      </div>
+    </div>
+  </div>
+  <!-- Member -->
+  <div class="row mb-2">
+    <label for="memberNameInput" class="col-sm-2 col-form-label">Member</label>
+    <div class="col-sm-10">
+      <input type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"
+        aria-describedby="memberNameLabel">
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
+        (action)="onSave()">Save</layout-waiting-button>
+    </div>
+  </div>
+</form>
