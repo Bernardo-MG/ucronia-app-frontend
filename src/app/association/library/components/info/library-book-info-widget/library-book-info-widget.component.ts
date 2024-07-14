@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LibraryBookLendingComponent } from '@app/association/library-lending/components/views/library-book-lending/library-book-lending.component';
+import { LibraryBookLendingComponent } from '@app/association/library-lending/components/library-book-lending/library-book-lending.component';
+import { LibraryBookReturnComponent } from '@app/association/library-lending/components/library-book-return/library-book-return.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -14,7 +15,7 @@ import { LibraryBookLendingsComponent } from '../library-book-lendings/library-b
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent],
+  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {

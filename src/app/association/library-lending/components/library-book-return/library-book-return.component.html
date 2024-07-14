@@ -1,0 +1,6 @@
+<!-- Form -->
+<button type="button" class="page-link" aria-label="Return"
+  (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
+<assoc-book-return-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
+  [book]="book" (save)="onSave($event)">
+</assoc-book-return-form>
