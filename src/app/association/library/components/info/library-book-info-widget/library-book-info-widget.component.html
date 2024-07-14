@@ -1,5 +1,5 @@
 <layout-article title="Book info">
-  <div class="col-md-6 offset-md-3">
+  <div class="col-md-6 offset-md-3 pb-2">
     <div class="card">
       <div class="card-body">
         <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
@@ -8,6 +8,13 @@
           <icon-take-out></icon-take-out>Lend
         </button>
         <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 offset-md-3">
+    <div class="card">
+      <div class="card-body">
+        <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
       </div>
     </div>
   </div>

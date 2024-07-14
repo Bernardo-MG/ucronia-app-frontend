@@ -9,11 +9,12 @@ import { Observable } from 'rxjs';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
+import { LibraryBookLendingsComponent } from '../library-book-lendings/library-book-lendings.component';
 
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent],
+  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {
