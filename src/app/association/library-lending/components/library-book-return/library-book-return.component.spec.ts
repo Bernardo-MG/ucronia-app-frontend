@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryBookReturnComponent } from './library-book-return.component';
 
 describe('LibraryBookReturnComponent', () => {
@@ -8,7 +8,10 @@ describe('LibraryBookReturnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookReturnComponent]
+      imports: [
+        HttpClientTestingModule,
+        LibraryBookReturnComponent
+      ]
     })
     .compileComponents();
     
