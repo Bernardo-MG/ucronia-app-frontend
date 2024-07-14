@@ -57,10 +57,12 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
 
   public onCloseLend() {
     this.lendCloseButton.nativeElement.click();
+    this.load();
   }
 
   public onCloseReturn() {
     this.returnCloseButton.nativeElement.click();
+    this.load();
   }
 
   private load(): void {
