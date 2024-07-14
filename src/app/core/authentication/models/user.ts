@@ -6,5 +6,6 @@ export class User {
   email = '';
   enabled = false;
   passwordExpired = false;
+  locked = false;
   roles: Role[] = [];
 }

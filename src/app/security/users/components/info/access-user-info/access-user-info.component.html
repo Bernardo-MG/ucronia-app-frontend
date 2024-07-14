@@ -39,4 +39,12 @@
       <icon-failure *ngIf="!data.passwordExpired"></icon-failure>
     </div>
   </div>
+  <!-- Locked -->
+  <div class="row mb-2">
+    <label id="lockedLabel" class="col-sm-2 col-form-label">Locked</label>
+    <div class="col-sm-10">
+      <icon-success *ngIf="data.locked"></icon-success>
+      <icon-failure *ngIf="!data.locked"></icon-failure>
+    </div>
+  </div>
 </form>
