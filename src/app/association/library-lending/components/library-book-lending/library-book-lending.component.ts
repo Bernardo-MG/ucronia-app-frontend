@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { LibraryLendingService } from '@app/association/library-lending/services/library-lending.service';
 import { Book } from '@app/association/library/models/book';
@@ -25,6 +25,8 @@ import { BookLendingFormComponent } from '../data/book-lending-form/book-lending
 export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {
 
   @Input() public book = new Book();
+
+  @Output() public saved = new EventEmitter<void>();
 
   public filled_bar = 0;
 
@@ -59,13 +61,6 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
     this.onGoToMembersPage(0);
   }
 
-  protected override save(toSave: BookLent): Observable<BookLent> {
-    return this.service.lend(toSave);
-  }
-  protected override getReturnRoute(saved: BookLent): string {
-    return '';
-  }
-
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
     // TODO: The page correction should be done automatically
@@ -92,6 +87,19 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
     this.member = member;
     this.selectedMember = true;
     this.filled_bar = 50;
+  }
+
+  protected override save(toSave: BookLent): Observable<BookLent> {
+    return this.service.lend(toSave);
+  }
+
+  protected override getReturnRoute(saved: BookLent): string {
+    return '';
+  }
+
+  protected override handleSaveSuccess(response: BookLent) {
+    super.handleSaveSuccess(response);
+    this.saved.emit();
   }
 
 }

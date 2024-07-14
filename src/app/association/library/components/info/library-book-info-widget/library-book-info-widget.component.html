@@ -41,10 +41,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <assoc-library-book-lending [book]="data"></assoc-library-book-lending>
+        <assoc-library-book-lending [book]="data" (saved)="onCloseLend()"></assoc-library-book-lending>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #lendCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -58,10 +58,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <assoc-library-book-return [book]="data"></assoc-library-book-return>
+        <assoc-library-book-return [book]="data" (saved)="onCloseReturn()"></assoc-library-book-return>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #returnCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

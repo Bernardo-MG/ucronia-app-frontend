@@ -20,30 +20,38 @@ export abstract class CreateComponent<Data> {
     this.saving = true;
     this.save(data).subscribe({
       next: response => {
-        const route = this.getReturnRoute(response);
-        if (route) {
-          this.router.navigate([route]);
-        }
-        this.failures.clear();
-
-        // Reactivate component
-        this.saving = false;
+        this.handleSaveSuccess(response);
       },
       error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          // No failure response
-          // Just remove the failures
-          this.failures.clear();
-        }
-
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
+        return this.handleSaveFailure(error);
       }
     });
+  }
+
+  protected handleSaveSuccess(response: Data) {
+    const route = this.getReturnRoute(response);
+    if (route) {
+      this.router.navigate([route]);
+    }
+    this.failures.clear();
+
+    // Reactivate component
+    this.saving = false;
+  }
+
+  protected handleSaveFailure(error: any): Observable<never> {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      // No failure response
+      // Just remove the failures
+      this.failures.clear();
+    }
+
+    // Reactivate view
+    this.saving = false;
+
+    return throwError(() => error);
   }
 
   protected abstract save(toSave: Data): Observable<Data>;

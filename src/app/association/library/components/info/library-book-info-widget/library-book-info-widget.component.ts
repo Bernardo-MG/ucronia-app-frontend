@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LibraryBookLendingComponent } from '@app/association/library-lending/components/library-book-lending/library-book-lending.component';
 import { LibraryBookReturnComponent } from '@app/association/library-lending/components/library-book-return/library-book-return.component';
@@ -20,6 +20,10 @@ import { LibraryBookLendingsComponent } from '../library-book-lendings/library-b
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {
 
+  @ViewChild('lendCloseButton') lendCloseButton: any;
+
+  @ViewChild('returnCloseButton') returnCloseButton: any;
+
   public lendPermission = false;
 
   /**
@@ -35,7 +39,7 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
     private route: ActivatedRoute,
     private service: BookService,
     private authContainer: AuthContainer
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     // Check permissions
@@ -49,6 +53,14 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
       }
       this.load();
     });
+  }
+
+  public onCloseLend() {
+    this.lendCloseButton.nativeElement.click();
+  }
+
+  public onCloseReturn() {
+    this.returnCloseButton.nativeElement.click();
   }
 
   private load(): void {

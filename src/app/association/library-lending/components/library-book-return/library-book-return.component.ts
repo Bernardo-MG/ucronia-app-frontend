@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { LibraryLendingService } from '@app/association/library-lending/services/library-lending.service';
 import { Book } from '@app/association/library/models/book';
-import { BookLent } from '@app/association/library/models/book-lent';
+import { BookReturned } from '@app/association/library/models/book-returned';
+import { Person } from '@app/association/library/models/person';
 import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
-import { Active } from '@app/association/members/models/active';
-import { Member } from '@app/association/members/models/member';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -15,8 +13,6 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { Observable } from 'rxjs';
 import { BookLendingMemberSelectionComponent } from '../book-lending-member-selection/book-lending-member-selection.component';
 import { BookReturnFormComponent } from '../data/book-return-form/book-return-form.component';
-import { Person } from '@app/association/library/models/person';
-import { BookReturned } from '@app/association/library/models/book-returned';
 
 @Component({
   selector: 'assoc-library-book-return',
@@ -27,6 +23,8 @@ import { BookReturned } from '@app/association/library/models/book-returned';
 export class LibraryBookReturnComponent extends CreateComponent<BookReturned> implements OnInit, OnChanges {
 
   @Input() public book = new Book();
+
+  @Output() public saved = new EventEmitter<void>();
 
   public createPermission = false;
 
@@ -44,11 +42,11 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("library_lending", "create");
   }
-  
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['book']) {
-      if(this.book.lendings.length > 0) {
-        this.person = this.book.lendings[this.book.lendings.length-1].person;
+      if (this.book.lendings.length > 0) {
+        this.person = this.book.lendings[this.book.lendings.length - 1].person;
       } else {
         this.person = new Person();
       }
@@ -61,6 +59,11 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
 
   protected override getReturnRoute(saved: BookReturned): string {
     return '';
+  }
+
+  protected override handleSaveSuccess(response: BookReturned) {
+    super.handleSaveSuccess(response);
+    this.saved.emit();
   }
 
 }
