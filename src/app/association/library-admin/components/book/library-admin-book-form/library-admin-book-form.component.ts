@@ -40,7 +40,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.loadData(value);
     this.bookType = value.bookType.name;
     this.gameSystem = value.gameSystem.name;
-    this.publisher = value.publisher.name;
   }
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
@@ -63,6 +62,14 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('authors')?.setValue(data);
   }
 
+  public get publishers(): Author[] {
+    return this.form.get('publishers')?.value;
+  }
+
+  public set publishers(data: Author[]) {
+    this.form.get('publishers')?.setValue(data);
+  }
+
   public get donors(): Person[] {
     return this.form.get('donors')?.value;
   }
@@ -77,14 +84,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public set bookType(data: string) {
     this.form.get('bookType')?.setValue(data);
-  }
-
-  public get publisher(): string {
-    return this.form.get('publisher')?.value;
-  }
-
-  public set publisher(data: string) {
-    this.form.get('publisher')?.setValue(data);
   }
 
   public get gameSystem(): string {
@@ -111,7 +110,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       authors: [[]],
       donors: [[]],
       bookType: [''],
-      publisher: [''],
+      publishers: [[]],
       gameSystem: ['']
     });
 
@@ -160,7 +159,9 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onSelectPublisher(publisher: Publisher) {
-    this.publisher = publisher.name;
+    if (!this.publishers.find(p => p.name === publisher.name)) {
+      this.publishers = this.publishers.concat([publisher]);
+    }
     this.selector = '';
     this.pickCloseButton.nativeElement.click();
   }
@@ -179,6 +180,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onRemoveDonor(donor: Person) {
     this.donors = this.donors.filter(d => d.number !== donor.number);
+  }
+
+  public onRemovePublisher(publisher: Publisher) {
+    this.publishers = this.publishers.filter(d => d.name !== publisher.name);
   }
 
   public onGoToBookTypePage(page: number) {

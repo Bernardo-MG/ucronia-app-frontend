@@ -44,20 +44,6 @@
         </div>
       </div>
     </div>
-    <!-- Publisher -->
-    <div class="row mb-2">
-      <label for="publisherInput" id="publisherLabel" class="col-sm-2 col-form-label">Publisher</label>
-      <div class="col-sm-9">
-        <input type="text" [value]="publisher" id="publisherInput" [readonly]="true" [disabled]="!formEnabled"
-          class="form-control" aria-describedby="publisherLabel">
-      </div>
-      <div class="col-sm-1">
-        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Pick publisher" data-bs-toggle="modal" data-bs-target="#pickModal">
-          <icon-search></icon-search>
-        </button>
-      </div>
-    </div>
     <!-- Book type -->
     <div class="row mb-2">
       <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
@@ -86,6 +72,46 @@
         </button>
       </div>
     </div>
+    <!-- Publishers -->
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h2>Publishers</h2>
+      </div>
+      <div class="col-sm-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">
+              </th>
+              <th scope="col">
+                Publisher
+              </th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <ng-template ngFor let-publisher let-i="index" [ngForOf]="publishers">
+              <tr>
+                <td>
+                  <button (click)="onRemovePublisher(publisher)" type="button" class="btn btn-link link-dark"
+                    role="button" aria-label="Remove publisher">
+                    <icon-delete></icon-delete>
+                  </button>
+                </td>
+                <td>{{publisher.name}}</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-2 offset-md-5">
+        <div class="d-grid">
+          <button (click)="onShowPublisherSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+            data-bs-toggle="modal" data-bs-target="#pickModal">
+            <icon-add></icon-add>
+          </button>
+        </div>
+      </div>
+    </div>
     <!-- Donors -->
     <div class="row mb-2">
       <div class="col-sm-12">
@@ -107,7 +133,7 @@
               <tr>
                 <td>
                   <button (click)="onRemoveDonor(donor)" type="button" class="btn btn-link link-dark"
-                    role="button" aria-label="Remove author">
+                    role="button" aria-label="Remove donor">
                     <icon-delete></icon-delete>
                   </button>
                 </td>
