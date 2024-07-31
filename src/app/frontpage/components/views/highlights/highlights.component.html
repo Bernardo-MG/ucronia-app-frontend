@@ -1,7 +1,52 @@
-<layout-article>
-  <div class="row pb-2">
-    <div class="col-md-12 pb-2">
-      Somos una asociación de rol con años, surgida de la difunta Distopia, que no sobrevivió a la pandemia. Consulta nuestro listado de actividades para ver qué es lo que hacemos, o contacta con nosotros.
+<div class="container text-center mt-5">
+  <button class="btn btn-primary m-2" (click)="openModal('activities')">Actividades</button>
+  <button class="btn btn-primary m-2" (click)="openModal('events')">Donde estamos</button>
+  <button class="btn btn-primary m-2" (click)="openModal('contactUs')">Contacto</button>
+</div>
+
+<!-- Activities modal -->
+<div class="modal fade" id="activitiesModal" tabindex="-1" aria-labelledby="activitiesModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="activitiesModalLabel">Actividades</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-public-activity-calendar-widget></app-public-activity-calendar-widget>
+      </div>
     </div>
   </div>
-</layout-article>
+</div>
+
+<!-- Where we are modal -->
+<div class="modal fade" id="eventsModal" tabindex="-1" aria-labelledby="eventsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventsModalLabel">Donde estamos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-6 offset-md-3">
+          <app-public-location-widget></app-public-location-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contact us modal -->
+<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="contactUsModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactUsModalLabel">Contacto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Contacto
+      </div>
+    </div>
+  </div>
+</div>
