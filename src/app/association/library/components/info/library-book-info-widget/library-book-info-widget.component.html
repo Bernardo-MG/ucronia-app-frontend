@@ -2,18 +2,24 @@
   <div class="col-md-6 offset-md-3 pb-2">
     <div class="card">
       <div class="card-body">
-        <!-- Lend button -->
-        <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-          [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
-          data-bs-target="#lendModal">
-          <icon-take-out></icon-take-out>Lend
-        </button>
-        <!-- Return button -->
-        <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-          [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
-          data-bs-target="#returnModal">
-          <icon-take-in></icon-take-in>Return
-        </button>
+        <ng-container [ngSwitch]="data.lent">
+          <ng-container *ngSwitchCase="true">
+            <!-- Return button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+              [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
+              data-bs-target="#returnModal">
+              <icon-take-in></icon-take-in>Return
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Lend button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+              [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
+              data-bs-target="#lendModal">
+              <icon-take-out></icon-take-out>Lend
+            </button>
+          </ng-container>
+        </ng-container>
         <!-- Book info -->
         <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
       </div>
