@@ -5,12 +5,13 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import * as bootstrap from 'bootstrap';
 import { PublicActivityCalendarWidgetComponent } from '../../public-activity-calendar-widget/public-activity-calendar-widget.component';
+import { PublicContactUsWidgetComponent } from '../../public-contact-us-widget/public-contact-us-widget.component';
 import { PublicLocationWidgetComponent } from '../../public-location-widget/public-location-widget.component';
 
 @Component({
   selector: 'app-frontpage-highlights',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, PublicActivityCalendarWidgetComponent, PublicLocationWidgetComponent],
+  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, PublicActivityCalendarWidgetComponent, PublicLocationWidgetComponent, PublicContactUsWidgetComponent],
   templateUrl: './highlights.component.html',
   styleUrls: ['./highlights.component.sass']
 })
