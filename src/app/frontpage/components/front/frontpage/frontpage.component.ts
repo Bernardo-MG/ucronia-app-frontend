@@ -4,14 +4,14 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import * as bootstrap from 'bootstrap';
-import { PublicActivityCalendarWidgetComponent } from '../../public-activity-calendar-widget/public-activity-calendar-widget.component';
-import { PublicContactUsWidgetComponent } from '../../public-contact-us-widget/public-contact-us-widget.component';
-import { PublicLocationWidgetComponent } from '../../public-location-widget/public-location-widget.component';
+import { FrontpageActivityCalendarWidgetComponent } from '../frontpage-activity-calendar/frontpage-activity-calendar.component';
+import { FrontpageContactUsComponent } from '../frontpage-contact-us/frontpage-contact-us.component';
+import { PublicLocationWidgetComponent } from '../frontpage-location/frontpage-location.component';
 
 @Component({
   selector: 'app-frontpage-frontpage',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, PublicActivityCalendarWidgetComponent, PublicLocationWidgetComponent, PublicContactUsWidgetComponent],
+  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, FrontpageActivityCalendarWidgetComponent, PublicLocationWidgetComponent, FrontpageContactUsComponent],
   templateUrl: './frontpage.component.html',
   styleUrls: ['./frontpage.component.sass']
 })

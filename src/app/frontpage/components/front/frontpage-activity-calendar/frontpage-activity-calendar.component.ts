@@ -5,12 +5,12 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 
 @Component({
-  selector: 'app-public-activity-calendar-widget',
+  selector: 'frontpage-activity-calendar',
   standalone: true,
   imports: [ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent],
-  templateUrl: './public-activity-calendar-widget.component.html'
+  templateUrl: './frontpage-activity-calendar.component.html'
 })
-export class PublicActivityCalendarWidgetComponent implements OnInit {
+export class FrontpageActivityCalendarWidgetComponent implements OnInit {
 
   public readingCalendarId = false;
 

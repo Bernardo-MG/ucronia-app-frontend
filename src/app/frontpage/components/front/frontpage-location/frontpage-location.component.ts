@@ -4,10 +4,10 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 
 @Component({
-  selector: 'app-public-location-widget',
+  selector: 'frontpage-location',
   standalone: true,
   imports: [GoogleMapsComponent, WaitingOverlayComponent],
-  templateUrl: './public-location-widget.component.html'
+  templateUrl: './frontpage-location.component.html'
 })
 export class PublicLocationWidgetComponent {
 
