@@ -1,23 +1,23 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { HighlightsComponent } from './highlights.component';
+import { FrontpageComponent } from './frontpage.component';
 
-describe('HighlightsComponent', () => {
-  let component: HighlightsComponent;
-  let fixture: ComponentFixture<HighlightsComponent>;
+describe('FrontpageComponent', () => {
+  let component: FrontpageComponent;
+  let fixture: ComponentFixture<FrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         ArticleComponent,
-        HighlightsComponent
+        FrontpageComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(HighlightsComponent);
+    fixture = TestBed.createComponent(FrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

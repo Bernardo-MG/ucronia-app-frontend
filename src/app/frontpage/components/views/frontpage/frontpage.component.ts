@@ -9,13 +9,13 @@ import { PublicContactUsWidgetComponent } from '../../public-contact-us-widget/p
 import { PublicLocationWidgetComponent } from '../../public-location-widget/public-location-widget.component';
 
 @Component({
-  selector: 'app-frontpage-highlights',
+  selector: 'app-frontpage-frontpage',
   standalone: true,
   imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, PublicActivityCalendarWidgetComponent, PublicLocationWidgetComponent, PublicContactUsWidgetComponent],
-  templateUrl: './highlights.component.html',
-  styleUrls: ['./highlights.component.sass']
+  templateUrl: './frontpage.component.html',
+  styleUrls: ['./frontpage.component.sass']
 })
-export class HighlightsComponent {
+export class FrontpageComponent {
 
   openModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
