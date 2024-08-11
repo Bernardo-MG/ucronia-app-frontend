@@ -1,4 +1,4 @@
-<layout-article title="Edit user token">
+<layout-article title="Editar token de usuario">
   <div class="col-md-6 offset-md-3">
     <!-- Role -->
     <div class="mb-1">
@@ -13,13 +13,13 @@
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke"
               data-bs-toggle="modal"
-              [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revoke</layout-waiting-button>
+              [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocado</layout-waiting-button>
             </div>
             <!-- Extend expiration button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extend expiration</layout-waiting-button>
+                [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender expiración</layout-waiting-button>
             </div>
           </div>
         </footer>
@@ -34,13 +34,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Choose new date</p>
+        <p>Elige una nueva fecha</p>
         <form [formGroup]="extendExpirationForm" (ngSubmit)="onExtendExpiration()" class="needs-validation" novalidate>
           <input type="datetime-local" id="extendExpirationInput" class="form-control" formControlName="expirationDate">
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-secondary" (click)="onExtendExpiration()"
           data-bs-dismiss="modal">Accept</button>
       </div>
@@ -54,12 +54,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Are you sure you want to revoke the token?</p>
-        <p class="text-warning"><small>This action cannot be undone.</small></p>
+        <p>¿Estás seguro de que quieres revocar el token?</p>
+        <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onRevoke()" data-bs-dismiss="modal">Revoke</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="onRevoke()" data-bs-dismiss="modal">Revocar</button>
       </div>
     </div>
   </div>

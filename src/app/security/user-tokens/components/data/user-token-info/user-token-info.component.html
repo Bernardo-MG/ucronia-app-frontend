@@ -1,7 +1,7 @@
 <form class="needs-validation" novalidate>
   <!-- Username -->
   <div class="row mb-2">
-    <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Username</label>
+    <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Usuario</label>
     <div class="col-sm-10">
       <input type="text" [value]="data.name" id="usernameInput" [readonly]="true" class="form-control"
         aria-describedby="usernameLabel">
@@ -9,7 +9,7 @@
   </div>
   <!-- Name -->
   <div class="row mb-2">
-    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
+    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
       <input type="text" [value]="data.name" id="nameInput" [readonly]="true" class="form-control"
         aria-describedby="nameLabel">
@@ -25,7 +25,7 @@
   </div>
   <!-- Scope -->
   <div class="row mb-2">
-    <label for="scopeInput" id="scopeLabel" class="col-sm-2 col-form-label">Scope</label>
+    <label for="scopeInput" id="scopeLabel" class="col-sm-2 col-form-label">Alcance</label>
     <div class="col-sm-10">
       <input type="text" [value]="data.scope" id="scopeInput" [readonly]="true" class="form-control"
         aria-describedby="scopeLabel">
@@ -33,7 +33,7 @@
   </div>
   <!-- Creation date -->
   <div class="row mb-2">
-    <label for="creationDateInput" id="creationDateLabel" class="col-sm-2 col-form-label">Creation date</label>
+    <label for="creationDateInput" id="creationDateLabel" class="col-sm-2 col-form-label">Fecha de creación</label>
     <div class="col-sm-10">
       <input type="creationDate" [value]="data.creationDate" id="creationDateInput" [readonly]="true"
         class="form-control" aria-describedby="creationDateLabel">
@@ -41,7 +41,7 @@
   </div>
   <!-- Expiration date -->
   <div class="row mb-2">
-    <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Expiration date</label>
+    <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Fecha de expiración</label>
     <div class="col-sm-10">
       <input type="expirationDate" [value]="data.expirationDate" id="expirationDateInput" [readonly]="true"
         class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('expirationDate') }"
@@ -53,7 +53,7 @@
   </div>
   <!-- Consumed -->
   <div class="row mb-2">
-    <label id="consumedLabel" class="col-sm-2 col-form-label">Consumed</label>
+    <label id="consumedLabel" class="col-sm-2 col-form-label">Consumido</label>
     <div class="col-sm-10">
       <icon-success *ngIf="data.consumed"></icon-success>
       <icon-failure *ngIf="!data.consumed"></icon-failure>
@@ -61,7 +61,7 @@
   </div>
   <!-- Revoked -->
   <div class="row mb-2">
-    <label id="revokedLabel" class="col-sm-2 col-form-label">Revoked</label>
+    <label id="revokedLabel" class="col-sm-2 col-form-label">Revocado</label>
     <div class="col-sm-10">
       <icon-success *ngIf="data.revoked"></icon-success>
       <icon-failure *ngIf="!data.revoked"></icon-failure>
