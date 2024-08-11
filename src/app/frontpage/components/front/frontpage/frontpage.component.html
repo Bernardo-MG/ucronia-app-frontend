@@ -22,7 +22,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <frontpage-activity-calendar></frontpage-activity-calendar>
+        <frontpage-activity-calendar [calendarCode]="calendarCode" [waiting]="readingCalendarCode"></frontpage-activity-calendar>
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@
       </div>
       <div class="modal-body">
         <div class="col-md-6 offset-md-3">
-          <frontpage-location></frontpage-location>
+          <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
         </div>
       </div>
     </div>

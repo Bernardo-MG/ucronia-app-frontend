@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { FrontpageService } from '@app/frontpage/services/frontpage.service';
+import { Component, Input } from '@angular/core';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 
@@ -11,25 +10,8 @@ import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/g
 })
 export class PublicLocationWidgetComponent {
 
-  public locationCode = "";
+  @Input() public locationCode = "";
 
-  public readingLocationId = false;
-
-  constructor(
-    private service: FrontpageService
-  ) { }
-
-  ngOnInit(): void {
-    this.readingLocationId = true;
-    this.service.getMapCode().subscribe({
-      next: response => {
-        this.locationCode = response;
-        this.readingLocationId = false;
-      },
-      error: error => {
-        this.readingLocationId = false;
-      }
-    });
-  }
+  @Input() public waiting = false;
 
 }
