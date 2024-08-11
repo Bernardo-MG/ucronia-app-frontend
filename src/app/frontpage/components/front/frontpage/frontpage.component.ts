@@ -5,12 +5,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { FrontpageActivityCalendarComponent } from '../frontpage-activity-calendar/frontpage-activity-calendar.component';
+import { FrontpageCalendarComponent } from '../frontpage-calendar/frontpage-calendar.component';
 
 @Component({
   selector: 'app-frontpage-frontpage',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, FrontpageActivityCalendarComponent, GoogleMapsComponent],
+  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, FrontpageCalendarComponent, GoogleMapsComponent],
   templateUrl: './frontpage.component.html',
   styleUrls: ['./frontpage.component.sass']
 })

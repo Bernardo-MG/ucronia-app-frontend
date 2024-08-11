@@ -1,16 +1,16 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
-import { FrontpageActivityCalendarComponent } from './frontpage-activity-calendar.component';
+import { FrontpageCalendarComponent } from './frontpage-calendar.component';
 
-describe('FrontpageActivityCalendarComponent', () => {
-  let component: FrontpageActivityCalendarComponent;
-  let fixture: ComponentFixture<FrontpageActivityCalendarComponent>;
+describe('FrontpageCalendarComponent', () => {
+  let component: FrontpageCalendarComponent;
+  let fixture: ComponentFixture<FrontpageCalendarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FrontpageActivityCalendarComponent,
+        FrontpageCalendarComponent,
         HttpClientTestingModule
       ],
       providers: [
@@ -19,7 +19,7 @@ describe('FrontpageActivityCalendarComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FrontpageActivityCalendarComponent);
+    fixture = TestBed.createComponent(FrontpageCalendarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
