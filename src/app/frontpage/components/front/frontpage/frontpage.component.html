@@ -1,19 +1,28 @@
 <div>
   <div class="container">
+    <!-- Logo -->
     <div class="row">
       <div class="d-flex col-md-4 offset-md-4">
         <img src='assets/resources/img/Ucronia_logo-01.png' alt='Instagram' class="img-fluid" height="300">
       </div>
     </div>
-  </div>
-  <div class="container">
+    <!-- Activities -->
     <div class="row">
-      <frontpage-activity-calendar [calendarCode]="calendarCode"
-        [waiting]="readingCalendarCode"></frontpage-activity-calendar>
+      <layout-article title="Actividades">
+        <layout-waiting-overlay [waiting]="readingCalendarCode">
+          <frontpage-activity-calendar [calendarCode]="calendarCode"></frontpage-activity-calendar>
+        </layout-waiting-overlay>
+      </layout-article>
     </div>
+    <!-- Location -->
     <div class="row">
-      <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
+      <layout-article title="Dónde estamos">
+        <layout-waiting-overlay [waiting]="readingCalendarCode">
+          <app-google-maps [code]="locationCode"></app-google-maps>
+        </layout-waiting-overlay>
+      </layout-article>
     </div>
+    <!-- Contact -->
     <div class="row">
       <layout-article title="Contacta con nosotros">
         <div class="container text-center">
