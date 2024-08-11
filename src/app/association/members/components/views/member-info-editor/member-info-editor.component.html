@@ -31,7 +31,7 @@
                 <div class="col-sm-2 d-grid gap-2">
                   <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
                     data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activate</layout-waiting-button>
+                    [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activar</layout-waiting-button>
                 </div>
               </ng-template>
               <ng-template [ngIf]="data.active">
@@ -39,7 +39,7 @@
                 <div class="col-sm-2 d-grid gap-2">
                   <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
                     data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Deactivate</layout-waiting-button>
+                    [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Desactivar</layout-waiting-button>
                 </div>
               </ng-template>
             </div>
@@ -56,12 +56,12 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Are you sure you want to deactivate the user?</p>
+        <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-danger" (click)="onDeactivate()"
-          data-bs-dismiss="modal">Deactivate</button>
+          data-bs-dismiss="modal">Desactivar</button>
       </div>
     </div>
   </div>
@@ -73,11 +73,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Are you sure you want to activate the user?</p>
+        <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onActivate()" data-bs-dismiss="modal">Activate</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="onActivate()" data-bs-dismiss="modal">Activar</button>
       </div>
     </div>
   </div>

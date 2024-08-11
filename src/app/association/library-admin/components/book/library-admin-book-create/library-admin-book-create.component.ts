@@ -6,9 +6,10 @@ import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
 import { GameSystem } from '@app/association/library/models/game-system';
+import { Language } from '@app/association/library/models/language';
+import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
@@ -18,7 +19,6 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
-import { Person } from '@app/association/library/models/person';
 
 @Component({
   selector: 'assoc-library-admin-book-create',
@@ -48,6 +48,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public donorPage = new PaginatedResponse<Person[]>([]);
 
+  public languages: Language[] = [];
+
   constructor(
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
@@ -67,6 +69,8 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
+
+    this.languages = this.service.getLanguages();
   }
 
   public onGoToBookTypePage(page: number) {

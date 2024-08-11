@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '@app/association/library/models/book';
+import { Language } from '@app/association/library/models/language';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -53,6 +54,10 @@ export class BookAdminService {
     query.pagination = { page };
 
     return this.getClient().query(query).read();
+  }
+
+  public getLanguages(): Language[] {
+    return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
   }
 
   private getClient(): Client {
