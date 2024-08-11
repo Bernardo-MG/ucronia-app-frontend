@@ -6,56 +6,25 @@
       </div>
     </div>
   </div>
-  <div class="text-center">
-    <button class="btn btn-primary m-2" (click)="openModal('activities')">Actividades</button>
-    <button class="btn btn-primary m-2" (click)="openModal('events')">Dónde estamos</button>
-    <button class="btn btn-primary m-2" (click)="openModal('contactUs')">Contacto</button>
-  </div>
-</div>
-
-<!-- Activities modal -->
-<div class="modal fade" id="activitiesModal" tabindex="-1" aria-labelledby="activitiesModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="activitiesModalLabel">Actividades</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <frontpage-activity-calendar [calendarCode]="calendarCode" [waiting]="readingCalendarCode"></frontpage-activity-calendar>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Where we are modal -->
-<div class="modal fade" id="eventsModal" tabindex="-1" aria-labelledby="eventsModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="eventsModalLabel">Dónde estamos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="col-md-6 offset-md-3">
-          <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
+  <div class="container">
+    <div class="row">
+      <layout-article title="Contacta con nosotros">
+        <div class="container text-center">
+          <a [href]="instagramLink" class="me-3">
+            <img src='assets/resources/img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
+          </a>
+          <a [href]="instagramLink">
+            <img src='assets/resources/img/email-icon.png' alt='Instagram' width="50" height="50">
+          </a>
         </div>
-      </div>
+      </layout-article>
     </div>
-  </div>
-</div>
-
-<!-- Contact us modal -->
-<div class="modal fade" id="contactUsModal" tabindex="-1" aria-labelledby="contactUsModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="contactUsModalLabel">Contacto</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <frontpage-contact-us></frontpage-contact-us>
-      </div>
+    <div class="row">
+      <frontpage-activity-calendar [calendarCode]="calendarCode"
+        [waiting]="readingCalendarCode"></frontpage-activity-calendar>
+    </div>
+    <div class="row">
+      <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
     </div>
   </div>
 </div>

@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FrontpageService } from '@app/frontpage/services/frontpage.service';
+import { Component, Input } from '@angular/core';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';

@@ -26,6 +26,8 @@ export class FrontpageComponent implements OnInit {
 
   public readingLocationCode = false;
 
+  public instagramLink = "https://www.instagram.com/arucronia/";
+
   constructor(
     private service: FrontpageService
   ) { }
@@ -53,14 +55,6 @@ export class FrontpageComponent implements OnInit {
         this.readingLocationCode = false;
       }
     });
-  }
-
-  public openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-    }
   }
 
 }
