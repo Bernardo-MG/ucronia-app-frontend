@@ -34,7 +34,8 @@
               "pagination",
               "shared",
               "sorting",
-              "form"
+              "form",
+              "frontpage"
             ],
             "style": "camelCase"
           }
@@ -58,7 +59,8 @@
               "pagination",
               "shared",
               "sorting",
-              "form"
+              "form",
+              "frontpage"
             ],
             "style": "kebab-case"
           }

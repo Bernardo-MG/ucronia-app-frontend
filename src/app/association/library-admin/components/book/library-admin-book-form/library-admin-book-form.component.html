@@ -132,8 +132,8 @@
             <ng-template ngFor let-donor let-i="index" [ngForOf]="donors">
               <tr>
                 <td>
-                  <button (click)="onRemoveDonor(donor)" type="button" class="btn btn-link link-dark"
-                    role="button" aria-label="Remove donor">
+                  <button (click)="onRemoveDonor(donor)" type="button" class="btn btn-link link-dark" role="button"
+                    aria-label="Remove donor">
                     <icon-delete></icon-delete>
                   </button>
                 </td>
@@ -172,8 +172,8 @@
             <ng-template ngFor let-author [ngForOf]="authors">
               <tr>
                 <td>
-                  <button (click)="onRemoveAuthor(author)" type="button" class="btn btn-link link-dark"
-                    role="button" aria-label="Remove author">
+                  <button (click)="onRemoveAuthor(author)" type="button" class="btn btn-link link-dark" role="button"
+                    aria-label="Remove author">
                     <icon-delete></icon-delete>
                   </button>
                 </td>
@@ -208,45 +208,98 @@
   </form>
 </ng-container>
 
-<div class="modal fade" id="pickModal" tabindex="-1" aria-labelledby="pickModalLabel" aria-hidden="true">
+<!-- Book type modal-->
+<div class="modal fade" id="book_typeModal" tabindex="-1" aria-labelledby="book_typeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="pickModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="book_typeModalLabel">Book type</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- Select book type -->
-        <ng-template [ngIf]="selector === 'book_type'">
-          <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
-            [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
-            (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
-        </ng-template>
-        <!-- Select game system -->
-        <ng-template [ngIf]="selector === 'game_system'">
-          <assoc-library-admin-game-system-selection [values]="gameSystemPage.content"
-            [current]="gameSystemPage.page + 1" [pages]="gameSystemPage.totalPages"
-            (choose)="onSelectGameSystem($event)"
-            (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
-        </ng-template>
-        <!-- Select authors -->
-        <ng-template [ngIf]="selector === 'author'">
-          <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
-            [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
-            (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
-        </ng-template>
-        <!-- Select publisher -->
-        <ng-template [ngIf]="selector === 'publisher'">
-          <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
-            [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
-            (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
-        </ng-template>
-        <!-- Select donor -->
-        <ng-template [ngIf]="selector === 'donor'">
-          <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
-            [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
-            (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
-        </ng-template>
+        <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
+          [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
+          (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
+      </div>
+      <div class="modal-footer">
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Game system modal -->
+<div class="modal fade" id="game_systemModal" tabindex="-1" aria-labelledby="game_systemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="game_systemModalLabel">Game system</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
+          [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
+          (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
+      </div>
+      <div class="modal-footer">
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Author modal -->
+<div class="modal fade" id="authorModal" tabindex="-1" aria-labelledby="authorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="authorModalLabel">Author</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
+          [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
+          (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
+      </div>
+      <div class="modal-footer">
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Publisher modal -->
+<div class="modal fade" id="publisherModal" tabindex="-1" aria-labelledby="publisherModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="publisherModalLabel">Publisher</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
+          [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
+          (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
+      </div>
+      <div class="modal-footer">
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Donor modal -->
+<div class="modal fade" id="donorModal" tabindex="-1" aria-labelledby="donorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="donorModalLabel">Publisher</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
+          [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
+          (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
       </div>
       <div class="modal-footer">
         <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

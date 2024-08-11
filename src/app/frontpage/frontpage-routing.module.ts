@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HighlightsComponent } from './components/views/highlights/highlights.component';
+import { FrontpageComponent } from './components/front/frontpage/frontpage.component';
 
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: HighlightsComponent }
+      { path: '', component: FrontpageComponent }
     ]
   }
 ];
