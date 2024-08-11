@@ -2,7 +2,7 @@
   <ng-container *ngSwitchCase="'valid_token'">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Activate new user {{username}}</h5>
+        <h5 class="card-title">Activación de usuario {{username}}</h5>
         <layout-waiting-overlay [waiting]="validating">
           <access-user-activation-form [failures]="failures" [waiting]="activating"
             (save)="onActivateUser($event.password)"></access-user-activation-form>
@@ -11,9 +11,9 @@
     </div>
   </ng-container>
   <ng-container *ngSwitchCase="'invalid_token'">
-    Invalid token
+    Token inválido
   </ng-container>
   <ng-container *ngSwitchCase="'finished'">
-    User activated
+    Usuario activado
   </ng-container>
 </ng-container>
