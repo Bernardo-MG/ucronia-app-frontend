@@ -25,14 +25,13 @@ export class FeePaymentChartComponent implements OnChanges {
       this.chart.destroy();
     }
 
-    const labels = ['paid', 'unpaid'];
+    const labels = ['Pagado', 'No pagado'];
     const payments = [this.report.paid, this.report.unpaid];
 
     const data = {
       labels: labels,
       datasets: [
         {
-          label: 'Paid/unpaid',
           data: payments,
           backgroundColor: ["#51EAEA", "#FCDDB0"]
         },

@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Number -->
   <div *ngIf="data?.number" class="row mb-2">
-    <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Number</label>
+    <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Número</label>
     <div class="col-sm-10">
       <input type="text" [value]="data?.number" id="numberInput" [readonly]="true" class="form-control"
         aria-describedby="numberLabel">
@@ -9,7 +9,7 @@
   </div>
   <!-- First name -->
   <div class="row mb-2">
-    <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">First name</label>
+    <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
       <div formGroupName="name">
         <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
@@ -22,7 +22,7 @@
   </div>
   <!-- Last name -->
   <div class="row mb-2">
-    <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">lastName</label>
+    <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
     <div class="col-sm-10">
       <div formGroupName="name">
         <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
@@ -35,7 +35,7 @@
   </div>
   <!-- Identifier -->
   <div class="row mb-2">
-    <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">Identifier</label>
+    <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">DNI</label>
     <div class="col-sm-10">
       <input type="text" id="identifierInput" formControlName="identifier" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('identifier') }" aria-describedby="identifierLabel" maxlength="15">
@@ -46,7 +46,7 @@
   </div>
   <!-- Phone -->
   <div class="row mb-2">
-    <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Phone</label>
+    <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Teléfono</label>
     <div class="col-sm-10">
       <input type="text" id="phoneInput" formControlName="phone" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('phone') }" aria-describedby="phoneLabel" maxlength="15">
@@ -59,12 +59,12 @@
     <!-- Save button -->
     <div class="col-sm-2 d-grid gap-2">
       <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Save</layout-waiting-button>
+        (action)="onSave()">Guardar</layout-waiting-button>
     </div>
     <!-- Cancel button -->
     <ng-template [ngIf]="cancellable">
       <div class="col-sm-2 d-grid gap-2">
-        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
       </div>
     </ng-template>
   </div>

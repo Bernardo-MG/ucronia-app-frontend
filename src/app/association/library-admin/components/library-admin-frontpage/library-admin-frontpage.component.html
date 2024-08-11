@@ -2,27 +2,27 @@
   <ul class="nav nav-tabs pb-2">
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button"
-        (click)="onChangeView('books')">Books</a>
+        (click)="onChangeView('books')">Libros</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button"
-        (click)="onChangeView('authors')">Authors</a>
+        (click)="onChangeView('authors')">Autores</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button"
-        (click)="onChangeView('publishers')">Publishers</a>
+        (click)="onChangeView('publishers')">Editores</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button"
-        (click)="onChangeView('book_types')">Book types</a>
+        (click)="onChangeView('book_types')">Tipos</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
-        (click)="onChangeView('game_systems')">Game systems</a>
+        (click)="onChangeView('game_systems')">Sistemas</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" [class.active]="view === 'donors'" aria-current="page" role="button"
-        (click)="onChangeView('donors')">Donors</a>
+        (click)="onChangeView('donors')">Donantes</a>
     </li>
   </ul>
   <ng-container [ngSwitch]="view">

@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#returnModal">
-              <icon-take-in></icon-take-in>Return
+              <icon-take-in></icon-take-in>Devuelto
             </button>
           </ng-container>
           <ng-container *ngSwitchCase="false">
@@ -16,7 +16,7 @@
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#lendModal">
-              <icon-take-out></icon-take-out>Lend
+              <icon-take-out></icon-take-out>Prestado
             </button>
           </ng-container>
         </ng-container>
@@ -29,7 +29,7 @@
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-header">
-        <h2>Lendings</h2>
+        <h2>Préstamos</h2>
       </div>
       <div class="card-body">
         <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
