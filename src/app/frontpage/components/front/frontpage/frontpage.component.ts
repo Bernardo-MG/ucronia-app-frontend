@@ -17,7 +17,7 @@ import { PublicLocationWidgetComponent } from '../frontpage-location/frontpage-l
 })
 export class FrontpageComponent {
 
-  openModal(modalId: string): void {
+  public openModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
     if (modalElement) {
       const modal = new bootstrap.Modal(modalElement);
