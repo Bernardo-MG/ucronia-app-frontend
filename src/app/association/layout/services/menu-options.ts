@@ -9,7 +9,7 @@ import { MenuOptions } from '@app/shared/menu/models/menu-options';
 // Define menu options with titles for each section
 export const MENU_OPTIONS: MenuOptions = {
   association: {
-    title: 'Association',
+    title: 'Asociación',
     links: [
       new AuthMenuLink('Calendario', '/calendar', 'activity_calendar', IconCalendarComponent),
       new AuthMenuLink('Socios', '/members', 'member', IconPersonComponent),

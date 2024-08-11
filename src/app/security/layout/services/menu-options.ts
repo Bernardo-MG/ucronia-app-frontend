@@ -4,7 +4,7 @@ import { MenuOptions } from '@app/shared/menu/models/menu-options';
 // Define menu options with titles for each section
 export const MENU_OPTIONS: MenuOptions = {
   security: {
-    title: 'Security',
+    title: 'Seguridad',
     links: [
       new AuthMenuLink('Usuarios', '/security/users', 'user'),
       new AuthMenuLink('Roles', '/security/roles', 'role'),

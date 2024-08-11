@@ -1,4 +1,4 @@
-<layout-article title="Book info">
+<layout-article title="Datos de libro">
   <div class="col-md-6 offset-md-3 pb-2">
     <div class="card">
       <div class="card-body">
@@ -50,7 +50,7 @@
         <assoc-library-book-lending [book]="data" (saved)="onCloseLend()"></assoc-library-book-lending>
       </div>
       <div class="modal-footer">
-        <button #lendCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #lendCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@
         <assoc-library-book-return [book]="data" (saved)="onCloseReturn()"></assoc-library-book-return>
       </div>
       <div class="modal-footer">
-        <button #returnCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #returnCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

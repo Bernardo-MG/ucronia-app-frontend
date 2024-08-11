@@ -1,4 +1,4 @@
-<layout-article title="Pay fee">
+<layout-article title="Pago de cuota">
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
@@ -10,10 +10,10 @@
           <ng-container *ngSwitchCase="false">
             <layout-waiting-overlay [waiting]="readingMembers">
               <div class="row mb-2">
-                <div class="col-2">Pick member</div>
+                <div class="col-2">Selecciona un socio</div>
                 <div class="col-4 offset-6 d-flex">
                   <div class="me-2">
-                    Status:
+                    Estado:
                   </div>
                   <assoc-member-status-select
                     (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
