@@ -1,5 +1,5 @@
 import { CommonModule, } from '@angular/common';
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
@@ -42,6 +42,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.bookType = value.bookType.name;
     this.gameSystem = value.gameSystem.name;
   }
+
+  @Input() public languages: Language[] = [];
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
 
@@ -95,8 +97,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public selector = '';
 
-  public languages: Language[] = [];
-
   constructor(
     fb: FormBuilder
   ) {
@@ -112,9 +112,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       publishers: [[]],
       gameSystem: ['']
     });
-
-    this.languages = [new Language('en', 'English'), new Language('es', 'Spanish')];
-    this.languages = this.languages.sort((left, right) => (left.name > right.name ? -1 : 1));
   }
 
   public onShowBookTypeSelection() {
