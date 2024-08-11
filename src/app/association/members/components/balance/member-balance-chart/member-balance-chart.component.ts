@@ -53,7 +53,7 @@ export class MemberBalanceChartComponent implements OnChanges {
       labels: labels,
       datasets: [
         {
-          label: 'Members',
+          label: 'Socios',
           data: totals,
           borderColor: 'rgba(200, 99, 132, .7)',
           borderWidth: 2,
