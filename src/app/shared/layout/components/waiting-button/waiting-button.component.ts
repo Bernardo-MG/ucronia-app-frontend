@@ -16,6 +16,8 @@ export class WaitingButtonComponent {
 
   @Input() public name = '';
 
+  @Input() public type = 'button';
+
   @Output() public action = new EventEmitter<void>();
 
   public onClick(): void {
