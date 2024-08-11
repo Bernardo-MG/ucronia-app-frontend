@@ -26,7 +26,9 @@ export class FrontpageComponent implements OnInit {
 
   public readingLocationCode = false;
 
-  public instagramLink = "https://www.instagram.com/arucronia/";
+  public instagramLink = "";
+
+  public emailLink = "";
 
   constructor(
     private service: FrontpageService
@@ -55,6 +57,10 @@ export class FrontpageComponent implements OnInit {
         this.readingLocationCode = false;
       }
     });
+    // Instagram URL
+    this.instagramLink = this.service.getInstagramUrl();
+    // Email URL
+    this.emailLink = this.service.getEmailUrl();
   }
 
 }
