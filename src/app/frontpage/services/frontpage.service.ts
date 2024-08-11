@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Menu } from '@app/shared/menu/models/menu';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PublicConfiguration } from '../models/public-configuration';
@@ -27,6 +26,14 @@ export class FrontpageService {
     return this.getConfigClient()
       .read<SimpleResponse<PublicConfiguration>>()
       .pipe(map(r => r.content.mapCode));
+  }
+
+  public getInstagramUrl(): string {
+    return "https://www.instagram.com/arucronia/";
+  }
+
+  public getEmailUrl(): string {
+    return "mailto:contacto@arucronia.com";
   }
 
   private getConfigClient(): Client {

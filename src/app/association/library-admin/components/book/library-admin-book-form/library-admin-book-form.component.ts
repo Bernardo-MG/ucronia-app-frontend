@@ -12,6 +12,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import * as bootstrap from 'bootstrap';
 import { LibraryAdminAuthorSelectionComponent } from '../../author/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '../../book-type/library-admin-book-type-selection/library-admin-book-type-selection.component';
 import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
@@ -51,8 +52,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   @Output() public goToPublisherPage = new EventEmitter<number>();
 
   @Output() public goToDonorPage = new EventEmitter<number>();
-
-  @ViewChild('pickCloseButton') pickCloseButton: any;
 
   public get authors(): Author[] {
     return this.form.get('authors')?.value;
@@ -119,35 +118,35 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-    this.selector = 'book_type';
+    this.openModal('book_type');
   }
 
   public onShowGameSystemSelection() {
-    this.selector = 'game_system';
+    this.openModal('game_system');
   }
 
   public onShowAuthorSelection() {
-    this.selector = 'author';
+    this.openModal('author');
   }
 
   public onShowPublisherSelection() {
-    this.selector = 'publisher';
+    this.openModal('publisher');
   }
 
   public onShowDonorSelection() {
-    this.selector = 'donor';
+    this.openModal('donor');
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType.name;
     this.selector = ''
-    this.pickCloseButton.nativeElement.click();
+    this.closeModal('book_type');
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem.name;
     this.selector = '';
-    this.pickCloseButton.nativeElement.click();
+    this.closeModal('game_system');
   }
 
   public onSelectAuthor(author: Author) {
@@ -155,7 +154,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       this.authors = this.authors.concat([author]);
     }
     this.selector = '';
-    this.pickCloseButton.nativeElement.click();
+    this.closeModal('author');
   }
 
   public onSelectPublisher(publisher: Publisher) {
@@ -163,7 +162,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       this.publishers = this.publishers.concat([publisher]);
     }
     this.selector = '';
-    this.pickCloseButton.nativeElement.click();
+    this.closeModal('publisher');
   }
 
   public onSelectDonor(donor: Person) {
@@ -171,7 +170,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       this.donors.push(donor);
     }
     this.selector = '';
-    this.pickCloseButton.nativeElement.click();
+    this.closeModal('donor');
   }
 
   public onRemoveAuthor(author: Author) {
@@ -204,6 +203,22 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onGoToDonorPage(page: number) {
     this.goToDonorPage.emit(page);
+  }
+
+  private openModal(modalId: string): void {
+    const modalElement = document.getElementById(`${modalId}Modal`);
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
+  }
+
+  private closeModal(modalId: string): void {
+    const modalElement = document.getElementById(`${modalId}Modal`);
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.dispose();
+    }
   }
 
 }
