@@ -8,6 +8,13 @@
   </div>
   <div class="container">
     <div class="row">
+      <frontpage-activity-calendar [calendarCode]="calendarCode"
+        [waiting]="readingCalendarCode"></frontpage-activity-calendar>
+    </div>
+    <div class="row">
+      <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
+    </div>
+    <div class="row">
       <layout-article title="Contacta con nosotros">
         <div class="container text-center">
           <a [href]="instagramLink" class="me-3">
@@ -18,13 +25,6 @@
           </a>
         </div>
       </layout-article>
-    </div>
-    <div class="row">
-      <frontpage-activity-calendar [calendarCode]="calendarCode"
-        [waiting]="readingCalendarCode"></frontpage-activity-calendar>
-    </div>
-    <div class="row">
-      <frontpage-location [locationCode]="locationCode" [waiting]="readingCalendarCode"></frontpage-location>
     </div>
   </div>
 </div>
