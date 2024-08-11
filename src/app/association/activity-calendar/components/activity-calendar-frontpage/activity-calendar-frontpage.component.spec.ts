@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ActivityCalendarFrontpageComponent } from './activity-calendar-frontpage.component';
 
 describe('ActivityCalendarFrontpageComponent', () => {
@@ -8,7 +8,10 @@ describe('ActivityCalendarFrontpageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ActivityCalendarFrontpageComponent]
+      imports: [
+        HttpClientTestingModule,
+        ActivityCalendarFrontpageComponent
+      ]
     })
     .compileComponents();
     
