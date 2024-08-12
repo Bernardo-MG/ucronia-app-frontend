@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeeCalendar } from '../../../models/fee-calendar';
@@ -10,7 +11,7 @@ import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 @Component({
   selector: 'assoc-fee-calendar-widget',
   standalone: true,
-  imports: [RouterModule, FeeCalendarComponent],
+  imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent],
   templateUrl: './fee-calendar-widget.component.html'
 })
 export class FeeCalendarWidgetComponent implements OnInit {
@@ -55,9 +56,8 @@ export class FeeCalendarWidgetComponent implements OnInit {
     });
   }
 
-  public onChangeActiveFilter(event: any) {
-    const value = event.target.value as 'Active' | 'Inactive' | 'All';
-    this.activeFilter = (Active[value] as Active);
+  public onChangeActiveFilter(active: Active) {
+    this.activeFilter = active;
     this.load(this.year);
   }
 
