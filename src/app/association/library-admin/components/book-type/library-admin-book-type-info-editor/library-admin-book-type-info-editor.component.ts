@@ -32,7 +32,7 @@ export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusCom
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = false;
+    this.editable = this.authContainer.hasPermission("library_book_type", "update");
     this.deletable = this.authContainer.hasPermission("library_book_type", "delete");
 
     // Get id
