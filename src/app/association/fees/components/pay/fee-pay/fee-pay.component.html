@@ -2,6 +2,7 @@
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
+        <!-- Progress -->
         <div class="progress mb-2">
           <div class="progress-bar" role="progressbar" aria-label="Fee payment step"
             [style]="'width: ' + filled_bar + '%'" [attr.aria-valuenow]="filled_bar" aria-valuemin="0"
@@ -9,20 +10,10 @@
         </div>
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="false">
-            <div class="row mb-2">
-              <div class="col-2">Selecciona un socio</div>
-              <div class="col-4 offset-6 d-flex">
-                <div class="me-2">
-                  Estado:
-                </div>
-                <assoc-member-status-select [disabled]="readingMembers"
-                  (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
-              </div>
-            </div>
-            <assoc-fee-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
-              [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
-              (goToPage)="onGoToMembersPage($event)">
-            </assoc-fee-member-selection>
+            <!-- Member selection -->
+            <app-fee-pay-select-member [memberPage]="memberPage" [waiting]="readingMembers"
+              (selectMember)="onSelectMember($event)" (goToPage)="onGoToMembersPage($event)"
+              (changeFilter)="onChangeActiveFilter($event)"></app-fee-pay-select-member>
           </ng-container>
           <ng-container *ngSwitchCase="true">
             <!-- Form -->

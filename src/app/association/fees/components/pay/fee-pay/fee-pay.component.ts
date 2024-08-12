@@ -1,25 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { Observable } from 'rxjs';
 import { Member } from '../../../../members/models/member';
 import { FeePayment } from '../../../models/fee-payment';
 import { FeeService } from '../../../services/fee.service';
-import { FeeMemberSelectionComponent } from '../../data/fee-member-selection/fee-member-selection.component';
-import { FeePayFormComponent } from '../../pay/fee-pay-form/fee-pay-form.component';
+import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
+import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
 
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, IconsModule, FeePayFormComponent, FeeMemberSelectionComponent, ArticleComponent, WaitingOverlayComponent, MemberStatusSelectComponent],
+  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
