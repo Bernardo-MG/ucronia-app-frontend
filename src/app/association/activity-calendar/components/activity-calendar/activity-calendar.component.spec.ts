@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
-import { ActivityCalendarWidgetComponent } from './activity-calendar-widget.component';
+import { ActivityCalendarWidgetComponent } from './activity-calendar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ActivityCalendarWidgetComponent', () => {
