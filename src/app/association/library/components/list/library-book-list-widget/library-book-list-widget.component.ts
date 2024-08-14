@@ -5,6 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
@@ -13,7 +14,7 @@ import { LibraryBookListComponent } from '../library-book-list/library-book-list
 @Component({
   selector: 'assoc-library-book-list-widget',
   standalone: true,
-  imports: [CommonModule, RouterModule, WaitingOverlayComponent, PaginationNavigationComponent, LibraryBookListComponent],
+  imports: [CommonModule, RouterModule, WaitingOverlayComponent, PaginationNavigationComponent, LibraryBookListComponent, PaginationNavigationInfoComponent],
   templateUrl: './library-book-list-widget.component.html'
 })
 export class LibraryBookListWidgetComponent implements OnInit {
@@ -23,7 +24,7 @@ export class LibraryBookListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingBooks = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -44,23 +45,19 @@ export class LibraryBookListWidgetComponent implements OnInit {
     this.load(this.page.page + 1);
   }
 
-  public onGoTo(page: number) {
-    this.load(page);
-  }
-
-  private load(page: number) {
-    this.readingBooks = true;
+  public load(page: number) {
+    this.reading = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingBooks = false;
+        this.reading = false;
       }
     });
   }
