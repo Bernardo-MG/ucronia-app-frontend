@@ -10,11 +10,12 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
+import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
 
 @Component({
   selector: 'assoc-library-admin-game-system-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent ],
+  imports: [ CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent, PaginationNavigationInfoComponent ],
   templateUrl: './library-admin-game-system-list.component.html'
 })
 export class LibraryAdminGameSystemListComponent implements OnInit {
@@ -45,11 +46,7 @@ export class LibraryAdminGameSystemListComponent implements OnInit {
     this.load(this.page.page + 1);
   }
 
-  public onGoTo(page: number) {
-    this.load(page);
-  }
-
-  private load(page: number) {
+  public load(page: number) {
     this.reading = true;
 
     this.service.getAll(page).subscribe({

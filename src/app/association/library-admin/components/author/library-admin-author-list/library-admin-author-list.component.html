@@ -5,8 +5,7 @@
       <tr>
         <!-- Headers -->
         <th scope="col">
-          Nombre<sorting-button property="name"
-            (directionChange)="onChangeDirection($event)"></sorting-button>
+          Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
         </th>
       </tr>
     </thead>
@@ -21,8 +20,5 @@
     </tbody>
   </table>
 </layout-waiting-overlay>
-<div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="reading"
-    (goTo)="onGoTo($event)">
-  </pagination-navigation>
-</div>
+<!-- Pagination info -->
+<pagination-navigation-info [page]="page" [disabled]="reading" (goTo)="load($event)"></pagination-navigation-info>

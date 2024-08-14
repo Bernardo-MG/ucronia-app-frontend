@@ -14,18 +14,9 @@
       <assoc-member-list [page]="page" (changeDirection)="onChangeDirection($event)">
       </assoc-member-list>
     </layout-waiting-overlay>
-    <!-- Total -->
-    <div class="row">
-      <div class="col-md-1">
-        <p>Total: {{page.totalElements}}</p>
-      </div>
-    </div>
-    <!-- Page navigation -->
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingMembers"
-        (goTo)="load($event)">
-      </pagination-navigation>
-    </div>
+    <!-- Pagination info -->
+    <pagination-navigation-info [page]="page" [disabled]="readingMembers"
+      (goTo)="load($event)"></pagination-navigation-info>
     <!-- Add -->
     <div class="col-md-2 offset-md-5">
       <div class="d-grid">
