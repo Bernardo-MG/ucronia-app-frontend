@@ -3,10 +3,10 @@
     <div class="card">
       <div class="card-body">
         <!-- Progress -->
-        <div class="progress mb-2">
-          <div class="progress-bar" role="progressbar" aria-label="Fee payment step"
-            [style]="'width: ' + filled_bar + '%'" [attr.aria-valuenow]="filled_bar" aria-valuemin="0"
-            aria-valuemax="100"></div>
+          <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-link me-2" aria-label="Return" (click)="onReturnToMembers()"
+            [disabled]="isReturnDisabled()"><icon-backward></icon-backward></button>
+          <h2>{{currentStep}}/2</h2>
         </div>
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="false">
@@ -17,8 +17,6 @@
           </ng-container>
           <ng-container *ngSwitchCase="true">
             <!-- Form -->
-            <button type="button" class="page-link" aria-label="Return"
-              (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
             <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
               [member]="member" (save)="onSave($event)">
             </assoc-fee-pay-form>

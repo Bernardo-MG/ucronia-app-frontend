@@ -22,7 +22,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="true">
     <!-- Lend book form -->
-    <button type="button" class="page-link" aria-label="Return"
+    <button type="button" class="btn btn-link" aria-label="Return"
       (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
     <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
       [book]="book" (save)="onSave($event)">

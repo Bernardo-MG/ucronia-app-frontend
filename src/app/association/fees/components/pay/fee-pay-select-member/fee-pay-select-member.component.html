@@ -1,9 +1,6 @@
 <div class="row mb-2">
-  <div class="col-2">Selecciona un socio</div>
-  <div class="col-4 offset-6 d-flex">
-    <div class="me-2">
-      Estado:
-    </div>
+  <div class="d-flex justify-content-between">
+    <div>Selecciona un socio</div>
     <assoc-member-status-select [disabled]="waiting"
       (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
   </div>

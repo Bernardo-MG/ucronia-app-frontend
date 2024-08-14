@@ -34,7 +34,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public activeFilter = Active.Active;
 
-  public filled_bar = 0;
+  public currentStep = 1;
 
   constructor(
     private service: FeeService,
@@ -82,13 +82,17 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public onReturnToMembers() {
     this.selectedMember = false;
-    this.filled_bar = 0;
+    this.currentStep = 1;
   }
 
   public onSelectMember(member: Member) {
     this.member = member;
     this.selectedMember = true;
-    this.filled_bar = 50;
+    this.currentStep = 2;
+  }
+
+  public isReturnDisabled() {
+    return this.currentStep < 2;
   }
 
 }
