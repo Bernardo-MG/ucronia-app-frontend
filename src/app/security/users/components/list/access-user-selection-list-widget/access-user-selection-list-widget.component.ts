@@ -6,16 +6,14 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
-import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent, PaginationNavigationInfoComponent],
+  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent,   PaginationInfoWrapperComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {

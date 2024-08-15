@@ -1,12 +1,10 @@
-<layout-waiting-overlay [waiting]="reading">
-  <!-- List -->
+<layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
   <table class="table table-hover">
     <thead>
       <tr>
         <!-- Headers -->
         <th scope="col">
-          Nombre<sorting-button property="title"
-            (directionChange)="onChangeDirection($event)"></sorting-button>
+          Nombre<sorting-button property="title" (directionChange)="onChangeDirection($event)"></sorting-button>
         </th>
       </tr>
     </thead>
@@ -20,6 +18,4 @@
       </tr>
     </tbody>
   </table>
-</layout-waiting-overlay>
-<!-- Pagination info -->
-<pagination-navigation-info [page]="page" [disabled]="reading" (goTo)="load($event)"></pagination-navigation-info>
+</layout-pagination-info-wrapper>

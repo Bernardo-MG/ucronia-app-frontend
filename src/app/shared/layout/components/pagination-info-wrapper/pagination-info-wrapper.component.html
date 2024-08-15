@@ -1,3 +1,8 @@
+<!-- List -->
+<layout-waiting-overlay [waiting]="waiting">
+  <ng-content></ng-content>
+</layout-waiting-overlay>
+<!-- Pagination info -->
 <!-- Total -->
 <div class="row">
   <div class="col-md-1">
@@ -6,7 +11,7 @@
 </div>
 <!-- Page navigation -->
 <div class="d-flex justify-content-center mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="disabled"
+  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
     (goTo)="goTo.emit($event)">
   </pagination-navigation>
 </div>

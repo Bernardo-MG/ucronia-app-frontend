@@ -6,14 +6,13 @@ import { BookType } from '@app/association/library/models/book-type';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'assoc-library-admin-book-type-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationInfoComponent],
+  imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
   templateUrl: './library-admin-book-type-list.component.html'
 })
 export class LibraryAdminBookTypeListComponent implements OnInit {

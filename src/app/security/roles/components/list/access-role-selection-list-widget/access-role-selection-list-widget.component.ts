@@ -6,16 +6,14 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
 
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent, PaginationNavigationInfoComponent],
+  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoWrapperComponent],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {

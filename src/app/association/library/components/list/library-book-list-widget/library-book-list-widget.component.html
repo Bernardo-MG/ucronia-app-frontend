@@ -1,10 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <layout-waiting-overlay [waiting]="reading">
-      <!-- List -->
+    <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
       <assoc-library-book-list [books]="page.content" [routeLinkAdapter]="routeLinkAdapter"></assoc-library-book-list>
-    </layout-waiting-overlay>
-    <!-- Pagination info -->
-    <pagination-navigation-info [page]="page" [disabled]="reading" (goTo)="load($event)"></pagination-navigation-info>
+    </layout-pagination-info-wrapper>
   </div>
 </div>
