@@ -1,22 +1,19 @@
-<layout-waiting-overlay [waiting]="readingUsers">
-  <!-- List -->
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <!-- Headers -->
-        <th scope="col">
-          Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
-        </th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr *ngFor="let user of page.content; let rowIndex = index" role="button"
-        routerLink="/security/users/{{user.username}}">
-        <!-- Cells -->
-        <td>
-          {{user.name}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</layout-waiting-overlay>
+<!-- List -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Headers -->
+      <th scope="col">
+        Nombre <sorting-button property="name" (directionChange)="changeDirection.emit($event)"></sorting-button>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr *ngFor="let user of users; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(user)}}">
+      <!-- Cells -->
+      <td>
+        {{user.name}}
+      </td>
+    </tr>
+  </tbody>
+</table>

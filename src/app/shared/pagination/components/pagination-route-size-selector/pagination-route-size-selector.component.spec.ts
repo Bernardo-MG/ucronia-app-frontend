@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationSizeSelectorComponent as PaginationRouteSizeSelectorComponent } from './pagination-route-size-selector.component';
 
 describe('PaginationRouteSizeSelectorComponent', () => {
@@ -11,7 +10,6 @@ describe('PaginationRouteSizeSelectorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule,
         PaginationRouteSizeSelectorComponent
       ]
     })

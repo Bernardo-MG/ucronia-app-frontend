@@ -6,15 +6,14 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
 
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent],
+  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoWrapperComponent],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {
@@ -26,7 +25,7 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingRoles = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -51,19 +50,23 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingRoles = true;
+    this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingRoles = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingRoles = false;
+        this.reading = false;
       }
     });
+  }
+
+  public routeLinkAdapter(data: Role): string {
+    return `/security/roles/${data.name}`;
   }
 
 }

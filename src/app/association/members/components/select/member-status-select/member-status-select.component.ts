@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Active } from '../../../models/active';
 
 @Component({
@@ -9,9 +9,11 @@ import { Active } from '../../../models/active';
 })
 export class MemberStatusSelectComponent {
 
-  public status = Active.Active;
+  @Input() public disabled = false;
 
   @Output() public changeStatus = new EventEmitter<Active>();
+
+  public status = Active.Active;
 
   public onChangeStatus(event: any) {
     const value = event.target.value as 'Active' | 'Inactive' | 'All';
