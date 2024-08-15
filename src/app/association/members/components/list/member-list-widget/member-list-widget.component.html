@@ -1,13 +1,9 @@
 <div class="card">
   <div class="card-body">
     <!-- Filter -->
-    <div class="row">
-      <div class="col-md-1 offset-md-9">
-        Estado
-      </div>
-      <div class="col-md-2">
-        <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
-      </div>
+    <div class="d-flex justify-content-end">
+      <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
+      </assoc-member-status-select>
     </div>
     <!-- List -->
     <layout-waiting-overlay [waiting]="readingMembers">
