@@ -205,7 +205,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   private openModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
     if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      if (!modal) {
+        modal = new bootstrap.Modal(modalElement);
+      }
       modal.show();
     }
   }
@@ -213,8 +216,10 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   private closeModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
     if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.dispose();
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      if (modal) {
+        modal.toggle();
+      }
     }
   }
 
