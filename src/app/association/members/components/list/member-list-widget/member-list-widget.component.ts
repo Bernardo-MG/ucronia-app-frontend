@@ -33,7 +33,7 @@ export class MemberListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingMembers = false;
+  public reading = false;
 
   constructor(
     private authContainer: AuthContainer,
@@ -61,18 +61,18 @@ export class MemberListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingMembers = true;
+    this.reading = true;
 
     this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingMembers = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingMembers = false;
+        this.reading = false;
       }
     });
   }

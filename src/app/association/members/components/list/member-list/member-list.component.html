@@ -4,10 +4,10 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Nombre <sorting-button property="fullName" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Nombre <sorting-button property="fullName" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Activo <sorting-button property="active" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Activo <sorting-button property="active" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
     </tr>
   </thead>

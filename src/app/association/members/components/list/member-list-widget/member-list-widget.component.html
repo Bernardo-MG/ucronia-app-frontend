@@ -6,12 +6,12 @@
       </assoc-member-status-select>
     </div>
     <!-- List -->
-    <layout-waiting-overlay [waiting]="readingMembers">
+    <layout-waiting-overlay [waiting]="reading">
       <assoc-member-list [page]="page" (changeDirection)="onChangeDirection($event)">
       </assoc-member-list>
     </layout-waiting-overlay>
     <!-- Pagination info -->
-    <pagination-navigation-info [page]="page" [disabled]="readingMembers"
+    <pagination-navigation-info [page]="page" [disabled]="reading"
       (goTo)="load($event)"></pagination-navigation-info>
     <!-- Add -->
     <div class="col-md-2 offset-md-5">

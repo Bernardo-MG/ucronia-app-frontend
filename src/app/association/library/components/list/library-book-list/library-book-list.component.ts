@@ -18,8 +18,4 @@ export class LibraryBookListComponent {
 
   @Output() public directionChange = new EventEmitter<SortProperty>();
 
-  public onChangeDirection(field: SortProperty) {
-    this.directionChange.emit(field);
-  }
-
 }

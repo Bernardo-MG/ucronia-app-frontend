@@ -18,10 +18,4 @@ export class AccessRoleSelectionListComponent {
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 
-  constructor() { }
-
-  public onChangeDirection(field: SortProperty) {
-    this.changeDirection.emit(field);
-  }
-
 }

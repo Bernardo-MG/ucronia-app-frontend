@@ -18,8 +18,4 @@ export class AccessUserSelectionListComponent {
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 
-  public onChangeDirection(field: SortProperty) {
-    this.changeDirection.emit(field);
-  }
-
 }

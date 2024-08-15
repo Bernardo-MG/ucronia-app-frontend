@@ -4,13 +4,13 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Usuario<sorting-button property="username" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Usuario <sorting-button property="username" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Fecha<sorting-button property="date" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Fecha <sorting-button property="date" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Login<sorting-button property="loggedIn" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Login <sorting-button property="loggedIn" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
     </tr>
   </thead>

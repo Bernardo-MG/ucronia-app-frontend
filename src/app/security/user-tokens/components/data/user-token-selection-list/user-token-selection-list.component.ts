@@ -18,8 +18,4 @@ export class UserTokenSelectionListComponent {
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 
-  public onChangeDirection(field: SortProperty) {
-    this.changeDirection.emit(field);
-  }
-
 }
