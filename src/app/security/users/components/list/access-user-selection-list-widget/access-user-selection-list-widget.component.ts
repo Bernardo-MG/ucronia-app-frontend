@@ -67,4 +67,8 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
     });
   }
 
+  public routeLinkAdapter(data: User): string {
+    return `/security/users/${data.username}`;
+  }
+
 }

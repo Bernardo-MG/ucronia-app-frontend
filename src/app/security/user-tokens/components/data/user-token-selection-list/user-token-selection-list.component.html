@@ -21,8 +21,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let token of page.content; let rowIndex = index" role="button"
-      routerLink="/user-tokens/{{token.token}}">
+    <tr *ngFor="let token of userTokens; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(token)}}">
       <!-- Cells -->
       <td>
         {{token.username}}

@@ -7,7 +7,7 @@
     </div>
     <!-- List -->
     <layout-waiting-overlay [waiting]="reading">
-      <assoc-member-list [page]="page" (changeDirection)="onChangeDirection($event)">
+      <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter" (changeDirection)="onChangeDirection($event)">
       </assoc-member-list>
     </layout-waiting-overlay>
     <!-- Pagination info -->

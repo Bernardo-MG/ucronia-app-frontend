@@ -12,8 +12,8 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let member of page.content; let rowIndex = index"
-      [ngClass]="{ 'table-secondary': member.active === false }" role="button" routerLink="/members/{{member.number}}">
+    <tr *ngFor="let member of members; let rowIndex = index"
+      [ngClass]="{ 'table-secondary': member.active === false }" role="button" routerLink="{{routeLinkAdapter(member)}}">
       <!-- Cells -->
       <td>
         {{member.name.fullName}}

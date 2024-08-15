@@ -58,4 +58,8 @@ export class UserTokenFrontpageComponent implements OnInit {
     });
   }
 
+  public routeLinkAdapter(data: UserToken): string {
+    return `/user-tokens/${data.token}`;
+  }
+
 }

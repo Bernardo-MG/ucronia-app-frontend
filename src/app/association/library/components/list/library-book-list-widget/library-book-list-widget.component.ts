@@ -60,4 +60,8 @@ export class LibraryBookListWidgetComponent implements OnInit {
     });
   }
 
+  public routeLinkAdapter(data: Book): string {
+    return `/library/book/${data.number}`;
+  }
+
 }

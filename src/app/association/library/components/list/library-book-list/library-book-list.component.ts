@@ -16,6 +16,8 @@ export class LibraryBookListComponent {
 
   @Input() books: Book[] = [];
 
+  @Input() public routeLinkAdapter: (data: Book) => string = (data) => '';
+
   @Output() public directionChange = new EventEmitter<SortProperty>();
 
 }

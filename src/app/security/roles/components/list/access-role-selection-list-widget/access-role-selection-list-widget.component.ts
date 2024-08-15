@@ -67,4 +67,8 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
     });
   }
 
+  public routeLinkAdapter(data: Role): string {
+    return `/security/roles/${data.name}`;
+  }
+
 }

@@ -3,7 +3,7 @@
     <layout-waiting-overlay [waiting]="reading">
       <layout-article title="Tokens de usuario">
         <!-- List -->
-        <access-user-token-selection-list [page]="page" (changeDirection)="onChangeDirection($event)">
+        <access-user-token-selection-list [userTokens]="page.content" (changeDirection)="onChangeDirection($event)" [routeLinkAdapter]="routeLinkAdapter">
         </access-user-token-selection-list>
       </layout-article>
       <!-- Pagination info -->

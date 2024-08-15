@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
@@ -14,7 +13,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 })
 export class AccessUserSelectionListComponent {
 
-  @Input() public page = new PaginatedResponse<User[]>([]);
+  @Input() public users: User[] = [];
+
+  @Input() public routeLinkAdapter: (data: User) => string = (data) => '';
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 

@@ -4,13 +4,12 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Nombre<sorting-button property="name" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Nombre <sorting-button property="name" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let user of page.content; let rowIndex = index" role="button"
-      routerLink="/security/users/{{user.username}}">
+    <tr *ngFor="let user of users; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(user)}}">
       <!-- Cells -->
       <td>
         {{user.name}}

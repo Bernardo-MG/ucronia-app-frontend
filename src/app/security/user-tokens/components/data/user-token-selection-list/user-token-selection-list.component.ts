@@ -14,7 +14,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 })
 export class UserTokenSelectionListComponent {
 
-  @Input() public page = new PaginatedResponse<UserToken[]>([]);
+  @Input() public userTokens: UserToken[] = [];
+
+  @Input() public routeLinkAdapter: (data: UserToken) => string = (data) => '';
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 

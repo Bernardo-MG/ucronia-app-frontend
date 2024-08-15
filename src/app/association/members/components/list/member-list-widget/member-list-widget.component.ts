@@ -77,4 +77,8 @@ export class MemberListWidgetComponent implements OnInit {
     });
   }
 
+  public routeLinkAdapter(data: Member): string {
+    return `/members/${data.number}`;
+  }
+
 }

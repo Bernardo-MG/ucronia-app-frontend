@@ -2,8 +2,8 @@
   <div class="card-body">
     <!-- List -->
     <layout-waiting-overlay [waiting]="reading">
-      <access-role-selection-list [page]="page"
-        (changeDirection)="onChangeDirection($event)"></access-role-selection-list>
+      <access-role-selection-list [roles]="page.content" (changeDirection)="onChangeDirection($event)"
+        [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
     </layout-waiting-overlay>
     <!-- Pagination info -->
     <pagination-navigation-info [page]="page" [disabled]="reading" (goTo)="load($event)"></pagination-navigation-info>
