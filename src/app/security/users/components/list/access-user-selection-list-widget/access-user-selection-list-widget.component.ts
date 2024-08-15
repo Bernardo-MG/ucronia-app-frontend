@@ -10,11 +10,12 @@ import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-o
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
+import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent],
+  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent, PaginationNavigationInfoComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {
@@ -26,7 +27,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingUsers = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -51,17 +52,17 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingUsers = true;
+    this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingUsers = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingUsers = false;
+        this.reading = false;
       }
     });
   }

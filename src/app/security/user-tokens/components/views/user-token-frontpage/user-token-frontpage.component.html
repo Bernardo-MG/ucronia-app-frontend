@@ -1,5 +1,13 @@
-<layout-article title="Tokens de usuario">
-  <!-- List -->
-  <access-user-token-selection-list>
-  </access-user-token-selection-list>
-</layout-article>
+<div class="card">
+  <div class="card-body">
+    <layout-waiting-overlay [waiting]="reading">
+      <layout-article title="Tokens de usuario">
+        <!-- List -->
+        <access-user-token-selection-list [page]="page" (changeDirection)="onChangeDirection($event)">
+        </access-user-token-selection-list>
+      </layout-article>
+      <!-- Pagination info -->
+      <pagination-navigation-info [page]="page" [disabled]="reading" (goTo)="load($event)"></pagination-navigation-info>
+    </layout-waiting-overlay>
+  </div>
+</div>

@@ -17,11 +17,6 @@ export class AccessUserSelectionListComponent {
 
   @Input() public page = new PaginatedResponse<User[]>([]);
 
-  /**
-   * Loading flag.
-   */
-  @Input() public readingUsers = false;
-
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 
   public onChangeDirection(field: SortProperty) {

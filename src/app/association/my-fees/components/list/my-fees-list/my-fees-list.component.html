@@ -22,7 +22,7 @@
           {{fee.transaction.date}}
         </ng-container>
         <ng-container *ngIf="!fee.paid">
-          -
+          <icon-failure class="text-danger"></icon-failure>
         </ng-container>
       </td>
     </tr>

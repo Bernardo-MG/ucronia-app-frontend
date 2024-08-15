@@ -7,6 +7,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
@@ -14,7 +15,7 @@ import { AccessRoleSelectionListComponent } from '../access-role-selection-list/
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent],
+  imports: [RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationNavigationComponent, WaitingOverlayComponent, PaginationNavigationInfoComponent],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {
@@ -26,7 +27,7 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingRoles = false;
+  public reading = false;
 
   private sort = new Sort([]);
 
@@ -51,17 +52,17 @@ export class AccessRoleSelectionListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingRoles = true;
+    this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingRoles = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingRoles = false;
+        this.reading = false;
       }
     });
   }
