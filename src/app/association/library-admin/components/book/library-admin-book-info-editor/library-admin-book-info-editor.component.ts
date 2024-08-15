@@ -22,6 +22,7 @@ import { PublisherAdminService } from '../../../services/publisher-admin.service
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
 import { Language } from '@app/association/library/models/language';
+import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
@@ -111,7 +112,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onGoToBookTypePage(page: number) {
     this.readingBookTypes = true;
     // TODO: The page correction should be done automatically
-    this.bookTypeService.getAll(page).subscribe({
+    this.bookTypeService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.bookTypePage = response;
 
@@ -128,7 +129,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onGoToGameSystemPage(page: number) {
     this.readingGameSystems = true;
     // TODO: The page correction should be done automatically
-    this.gameSystemService.getAll(page).subscribe({
+    this.gameSystemService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.gameSystemPage = response;
 
@@ -145,7 +146,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onGoToAuthorPage(page: number) {
     this.readingAuthors = true;
     // TODO: The page correction should be done automatically
-    this.authorService.getAll(page).subscribe({
+    this.authorService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.authorPage = response;
 
@@ -162,7 +163,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onGoToPublisherPage(page: number) {
     this.readingPublishers = true;
     // TODO: The page correction should be done automatically
-    this.publisherService.getAll(page).subscribe({
+    this.publisherService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.publisherPage = response;
 
@@ -179,7 +180,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public onGoToDonorPage(page: number) {
     this.readingDonors = true;
     // TODO: The page correction should be done automatically
-    this.donorService.getAll(page).subscribe({
+    this.donorService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.donorPage = response;
 

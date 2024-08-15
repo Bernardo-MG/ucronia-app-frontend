@@ -10,6 +10,7 @@ import { Language } from '@app/association/library/models/language';
 import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { Observable } from 'rxjs';
@@ -76,7 +77,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public onGoToBookTypePage(page: number) {
     this.readingBookTypes = true;
     // TODO: The page correction should be done automatically
-    this.bookTypeService.getAll(page).subscribe({
+    this.bookTypeService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.bookTypePage = response;
 
@@ -93,7 +94,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public onGoToGameSystemPage(page: number) {
     this.readingGameSystems = true;
     // TODO: The page correction should be done automatically
-    this.gameSystemService.getAll(page).subscribe({
+    this.gameSystemService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.gameSystemPage = response;
 
@@ -110,7 +111,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public onGoToAuthorPage(page: number) {
     this.readingAuthors = true;
     // TODO: The page correction should be done automatically
-    this.authorService.getAll(page).subscribe({
+    this.authorService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.authorPage = response;
 
@@ -127,7 +128,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public onGoToPublisherPage(page: number) {
     this.readingPublishers = true;
     // TODO: The page correction should be done automatically
-    this.publisherService.getAll(page).subscribe({
+    this.publisherService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.publisherPage = response;
 
@@ -144,7 +145,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   public onGoToDonorPage(page: number) {
     this.readingDonors = true;
     // TODO: The page correction should be done automatically
-    this.donorService.getAll(page).subscribe({
+    this.donorService.getAll(page, new Sort([])).subscribe({
       next: response => {
         this.donorPage = response;
 

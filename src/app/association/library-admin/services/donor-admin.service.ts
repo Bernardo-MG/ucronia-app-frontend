@@ -47,10 +47,11 @@ export class DonorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number): Observable<PaginatedResponse<Person[]>> {
+  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Person[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('fullName')]);
     query.pagination = { page };
+    query.sort = sort;
 
     return this.getClient().query(query).read();
   }
