@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationInfoComponent } from '@app/shared/pagination/components/pagination-navigation-info/pagination-navigation-info.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
@@ -14,7 +12,7 @@ import { LibraryBookListComponent } from '../library-book-list/library-book-list
 @Component({
   selector: 'assoc-library-book-list-widget',
   standalone: true,
-  imports: [CommonModule, RouterModule, WaitingOverlayComponent, PaginationNavigationComponent, LibraryBookListComponent, PaginationNavigationInfoComponent],
+  imports: [CommonModule, WaitingOverlayComponent, LibraryBookListComponent, PaginationNavigationInfoComponent],
   templateUrl: './library-book-list-widget.component.html'
 })
 export class LibraryBookListWidgetComponent implements OnInit {
