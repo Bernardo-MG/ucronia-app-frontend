@@ -90,6 +90,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
 
+    // Load languages
     this.languages = this.service.getLanguages();
   }
 

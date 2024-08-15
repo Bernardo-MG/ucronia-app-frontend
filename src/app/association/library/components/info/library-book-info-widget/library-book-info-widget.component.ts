@@ -11,6 +11,7 @@ import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
 import { LibraryBookLendingsComponent } from '../library-book-lendings/library-book-lendings.component';
+import { Language } from '@app/association/library/models/language';
 
 @Component({
   selector: 'assoc-library-book-info-widget',
@@ -23,6 +24,8 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   @ViewChild('lendCloseButton') lendCloseButton: any;
 
   @ViewChild('returnCloseButton') returnCloseButton: any;
+
+  public languages: Language[] = [];
 
   public lendPermission = false;
 
@@ -53,6 +56,9 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
       }
       this.load();
     });
+
+    // Load languages
+    this.languages = this.service.getLanguages();
   }
 
   public onCloseLend() {
