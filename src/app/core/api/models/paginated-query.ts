@@ -1,11 +1,12 @@
 import { Pagination } from "./pagination";
 import { Sort } from "./sort";
+import { SortDirection } from "./sort-direction";
 
 export class PaginatedQuery {
 
-  public _sort = new Sort([]);
+  private _sort = new Sort([]);
 
-  public _defaultSort = new Sort([]);
+  private _defaultSort = new Sort([]);
 
   public parameters: { [key: string]: any } = {};
 
@@ -14,19 +15,24 @@ export class PaginatedQuery {
   }
 
   public get sort(): Sort {
+    let validSortings;
     let sortFields;
 
-    if (this._sort.properties.length === 0) {
+    // Remove unsorted fields
+    validSortings = this._sort.properties.filter(f => f.direction != SortDirection.Unsorted);
+    if (validSortings.length === 0) {
       // Use default sorts if no sorting was received
       sortFields = this._defaultSort.properties;
     } else {
       // Merge default sorting with the received one
 
-      // Replace unsorted fields with defaults
-      const sortedProperties = this._sort.properties.map(f => f.property);
-      const defaultSortFields = this._defaultSort.properties.filter(f => !sortedProperties.includes(f.property));
+      // Apply default sortings to those fields which are not sorted
+      const sortedProperties = validSortings.map(f => f.property);
+      const defaultSortFields = this._defaultSort.properties.filter(f =>
+        (f.direction == SortDirection.Unsorted) || (!sortedProperties.includes(f.property))
+      );
 
-      sortFields = this._sort.properties.concat(defaultSortFields);
+      sortFields = validSortings.concat(defaultSortFields);
     }
 
     // Sort fields alphabetically
