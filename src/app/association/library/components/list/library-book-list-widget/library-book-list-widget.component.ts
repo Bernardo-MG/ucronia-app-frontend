@@ -45,7 +45,7 @@ export class LibraryBookListWidgetComponent implements OnInit {
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAll(page).subscribe({
+    this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
