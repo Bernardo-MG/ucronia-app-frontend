@@ -4,13 +4,13 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Username<sorting-button property="username" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Usuario <sorting-button property="username" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Date<sorting-button property="date" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Fecha <sorting-button property="date" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Logged in<sorting-button property="loggedIn" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Login <sorting-button property="loggedIn" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
     </tr>
   </thead>
@@ -24,7 +24,16 @@
         {{user.date}}
       </td>
       <td>
-        {{user.loggedIn}}
+        <ng-container [ngSwitch]="user.loggedIn">
+          <ng-container *ngSwitchCase="true">
+            <!-- Active -->
+            <icon-success class="text-success"></icon-success>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Not active -->
+            <icon-failure class="text-danger"></icon-failure>
+          </ng-container>
+        </ng-container>
       </td>
     </tr>
   </tbody>

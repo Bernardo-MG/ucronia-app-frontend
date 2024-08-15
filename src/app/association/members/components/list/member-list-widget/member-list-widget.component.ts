@@ -5,8 +5,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { Active } from '../../../models/active';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
@@ -16,7 +15,7 @@ import { MemberListComponent } from '../member-list/member-list.component';
 @Component({
   selector: 'assoc-member-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, MemberListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, WaitingOverlayComponent],
+  imports: [RouterModule, IconsModule, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent],
   templateUrl: './member-list-widget.component.html'
 })
 export class MemberListWidgetComponent implements OnInit {
@@ -32,7 +31,7 @@ export class MemberListWidgetComponent implements OnInit {
   /**
    * Loading flag.
    */
-  public readingMembers = false;
+  public reading = false;
 
   constructor(
     private authContainer: AuthContainer,
@@ -60,20 +59,24 @@ export class MemberListWidgetComponent implements OnInit {
   }
 
   public load(page: number) {
-    this.readingMembers = true;
+    this.reading = true;
 
     this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.page = response;
 
         // Reactivate view
-        this.readingMembers = false;
+        this.reading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingMembers = false;
+        this.reading = false;
       }
     });
+  }
+
+  public routeLinkAdapter(data: Member): string {
+    return `/members/${data.number}`;
   }
 
 }

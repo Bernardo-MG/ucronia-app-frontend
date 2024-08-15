@@ -1,15 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
   <div class="row mb-2">
-    <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Member</label>
+    <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
       <input type="text" [value]="fee.person.fullName" id="fullNameInput" readonly="true" class="form-control"
         aria-describedby="fullNameLabel">
     </div>
   </div>
-  <!-- Date -->
+  <!-- Month -->
   <div class="row mb-2">
-    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Date</label>
+    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Mes</label>
     <div class="col-sm-10">
       <input type="month" id="dateInput" formControlName="date" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
@@ -18,9 +18,9 @@
       </div>
     </div>
   </div>
-  <!-- Paid -->
+  <!-- Pagado -->
   <div class="row mb-2">
-    <label id="activeLabel" class="col-sm-2 col-form-label">Paid</label>
+    <label id="activeLabel" class="col-sm-2 col-form-label">Pagado</label>
     <div class="col-sm-10">
       <icon-success *ngIf="data?.paid"></icon-success>
       <icon-failure *ngIf="!data?.paid"></icon-failure>
@@ -28,7 +28,7 @@
   </div>
   <!-- Payment date -->
   <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Payment date</label>
+    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Fecha de pago</label>
     <div class="col-sm-10">
       <input type="date" [value]="fee.transaction.date" id="paymentDateInput" [readonly]="true" class="form-control"
         aria-describedby="paymentDateLabel">
@@ -38,12 +38,12 @@
     <!-- Save button -->
     <div class="col-sm-2 d-grid gap-2">
       <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Save</layout-waiting-button>
+        (action)="onSave()">Guardar</layout-waiting-button>
     </div>
     <!-- Cancel button -->
     <ng-template [ngIf]="cancellable">
       <div class="col-sm-2 d-grid gap-2">
-        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
       </div>
     </ng-template>
   </div>

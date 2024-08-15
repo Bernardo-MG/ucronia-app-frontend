@@ -16,10 +16,8 @@ export class LibraryBookListComponent {
 
   @Input() books: Book[] = [];
 
-  @Output() public directionChange = new EventEmitter<SortProperty>();
+  @Input() public routeLinkAdapter: (data: Book) => string = (data) => '';
 
-  public onChangeDirection(field: SortProperty) {
-    this.directionChange.emit(field);
-  }
+  @Output() public directionChange = new EventEmitter<SortProperty>();
 
 }

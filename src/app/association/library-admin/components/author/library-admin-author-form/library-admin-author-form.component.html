@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Name -->
   <div class="row mb-2">
-    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Name</label>
+    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
       <input type="text" id="nameInput" formControlName="name" class="form-control"
         [ngClass]="{ 'is-invalid': isFieldInvalid('name') }" aria-describedby="nameLabel" maxlength="100">
@@ -14,7 +14,7 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Save</layout-waiting-button>
+        (action)="onSave()">Guardar</layout-waiting-button>
     </div>
   </div>
 </form>

@@ -1,13 +1,13 @@
-<layout-article title="Register book">
+<layout-article title="Registro de libro">
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
         <!-- Form -->
-        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [bookTypePage]="bookTypePage"
-          [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-          [donorPage]="donorPage" (save)="onSave($event)" (goToBookTypePage)="onGoToBookTypePage($event)"
-          (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
-          (goToPublisherPage)="onGoToPublisherPage($event)">
+        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [languages]="languages"
+          [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage"
+          [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
+          (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
+          (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)">
         </assoc-library-admin-book-form>
       </div>
     </div>

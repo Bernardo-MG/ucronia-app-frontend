@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
+import { ActivityCalendarWidgetComponent } from '../activity-calendar/activity-calendar.component';
 
 @Component({
-  selector: 'assoc-activity-calendar-widget',
+  selector: 'app-activity-calendar-frontpage',
   standalone: true,
-  imports: [ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent],
-  templateUrl: './activity-calendar-widget.component.html'
+  imports: [ArticleComponent, ActivityCalendarWidgetComponent, WaitingOverlayComponent],
+  templateUrl: './activity-calendar-frontpage.component.html'
 })
-export class ActivityCalendarWidgetComponent implements OnInit {
+export class ActivityCalendarFrontpageComponent implements OnInit {
 
-  public readingCalendarId = false;
+  public readingCalendarCode = false;
+
+  public calendarCode = '';
 
   constructor(
     private service: ActivityCalendarService
   ) { }
 
-  public calendarCode = '';
-
   ngOnInit(): void {
-    this.readingCalendarId = true;
+    this.readingCalendarCode = true;
     this.service.getCalendarCode().subscribe({
       next: response => {
         this.calendarCode = response;
-        this.readingCalendarId = false;
+        this.readingCalendarCode = false;
       },
       error: error => {
-        this.readingCalendarId = false;
+        this.readingCalendarCode = false;
       }
     });
   }

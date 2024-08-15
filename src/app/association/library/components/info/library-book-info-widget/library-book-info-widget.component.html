@@ -1,4 +1,4 @@
-<layout-article title="Book info">
+<layout-article title="Datos de libro">
   <div class="col-md-6 offset-md-3 pb-2">
     <div class="card">
       <div class="card-body">
@@ -8,7 +8,7 @@
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#returnModal">
-              <icon-take-in></icon-take-in>Return
+              <icon-take-in></icon-take-in>Devuelto
             </button>
           </ng-container>
           <ng-container *ngSwitchCase="false">
@@ -16,12 +16,12 @@
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#lendModal">
-              <icon-take-out></icon-take-out>Lend
+              <icon-take-out></icon-take-out>Prestado
             </button>
           </ng-container>
         </ng-container>
         <!-- Book info -->
-        <assoc-library-book-info id="info" [data]="data"></assoc-library-book-info>
+        <assoc-library-book-info id="info" [data]="data" [languages]="languages"></assoc-library-book-info>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-header">
-        <h2>Lendings</h2>
+        <h2>Préstamos</h2>
       </div>
       <div class="card-body">
         <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
@@ -50,7 +50,7 @@
         <assoc-library-book-lending [book]="data" (saved)="onCloseLend()"></assoc-library-book-lending>
       </div>
       <div class="modal-footer">
-        <button #lendCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #lendCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -67,7 +67,7 @@
         <assoc-library-book-return [book]="data" (saved)="onCloseReturn()"></assoc-library-book-return>
       </div>
       <div class="modal-footer">
-        <button #returnCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #returnCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

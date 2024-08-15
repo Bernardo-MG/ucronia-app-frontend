@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SortDirection } from '@app/core/api/models/sort-direction';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BehaviorSubject } from 'rxjs';
 import { SortingRouteButtonComponent } from './sorting-route-button.component';
 
@@ -15,7 +14,6 @@ describe('SortingRouteButtonComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule,
         SortingRouteButtonComponent
       ],
       providers: [

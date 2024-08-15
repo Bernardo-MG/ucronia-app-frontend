@@ -1,0 +1,9 @@
+<layout-article title="Calendario">
+  <div class="card">
+    <div class="card-body">
+      <layout-waiting-overlay [waiting]="readingCalendarCode">
+        <assoc-activity-calendar [calendarCode]="calendarCode"></assoc-activity-calendar>
+      </layout-waiting-overlay>
+    </div>
+  </div>
+</layout-article>

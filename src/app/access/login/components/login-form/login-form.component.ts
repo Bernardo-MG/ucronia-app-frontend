@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -12,7 +13,7 @@ import { UserLogin } from '../../models/user-login';
 @Component({
   selector: 'login-login-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {

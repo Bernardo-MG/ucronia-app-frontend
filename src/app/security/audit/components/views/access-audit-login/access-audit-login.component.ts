@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { LoginRegister } from '../../../models/login-register';
 import { AccessAuditLoginService } from '../../../services/access-audit-login.service';
 import { AccessAuditLoginListComponent } from '../../list/access-audit-login-list/access-audit-login-list.component';
@@ -13,7 +11,7 @@ import { AccessAuditLoginListComponent } from '../../list/access-audit-login-lis
 @Component({
   selector: 'access-audit-login',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessAuditLoginListComponent, PaginationNavigationComponent, WaitingOverlayComponent],
+  imports: [AccessAuditLoginListComponent, ArticleComponent, PaginationInfoWrapperComponent],
   templateUrl: './access-audit-login.component.html'
 })
 export class AccessAuditLoginComponent implements OnInit {

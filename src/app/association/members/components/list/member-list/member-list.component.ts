@@ -15,12 +15,10 @@ import { Member } from '../../../models/member';
 })
 export class MemberListComponent {
 
-  @Input() public page = new PaginatedResponse<Member[]>([]);
+  @Input() public members: Member[] = [];
+
+  @Input() public routeLinkAdapter: (data: Member) => string = (data) => '';
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
-
-  public onChangeDirection(field: SortProperty) {
-    this.changeDirection.emit(field);
-  }
 
 }

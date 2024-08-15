@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
     <!-- Index -->
     <div *ngIf="data?.number" class="row mb-2">
-      <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Index</label>
+      <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Índice</label>
       <div class="col-sm-10">
         <input type="text" [value]="data?.number" id="indexInput" [readonly]="true" class="form-control"
           aria-describedby="indexLabel">
@@ -21,7 +21,7 @@
     </div>
     <!-- Title -->
     <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Title</label>
+      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
       <div class="col-sm-10">
         <input type="text" id="titleInput" formControlName="title" class="form-control"
           [ngClass]="{ 'is-invalid': isFieldInvalid('title') }" aria-describedby="titleLabel" maxlength="100">
@@ -32,10 +32,10 @@
     </div>
     <!-- Language -->
     <div class="row mb-2">
-      <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Language</label>
+      <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
       <div class="col-sm-10">
         <select class="form-select" aria-label="Select year" formControlName="language"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('isbn') }" aria-describedby="languageLabel">
+          [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
           <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
             {{selectionLanguage.name}}</option>
         </select>
@@ -46,7 +46,7 @@
     </div>
     <!-- Book type -->
     <div class="row mb-2">
-      <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Book type</label>
+      <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
       <div class="col-sm-9">
         <input type="text" [value]="bookType" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
           class="form-control" aria-describedby="bookTypeLabel">
@@ -60,7 +60,7 @@
     </div>
     <!-- Game system -->
     <div class="row mb-2">
-      <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Game system</label>
+      <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
       <div class="col-sm-9">
         <input type="text" [value]="gameSystem" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
           class="form-control" aria-describedby="gameSystemLabel">
@@ -75,7 +75,7 @@
     <!-- Publishers -->
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h2>Publishers</h2>
+        <h2>Editores</h2>
       </div>
       <div class="col-sm-12">
         <table class="table">
@@ -84,7 +84,7 @@
               <th scope="col">
               </th>
               <th scope="col">
-                Publisher
+                Nombre
               </th>
             </tr>
           </thead>
@@ -115,7 +115,7 @@
     <!-- Donors -->
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h2>Donors</h2>
+        <h2>Donantes</h2>
       </div>
       <div class="col-sm-12">
         <table class="table">
@@ -124,7 +124,7 @@
               <th scope="col">
               </th>
               <th scope="col">
-                Donor
+                Nombre
               </th>
             </tr>
           </thead>
@@ -155,7 +155,7 @@
     <!-- Authors -->
     <div class="row mb-2">
       <div class="col-sm-12">
-        <h2>Authors</h2>
+        <h2>Autores</h2>
       </div>
       <div class="col-sm-12">
         <table class="table">
@@ -164,7 +164,7 @@
               <th scope="col">
               </th>
               <th scope="col">
-                Author
+                Nombre
               </th>
             </tr>
           </thead>
@@ -196,12 +196,12 @@
       <!-- Save button -->
       <div class="col-sm-2 d-grid gap-2">
         <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-          (action)="onSave()">Save</layout-waiting-button>
+          (action)="onSave()">Guardar</layout-waiting-button>
       </div>
       <!-- Cancel button -->
       <ng-template [ngIf]="cancellable">
         <div class="col-sm-2 d-grid gap-2">
-          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancel</button>
+          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
         </div>
       </ng-template>
     </div>
@@ -222,7 +222,7 @@
           (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -242,7 +242,7 @@
           (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -262,7 +262,7 @@
           (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -282,7 +282,7 @@
           (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -302,7 +302,7 @@
           (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
       </div>
       <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

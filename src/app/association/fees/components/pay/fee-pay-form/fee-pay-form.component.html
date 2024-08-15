@@ -1,15 +1,28 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
   <div class="row mb-2">
-    <label for="memberNameInput" class="col-sm-2 col-form-label">Member</label>
+    <label for="memberNameInput" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
-      <input type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"
+      <input disabled type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"
         aria-describedby="memberNameLabel">
     </div>
   </div>
-  <!-- Fee dates -->
+  <!-- Payment date -->
   <div class="row mb-2">
-    <label class="col-sm-2 col-form-label">Fee dates</label>
+    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
+    <div class="col-sm-10">
+      <div formGroupName="transaction">
+        <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('transaction.date') }" aria-describedby="paymentDateLabel">
+        <div class="invalid-feedback" *ngFor="let failure of getFailures('transaction.date')">
+          {{failure.message}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fees -->
+  <div class="row mb-2">
+    <label class="col-sm-2 col-form-label">Cuotas</label>
     <div class="col-sm-10">
       <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
         <div class="col-md-6 mb-2">
@@ -27,24 +40,11 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <button type="button" class="btn btn-link link-dark" aria-label="Add date" [disabled]="!formEnabled"
+        <div class="col-md-12 d-flex justify-content-center align-items-center">
+          <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled"
             (click)="addDate()">
             <icon-add></icon-add>
           </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Payment date -->
-  <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Payment date</label>
-    <div class="col-sm-10">
-      <div formGroupName="transaction">
-        <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('transaction.date') }" aria-describedby="paymentDateLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('transaction.date')">
-          {{failure.message}}
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
       <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Save</layout-waiting-button>
+        (action)="onSave()">Guardar</layout-waiting-button>
     </div>
   </div>
 </form>

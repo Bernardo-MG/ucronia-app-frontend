@@ -32,7 +32,7 @@ export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusC
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = false;
+    this.editable = this.authContainer.hasPermission("library_game_system", "update");
     this.deletable = this.authContainer.hasPermission("library_game_system", "delete");
 
     // Get id

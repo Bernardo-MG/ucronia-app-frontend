@@ -1,4 +1,4 @@
-<layout-article title="Book info">
+<layout-article title="Datos de libro">
   <div class="col-md-6 offset-md-3">
     <div class="card">
       <div class="card-body">
@@ -10,16 +10,17 @@
           <!-- Form -->
           <ng-container *ngSwitchCase="true">
             <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
-              [readonly]="!formEnabled" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
-              [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" [cancellable]="true"
-              (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
-              (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
-              (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)">
+              [readonly]="!formEnabled" [languages]="languages" [bookTypePage]="bookTypePage"
+              [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+              [donorPage]="donorPage" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()"
+              (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
+              (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
+              (goToDonorPage)="onGoToDonorPage($event)">
             </assoc-library-admin-book-form>
           </ng-container>
           <!-- Info -->
           <ng-container *ngSwitchCase="false">
-            <assoc-library-admin-book-info [data]="data"></assoc-library-admin-book-info>
+            <assoc-library-admin-book-info [data]="data" [languages]="languages"></assoc-library-admin-book-info>
           </ng-container>
         </ng-container>
       </div>

@@ -13,8 +13,6 @@ export class AccountMenuComponent implements OnInit {
 
   public username = '';
 
-  private loginUrl = '/login';
-
   constructor(
     private authContainer: AuthContainer,
     private router: Router
@@ -26,7 +24,11 @@ export class AccountMenuComponent implements OnInit {
 
   public onLogout() {
     this.authContainer.logout();
-    this.router.navigate([this.loginUrl]);
+    if (this.router.url === '/') {
+      window.location.reload();
+    } else {
+      this.router.navigate(['/']);
+    }
   }
 
 }

@@ -4,10 +4,10 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Fee date
+        Cuota
       </th>
       <th scope="col">
-        Payment date
+        Fecha de pago
       </th>
     </tr>
   </thead>
@@ -22,7 +22,7 @@
           {{fee.transaction.date}}
         </ng-container>
         <ng-container *ngIf="!fee.paid">
-          -
+          <icon-failure class="text-danger"></icon-failure>
         </ng-container>
       </td>
     </tr>

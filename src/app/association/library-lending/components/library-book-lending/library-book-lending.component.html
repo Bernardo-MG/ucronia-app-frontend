@@ -7,10 +7,10 @@
     <!-- Select member -->
     <layout-waiting-overlay [waiting]="readingMembers">
       <div class="row mb-2">
-        <div class="col-2">Pick member</div>
+        <div class="col-2">Elige socio</div>
         <div class="col-4 offset-6 d-flex">
           <div class="me-2">
-            Status:
+            Estado:
           </div>
           <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
         </div>
@@ -22,7 +22,7 @@
   </ng-container>
   <ng-container *ngSwitchCase="true">
     <!-- Lend book form -->
-    <button type="button" class="page-link" aria-label="Return"
+    <button type="button" class="btn btn-link" aria-label="Return"
       (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
     <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
       [book]="book" (save)="onSave($event)">

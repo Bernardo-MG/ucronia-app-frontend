@@ -21,6 +21,7 @@ import { GameSystemAdminService } from '../../../services/game-system-admin.serv
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
+import { Language } from '@app/association/library/models/language';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
@@ -51,6 +52,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
   public donorPage = new PaginatedResponse<Person[]>([]);
+
+  public languages: Language[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -86,6 +89,9 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
+
+    // Load languages
+    this.languages = this.service.getLanguages();
   }
 
   protected override delete(): void {

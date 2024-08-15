@@ -10,6 +10,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Book } from '../models/book';
+import { Language } from '../models/language';
 
 @Injectable({
   providedIn: "root"
@@ -37,6 +38,10 @@ export class BookService {
 
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/library/book');
+  }
+
+  public getLanguages(): Language[] {
+    return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
   }
 
 }

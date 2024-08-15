@@ -1,31 +1,15 @@
 <div class="card">
   <div class="card-body">
     <!-- Filter -->
-    <div class="row">
-      <div class="col-md-1 offset-md-9">
-        status
-      </div>
-      <div class="col-md-2">
-        <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
-      </div>
+    <div class="d-flex justify-content-end">
+      <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
+      </assoc-member-status-select>
     </div>
     <!-- List -->
-    <layout-waiting-overlay [waiting]="readingMembers">
-      <assoc-member-list [page]="page" (changeDirection)="onChangeDirection($event)">
+     <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+      <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter" (changeDirection)="onChangeDirection($event)">
       </assoc-member-list>
-    </layout-waiting-overlay>
-    <!-- Total -->
-    <div class="row">
-      <div class="col-md-1">
-        <p>Total: {{page.totalElements}}</p>
-      </div>
-    </div>
-    <!-- Page navigation -->
-    <div class="d-flex justify-content-center mt-1">
-      <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="readingMembers"
-        (goTo)="load($event)">
-      </pagination-navigation>
-    </div>
+     </layout-pagination-info-wrapper>
     <!-- Add -->
     <div class="col-md-2 offset-md-5">
       <div class="d-grid">

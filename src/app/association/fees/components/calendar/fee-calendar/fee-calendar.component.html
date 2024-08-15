@@ -1,7 +1,7 @@
 <!-- Controls -->
 <div class="d-flex justify-content-center pb-2">
   <!-- To previous year button -->
-  <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="page-link" (click)="onGoPrevious()"
+  <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
     [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
     <icon-backward></icon-backward>
   </button>
@@ -14,7 +14,7 @@
     </select>
   </div>
   <!-- To next year button -->
-  <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="page-link" (click)="onGoNext()"
+  <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="btn btn-link" (click)="onGoNext()"
     [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()" aria-label="Next year">
     <icon-forward></icon-forward>
   </button>
@@ -25,7 +25,7 @@
     <table class="table table-sm table-hover">
       <thead class="thead-light">
         <tr>
-          <th scope="col">Member</th>
+          <th scope="col">Socio</th>
           <!-- Add classes for responsiveness -->
           <th scope="col" *ngFor="let month of months"> {{month}}</th>
         </tr>

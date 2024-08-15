@@ -14,14 +14,10 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 })
 export class AccessRoleSelectionListComponent {
 
-  @Input() public page = new PaginatedResponse<Role[]>([]);
+  @Input() public roles: Role[] = [];
+
+  @Input() public routeLinkAdapter: (data: Role) => string = (data) => '';
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
-
-  constructor() { }
-
-  public onChangeDirection(field: SortProperty) {
-    this.changeDirection.emit(field);
-  }
 
 }

@@ -1,9 +1,9 @@
-<layout-article title="Edit user">
+<layout-article title="Editar usuario">
   <div class="col-md-6 offset-md-3">
     <ul class="nav nav-tabs pb-2">
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
-          (click)="onChangeView('user')">User</a>
+          (click)="onChangeView('user')">Usuario</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'roles'" aria-current="page" role="button"
@@ -11,7 +11,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'member'" aria-current="page" role="button"
-          (click)="onChangeView('member')">Member</a>
+          (click)="onChangeView('member')">Socio</a>
       </li>
     </ul>
     <ng-container [ngSwitch]="view">
@@ -47,7 +47,7 @@
                   <div class="col-sm-2 d-grid gap-2">
                     <layout-waiting-button [waiting]="changingActive" [disabled]="!editEnabled" name="Enable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Enable</layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</layout-waiting-button>
                   </div>
                 </ng-template>
                 <ng-template [ngIf]="data.enabled">
@@ -55,7 +55,7 @@
                   <div class="col-sm-2 d-grid gap-2">
                     <layout-waiting-button [waiting]="changingActive" [disabled]="!editEnabled" name="Disable"
                       data-bs-toggle="modal"
-                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Disable</layout-waiting-button>
+                      [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</layout-waiting-button>
                   </div>
                 </ng-template>
               </div>
@@ -87,7 +87,7 @@
       <ng-container *ngSwitchCase="'member'">
         <article class="p-4">
           <header>
-            <h2 class="border-bottom">Member</h2>
+            <h2 class="border-bottom">Socio</h2>
           </header>
           <!-- Member -->
           <div class="mb-1">
@@ -112,11 +112,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Are you sure you want to disable the user?</p>
+        <p>¿Está seguro de que quieres desactivar el usuario?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onDisable()" data-bs-dismiss="modal">Disable</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="onDisable()" data-bs-dismiss="modal">Desactivar</button>
       </div>
     </div>
   </div>
@@ -128,11 +128,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-body">
-        <p>Are you sure you want to enable the user?</p>
+        <p>¿Está seguro de que quieres activar el usuario?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-danger" (click)="onEnable()" data-bs-dismiss="modal">Enable</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" (click)="onEnable()" data-bs-dismiss="modal">Activar</button>
       </div>
     </div>
   </div>
