@@ -10,7 +10,7 @@ import { Member } from '../../../models/member';
 @Component({
   selector: 'assoc-member-form',
   standalone: true,
-  imports: [CommonModule, FormModule, ReactiveFormsModule, WaitingButtonComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormModule, ReactiveFormsModule, WaitingButtonComponent],
   templateUrl: './member-form.component.html'
 })
 export class MemberFormComponent extends FormComponent<Member> {

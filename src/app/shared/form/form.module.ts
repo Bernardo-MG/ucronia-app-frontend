@@ -4,13 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '../icons/icons.module';
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
 import { InputFailureFeedbackComponent } from './components/input-failure-feedback/input-failure-feedback.component';
+import { InvalidFieldDirective } from './directives/invalid-field.directive';
 
 
 
 @NgModule({
   declarations: [
     EditorHeaderComponent,
-    InputFailureFeedbackComponent
+    InputFailureFeedbackComponent,
+    InvalidFieldDirective
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { InputFailureFeedbackComponent } from './components/input-failure-feedba
   ],
   exports: [
     EditorHeaderComponent,
-    InputFailureFeedbackComponent
+    InputFailureFeedbackComponent,
+    InvalidFieldDirective
   ]
 })
 export class FormModule { }

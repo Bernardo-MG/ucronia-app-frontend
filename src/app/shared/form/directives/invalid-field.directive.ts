@@ -2,8 +2,7 @@ import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } fro
 import { FormControl, NgControl, FormGroupDirective } from '@angular/forms';
 
 @Directive({
-  selector: '[appInvalidField]',
-  standalone: true
+  selector: '[appInvalidField]'
 })
 export class InvalidFieldDirective implements OnChanges {
 

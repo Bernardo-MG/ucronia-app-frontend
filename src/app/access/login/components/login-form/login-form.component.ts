@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { UserLogin } from '../../models/user-login';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { UserLogin } from '../../models/user-login';
 
 /**
  * Login form component. Dumb component for just handling the form.
@@ -14,7 +15,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 @Component({
   selector: 'login-login-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
+  imports: [CommonModule, FormModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {

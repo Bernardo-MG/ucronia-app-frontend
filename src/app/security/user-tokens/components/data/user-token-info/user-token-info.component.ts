@@ -3,12 +3,13 @@ import { Component, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
+import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-user-token-info',
   standalone: true,
-  imports: [CommonModule, IconsModule],
+  imports: [CommonModule, IconsModule, FormModule],
   templateUrl: './user-token-info.component.html'
 })
 export class UserTokenInfoComponent {
