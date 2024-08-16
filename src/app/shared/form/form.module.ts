@@ -3,12 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconsModule } from '../icons/icons.module';
 import { EditorHeaderComponent } from './components/editor-header/editor-header.component';
+import { InputFailureFeedbackComponent } from './components/input-failure-feedback/input-failure-feedback.component';
 
 
 
 @NgModule({
   declarations: [
-    EditorHeaderComponent
+    EditorHeaderComponent,
+    InputFailureFeedbackComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { EditorHeaderComponent } from './components/editor-header/editor-header.
     IconsModule
   ],
   exports: [
-    EditorHeaderComponent
+    EditorHeaderComponent,
+    InputFailureFeedbackComponent
   ]
 })
 export class FormModule { }
