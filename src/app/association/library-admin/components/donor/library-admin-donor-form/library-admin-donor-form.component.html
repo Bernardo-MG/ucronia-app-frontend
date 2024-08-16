@@ -4,8 +4,8 @@
     <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
       <div formGroupName="name">
-        <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('firstName') }" aria-describedby="firstNameLabel" maxlength="50">
+        <input type="text" id="firstNameInput" formControlName="name.firstName" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('name.firstName') }" aria-describedby="firstNameLabel" maxlength="50">
       </div>
       <div class="invalid-feedback" *ngFor="let failure of getFailures('firstName')">
         {{failure.message}}
@@ -17,8 +17,8 @@
     <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
     <div class="col-sm-10">
       <div formGroupName="name">
-        <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('lastName') }" aria-describedby="lastNameLabel" maxlength="50">
+        <input type="text" id="lastNameInput" formControlName="name.lastName" class="form-control"
+          [ngClass]="{ 'is-invalid': isFieldInvalid('name.lastName') }" aria-describedby="lastNameLabel" maxlength="50">
       </div>
       <div class="invalid-feedback" *ngFor="let failure of getFailures('lastName')">
         {{failure.message}}
