@@ -4,7 +4,8 @@
     <label for="passwordInput" id="passwordLabel" class="col-sm-2 col-form-label">Contraseña</label>
     <div class="col-sm-10">
       <input type="password" id="passwordInput" formControlName="password" class="form-control"
-        appInvalidField="password" [backendFailure]="failures.hasProperty('password')" />
+        appInvalidField="password" [backendFailure]="failures.hasProperty('password')"
+        aria-describedby="passwordLabel" />
       <app-input-failure-feedback [failures]="getFailures('password')"></app-input-failure-feedback>
     </div>
   </div>
@@ -14,7 +15,8 @@
       contraseña</label>
     <div class="col-sm-10">
       <input type="password" id="confirmPasswordInput" formControlName="confirmPassword" class="form-control"
-        appInvalidField="confirmPassword" [backendFailure]="failures.hasProperty('confirmPassword')" />
+        appInvalidField="confirmPassword" [backendFailure]="failures.hasProperty('confirmPassword')"
+        aria-describedby="confirmPasswordLabel" />
       <app-input-failure-feedback [failures]="getFailures('confirmPassword')"></app-input-failure-feedback>
     </div>
   </div>
