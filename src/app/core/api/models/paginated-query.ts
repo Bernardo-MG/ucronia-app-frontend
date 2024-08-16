@@ -15,11 +15,10 @@ export class PaginatedQuery {
   }
 
   public get sort(): Sort {
-    let validSortings;
     let sortFields;
 
     // Remove unsorted fields
-    validSortings = this._sort.properties.filter(f => f.direction != SortDirection.Unsorted);
+    const validSortings = this._sort.properties.filter(f => f.direction != SortDirection.Unsorted);
     if (validSortings.length === 0) {
       // Use default sorts if no sorting was received
       sortFields = this._defaultSort.properties;
