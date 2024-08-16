@@ -19,16 +19,7 @@
         {{member.name.fullName}}
       </td>
       <td>
-        <ng-container [ngSwitch]="member.active">
-          <ng-container *ngSwitchCase="true">
-            <!-- Active -->
-            <icon-success class="text-success"></icon-success>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- Not active -->
-            <icon-failure class="text-danger"></icon-failure>
-          </ng-container>
-        </ng-container>
+        <icon-success-or-failure [success]="member.active"></icon-success-or-failure>
       </td>
     </tr>
   </tbody>

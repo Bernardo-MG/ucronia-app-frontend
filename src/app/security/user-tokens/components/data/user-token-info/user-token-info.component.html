@@ -55,16 +55,14 @@
   <div class="row mb-2">
     <label id="consumedLabel" class="col-sm-2 col-form-label">Consumido</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.consumed"></icon-success>
-      <icon-failure *ngIf="!data.consumed"></icon-failure>
+      <icon-success-or-failure [success]="data.consumed"></icon-success-or-failure>
     </div>
   </div>
   <!-- Revoked -->
   <div class="row mb-2">
     <label id="revokedLabel" class="col-sm-2 col-form-label">Revocado</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.revoked"></icon-success>
-      <icon-failure *ngIf="!data.revoked"></icon-failure>
+      <icon-success-or-failure [success]="data.revoked"></icon-success-or-failure>
     </div>
   </div>
 </form>

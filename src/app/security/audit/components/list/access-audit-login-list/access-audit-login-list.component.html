@@ -24,16 +24,7 @@
         {{user.date}}
       </td>
       <td>
-        <ng-container [ngSwitch]="user.loggedIn">
-          <ng-container *ngSwitchCase="true">
-            <!-- Active -->
-            <icon-success class="text-success"></icon-success>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- Not active -->
-            <icon-failure class="text-danger"></icon-failure>
-          </ng-container>
-        </ng-container>
+        <icon-success-or-failure [success]="user.loggedIn"></icon-success-or-failure>
       </td>
     </tr>
   </tbody>
