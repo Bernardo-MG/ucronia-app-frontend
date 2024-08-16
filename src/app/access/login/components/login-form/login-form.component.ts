@@ -53,6 +53,13 @@ export class LoginFormComponent {
   @Output() public rememberMe = new EventEmitter<boolean>();
 
   /**
+   * Login enabled flag.
+   */
+  public get loginEnabled(): boolean {
+    return ((this.form.valid) && (!this.waiting));
+  }
+
+  /**
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
@@ -120,15 +127,6 @@ export class LoginFormComponent {
     }
 
     return invalid;
-  }
-
-  /**
-   * Returns true if the login button is enabled.
-   * 
-   * @returns true if the login button is enabled, false otherwise
-   */
-  public isLoginEnabled(): boolean {
-    return ((this.form.valid) && (!this.waiting));
   }
 
   /**
