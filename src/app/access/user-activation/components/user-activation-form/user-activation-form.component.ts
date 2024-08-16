@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 /**
@@ -13,7 +12,7 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 @Component({
   selector: 'access-user-activation-form',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {

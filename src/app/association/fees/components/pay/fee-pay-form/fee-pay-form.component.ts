@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -12,7 +12,7 @@ import { FeePayment } from '../../../models/fee-payment';
 @Component({
   selector: 'assoc-fee-pay-form',
   standalone: true,
-  imports: [CommonModule, FormModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
+  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {

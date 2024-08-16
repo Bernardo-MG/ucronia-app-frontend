@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
@@ -14,7 +14,7 @@ import { BookLendingMemberSelectionComponent } from '../../book-lending-member-s
 @Component({
   selector: 'assoc-book-lending-form',
   standalone: true,
-  imports: [CommonModule, FormModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, BookLendingMemberSelectionComponent, LibraryAdminBookSelectionComponent],
+  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, BookLendingMemberSelectionComponent, LibraryAdminBookSelectionComponent],
   templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -9,7 +9,7 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 @Component({
   selector: 'account-change-password-form',
   standalone: true,
-  imports: [CommonModule, FormModule, ReactiveFormsModule, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {
