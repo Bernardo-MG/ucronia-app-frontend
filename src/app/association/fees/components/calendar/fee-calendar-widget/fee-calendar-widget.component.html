@@ -8,13 +8,11 @@
     <assoc-fee-calendar [activeFilter]="activeFilter" [range]="range" [waiting]="readingCalendar" [rows]="rows"
       (goToYear)="onGoToYear($event)"></assoc-fee-calendar>
     <!-- Pay fee -->
-    <div class="col-md-2 offset-md-5">
-      <div class="d-grid">
-        <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          Pagar cuota
-        </button>
-      </div>
+    <div appJustifyCenter>
+      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        Pagar cuota
+      </button>
     </div>
   </div>
 </div>

@@ -103,13 +103,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowPublisherSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <!-- Donors -->
@@ -143,13 +141,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowDonorSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowDonorSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <!-- Authors -->
@@ -183,13 +179,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowAuthorSelection()" type="button" class="btn btn-primary" aria-label="Add author"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowAuthorSelection()" type="button" class="btn btn-primary" aria-label="Add author"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <div class="row">
@@ -201,7 +195,8 @@
       <!-- Cancel button -->
       <ng-template [ngIf]="cancellable">
         <div class="col-sm-2 d-grid gap-2">
-          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
+          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel"
+            (click)="onCancel()">Cancelar</button>
         </div>
       </ng-template>
     </div>

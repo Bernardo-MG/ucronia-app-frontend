@@ -5,13 +5,11 @@
         (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
     </layout-pagination-info-wrapper>
     <!-- Add -->
-    <div class="col-md-2 offset-md-5">
-      <div class="d-grid">
-        <button type="button" class="btn btn-primary" aria-label="register" routerLink="/security/users/add"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          <icon-add></icon-add>
-        </button>
-      </div>
+    <div appJustifyCenter>
+      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/security/users/add"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        <icon-add></icon-add>
+      </button>
     </div>
   </div>
 </div>
