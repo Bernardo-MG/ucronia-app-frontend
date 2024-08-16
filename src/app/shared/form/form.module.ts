@@ -16,14 +16,16 @@ import { InvalidFieldDirective } from './directives/invalid-field.directive';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     IconsModule
   ],
   exports: [
     EditorHeaderComponent,
     InputFailureFeedbackComponent,
-    InvalidFieldDirective
+    InvalidFieldDirective,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class FormModule { }
