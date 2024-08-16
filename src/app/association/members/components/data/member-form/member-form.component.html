@@ -13,8 +13,8 @@
     <div class="col-sm-10">
       <div formGroupName="name">
         <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('name.firstName') }" aria-describedby="firstNameLabel"
-          maxlength="50">
+          appInvalidField="name.firstName" [backendFailure]="failures.hasProperty('name.firstName')"
+          aria-describedby="firstNameLabel" maxlength="50">
         <app-input-failure-feedback [failures]="getFailures('name.firstName')"></app-input-failure-feedback>
       </div>
     </div>
@@ -25,7 +25,8 @@
     <div class="col-sm-10">
       <div formGroupName="name">
         <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('name.lastName') }" aria-describedby="lastNameLabel" maxlength="50">
+          appInvalidField="name.firstName" [backendFailure]="failures.hasProperty('name.lastName')"
+          aria-describedby="lastNameLabel" maxlength="50">
         <app-input-failure-feedback [failures]="getFailures('name.lastName')"></app-input-failure-feedback>
       </div>
     </div>
@@ -35,7 +36,8 @@
     <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">DNI</label>
     <div class="col-sm-10">
       <input type="text" id="identifierInput" formControlName="identifier" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('identifier') }" aria-describedby="identifierLabel" maxlength="15">
+        appInvalidField="identifier" [backendFailure]="failures.hasProperty('identifier')"
+        aria-describedby="identifierLabel" maxlength="15">
       <app-input-failure-feedback [failures]="getFailures('identifier')"></app-input-failure-feedback>
     </div>
   </div>
@@ -43,8 +45,8 @@
   <div class="row mb-2">
     <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Teléfono</label>
     <div class="col-sm-10">
-      <input type="text" id="phoneInput" formControlName="phone" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('phone') }" aria-describedby="phoneLabel" maxlength="15">
+      <input type="text" id="phoneInput" formControlName="phone" class="form-control" appInvalidField="phone"
+        [backendFailure]="failures.hasProperty('phone')" aria-describedby="phoneLabel" maxlength="15">
       <app-input-failure-feedback [failures]="getFailures('phone')"></app-input-failure-feedback>
     </div>
   </div>
