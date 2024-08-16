@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <!-- Progress -->
-          <div class="d-flex justify-content-between">
+          <div appJustifyBetween>
           <button type="button" class="btn btn-link me-2" aria-label="Return" (click)="onReturnToMembers()"
             [disabled]="isReturnDisabled()"><icon-backward></icon-backward></button>
           <h2>{{currentStep}}/2</h2>

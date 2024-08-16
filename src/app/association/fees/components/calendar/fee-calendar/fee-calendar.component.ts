@@ -5,13 +5,14 @@ import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar
 import { Active } from '@app/association/members/models/active';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { FeeCalendar } from '../../../models/fee-calendar';
 import { FeeCalendarMonth } from '../../../models/fee-month';
 
 @Component({
   selector: 'assoc-fee-calendar',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent],
+  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, JustifyCenterDirective],
   templateUrl: './fee-calendar.component.html'
 })
 export class FeeCalendarComponent implements OnChanges {

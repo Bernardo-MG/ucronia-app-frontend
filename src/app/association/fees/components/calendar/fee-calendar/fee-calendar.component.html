@@ -1,5 +1,5 @@
 <!-- Controls -->
-<div class="d-flex justify-content-center pb-2">
+<div appJustifyCenter class="pb-2">
   <!-- To previous year button -->
   <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
     [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">

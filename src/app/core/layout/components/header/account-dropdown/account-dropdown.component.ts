@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'layout-account-dropdown',
   standalone: true,
-  imports: [RouterModule, IconsModule],
+  imports: [RouterModule, IconsModule, JustifyCenterDirective],
   templateUrl: './account-dropdown.component.html'
 })
 export class AccountMenuComponent implements OnInit {

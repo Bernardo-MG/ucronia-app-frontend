@@ -10,7 +10,7 @@
   </div>
 </div>
 <!-- Page navigation -->
-<div class="d-flex justify-content-center mt-1">
+<div appJustifyCenter class="mt-1">
   <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
     (goTo)="goTo.emit($event)">
   </pagination-navigation>

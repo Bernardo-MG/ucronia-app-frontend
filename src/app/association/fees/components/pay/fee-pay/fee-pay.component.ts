@@ -13,11 +13,12 @@ import { FeePayment } from '../../../models/fee-payment';
 import { FeeService } from '../../../services/fee.service';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
+import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent],
+  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {

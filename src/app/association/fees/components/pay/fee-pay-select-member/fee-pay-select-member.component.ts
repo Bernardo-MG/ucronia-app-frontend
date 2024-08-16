@@ -6,11 +6,13 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'app-fee-pay-select-member',
   standalone: true,
-  imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent, MemberStatusSelectComponent],
+  imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyCenterDirective, JustifyBetweenDirective],
   templateUrl: './fee-pay-select-member.component.html'
 })
 export class FeePaySelectMemberComponent {

@@ -4,13 +4,14 @@ import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } 
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Member } from '../../../../members/models/member';
 import { FeePayment } from '../../../models/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {

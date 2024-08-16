@@ -5,11 +5,12 @@ import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'access-user-add-role',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent, JustifyCenterDirective],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnInit {

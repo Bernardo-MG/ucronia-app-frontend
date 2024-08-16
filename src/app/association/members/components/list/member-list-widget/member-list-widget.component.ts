@@ -4,8 +4,9 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 import { Active } from '../../../models/active';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
@@ -15,7 +16,7 @@ import { MemberListComponent } from '../member-list/member-list.component';
 @Component({
   selector: 'assoc-member-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent],
+  imports: [RouterModule, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
   templateUrl: './member-list-widget.component.html'
 })
 export class MemberListWidgetComponent implements OnInit {
