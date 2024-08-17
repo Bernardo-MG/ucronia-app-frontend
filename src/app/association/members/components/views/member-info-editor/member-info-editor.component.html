@@ -1,5 +1,5 @@
 <layout-article title="Datos de socio">
-  <div class="col-md-6 offset-md-3">
+  <div appResponsiveShortColumns>
     <div *ngIf="showMenu">
       <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
         (delete)="onDelete()"></form-editor-header>
