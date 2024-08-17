@@ -10,25 +10,21 @@
   <!-- First name -->
   <div class="row mb-2">
     <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
-    <div class="col-sm-10">
-      <div formGroupName="name">
-        <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
-          appInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
-          aria-describedby="firstNameLabel" maxlength="50">
-        <app-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></app-input-failure-feedback>
-      </div>
+    <div formGroupName="name" class="col-sm-10">
+      <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
+        appInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
+        aria-describedby="firstNameLabel" maxlength="50">
+      <app-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Last name -->
   <div class="row mb-2">
     <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
-    <div class="col-sm-10">
-      <div formGroupName="name">
-        <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
-          appInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
-          aria-describedby="lastNameLabel" maxlength="50">
-        <app-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></app-input-failure-feedback>
-      </div>
+    <div formGroupName="name" class="col-sm-10">
+      <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
+        appInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
+        aria-describedby="lastNameLabel" maxlength="50">
+      <app-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Identifier -->
