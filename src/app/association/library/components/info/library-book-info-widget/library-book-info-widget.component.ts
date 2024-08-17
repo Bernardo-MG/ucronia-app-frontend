@@ -7,6 +7,7 @@ import { Language } from '@app/association/library/models/language';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { Book } from '../../../models/book';
@@ -17,7 +18,7 @@ import { LibraryBookLendingsComponent } from '../library-book-lendings/library-b
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {

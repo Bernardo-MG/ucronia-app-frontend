@@ -26,8 +26,8 @@
             <ng-container [ngSwitch]="editing">
               <!-- Form -->
               <ng-container *ngSwitchCase="true">
-                <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-                  [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+                <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+                  [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
                 </access-user-form>
               </ng-container>
               <!-- Info -->
@@ -107,33 +107,11 @@
 </layout-article>
 
 <!-- Modal confirmation for disabling -->
-<div id="disableModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Está seguro de que quieres desactivar el usuario?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onDisable()" data-bs-dismiss="modal">Desactivar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="disableModal" title="Desactivar usuario" acceptText="Desactivar" (accept)="onDisable()">
+  <p>¿Está seguro de que quieres desactivar el usuario?</p>
+</layout-modal>
 
 <!-- Modal confirmation for enabling -->
-<div id="enableModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Está seguro de que quieres activar el usuario?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onEnable()" data-bs-dismiss="modal">Activar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="enableModal" title="Activar usuario" acceptText="Activar" (accept)="onEnable()">
+  <p>¿Está seguro de que quieres activar el usuario?</p>
+</layout-modal>

@@ -11,6 +11,7 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../../services/access-role.service';
@@ -21,7 +22,7 @@ import { AccessRolePermissionsComponent } from '../../data/access-role-permissio
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, IconsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
