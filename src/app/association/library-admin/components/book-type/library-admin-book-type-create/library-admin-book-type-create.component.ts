@@ -4,13 +4,14 @@ import { BookTypeAdminService } from '@app/association/library-admin/services/bo
 import { BookType } from '@app/association/library/models/book-type';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../library-admin-book-type-form/library-admin-book-type-form.component';
 
 @Component({
   selector: 'assoc-library-admin-book-type-create',
   standalone: true,
-  imports: [ LibraryAdminBookTypeFormComponent, ArticleComponent ],
+  imports: [LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-create.component.html'
 })
 export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookType> {

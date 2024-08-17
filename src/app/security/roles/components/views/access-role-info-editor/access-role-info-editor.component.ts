@@ -9,18 +9,19 @@ import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from '../../data/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../data/access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../../data/access-role-permissions/access-role-permissions.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-role-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, IconsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-info-editor.component.html'
 })
 export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {

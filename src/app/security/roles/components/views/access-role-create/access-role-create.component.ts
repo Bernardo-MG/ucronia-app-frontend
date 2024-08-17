@@ -6,11 +6,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleFormComponent } from '../../data/access-role-form/access-role-form.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 
 @Component({
   selector: 'access-role-create',
   standalone: true,
-  imports: [AccessRoleFormComponent, ArticleComponent],
+  imports: [AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-create.component.html'
 })
 export class AccessRoleCreateComponent extends CreateComponent<Role> {

@@ -13,6 +13,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookAdminService } from '../../../services/book-admin.service';
@@ -24,7 +25,7 @@ import { LibraryAdminBookFormComponent } from '../library-admin-book-form/librar
 @Component({
   selector: 'assoc-library-admin-book-create',
   standalone: true,
-  imports: [CommonModule, LibraryAdminBookFormComponent, ArticleComponent],
+  imports: [CommonModule, LibraryAdminBookFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-create.component.html'
 })
 export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {

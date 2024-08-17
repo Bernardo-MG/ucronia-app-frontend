@@ -7,6 +7,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../data/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../data/transaction-info/transaction-info.component';
@@ -14,7 +15,7 @@ import { TransactionInfoComponent } from '../../data/transaction-info/transactio
 @Component({
   selector: 'assoc-transaction-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './transaction-info-editor.component.html'
 })
 export class TransactionInfoEditorComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {

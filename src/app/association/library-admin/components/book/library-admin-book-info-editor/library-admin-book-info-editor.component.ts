@@ -6,13 +6,16 @@ import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
 import { GameSystem } from '@app/association/library/models/game-system';
+import { Language } from '@app/association/library/models/language';
 import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookAdminService } from '../../../services/book-admin.service';
@@ -21,13 +24,11 @@ import { GameSystemAdminService } from '../../../services/game-system-admin.serv
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
-import { Language } from '@app/association/library/models/language';
-import { Sort } from '@app/core/api/models/sort';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent],
+  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
