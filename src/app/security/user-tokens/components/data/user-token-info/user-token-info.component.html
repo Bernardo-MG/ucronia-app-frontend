@@ -41,30 +41,27 @@
   </div>
   <!-- Expiration date -->
   <div class="row mb-2">
-    <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Fecha de expiración</label>
+    <label for="expirationDateInput" id="expirationDateLabel" class="col-sm-2 col-form-label">Fecha de
+      expiración</label>
     <div class="col-sm-10">
       <input type="expirationDate" [value]="data.expirationDate" id="expirationDateInput" [readonly]="true"
-        class="form-control" [ngClass]="{ 'is-invalid': isFieldInvalid('expirationDate') }"
+        class="form-control" [ngClass]="{ 'is-invalid': failures.hasFailures('expirationDate') }"
         aria-describedby="expirationDateLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('expirationDate')">
-        {{failure.message}}
-      </div>
+      <app-input-failure-feedback [failures]="failures.getFailures('expirationDate')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Consumed -->
   <div class="row mb-2">
     <label id="consumedLabel" class="col-sm-2 col-form-label">Consumido</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.consumed"></icon-success>
-      <icon-failure *ngIf="!data.consumed"></icon-failure>
+      <icon-success-or-failure [success]="data.consumed"></icon-success-or-failure>
     </div>
   </div>
   <!-- Revoked -->
   <div class="row mb-2">
     <label id="revokedLabel" class="col-sm-2 col-form-label">Revocado</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.revoked"></icon-success>
-      <icon-failure *ngIf="!data.revoked"></icon-failure>
+      <icon-success-or-failure [success]="data.revoked"></icon-success-or-failure>
     </div>
   </div>
 </form>

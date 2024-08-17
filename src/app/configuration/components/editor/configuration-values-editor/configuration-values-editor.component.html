@@ -5,12 +5,9 @@
       class="col-sm-2 col-form-label">{{configuration.code}}</label>
     <div class="col-sm-9">
       <input name="{{configuration.code}}" type="{{configuration.type}}" step="any"
-        id="{{configuration.code + 'Input'}}" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('configuration.code') }" [value]="configuration.value"
-        attr.aria-describedby="{{configuration.code + 'Label'}}" [disabled]="disabled || !isEditing(configuration.code)">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('configuration.code')">
-        {{failure.message}}
-      </div>
+        id="{{configuration.code + 'Input'}}" class="form-control" appInvalidField="configuration.code"
+        [value]="configuration.value" attr.aria-describedby="{{configuration.code + 'Label'}}"
+        [disabled]="disabled || !isEditing(configuration.code)">
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">

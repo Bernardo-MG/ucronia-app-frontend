@@ -6,6 +6,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/library-admin-author-form.component';
@@ -14,7 +15,7 @@ import { LibraryAdminAuthorInfoComponent } from '../library-admin-author-info/li
 @Component({
   selector: 'assoc-library-admin-author-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-author-info-editor.component.html'
 })
 export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {

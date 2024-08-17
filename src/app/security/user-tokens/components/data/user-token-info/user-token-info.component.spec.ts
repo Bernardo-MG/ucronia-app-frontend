@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { UserTokenInfoComponent } from './user-token-info.component';
 
 describe('UserTokenInfoComponent', () => {
@@ -9,6 +10,10 @@ describe('UserTokenInfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         UserTokenInfoComponent
+      ],
+      providers: [
+        { provide: FormGroupDirective, useValue: { form: { get: () => null } } },
+        { provide: NgControl, useValue: { control: new FormControl() } }
       ]
     });
     fixture = TestBed.createComponent(UserTokenInfoComponent);

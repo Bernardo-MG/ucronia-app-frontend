@@ -5,14 +5,16 @@ import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar
 import { Active } from '@app/association/members/models/active';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { FeeCalendar } from '../../../models/fee-calendar';
 import { FeeCalendarMonth } from '../../../models/fee-month';
 
 @Component({
   selector: 'assoc-fee-calendar',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent],
-  templateUrl: './fee-calendar.component.html'
+  imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, JustifyCenterDirective],
+  templateUrl: './fee-calendar.component.html',
+  styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
 
@@ -34,6 +36,14 @@ export class FeeCalendarComponent implements OnChanges {
   public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   private index = 0;
+
+  public get canGoNext() {
+    return ((this.index >= 0) && ((this.index + 1) < this.range.years.length));
+  }
+
+  public get canGoPrevious() {
+    return (this.index > 0);
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['year']) {
@@ -63,14 +73,6 @@ export class FeeCalendarComponent implements OnChanges {
     this.index = this.index + 1;
     this.year = this.range.years[this.index];
     this.goToYear.emit(this.year);
-  }
-
-  public isAbleToGoNext() {
-    return ((this.index >= 0) && ((this.index + 1) < this.range.years.length));
-  }
-
-  public isAbleToGoPrevious() {
-    return (this.index > 0);
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {

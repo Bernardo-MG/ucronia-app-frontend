@@ -48,10 +48,11 @@ export class BookAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number): Observable<PaginatedResponse<Book[]>> {
+  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Book[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('title')]);
     query.pagination = { page };
+    query.sort = sort;
 
     return this.getClient().query(query).read();
   }

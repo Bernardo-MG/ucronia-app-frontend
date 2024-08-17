@@ -1,7 +1,8 @@
 <div class="card">
   <div class="card-body">
     <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
-      <assoc-library-book-list [books]="page.content" [routeLinkAdapter]="routeLinkAdapter"></assoc-library-book-list>
+      <assoc-library-book-list [books]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+        (directionChange)="onChangeDirection($event)"></assoc-library-book-list>
     </layout-pagination-info-wrapper>
   </div>
 </div>

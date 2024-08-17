@@ -4,13 +4,14 @@ import { DonorAdminService } from '@app/association/library-admin/services/donor
 import { Person } from '@app/association/library/models/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/library-admin-donor-form.component';
 
 @Component({
   selector: 'app-library-admin-donor-create',
   standalone: true,
-  imports: [LibraryAdminDonorFormComponent, ArticleComponent],
+  imports: [LibraryAdminDonorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-donor-create.component.html'
 })
 export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {

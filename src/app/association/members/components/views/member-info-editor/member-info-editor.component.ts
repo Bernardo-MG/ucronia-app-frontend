@@ -5,7 +5,9 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
@@ -15,7 +17,7 @@ import { MemberInfoComponent } from '../../data/member-info/member-info.componen
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoComponent, ArticleComponent, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {

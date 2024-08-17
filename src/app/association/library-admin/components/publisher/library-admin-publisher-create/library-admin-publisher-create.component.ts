@@ -6,11 +6,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { Observable } from 'rxjs';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminPublisherFormComponent } from '../library-admin-publisher-form/library-admin-publisher-form.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 
 @Component({
   selector: 'assoc-library-admin-publisher-create',
   standalone: true,
-  imports: [ LibraryAdminPublisherFormComponent, ArticleComponent ],
+  imports: [LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-create.component.html'
 })
 export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publisher> {

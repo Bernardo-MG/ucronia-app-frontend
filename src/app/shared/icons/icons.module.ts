@@ -27,6 +27,7 @@ import { IconSuccessComponent } from './components/icon-success/icon-success.com
 import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
 import { IconTakeInComponent } from './components/icon-take-in/icon-take-in.component';
 import { IconTakeOutComponent } from './components/icon-take-out/icon-take-out.component';
+import { IconSuccessOrFailureComponent } from './components/icon-success-or-failure/icon-success-or-failure.component';
 
 
 
@@ -57,7 +58,8 @@ import { IconTakeOutComponent } from './components/icon-take-out/icon-take-out.c
     IconCalendarComponent,
     IconMailComponent,
     IconTakeInComponent,
-    IconTakeOutComponent
+    IconTakeOutComponent,
+    IconSuccessOrFailureComponent
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,8 @@ import { IconTakeOutComponent } from './components/icon-take-out/icon-take-out.c
     IconCalendarComponent,
     IconMailComponent,
     IconTakeInComponent,
-    IconTakeOutComponent
+    IconTakeOutComponent,
+    IconSuccessOrFailureComponent
   ]
 })
 export class IconsModule { }

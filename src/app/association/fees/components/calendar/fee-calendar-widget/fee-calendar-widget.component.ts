@@ -3,6 +3,8 @@ import { RouterModule } from '@angular/router';
 import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 import { FeeCalendar } from '../../../models/fee-calendar';
 import { FeeCalendarYearsRange } from '../../../models/fee-calendar-years-range';
 import { FeeCalendarService } from '../../../services/fee-calendar.service';
@@ -11,7 +13,7 @@ import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 @Component({
   selector: 'assoc-fee-calendar-widget',
   standalone: true,
-  imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent],
+  imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective, JustifyCenterDirective],
   templateUrl: './fee-calendar-widget.component.html'
 })
 export class FeeCalendarWidgetComponent implements OnInit {

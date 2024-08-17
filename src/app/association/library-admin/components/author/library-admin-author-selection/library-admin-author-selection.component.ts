@@ -4,11 +4,12 @@ import { PagedSelectorComponent } from '@app/shared/form/components/paged-select
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'assoc-library-admin-author-selection',
   standalone: true,
-  imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent],
+  imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent, JustifyCenterDirective],
   templateUrl: './library-admin-author-selection.component.html'
 })
 export class LibraryAdminAuthorSelectionComponent extends PagedSelectorComponent<Author> {

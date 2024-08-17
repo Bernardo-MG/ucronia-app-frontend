@@ -13,18 +13,7 @@
 </div>
 
 <!-- Modal confirmation for delete -->
-<div id="deleteModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres borrar los datos?</p>
-        <p class="text-warning"><small>Esta acción no se puede revertir.</small></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onDelete()" data-bs-dismiss="modal">Borrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="deleteModal" title="Borrar" acceptText="Borrar" (accept)="onDelete()">
+  <p>¿Estás seguro de que quieres borrar los datos?</p>
+  <p class="text-warning"><small>Esta acción no se puede revertir.</small></p>
+</layout-modal>

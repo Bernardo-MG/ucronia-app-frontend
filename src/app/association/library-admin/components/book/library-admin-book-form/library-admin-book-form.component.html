@@ -12,36 +12,30 @@
     <div class="row mb-2">
       <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
       <div class="col-sm-10">
-        <input type="text" id="isbnInput" formControlName="isbn" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('isbn') }" aria-describedby="isbnLabel" maxlength="13">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('isbn')">
-          {{failure.message}}
-        </div>
+        <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField="isbn"
+          [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="13">
+        <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Title -->
     <div class="row mb-2">
       <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
       <div class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="title" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('title') }" aria-describedby="titleLabel" maxlength="100">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('title')">
-          {{failure.message}}
-        </div>
+        <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title"
+          [backendFailure]="failures.hasFailures('title')" aria-describedby="titleLabel" maxlength="100">
+        <app-input-failure-feedback [failures]="failures.getFailures('title')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Language -->
     <div class="row mb-2">
       <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
       <div class="col-sm-10">
-        <select class="form-select" aria-label="Select year" formControlName="language"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('language') }" aria-describedby="languageLabel">
+        <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField="language"
+          [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
           <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
             {{selectionLanguage.name}}</option>
         </select>
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('language')">
-          {{failure.message}}
-        </div>
+        <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Book type -->
@@ -103,13 +97,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowPublisherSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowPublisherSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <!-- Donors -->
@@ -143,13 +135,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowDonorSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowDonorSelection()" type="button" class="btn btn-primary" aria-label="Add donor"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <!-- Authors -->
@@ -183,13 +173,11 @@
           </tbody>
         </table>
       </div>
-      <div class="col-md-2 offset-md-5">
-        <div class="d-grid">
-          <button (click)="onShowAuthorSelection()" type="button" class="btn btn-primary" aria-label="Add author"
-            data-bs-toggle="modal" data-bs-target="#pickModal">
-            <icon-add></icon-add>
-          </button>
-        </div>
+      <div appJustifyCenter>
+        <button (click)="onShowAuthorSelection()" type="button" class="btn btn-primary" aria-label="Add author"
+          data-bs-toggle="modal" data-bs-target="#pickModal">
+          <icon-add></icon-add>
+        </button>
       </div>
     </div>
     <div class="row">
@@ -201,7 +189,8 @@
       <!-- Cancel button -->
       <ng-template [ngIf]="cancellable">
         <div class="col-sm-2 d-grid gap-2">
-          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
+          <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel"
+            (click)="onCancel()">Cancelar</button>
         </div>
       </ng-template>
     </div>
@@ -209,101 +198,36 @@
 </ng-container>
 
 <!-- Book type modal-->
-<div class="modal fade" id="book_typeModal" tabindex="-1" aria-labelledby="book_typeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="book_typeModalLabel">Book type</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
-          [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
-          (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="book_typeModal" title="Tipo de libro">
+  <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
+    [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
+    (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
+</layout-modal>
 
 <!-- Game system modal -->
-<div class="modal fade" id="game_systemModal" tabindex="-1" aria-labelledby="game_systemModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="game_systemModalLabel">Game system</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
-          [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
-          (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="game_systemModal" title="Sistema de juego">
+  <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
+    [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
+    (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
+</layout-modal>
 
 <!-- Author modal -->
-<div class="modal fade" id="authorModal" tabindex="-1" aria-labelledby="authorModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="authorModalLabel">Author</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
-          [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
-          (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="authorModal" title="Autor">
+  <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
+    [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
+    (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
+</layout-modal>
 
 <!-- Publisher modal -->
-<div class="modal fade" id="publisherModal" tabindex="-1" aria-labelledby="publisherModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="publisherModalLabel">Publisher</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
-          [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
-          (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="authorModal" title="Editor">
+  <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
+    [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
+    (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
+</layout-modal>
 
 <!-- Donor modal -->
-<div class="modal fade" id="donorModal" tabindex="-1" aria-labelledby="donorModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="donorModalLabel">Publisher</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
-          [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
-          (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
-      </div>
-      <div class="modal-footer">
-        <button #pickCloseButton type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="donorModal" title="Donante">
+  <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
+    [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
+    (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
+</layout-modal>

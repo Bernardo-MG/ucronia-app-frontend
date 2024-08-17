@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { LibraryAdminAuthorListComponent } from '../author/library-admin-author-list/library-admin-author-list.component';
 import { LibraryAdminBookTypeListComponent } from '../book-type/library-admin-book-type-list/library-admin-book-type-list.component';
 import { LibraryAdminBookListComponent } from '../book/library-admin-book-list/library-admin-book-list.component';
@@ -14,7 +15,7 @@ import { LibraryAdminPublisherListComponent } from '../publisher/library-admin-p
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, LibraryAdminDonorListComponent, ArticleComponent],
+  imports: [CommonModule, RouterModule, IconsModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, LibraryAdminDonorListComponent, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-frontpage.component.html'
 })
 export class LibraryAdminFrontpageComponent implements OnInit {

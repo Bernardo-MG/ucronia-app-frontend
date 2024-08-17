@@ -7,13 +7,14 @@ import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent,   PaginationInfoWrapperComponent],
+  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {
