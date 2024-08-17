@@ -1,14 +1,12 @@
 <!-- Controls -->
-<div class="row">
-  <div class="col-md-2 offset-md-5">
-    <div class="row">
-      <!-- Current month -->
-      <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
-        <option *ngFor="let selectionMonth of selectionMonths" [selected]="selectionMonth === currentMonth"
-          [value]="selectionMonth.year + '-' + selectionMonth.month">
-          {{getMonthName(selectionMonth)}}</option>
-      </select>
-    </div>
+<div appJustifyCenter>
+  <!-- Current month -->
+  <div>
+    <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
+      <option *ngFor="let selectionMonth of selectionMonths" [selected]="selectionMonth === currentMonth"
+        [value]="selectionMonth.year + '-' + selectionMonth.month">
+        {{getMonthName(selectionMonth)}}</option>
+    </select>
   </div>
 </div>
 <!-- Table -->

@@ -1,0 +1,18 @@
+<div id="{{name}}" class="modal fade" data-bs-keyboard="false" tabindex="-1"
+  aria-hidden="true" attr.aria-labelledby="{{name}}ModalLabel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="{{name}}ModalLabel">{{title}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="acceptText" type="button" class="btn btn-danger" (click)="accept.emit()"
+          data-bs-dismiss="modal" aria-label="Accept">{{acceptText}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/library-admin-donor-form.component';
 import { LibraryAdminDonorInfoComponent } from '../library-admin-donor-info/library-admin-donor-info.component';
@@ -14,7 +15,7 @@ import { LibraryAdminDonorInfoComponent } from '../library-admin-donor-info/libr
 @Component({
   selector: 'app-library-admin-donor-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, LibraryAdminDonorInfoComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, LibraryAdminDonorInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-donor-info-editor.component.html'
 })
 export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {

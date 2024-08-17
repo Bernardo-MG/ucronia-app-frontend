@@ -12,21 +12,18 @@
     <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Descripción</label>
     <div class="col-sm-10">
       <input type="text" id="descriptionInput" formControlName="description" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('description') }" aria-describedby="descriptionLabel" maxlength="200">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('description')">
-        {{failure.message}}
-      </div>
+        appInvalidField="description" [backendFailure]="failures.hasFailures('description')"
+        aria-describedby="descriptionLabel" maxlength="200">
+      <app-input-failure-feedback [failures]="failures.getFailures('description')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Date -->
   <div class="row mb-2">
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Fecha</label>
     <div class="col-sm-10">
-      <input type="date" id="dateInput" formControlName="date" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
-        {{failure.message}}
-      </div>
+      <input type="date" id="dateInput" formControlName="date" class="form-control" appInvalidField="date"
+        [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Amount -->
@@ -34,10 +31,8 @@
     <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Importe</label>
     <div class="col-sm-10">
       <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('amount') }" aria-describedby="amountLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('amount')">
-        {{failure.message}}
-      </div>
+        appInvalidField="amount" [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('amount')"></app-input-failure-feedback>
     </div>
   </div>
   <div class="row">

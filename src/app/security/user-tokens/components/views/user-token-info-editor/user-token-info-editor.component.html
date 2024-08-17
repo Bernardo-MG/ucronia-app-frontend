@@ -1,5 +1,5 @@
 <layout-article title="Editar token de usuario">
-  <div class="col-md-6 offset-md-3">
+  <div appResponsiveShortColumns>
     <!-- Role -->
     <div class="mb-1">
       <!-- Info -->
@@ -11,15 +11,14 @@
           <div class="row">
             <!-- Revoke button -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke"
-              data-bs-toggle="modal"
-              [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocado</layout-waiting-button>
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocado</layout-waiting-button>
             </div>
             <!-- Extend expiration button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
-                data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender expiración</layout-waiting-button>
+                data-bs-toggle="modal" [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
+                expiración</layout-waiting-button>
             </div>
           </div>
         </footer>
@@ -29,38 +28,16 @@
 </layout-article>
 
 <!-- Modal for extending expiration -->
-<div id="extendExpirationModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>Elige una nueva fecha</p>
-        <form [formGroup]="extendExpirationForm" (ngSubmit)="onExtendExpiration()" class="needs-validation" novalidate>
-          <input type="datetime-local" id="extendExpirationInput" class="form-control" formControlName="expirationDate">
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-secondary" (click)="onExtendExpiration()"
-          data-bs-dismiss="modal">Accept</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="extendExpirationModal" title="Extender expiración" acceptText="Extender"
+  (accept)="onExtendExpiration()">
+  <p>Elige una nueva fecha</p>
+  <form [formGroup]="extendExpirationForm" (ngSubmit)="onExtendExpiration()" class="needs-validation" novalidate>
+    <input type="datetime-local" id="extendExpirationInput" class="form-control" formControlName="expirationDate">
+  </form>
+</layout-modal>
 
 <!-- Modal confirmation for revoking -->
-<div id="revokeModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres revocar el token?</p>
-        <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onRevoke()" data-bs-dismiss="modal">Revocar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="revokeModal" title="Revocar token" acceptText="Revocar" (accept)="onRevoke()">
+  <p>¿Estás seguro de que quieres revocar el token?</p>
+  <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
+</layout-modal>

@@ -4,10 +4,9 @@
     <label for="lendingDateInput" id="lendingDateLabel" class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
       <input type="date" id="lendingDateInput" formControlName="lendingDate" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('lendingDate') }" aria-describedby="lendingDateLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('lendingDate')">
-        {{failure.message}}
-      </div>
+        appInvalidField="lendingDate" [backendFailure]="failures.hasFailures('lendingDate')"
+        aria-describedby="lendingDateLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('lendingDate')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Member -->

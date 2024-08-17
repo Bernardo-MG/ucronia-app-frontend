@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { FormBuilder, Validators } from '@angular/forms';
+import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -13,7 +14,7 @@ import { UserLogin } from '../../models/user-login';
 @Component({
   selector: 'login-login-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
@@ -50,6 +51,13 @@ export class LoginFormComponent {
    * Remember me event. Sent when the user changes the remember me flag.
    */
   @Output() public rememberMe = new EventEmitter<boolean>();
+
+  /**
+   * Login enabled flag.
+   */
+  public get loginEnabled(): boolean {
+    return ((this.form.valid) && (!this.waiting));
+  }
 
   /**
    * Form structure.
@@ -119,15 +127,6 @@ export class LoginFormComponent {
     }
 
     return invalid;
-  }
-
-  /**
-   * Returns true if the login button is enabled.
-   * 
-   * @returns true if the login button is enabled, false otherwise
-   */
-  public isLoginEnabled(): boolean {
-    return ((this.form.valid) && (!this.waiting));
   }
 
   /**

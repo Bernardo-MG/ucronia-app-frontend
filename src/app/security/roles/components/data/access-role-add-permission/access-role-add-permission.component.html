@@ -26,7 +26,7 @@
   </tbody>
 </table>
 <!-- Permissions navigation -->
-<div class="d-flex justify-content-center mt-1">
+<div appJustifyCenter class="mt-1">
   <pagination-navigation [current]="permissions.page + 1" [pages]="permissions.totalPages" (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>

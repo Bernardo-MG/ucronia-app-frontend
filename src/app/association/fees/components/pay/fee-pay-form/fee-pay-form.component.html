@@ -3,34 +3,30 @@
   <div class="row mb-2">
     <label for="memberNameInput" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
-      <input disabled type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true" class="form-control"
-        aria-describedby="memberNameLabel">
+      <input disabled type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true"
+        class="form-control" aria-describedby="memberNameLabel">
     </div>
   </div>
   <!-- Payment date -->
   <div class="row mb-2">
     <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
-    <div class="col-sm-10">
-      <div formGroupName="transaction">
-        <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-          [ngClass]="{ 'is-invalid': isFieldInvalid('transaction.date') }" aria-describedby="paymentDateLabel">
-        <div class="invalid-feedback" *ngFor="let failure of getFailures('transaction.date')">
-          {{failure.message}}
-        </div>
-      </div>
+    <div formGroupName="transaction" class="col-sm-10">
+      <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
+        appInvalidField="transaction.date" [backendFailure]="failures.hasFailures('transaction.date')"
+        aria-describedby="paymentDateLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('transaction.date')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Fees -->
   <div class="row mb-2">
     <label class="col-sm-2 col-form-label">Cuotas</label>
     <div class="col-sm-10">
+      <!-- Each fee -->
       <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
         <div class="col-md-6 mb-2">
           <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
-            [ngClass]="{ 'is-invalid': isFieldInvalid('feeDates[]') }">
-          <div class="invalid-feedback" *ngFor="let failure of getFailures('feeDates[]')">
-            {{failure.message}}
-          </div>
+            appInvalidField="feeDates[]" [backendFailure]="failures.hasFailures('feeDates[]')">
+          <app-input-failure-feedback [failures]="failures.getFailures('feeDates[]')"></app-input-failure-feedback>
         </div>
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
@@ -39,8 +35,9 @@
           </button>
         </div>
       </div>
+      <!-- Add fee button -->
       <div class="row">
-        <div class="col-md-12 d-flex justify-content-center align-items-center">
+        <div appJustifyCenter>
           <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled"
             (click)="addDate()">
             <icon-add></icon-add>

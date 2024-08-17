@@ -27,24 +27,21 @@
   <div class="row mb-2">
     <label id="enabledLabel" class="col-sm-2 col-form-label">Activo</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.enabled"></icon-success>
-      <icon-failure *ngIf="!data.enabled"></icon-failure>
+      <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
     </div>
   </div>
   <!-- Password expired -->
   <div class="row mb-2">
     <label id="passwordExpiredLabel" class="col-sm-2 col-form-label">Contraseña expirada</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.passwordExpired"></icon-success>
-      <icon-failure *ngIf="!data.passwordExpired"></icon-failure>
+      <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
     </div>
   </div>
   <!-- Locked -->
   <div class="row mb-2">
     <label id="lockedLabel" class="col-sm-2 col-form-label">Bloqueado</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data.locked"></icon-success>
-      <icon-failure *ngIf="!data.locked"></icon-failure>
+      <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
     </div>
   </div>
 </form>

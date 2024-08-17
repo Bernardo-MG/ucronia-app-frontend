@@ -1,15 +1,13 @@
 <div class="card">
   <div class="card-body">
-    <h2>Transacciones</h2>
+    <h2 class="card-title">Transacciones</h2>
     <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
       (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)"></shared-calendar-month>
-    <div class="col-md-2 offset-md-5">
-      <div class="d-grid pt-2">
-        <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          <icon-add></icon-add>
-        </button>
-      </div>
+    <div class="mt-2" appJustifyCenter>
+      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        <icon-add></icon-add>
+      </button>
     </div>
   </div>
 </div>

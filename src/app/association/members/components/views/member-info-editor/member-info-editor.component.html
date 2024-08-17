@@ -1,5 +1,5 @@
 <layout-article title="Datos de socio">
-  <div class="col-md-6 offset-md-3">
+  <div appResponsiveShortColumns>
     <div *ngIf="showMenu">
       <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
         (delete)="onDelete()"></form-editor-header>
@@ -51,34 +51,11 @@
 </layout-article>
 
 <!-- Modal confirmation for deactivating -->
-<div id="deactivateModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onDeactivate()"
-          data-bs-dismiss="modal">Desactivar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="deactivateModal" title="Desactivar socio" acceptText="Desactivar" (accept)="onDeactivate()">
+  <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
+</layout-modal>
 
 <!-- Modal confirmation for activating -->
-<div id="activateModal" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="onActivate()" data-bs-dismiss="modal">Activar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<layout-modal name="activateModal" title="Activar socio" acceptText="Activar" (accept)="onActivate()">
+  <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
+</layout-modal>

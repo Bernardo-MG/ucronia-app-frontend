@@ -5,6 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { Fee } from '../../../models/fee';
 import { FeeService } from '../../../services/fee.service';
@@ -14,7 +15,7 @@ import { FeeInfoComponent } from '../../data/fee-info/fee-info.component';
 @Component({
   selector: 'assoc-fee-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent],
+  imports: [CommonModule, FormModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-info-editor.component.html'
 })
 export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {

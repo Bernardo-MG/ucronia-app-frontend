@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { FormModule } from '@app/shared/form/form.module';
+import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 
 /**
@@ -11,7 +12,7 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
 @Component({
   selector: 'login-password-reset-request-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
+  imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './password-reset-request-form.component.html'
 })
 export class PasswordResetRequestFormComponent extends FormComponent<PasswordResetRequest> {

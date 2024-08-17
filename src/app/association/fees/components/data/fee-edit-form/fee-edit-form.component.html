@@ -11,19 +11,16 @@
   <div class="row mb-2">
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Mes</label>
     <div class="col-sm-10">
-      <input type="month" id="dateInput" formControlName="date" class="form-control"
-        [ngClass]="{ 'is-invalid': isFieldInvalid('date') }" aria-describedby="dateLabel">
-      <div class="invalid-feedback" *ngFor="let failure of getFailures('date')">
-        {{failure.message}}
-      </div>
+      <input type="month" id="dateInput" formControlName="date" class="form-control" appInvalidField="date"
+        [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Pagado -->
   <div class="row mb-2">
     <label id="activeLabel" class="col-sm-2 col-form-label">Pagado</label>
     <div class="col-sm-10">
-      <icon-success *ngIf="data?.paid"></icon-success>
-      <icon-failure *ngIf="!data?.paid"></icon-failure>
+      <icon-success-or-failure [success]="data?.paid"></icon-success-or-failure>
     </div>
   </div>
   <!-- Payment date -->

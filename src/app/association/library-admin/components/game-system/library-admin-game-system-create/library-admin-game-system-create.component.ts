@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { GameSystem } from '@app/association/library/models/game-system';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { LibraryAdminGameSystemFormComponent } from '../library-admin-game-system-form/library-admin-game-system-form.component';
@@ -10,7 +11,7 @@ import { LibraryAdminGameSystemFormComponent } from '../library-admin-game-syste
 @Component({
   selector: 'assoc-library-admin-game-system-create',
   standalone: true,
-  imports: [ LibraryAdminGameSystemFormComponent, ArticleComponent ],
+  imports: [LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-create.component.html'
 })
 export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameSystem> {

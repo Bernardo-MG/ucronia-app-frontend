@@ -1,25 +1,18 @@
 <div class="card">
   <div class="card-body">
     <!-- Status selector -->
-    <div class="row">
-      <div class="col-md-1 offset-md-9">
-        Estado
-      </div>
-      <div class="col-md-2">
-        <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
-      </div>
+    <div appJustifyEnd>
+      <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
     </div>
     <!-- Calendar -->
     <assoc-fee-calendar [activeFilter]="activeFilter" [range]="range" [waiting]="readingCalendar" [rows]="rows"
       (goToYear)="onGoToYear($event)"></assoc-fee-calendar>
     <!-- Pay fee -->
-    <div class="col-md-2 offset-md-5">
-      <div class="d-grid">
-        <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          Pagar cuota
-        </button>
-      </div>
+    <div appJustifyCenter>
+      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/fees/pay"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        Pagar cuota
+      </button>
     </div>
   </div>
 </div>

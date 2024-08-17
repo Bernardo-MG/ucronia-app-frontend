@@ -23,7 +23,7 @@
     </tbody>
   </table>
 </layout-waiting-overlay>
-<div class="d-flex justify-content-center mt-1">
+<div appJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="roles.page + 1" [pages]="roles.totalPages"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>

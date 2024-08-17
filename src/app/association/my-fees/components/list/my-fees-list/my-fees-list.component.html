@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let fee of fees; let rowIndex = index" [ngClass]="{ 'table-warning': fee.paid === false }">
+    <tr *ngFor="let fee of fees; let rowIndex = index" [ngClass]="{ 'table-warning': !fee.paid }">
       <!-- Cells -->
       <td>
         {{fee.date}}

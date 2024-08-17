@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Configuration } from '@app/configuration/models/configuration';
 import { Failure } from '@app/core/api/models/failure';
+import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'assoc-configuration-values-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule, IconsModule],
+  imports: [CommonModule, FormModule, IconsModule],
   templateUrl: './configuration-values-editor.component.html'
 })
 export class ConfigurationValuesEditorComponent {
@@ -23,10 +23,6 @@ export class ConfigurationValuesEditorComponent {
 
   public isFieldInvalid(property: string): boolean {
     return false;
-  }
-
-  public getFailures(property: string): Failure[] {
-    return [];
   }
 
   public onEdit(code: string) {

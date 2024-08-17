@@ -3,20 +3,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LibraryBookLendingComponent } from '@app/association/library-lending/components/library-book-lending/library-book-lending.component';
 import { LibraryBookReturnComponent } from '@app/association/library-lending/components/library-book-return/library-book-return.component';
+import { Language } from '@app/association/library/models/language';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
 import { LibraryBookLendingsComponent } from '../library-book-lendings/library-book-lendings.component';
-import { Language } from '@app/association/library/models/language';
 
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent],
+  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {

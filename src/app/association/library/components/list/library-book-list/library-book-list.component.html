@@ -17,16 +17,7 @@
         {{book.title}}
       </td>
       <td>
-        <ng-container [ngSwitch]="book.lent">
-          <ng-container *ngSwitchCase="true">
-            <!-- Lent -->
-            <icon-failure class="text-danger"></icon-failure>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- Not lent -->
-            <icon-success class="text-success"></icon-success>
-          </ng-container>
-        </ng-container>
+        <icon-success-or-failure [success]="book.lent"></icon-success-or-failure>
       </td>
     </tr>
   </tbody>

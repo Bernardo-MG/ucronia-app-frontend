@@ -108,17 +108,7 @@ export class FormComponent<Data> {
    * @returns true if the form is invalid, false otherwise
    */
   public isFieldInvalid(property: string): boolean {
-    return this.isFormFieldInvalid(property) || (this.failures.hasProperty(property));
-  }
-
-  /**
-   * Returns the failures for a property.
-   * 
-   * @param property property to search for failures
-   * @returns failures for the property
-   */
-  public getFailures(property: string): Failure[] {
-    return this.failures.getFailures(property);
+    return this.isFormFieldInvalid(property) || (this.failures.hasFailures(property));
   }
 
   /**

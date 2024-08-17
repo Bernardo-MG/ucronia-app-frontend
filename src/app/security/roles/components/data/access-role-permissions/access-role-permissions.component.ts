@@ -6,11 +6,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'access-role-permissions',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {

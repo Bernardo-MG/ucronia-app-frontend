@@ -7,6 +7,8 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { Member } from '../../../../members/models/member';
 import { FeePayment } from '../../../models/fee-payment';
@@ -17,7 +19,7 @@ import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-se
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent],
+  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
