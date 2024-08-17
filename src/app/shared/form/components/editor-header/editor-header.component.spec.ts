@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EditorHeaderComponent } from './editor-header.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
+import { EditorHeaderComponent } from './editor-header.component';
 
 describe('EditorHeaderComponent', () => {
   let component: EditorHeaderComponent;
@@ -10,7 +10,8 @@ describe('EditorHeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule
+        IconsModule,
+        ModalComponent
       ],
       declarations: [
         EditorHeaderComponent
