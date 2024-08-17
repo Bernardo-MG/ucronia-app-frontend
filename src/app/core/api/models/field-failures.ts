@@ -25,7 +25,7 @@ export class FieldFailures {
   public getFailures(property: string): Failure[] {
     let failures: Failure[];
 
-    if (this.hasProperty(property)) {
+    if (this.hasFailures(property)) {
       const found = this.propertyFailures[property];
       failures = (found as Failure[]);
     } else {
@@ -41,7 +41,7 @@ export class FieldFailures {
    * @param property property to check for failures
    * @returns true if there are failures for the property, false otherwise
    */
-  public hasProperty(property: string) {
+  public hasFailures(property: string) {
     return property in this.propertyFailures;
   }
 

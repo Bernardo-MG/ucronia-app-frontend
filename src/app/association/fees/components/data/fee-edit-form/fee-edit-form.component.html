@@ -12,7 +12,7 @@
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Mes</label>
     <div class="col-sm-10">
       <input type="month" id="dateInput" formControlName="date" class="form-control" appInvalidField="date"
-        [backendFailure]="failures.hasProperty('date')" aria-describedby="dateLabel">
+        [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
     </div>
   </div>

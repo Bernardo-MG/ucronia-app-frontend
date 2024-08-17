@@ -19,7 +19,7 @@ export class UserTokenInfoComponent {
   @Input() public failures = new FieldFailures();
 
   public isFieldInvalid(property: string): boolean {
-    return this.failures.hasProperty(property);
+    return this.failures.hasFailures(property);
   }
 
   public getFailures(property: string): Failure[] {

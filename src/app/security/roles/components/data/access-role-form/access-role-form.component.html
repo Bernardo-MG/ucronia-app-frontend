@@ -4,7 +4,7 @@
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
       <input type="text" id="nameInput" formControlName="name" class="form-control" appInvalidField="name"
-        [backendFailure]="failures.hasProperty('name')" aria-describedby="nameLabel">
+        [backendFailure]="failures.hasFailures('name')" aria-describedby="nameLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('name')"></app-input-failure-feedback>
     </div>
   </div>

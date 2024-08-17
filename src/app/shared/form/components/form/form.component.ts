@@ -108,7 +108,7 @@ export class FormComponent<Data> {
    * @returns true if the form is invalid, false otherwise
    */
   public isFieldInvalid(property: string): boolean {
-    return this.isFormFieldInvalid(property) || (this.failures.hasProperty(property));
+    return this.isFormFieldInvalid(property) || (this.failures.hasFailures(property));
   }
 
   /**
