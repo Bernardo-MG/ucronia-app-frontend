@@ -6,7 +6,7 @@
       <input type="password" id="passwordInput" formControlName="password" class="form-control"
         appInvalidField="password" [backendFailure]="failures.hasProperty('password')"
         aria-describedby="passwordLabel" />
-      <app-input-failure-feedback [failures]="getFailures('password')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('password')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Repeat password -->
@@ -17,7 +17,7 @@
       <input type="password" id="confirmPasswordInput" formControlName="confirmPassword" class="form-control"
         appInvalidField="confirmPassword" [backendFailure]="failures.hasProperty('confirmPassword')"
         aria-describedby="confirmPasswordLabel" />
-      <app-input-failure-feedback [failures]="getFailures('confirmPassword')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('confirmPassword')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Password mismatch warning -->

@@ -15,7 +15,7 @@
         <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
           appInvalidField="transaction.date" [backendFailure]="failures.hasProperty('transaction.date')"
           aria-describedby="paymentDateLabel">
-        <app-input-failure-feedback [failures]="getFailures('transaction.date')"></app-input-failure-feedback>
+        <app-input-failure-feedback [failures]="failures.getFailures('transaction.date')"></app-input-failure-feedback>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
         <div class="col-md-6 mb-2">
           <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
             appInvalidField="feeDates[]" [backendFailure]="failures.hasProperty('feeDates[]')">
-          <app-input-failure-feedback [failures]="getFailures('feeDates[]')"></app-input-failure-feedback>
+          <app-input-failure-feedback [failures]="failures.getFailures('feeDates[]')"></app-input-failure-feedback>
         </div>
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"

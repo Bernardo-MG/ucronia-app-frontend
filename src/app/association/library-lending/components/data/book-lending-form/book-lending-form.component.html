@@ -6,7 +6,7 @@
       <input type="date" id="lendingDateInput" formControlName="lendingDate" class="form-control"
         appInvalidField="lendingDate" [backendFailure]="failures.hasProperty('lendingDate')"
         aria-describedby="lendingDateLabel">
-      <app-input-failure-feedback [failures]="getFailures('lendingDate')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('lendingDate')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Member -->

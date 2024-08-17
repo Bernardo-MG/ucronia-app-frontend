@@ -112,16 +112,6 @@ export class FormComponent<Data> {
   }
 
   /**
-   * Returns the failures for a property.
-   * 
-   * @param property property to search for failures
-   * @returns failures for the property
-   */
-  public getFailures(property: string): Failure[] {
-    return this.failures.getFailures(property);
-  }
-
-  /**
    * Loads the received data into the form.
    *
    * @param data data to load

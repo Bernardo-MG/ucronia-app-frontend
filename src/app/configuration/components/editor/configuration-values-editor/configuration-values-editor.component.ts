@@ -25,10 +25,6 @@ export class ConfigurationValuesEditorComponent {
     return false;
   }
 
-  public getFailures(property: string): Failure[] {
-    return [];
-  }
-
   public onEdit(code: string) {
     this.activeConfig = code;
   }

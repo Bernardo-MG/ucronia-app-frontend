@@ -47,7 +47,7 @@
       <input type="expirationDate" [value]="data.expirationDate" id="expirationDateInput" [readonly]="true"
         class="form-control" appInvalidField="expirationDate" [backendFailure]="failures.hasProperty('expirationDate')"
         aria-describedby="expirationDateLabel">
-      <app-input-failure-feedback [failures]="getFailures('expirationDate')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('expirationDate')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Consumed -->

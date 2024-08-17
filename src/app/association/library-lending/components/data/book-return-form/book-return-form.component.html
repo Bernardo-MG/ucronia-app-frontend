@@ -6,7 +6,7 @@
       <input type="date" id="returnDateInput" formControlName="returnDate" class="form-control"
         appInvalidField="returnDate" [backendFailure]="failures.hasProperty('returnDate')"
         aria-describedby="returnDateLabel">
-      <app-input-failure-feedback [failures]="getFailures('returnDate')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('returnDate')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Member -->

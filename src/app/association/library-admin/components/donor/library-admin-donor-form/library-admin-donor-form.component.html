@@ -8,7 +8,7 @@
           appInvalidField="name.firstName" [backendFailure]="failures.hasProperty('name.firstName')"
           aria-describedby="firstNameLabel" maxlength="50">
       </div>
-      <app-input-failure-feedback [failures]="getFailures('name.firstName')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Last name -->
@@ -20,7 +20,7 @@
           appInvalidField="name.lastName" [backendFailure]="failures.hasProperty('name.lastName')"
           aria-describedby="lastNameLabel" maxlength="50">
       </div>
-      <app-input-failure-feedback [failures]="getFailures('name.lastName')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></app-input-failure-feedback>
     </div>
   </div>
   <!-- Save button -->

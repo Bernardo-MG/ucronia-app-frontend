@@ -8,7 +8,6 @@
         id="{{configuration.code + 'Input'}}" class="form-control" appInvalidField="configuration.code"
         [value]="configuration.value" attr.aria-describedby="{{configuration.code + 'Label'}}"
         [disabled]="disabled || !isEditing(configuration.code)">
-      <app-input-failure-feedback [failures]="getFailures('configuration.code')"></app-input-failure-feedback>
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">
