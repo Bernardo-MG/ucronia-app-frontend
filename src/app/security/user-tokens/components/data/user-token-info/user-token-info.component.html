@@ -45,7 +45,7 @@
       expiración</label>
     <div class="col-sm-10">
       <input type="expirationDate" [value]="data.expirationDate" id="expirationDateInput" [readonly]="true"
-        class="form-control" appInvalidField="expirationDate" [backendFailure]="failures.hasFailures('expirationDate')"
+        class="form-control" [ngClass]="{ 'is-invalid': failures.hasFailures('expirationDate') }"
         aria-describedby="expirationDateLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('expirationDate')"></app-input-failure-feedback>
     </div>

@@ -58,7 +58,7 @@ export class UserTokenFrontpageComponent implements OnInit {
   }
 
   public routeLinkAdapter(data: UserToken): string {
-    console.log(data.token);
+    console.log(`Token: ${data.token}`);
     return `/security/user-tokens/${data.token}`;
   }
 
