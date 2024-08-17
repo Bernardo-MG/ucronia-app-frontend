@@ -13,7 +13,8 @@ import { FeeCalendarMonth } from '../../../models/fee-month';
   selector: 'assoc-fee-calendar',
   standalone: true,
   imports: [CommonModule, RouterModule, IconsModule, WaitingOverlayComponent, JustifyCenterDirective],
-  templateUrl: './fee-calendar.component.html'
+  templateUrl: './fee-calendar.component.html',
+  styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
 
