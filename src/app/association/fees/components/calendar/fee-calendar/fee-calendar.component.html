@@ -31,7 +31,7 @@
       </thead>
       <tbody class="table-group-divider">
         <ng-template ngFor let-row [ngForOf]="rows">
-          <tr [ngClass]="{ 'table-warning': row.member.active === false }">
+          <tr [ngClass]="{ 'table-warning': !row.member.active }">
             <td>
               {{row.member.fullName}}
             </td>
