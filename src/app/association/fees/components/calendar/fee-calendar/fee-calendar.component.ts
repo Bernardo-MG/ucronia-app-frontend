@@ -36,6 +36,14 @@ export class FeeCalendarComponent implements OnChanges {
 
   private index = 0;
 
+  public get canGoNext() {
+    return ((this.index >= 0) && ((this.index + 1) < this.range.years.length));
+  }
+
+  public get canGoPrevious() {
+    return (this.index > 0);
+  }
+
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['year']) {
       this.index = this.range.years.indexOf(this.year);
@@ -64,14 +72,6 @@ export class FeeCalendarComponent implements OnChanges {
     this.index = this.index + 1;
     this.year = this.range.years[this.index];
     this.goToYear.emit(this.year);
-  }
-
-  public isAbleToGoNext() {
-    return ((this.index >= 0) && ((this.index + 1) < this.range.years.length));
-  }
-
-  public isAbleToGoPrevious() {
-    return (this.index > 0);
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {

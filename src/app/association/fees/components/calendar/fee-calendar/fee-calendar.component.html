@@ -1,8 +1,8 @@
 <!-- Controls -->
 <div appJustifyCenter class="pb-2">
   <!-- To previous year button -->
-  <button *ngIf="isAbleToGoPrevious()" id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
-    [disabled]="!isAbleToGoPrevious()" [attr.aria-disabled]="!isAbleToGoPrevious()" aria-label="Previous year">
+  <button *ngIf="canGoPrevious" id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
+    [disabled]="!canGoPrevious" [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year">
     <icon-backward></icon-backward>
   </button>
   <div class="w-25 px-3">
@@ -14,19 +14,18 @@
     </select>
   </div>
   <!-- To next year button -->
-  <button *ngIf="isAbleToGoNext()" id="nextYearButton" type="button" class="btn btn-link" (click)="onGoNext()"
-    [disabled]="!isAbleToGoNext()" [attr.aria-disabled]="!isAbleToGoNext()" aria-label="Next year">
+  <button *ngIf="canGoNext" id="nextYearButton" type="button" class="btn btn-link" (click)="onGoNext()"
+    [disabled]="!canGoNext" [attr.aria-disabled]="!canGoNext" aria-label="Next year">
     <icon-forward></icon-forward>
   </button>
 </div>
 <!-- Table -->
 <layout-waiting-overlay [waiting]="waiting">
-  <div class="table-responsive"> <!-- Add a container for responsiveness -->
+  <div class="table-responsive">
     <table class="table table-sm table-hover">
       <thead class="thead-light">
         <tr>
           <th scope="col">Socio</th>
-          <!-- Add classes for responsiveness -->
           <th scope="col" *ngFor="let month of months"> {{month}}</th>
         </tr>
       </thead>
@@ -42,7 +41,8 @@
                 <ng-container *ngIf="hasMonth(row.months, month)">
                   <button type="button" class="btn btn-secondary btn-sm" role="button"
                     routerLink="/fees/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
-                    <icon-success-or-failure [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
+                    <icon-success-or-failure
+                      [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
                   </button>
                 </ng-container>
               </td>
