@@ -1,14 +1,17 @@
-import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
-import { FormControl, NgControl, FormGroupDirective } from '@angular/forms';
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appInvalidField]'
 })
-export class InvalidFieldDirective implements OnChanges {
+export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() appInvalidField: string | FormControl | null = null;
 
   @Input() backendFailure: boolean = false;
+
+  private statusChangeSubscription: Subscription | null = null;
 
   constructor(
     private el: ElementRef,
@@ -17,9 +20,25 @@ export class InvalidFieldDirective implements OnChanges {
     private formGroupDirective: FormGroupDirective
   ) { }
 
+  ngOnInit(): void {
+    const control = this.getFormControl();
+
+    if (control) {
+      this.statusChangeSubscription = control.statusChanges.subscribe(() => {
+        this.updateFieldClass();
+      });
+    }
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['appInvalidField'] || changes['backendFailure']) {
       this.updateFieldClass();
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.statusChangeSubscription) {
+      this.statusChangeSubscription.unsubscribe();
     }
   }
 
