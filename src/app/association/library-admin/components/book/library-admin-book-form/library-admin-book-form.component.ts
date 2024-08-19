@@ -15,6 +15,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
 import { LibraryAdminAuthorSelectionComponent } from '../../author/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '../../book-type/library-admin-book-type-selection/library-admin-book-type-selection.component';
@@ -106,7 +107,7 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      isbn: [''],
+      isbn: ['', isbnValidator()],
       title: ['', Validators.required],
       language: ['', Validators.required],
       authors: [[]],
