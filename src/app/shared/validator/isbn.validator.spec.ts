@@ -21,16 +21,16 @@ describe('isbnValidator', () => {
     expect(result).toBeNull();
   });
 
-  it('should return an error object for an invalid ISBN-10', () => {
+  it('should return null, and ignore checksum, for an invalid ISBN-10', () => {
     const control = new FormControl('0-306-40615-9');
     const result = isbnValidator()(control);
-    expect(result).toEqual({ 'invalidISBN': true });
+    expect(result).toBeNull();
   });
 
-  it('should return an error object for an invalid ISBN-13', () => {
+  it('should return null, and ignore checksum, for an invalid ISBN-13', () => {
     const control = new FormControl('978-3-16-148410-9');
     const result = isbnValidator()(control);
-    expect(result).toEqual({ 'invalidISBN': true });
+    expect(result).toBeNull();
   });
 
   it('should return an error object for an invalid format (not ISBN-10 or ISBN-13)', () => {
