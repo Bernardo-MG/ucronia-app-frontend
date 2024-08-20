@@ -20,7 +20,7 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     private formGroupDirective: FormGroupDirective
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     const control = this.getFormControl();
 
     if (control) {
@@ -30,19 +30,19 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['appInvalidField'] || changes['backendFailure']) {
       this.updateFieldClass();
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.statusChangeSubscription) {
       this.statusChangeSubscription.unsubscribe();
     }
   }
 
-  private updateFieldClass(): void {
+  updateFieldClass(): void {
     const control = this.getFormControl();
 
     if (
@@ -55,7 +55,7 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private getFormControl(): FormControl | null {
+  getFormControl(): FormControl | null {
     let formControl;
 
     if (typeof this.appInvalidField === 'string') {
@@ -66,6 +66,14 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
       formControl = this.controlDir.control as FormControl;
     } else {
       formControl = null;
+    }
+
+    // Fall back to using formControlName if appInvalidField is not provided
+    if (!formControl && this.controlDir) {
+      const formControlName = this.controlDir.name as string | readonly (string | number)[];
+      if (formControlName) {
+        formControl = this.formGroupDirective.form.get(formControlName) as FormControl;
+      }
     }
 
     return formControl;

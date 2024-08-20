@@ -31,9 +31,8 @@
   <div class="row mb-2">
     <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">DNI</label>
     <div class="col-sm-10">
-      <input type="text" id="identifierInput" formControlName="identifier" class="form-control"
-        appInvalidField="identifier" [backendFailure]="failures.hasFailures('identifier')"
-        aria-describedby="identifierLabel" maxlength="15">
+      <input type="text" id="identifierInput" formControlName="identifier" class="form-control" appInvalidField
+        [backendFailure]="failures.hasFailures('identifier')" aria-describedby="identifierLabel" maxlength="15">
       <app-input-failure-feedback [failures]="failures.getFailures('identifier')"></app-input-failure-feedback>
     </div>
   </div>
@@ -41,7 +40,7 @@
   <div class="row mb-2">
     <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Teléfono</label>
     <div class="col-sm-10">
-      <input type="text" id="phoneInput" formControlName="phone" class="form-control" appInvalidField="phone"
+      <input type="text" id="phoneInput" formControlName="phone" class="form-control" appInvalidField
         [backendFailure]="failures.hasFailures('phone')" aria-describedby="phoneLabel" maxlength="15">
       <app-input-failure-feedback [failures]="failures.getFailures('phone')"></app-input-failure-feedback>
     </div>
