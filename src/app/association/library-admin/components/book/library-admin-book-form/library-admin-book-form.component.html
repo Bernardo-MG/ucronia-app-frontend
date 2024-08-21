@@ -219,7 +219,7 @@
 </layout-modal>
 
 <!-- Publisher modal -->
-<layout-modal name="authorModal" title="Editor">
+<layout-modal name="publisherModal" title="Editor">
   <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
     [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
     (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
