@@ -11,9 +11,8 @@
   <div class="row mb-2">
     <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Descripción</label>
     <div class="col-sm-10">
-      <input type="text" id="descriptionInput" formControlName="description" class="form-control"
-        appInvalidField="description" [backendFailure]="failures.hasFailures('description')"
-        aria-describedby="descriptionLabel" maxlength="200">
+      <input type="text" id="descriptionInput" formControlName="description" class="form-control" appInvalidField
+        [backendFailure]="failures.hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
       <app-input-failure-feedback [failures]="failures.getFailures('description')"></app-input-failure-feedback>
     </div>
   </div>
@@ -21,7 +20,7 @@
   <div class="row mb-2">
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Fecha</label>
     <div class="col-sm-10">
-      <input type="date" id="dateInput" formControlName="date" class="form-control" appInvalidField="date"
+      <input type="date" id="dateInput" formControlName="date" class="form-control" appInvalidField
         [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
     </div>
@@ -30,22 +29,11 @@
   <div class="row mb-2">
     <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Importe</label>
     <div class="col-sm-10">
-      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control"
-        appInvalidField="amount" [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
+      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" appInvalidField
+        [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('amount')"></app-input-failure-feedback>
     </div>
   </div>
-  <div class="row">
-    <!-- Save button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Guardar</layout-waiting-button>
-    </div>
-    <!-- Cancel button -->
-    <ng-template [ngIf]="cancellable">
-      <div class="col-sm-2 d-grid gap-2">
-        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
-      </div>
-    </ng-template>
-  </div>
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="true" (cancel)="onCancel()" (save)="onSave()"></app-save-controls>
 </form>

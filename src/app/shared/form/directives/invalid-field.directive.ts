@@ -1,14 +1,17 @@
-import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges } from '@angular/core';
-import { FormControl, NgControl, FormGroupDirective } from '@angular/forms';
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
+import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appInvalidField]'
 })
-export class InvalidFieldDirective implements OnChanges {
+export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 
   @Input() appInvalidField: string | FormControl | null = null;
 
   @Input() backendFailure: boolean = false;
+
+  private statusChangeSubscription: Subscription | null = null;
 
   constructor(
     private el: ElementRef,
@@ -17,13 +20,29 @@ export class InvalidFieldDirective implements OnChanges {
     private formGroupDirective: FormGroupDirective
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnInit(): void {
+    const control = this.getFormControl();
+
+    if (control) {
+      this.statusChangeSubscription = control.statusChanges.subscribe(() => {
+        this.updateFieldClass();
+      });
+    }
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['appInvalidField'] || changes['backendFailure']) {
       this.updateFieldClass();
     }
   }
 
-  private updateFieldClass(): void {
+  public ngOnDestroy(): void {
+    if (this.statusChangeSubscription) {
+      this.statusChangeSubscription.unsubscribe();
+    }
+  }
+
+  updateFieldClass(): void {
     const control = this.getFormControl();
 
     if (
@@ -36,7 +55,7 @@ export class InvalidFieldDirective implements OnChanges {
     }
   }
 
-  private getFormControl(): FormControl | null {
+  getFormControl(): FormControl | null {
     let formControl;
 
     if (typeof this.appInvalidField === 'string') {
@@ -47,6 +66,14 @@ export class InvalidFieldDirective implements OnChanges {
       formControl = this.controlDir.control as FormControl;
     } else {
       formControl = null;
+    }
+
+    // Fall back to using formControlName if appInvalidField is not provided
+    if (!formControl && this.controlDir) {
+      const formControlName = this.controlDir.name as string | readonly (string | number)[];
+      if (formControlName) {
+        formControl = this.formGroupDirective.form.get(formControlName) as FormControl;
+      }
     }
 
     return formControl;
