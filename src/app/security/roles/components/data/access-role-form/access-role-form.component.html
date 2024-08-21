@@ -8,17 +8,6 @@
       <app-input-failure-feedback [failures]="failures.getFailures('name')"></app-input-failure-feedback>
     </div>
   </div>
-  <div class="row">
-    <!-- Save button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Guardar</layout-waiting-button>
-    </div>
-    <!-- Cancel button -->
-    <ng-template [ngIf]="cancellable">
-      <div class="col-sm-2 d-grid gap-2">
-        <button class="btn btn-primary" [disabled]="!cancelEnabled" name="Cancel" (click)="onCancel()">Cancelar</button>
-      </div>
-    </ng-template>
-  </div>
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="true" (cancel)="onCancel()" (save)="onSave()"></app-save-controls>
 </form>

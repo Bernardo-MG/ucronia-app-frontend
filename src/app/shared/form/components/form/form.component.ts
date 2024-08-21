@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 
 @Component({
