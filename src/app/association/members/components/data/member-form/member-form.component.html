@@ -46,5 +46,5 @@
     </div>
   </div>
   <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="true" (cancel)="onCancel()" (save)="onSave()"></app-save-controls>
+    [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
 </form>
