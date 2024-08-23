@@ -6,7 +6,7 @@
         Título <sorting-button property="title" (directionChange)="directionChange.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Prestado <sorting-button property="lent" (directionChange)="directionChange.emit($event)"></sorting-button>
+        Disponible <sorting-button property="lent" (directionChange)="directionChange.emit($event)"></sorting-button>
       </th>
     </tr>
   </thead>
@@ -17,7 +17,7 @@
         {{book.title}}
       </td>
       <td>
-        <icon-success-or-failure [success]="book.lent"></icon-success-or-failure>
+        <icon-success-or-failure [success]="!book.lent"></icon-success-or-failure>
       </td>
     </tr>
   </tbody>
