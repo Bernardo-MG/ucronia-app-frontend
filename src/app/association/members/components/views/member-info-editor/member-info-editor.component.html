@@ -1,4 +1,4 @@
-<layout-article title="Datos de socio">
+<layout-article title="#{{data.number}} {{data.name.fullName}}">
   <div appResponsiveShortColumns>
     <div *ngIf="showMenu">
       <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
@@ -19,30 +19,36 @@
       <ng-container *ngSwitchCase="false">
         <div class="card mb-1">
           <div class="card-body">
+            <h5 class="card-title">Detalles</h5>
             <assoc-member-info [data]="data"></assoc-member-info>
           </div>
         </div>
-        <!-- Enable/disable button -->
-        <div class="card">
+        <div class="card mb-1">
           <div class="card-body">
-            <div class="row">
-              <!-- Enable button -->
-              <ng-template [ngIf]="!data.active">
-                <div class="col-sm-2 d-grid gap-2">
-                  <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
-                    data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activar</layout-waiting-button>
-                </div>
-              </ng-template>
-              <ng-template [ngIf]="data.active">
-                <!-- Disable button -->
-                <div class="col-sm-2 d-grid gap-2">
-                  <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
-                    data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Desactivar</layout-waiting-button>
-                </div>
-              </ng-template>
+            <h5 class="card-title">Estado</h5>
+            <!-- Active -->
+            <div class="row mb-2">
+              <label id="activeLabel" class="col-sm-2 col-form-label">Activo</label>
+              <div class="col-sm-10">
+                <icon-success-or-failure [success]="data.active"></icon-success-or-failure>
+              </div>
             </div>
+            <!-- Enable button -->
+            <ng-template [ngIf]="!data.active">
+              <div class="col-sm-2 d-grid gap-2">
+                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activar</layout-waiting-button>
+              </div>
+            </ng-template>
+            <ng-template [ngIf]="data.active">
+              <!-- Disable button -->
+              <div class="col-sm-2 d-grid gap-2">
+                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Desactivar</layout-waiting-button>
+              </div>
+            </ng-template>
           </div>
         </div>
       </ng-container>
