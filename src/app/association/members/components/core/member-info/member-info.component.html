@@ -1,5 +1,6 @@
 <div class="card mb-1">
   <div class="card-header">
+    <!-- Tabs -->
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
@@ -11,8 +12,10 @@
       </li>
     </ul>
   </div>
+  <!-- View-->
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
+      <!-- Member details -->
       <div class="card-body">
         <assoc-member-info-details [data]="data"></assoc-member-info-details>
       </div>
@@ -24,6 +27,7 @@
       </div>
     </ng-container>
     <ng-container *ngSwitchCase="'status'">
+      <!-- Member status -->
       <div class="card-body">
         <!-- Active -->
         <div class="row mb-2">
