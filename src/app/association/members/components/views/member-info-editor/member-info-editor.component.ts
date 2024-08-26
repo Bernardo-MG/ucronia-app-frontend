@@ -8,8 +8,8 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
-import { MemberFormComponent } from '../../data/member-form/member-form.component';
-import { MemberInfoComponent } from '../../info/member-info/member-info.component';
+import { MemberFormComponent } from '../../core/member-form/member-form.component';
+import { MemberInfoComponent } from '../../core/member-info/member-info.component';
 
 @Component({
   selector: 'assoc-member-info-editor',
