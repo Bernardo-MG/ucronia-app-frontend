@@ -14,7 +14,8 @@
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-member-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
-          [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-member-info>
+          [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
+          (activate)="onActivate()" (deactivate)="onDeactivate()"></assoc-member-info>
       </ng-container>
     </ng-container>
   </div>

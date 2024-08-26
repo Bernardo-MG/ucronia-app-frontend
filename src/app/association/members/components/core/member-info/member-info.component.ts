@@ -5,6 +5,7 @@ import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import * as bootstrap from 'bootstrap';
 import { MemberInfoDetailsComponent } from '../member-info-details/member-info-details.component';
 
 @Component({
@@ -39,6 +40,25 @@ export class MemberInfoComponent {
 
   public onChangeView(newView: string) {
     this.view = newView;
+  }
+
+  public onShowActivate() {
+    this.openModal('activate');
+  }
+
+  public onShowDeactivate() {
+    this.openModal('deactivate');
+  }
+
+  private openModal(modalId: string): void {
+    const modalElement = document.getElementById(`${modalId}Modal`);
+    if (modalElement) {
+      let modal = bootstrap.Modal.getInstance(modalElement);
+      if (!modal) {
+        modal = new bootstrap.Modal(modalElement);
+      }
+      modal.show();
+    }
   }
 
 }
