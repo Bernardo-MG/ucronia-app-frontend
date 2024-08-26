@@ -18,38 +18,54 @@
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <div class="card mb-1">
-          <div class="card-body">
-            <h5 class="card-title">Detalles</h5>
-            <assoc-member-info [data]="data"></assoc-member-info>
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
+                  (click)="onChangeView('details')">Detalles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [class.active]="view === 'status'" aria-current="page" role="button"
+                  (click)="onChangeView('status')">Estado</a>
+              </li>
+            </ul>
           </div>
-        </div>
-        <div class="card mb-1">
-          <div class="card-body">
-            <h5 class="card-title">Estado</h5>
-            <!-- Active -->
-            <div class="row mb-2">
-              <label id="activeLabel" class="col-sm-2 col-form-label">Activo</label>
-              <div class="col-sm-10">
-                <icon-success-or-failure [success]="data.active"></icon-success-or-failure>
+          <ng-container [ngSwitch]="view">
+            <ng-container *ngSwitchCase="'details'">
+              <div class="card-body">
+                <assoc-member-info-details [data]="data"></assoc-member-info-details>
               </div>
-            </div>
-            <!-- Enable button -->
-            <ng-template [ngIf]="!data.active">
-              <div class="col-sm-2 d-grid gap-2">
-                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
-                  data-bs-toggle="modal"
-                  [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activar</layout-waiting-button>
+            </ng-container>
+            <ng-container *ngSwitchCase="'status'">
+              <div class="card-body">
+                <!-- Active -->
+                <div class="row mb-2">
+                  <div class="col-sm-2 text-primary">Activo</div>
+                  <div class="col-sm-10">
+                    <icon-success-or-failure [success]="data.active"></icon-success-or-failure>
+                  </div>
+                </div>
               </div>
-            </ng-template>
-            <ng-template [ngIf]="data.active">
-              <!-- Disable button -->
-              <div class="col-sm-2 d-grid gap-2">
-                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
-                  data-bs-toggle="modal"
-                  [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Desactivar</layout-waiting-button>
+              <div class="card-footer text-muted">
+                <ng-template [ngIf]="!data.active">
+                  <!-- Enable button -->
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#activateModal' : ''">Activar</layout-waiting-button>
+                  </div>
+                </ng-template>
+                <ng-template [ngIf]="data.active">
+                  <!-- Disable button -->
+                  <div class="col-sm-2 d-grid gap-2">
+                    <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
+                      data-bs-toggle="modal"
+                      [attr.data-bs-target]="editEnabled ? '#deactivateModal' : ''">Desactivar</layout-waiting-button>
+                  </div>
+                </ng-template>
               </div>
-            </ng-template>
-          </div>
+            </ng-container>
+          </ng-container>
         </div>
       </ng-container>
     </ng-container>

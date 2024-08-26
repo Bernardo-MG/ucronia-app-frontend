@@ -13,15 +13,17 @@ import { Observable } from 'rxjs';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../../data/member-form/member-form.component';
-import { MemberInfoComponent } from '../../data/member-info/member-info.component';
+import { MemberInfoDetailsComponent } from '../../info/member-info-details/member-info-details.component';
 
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, IconsModule, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoDetailsComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, IconsModule, ResponsiveShortColumnsDirective],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
+
+  public view: string = 'details';
 
   private number = -1;
 
@@ -59,6 +61,10 @@ export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member>
     const user = this.data;
     user.active = false;
     this.onSave(user);
+  }
+
+  public onChangeView(newView: string) {
+    this.view = newView;
   }
 
   protected override delete(): void {
