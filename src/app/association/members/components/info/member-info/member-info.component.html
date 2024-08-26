@@ -18,8 +18,8 @@
       </div>
       <div *ngIf="showMenu" class="card-footer">
         <div>
-          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-            (delete)="delete.emit()"></form-editor-header>
+          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
+            (delete)="delete.emit()"></form-control-buttons>
         </div>
       </div>
     </ng-container>

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'form-editor-header',
-  templateUrl: './editor-header.component.html'
+  selector: 'form-control-buttons',
+  templateUrl: './control-buttons.component.html'
 })
-export class EditorHeaderComponent {
+export class ControlButtonsComponent {
 
   @Input() public editable = false;
 

@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { EditorHeaderComponent } from './editor-header.component';
+import { ControlButtonsComponent } from './control-buttons.component';
 
 describe('EditorHeaderComponent', () => {
-  let component: EditorHeaderComponent;
-  let fixture: ComponentFixture<EditorHeaderComponent>;
+  let component: ControlButtonsComponent;
+  let fixture: ComponentFixture<ControlButtonsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,12 +14,12 @@ describe('EditorHeaderComponent', () => {
         ModalComponent
       ],
       declarations: [
-        EditorHeaderComponent
+        ControlButtonsComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(EditorHeaderComponent);
+    fixture = TestBed.createComponent(ControlButtonsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

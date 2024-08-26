@@ -5,8 +5,8 @@
       <div class="card">
         <div class="card-body">
           <div *ngIf="showMenu">
-            <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-              (delete)="onDelete()"></form-editor-header>
+            <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+              (delete)="onDelete()"></form-control-buttons>
           </div>
           <access-role-info id="info" [data]="data"></access-role-info>
         </div>

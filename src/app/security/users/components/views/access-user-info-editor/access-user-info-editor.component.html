@@ -20,8 +20,8 @@
         <div class="card mb-1">
           <div class="card-body">
             <div *ngIf="showMenu">
-              <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-                (delete)="onDelete()"></form-editor-header>
+              <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+                (delete)="onDelete()"></form-control-buttons>
             </div>
             <ng-container [ngSwitch]="editing">
               <!-- Form -->
