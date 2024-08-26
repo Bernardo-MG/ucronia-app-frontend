@@ -10,7 +10,7 @@ import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.di
 import { Active } from '../../../models/active';
 import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
-import { MemberStatusSelectComponent } from '../../select/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '../../shared/member-status-select/member-status-select.component';
 import { MemberListComponent } from '../member-list/member-list.component';
 
 @Component({

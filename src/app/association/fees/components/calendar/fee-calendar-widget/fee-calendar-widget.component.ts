@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/association/members/components/shared/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
