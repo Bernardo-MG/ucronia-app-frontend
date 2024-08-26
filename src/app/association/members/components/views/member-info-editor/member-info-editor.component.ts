@@ -14,11 +14,12 @@ import { Member } from '../../../models/member';
 import { MemberService } from '../../../services/member.service';
 import { MemberFormComponent } from '../../data/member-form/member-form.component';
 import { MemberInfoDetailsComponent } from '../../info/member-info-details/member-info-details.component';
+import { MemberInfoComponent } from '../../info/member-info/member-info.component';
 
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoDetailsComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, IconsModule, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, MemberFormComponent, MemberInfoDetailsComponent, MemberInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, IconsModule, ResponsiveShortColumnsDirective],
   templateUrl: './member-info-editor.component.html'
 })
 export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
