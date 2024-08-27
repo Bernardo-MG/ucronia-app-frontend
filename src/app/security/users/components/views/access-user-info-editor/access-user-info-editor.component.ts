@@ -29,8 +29,6 @@ import { AccessUserStatusComponent } from '../../info/access-user-status/access-
 })
 export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {
 
-  public view: 'user' | 'roles' | 'member' | 'status' = 'user';
-
   public readingRoleSelection = false;
 
   public readingMemberSelection = false;
@@ -156,10 +154,6 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
     user.enabled = true;
     this.changingActive = true;
     this.onSave(user);
-  }
-
-  public onChangeView(newView: 'user' | 'roles' | 'member' | 'status') {
-    this.view = newView;
   }
 
   protected override delete(): void {

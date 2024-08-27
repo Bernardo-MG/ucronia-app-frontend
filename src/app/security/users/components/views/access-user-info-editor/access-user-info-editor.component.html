@@ -1,51 +1,27 @@
 <layout-article title="Editar usuario">
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-header">
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
-              (click)="onChangeView('user')">Usuario</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'status'" aria-current="page" role="button"
-              (click)="onChangeView('status')">Estado</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'roles'" aria-current="page" role="button"
-              (click)="onChangeView('roles')">Roles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'member'" aria-current="page" role="button"
-              (click)="onChangeView('member')">Socio</a>
-          </li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
-            <div class="card mb-1">
-              <div class="card-body">
-                <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-                  [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
-                </access-user-form>
-              </div>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <access-user-info [view]="view" [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-              [editEnabled]="editEnabled" [waiting]="waiting" [member]="member"
-              [readingMemberSelection]="readingMemberSelection" [readingMember]="readingMember"
-              [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
-              [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
-              (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
-              (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
-              (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)"></access-user-info>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card mb-1">
+          <div class="card-body">
+            <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </access-user-form>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *ngSwitchCase="false">
+        <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+          [editEnabled]="editEnabled" [waiting]="waiting" [member]="member"
+          [readingMemberSelection]="readingMemberSelection" [readingMember]="readingMember"
+          [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
+          [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
+          (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
+          (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
+          (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)"></access-user-info>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>
 

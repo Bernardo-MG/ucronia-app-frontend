@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '@app/core/authentication/models/user';
-import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
   selector: 'access-user-info-details',
   standalone: true,
-  imports: [CommonModule, IconsModule, FormModule],
+  imports: [CommonModule, IconsModule],
   templateUrl: './access-user-info-details.component.html'
 })
 export class AccessUserInfoDetailsComponent {

@@ -4,6 +4,7 @@ import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
+import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
@@ -13,12 +14,10 @@ import { AccessUserStatusComponent } from '../access-user-status/access-user-sta
 @Component({
   selector: 'access-user-info',
   standalone: true,
-  imports: [CommonModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
   templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {
-
-  @Input() public view: 'user' | 'roles' | 'member' | 'status' = 'user';
 
   @Input() public data = new User();
 
@@ -57,5 +56,11 @@ export class AccessUserInfoComponent {
   @Output() public goToRoleSelectionPage = new EventEmitter<number>();
 
   @Output() public goToMemberSelectionPage = new EventEmitter<number>();
+
+  public view: 'user' | 'roles' | 'member' | 'status' = 'user';
+
+  public onChangeView(newView: 'user' | 'roles' | 'member' | 'status') {
+    this.view = newView;
+  }
 
 }

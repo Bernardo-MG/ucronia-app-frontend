@@ -45,9 +45,3 @@
     </div>
   </div>
 </form>
-<div *ngIf="showMenu" class="card-footer">
-  <div>
-    <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-      (delete)="delete.emit()"></form-control-buttons>
-  </div>
-</div>
