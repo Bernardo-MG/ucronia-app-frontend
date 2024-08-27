@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association/members/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { Member } from '@app/association/members/shared/models/member';
 
 @Component({
   selector: 'access-user-member-editor',

@@ -5,7 +5,7 @@ import { LibraryLendingService } from '@app/association/library-lending/services
 import { Book } from '@app/association/library/models/book';
 import { BookReturned } from '@app/association/library/models/book-returned';
 import { Person } from '@app/association/library/models/person';
-import { MemberStatusSelectComponent } from '@app/association/members/components/select/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';

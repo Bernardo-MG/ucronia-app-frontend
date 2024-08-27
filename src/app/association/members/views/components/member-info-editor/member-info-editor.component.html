@@ -1,0 +1,22 @@
+<layout-article title="#{{data.number}} {{data.name.fullName}}">
+  <div appResponsiveShortColumns>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card mb-1">
+          <div class="card-body">
+            <assoc-member-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()" (startEditing)="onStartEditing()">
+            </assoc-member-form>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-member-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
+          [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
+          (activate)="onActivate()" (deactivate)="onDeactivate()"></assoc-member-info>
+      </ng-container>
+    </ng-container>
+  </div>
+</layout-article>

@@ -1,4 +1,4 @@
-<form class="needs-validation" novalidate (ngSubmit)="onSave(configuration, $event)"
+<form class="needs-validation" (ngSubmit)="onSave(configuration, $event)" novalidate
   *ngFor="let configuration of configurations">
   <div class="row mb-2">
     <label for="{{configuration.code + 'Input'}}" id="{{configuration.code + 'Label'}}"

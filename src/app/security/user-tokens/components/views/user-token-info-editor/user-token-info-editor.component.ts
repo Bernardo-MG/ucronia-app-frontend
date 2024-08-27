@@ -12,11 +12,12 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { UserTokenService } from '../../../services/user-token.service';
 import { UserTokenInfoComponent } from '../../data/user-token-info/user-token-info.component';
+import { UserTokenStatusComponent } from '../../data/user-token-status/user-token-status.component';
 
 @Component({
   selector: 'access-user-token-info-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
   templateUrl: './user-token-info-editor.component.html'
 })
 export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<UserToken> implements OnInit {
@@ -24,6 +25,8 @@ export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<User
   public extendExpirationForm;
 
   private token = "";
+
+  public view: string = 'details';
 
   constructor(
     fb: FormBuilder,
@@ -50,6 +53,10 @@ export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<User
       }
       this.load();
     });
+  }
+
+  public onChangeView(newView: string) {
+    this.view = newView;
   }
 
   public onRevoke(): void {

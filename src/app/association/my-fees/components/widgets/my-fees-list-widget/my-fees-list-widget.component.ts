@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Fee } from '@app/association/fees/models/fee';
+import { Fee } from '@app/association/fees/shared/models/fee';
 import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';

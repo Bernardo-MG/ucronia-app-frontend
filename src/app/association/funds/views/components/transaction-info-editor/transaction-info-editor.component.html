@@ -1,0 +1,21 @@
+<layout-article title="Datos de transacción">
+  <div appResponsiveShortColumns>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card">
+          <div class="card-body">
+            <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-transaction-form>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-transaction-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+          (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
+      </ng-container>
+    </ng-container>
+  </div>
+</layout-article>

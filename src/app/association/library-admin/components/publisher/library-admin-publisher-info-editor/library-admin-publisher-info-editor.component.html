@@ -1,23 +1,11 @@
 <layout-article title="Datos de editor">
   <div appResponsiveShortColumns>
+    <!-- Form -->
     <div class="card">
       <div class="card-body">
-        <div *ngIf="showMenu">
-          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-            (delete)="onDelete()"></form-editor-header>
-        </div>
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
-            <assoc-library-admin-publisher-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" (save)="onSave($event)">
-            </assoc-library-admin-publisher-form>
-          </ng-container>
-          <!-- Info -->
-          <ng-container *ngSwitchCase="false">
-            <assoc-library-admin-publisher-info [data]="data"></assoc-library-admin-publisher-info>
-          </ng-container>
-        </ng-container>
+        <assoc-library-admin-publisher-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+          [failures]="failures" (save)="onSave($event)" (cancel)="onCancel()">
+        </assoc-library-admin-publisher-form>
       </div>
     </div>
   </div>

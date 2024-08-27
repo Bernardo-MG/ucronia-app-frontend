@@ -1,22 +1,10 @@
 <layout-article title="Datos de donante">
   <div appResponsiveShortColumns>
+    <!-- Form -->
     <div class="card">
       <div class="card-body">
-        <div *ngIf="showMenu">
-          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-            (delete)="onDelete()"></form-editor-header>
-        </div>
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
-            <assoc-library-admin-donor-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" (save)="onSave($event)"></assoc-library-admin-donor-form>
-          </ng-container>
-          <!-- Info -->
-          <ng-container *ngSwitchCase="false">
-            <assoc-library-admin-donor-info [data]="data"></assoc-library-admin-donor-info>
-          </ng-container>
-        </ng-container>
+        <assoc-library-admin-donor-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+          [failures]="failures" (save)="onSave($event)" (cancel)="onCancel()"></assoc-library-admin-donor-form>
       </div>
     </div>
   </div>
