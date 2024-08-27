@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MemberBalanceService } from '../../../services/member-balance.service';
-import { MemberService } from '../../../services/member.service';
+import { MemberBalanceService } from '@app/association/members/balance/services/member-balance.service';
+import { MemberService } from '@app/association/members/core/services/member.service';
 import { MemberFrontpageComponent } from './member-frontpage.component';
 
 describe('MemberFrontpageComponent', () => {

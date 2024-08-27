@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberBalanceService } from '../../../services/member-balance.service';
+import { MemberBalanceService } from '../../services/member-balance.service';
 import { MemberBalanceChartWidgetComponent } from './member-balance-chart-widget.component';
 
 describe('MemberBalanceChartWidgetComponent', () => {
