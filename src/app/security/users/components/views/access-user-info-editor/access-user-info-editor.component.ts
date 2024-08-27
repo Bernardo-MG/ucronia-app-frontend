@@ -18,16 +18,17 @@ import { AccessUserFormComponent } from '../../form/access-user-form/access-user
 import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
 import { AccessUserInfoComponent } from '../../info/access-user-info/access-user-info.component';
+import { AccessUserStatusComponent } from '../../info/access-user-status/access-user-status.component';
 
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, AccessUserStatusComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {
 
-  public view: 'user' | 'roles' | 'member' = 'user';
+  public view: 'user' | 'roles' | 'member' | 'status' = 'user';
 
   public readingRoleSelection = false;
 
@@ -156,7 +157,7 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
     this.onSave(user);
   }
 
-  public onChangeView(newView: 'user' | 'roles' | 'member') {
+  public onChangeView(newView: 'user' | 'roles' | 'member' | 'status') {
     this.view = newView;
   }
 
