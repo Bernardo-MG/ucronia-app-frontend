@@ -4,11 +4,11 @@
     <div class="mb-1">
       <div class="card">
         <div class="card-body">
-          <div *ngIf="showMenu">
-            <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-              (delete)="onDelete()"></form-control-buttons>
-          </div>
           <access-role-info id="info" [data]="data"></access-role-info>
+        </div>
+        <div *ngIf="showMenu" class="card-footer">
+          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+            (delete)="onDelete()"></form-control-buttons>
         </div>
       </div>
     </div>
