@@ -2,13 +2,17 @@
   <div class="col-md-6 offset-md-3 pb-2">
     <div class="card">
       <div class="card-body">
+        <!-- Book info -->
+        <assoc-library-book-info id="info" [data]="data" [languages]="languages"></assoc-library-book-info>
+      </div>
+      <footer *ngIf="lendPermission" class="card-footer">
         <ng-container [ngSwitch]="data.lent">
           <ng-container *ngSwitchCase="true">
             <!-- Return button -->
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#returnModal">
-              <icon-take-in></icon-take-in>Devuelto
+              <icon-take-in></icon-take-in>Devolver
             </button>
           </ng-container>
           <ng-container *ngSwitchCase="false">
@@ -16,13 +20,11 @@
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
               [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
               data-bs-target="#lendModal">
-              <icon-take-out></icon-take-out>Prestado
+              <icon-take-out></icon-take-out>Prestar
             </button>
           </ng-container>
         </ng-container>
-        <!-- Book info -->
-        <assoc-library-book-info id="info" [data]="data" [languages]="languages"></assoc-library-book-info>
-      </div>
+      </footer>
     </div>
   </div>
   <!-- Lendings -->
