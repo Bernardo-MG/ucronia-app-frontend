@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { FeeFrontpageComponent } from './components/views/fee-frontpage/fee-frontpage.component';
-import { FeeInfoEditorComponent } from './components/views/fee-info-editor/fee-info-editor.component';
-import { FeePayComponent } from './components/pay/fee-pay/fee-pay.component';
+import { FeePayComponent } from './pay/components/fee-pay/fee-pay.component';
+import { FeeFrontpageComponent } from './views/components/fee-frontpage/fee-frontpage.component';
+import { FeeInfoEditorComponent } from './views/components/fee-info-editor/fee-info-editor.component';
 
 
 const routes: Routes = [

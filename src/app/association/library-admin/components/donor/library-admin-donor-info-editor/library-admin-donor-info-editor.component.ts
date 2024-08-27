@@ -10,12 +10,11 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/library-admin-donor-form.component';
-import { LibraryAdminDonorInfoComponent } from '../library-admin-donor-info/library-admin-donor-info.component';
 
 @Component({
   selector: 'app-library-admin-donor-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, LibraryAdminDonorInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-donor-info-editor.component.html'
 })
 export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {
@@ -32,6 +31,9 @@ export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusCompon
   }
 
   public ngOnInit(): void {
+    // Activate edition
+    this.editing = true;
+
     // Check permissions
     this.editable = this.authContainer.hasPermission("inventory_donor", "update");
     this.deletable = this.authContainer.hasPermission("inventory_donor", "delete");

@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Member } from '@app/association/members/models/member';
+import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
@@ -18,17 +17,17 @@ import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserFormComponent } from '../../form/access-user-form/access-user-form.component';
 import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
+import { AccessUserInfoDetailsComponent } from '../../info/access-user-info-details/access-user-info-details.component';
 import { AccessUserInfoComponent } from '../../info/access-user-info/access-user-info.component';
+import { AccessUserStatusComponent } from '../../info/access-user-status/access-user-status.component';
 
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoDetailsComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, AccessUserStatusComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {
-
-  public view: 'user' | 'roles' | 'member' = 'user';
 
   public readingRoleSelection = false;
 
@@ -155,10 +154,6 @@ export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<Use
     user.enabled = true;
     this.changingActive = true;
     this.onSave(user);
-  }
-
-  public onChangeView(newView: 'user' | 'roles' | 'member') {
-    this.view = newView;
   }
 
   protected override delete(): void {

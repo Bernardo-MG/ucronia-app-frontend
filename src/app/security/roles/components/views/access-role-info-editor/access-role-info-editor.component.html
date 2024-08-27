@@ -3,37 +3,51 @@
     <!-- Role -->
     <div class="mb-1">
       <div class="card">
-        <div class="card-body">
-          <div *ngIf="showMenu">
-            <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-              (delete)="onDelete()"></form-editor-header>
-          </div>
-          <access-role-info id="info" [data]="data"></access-role-info>
+        <div class="card-header">
+          <!-- Tabs -->
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
+                (click)="onChangeView('details')">Detalles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="view === 'permissions'" aria-current="page" role="button"
+                (click)="onChangeView('permissions')">Permisos</a>
+            </li>
+          </ul>
         </div>
+        <ng-container [ngSwitch]="view">
+          <ng-container *ngSwitchCase="'details'">
+            <div class="card-body">
+              <access-role-info id="info" [data]="data"></access-role-info>
+            </div>
+            <div *ngIf="showMenu" class="card-footer">
+              <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+                (delete)="onDelete()"></form-control-buttons>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'permissions'">
+            <!-- Permissions -->
+            <div class="mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <!-- Permissions list -->
+                  <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+                    (remove)="onRemovePermission($event)"></access-role-permissions>
+                  <div class="d-grid">
+                    <!-- Add button -->
+                    <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
+                      data-bs-target="#pickPermissionModal">
+                      <icon-add></icon-add>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
-    <article class="p-4">
-      <header>
-        <h2 class="border-bottom">Permisos</h2>
-      </header>
-      <!-- Permissions -->
-      <div class="mb-3">
-        <div class="card">
-          <div class="card-body">
-            <!-- Permissions list -->
-            <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-              (remove)="onRemovePermission($event)"></access-role-permissions>
-            <div class="d-grid">
-              <!-- Add button -->
-              <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
-                data-bs-target="#pickPermissionModal">
-                <icon-add></icon-add>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
   </div>
 </layout-article>
 

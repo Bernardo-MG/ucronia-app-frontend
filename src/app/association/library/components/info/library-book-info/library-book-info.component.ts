@@ -15,9 +15,21 @@ export class LibraryBookInfoComponent {
 
   @Input() public languages: Language[] = [];
 
-  public getLanguage(code: string): string {
-    const language = this.languages.find(lang => lang.code === code);
-    return language ? language.name : code;
+  public get language(): string {
+    const language = this.languages.find(lang => lang.code === this.data.language);
+    return language ? language.name : this.data.language;
+  }
+
+  public get editors(): string {
+    return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public get donors(): string {
+    return this.data.donors.map(e => e.name.fullName).join(", ");
+  }
+
+  public get authors(): string {
+    return this.data.authors.map(e => e.name).join(", ");
   }
 
 }

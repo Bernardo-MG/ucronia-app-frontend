@@ -1,0 +1,22 @@
+<layout-article title="Datos de cuota">
+  <div appResponsiveShortColumns>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card">
+          <div class="card-body">
+            <assoc-fee-edit-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+            </assoc-fee-edit-form>
+          </div>
+        </div>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+          (delete)="onDelete()" (startEditing)="onStartEditing()"
+          (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
+      </ng-container>
+    </ng-container>
+  </div>
+</layout-article>

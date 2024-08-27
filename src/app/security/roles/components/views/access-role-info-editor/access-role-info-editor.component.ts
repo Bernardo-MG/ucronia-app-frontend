@@ -29,6 +29,8 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
 
   public permissions = new PaginatedResponse<ResourcePermission[]>([]);
 
+  public view: string = 'details';
+
   private permissionsSort = new Sort([]);
 
   private role = '';
@@ -60,6 +62,10 @@ export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Rol
         this.onLoadPermissions(0);
       }
     });
+  }
+
+  public onChangeView(newView: string) {
+    this.view = newView;
   }
 
   public onAddPermission(permission: ResourcePermission): void {

@@ -10,12 +10,11 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/library-admin-author-form.component';
-import { LibraryAdminAuthorInfoComponent } from '../library-admin-author-info/library-admin-author-info.component';
 
 @Component({
   selector: 'assoc-library-admin-author-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-author-info-editor.component.html'
 })
 export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {
@@ -32,6 +31,9 @@ export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusCompo
   }
 
   public ngOnInit(): void {
+    // Activate edition
+    this.editing = true;
+
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_author", "update");
     this.deletable = this.authContainer.hasPermission("library_author", "delete");

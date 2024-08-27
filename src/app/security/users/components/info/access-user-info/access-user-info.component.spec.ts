@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { AccessUserInfoComponent } from './access-user-info.component';
 
 describe('AccessUserInfoComponent', () => {
@@ -7,12 +8,10 @@ describe('AccessUserInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        AccessUserInfoComponent
-      ]
+      imports: [AccessUserInfoComponent]
     })
-      .compileComponents();
-
+    .compileComponents();
+    
     fixture = TestBed.createComponent(AccessUserInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

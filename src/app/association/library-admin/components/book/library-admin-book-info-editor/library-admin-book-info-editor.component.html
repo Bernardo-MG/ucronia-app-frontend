@@ -1,28 +1,15 @@
 <layout-article title="Datos de libro">
   <div appResponsiveShortColumns>
+    <!-- Form -->
     <div class="card">
       <div class="card-body">
-        <div *ngIf="showMenu">
-          <form-editor-header [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-            (delete)="onDelete()"></form-editor-header>
-        </div>
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
-            <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
-              [readonly]="!formEnabled" [languages]="languages" [bookTypePage]="bookTypePage"
-              [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-              [donorPage]="donorPage" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()"
-              (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
-              (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
-              (goToDonorPage)="onGoToDonorPage($event)">
-            </assoc-library-admin-book-form>
-          </ng-container>
-          <!-- Info -->
-          <ng-container *ngSwitchCase="false">
-            <assoc-library-admin-book-info [data]="data" [languages]="languages"></assoc-library-admin-book-info>
-          </ng-container>
-        </ng-container>
+        <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures" [readonly]="!formEnabled"
+          [languages]="languages" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
+          [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" 
+          (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+          (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+          (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)">
+        </assoc-library-admin-book-form>
       </div>
     </div>
   </div>

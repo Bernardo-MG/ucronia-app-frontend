@@ -8,11 +8,7 @@
       <app-input-failure-feedback [failures]="failures.getFailures('name')"></app-input-failure-feedback>
     </div>
   </div>
-  <!-- Save button -->
-  <div class="row">
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
-        (action)="onSave()">Guardar</layout-waiting-button>
-    </div>
-  </div>
+  <!-- Save controls -->
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
 </form>

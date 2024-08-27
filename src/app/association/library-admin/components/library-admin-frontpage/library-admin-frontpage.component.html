@@ -1,36 +1,37 @@
 <layout-article title="Administración de biblioteca">
-  <ul class="nav nav-tabs pb-2">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button"
-        (click)="onChangeView('books')">Libros</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button"
-        (click)="onChangeView('authors')">Autores</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button"
-        (click)="onChangeView('publishers')">Editores</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button"
-        (click)="onChangeView('book_types')">Tipos</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
-        (click)="onChangeView('game_systems')">Sistemas</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="view === 'donors'" aria-current="page" role="button"
-        (click)="onChangeView('donors')">Donantes</a>
-    </li>
-  </ul>
-  <ng-container [ngSwitch]="view">
-    <!-- Books -->
-    <ng-container *ngSwitchCase="'books'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Libros</h2>
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button"
+            (click)="onChangeView('books')">Libros</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button"
+            (click)="onChangeView('authors')">Autores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button"
+            (click)="onChangeView('publishers')">Editores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button"
+            (click)="onChangeView('book_types')">Tipos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
+            (click)="onChangeView('game_systems')">Sistemas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="view === 'donors'" aria-current="page" role="button"
+            (click)="onChangeView('donors')">Donantes</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <ng-container [ngSwitch]="view">
+        <!-- Books -->
+        <ng-container *ngSwitchCase="'books'">
           <assoc-library-admin-book-list></assoc-library-admin-book-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/book/add"
@@ -38,14 +39,9 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Authors -->
-    <ng-container *ngSwitchCase="'authors'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Autores</h2>
+        </ng-container>
+        <!-- Authors -->
+        <ng-container *ngSwitchCase="'authors'">
           <assoc-library-admin-author-list></assoc-library-admin-author-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/author/add"
@@ -53,14 +49,9 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Publishers -->
-    <ng-container *ngSwitchCase="'publishers'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Editores</h2>
+        </ng-container>
+        <!-- Publishers -->
+        <ng-container *ngSwitchCase="'publishers'">
           <assoc-library-admin-publisher-list></assoc-library-admin-publisher-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
@@ -69,14 +60,9 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Book types -->
-    <ng-container *ngSwitchCase="'book_types'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Tipos</h2>
+        </ng-container>
+        <!-- Book types -->
+        <ng-container *ngSwitchCase="'book_types'">
           <assoc-library-admin-book-type-list></assoc-library-admin-book-type-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/bookType/add"
@@ -84,14 +70,9 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Game systems -->
-    <ng-container *ngSwitchCase="'game_systems'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Sistemas</h2>
+        </ng-container>
+        <!-- Game systems -->
+        <ng-container *ngSwitchCase="'game_systems'">
           <assoc-library-admin-game-system-list></assoc-library-admin-game-system-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
@@ -100,14 +81,9 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-    <!-- Donors -->
-    <ng-container *ngSwitchCase="'donors'">
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">Donantes</h2>
+        </ng-container>
+        <!-- Donors -->
+        <ng-container *ngSwitchCase="'donors'">
           <assoc-library-admin-donor-list></assoc-library-admin-donor-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/donor/add"
@@ -115,8 +91,8 @@
               <icon-add></icon-add>
             </button>
           </div>
-        </div>
-      </div>
-    </ng-container>
-  </ng-container>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </layout-article>
