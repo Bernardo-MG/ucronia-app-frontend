@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FeeEditFormComponent } from '@app/association/fees/core/components/fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '@app/association/fees/core/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { Fee } from '../../../shared/models/fee';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeeEditFormComponent } from '@app/association/fees/core/components/fee-edit-form/fee-edit-form.component';
-import { FeeInfoComponent } from '@app/association/fees/core/components/fee-info/fee-info.component';
+import { Fee } from '../../../shared/models/fee';
 
 @Component({
   selector: 'assoc-fee-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-info-editor.component.html'
 })
 export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {

@@ -1,38 +1,44 @@
-<form class="needs-validation" novalidate>
-  <!-- Member -->
-  <div class="row mb-2">
-    <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Socio</label>
-    <div class="col-sm-10">
-      <input type="text" [value]="data.person.fullName" id="fullNameInput" readonly="true" class="form-control"
-        aria-describedby="fullNameLabel">
+<div class="card">
+  <div class="card-body">
+    <!-- Member -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Socio</div>
+      <div class="col-sm-10">
+        {{data.person.fullName}}
+      </div>
+    </div>
+    <!-- Month -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Mes</div>
+      <div class="col-sm-10">
+        {{data.date}}
+      </div>
+    </div>
+    <!-- Paid -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Pagado</div>
+      <div class="col-sm-10">
+        <icon-success-or-failure [success]="data.paid"></icon-success-or-failure>
+      </div>
+    </div>
+    <!-- Payment date -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Fecha de pago</div>
+      <div class="col-sm-9">
+        {{data.transaction.date}}
+      </div>
+      <div class="col-sm-1">
+        <button [disabled]="isTransactionDisabled()" (click)="selectTransaction()" type="button"
+          class="btn btn-link link-dark" role="button" aria-label="Back">
+          <icon-search></icon-search>
+        </button>
+      </div>
     </div>
   </div>
-  <!-- Month -->
-  <div class="row mb-2">
-    <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Mes</label>
-    <div class="col-sm-10">
-      <input type="month" [value]="data.date" id="dateInput" [readonly]="true" class="form-control"
-        aria-describedby="dateLabel">
+  <div *ngIf="showMenu" class="card-footer">
+    <div>
+      <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
+        (delete)="delete.emit()"></form-control-buttons>
     </div>
   </div>
-  <!-- Paid -->
-  <div class="row mb-2">
-    <label id="activeLabel" class="col-sm-2 col-form-label">Pagado</label>
-    <div class="col-sm-10">
-      <icon-success-or-failure [success]="data.paid"></icon-success-or-failure>
-    </div>
-  </div>
-  <!-- Payment date -->
-  <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Fecha de pago</label>
-    <div class="col-sm-9">
-      <input type="date" [value]="data.transaction.date" id="paymentDateInput" [readonly]="true" class="form-control"
-        aria-describedby="paymentDateLabel">
-    </div>
-    <div class="col-sm-1">
-      <button [disabled]="isTransactionDisabled()" (click)="selectTransaction()" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
-        <icon-search></icon-search>
-      </button>
-    </div>
-  </div>
-</form>
+</div>
