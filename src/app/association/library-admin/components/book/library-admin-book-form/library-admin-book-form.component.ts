@@ -107,6 +107,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
+      number: [-1],
+      index: [-1],
       isbn: ['', isbnValidator()],
       title: ['', Validators.required],
       language: ['', Validators.required],
