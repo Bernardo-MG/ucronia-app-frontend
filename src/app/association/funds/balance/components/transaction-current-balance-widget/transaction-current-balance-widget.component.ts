@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { TransactionCurrentBalance } from '../../../shared/models/transaction-current-balance';
-import { TransactionBalanceService } from '../../../core/service/transaction-balance.service';
+import { TransactionBalanceService } from '../../services/transaction-balance.service';
 
 @Component({
   selector: 'assoc-transaction-current-balance-widget',

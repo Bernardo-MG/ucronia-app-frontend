@@ -8,7 +8,7 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
-import { TransactionCalendarService } from '../../../core/service/transaction-calendar.service';
+import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({
   selector: 'assoc-transaction-calendar-widget',

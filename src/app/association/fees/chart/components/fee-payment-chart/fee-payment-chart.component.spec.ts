@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FeeReportService } from '@app/association/fees/core/services/fee-report.service';
+import { FeeReportService } from '@app/association/fees/chart/services/fee-report.service';
 import { FeePaymentChartComponent } from './fee-payment-chart.component';
 
 describe('FeePaymentChartWidgetComponent', () => {

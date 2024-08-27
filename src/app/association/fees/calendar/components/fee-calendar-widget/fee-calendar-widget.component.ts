@@ -5,7 +5,7 @@ import { Active } from '@app/association/members/shared/models/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
-import { FeeCalendarService } from '../../../core/services/fee-calendar.service';
+import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendar } from '../../../shared/models/fee-calendar';
 import { FeeCalendarYearsRange } from '../../../shared/models/fee-calendar-years-range';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';

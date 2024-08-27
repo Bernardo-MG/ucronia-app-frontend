@@ -1,6 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { TransactionBalanceService } from './transaction-balance.service';
 
 describe('TransactionBalanceService', () => {

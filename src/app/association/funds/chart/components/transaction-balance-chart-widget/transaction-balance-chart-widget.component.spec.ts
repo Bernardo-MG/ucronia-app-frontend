@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TransactionBalanceService } from '../../../core/service/transaction-balance.service';
+import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartWidgetComponent } from './transaction-balance-chart-widget.component';
 
 describe('TransactionBalanceChartWidgetComponent', () => {
