@@ -7,7 +7,7 @@
 </div>
 <!-- Name -->
 <div class="row mb-2">
-  <div class="col-sm-2 text-primary">Usuario</div>
+  <div class="col-sm-2 text-primary">Nombre</div>
   <div class="col-sm-10">
     {{data.name}}
   </div>
@@ -44,19 +44,5 @@
     <div *ngFor="let failure of failures.getFailures('expirationDate')" class="text-danger">
       {{failure.message}}
     </div>
-  </div>
-</div>
-<!-- Consumed -->
-<div class="row mb-2">
-  <div class="col-sm-2 text-primary">Consumido</div>
-  <div class="col-sm-10">
-    <icon-success-or-failure [success]="data.consumed"></icon-success-or-failure>
-  </div>
-</div>
-<!-- Revoked -->
-<div class="row mb-2">
-  <div class="col-sm-2 text-primary">Revocado</div>
-  <div class="col-sm-10">
-    <icon-success-or-failure [success]="data.revoked"></icon-success-or-failure>
   </div>
 </div>

@@ -4,24 +4,42 @@
     <div class="mb-1">
       <!-- Info -->
       <div class="card">
-        <div class="card-body">
-          <access-user-token-info id="info" [failures]="failures" [data]="data"></access-user-token-info>
+        <div class="card-header">
+          <!-- Tabs -->
+          <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
+                (click)="onChangeView('details')">Detalles</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" [class.active]="view === 'status'" aria-current="page" role="button"
+                (click)="onChangeView('status')">Estado</a>
+            </li>
+          </ul>
         </div>
-        <footer class="card-footer">
-          <div class="row">
-            <!-- Revoke button -->
-            <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke" data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocado</layout-waiting-button>
+        <ng-container [ngSwitch]="view">
+          <ng-container *ngSwitchCase="'details'">
+            <div class="card-body">
+              <access-user-token-info id="info" [failures]="failures" [data]="data"></access-user-token-info>
             </div>
-            <!-- Extend expiration button -->
-            <div class="col-sm-2 d-grid gap-2">
+            <footer class="card-footer">
+              <!-- Extend expiration button -->
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal" [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
                 expiración</layout-waiting-button>
+            </footer>
+          </ng-container>
+          <ng-container *ngSwitchCase="'status'">
+            <div class="card-body">
+              <access-user-token-status [data]="data"></access-user-token-status>
             </div>
-          </div>
-        </footer>
+            <footer class="card-footer">
+              <!-- Revoke button -->
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</layout-waiting-button>
+            </footer>
+          </ng-container>
+        </ng-container>
       </div>
     </div>
   </div>
