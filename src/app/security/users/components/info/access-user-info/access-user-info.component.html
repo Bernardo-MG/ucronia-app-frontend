@@ -64,41 +64,31 @@
     </ng-container>
     <!-- Roles -->
     <ng-container *ngSwitchCase="'roles'">
-      <article class="p-4">
-        <header>
-          <h2 class="border-bottom">Roles</h2>
-        </header>
-        <!-- Roles -->
-        <div class="mb-1">
-          <div class="card">
-            <div class="card-body">
-              <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
-                [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
-                [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
-                (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
-            </div>
+      <!-- Roles -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
+              [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
+              [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
+              (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
           </div>
         </div>
-      </article>
+      </div>
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
-      <article class="p-4">
-        <header>
-          <h2 class="border-bottom">Socio</h2>
-        </header>
-        <!-- Member -->
-        <div class="mb-1">
-          <div class="card">
-            <div class="card-body">
-              <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
-                [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
-                (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
-                (selectMember)="selectMember.emit($event)"></access-user-member-editor>
-            </div>
+      <!-- Member -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
+              [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
+              (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
+              (selectMember)="selectMember.emit($event)"></access-user-member-editor>
           </div>
         </div>
-      </article>
+      </div>
     </ng-container>
   </ng-container>
 </div>

@@ -1,27 +1,25 @@
 <div class="card">
   <div class="card-body">
-    <form class="needs-validation" novalidate>
-      <!-- Enabled -->
-      <div class="row mb-2">
-        <label id="enabledLabel" class="col-sm-2 col-form-label">Activo</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
-        </div>
+    <!-- Enabled -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Activo</div>
+      <div class="col-sm-10">
+        <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
       </div>
-      <!-- Password expired -->
-      <div class="row mb-2">
-        <label id="passwordExpiredLabel" class="col-sm-2 col-form-label">Contraseña expirada</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
-        </div>
+    </div>
+    <!-- Password expired -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Activo</div>
+      <div class="col-sm-10">
+        <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
       </div>
-      <!-- Locked -->
-      <div class="row mb-2">
-        <label id="lockedLabel" class="col-sm-2 col-form-label">Bloqueado</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
-        </div>
+    </div>
+    <!-- Locked -->
+    <div class="row mb-2">
+      <div class="col-sm-2 text-primary">Bloqueado</div>
+      <div class="col-sm-10">
+        <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
       </div>
-    </form>
+    </div>
   </div>
 </div>
