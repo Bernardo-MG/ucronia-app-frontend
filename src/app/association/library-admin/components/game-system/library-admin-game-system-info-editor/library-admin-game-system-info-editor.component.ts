@@ -10,12 +10,11 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { LibraryAdminGameSystemFormComponent } from '../library-admin-game-system-form/library-admin-game-system-form.component';
-import { LibraryAdminGameSystemInfoComponent } from '../library-admin-game-system-info/library-admin-game-system-info.component';
 
 @Component({
   selector: 'assoc-library-admin-game-system-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-info-editor.component.html'
 })
 export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusComponent<GameSystem> implements OnInit {

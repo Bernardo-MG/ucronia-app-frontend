@@ -10,12 +10,11 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminPublisherFormComponent } from '../library-admin-publisher-form/library-admin-publisher-form.component';
-import { LibraryAdminPublisherInfoComponent } from '../library-admin-publisher-info/library-admin-publisher-info.component';
 
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ArticleComponent,ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, LibraryAdminPublisherFormComponent, ArticleComponent,ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
 export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {

@@ -10,12 +10,11 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../library-admin-book-type-form/library-admin-book-type-form.component';
-import { LibraryAdminBookTypeInfoComponent } from '../library-admin-book-type-info/library-admin-book-type-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-info-editor.component.html'
 })
 export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {

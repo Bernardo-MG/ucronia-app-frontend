@@ -23,12 +23,11 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
-import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
