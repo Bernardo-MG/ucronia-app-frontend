@@ -4,11 +4,12 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { AssociationConfigurationService } from '../../../service/association-configuration.service';
 import { ConfigurationValuesEditorComponent } from '../../editor/configuration-values-editor/configuration-values-editor.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'assoc-configuration-info-editor',
   standalone: true,
-  imports: [ArticleComponent, ConfigurationValuesEditorComponent],
+  imports: [ReactiveFormsModule, FormsModule, ArticleComponent, ConfigurationValuesEditorComponent],
   templateUrl: './configuration-info-editor.component.html'
 })
 export class ConfigurationInfoEditorComponent implements OnInit {
