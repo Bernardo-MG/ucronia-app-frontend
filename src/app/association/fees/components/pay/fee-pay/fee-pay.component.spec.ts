@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../../services/fee.service';
+import { FeeService } from '../../../core/services/fee.service';
 import { FeePayComponent } from './fee-pay.component';
 
 describe('FeePayComponent', () => {

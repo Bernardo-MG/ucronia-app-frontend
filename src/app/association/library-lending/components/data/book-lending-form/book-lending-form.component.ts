@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
-import { Member } from '@app/association/members/models/member';
+import { Member } from '@app/association/members/shared/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';

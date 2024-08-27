@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Member } from '@app/association/members/shared/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { Member } from '../../../../members/models/member';
-import { FeePayment } from '../../../models/fee-payment';
+import { FeePayment } from '../../../shared/models/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',

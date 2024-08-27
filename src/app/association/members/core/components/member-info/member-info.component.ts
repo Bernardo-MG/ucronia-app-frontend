@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association/members/models/member';
+import { Member } from '@app/association/members/shared/models/member';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';

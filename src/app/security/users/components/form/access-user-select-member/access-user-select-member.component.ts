@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Member } from '@app/association/members/models/member';
+import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';

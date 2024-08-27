@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Active } from '@app/association/members/models/active';
+import { Active } from '@app/association/members/shared/models/active';
+import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -10,9 +11,8 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { Member } from '../../../../members/models/member';
-import { FeePayment } from '../../../models/fee-payment';
-import { FeeService } from '../../../services/fee.service';
+import { FeeService } from '../../../core/services/fee.service';
+import { FeePayment } from '../../../shared/models/fee-payment';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
 

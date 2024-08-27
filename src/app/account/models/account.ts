@@ -1,4 +1,4 @@
-import { Member } from "@app/association/members/models/member";
+import { Member } from "@app/association/members/shared/models/member";
 
 /**
  * Account for a user.

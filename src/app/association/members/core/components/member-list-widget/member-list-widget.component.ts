@@ -7,11 +7,11 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
-import { Active } from '../../../models/active';
-import { Member } from '../../../models/member';
-import { MemberService } from '../../../services/member.service';
-import { MemberStatusSelectComponent } from '../../shared/member-status-select/member-status-select.component';
 import { MemberListComponent } from '../member-list/member-list.component';
+import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
+import { Active } from '@app/association/members/shared/models/active';
+import { Member } from '@app/association/members/shared/models/member';
+import { MemberService } from '../../services/member.service';
 
 @Component({
   selector: 'assoc-member-list-widget',

@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendarYearsRange } from '@app/association/fees/models/fee-calendar-years-range';
-import { Active } from '@app/association/members/models/active';
+import { FeeCalendarYearsRange } from '@app/association/fees/shared/models/fee-calendar-years-range';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { FeeCalendar } from '../../../models/fee-calendar';
-import { FeeCalendarMonth } from '../../../models/fee-month';
+import { FeeCalendar } from '../../../shared/models/fee-calendar';
+import { FeeCalendarMonth } from '../../../shared/models/fee-month';
+import { Active } from '@app/association/members/shared/models/active';
 
 @Component({
   selector: 'assoc-fee-calendar',

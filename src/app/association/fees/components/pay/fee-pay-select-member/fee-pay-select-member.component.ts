@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MemberStatusSelectComponent } from '@app/association/members/components/shared/member-status-select/member-status-select.component';
-import { Active } from '@app/association/members/models/active';
-import { Member } from '@app/association/members/models/member';
+import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
+import { Active } from '@app/association/members/shared/models/active';
+import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';

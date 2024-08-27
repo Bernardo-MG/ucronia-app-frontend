@@ -5,7 +5,7 @@ import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { FeePaymentReport } from '../models/fee-payment-report';
+import { FeePaymentReport } from '../../shared/models/fee-payment-report';
 
 @Injectable({
   providedIn: "root"

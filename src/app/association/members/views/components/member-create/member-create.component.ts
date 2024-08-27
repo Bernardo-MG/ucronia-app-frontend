@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MemberFormComponent } from '@app/association/members/core/components/member-form/member-form.component';
+import { MemberService } from '@app/association/members/core/services/member.service';
+import { Member } from '@app/association/members/shared/models/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { Member } from '../../../models/member';
-import { MemberService } from '../../../services/member.service';
-import { MemberFormComponent } from '../../core/member-form/member-form.component';
 
 @Component({
   selector: 'assoc-member-create',

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { Member } from '@app/association/members/shared/models/member';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { Member } from '../../../models/member';
 
 @Component({
   selector: 'assoc-member-info-details',

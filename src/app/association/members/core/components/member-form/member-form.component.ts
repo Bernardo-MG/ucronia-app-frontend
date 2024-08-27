@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Member } from '@app/association/members/shared/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { Member } from '../../../models/member';
 
 @Component({
   selector: 'assoc-member-form',

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Member } from '@app/association/members/models/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -14,6 +13,7 @@ import { User } from '@app/core/authentication/models/user';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
+import { Member } from '@app/association/members/shared/models/member';
 
 @Injectable({
   providedIn: "root"

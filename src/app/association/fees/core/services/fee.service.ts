@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Active } from '@app/association/members/shared/models/active';
+import { Member } from '@app/association/members/shared/models/member';
+import { AngularClient } from '@app/core/api/client/angular-client';
+import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Member } from '../../members/models/member';
-import { Fee } from '../models/fee';
-import { FeePayment } from '../models/fee-payment';
-import { Active } from '@app/association/members/models/active';
+import { Fee } from '../../shared/models/fee';
+import { FeePayment } from '../../shared/models/fee-payment';
 
 @Injectable({
   providedIn: "root"

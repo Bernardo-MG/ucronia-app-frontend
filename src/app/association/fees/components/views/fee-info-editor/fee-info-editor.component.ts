@@ -7,8 +7,8 @@ import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { Fee } from '../../../models/fee';
-import { FeeService } from '../../../services/fee.service';
+import { Fee } from '../../../shared/models/fee';
+import { FeeService } from '../../../core/services/fee.service';
 import { FeeEditFormComponent } from '../../data/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from '../../data/fee-info/fee-info.component';
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { MemberBalance } from '@app/association/members/shared/models/member-balance';
 import Chart from 'chart.js/auto';
-import { MemberBalance } from '../../../models/member-balance';
 
 @Component({
   selector: 'assoc-member-balance-chart',
