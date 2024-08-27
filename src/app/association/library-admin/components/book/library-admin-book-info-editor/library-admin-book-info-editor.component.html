@@ -1,14 +1,10 @@
 <layout-article title="Datos de libro">
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-body">
-        <div *ngIf="showMenu">
-          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-            (delete)="onDelete()"></form-control-buttons>
-        </div>
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card">
+          <div class="card-body">
             <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
               [readonly]="!formEnabled" [languages]="languages" [bookTypePage]="bookTypePage"
               [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
@@ -17,13 +13,21 @@
               (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
               (goToDonorPage)="onGoToDonorPage($event)">
             </assoc-library-admin-book-form>
-          </ng-container>
-          <!-- Info -->
-          <ng-container *ngSwitchCase="false">
+          </div>
+        </div>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <div class="card">
+          <div class="card-body">
             <assoc-library-admin-book-info [data]="data" [languages]="languages"></assoc-library-admin-book-info>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
+          </div>
+          <div *ngIf="showMenu" class="card-footer">
+            <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+              (delete)="onDelete()"></form-control-buttons>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>

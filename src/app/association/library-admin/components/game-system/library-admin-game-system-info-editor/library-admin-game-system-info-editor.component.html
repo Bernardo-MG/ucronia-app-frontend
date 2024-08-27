@@ -1,23 +1,28 @@
 <layout-article title="Datos de sistema">
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-body">
-        <div *ngIf="showMenu">
-          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-            (delete)="onDelete()"></form-control-buttons>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <div class="card">
+          <div class="card-body">
+            <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
+              [data]="data" [failures]="failures" (save)="onSave($event)"
+              (cancel)="onCancel()"></assoc-library-admin-game-system-form>
+          </div>
         </div>
-        <ng-container [ngSwitch]="editing">
-          <!-- Form -->
-          <ng-container *ngSwitchCase="true">
-            <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" (save)="onSave($event)"></assoc-library-admin-game-system-form>
-          </ng-container>
-          <!-- Info -->
-          <ng-container *ngSwitchCase="false">
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <div class="card">
+          <div class="card-body">
             <assoc-library-admin-game-system-info [data]="data"></assoc-library-admin-game-system-info>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
+          </div>
+          <div *ngIf="showMenu" class="card-footer">
+            <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
+              (delete)="onDelete()"></form-control-buttons>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>
