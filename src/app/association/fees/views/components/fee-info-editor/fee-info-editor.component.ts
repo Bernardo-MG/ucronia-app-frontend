@@ -9,8 +9,8 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { Fee } from '../../../shared/models/fee';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeeEditFormComponent } from '../../data/fee-edit-form/fee-edit-form.component';
-import { FeeInfoComponent } from '../../data/fee-info/fee-info.component';
+import { FeeEditFormComponent } from '@app/association/fees/core/components/fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '@app/association/fees/core/components/fee-info/fee-info.component';
 
 @Component({
   selector: 'assoc-fee-info-editor',
