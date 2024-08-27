@@ -17,13 +17,14 @@ import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserFormComponent } from '../../form/access-user-form/access-user-form.component';
 import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
+import { AccessUserInfoDetailsComponent } from '../../info/access-user-info-details/access-user-info-details.component';
 import { AccessUserInfoComponent } from '../../info/access-user-info/access-user-info.component';
 import { AccessUserStatusComponent } from '../../info/access-user-status/access-user-status.component';
 
 @Component({
   selector: 'access-user-info-editor',
   standalone: true,
-  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, AccessUserStatusComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, AccessUserFormComponent, AccessUserInfoDetailsComponent, ArticleComponent, WaitingButtonComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ModalComponent, AccessUserStatusComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-info-editor.component.html'
 })
 export class AccessUserInfoEditorComponent extends InfoEditorStatusComponent<User> implements OnInit {

@@ -1,57 +1,74 @@
-<div class="card">
-  <div class="card-body">
-    <form class="needs-validation" novalidate>
-      <!-- Username -->
-      <div class="row mb-2">
-        <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Usuario</label>
-        <div class="col-sm-10">
-          <input type="text" [value]="data.username" id="usernameInput" [readonly]="true" class="form-control"
-            aria-describedby="usernameLabel">
+<ng-container [ngSwitch]="view">
+  <!-- User -->
+  <ng-container *ngSwitchCase="'user'">
+    <access-user-info-details [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+      (delete)="delete.emit()" (startEditing)="startEditing.emit()"></access-user-info-details>
+  </ng-container>
+  <!-- Status -->
+  <ng-container *ngSwitchCase="'status'">
+    <access-user-status [data]="data"></access-user-status>
+    <!-- Enable/disable button -->
+    <div class="mb-1">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <ng-template [ngIf]="!data.enabled">
+              <!-- Enable button -->
+              <div class="col-sm-2 d-grid gap-2">
+                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</layout-waiting-button>
+              </div>
+            </ng-template>
+            <ng-template [ngIf]="data.enabled">
+              <!-- Disable button -->
+              <div class="col-sm-2 d-grid gap-2">
+                <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</layout-waiting-button>
+              </div>
+            </ng-template>
+          </div>
         </div>
       </div>
-      <!-- Name -->
-      <div class="row mb-2">
-        <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
-        <div class="col-sm-10">
-          <input type="text" [value]="data.name" id="nameInput" [readonly]="true" class="form-control"
-            aria-describedby="nameLabel">
-        </div>
-      </div>
-      <!-- Email -->
-      <div class="row mb-2">
-        <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">E-mail</label>
-        <div class="col-sm-10">
-          <input type="text" [value]="data.email" id="emailInput" [readonly]="true" class="form-control"
-            aria-describedby="emailLabel">
-        </div>
-      </div>
-      <!-- Enabled -->
-      <div class="row mb-2">
-        <label id="enabledLabel" class="col-sm-2 col-form-label">Activo</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
-        </div>
-      </div>
-      <!-- Password expired -->
-      <div class="row mb-2">
-        <label id="passwordExpiredLabel" class="col-sm-2 col-form-label">Contraseña expirada</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
-        </div>
-      </div>
-      <!-- Locked -->
-      <div class="row mb-2">
-        <label id="lockedLabel" class="col-sm-2 col-form-label">Bloqueado</label>
-        <div class="col-sm-10">
-          <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div *ngIf="showMenu" class="card-footer">
-    <div>
-      <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-        (delete)="delete.emit()"></form-control-buttons>
     </div>
-  </div>
-</div>
+  </ng-container>
+  <!-- Roles -->
+  <ng-container *ngSwitchCase="'roles'">
+    <article class="p-4">
+      <header>
+        <h2 class="border-bottom">Roles</h2>
+      </header>
+      <!-- Roles -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
+              [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
+              [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
+              (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
+          </div>
+        </div>
+      </div>
+    </article>
+  </ng-container>
+  <!-- Member -->
+  <ng-container *ngSwitchCase="'member'">
+    <article class="p-4">
+      <header>
+        <h2 class="border-bottom">Socio</h2>
+      </header>
+      <!-- Member -->
+      <div class="mb-1">
+        <div class="card">
+          <div class="card-body">
+            <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
+              [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
+              (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
+              (selectMember)="selectMember.emit($event)"></access-user-member-editor>
+          </div>
+        </div>
+      </div>
+    </article>
+  </ng-container>
+</ng-container>
