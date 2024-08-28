@@ -6,6 +6,27 @@
   </div>
   <div class="row">
     <!-- Member List -->
-    <assoc-member-list-widget></assoc-member-list-widget>
+    <div class="card">
+      <div class="card-body">
+        <!-- Status selector -->
+        <div appJustifyEnd>
+          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
+          </assoc-member-status-select>
+        </div>
+        <!-- List -->
+        <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+          <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+            (changeDirection)="onChangeDirection($event)">
+          </assoc-member-list>
+        </layout-pagination-info-wrapper>
+        <!-- Add -->
+        <div appJustifyCenter>
+          <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
+            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            Registrar socio
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </layout-article>
