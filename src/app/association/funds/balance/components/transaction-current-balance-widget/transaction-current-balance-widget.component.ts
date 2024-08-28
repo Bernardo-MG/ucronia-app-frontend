@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { TransactionCurrentBalance } from '../../../shared/models/transaction-current-balance';
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
 
 @Component({
   selector: 'assoc-transaction-current-balance-widget',
   standalone: true,
-  imports: [WaitingOverlayComponent],
+  imports: [BlockUiDirective],
   templateUrl: './transaction-current-balance-widget.component.html'
 })
 export class FundsCurrentBalanceWidgetComponent implements OnInit {

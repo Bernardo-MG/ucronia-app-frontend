@@ -1,29 +1,27 @@
-<layout-waiting-overlay [waiting]="waiting">
-  <!-- Roles -->
-  <table class="table">
-    <thead>
+<!-- Roles -->
+<table class="table" *layoutBlockUi="waiting">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">
+        Nombre
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <ng-template ngFor let-role [ngForOf]="page.content">
       <tr>
-        <th scope="col"></th>
-        <th scope="col">
-          Nombre
-        </th>
+        <td>
+          <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
+            role="button" aria-label="Remove role">
+            <icon-delete></icon-delete>
+          </button>
+        </td>
+        <td>{{role.name}}</td>
       </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="page.content">
-        <tr>
-          <td>
-            <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
-              role="button" aria-label="Remove role">
-              <icon-delete></icon-delete>
-            </button>
-          </td>
-          <td>{{role.name}}</td>
-        </tr>
-      </ng-template>
-    </tbody>
-  </table>
-</layout-waiting-overlay>
+    </ng-template>
+  </tbody>
+</table>
 <!-- Page navigation -->
 <div appJustifyCenter class="mt-1">
   <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"

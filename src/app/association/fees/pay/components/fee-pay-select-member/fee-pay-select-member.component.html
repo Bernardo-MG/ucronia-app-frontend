@@ -5,10 +5,8 @@
       (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
   </div>
 </div>
-<layout-waiting-overlay [waiting]="waiting">
-  <layout-button-list [values]="memberPage.content" [renderer]="nameRenderer"
+  <layout-button-list [values]="memberPage.content" [renderer]="nameRenderer" *layoutBlockUi="waiting"
     (pick)="selectMember.emit($event)"></layout-button-list>
-</layout-waiting-overlay>
 <div JustifyCenterDirective class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="memberPage.page + 1" [pages]="memberPage.totalPages"
     (goTo)="goToPage.emit($event)">

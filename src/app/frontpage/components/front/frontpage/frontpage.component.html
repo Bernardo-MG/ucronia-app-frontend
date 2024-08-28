@@ -9,17 +9,13 @@
     <!-- Activities -->
     <div class="row">
       <layout-article title="Actividades">
-        <layout-waiting-overlay [waiting]="readingCalendarCode">
-          <frontpage-calendar [calendarCode]="calendarCode"></frontpage-calendar>
-        </layout-waiting-overlay>
+        <frontpage-calendar [calendarCode]="calendarCode" *layoutBlockUi="readingCalendarCode"></frontpage-calendar>
       </layout-article>
     </div>
     <!-- Location -->
     <div class="row">
       <layout-article title="Dónde estamos">
-        <layout-waiting-overlay [waiting]="readingCalendarCode">
-          <app-google-maps [code]="locationCode"></app-google-maps>
-        </layout-waiting-overlay>
+        <app-google-maps [code]="locationCode" *layoutBlockUi="readingLocationCode"></app-google-maps>
       </layout-article>
     </div>
     <!-- Contact -->

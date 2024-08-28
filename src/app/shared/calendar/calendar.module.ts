@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { IconsModule } from '../icons/icons.module';
-import { WaitingOverlayComponent } from '../layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '../layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '../style/directives/justify-center.directive';
 import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 
@@ -18,7 +18,7 @@ import { CalendarMonthComponent } from './components/calendar-month/calendar-mon
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    WaitingOverlayComponent,
+    BlockUiDirective,
     IconsModule,
     JustifyCenterDirective
   ],

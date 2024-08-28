@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 import { ActivityCalendarWidgetComponent } from '../activity-calendar/activity-calendar.component';
 
 @Component({
   selector: 'app-activity-calendar-frontpage',
   standalone: true,
-  imports: [CardModule, ArticleComponent, ActivityCalendarWidgetComponent, WaitingOverlayComponent],
+  imports: [CardModule, ArticleComponent, ActivityCalendarWidgetComponent, BlockUiDirective],
   templateUrl: './activity-calendar-frontpage.component.html'
 })
 export class ActivityCalendarFrontpageComponent implements OnInit {

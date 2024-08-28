@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { FrontpageCalendarComponent } from '../frontpage-calendar/frontpage-calendar.component';
@@ -10,7 +10,7 @@ import { FrontpageCalendarComponent } from '../frontpage-calendar/frontpage-cale
 @Component({
   selector: 'app-frontpage-frontpage',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, WaitingOverlayComponent, FrontpageCalendarComponent, GoogleMapsComponent],
+  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, FrontpageCalendarComponent, GoogleMapsComponent, BlockUiDirective],
   templateUrl: './frontpage.component.html',
   styleUrls: ['./frontpage.component.sass']
 })

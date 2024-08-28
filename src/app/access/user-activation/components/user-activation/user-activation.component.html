@@ -3,10 +3,8 @@
     <app-card>
       <app-card-body>
         <h5 class="card-title">Activación de usuario {{username}}</h5>
-        <layout-waiting-overlay [waiting]="validating">
           <access-user-activation-form [failures]="failures" [waiting]="activating"
-            (save)="onActivateUser($event.password)"></access-user-activation-form>
-        </layout-waiting-overlay>
+            (save)="onActivateUser($event.password)" *layoutBlockUi="validating"></access-user-activation-form>
       </app-card-body>
     </app-card>
   </ng-container>

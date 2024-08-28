@@ -9,7 +9,7 @@ import { MemberStatusSelectComponent } from '@app/association/members/shared/com
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { Observable } from 'rxjs';
 import { BookLendingMemberSelectionComponent } from '../book-lending-member-selection/book-lending-member-selection.component';
 import { BookReturnFormComponent } from '../data/book-return-form/book-return-form.component';
@@ -17,7 +17,7 @@ import { BookReturnFormComponent } from '../data/book-return-form/book-return-fo
 @Component({
   selector: 'assoc-library-book-return',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookReturnFormComponent],
+  imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookReturnFormComponent, BlockUiDirective],
   templateUrl: './library-book-return.component.html'
 })
 export class LibraryBookReturnComponent extends CreateComponent<BookReturned> implements OnInit, OnChanges {
