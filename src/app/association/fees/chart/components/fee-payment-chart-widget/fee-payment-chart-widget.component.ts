@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FeePaymentReport } from '@app/association/fees/shared/models/fee-payment-report';
 import { FeeReportService } from '@app/association/fees/chart/services/fee-report.service';
+import { FeePaymentReport } from '@app/association/fees/shared/models/fee-payment-report';
+import { CardModule } from '@app/shared/card/card.module';
 import { FeePaymentChartComponent } from '../fee-payment-chart/fee-payment-chart.component';
 
 @Component({
   selector: 'assoc-fee-payment-chart-widget',
   standalone: true,
-  imports: [FeePaymentChartComponent],
+  imports: [CardModule, FeePaymentChartComponent],
   templateUrl: './fee-payment-chart-widget.component.html'
 })
 export class FeePaymentChartWidgetComponent implements OnInit {

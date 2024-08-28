@@ -1,11 +1,11 @@
 <layout-article title="Datos de libro">
   <div class="col-md-6 offset-md-3 pb-2">
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <!-- Book info -->
         <assoc-library-book-info id="info" [data]="data" [languages]="languages"></assoc-library-book-info>
-      </div>
-      <footer *ngIf="lendPermission" class="card-footer">
+      </app-card-body>
+      <app-card-footer *ngIf="lendPermission">
         <ng-container [ngSwitch]="data.lent">
           <ng-container *ngSwitchCase="true">
             <!-- Return button -->
@@ -24,19 +24,19 @@
             </button>
           </ng-container>
         </ng-container>
-      </footer>
-    </div>
+      </app-card-footer>
+    </app-card>
   </div>
   <!-- Lendings -->
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-header">
+    <app-card>
+      <app-card-header>
         <h2>Préstamos</h2>
-      </div>
-      <div class="card-body">
+      </app-card-header>
+      <app-card-body>
         <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </div>
 </layout-article>
 

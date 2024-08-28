@@ -1,17 +1,17 @@
 <layout-article title="Perfil">
-  <div class="card">
-    <div class="card-body">
+  <app-card>
+    <app-card-body>
       <account-profile-info [account]="account"></account-profile-info>
-    </div>
-  </div>
+    </app-card-body>
+  </app-card>
   <article *ngIf="account.member" class="p-4">
     <header>
       <h2 class="border-bottom">Socio</h2>
     </header>
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <account-profile-member [data]="member"></account-profile-member>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </article>
 </layout-article>

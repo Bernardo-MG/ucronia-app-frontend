@@ -10,6 +10,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
@@ -18,7 +19,7 @@ import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.di
 @Component({
   selector: 'assoc-member-frontpage',
   standalone: true,
-  imports: [RouterModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
+  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
   templateUrl: './member-frontpage.component.html'
 })
 export class MemberFrontpageComponent implements OnInit {

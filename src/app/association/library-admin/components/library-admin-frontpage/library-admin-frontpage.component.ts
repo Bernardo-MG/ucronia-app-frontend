@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
+import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
@@ -15,12 +17,12 @@ import { LibraryAdminPublisherListComponent } from '../publisher/library-admin-p
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, LibraryAdminDonorListComponent, ArticleComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, LibraryAdminDonorListComponent, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-frontpage.component.html'
 })
 export class LibraryAdminFrontpageComponent implements OnInit {
 
-  public view: 'books' | 'authors' | 'publishers' | 'book_types' | 'game_systems' | 'donors' = 'books';
+  public view = 'books';
 
   public createBookPermission = false;
 
@@ -33,6 +35,11 @@ export class LibraryAdminFrontpageComponent implements OnInit {
   public createPublisherPermission = false;
 
   public createDonorPermission = false;
+
+  public tabs = [
+    new CardTab('books', 'Libros'), new CardTab('authors', 'Autores'), new CardTab('publishers', 'Editores'),
+    new CardTab('book_types', 'Tipos'), new CardTab('game_systems', 'Sistemas'), new CardTab('donors', 'Donantes')
+  ];
 
   constructor(
     private authContainer: AuthContainer
@@ -48,7 +55,7 @@ export class LibraryAdminFrontpageComponent implements OnInit {
     this.createDonorPermission = this.authContainer.hasPermission("inventory_donor", "create");
   }
 
-  public onChangeView(newView: 'books' | 'authors' | 'publishers' | 'book_types' | 'game_systems' | 'donors' = 'books') {
+  public onChangeView(newView = 'books') {
     this.view = newView;
   }
 

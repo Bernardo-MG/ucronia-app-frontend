@@ -1,5 +1,5 @@
-<div class="card">
-  <div class="card-header">
+<app-card>
+  <app-card-header>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
@@ -18,28 +18,28 @@
           (click)="onChangeView('member')">Socio</a>
       </li>
     </ul>
-  </div>
+  </app-card-header>
   <ng-container [ngSwitch]="view">
     <!-- User -->
     <ng-container *ngSwitchCase="'user'">
-      <div class="card-body">
+      <app-card-body>
         <access-user-info-details [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
           (delete)="delete.emit()" (startEditing)="startEditing.emit()"></access-user-info-details>
-      </div>
-      <div *ngIf="showMenu" class="card-footer">
+      </app-card-body>
+      <app-card-footer *ngIf="showMenu">
         <div>
           <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
             (delete)="delete.emit()"></form-control-buttons>
         </div>
-      </div>
+      </app-card-footer>
     </ng-container>
     <!-- Status -->
     <ng-container *ngSwitchCase="'status'">
       <access-user-status [data]="data"></access-user-status>
       <!-- Enable/disable button -->
       <div class="mb-1">
-        <div class="card">
-          <div class="card-body">
+        <app-card>
+          <app-card-body>
             <div class="row">
               <ng-template [ngIf]="!data.enabled">
                 <!-- Enable button -->
@@ -58,37 +58,37 @@
                 </div>
               </ng-template>
             </div>
-          </div>
-        </div>
+          </app-card-body>
+        </app-card>
       </div>
     </ng-container>
     <!-- Roles -->
     <ng-container *ngSwitchCase="'roles'">
       <!-- Roles -->
       <div class="mb-1">
-        <div class="card">
-          <div class="card-body">
+        <app-card>
+          <app-card-body>
             <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
               [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
               [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
               (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
-          </div>
-        </div>
+          </app-card-body>
+        </app-card>
       </div>
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
       <!-- Member -->
       <div class="mb-1">
-        <div class="card">
-          <div class="card-body">
+        <app-card>
+          <app-card-body>
             <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
               [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
               (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
               (selectMember)="selectMember.emit($event)"></access-user-member-editor>
-          </div>
-        </div>
+          </app-card-body>
+        </app-card>
       </div>
     </ng-container>
   </ng-container>
-</div>
+</app-card>

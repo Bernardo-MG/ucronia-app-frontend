@@ -3,11 +3,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { Fee } from '../../../shared/models/fee';
 import { CommonModule } from '@angular/common';
 import { FormModule } from '@app/shared/form/form.module';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-fee-info',
   standalone: true,
-  imports: [CommonModule, IconsModule, FormModule],
+  imports: [CommonModule, IconsModule, CardModule, FormModule],
   templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {

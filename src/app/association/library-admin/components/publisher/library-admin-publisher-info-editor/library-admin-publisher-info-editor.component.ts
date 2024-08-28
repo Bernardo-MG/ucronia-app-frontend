@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/association/library/models/publisher';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -14,7 +15,7 @@ import { LibraryAdminPublisherFormComponent } from '../library-admin-publisher-f
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminPublisherFormComponent, ArticleComponent,ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, CardModule, LibraryAdminPublisherFormComponent, ArticleComponent,ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
 export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {

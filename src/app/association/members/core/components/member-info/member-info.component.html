@@ -1,43 +1,32 @@
-<div class="card">
-  <div class="card-header">
+<app-card>
+  <app-card-header>
     <!-- Tabs -->
-    <ul class="nav nav-tabs card-header-tabs">
-      <li class="nav-item">
-        <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
-          (click)="onChangeView('details')">Detalles</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" [class.active]="view === 'status'" aria-current="page" role="button"
-          (click)="onChangeView('status')">Estado</a>
-      </li>
-    </ul>
-  </div>
+    <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
+  </app-card-header>
   <!-- View-->
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
-      <div class="card-body">
+      <app-card-body>
         <assoc-member-info-details [data]="data"></assoc-member-info-details>
-      </div>
-      <div *ngIf="showMenu" class="card-footer">
-        <div>
-          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-            (delete)="delete.emit()"></form-control-buttons>
-        </div>
-      </div>
+      </app-card-body>
+      <app-card-footer *ngIf="showMenu">
+        <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
+          (delete)="delete.emit()"></form-control-buttons>
+      </app-card-footer>
     </ng-container>
     <ng-container *ngSwitchCase="'status'">
       <!-- Member status -->
-      <div class="card-body">
+      <app-card-body>
         <!-- Active -->
-        <div class="row mb-2">
+        <div class="row">
           <div class="col-sm-2 text-primary">Activo</div>
           <div class="col-sm-10">
             <icon-success-or-failure [success]="data.active"></icon-success-or-failure>
           </div>
         </div>
-      </div>
-      <div class="card-footer">
+      </app-card-body>
+      <app-card-footer>
         <ng-template [ngIf]="!data.active">
           <!-- Enable button -->
           <div class="col-sm-2 d-grid gap-2">
@@ -52,10 +41,10 @@
               (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
           </div>
         </ng-template>
-      </div>
+      </app-card-footer>
     </ng-container>
   </ng-container>
-</div>
+</app-card>
 
 <!-- Modal confirmation for deactivating -->
 <layout-modal name="deactivateModal" title="Desactivar socio" acceptText="Desactivar" (accept)="deactivate.emit()">

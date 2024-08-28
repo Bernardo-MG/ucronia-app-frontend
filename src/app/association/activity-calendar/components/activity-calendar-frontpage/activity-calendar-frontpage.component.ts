@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
@@ -7,7 +8,7 @@ import { ActivityCalendarWidgetComponent } from '../activity-calendar/activity-c
 @Component({
   selector: 'app-activity-calendar-frontpage',
   standalone: true,
-  imports: [ArticleComponent, ActivityCalendarWidgetComponent, WaitingOverlayComponent],
+  imports: [CardModule, ArticleComponent, ActivityCalendarWidgetComponent, WaitingOverlayComponent],
   templateUrl: './activity-calendar-frontpage.component.html'
 })
 export class ActivityCalendarFrontpageComponent implements OnInit {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Fee } from '@app/association/fees/shared/models/fee';
 import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { CardModule } from '@app/shared/card/card.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
 import { MyFeesListComponent } from '../../list/my-fees-list/my-fees-list.component';
@@ -9,7 +10,7 @@ import { MyFeesListComponent } from '../../list/my-fees-list/my-fees-list.compon
 @Component({
   selector: 'assoc-my-fees-list-widget',
   standalone: true,
-  imports: [WaitingOverlayComponent, MyFeesListComponent, PaginationInfoWrapperComponent],
+  imports: [CardModule, WaitingOverlayComponent, MyFeesListComponent, PaginationInfoWrapperComponent],
   templateUrl: './my-fees-list-widget.component.html'
 })
 export class MyFeesListWidgetComponent implements OnInit {

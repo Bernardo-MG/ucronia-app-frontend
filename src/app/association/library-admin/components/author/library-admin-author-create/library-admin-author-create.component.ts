@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Author } from '@app/association/library/models/author';
+import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -11,7 +12,7 @@ import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/li
 @Component({
   selector: 'assoc-library-admin-author-create',
   standalone: true,
-  imports: [LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-author-create.component.html'
 })
 export class LibraryAdminAuthorCreateComponent extends CreateComponent<Author> {

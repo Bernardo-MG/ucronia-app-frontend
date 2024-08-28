@@ -1,11 +1,11 @@
 <layout-article title="Registro de donante">
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <!-- Form -->
         <assoc-library-admin-donor-form [waiting]="saving" [failures]="failures"
           (save)="onSave($event)"></assoc-library-admin-donor-form>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </div>
 </layout-article>

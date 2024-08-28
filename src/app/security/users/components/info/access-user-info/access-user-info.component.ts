@@ -4,6 +4,7 @@ import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
+import { CardModule } from '@app/shared/card/card.module';
 import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
@@ -14,7 +15,7 @@ import { AccessUserStatusComponent } from '../access-user-status/access-user-sta
 @Component({
   selector: 'access-user-info',
   standalone: true,
-  imports: [CommonModule, FormModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
+  imports: [CommonModule, FormModule, CardModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
   templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {

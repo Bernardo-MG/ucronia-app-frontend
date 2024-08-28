@@ -21,11 +21,12 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-library-admin-book-create',
   standalone: true,
-  imports: [CommonModule, LibraryAdminBookFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-create.component.html'
 })
 export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {

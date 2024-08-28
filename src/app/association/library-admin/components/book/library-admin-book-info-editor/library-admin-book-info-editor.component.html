@@ -1,8 +1,8 @@
 <layout-article title="Datos de libro">
   <div appResponsiveShortColumns>
     <!-- Form -->
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures" [readonly]="!formEnabled"
           [languages]="languages" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
           [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" 
@@ -10,7 +10,7 @@
           (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
           (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)">
         </assoc-library-admin-book-form>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </div>
 </layout-article>

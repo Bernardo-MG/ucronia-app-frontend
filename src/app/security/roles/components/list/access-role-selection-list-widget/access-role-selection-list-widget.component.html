@@ -1,5 +1,5 @@
-<div class="card">
-  <div class="card-body">
+<app-card>
+  <app-card-body>
     <!-- List -->
     <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
       <access-role-selection-list [roles]="page.content" (changeDirection)="onChangeDirection($event)"
@@ -12,5 +12,5 @@
         <icon-add></icon-add>
       </button>
     </div>
-  </div>
-</div>
+  </app-card-body>
+</app-card>

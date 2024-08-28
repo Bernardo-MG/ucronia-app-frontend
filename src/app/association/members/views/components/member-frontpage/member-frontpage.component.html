@@ -6,8 +6,8 @@
   </div>
   <div class="row">
     <!-- Member List -->
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <!-- Status selector -->
         <div appJustifyEnd>
           <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
@@ -26,7 +26,7 @@
             Registrar socio
           </button>
         </div>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </div>
 </layout-article>

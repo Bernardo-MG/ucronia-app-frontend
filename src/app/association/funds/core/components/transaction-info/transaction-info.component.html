@@ -1,5 +1,5 @@
-<div class="card">
-  <div class="card-body">
+<app-card>
+  <app-card-body>
     <!-- Index -->
     <div class="row mb-2">
       <div class="col">
@@ -27,11 +27,11 @@
         {{data.amount}}
       </div>
     </div>
-  </div>
-  <div *ngIf="showMenu" class="card-footer">
+  </app-card-body>
+  <app-card-footer>
     <div>
       <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
         (delete)="delete.emit()"></form-control-buttons>
     </div>
-  </div>
-</div>
+  </app-card-footer>
+</app-card>

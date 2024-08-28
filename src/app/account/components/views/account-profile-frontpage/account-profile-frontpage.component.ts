@@ -6,11 +6,12 @@ import { Member } from '@app/association/members/shared/models/member';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { AccountProfileInfoComponent } from '../../profile/account-profile-info/account-profile-info.component';
 import { AccountProfileMemberComponent } from '../../profile/account-profile-member/account-profile-member.component';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'account-profile-frontpage',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, AccountProfileInfoComponent, AccountProfileMemberComponent],
+  imports: [CommonModule, ArticleComponent, CardModule, AccountProfileInfoComponent, AccountProfileMemberComponent],
   templateUrl: './account-profile-frontpage.component.html'
 })
 export class AccountProfileFrontpageComponent implements OnInit {

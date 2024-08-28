@@ -1,7 +1,7 @@
 <layout-article title="Registro de libro">
   <div appResponsiveShortColumns>
-    <div class="card">
-      <div class="card-body">
+    <app-card>
+      <app-card-body>
         <!-- Form -->
         <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [languages]="languages"
           [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage"
@@ -10,7 +10,7 @@
           (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
           (goToDonorPage)="onGoToDonorPage($event)">
         </assoc-library-admin-book-form>
-      </div>
-    </div>
+      </app-card-body>
+    </app-card>
   </div>
 </layout-article>
