@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, Renderer2, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, Optional, Renderer2, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[layoutPlaceholder]',
@@ -8,35 +8,45 @@ export class PlaceholderDirective implements OnChanges {
 
   @Input() layoutPlaceholder!: boolean;  // Input property to control visibility
 
+  private placeholderElement: HTMLElement | null = null;  // Placeholder element reference
+
   constructor(
     private renderer: Renderer2,
     private el: ElementRef,
-    private templateRef: TemplateRef<any>,  // Template reference for the actual content
-    private viewContainer: ViewContainerRef  // View container for managing views
+    @Optional() private templateRef: TemplateRef<any>,  // Template reference, optional for cases without ng-template
+    private viewContainer: ViewContainerRef
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Clear the view container each time the input changes
-    //this.viewContainer.clear();
+    this.viewContainer.clear();  // Clear any previously rendered content
 
     if (this.layoutPlaceholder) {
-      // Create a placeholder element with Bootstrap classes
-      const placeholderElement = this.renderer.createElement('div');
-      placeholderElement.classList.add('placeholder-glow', 'd-flex', 'flex-column');
+      // Create a placeholder element if it doesn't exist
+      if (!this.placeholderElement) {
+        this.placeholderElement = this.renderer.createElement('div');
+        this.renderer.addClass(this.placeholderElement, 'placeholder-glow');
+        this.renderer.addClass(this.placeholderElement, 'd-flex');
+        this.renderer.addClass(this.placeholderElement, 'flex-column');
 
-      // Create a span for the placeholder
-      const spanElement = this.renderer.createElement('span');
-      spanElement.classList.add('placeholder', 'col-12');
+        const spanElement = this.renderer.createElement('span');
+        this.renderer.addClass(spanElement, 'placeholder');
+        this.renderer.addClass(spanElement, 'col-12');
 
-      // Append the span to the placeholder element
-      placeholderElement.appendChild(spanElement);
+        this.renderer.appendChild(this.placeholderElement, spanElement);
+      }
 
-      // Insert the placeholder element into the view container
-      const parentElement = this.el.nativeElement.parentElement;
-      this.renderer.appendChild(parentElement, placeholderElement);
+      // Clear the element content and insert the placeholder element
+      this.el.nativeElement.innerHTML = '';
+      this.renderer.appendChild(this.el.nativeElement, this.placeholderElement);
     } else {
-      // Create an embedded view of the actual content
-      this.viewContainer.createEmbeddedView(this.templateRef);  // Show the actual content
+      // Remove the placeholder element and render the actual content
+      if (this.placeholderElement) {
+        this.renderer.removeChild(this.el.nativeElement, this.placeholderElement);
+      }
+      if (this.templateRef) {
+        // Create an embedded view if templateRef exists (for ng-template contexts)
+        this.viewContainer.createEmbeddedView(this.templateRef);
+      }
     }
   }
 
