@@ -42,6 +42,7 @@ export class PlaceholderDirective implements OnChanges {
       // Remove the placeholder element and render the actual content
       if (this.placeholderElement) {
         this.renderer.removeChild(this.el.nativeElement, this.placeholderElement);
+        this.placeholderElement = null;
       }
       if (this.templateRef) {
         // Create an embedded view if templateRef exists (for ng-template contexts)

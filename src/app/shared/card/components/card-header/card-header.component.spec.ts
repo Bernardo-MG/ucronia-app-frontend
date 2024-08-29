@@ -8,7 +8,7 @@ describe('CardHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardHeaderComponent]
+      declarations: [CardHeaderComponent]
     })
     .compileComponents();
     
