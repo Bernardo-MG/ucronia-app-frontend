@@ -2,28 +2,28 @@
   <app-card-body>
     <!-- Index -->
     <div class="row mb-2">
-      <div class="col">
+      <div class="col" *layoutPlaceholder="waiting">
         # {{data.index}}
       </div>
     </div>
     <!-- Description -->
     <div class="row mb-2">
       <div class="col-sm-2 text-primary">Description</div>
-      <div class="col-sm-10">
+      <div class="col-sm-10" *layoutPlaceholder="waiting">
         {{data.description}}
       </div>
     </div>
     <!-- Date -->
     <div class="row mb-2">
       <div class="col-sm-2 text-primary">Fecha</div>
-      <div class="col-sm-10">
+      <div class="col-sm-10" *layoutPlaceholder="waiting">
         {{data.date}}
       </div>
     </div>
     <!-- Amount -->
     <div class="row mb-2">
       <div class="col-sm-2 text-primary">Importe</div>
-      <div class="col-sm-10">
+      <div class="col-sm-10" *layoutPlaceholder="waiting">
         {{data.amount}}
       </div>
     </div>

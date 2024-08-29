@@ -1,14 +1,15 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { Fee } from '../../../shared/models/fee';
 import { CommonModule } from '@angular/common';
-import { FormModule } from '@app/shared/form/form.module';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
+import { FormModule } from '@app/shared/form/form.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { Fee } from '../../../shared/models/fee';
 
 @Component({
   selector: 'assoc-fee-info',
   standalone: true,
-  imports: [CommonModule, IconsModule, CardModule, FormModule],
+  imports: [CommonModule, IconsModule, CardModule, FormModule, PlaceholderDirective],
   templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {
@@ -21,6 +22,8 @@ export class FeeInfoComponent {
 
   @Input() public editable = false;
 
+  @Input() public waiting = false;
+
   @Output() public delete = new EventEmitter<void>();
 
   @Output() public startEditing = new EventEmitter<void>();
@@ -32,7 +35,7 @@ export class FeeInfoComponent {
   }
 
   public isTransactionDisabled(): boolean {
-    return this.data.transaction.date === null;
+    return (this.waiting) || (this.data.transaction.date === null);
   }
 
 }

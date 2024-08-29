@@ -35,7 +35,7 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   /**
    * Reading flag. Active while the data is being read.
    */
-  protected reading = false;
+  protected waiting = false;
 
   private index = -1;
 
@@ -75,15 +75,15 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   }
 
   private load(): void {
-    this.reading = true;
+    this.waiting = true;
     this.read()
       .subscribe({
         next: response => {
           this.data = response;
-          this.reading = false;
+          this.waiting = false;
         },
         error: error => {
-          this.reading = false;
+          this.waiting = false;
         }
       });
   }

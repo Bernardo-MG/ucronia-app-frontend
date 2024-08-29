@@ -14,7 +14,7 @@
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-transaction-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
+          [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
       </ng-container>
     </ng-container>
   </div>

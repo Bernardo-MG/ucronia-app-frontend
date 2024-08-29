@@ -1,17 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Book } from '../../../models/book';
 import { Language } from '@app/association/library/models/language';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { Book } from '../../../models/book';
 
 @Component({
   selector: 'assoc-library-book-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PlaceholderDirective],
   templateUrl: './library-book-info.component.html'
 })
 export class LibraryBookInfoComponent {
 
   @Input() data = new Book();
+
+  @Input() waiting = false;
 
   @Input() public languages: Language[] = [];
 

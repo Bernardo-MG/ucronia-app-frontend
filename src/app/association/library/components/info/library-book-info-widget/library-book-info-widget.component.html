@@ -3,7 +3,7 @@
     <app-card>
       <app-card-body>
         <!-- Book info -->
-        <assoc-library-book-info id="info" [data]="data" [languages]="languages"></assoc-library-book-info>
+        <assoc-library-book-info id="info" [data]="data" [languages]="languages" [waiting]="waiting"></assoc-library-book-info>
       </app-card-body>
       <app-card-footer *ngIf="lendPermission">
         <ng-container [ngSwitch]="data.lent">

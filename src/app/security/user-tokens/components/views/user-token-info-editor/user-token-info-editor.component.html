@@ -20,7 +20,7 @@
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
             <app-card-body>
-              <access-user-token-info id="info" [failures]="failures" [data]="data"></access-user-token-info>
+              <access-user-token-info id="info" [failures]="failures" [data]="data" [waiting]="waiting"></access-user-token-info>
             </app-card-body>
             <app-card-footer>
               <!-- Extend expiration button -->

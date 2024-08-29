@@ -14,7 +14,7 @@
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          (delete)="onDelete()" (startEditing)="onStartEditing()"
+          [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"
           (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
       </ng-container>
     </ng-container>
