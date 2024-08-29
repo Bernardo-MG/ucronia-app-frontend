@@ -1,45 +1,37 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Optional, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, Renderer2, OnChanges, ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
 
 @Directive({
   selector: '[layoutPlaceholder]',
   standalone: true
 })
-export class PlaceholderDirective implements OnChanges, AfterViewInit, OnDestroy {
+export class PlaceholderDirective implements OnChanges {
 
   @Input() layoutPlaceholder!: boolean;
 
   private placeholderElement: HTMLElement | null = null;
+  private embeddedView: EmbeddedViewRef<any> | null = null;
 
   constructor(
     private renderer: Renderer2,
-    private el: ElementRef,
-    // Template reference, optional for cases without ng-template
-    @Optional() private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef
+    private viewContainer: ViewContainerRef,
+    private templateRef: TemplateRef<any>
   ) { }
 
-  public ngAfterViewInit() {
+  public ngOnChanges() {
     if (this.layoutPlaceholder) {
-      this.showPlaceholder();
+      this.showPlaceholderInContent();
+    } else {
+      this.showContentWithoutPlaceholder();
     }
   }
 
-  public ngOnChanges() {
-    // Clear any previously rendered content
+  private showPlaceholderInContent() {
+    // Clear any previous content
     this.viewContainer.clear();
 
-    if (this.layoutPlaceholder) {
-      this.showPlaceholder();
-    } else {
-      this.removePlaceholder();
-    }
-  }
+    // Create and insert the embedded view
+    this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
 
-  public ngOnDestroy() {
-    this.removePlaceholder();
-  }
-
-  private showPlaceholder() {
     // Create a placeholder element if it doesn't exist
     if (!this.placeholderElement) {
       this.placeholderElement = this.renderer.createElement('div');
@@ -54,21 +46,23 @@ export class PlaceholderDirective implements OnChanges, AfterViewInit, OnDestroy
       this.renderer.appendChild(this.placeholderElement, spanElement);
     }
 
-    // Clear the element content and insert the placeholder element
-    this.el.nativeElement.innerHTML = '';
-    this.renderer.appendChild(this.el.nativeElement, this.placeholderElement);
-  }
+    // Insert the placeholder inside the first root node of the embedded view
+    if (this.embeddedView && this.embeddedView.rootNodes.length > 0) {
+      const originalContentNode = this.embeddedView.rootNodes[0];
 
-  private removePlaceholder() {
-    // Remove the placeholder element and render the actual content
-    if (this.placeholderElement) {
-      this.renderer.removeChild(this.el.nativeElement, this.placeholderElement);
-      this.placeholderElement = null;
-    }
-    if (this.templateRef) {
-      // Create an embedded view if templateRef exists (for ng-template contexts)
-      this.viewContainer.createEmbeddedView(this.templateRef);
+      // Clear the original content node's children (if any)
+      this.renderer.setProperty(originalContentNode, 'innerHTML', '');
+
+      // Append the placeholder inside the original content node
+      this.renderer.appendChild(originalContentNode, this.placeholderElement);
     }
   }
 
+  private showContentWithoutPlaceholder() {
+    // Clear the view container to remove the placeholder and previous content
+    this.viewContainer.clear();
+
+    // Recreate the original content
+    this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
+  }
 }
