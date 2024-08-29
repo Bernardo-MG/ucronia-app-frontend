@@ -19,7 +19,7 @@
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
             <app-card-body>
-              <access-role-info id="info" [data]="data" [waiting]="waiting"></access-role-info>
+              <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
             </app-card-body>
             <app-card-footer *ngIf="showMenu">
               <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
