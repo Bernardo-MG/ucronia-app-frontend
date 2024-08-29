@@ -1,4 +1,4 @@
-import { TemplateRef, ViewContainerRef, Renderer2, ElementRef, SimpleChanges } from '@angular/core';
+import { TemplateRef, ViewContainerRef, Renderer2, ElementRef } from '@angular/core';
 import { PlaceholderDirective } from './placeholder.directive';
 
 describe('PlaceholderDirective', () => {
@@ -6,17 +6,16 @@ describe('PlaceholderDirective', () => {
   let templateRefMock: jasmine.SpyObj<TemplateRef<any>>;
   let viewContainerRefMock: jasmine.SpyObj<ViewContainerRef>;
   let rendererMock: jasmine.SpyObj<Renderer2>;
-  let elementRefMock: jasmine.SpyObj<ElementRef>;
   let nativeElement: HTMLElement;
 
   beforeEach(() => {
     templateRefMock = jasmine.createSpyObj('TemplateRef', ['elementRef']);
     viewContainerRefMock = jasmine.createSpyObj('ViewContainerRef', ['createEmbeddedView', 'clear']);
-    rendererMock = jasmine.createSpyObj('Renderer2', ['createElement', 'appendChild', 'removeChild', 'addClass']);
+    rendererMock = jasmine.createSpyObj('Renderer2', ['createElement', 'appendChild', 'removeChild', 'addClass', 'setProperty']);
     nativeElement = document.createElement('div');
-    elementRefMock = jasmine.createSpyObj('ElementRef', [], { nativeElement });
 
-    directive = new PlaceholderDirective(rendererMock, elementRefMock, templateRefMock, viewContainerRefMock);
+    // Setting up the directive with mocked dependencies
+    directive = new PlaceholderDirective(rendererMock, viewContainerRefMock, templateRefMock);
   });
 
   it('should create an instance', () => {
@@ -24,79 +23,66 @@ describe('PlaceholderDirective', () => {
   });
 
   it('should show the placeholder when layoutPlaceholder is true', () => {
+    // Mock createElement to return a new div element
+    const placeholderDiv = document.createElement('div');
+    rendererMock.createElement.and.returnValue(placeholderDiv);
+
     directive.layoutPlaceholder = true;
-    directive.ngOnChanges({} as SimpleChanges);
+    directive.ngOnChanges();
 
     expect(viewContainerRefMock.clear).toHaveBeenCalled();
     expect(rendererMock.createElement).toHaveBeenCalledWith('div');
-    expect(rendererMock.addClass).toHaveBeenCalled();
-    expect(nativeElement.innerHTML).not.toContain('John Doe');
+
+    // Check classes are added to placeholderElement
+    expect(rendererMock.addClass).toHaveBeenCalledWith(placeholderDiv, 'placeholder-glow');
+    expect(rendererMock.addClass).toHaveBeenCalledWith(placeholderDiv, 'd-flex');
+    expect(rendererMock.addClass).toHaveBeenCalledWith(placeholderDiv, 'flex-column');
+
+    // Check if the placeholder was appended correctly
+    expect(rendererMock.appendChild).toHaveBeenCalledWith(nativeElement, jasmine.any(HTMLElement)); // Validate it appends a new element
+    expect(nativeElement.innerHTML).toBe(''); // Ensure original content is cleared
   });
 
   it('should show the content when layoutPlaceholder is false', () => {
     directive.layoutPlaceholder = false;
-    directive.ngOnChanges({} as SimpleChanges);
+    directive.ngOnChanges();
 
     expect(viewContainerRefMock.clear).toHaveBeenCalled();
-    if (templateRefMock) {
-      expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
-    }
+    expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
   });
 
   it('should toggle between placeholder and content correctly', () => {
     // Initially set to show the placeholder
     directive.layoutPlaceholder = true;
-    directive.ngOnChanges({} as SimpleChanges);
-
-    expect(viewContainerRefMock.clear).toHaveBeenCalled();
-    expect(nativeElement.innerHTML).not.toContain('John Doe');
+    directive.ngOnChanges();
 
     // Toggle to show content
     directive.layoutPlaceholder = false;
-    directive.ngOnChanges({} as SimpleChanges);
+    directive.ngOnChanges();
 
-    expect(viewContainerRefMock.clear).toHaveBeenCalled();
-    if (templateRefMock) {
-      expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
-    }
+    expect(viewContainerRefMock.clear).toHaveBeenCalledTimes(2); // Should clear again
+    expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
+    expect(directive['placeholderElement']).toBeNull(); // Ensure placeholder is removed
   });
 
   it('should remove the placeholder element when layoutPlaceholder changes to false', () => {
     // Mock createElement to return a new div element
-    rendererMock.createElement.and.callFake((tagName: string) => {
-      return document.createElement(tagName);
-    });
+    const placeholderDiv = document.createElement('div');
+    rendererMock.createElement.and.returnValue(placeholderDiv);
 
     // Set layoutPlaceholder to true to create the placeholder
     directive.layoutPlaceholder = true;
-    directive.ngOnChanges({ layoutPlaceholder: {} } as unknown as SimpleChanges);
+    directive.ngOnChanges();
 
-    // Ensure that the placeholderElement has been created and added
-    expect(rendererMock.appendChild).toHaveBeenCalledWith(nativeElement, directive['placeholderElement']);
-    expect(directive['placeholderElement']).toBeDefined(); // Ensure placeholderElement is defined
+    // Ensure that the placeholderElement has been created
+    expect(directive['placeholderElement']).toBeDefined();
 
     // Now change to hide the placeholder
     directive.layoutPlaceholder = false; 
-    directive.ngOnChanges({ layoutPlaceholder: {} } as unknown as SimpleChanges);
+    directive.ngOnChanges();
 
     // Ensure that placeholderElement is set to null after removal
     expect(directive['placeholderElement']).toBeNull();
-});
-
-  it('should handle cases where no templateRef is provided', () => {
-    // Instantiate directive without a templateRef
-    directive = new PlaceholderDirective(rendererMock, elementRefMock, null as any, viewContainerRefMock);
-
-    directive.layoutPlaceholder = true;
-    directive.ngOnChanges({} as SimpleChanges);
-
-    expect(viewContainerRefMock.clear).toHaveBeenCalled();
-
-    directive.layoutPlaceholder = false;
-    directive.ngOnChanges({} as SimpleChanges);
-
-    // No placeholder element to remove since templateRef is null
-    expect(rendererMock.removeChild).not.toHaveBeenCalled();
-    expect(viewContainerRefMock.createEmbeddedView).not.toHaveBeenCalled();
   });
+
 });

@@ -64,5 +64,8 @@ export class PlaceholderDirective implements OnChanges {
 
     // Recreate the original content
     this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
+
+    // Remove placeholder
+    this.placeholderElement = null;
   }
 }
