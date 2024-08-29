@@ -8,7 +8,7 @@
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
       <app-card-body>
-        <assoc-member-info-details [data]="data"></assoc-member-info-details>
+        <assoc-member-info-details [data]="data" [waiting]="waiting"></assoc-member-info-details>
       </app-card-body>
       <app-card-footer *ngIf="showMenu">
         <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
