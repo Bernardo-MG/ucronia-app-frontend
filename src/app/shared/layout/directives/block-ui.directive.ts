@@ -1,10 +1,10 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[layoutBlockUi]',
   standalone: true
 })
-export class BlockUiDirective implements AfterViewInit, OnDestroy {
+export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
 
   private overlayElement: HTMLElement | null = null;
 
@@ -15,20 +15,24 @@ export class BlockUiDirective implements AfterViewInit, OnDestroy {
     private viewContainer: ViewContainerRef,
     private renderer: Renderer2,
     private el: ElementRef
-  ) {}
+  ) { }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     if (this.layoutBlockUi) {
       this.showOverlay();
     }
   }
 
-  ngOnChanges() {
+  public ngOnChanges() {
     if (this.layoutBlockUi) {
       this.showOverlay();
     } else {
       this.removeOverlay();
     }
+  }
+
+  public ngOnDestroy() {
+    this.removeOverlay();
   }
 
   private showOverlay() {
@@ -58,10 +62,6 @@ export class BlockUiDirective implements AfterViewInit, OnDestroy {
       this.renderer.removeChild(this.el.nativeElement.parentElement, this.overlayElement);
       this.overlayElement = null;
     }
-  }
-
-  ngOnDestroy() {
-    this.removeOverlay();
   }
 
 }
