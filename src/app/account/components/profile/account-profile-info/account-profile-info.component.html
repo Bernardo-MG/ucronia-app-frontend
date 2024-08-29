@@ -1,26 +1,21 @@
-<form class="needs-validation" novalidate>
-  <!-- Username -->
-  <div class="form-group row">
-    <div class="input-group">
-      <label for="username" class="col-sm-2 col-form-label">Nombre de usuario</label>
-      <input id="username" class="form-control" type="text" [value]="account.username" [readonly]="true"
-        aria-label="Account username">
-    </div>
+<!-- Username -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Nombre de usuario</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{account.username}}
   </div>
-  <!-- Name -->
-  <div class="form-group row">
-    <div class="input-group">
-      <label for="name" class="col-sm-2 col-form-label">Nombre</label>
-      <input id="name" class="form-control" type="text" [value]="account.name" [readonly]="true"
-        aria-label="Account name">
-    </div>
+</div>
+<!-- Name -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Nombre</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{account.name}}
   </div>
-  <!-- Email -->
-  <div class="form-group row">
-    <div class="input-group">
-      <label for="email" class="col-sm-2 col-form-label">E-mail</label>
-      <input id="email" class="form-control" type="text" [value]="account.email" [readonly]="true"
-        aria-label="Account email">
-    </div>
+</div>
+<!-- Email -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">E-mail</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{account.email}}
   </div>
-</form>
+</div>

@@ -18,6 +18,8 @@ export class AccountProfileFrontpageComponent implements OnInit {
 
   public account = new Account();
 
+  public waiting = false;
+
   public get member() {
     return this.account.member as Member;
   }
@@ -27,7 +29,16 @@ export class AccountProfileFrontpageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.accountService.getAccount().subscribe(u => { this.account = u });
+    this.waiting = true;
+    this.accountService.getAccount().subscribe({
+      next: response => {
+        this.account = response;
+        this.waiting = false;
+      },
+      error: error => {
+        this.waiting = false;
+      }
+    });
   }
 
 }
