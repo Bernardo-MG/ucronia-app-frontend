@@ -13,8 +13,8 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
-import { LibraryBookInfoComponent } from '../library-book-info/library-book-info.component';
-import { LibraryBookLendingsComponent } from '../library-book-lendings/library-book-lendings.component';
+import { LibraryBookInfoComponent } from '../../info/library-book-info/library-book-info.component';
+import { LibraryBookLendingsComponent } from '../../info/library-book-lendings/library-book-lendings.component';
 
 @Component({
   selector: 'assoc-library-book-info-widget',

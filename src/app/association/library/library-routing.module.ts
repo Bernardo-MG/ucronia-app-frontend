@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { LibraryBookInfoWidgetComponent } from './components/info/library-book-info-widget/library-book-info-widget.component';
+import { LibraryBookInfoWidgetComponent } from './components/views/library-book-info-widget/library-book-info-widget.component';
 import { LibraryFrontpageComponent } from './components/views/library-frontpage/library-frontpage.component';
 
 
