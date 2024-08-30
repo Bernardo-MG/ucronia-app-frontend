@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { MemberBalance } from '@app/association/members/shared/models/member-balance';
 import Chart from 'chart.js/auto';
 
@@ -9,7 +9,7 @@ import Chart from 'chart.js/auto';
   imports: [CommonModule],
   templateUrl: './member-balance-chart.component.html'
 })
-export class MemberBalanceChartComponent implements OnChanges {
+export class MemberBalanceChartComponent implements OnChanges, OnDestroy {
 
   @Input() public waiting = false;
 
@@ -27,9 +27,15 @@ export class MemberBalanceChartComponent implements OnChanges {
 
   public chart: any;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['balance']) {
       this.loadChart();
+    }
+  }
+
+  public ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
     }
   }
 

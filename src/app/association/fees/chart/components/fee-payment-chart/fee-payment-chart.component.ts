@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { FeePaymentReport } from '@app/association/fees/shared/models/fee-payment-report';
 import Chart from 'chart.js/auto';
 
@@ -8,15 +8,21 @@ import Chart from 'chart.js/auto';
   imports: [],
   templateUrl: './fee-payment-chart.component.html'
 })
-export class FeePaymentChartComponent implements OnChanges {
+export class FeePaymentChartComponent implements OnChanges, OnDestroy {
 
   @Input() public report = new FeePaymentReport();
 
   public chart: any;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['report']) {
       this.loadChart();
+    }
+  }
+
+  public ngOnDestroy(): void {
+    if (this.chart) {
+      this.chart.destroy();
     }
   }
 

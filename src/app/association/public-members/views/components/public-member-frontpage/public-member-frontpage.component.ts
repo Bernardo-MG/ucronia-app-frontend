@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MemberBalanceChartWidgetComponent } from '@app/association/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
-import { MemberListComponent } from '@app/association/members/core/components/member-list/member-list.component';
-import { MemberService } from '@app/association/members/core/services/member.service';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
-import { Active } from '@app/association/members/shared/models/active';
-import { Member } from '@app/association/members/shared/models/member';
+import { PublicMemberListComponent } from '@app/association/public-members/core/components/public-member-list/public-member-list.component';
+import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
+import { PublicMember } from '@app/association/public-members/shared/models/public-member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
@@ -19,16 +17,12 @@ import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.di
 @Component({
   selector: 'assoc-member-frontpage',
   standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './member-frontpage.component.html'
+  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, PublicMemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
+  templateUrl: './public-member-frontpage.component.html'
 })
-export class MemberFrontpageComponent implements OnInit {
+export class PublicMemberFrontpageComponent implements OnInit {
 
-  public activeFilter = Active.Active;
-
-  public createPermission = false;
-
-  public page = new PaginatedResponse<Member[]>([]);
+  public page = new PaginatedResponse<PublicMember[]>([]);
 
   private sort = new Sort([]);
 
@@ -38,19 +32,10 @@ export class MemberFrontpageComponent implements OnInit {
   public reading = false;
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: MemberService
+    private service: PublicMemberService
   ) { }
 
   public ngOnInit(): void {
-    // Check permissions
-    this.createPermission = this.authContainer.hasPermission("member", "create");
-
-    this.load(0);
-  }
-
-  public onChangeActiveFilter(active: Active) {
-    this.activeFilter = active;
     this.load(0);
   }
 
@@ -65,7 +50,7 @@ export class MemberFrontpageComponent implements OnInit {
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
+    this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
@@ -79,8 +64,8 @@ export class MemberFrontpageComponent implements OnInit {
     });
   }
 
-  public routeLinkAdapter(data: Member): string {
-    return `/members/admin/${data.number}`;
+  public routeLinkAdapter(data: PublicMember): string {
+    return `/members/${data.number}`;
   }
 
 }
