@@ -28,22 +28,20 @@
           </ng-container>
           <ng-container *ngSwitchCase="'permissions'">
             <!-- Permissions -->
-            <div class="mb-3">
-              <app-card>
-                <app-card-body>
-                  <!-- Permissions list -->
-                  <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-                    (remove)="onRemovePermission($event)"></access-role-permissions>
-                  <div class="d-grid">
-                    <!-- Add button -->
-                    <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
-                      data-bs-target="#pickPermissionModal">
-                      <icon-add></icon-add>
-                    </button>
-                  </div>
-                </app-card-body>
-              </app-card>
-            </div>
+            <app-card-body>
+              <!-- Permissions list -->
+              <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+                (remove)="onRemovePermission($event)"></access-role-permissions>
+            </app-card-body>
+            <app-card-footer>
+              <div class="d-grid">
+                <!-- Add button -->
+                <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
+                  data-bs-target="#pickPermissionModal">
+                  <icon-add></icon-add>
+                </button>
+              </div>
+            </app-card-footer>
           </ng-container>
         </ng-container>
       </app-card>

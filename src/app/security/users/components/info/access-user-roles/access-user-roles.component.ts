@@ -10,7 +10,7 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 @Component({
   selector: 'access-user-roles',
   standalone: true,
-  imports: [CommonModule, IconsModule, BlockUiDirective, SortingButtonComponent, PaginationNavigationComponent],
+  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, BlockUiDirective],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
