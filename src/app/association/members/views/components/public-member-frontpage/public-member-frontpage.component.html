@@ -1,4 +1,4 @@
-<layout-article title="Administración de socios">
+<layout-article title="Socios">
   <div class="row pb-2">
     <div appJustifyCenter>
       <assoc-member-balance-chart-widget></assoc-member-balance-chart-widget>
@@ -19,13 +19,6 @@
             (changeDirection)="onChangeDirection($event)">
           </assoc-member-list>
         </layout-pagination-info-wrapper>
-        <!-- Add -->
-        <div appJustifyCenter>
-          <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/register"
-            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-            Registrar socio
-          </button>
-        </div>
       </app-card-body>
     </app-card>
   </div>
