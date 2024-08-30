@@ -5,7 +5,8 @@ import { MemberListComponent } from '@app/association/members/core/components/me
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { Active } from '@app/association/members/shared/models/active';
 import { Member } from '@app/association/members/shared/models/member';
-import { PublicMemberService } from '@app/association/public-members/public/services/public-member.service';
+import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
+import { PublicMember } from '@app/association/public-members/shared/models/public-member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
@@ -23,9 +24,7 @@ import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.di
 })
 export class PublicMemberFrontpageComponent implements OnInit {
 
-  public activeFilter = Active.Active;
-
-  public page = new PaginatedResponse<Member[]>([]);
+  public page = new PaginatedResponse<PublicMember[]>([]);
 
   private sort = new Sort([]);
 
@@ -42,11 +41,6 @@ export class PublicMemberFrontpageComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeActiveFilter(active: Active) {
-    this.activeFilter = active;
-    this.load(0);
-  }
-
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
@@ -58,7 +52,7 @@ export class PublicMemberFrontpageComponent implements OnInit {
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
+    this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.page = response;
 
