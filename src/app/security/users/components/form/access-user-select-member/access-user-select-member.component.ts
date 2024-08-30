@@ -3,14 +3,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'access-user-select-member',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, PaginationNavigationComponent, JustifyCenterDirective],
+  imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
   templateUrl: './access-user-select-member.component.html'
 })
 export class AccessUserSelectMemberComponent implements OnInit {

@@ -12,6 +12,7 @@ import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -27,7 +28,7 @@ import { LibraryAdminBookFormComponent } from '../library-admin-book-form/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {

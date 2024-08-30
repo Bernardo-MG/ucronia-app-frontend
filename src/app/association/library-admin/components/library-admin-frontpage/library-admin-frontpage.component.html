@@ -1,34 +1,9 @@
 <layout-article title="Administración de biblioteca">
-  <div class="card">
-    <div class="card-header">
-      <ul class="nav nav-tabs card-header-tabs">
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'books'" aria-current="page" role="button"
-            (click)="onChangeView('books')">Libros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'authors'" aria-current="page" role="button"
-            (click)="onChangeView('authors')">Autores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'publishers'" aria-current="page" role="button"
-            (click)="onChangeView('publishers')">Editores</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'book_types'" aria-current="page" role="button"
-            (click)="onChangeView('book_types')">Tipos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'game_systems'" aria-current="page" role="button"
-            (click)="onChangeView('game_systems')">Sistemas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [class.active]="view === 'donors'" aria-current="page" role="button"
-            (click)="onChangeView('donors')">Donantes</a>
-        </li>
-      </ul>
-    </div>
-    <div class="card-body">
+  <app-card>
+    <app-card-header>
+      <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
+    </app-card-header>
+    <app-card-body>
       <ng-container [ngSwitch]="view">
         <!-- Books -->
         <ng-container *ngSwitchCase="'books'">
@@ -93,6 +68,6 @@
           </div>
         </ng-container>
       </ng-container>
-    </div>
-  </div>
+    </app-card-body>
+  </app-card>
 </layout-article>

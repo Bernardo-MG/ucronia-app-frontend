@@ -1,8 +1,7 @@
 <div>Escoge un tipo</div>
 <layout-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)"></layout-button-list>
 <div appJustifyCenter class="mt-1">
-  <layout-waiting-overlay [waiting]="waiting">
-    <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
-    </pagination-navigation>
-  </layout-waiting-overlay>
+  <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" *layoutBlockUi="waiting"
+    (goTo)="onGoToPage($event)">
+  </pagination-navigation>
 </div>

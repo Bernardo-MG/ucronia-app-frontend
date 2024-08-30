@@ -1,37 +1,37 @@
-<div class="card">
-  <div class="card-body">
+<app-card>
+  <app-card-body>
     <!-- Index -->
-    <div class="row mb-2">
-      <div class="col">
+    <div class="row">
+      <div class="col-3" *layoutPlaceholder="waiting">
         # {{data.index}}
       </div>
     </div>
     <!-- Description -->
-    <div class="row mb-2">
-      <div class="col-sm-2 text-primary">Description</div>
-      <div class="col-sm-10">
+    <div class="row">
+      <div class="col-sm-3 text-primary">Description</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
         {{data.description}}
       </div>
     </div>
     <!-- Date -->
-    <div class="row mb-2">
-      <div class="col-sm-2 text-primary">Fecha</div>
-      <div class="col-sm-10">
+    <div class="row">
+      <div class="col-sm-3 text-primary">Fecha</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
         {{data.date}}
       </div>
     </div>
     <!-- Amount -->
-    <div class="row mb-2">
-      <div class="col-sm-2 text-primary">Importe</div>
-      <div class="col-sm-10">
+    <div class="row">
+      <div class="col-sm-3 text-primary">Importe</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
         {{data.amount}}
       </div>
     </div>
-  </div>
-  <div *ngIf="showMenu" class="card-footer">
+  </app-card-body>
+  <app-card-footer>
     <div>
-      <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-        (delete)="delete.emit()"></form-control-buttons>
+      <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+        (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
     </div>
-  </div>
-</div>
+  </app-card-footer>
+</app-card>

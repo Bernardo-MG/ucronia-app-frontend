@@ -10,11 +10,12 @@ import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pa
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
+  imports: [CardModule, RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {

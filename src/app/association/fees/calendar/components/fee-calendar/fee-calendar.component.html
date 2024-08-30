@@ -20,36 +20,33 @@
   </button>
 </div>
 <!-- Table -->
-<layout-waiting-overlay [waiting]="waiting">
-  <div class="table-responsive">
-    <table class="table table-sm table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">Socio</th>
-          <th scope="col" *ngFor="let month of months"> {{month}}</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <ng-template ngFor let-row [ngForOf]="rows">
-          <tr [ngClass]="{ 'table-warning': !row.member.active }">
+<div class="table-responsive" *layoutBlockUi="waiting">
+  <table class="table table-sm table-hover">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Socio</th>
+        <th scope="col" *ngFor="let month of months"> {{month}}</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <ng-template ngFor let-row [ngForOf]="rows">
+        <tr [ngClass]="{ 'table-warning': !row.member.active }">
+          <td>
+            {{row.member.fullName}}
+          </td>
+          <!-- Month fees -->
+          <ng-template ngFor let-month [ngForOf]="months">
             <td>
-              {{row.member.fullName}}
+              <ng-container *ngIf="hasMonth(row.months, month)">
+                <button type="button" class="btn btn-secondary btn-sm" role="button"
+                  routerLink="/fees/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
+                  <icon-success-or-failure [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
+                </button>
+              </ng-container>
             </td>
-            <!-- Month fees -->
-            <ng-template ngFor let-month [ngForOf]="months">
-              <td>
-                <ng-container *ngIf="hasMonth(row.months, month)">
-                  <button type="button" class="btn btn-secondary btn-sm" role="button"
-                    routerLink="/fees/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
-                    <icon-success-or-failure
-                      [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
-                  </button>
-                </ng-container>
-              </td>
-            </ng-template>
-          </tr>
-        </ng-template>
-      </tbody>
-    </table>
-  </div>
-</layout-waiting-overlay>
+          </ng-template>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
+import { CardModule } from '@app/shared/card/card.module';
 import { throwError } from 'rxjs';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
@@ -13,7 +14,7 @@ import { PasswordResetRequestFormComponent } from '../password-reset-request-for
 @Component({
   selector: 'login-password-reset-request',
   standalone: true,
-  imports: [CommonModule, PasswordResetRequestFormComponent],
+  imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
   templateUrl: './password-reset-request.component.html'
 })
 export class PasswordResetRequestComponent {

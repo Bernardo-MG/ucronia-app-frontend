@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
+import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -11,7 +12,7 @@ import { AccessUserFormComponent } from '../../form/access-user-form/access-user
 @Component({
   selector: 'access-user-create',
   standalone: true,
-  imports: [AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-create.component.html'
 })
 export class AccessUserCreateComponent extends CreateComponent<User> {

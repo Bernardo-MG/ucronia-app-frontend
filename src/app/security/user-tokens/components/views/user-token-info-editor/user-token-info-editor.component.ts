@@ -4,6 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
@@ -17,7 +18,7 @@ import { UserTokenStatusComponent } from '../../data/user-token-status/user-toke
 @Component({
   selector: 'access-user-token-info-editor',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
   templateUrl: './user-token-info-editor.component.html'
 })
 export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<UserToken> implements OnInit {

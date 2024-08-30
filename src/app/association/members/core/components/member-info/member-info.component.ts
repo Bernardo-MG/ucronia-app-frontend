@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/association/members/shared/models/member';
+import { CardModule } from '@app/shared/card/card.module';
+import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
@@ -11,7 +13,7 @@ import { MemberInfoDetailsComponent } from '../member-info-details/member-info-d
 @Component({
   selector: 'assoc-member-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, MemberInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, MemberInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
   templateUrl: './member-info.component.html'
 })
 export class MemberInfoComponent {
@@ -37,6 +39,8 @@ export class MemberInfoComponent {
   @Output() public deactivate = new EventEmitter<void>();
 
   public view: string = 'details';
+
+  public tabs = [new CardTab('details', 'Detalles'),new CardTab('status', 'Estado')];
 
   public onChangeView(newView: string) {
     this.view = newView;

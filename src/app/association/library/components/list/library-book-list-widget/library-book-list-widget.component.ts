@@ -7,11 +7,12 @@ import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pa
 import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-library-book-list-widget',
   standalone: true,
-  imports: [CommonModule, LibraryBookListComponent, PaginationInfoWrapperComponent],
+  imports: [CommonModule, CardModule, LibraryBookListComponent, PaginationInfoWrapperComponent],
   templateUrl: './library-book-list-widget.component.html'
 })
 export class LibraryBookListWidgetComponent implements OnInit {

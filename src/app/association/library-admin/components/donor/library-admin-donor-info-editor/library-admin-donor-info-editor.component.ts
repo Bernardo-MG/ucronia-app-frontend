@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
 import { Person } from '@app/association/library/models/person';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -14,7 +15,7 @@ import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/libr
 @Component({
   selector: 'app-library-admin-donor-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, LibraryAdminDonorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, CardModule, LibraryAdminDonorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-donor-info-editor.component.html'
 })
 export class LibraryAdminDonorInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {
