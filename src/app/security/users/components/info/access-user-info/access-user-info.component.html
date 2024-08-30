@@ -35,60 +35,48 @@
     </ng-container>
     <!-- Status -->
     <ng-container *ngSwitchCase="'status'">
-      <access-user-status [data]="data"></access-user-status>
       <!-- Enable/disable button -->
-      <div class="mb-1">
-        <app-card>
-          <app-card-body>
-            <div class="row">
-              <ng-template [ngIf]="!data.enabled">
-                <!-- Enable button -->
-                <div class="col-sm-2 d-grid gap-2">
-                  <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable"
-                    data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</layout-waiting-button>
-                </div>
-              </ng-template>
-              <ng-template [ngIf]="data.enabled">
-                <!-- Disable button -->
-                <div class="col-sm-2 d-grid gap-2">
-                  <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable"
-                    data-bs-toggle="modal"
-                    [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</layout-waiting-button>
-                </div>
-              </ng-template>
+      <app-card-body>
+        <access-user-status [data]="data"></access-user-status>
+      </app-card-body>
+      <app-card-footer>
+        <div class="row">
+          <ng-template [ngIf]="!data.enabled">
+            <!-- Enable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</layout-waiting-button>
             </div>
-          </app-card-body>
-        </app-card>
-      </div>
+          </ng-template>
+          <ng-template [ngIf]="data.enabled">
+            <!-- Disable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</layout-waiting-button>
+            </div>
+          </ng-template>
+        </div>
+      </app-card-footer>
     </ng-container>
     <!-- Roles -->
     <ng-container *ngSwitchCase="'roles'">
       <!-- Roles -->
-      <div class="mb-1">
-        <app-card>
-          <app-card-body>
-            <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
-              [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
-              [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
-              (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
-          </app-card-body>
-        </app-card>
-      </div>
+      <app-card-body>
+        <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
+          [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
+          [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
+          (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
+      </app-card-body>
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
       <!-- Member -->
-      <div class="mb-1">
-        <app-card>
-          <app-card-body>
-            <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
-              [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
-              (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
-              (selectMember)="selectMember.emit($event)"></access-user-member-editor>
-          </app-card-body>
-        </app-card>
-      </div>
+      <app-card-body>
+        <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
+          [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
+          (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
+          (selectMember)="selectMember.emit($event)"></access-user-member-editor>
+      </app-card-body>
     </ng-container>
   </ng-container>
 </app-card>
