@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MemberService } from '@app/association/members/core/services/member.service';
 import { Member } from '@app/association/members/shared/models/member';
-import { PublicMemberInfoComponent } from '@app/association/public-members/public/components/public-member-info/public-member-info.component';
+import { PublicMemberInfoComponent } from '@app/association/public-members/core/components/public-member-info/public-member-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';

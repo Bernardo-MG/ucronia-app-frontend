@@ -1,19 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MemberService } from '@app/association/members/core/services/member.service';
-import { MemberInfoEditorComponent } from './member-info-editor.component';
+import { PublicMemberListComponent } from './public-member-list.component';
 
-describe('MemberInfoEditorComponent', () => {
-  let component: MemberInfoEditorComponent;
-  let fixture: ComponentFixture<MemberInfoEditorComponent>;
+describe('PublicMemberListComponent', () => {
+  let component: PublicMemberListComponent;
+  let fixture: ComponentFixture<PublicMemberListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        MemberInfoEditorComponent
+        PublicMemberListComponent
       ],
       providers: [
         MemberService
@@ -21,7 +19,7 @@ describe('MemberInfoEditorComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberInfoEditorComponent);
+    fixture = TestBed.createComponent(PublicMemberListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

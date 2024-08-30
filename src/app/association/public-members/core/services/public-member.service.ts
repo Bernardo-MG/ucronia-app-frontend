@@ -9,8 +9,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Active } from '../../shared/models/active';
-import { Member } from '../../shared/models/member';
+import { PublicMember } from '../../shared/models/public-member';
 
 @Injectable({
   providedIn: 'root'
@@ -21,22 +20,21 @@ export class PublicMemberService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Member[]>> {
+  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<PublicMember[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
-    query.addParameter('status', active.toString().toUpperCase());
 
     return this.getClient()
       .query(query)
-      .read<PaginatedResponse<Member[]>>();
+      .read<PaginatedResponse<PublicMember[]>>();
   }
 
-  public getOne(number: number): Observable<Member> {
+  public getOne(number: number): Observable<PublicMember> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Member>>()
+      .read<SimpleResponse<PublicMember>>()
       .pipe(map(r => r.content));
   }
 
