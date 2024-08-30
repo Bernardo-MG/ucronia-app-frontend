@@ -71,5 +71,6 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
       }
       this.overlayElement = null;
     }
+    this.viewContainer.createEmbeddedView(this.templateRef);
   }
 }
