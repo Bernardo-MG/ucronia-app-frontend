@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EmbeddedViewRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[layoutBlockUi]',
@@ -6,10 +6,11 @@ import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Rend
 })
 export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
 
-  private overlayElement: HTMLElement | null = null;
-
   @Input() layoutBlockUi!: boolean;
 
+  private overlayElement: HTMLElement | null = null;
+  private embeddedView: EmbeddedViewRef<any> | null = null;
+  
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
@@ -37,31 +38,38 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
 
   private showOverlay() {
     if (!this.overlayElement) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
+      // Create and insert the embedded view
+      this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
 
-      const parentElement = this.el.nativeElement.parentElement;
+      const targetElement = this.embeddedView.rootNodes[0];
 
-      if (parentElement) {
-        this.overlayElement = this.renderer.createElement('div');
-        this.renderer.setStyle(this.overlayElement, 'position', 'absolute');
-        this.renderer.setStyle(this.overlayElement, 'top', '0');
-        this.renderer.setStyle(this.overlayElement, 'left', '0');
-        this.renderer.setStyle(this.overlayElement, 'right', '0');
-        this.renderer.setStyle(this.overlayElement, 'bottom', '0');
-        this.renderer.setStyle(this.overlayElement, 'background', 'rgba(0, 0, 0, 0.5)');
-        this.renderer.setStyle(this.overlayElement, 'z-index', '1000');
-        this.renderer.setStyle(this.overlayElement, 'cursor', 'not-allowed');
-
-        this.renderer.appendChild(parentElement, this.overlayElement);
+      // Ensure the target element has a position style
+      const computedStyle = window.getComputedStyle(targetElement);
+      if (computedStyle.position === 'static' || !computedStyle.position) {
+        this.renderer.setStyle(targetElement, 'position', 'relative');
       }
+
+      this.overlayElement = this.renderer.createElement('div');
+      this.renderer.setStyle(this.overlayElement, 'position', 'absolute');
+      this.renderer.setStyle(this.overlayElement, 'top', '0');
+      this.renderer.setStyle(this.overlayElement, 'left', '0');
+      this.renderer.setStyle(this.overlayElement, 'right', '0');
+      this.renderer.setStyle(this.overlayElement, 'bottom', '0');
+      this.renderer.setStyle(this.overlayElement, 'background', 'rgba(0, 0, 0, 0.5)');
+      this.renderer.setStyle(this.overlayElement, 'z-index', '1000');
+      this.renderer.setStyle(this.overlayElement, 'cursor', 'not-allowed');
+
+      this.renderer.appendChild(targetElement, this.overlayElement);
     }
   }
 
   private removeOverlay() {
     if (this.overlayElement) {
-      this.renderer.removeChild(this.el.nativeElement.parentElement, this.overlayElement);
+      const targetElement = this.embeddedView?.rootNodes[0];
+      if (targetElement) {
+        this.renderer.removeChild(targetElement, this.overlayElement);
+      }
       this.overlayElement = null;
     }
   }
-
 }
