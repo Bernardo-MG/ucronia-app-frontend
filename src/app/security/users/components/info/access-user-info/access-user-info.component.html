@@ -28,8 +28,8 @@
       </app-card-body>
       <app-card-footer *ngIf="showMenu">
         <div>
-          <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="startEditing.emit()"
-            (delete)="delete.emit()"></form-control-buttons>
+          <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+            (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
         </div>
       </app-card-footer>
     </ng-container>

@@ -22,8 +22,8 @@
               <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
             </app-card-body>
             <app-card-footer *ngIf="showMenu">
-              <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-                (delete)="onDelete()"></form-control-buttons>
+              <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+                (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
             </app-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'permissions'">
