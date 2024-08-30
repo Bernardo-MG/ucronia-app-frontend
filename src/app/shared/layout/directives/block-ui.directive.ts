@@ -39,6 +39,7 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
   private showOverlay() {
     if (!this.overlayElement) {
       // Create and insert the embedded view
+      this.viewContainer.clear();
       this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
 
       const targetElement = this.embeddedView.rootNodes[0];
@@ -70,6 +71,8 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
         this.renderer.removeChild(targetElement, this.overlayElement);
       }
       this.overlayElement = null;
+    } else {
+      this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }
 }

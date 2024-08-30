@@ -1,25 +1,21 @@
-<app-card>
-  <app-card-body>
-    <!-- Enabled -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Activo</div>
-      <div class="col-sm-9">
-        <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
-      </div>
-    </div>
-    <!-- Password expired -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Activo</div>
-      <div class="col-sm-9">
-        <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
-      </div>
-    </div>
-    <!-- Locked -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Bloqueado</div>
-      <div class="col-sm-9">
-        <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
-      </div>
-    </div>
-  </app-card-body>
-</app-card>
+<!-- Enabled -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Activo</div>
+  <div class="col-sm-9">
+    <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
+  </div>
+</div>
+<!-- Password expired -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Activo</div>
+  <div class="col-sm-9">
+    <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
+  </div>
+</div>
+<!-- Locked -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Bloqueado</div>
+  <div class="col-sm-9">
+    <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
+  </div>
+</div>

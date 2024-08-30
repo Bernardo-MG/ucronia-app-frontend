@@ -7,7 +7,7 @@ import { MemberInfoEditorComponent } from './views/components/member-info-editor
 
 
 const routes: Routes = [
-  { path: '', component: MemberFrontpageComponent },
+  { path: '', component: MemberFrontpageComponent, canActivate: [ResourceGuard("member", "read")] },
   { path: 'register', component: MemberCreateComponent, canActivate: [ResourceGuard("member", "create")] },
   { path: ':number', component: MemberInfoEditorComponent, canActivate: [ResourceGuard("member", "read")] }
 ];

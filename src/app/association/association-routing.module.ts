@@ -8,6 +8,7 @@ const fundsModule = () => import('@app/association/funds/funds.module').then(m =
 const feesModule = () => import('@app/association/fees/fees.module').then(m => m.FeesModule);
 const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
 const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
+const publicMembersModule = () => import('@app/association/public-members/public-members.module').then(m => m.PublicMembersModule);
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
 const libraryLendModule = () => import('@app/association/library-lending/library-lending.module').then(m => m.LibraryLendingModule);
@@ -33,9 +34,14 @@ const routes: Routes = [
         loadChildren: fundsModule
       },
       {
-        path: 'members',
+        path: 'members/admin',
         canActivate: [ResourceGuard("member", "view")],
         loadChildren: membersModule
+      },
+      {
+        path: 'members',
+        canActivate: [ResourceGuard("public_member", "view")],
+        loadChildren: publicMembersModule
       },
       {
         path: 'fees',

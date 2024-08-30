@@ -1,4 +1,4 @@
-<layout-article title="Administración de socios">
+<layout-article title="Socios">
   <div class="row pb-2">
     <div appJustifyCenter>
       <assoc-member-balance-chart-widget></assoc-member-balance-chart-widget>
@@ -8,24 +8,12 @@
     <!-- Member List -->
     <app-card>
       <app-card-body>
-        <!-- Status selector -->
-        <div appJustifyEnd>
-          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
-          </assoc-member-status-select>
-        </div>
         <!-- List -->
         <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
           <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
             (changeDirection)="onChangeDirection($event)">
           </assoc-member-list>
         </layout-pagination-info-wrapper>
-        <!-- Add -->
-        <div appJustifyCenter>
-          <button type="button" class="btn btn-primary" aria-label="register" routerLink="/members/admin/register"
-            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-            Registrar socio
-          </button>
-        </div>
       </app-card-body>
     </app-card>
   </div>

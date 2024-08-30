@@ -16,6 +16,14 @@ export class ListPaginatedResponse<T> extends SimpleResponse<T[]> {
     this.page = page;
     this.size = size;
     this.totalElements = cont.length;
-    this.totalPages = Math.ceil(cont.length / size);
+    if (size === 0) {
+      this.totalPages = 0;
+    } else {
+      this.totalPages = Math.ceil(cont.length / size);
+    }
+    this.elementsInPage = this.content.length;
+
+    this.first = (page <= 0);
+    this.last = (page >= (this.totalPages - 1));
   }
 }
