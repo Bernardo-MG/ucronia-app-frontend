@@ -31,6 +31,10 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   public languages: Language[] = [];
 
   public lendPermission = false;
+  
+  public get lendDisabled() {
+    return this.waiting || !this.lendPermission;
+  }
 
   /**
    * Reading flag. Active while the data is being read.

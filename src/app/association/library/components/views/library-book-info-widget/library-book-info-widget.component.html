@@ -10,7 +10,7 @@
           <ng-container *ngSwitchCase="true">
             <!-- Return button -->
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-              [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
               data-bs-target="#returnModal">
               <icon-take-in></icon-take-in>Devolver
             </button>
@@ -18,7 +18,7 @@
           <ng-container *ngSwitchCase="false">
             <!-- Lend button -->
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-              [disabled]="!lendPermission" [attr.aria-disabled]="!lendPermission" data-bs-toggle="modal"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
               data-bs-target="#lendModal">
               <icon-take-out></icon-take-out>Prestar
             </button>
