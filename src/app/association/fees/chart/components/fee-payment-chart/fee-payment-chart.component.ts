@@ -21,7 +21,9 @@ export class FeePaymentChartComponent implements OnChanges, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.chart.destroy();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
   private loadChart() {

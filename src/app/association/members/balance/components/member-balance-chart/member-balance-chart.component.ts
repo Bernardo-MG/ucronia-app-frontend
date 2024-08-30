@@ -34,7 +34,9 @@ export class MemberBalanceChartComponent implements OnChanges, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.chart.destroy();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
   public onSelectStartMonth(event: any) {
