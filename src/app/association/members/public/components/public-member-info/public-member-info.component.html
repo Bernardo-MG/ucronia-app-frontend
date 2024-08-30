@@ -1,0 +1,18 @@
+<app-card>
+  <!-- Member details -->
+  <app-card-body>
+    <!-- Number -->
+    <div class="row">
+      <div class="col-3" *layoutPlaceholder="waiting">
+        # {{data.number}}
+      </div>
+    </div>
+    <!-- Name -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Nombre</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.name.fullName}}
+      </div>
+    </div>
+  </app-card-body>
+</app-card>

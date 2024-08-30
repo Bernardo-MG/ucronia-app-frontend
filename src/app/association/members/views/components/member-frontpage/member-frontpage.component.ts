@@ -80,7 +80,7 @@ export class MemberFrontpageComponent implements OnInit {
   }
 
   public routeLinkAdapter(data: Member): string {
-    return `/members/${data.number}`;
+    return `/members/admin/${data.number}`;
   }
 
 }

@@ -8,11 +8,6 @@
     <!-- Member List -->
     <app-card>
       <app-card-body>
-        <!-- Status selector -->
-        <div appJustifyEnd>
-          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
-          </assoc-member-status-select>
-        </div>
         <!-- List -->
         <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
           <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
