@@ -11,7 +11,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { Observable } from 'rxjs';
 import { BookLendingMemberSelectionComponent } from '../book-lending-member-selection/book-lending-member-selection.component';
 import { BookLendingFormComponent } from '../data/book-lending-form/book-lending-form.component';
@@ -19,7 +19,7 @@ import { BookLendingFormComponent } from '../data/book-lending-form/book-lending
 @Component({
   selector: 'assoc-library-book-lending',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent],
+  imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, BlockUiDirective],
   templateUrl: './library-book-lending.component.html'
 })
 export class LibraryBookLendingComponent extends CreateComponent<BookLent> implements OnInit {

@@ -1,10 +1,10 @@
 <layout-article title="Tokens de usuario">
-  <div class="card">
-    <div class="card-body">
+  <app-card>
+    <app-card-body>
       <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
         <access-user-token-selection-list [userTokens]="page.content" (changeDirection)="onChangeDirection($event)"
           [routeLinkAdapter]="routeLinkAdapter">
         </access-user-token-selection-list></layout-pagination-info-wrapper>
-    </div>
-  </div>
+    </app-card-body>
+  </app-card>
 </layout-article>

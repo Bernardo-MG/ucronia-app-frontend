@@ -5,6 +5,7 @@ import { Active } from '@app/association/members/shared/models/active';
 import { Member } from '@app/association/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -19,7 +20,7 @@ import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-se
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, IconsModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, IconsModule, CardModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {

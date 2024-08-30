@@ -1,4 +1,4 @@
-<layout-waiting-overlay [waiting]="waiting">
+<div *layoutBlockUi="waiting">
   <ng-container [ngSwitch]="view">
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
@@ -31,4 +31,4 @@
       </div>
     </ng-container>
   </ng-container>
-</layout-waiting-overlay>
+</div>

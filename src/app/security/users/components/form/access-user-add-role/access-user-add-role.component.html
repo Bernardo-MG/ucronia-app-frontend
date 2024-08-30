@@ -1,4 +1,4 @@
-<layout-waiting-overlay [waiting]="waiting">
+<div *layoutBlockUi="waiting">
   <!-- Add role -->
   <table class="table table-hover">
     <thead>
@@ -22,7 +22,7 @@
       </ng-template>
     </tbody>
   </table>
-</layout-waiting-overlay>
+</div>
 <div appJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="roles.page + 1" [pages]="roles.totalPages"
     (goTo)="onGoToPage($event)">

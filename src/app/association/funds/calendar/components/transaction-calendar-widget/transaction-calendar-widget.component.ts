@@ -9,11 +9,12 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-transaction-calendar-widget',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, ScheduleModule, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, ScheduleModule, JustifyCenterDirective],
   templateUrl: './transaction-calendar-widget.component.html'
 })
 export class TransactionCalendarWidgetComponent implements OnInit {

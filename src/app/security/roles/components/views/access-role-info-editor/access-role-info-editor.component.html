@@ -2,8 +2,8 @@
   <div appResponsiveShortColumns>
     <!-- Role -->
     <div class="mb-1">
-      <div class="card">
-        <div class="card-header">
+      <app-card>
+        <app-card-header>
           <!-- Tabs -->
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -15,22 +15,22 @@
                 (click)="onChangeView('permissions')">Permisos</a>
             </li>
           </ul>
-        </div>
+        </app-card-header>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <div class="card-body">
-              <access-role-info id="info" [data]="data"></access-role-info>
-            </div>
-            <div *ngIf="showMenu" class="card-footer">
-              <form-control-buttons [editable]="editable" [deletable]="deletable" (startEditing)="onStartEditing()"
-                (delete)="onDelete()"></form-control-buttons>
-            </div>
+            <app-card-body>
+              <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
+            </app-card-body>
+            <app-card-footer *ngIf="showMenu">
+              <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+                (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
+            </app-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'permissions'">
             <!-- Permissions -->
             <div class="mb-3">
-              <div class="card">
-                <div class="card-body">
+              <app-card>
+                <app-card-body>
                   <!-- Permissions list -->
                   <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
                     (remove)="onRemovePermission($event)"></access-role-permissions>
@@ -41,12 +41,12 @@
                       <icon-add></icon-add>
                     </button>
                   </div>
-                </div>
-              </div>
+                </app-card-body>
+              </app-card>
             </div>
           </ng-container>
         </ng-container>
-      </div>
+      </app-card>
     </div>
   </div>
 </layout-article>

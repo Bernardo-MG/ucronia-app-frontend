@@ -1,29 +1,27 @@
-<layout-waiting-overlay [waiting]="waiting">
-  <!-- Add role -->
-  <table class="table table-hover">
-    <thead>
+<!-- Add role -->
+<table class="table table-hover" *layoutBlockUi="waiting">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col">
+        Nombre
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <ng-template ngFor let-member [ngForOf]="members.content">
       <tr>
-        <th scope="col"></th>
-        <th scope="col">
-          Nombre
-        </th>
+        <td>
+          <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
+            aria-label="Back">
+            <icon-add></icon-add>
+          </button>
+        </td>
+        <td>{{member.name.fullName}}</td>
       </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <ng-template ngFor let-member [ngForOf]="members.content">
-        <tr>
-          <td>
-            <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
-              aria-label="Back">
-              <icon-add></icon-add>
-            </button>
-          </td>
-          <td>{{member.name.fullName}}</td>
-        </tr>
-      </ng-template>
-    </tbody>
-  </table>
-</layout-waiting-overlay>
+    </ng-template>
+  </tbody>
+</table>
 <div appJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="members.page + 1" [pages]="members.totalPages"
     (goTo)="onGoToPage($event)">

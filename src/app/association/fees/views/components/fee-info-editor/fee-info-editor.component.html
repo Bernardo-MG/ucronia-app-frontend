@@ -3,18 +3,18 @@
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <div class="card">
-          <div class="card-body">
+        <app-card>
+          <app-card-body>
             <assoc-fee-edit-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
               [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
             </assoc-fee-edit-form>
-          </div>
-        </div>
+          </app-card-body>
+        </app-card>
       </ng-container>
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          (delete)="onDelete()" (startEditing)="onStartEditing()"
+          [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"
           (goToTransaction)="goToTransaction($event)"></assoc-fee-info>
       </ng-container>
     </ng-container>

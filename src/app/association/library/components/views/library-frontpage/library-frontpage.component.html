@@ -1,13 +1,15 @@
 <layout-article title="Biblioteca">
-  <div class="card mb-1">
-    <div class="card-body">
+  <div class="mb-1">
+  <app-card>
+    <app-card-body>
       <!-- Books menu -->
       <button type="button" class="btn btn-link link-dark" role="button" aria-label="admin" routerLink="/library/admin"
         [disabled]="!adminPermission" [attr.aria-disabled]="!adminPermission">
         <icon-settings></icon-settings> Administrar
       </button>
-    </div>
-  </div>
+    </app-card-body>
+  </app-card>
+</div>
   <!-- Books list -->
   <assoc-library-book-list-widget></assoc-library-book-list-widget>
 </layout-article>

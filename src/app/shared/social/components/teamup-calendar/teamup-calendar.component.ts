@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 
 @Component({
   selector: 'app-teamup-calendar',
   standalone: true,
-  imports: [WaitingOverlayComponent],
+  imports: [BlockUiDirective],
   templateUrl: './teamup-calendar.component.html'
 })
 export class TeamupCalendarComponent implements OnChanges {

@@ -3,8 +3,8 @@
     <!-- Role -->
     <div class="mb-1">
       <!-- Info -->
-      <div class="card">
-        <div class="card-header">
+      <app-card>
+        <app-card-header>
           <!-- Tabs -->
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -16,31 +16,31 @@
                 (click)="onChangeView('status')">Estado</a>
             </li>
           </ul>
-        </div>
+        </app-card-header>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <div class="card-body">
-              <access-user-token-info id="info" [failures]="failures" [data]="data"></access-user-token-info>
-            </div>
-            <footer class="card-footer">
+            <app-card-body>
+              <access-user-token-info [failures]="failures" [data]="data" [waiting]="waiting"></access-user-token-info>
+            </app-card-body>
+            <app-card-footer>
               <!-- Extend expiration button -->
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
                 data-bs-toggle="modal" [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
                 expiración</layout-waiting-button>
-            </footer>
+            </app-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'status'">
-            <div class="card-body">
+            <app-card-body>
               <access-user-token-status [data]="data"></access-user-token-status>
-            </div>
-            <footer class="card-footer">
+            </app-card-body>
+            <app-card-footer>
               <!-- Revoke button -->
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke" data-bs-toggle="modal"
                 [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</layout-waiting-button>
-            </footer>
+            </app-card-footer>
           </ng-container>
         </ng-container>
-      </div>
+      </app-card>
     </div>
   </div>
 </layout-article>

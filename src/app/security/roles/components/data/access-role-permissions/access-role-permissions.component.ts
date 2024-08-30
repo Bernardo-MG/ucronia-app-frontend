@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
@@ -11,7 +11,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 @Component({
   selector: 'access-role-permissions',
   standalone: true,
-  imports: [CommonModule, IconsModule, WaitingOverlayComponent, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective],
+  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {

@@ -4,6 +4,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { UserTokenSelectionListComponent } from '../../data/user-token-selection-list/user-token-selection-list.component';
@@ -11,7 +12,7 @@ import { UserTokenSelectionListComponent } from '../../data/user-token-selection
 @Component({
   selector: 'access-user-token-frontpage',
   standalone: true,
-  imports: [UserTokenSelectionListComponent, ArticleComponent, PaginationInfoWrapperComponent],
+  imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoWrapperComponent],
   templateUrl: './user-token-frontpage.component.html'
 })
 export class UserTokenFrontpageComponent implements OnInit {

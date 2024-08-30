@@ -5,11 +5,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { AssociationConfigurationService } from '../../../service/association-configuration.service';
 import { ConfigurationValuesEditorComponent } from '../../editor/configuration-values-editor/configuration-values-editor.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-configuration-info-editor',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, ArticleComponent, ConfigurationValuesEditorComponent],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, ConfigurationValuesEditorComponent],
   templateUrl: './configuration-info-editor.component.html'
 })
 export class ConfigurationInfoEditorComponent implements OnInit {

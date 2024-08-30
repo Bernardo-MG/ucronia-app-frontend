@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/association/members/shared/models/member';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
-import { WaitingOverlayComponent } from '@app/shared/layout/components/waiting-overlay/waiting-overlay.component';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'assoc-book-lending-member-selection',
   standalone: true,
-  imports: [ButtonListComponent, WaitingOverlayComponent, PaginationNavigationComponent, JustifyCenterDirective],
+  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
   templateUrl: './book-lending-member-selection.component.html'
 })
 export class BookLendingMemberSelectionComponent {

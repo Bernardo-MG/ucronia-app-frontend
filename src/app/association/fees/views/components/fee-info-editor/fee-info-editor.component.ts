@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditFormComponent } from '@app/association/fees/core/components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from '@app/association/fees/core/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -14,7 +15,7 @@ import { Fee } from '../../../shared/models/fee';
 @Component({
   selector: 'assoc-fee-info-editor',
   standalone: true,
-  imports: [CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-info-editor.component.html'
 })
 export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {

@@ -1,7 +1,5 @@
 <!-- List -->
-<layout-waiting-overlay [waiting]="waiting">
-  <ng-content></ng-content>
-</layout-waiting-overlay>
+<ng-content *layoutBlockUi="waiting"></ng-content>
 <!-- Pagination info -->
 <!-- Total -->
 <div class="row">

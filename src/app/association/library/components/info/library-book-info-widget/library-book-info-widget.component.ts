@@ -5,6 +5,7 @@ import { LibraryBookLendingComponent } from '@app/association/library-lending/co
 import { LibraryBookReturnComponent } from '@app/association/library-lending/components/library-book-return/library-book-return.component';
 import { Language } from '@app/association/library/models/language';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
@@ -18,7 +19,7 @@ import { LibraryBookLendingsComponent } from '../library-book-lendings/library-b
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, IconsModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent, ModalComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, IconsModule, CardModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingComponent, LibraryBookLendingsComponent, LibraryBookReturnComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {
@@ -34,7 +35,7 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   /**
    * Reading flag. Active while the data is being read.
    */
-  protected reading = false;
+  protected waiting = false;
 
   private index = -1;
 
@@ -74,15 +75,15 @@ export class LibraryBookInfoWidgetComponent implements OnInit {
   }
 
   private load(): void {
-    this.reading = true;
+    this.waiting = true;
     this.read()
       .subscribe({
         next: response => {
           this.data = response;
-          this.reading = false;
+          this.waiting = false;
         },
         error: error => {
-          this.reading = false;
+          this.waiting = false;
         }
       });
   }

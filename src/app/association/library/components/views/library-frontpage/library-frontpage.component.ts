@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { LibraryBookListWidgetComponent } from '../../list/library-book-list-widget/library-book-list-widget.component';
@@ -8,7 +9,7 @@ import { LibraryBookListWidgetComponent } from '../../list/library-book-list-wid
 @Component({
   selector: 'assoc-library-frontpage',
   standalone: true,
-  imports: [RouterModule, IconsModule, LibraryBookListWidgetComponent, ArticleComponent],
+  imports: [RouterModule, IconsModule, CardModule, LibraryBookListWidgetComponent, ArticleComponent],
   templateUrl: './library-frontpage.component.html'
 })
 export class LibraryFrontpageComponent {
