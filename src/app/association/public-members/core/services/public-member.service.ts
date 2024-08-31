@@ -10,6 +10,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PublicMember } from '../../shared/models/public-member';
+import { Active } from '@app/association/members/shared/models/active';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class PublicMemberService {
     query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
+    query.addParameter('status', Active.Active.toString().toUpperCase());
 
     return this.getClient()
       .query(query)
