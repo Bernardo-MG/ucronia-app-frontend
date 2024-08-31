@@ -10,7 +10,7 @@
       <app-card-body>
         <!-- Status selector -->
         <div appJustifyEnd>
-          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)">
+          <assoc-member-status-select [disabled]="reading" (changeStatus)="onChangeActiveFilter($event)">
           </assoc-member-status-select>
         </div>
         <!-- List -->

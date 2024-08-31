@@ -12,7 +12,8 @@
           <div class="me-2">
             Estado:
           </div>
-          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+          <assoc-member-status-select [disabled]="readingMembers"
+            (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
         </div>
       </div>
       <assoc-book-lending-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
