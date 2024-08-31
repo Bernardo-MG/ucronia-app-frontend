@@ -5,17 +5,18 @@
 <ng-container [ngSwitch]="selectedMember">
   <ng-container *ngSwitchCase="false">
     <!-- Select member -->
-    <div *layoutBlockUi="readingMembers">
+    <div>
       <div class="row mb-2">
         <div class="col-2">Elige socio</div>
         <div class="col-4 offset-6 d-flex">
           <div class="me-2">
             Estado:
           </div>
-          <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+          <assoc-member-status-select [disabled]="readingMembers"
+            (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
         </div>
       </div>
-      <assoc-book-lending-member-selection [values]="memberPage.content" [current]="memberPage.page + 1"
+      <assoc-book-lending-member-selection *layoutBlockUi="readingMembers" [values]="memberPage.content" [current]="memberPage.page + 1"
         [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)" (goToPage)="onGoToMembersPage($event)">
       </assoc-book-lending-member-selection>
     </div>

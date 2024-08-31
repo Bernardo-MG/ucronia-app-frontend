@@ -2,7 +2,8 @@
   <app-card-body>
     <!-- Status selector -->
     <div appJustifyEnd>
-      <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+      <assoc-member-status-select [disabled]="readingCalendar"
+        (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
     </div>
     <!-- Calendar -->
     <assoc-fee-calendar [activeFilter]="activeFilter" [range]="range" [waiting]="readingCalendar" [rows]="rows"
