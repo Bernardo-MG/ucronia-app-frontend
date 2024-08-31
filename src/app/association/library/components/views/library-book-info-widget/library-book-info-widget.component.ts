@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { LibraryBookLendingComponent } from '@app/association/library-lending/components/library-book-lending/library-book-lending.component';
-import { LibraryBookReturnComponent } from '@app/association/library-lending/components/library-book-return/library-book-return.component';
+import { LibraryBookLendingComponent } from '@app/association/library-lending/shared/components/library-book-lending/library-book-lending.component';
+import { LibraryBookReturnComponent } from '@app/association/library-lending/shared/components/library-book-return/library-book-return.component';
 import { Language } from '@app/association/library/models/language';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';

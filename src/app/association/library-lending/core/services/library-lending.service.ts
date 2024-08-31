@@ -34,14 +34,6 @@ export class LibraryLendingService {
       .pipe(map(r => r.content));
   }
 
-  public getBooks(page: number): Observable<PaginatedResponse<Book[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('title')]);
-    query.pagination = { page };
-
-    return this.getBookClient().query(query).read();
-  }
-
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
     query.sort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
@@ -55,10 +47,6 @@ export class LibraryLendingService {
 
   private getLendClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/library/lending');
-  }
-
-  private getBookClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/book');
   }
 
   private getMemberClient(): Client {
