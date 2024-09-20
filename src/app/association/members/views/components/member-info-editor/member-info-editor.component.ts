@@ -75,7 +75,7 @@ export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member>
   }
 
   protected override save(toSave: Member): Observable<Member> {
-    return this.service.update(this.data.number, toSave);
+    return this.service.patch(this.data.number, toSave);
   }
 
 }
