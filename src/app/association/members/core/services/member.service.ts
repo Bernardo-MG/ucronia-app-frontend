@@ -39,10 +39,10 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Member): Observable<Member> {
+  public patch(number: number, data: Member): Observable<Member> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Member>>(data)
+      .patch<SimpleResponse<Member>>(data)
       .pipe(map(r => r.content));
   }
 
