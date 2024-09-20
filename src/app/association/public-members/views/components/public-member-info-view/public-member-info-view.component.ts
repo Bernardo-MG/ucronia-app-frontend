@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MemberService } from '@app/association/members/core/services/member.service';
-import { Member } from '@app/association/members/shared/models/member';
+import { ActivatedRoute } from '@angular/router';
 import { PublicMemberInfoComponent } from '@app/association/public-members/core/components/public-member-info/public-member-info.component';
+import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
+import { PublicMember } from '@app/association/public-members/shared/models/public-member';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
   imports: [CommonModule, CardModule, ArticleComponent, PublicMemberInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './public-member-info-view.component.html'
 })
-export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
+export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<PublicMember> implements OnInit {
 
   public view: string = 'details';
 
@@ -25,11 +25,10 @@ export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<M
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private service: MemberService,
+    private service: PublicMemberService,
     private authContainer: AuthContainer
   ) {
-    super(new Member());
+    super(new PublicMember());
   }
 
   public ngOnInit(): void {
@@ -64,17 +63,15 @@ export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<M
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate([`/members`]);
-    });
+    throw new Error('Method not implemented.');
   }
 
-  protected override read(): Observable<Member> {
+  protected override read(): Observable<PublicMember> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: Member): Observable<Member> {
-    return this.service.update(this.data.number, toSave);
+  protected override save(toSave: PublicMember): Observable<PublicMember> {
+    throw new Error('Method not implemented.');
   }
 
 }
