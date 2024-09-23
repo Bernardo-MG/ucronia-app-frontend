@@ -26,7 +26,7 @@ export class SettingsInfoEditorComponent implements OnInit {
 
   ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("association_configuration", "update");
+    this.editable = this.authContainer.hasPermission("association_settings", "update");
 
     this.service.getAll()
       .subscribe({

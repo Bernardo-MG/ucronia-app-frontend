@@ -23,7 +23,7 @@ export class LayoutService {
   }
 
   public showConfigurationLink(): boolean {
-    return this.authContainer.hasPermission('association_configuration', 'view');
+    return this.authContainer.hasPermission('association_settings', 'view');
   }
 
   public showSecurityLink(): boolean {

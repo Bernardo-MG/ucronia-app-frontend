@@ -70,7 +70,7 @@ const routes: Routes = [
       },
       {
         path: 'configuration',
-        canActivate: [ResourceGuard("association_configuration", "view")],
+        canActivate: [ResourceGuard("association_settings", "view")],
         loadChildren: settingsModule
       }
     ]
