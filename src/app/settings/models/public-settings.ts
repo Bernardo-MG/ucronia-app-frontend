@@ -1,4 +1,4 @@
-export class PublicConfiguration {
+export class PublicSettings {
   calendarCode = '';
   mapCode = '';
 }

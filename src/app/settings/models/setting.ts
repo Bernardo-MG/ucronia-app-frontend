@@ -1,4 +1,4 @@
-export class Configuration {
+export class Setting {
   code = '';
   value = '';
   type = '';

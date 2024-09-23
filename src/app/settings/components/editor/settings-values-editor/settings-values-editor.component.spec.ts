@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { Configuration } from '@app/configuration/models/configuration';
+import { Setting } from '@app/settings/models/setting';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { ConfigurationValuesEditorComponent } from './configuration-values-editor.component';
+import { SettingValuesEditorComponent } from './settings-values-editor.component';
 
-describe('ConfigurationValuesEditorComponent', () => {
-  let component: ConfigurationValuesEditorComponent;
-  let fixture: ComponentFixture<ConfigurationValuesEditorComponent>;
+describe('SettingValuesEditorComponent', () => {
+  let component: SettingValuesEditorComponent;
+  let fixture: ComponentFixture<SettingValuesEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -15,11 +15,11 @@ describe('ConfigurationValuesEditorComponent', () => {
         CommonModule,
         FormsModule,
         IconsModule,
-        ConfigurationValuesEditorComponent
+        SettingValuesEditorComponent
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ConfigurationValuesEditorComponent);
+    fixture = TestBed.createComponent(SettingValuesEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -39,8 +39,8 @@ describe('ConfigurationValuesEditorComponent', () => {
     expect(component.isEditing('config1')).toBeFalsy();
   });
 
-  it('should emit configuration on save', () => {
-    const config: Configuration = { code: 'config1', type: 'text', value: 'value1' };
+  it('should emit setting on save', () => {
+    const config: Setting = { code: 'config1', type: 'text', value: 'value1' };
     spyOn(component.save, 'emit');
 
     component.onSave(config, { target: { 'config1': { value: 'new value' } } });

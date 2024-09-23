@@ -22,8 +22,8 @@ export class LayoutService {
     return 'AR Ucronía';
   }
 
-  public showConfigurationLink(): boolean {
-    return this.authContainer.hasPermission('association_configuration', 'view');
+  public showSettingsLink(): boolean {
+    return this.authContainer.hasPermission('association_settings', 'view');
   }
 
   public showSecurityLink(): boolean {
