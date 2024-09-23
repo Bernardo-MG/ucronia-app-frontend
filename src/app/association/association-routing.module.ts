@@ -12,7 +12,7 @@ const publicMembersModule = () => import('@app/association/public-members/public
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
 const libraryLendModule = () => import('@app/association/library-lending/library-lending.module').then(m => m.LibraryLendingModule);
-const configurationModule = () => import('@app/configuration/configuration.module').then(m => m.ConfigurationModule);
+const settingsModule = () => import('@app/settings/settings.module').then(m => m.SettingsModule);
 
 const routes: Routes = [
   {
@@ -71,7 +71,7 @@ const routes: Routes = [
       {
         path: 'configuration',
         canActivate: [ResourceGuard("association_configuration", "view")],
-        loadChildren: configurationModule
+        loadChildren: settingsModule
       }
     ]
   }

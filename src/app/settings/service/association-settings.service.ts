@@ -5,27 +5,27 @@ import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Configuration } from '../models/configuration';
+import { Setting } from '../models/setting';
 
 @Injectable({
   providedIn: "root"
 })
-export class AssociationConfigurationService {
+export class AssociationSettingService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public getAll(): Observable<Configuration[]> {
+  public getAll(): Observable<Setting[]> {
     return this.getClient()
-      .read<SimpleResponse<Configuration[]>>()
+      .read<SimpleResponse<Setting[]>>()
       .pipe(map(r => r.content));
   }
 
-  public update(code: string, configuration: Configuration): Observable<Configuration> {
+  public update(code: string, configuration: Setting): Observable<Setting> {
     return this.getClient()
       .appendRoute(`/${code}`)
-      .update<SimpleResponse<Configuration>>(configuration)
+      .update<SimpleResponse<Setting>>(configuration)
       .pipe(map(r => r.content));
   }
 

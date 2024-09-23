@@ -1,22 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Configuration } from '@app/configuration/models/configuration';
+import { Setting } from '@app/settings/models/setting';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'assoc-configuration-values-editor',
+  selector: 'assoc-settings-values-editor',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
-  templateUrl: './configuration-values-editor.component.html'
+  templateUrl: './settings-values-editor.component.html'
 })
-export class ConfigurationValuesEditorComponent {
+export class SettingValuesEditorComponent {
 
   @Input() public disabled = false;
 
-  @Input() public configurations: Configuration[] = [];
+  @Input() public configurations: Setting[] = [];
 
-  @Output() public save = new EventEmitter<Configuration>();
+  @Output() public save = new EventEmitter<Setting>();
 
   public activeConfig = '';
 
@@ -24,10 +24,10 @@ export class ConfigurationValuesEditorComponent {
     this.activeConfig = code;
   }
 
-  public onSave(config: Configuration, event: any) {
+  public onSave(config: Setting, event: any) {
     this.activeConfig = '';
 
-    const configuration = new Configuration();
+    const configuration = new Setting();
     configuration.code = config.code;
     configuration.type = config.type;
     configuration.value = event.target[config.code].value;

@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { Configuration } from '@app/configuration/models/configuration';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { AssociationConfigurationService } from '../../../service/association-configuration.service';
-import { ConfigurationValuesEditorComponent } from '../../editor/configuration-values-editor/configuration-values-editor.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { Setting } from '@app/settings/models/setting';
 import { CardModule } from '@app/shared/card/card.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { AssociationSettingService as AssociationSettingsService } from '../../../service/association-settings.service';
+import { SettingValuesEditorComponent } from '../../editor/settings-values-editor/settings-values-editor.component';
 
 @Component({
-  selector: 'assoc-configuration-info-editor',
+  selector: 'assoc-settings-info-editor',
   standalone: true,
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, ConfigurationValuesEditorComponent],
-  templateUrl: './configuration-info-editor.component.html'
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
+  templateUrl: './settings-info-editor.component.html'
 })
 export class ConfigurationInfoEditorComponent implements OnInit {
 
-  public configurations: Configuration[] = [];
+  public configurations: Setting[] = [];
 
   public editable = false;
 
   constructor(
-    private service: AssociationConfigurationService,
+    private service: AssociationSettingsService,
     private authContainer: AuthContainer
   ) { }
 
@@ -38,7 +38,7 @@ export class ConfigurationInfoEditorComponent implements OnInit {
       });
   }
 
-  public onSaveConfig(config: Configuration) {
+  public onSaveConfig(config: Setting) {
     return this.service.update(config.code, config).subscribe({
       next: response => {
       },

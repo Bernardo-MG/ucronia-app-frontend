@@ -1,0 +1,8 @@
+<layout-article title="Configuración">
+  <app-card>
+    <app-card-body>
+      <assoc-settings-values-editor [disabled]="!editable" [configurations]="configurations"
+        (save)="onSaveConfig($event)"></assoc-settings-values-editor>
+    </app-card-body>
+  </app-card>
+</layout-article>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurationInfoEditorComponent } from './components/views/configuration-info-editor/configuration-info-editor.component';
+import { ConfigurationInfoEditorComponent } from './components/views/settings-info-editor/settings-info-editor.component';
 
 
 const routes: Routes = [
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConfigurationRoutingModule { }
+export class SettingsRoutingModule { }
