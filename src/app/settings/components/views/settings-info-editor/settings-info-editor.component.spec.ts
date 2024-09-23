@@ -1,25 +1,25 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AssociationConfigurationService } from '@app/configuration/service/association-configuration.service';
-import { ConfigurationInfoEditorComponent } from './configuration-info-editor.component';
+import { AssociationSettingsService } from '@app/settings/service/association-settings.service';
+import { SettingsInfoEditorComponent } from './settings-info-editor.component';
 
-describe('ConfigurationInfoEditorComponent', () => {
-  let component: ConfigurationInfoEditorComponent;
-  let fixture: ComponentFixture<ConfigurationInfoEditorComponent>;
+describe('SettingsInfoEditorComponent', () => {
+  let component: SettingsInfoEditorComponent;
+  let fixture: ComponentFixture<SettingsInfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ConfigurationInfoEditorComponent
+        SettingsInfoEditorComponent
       ],
       providers: [
-        AssociationConfigurationService
+        AssociationSettingsService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ConfigurationInfoEditorComponent);
+    fixture = TestBed.createComponent(SettingsInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

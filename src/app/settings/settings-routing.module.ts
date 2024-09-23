@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurationInfoEditorComponent } from './components/views/settings-info-editor/settings-info-editor.component';
+import { SettingsInfoEditorComponent } from './components/views/settings-info-editor/settings-info-editor.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: ConfigurationInfoEditorComponent
+    component: SettingsInfoEditorComponent
   }
 ];
 

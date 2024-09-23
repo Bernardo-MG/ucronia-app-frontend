@@ -10,7 +10,7 @@ import { Setting } from '../models/setting';
 @Injectable({
   providedIn: "root"
 })
-export class AssociationSettingService {
+export class AssociationSettingsService {
 
   constructor(
     private http: HttpClient

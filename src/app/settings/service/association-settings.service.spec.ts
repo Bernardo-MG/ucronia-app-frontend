@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AssociationSettingService } from './association-settings.service';
+import { AssociationSettingsService } from './association-settings.service';
 
-describe('AssociationSettingService', () => {
-  let service: AssociationSettingService;
+describe('AssociationSettingsService', () => {
+  let service: AssociationSettingsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,10 +11,10 @@ describe('AssociationSettingService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        AssociationSettingService
+        AssociationSettingsService
       ]
     });
-    service = TestBed.inject(AssociationSettingService);
+    service = TestBed.inject(AssociationSettingsService);
   });
 
   it('should be created', () => {

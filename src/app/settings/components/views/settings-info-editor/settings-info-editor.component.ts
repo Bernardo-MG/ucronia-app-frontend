@@ -4,7 +4,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Setting } from '@app/settings/models/setting';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { AssociationSettingService as AssociationSettingsService } from '../../../service/association-settings.service';
+import { AssociationSettingsService as AssociationSettingsService } from '../../../service/association-settings.service';
 import { SettingValuesEditorComponent } from '../../editor/settings-values-editor/settings-values-editor.component';
 
 @Component({
@@ -13,7 +13,7 @@ import { SettingValuesEditorComponent } from '../../editor/settings-values-edito
   imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
   templateUrl: './settings-info-editor.component.html'
 })
-export class ConfigurationInfoEditorComponent implements OnInit {
+export class SettingsInfoEditorComponent implements OnInit {
 
   public configurations: Setting[] = [];
 
