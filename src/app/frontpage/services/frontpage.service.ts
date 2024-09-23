@@ -37,7 +37,7 @@ export class FrontpageService {
   }
 
   private getConfigClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/configuration/public');
+    return new AngularClient(this.http, environment.apiUrl + '/settings/public');
   }
 
 }

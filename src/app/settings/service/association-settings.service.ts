@@ -22,10 +22,10 @@ export class AssociationSettingsService {
       .pipe(map(r => r.content));
   }
 
-  public update(code: string, configuration: Setting): Observable<Setting> {
+  public update(code: string, setting: Setting): Observable<Setting> {
     return this.getClient()
       .appendRoute(`/${code}`)
-      .update<SimpleResponse<Setting>>(configuration)
+      .update<SimpleResponse<Setting>>(setting)
       .pipe(map(r => r.content));
   }
 

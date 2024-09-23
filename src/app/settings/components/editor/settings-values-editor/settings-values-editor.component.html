@@ -1,18 +1,18 @@
-<form class="needs-validation" (ngSubmit)="onSave(configuration, $event)" novalidate
-  *ngFor="let configuration of configurations">
+<form class="needs-validation" (ngSubmit)="onSave(setting, $event)" novalidate
+  *ngFor="let setting of settings">
   <div class="row mb-2">
-    <label for="{{configuration.code + 'Input'}}" id="{{configuration.code + 'Label'}}"
-      class="col-sm-2 col-form-label">{{configuration.code}}</label>
+    <label for="{{setting.code + 'Input'}}" id="{{setting.code + 'Label'}}"
+      class="col-sm-2 col-form-label">{{setting.code}}</label>
     <div class="col-sm-9">
-      <input name="{{configuration.code}}" type="{{configuration.type}}" step="any"
-        id="{{configuration.code + 'Input'}}" class="form-control" appInvalidField="configuration.code"
-        [value]="configuration.value" attr.aria-describedby="{{configuration.code + 'Label'}}"
-        [disabled]="disabled || !isEditing(configuration.code)">
+      <input name="{{setting.code}}" type="{{setting.type}}" step="any"
+        id="{{setting.code + 'Input'}}" class="form-control" appInvalidField="setting.code"
+        [value]="setting.value" attr.aria-describedby="{{setting.code + 'Label'}}"
+        [disabled]="disabled || !isEditing(setting.code)">
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">
-        <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(configuration.code)"
-          [disabled]="disabled || isEditing(configuration.code)">
+        <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(setting.code)"
+          [disabled]="disabled || isEditing(setting.code)">
           <icon-edit></icon-edit>
         </button>
       </div>

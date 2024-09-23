@@ -15,7 +15,7 @@ import { SettingValuesEditorComponent } from '../../editor/settings-values-edito
 })
 export class SettingsInfoEditorComponent implements OnInit {
 
-  public configurations: Setting[] = [];
+  public settings: Setting[] = [];
 
   public editable = false;
 
@@ -31,7 +31,7 @@ export class SettingsInfoEditorComponent implements OnInit {
     this.service.getAll()
       .subscribe({
         next: response => {
-          this.configurations = response;
+          this.settings = response;
         },
         error: error => {
         }

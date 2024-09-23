@@ -39,7 +39,7 @@ describe('SettingValuesEditorComponent', () => {
     expect(component.isEditing('config1')).toBeFalsy();
   });
 
-  it('should emit configuration on save', () => {
+  it('should emit setting on save', () => {
     const config: Setting = { code: 'config1', type: 'text', value: 'value1' };
     spyOn(component.save, 'emit');
 

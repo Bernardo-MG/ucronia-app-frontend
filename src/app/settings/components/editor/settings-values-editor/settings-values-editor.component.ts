@@ -14,7 +14,7 @@ export class SettingValuesEditorComponent {
 
   @Input() public disabled = false;
 
-  @Input() public configurations: Setting[] = [];
+  @Input() public settings: Setting[] = [];
 
   @Output() public save = new EventEmitter<Setting>();
 
@@ -27,11 +27,11 @@ export class SettingValuesEditorComponent {
   public onSave(config: Setting, event: any) {
     this.activeConfig = '';
 
-    const configuration = new Setting();
-    configuration.code = config.code;
-    configuration.type = config.type;
-    configuration.value = event.target[config.code].value;
-    this.save.emit(configuration);
+    const setting = new Setting();
+    setting.code = config.code;
+    setting.type = config.type;
+    setting.value = event.target[config.code].value;
+    this.save.emit(setting);
   }
 
   public isEditing(code: string): boolean {
