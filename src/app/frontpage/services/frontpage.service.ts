@@ -5,7 +5,7 @@ import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { PublicConfiguration } from '../models/public-configuration';
+import { PublicSettings } from '../../settings/models/public-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,13 @@ export class FrontpageService {
 
   public getCalendarCode(): Observable<string> {
     return this.getConfigClient()
-      .read<SimpleResponse<PublicConfiguration>>()
+      .read<SimpleResponse<PublicSettings>>()
       .pipe(map(r => r.content.calendarCode));
   }
 
   public getMapCode(): Observable<string> {
     return this.getConfigClient()
-      .read<SimpleResponse<PublicConfiguration>>()
+      .read<SimpleResponse<PublicSettings>>()
       .pipe(map(r => r.content.mapCode));
   }
 

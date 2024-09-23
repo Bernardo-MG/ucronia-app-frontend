@@ -30,7 +30,7 @@ export class SidebarLayoutComponent implements OnInit {
     this.title = this.layoutService.getTitle();
 
     // Show links
-    this.showConfig = this.layoutService.showConfigurationLink();
+    this.showConfig = this.layoutService.showSettingsLink();
     this.showSecurity = this.layoutService.showSecurityLink();
   }
 

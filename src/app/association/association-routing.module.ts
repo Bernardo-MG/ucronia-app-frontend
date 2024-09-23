@@ -69,7 +69,7 @@ const routes: Routes = [
         loadChildren: libraryLendModule
       },
       {
-        path: 'configuration',
+        path: 'settings',
         canActivate: [ResourceGuard("association_settings", "view")],
         loadChildren: settingsModule
       }

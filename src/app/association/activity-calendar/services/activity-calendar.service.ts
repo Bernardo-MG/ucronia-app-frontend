@@ -24,7 +24,7 @@ export class ActivityCalendarService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/configuration');
+    return new AngularClient(this.http, environment.apiUrl + '/settings');
   }
 
 }
