@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
@@ -21,8 +22,13 @@ export class SidebarLayoutComponent implements OnInit {
 
   public showSecurity = false;
 
+  public get loggedIn() {
+    return this.authContainer.isLogged();
+  }
+
   constructor(
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private authContainer: AuthContainer
   ) { }
 
   ngOnInit(): void {

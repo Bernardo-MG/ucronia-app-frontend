@@ -9,18 +9,28 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
-        <li *ngIf="showSecurity" class="nav-item">
+        <li *ngIf="loggedOut" class="nav-item">
+          <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
+            <icon-login></icon-login>
+          </a>
+        </li>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a routerLink="/calendar" class="nav-link" aria-label="Login" title="Login">
+            Association
+          </a>
+        </li>
+        <li *ngIf="loggedIn && showSecurity" class="nav-item">
           <a routerLink="/security" class="nav-link" aria-label="Security" title="Security">
             <icon-shield></icon-shield>
           </a>
         </li>
-        <li *ngIf="showConfig" class="nav-item">
+        <li *ngIf="loggedIn && showConfig" class="nav-item">
           <a routerLink="/settings" class="nav-link" aria-label="Settings" title="Settings">
             <icon-settings></icon-settings>
           </a>
         </li>
         <!-- Account menu -->
-        <layout-account-dropdown></layout-account-dropdown>
+        <layout-account-dropdown *ngIf="loggedIn"></layout-account-dropdown>
       </ul>
     </div>
   </div>

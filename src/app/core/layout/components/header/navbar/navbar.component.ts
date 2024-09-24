@@ -14,8 +14,14 @@ export class NavbarComponent {
 
   @Input() public title = '';
 
+  @Input() public loggedIn = false;
+
   @Input() public showConfig = false;
 
   @Input() public showSecurity = false;
+
+  public get loggedOut() {
+    return !this.loggedIn;
+  }
 
 }

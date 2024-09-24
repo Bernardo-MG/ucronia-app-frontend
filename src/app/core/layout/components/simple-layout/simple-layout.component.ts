@@ -3,13 +3,13 @@ import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { PublicNavbarComponent } from '@app/frontpage/components/layout/public-navbar/public-navbar.component';
+import { NavbarComponent } from '../header/navbar/navbar.component';
 
 @Component({
-  selector: 'app-public-layout',
+  selector: 'app-simple-layout',
   standalone: true,
-  imports: [RouterModule, PublicNavbarComponent, SideMenuComponent],
-  templateUrl: './public-layout.component.html'
+  imports: [RouterModule, NavbarComponent, SideMenuComponent],
+  templateUrl: './simple-layout.component.html'
 })
 export class PublicLayoutComponent {
 
