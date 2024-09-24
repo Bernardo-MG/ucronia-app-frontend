@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MemberFormComponent } from '@app/association-admin/members/core/components/member-form/member-form.component';
 import { MemberService } from '@app/association-admin/members/core/services/member.service';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';

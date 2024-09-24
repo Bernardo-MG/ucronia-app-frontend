@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Active } from '@app/association-admin/members/shared/models/active';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Active } from '@app/models/members/active';
+import { Member } from '@app/models/members/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
@@ -13,7 +13,7 @@ import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-be
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeePayment } from '../../../shared/models/fee-payment';
+import { FeePayment } from '@app/models/fees/fee-payment';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
 

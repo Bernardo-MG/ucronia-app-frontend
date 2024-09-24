@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
-import { BookType } from '@app/association/library/models/book-type';
+import { BookType } from '@app/models/library/book-type';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';

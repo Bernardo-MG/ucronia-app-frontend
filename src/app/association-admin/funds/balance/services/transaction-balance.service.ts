@@ -9,8 +9,8 @@ import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { TransactionCurrentBalance } from '../../shared/models/transaction-current-balance';
-import { TransactionMonthlyBalance } from '../../shared/models/transaction-monthly-balance';
+import { TransactionCurrentBalance } from '../../../../models/transactions/transaction-current-balance';
+import { TransactionMonthlyBalance } from '../../../../models/transactions/transaction-monthly-balance';
 
 @Injectable({
   providedIn: "root"

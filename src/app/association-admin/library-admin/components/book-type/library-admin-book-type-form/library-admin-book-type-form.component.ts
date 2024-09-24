@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { BookType } from '@app/association/library/models/book-type';
+import { BookType } from '@app/models/library/book-type';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';

@@ -9,7 +9,7 @@ import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { MemberBalance } from '../../shared/models/member-balance';
+import { MemberBalance } from '../../../../models/members/member-balance';
 
 @Injectable({
   providedIn: "root"

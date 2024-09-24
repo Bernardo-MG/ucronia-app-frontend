@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';

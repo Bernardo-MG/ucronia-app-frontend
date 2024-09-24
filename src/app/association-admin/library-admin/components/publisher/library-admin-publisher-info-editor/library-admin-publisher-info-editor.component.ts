@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Publisher } from '@app/association/library/models/publisher';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
 import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
-import { Transaction } from '../../../shared/models/transaction';
+import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
   selector: 'assoc-transaction-info',

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 

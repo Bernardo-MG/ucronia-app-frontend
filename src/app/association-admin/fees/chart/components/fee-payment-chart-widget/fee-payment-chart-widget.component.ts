@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FeePaymentReport } from '@app/association-admin/fees/shared/models/fee-payment-report';
+import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import { CardModule } from '@app/shared/card/card.module';
 import { FeeReportService } from '../../services/fee-report.service';
 import { FeePaymentChartComponent } from '../fee-payment-chart/fee-payment-chart.component';

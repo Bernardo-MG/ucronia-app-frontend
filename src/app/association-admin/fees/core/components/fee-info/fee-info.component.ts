@@ -4,7 +4,7 @@ import { CardModule } from '@app/shared/card/card.module';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
-import { Fee } from '../../../shared/models/fee';
+import { Fee } from '../../../../../models/fees/fee';
 
 @Component({
   selector: 'assoc-fee-info',

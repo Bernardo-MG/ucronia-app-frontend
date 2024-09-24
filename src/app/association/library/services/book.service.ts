@@ -7,10 +7,10 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { Book } from '@app/models/library/book';
+import { Language } from '@app/models/library/language';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Book } from '../models/book';
-import { Language } from '../models/language';
 
 @Injectable({
   providedIn: "root"

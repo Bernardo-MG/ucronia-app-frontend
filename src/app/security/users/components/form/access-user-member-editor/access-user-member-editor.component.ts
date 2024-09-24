@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';

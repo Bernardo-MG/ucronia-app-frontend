@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association-admin/members/shared/models/active';
+import { Active } from '@app/models/members/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { FeeCalendar } from '@app/models/fees/fee-calendar';
+import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { FeeCalendar } from '../../shared/models/fee-calendar';
-import { FeeCalendarYearsRange } from '../../shared/models/fee-calendar-years-range';
 
 @Injectable({
   providedIn: "root"

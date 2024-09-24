@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GameSystem } from '@app/association/library/models/game-system';
+import { GameSystem } from '@app/models/library/game-system';
 import { PagedSelectorComponent } from '@app/shared/form/components/paged-selector/paged-selector.component';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';

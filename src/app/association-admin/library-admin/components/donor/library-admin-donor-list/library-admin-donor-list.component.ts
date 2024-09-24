@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
-import { Person } from '@app/association/library/models/person';
+import { Person } from '@app/models/library/person';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';

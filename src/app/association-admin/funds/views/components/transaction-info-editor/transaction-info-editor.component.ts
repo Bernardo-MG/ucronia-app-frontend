@@ -10,7 +10,7 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../../core/components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../../core/components/transaction-info/transaction-info.component';
-import { Transaction } from '@app/association-admin/funds/shared/models/transaction';
+import { Transaction } from '@app/models/transactions/transaction';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 
 @Component({

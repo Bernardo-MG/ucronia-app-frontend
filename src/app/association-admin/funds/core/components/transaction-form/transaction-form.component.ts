@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { Transaction } from '../../../shared/models/transaction';
+import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
   selector: 'assoc-transaction-form',

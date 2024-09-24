@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { TransactionMonthlyBalance } from '@app/association-admin/funds/shared/models/transaction-monthly-balance';
+import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 
 @Component({

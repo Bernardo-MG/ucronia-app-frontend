@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BookType } from '@app/association/library/models/book-type';
+import { BookType } from '@app/models/library/book-type';
 import { PagedSelectorComponent } from '@app/shared/form/components/paged-selector/paged-selector.component';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';

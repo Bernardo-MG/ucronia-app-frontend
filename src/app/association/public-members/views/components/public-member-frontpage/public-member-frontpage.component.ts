@@ -4,7 +4,7 @@ import { MemberBalanceChartWidgetComponent } from '@app/association-admin/member
 import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
 import { PublicMemberListComponent } from '@app/association/public-members/core/components/public-member-list/public-member-list.component';
 import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
-import { PublicMember } from '@app/association/public-members/shared/models/public-member';
+import { PublicMember } from '@app/models/members/public-member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';

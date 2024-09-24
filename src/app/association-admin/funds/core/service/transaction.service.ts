@@ -5,7 +5,7 @@ import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Transaction } from '../../shared/models/transaction';
+import { Transaction } from '../../../../models/transactions/transaction';
 
 @Injectable({
   providedIn: "root"

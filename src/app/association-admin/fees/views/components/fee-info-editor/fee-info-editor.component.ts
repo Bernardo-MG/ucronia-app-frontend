@@ -10,7 +10,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
-import { Fee } from '../../../shared/models/fee';
+import { Fee } from '../../../../../models/fees/fee';
 
 @Component({
   selector: 'assoc-fee-info-editor',

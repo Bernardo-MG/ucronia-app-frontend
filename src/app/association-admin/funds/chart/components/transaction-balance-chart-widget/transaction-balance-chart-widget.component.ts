@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { TransactionMonthlyBalance } from '@app/association-admin/funds/shared/models/transaction-monthly-balance';
+import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import { CardModule } from '@app/shared/card/card.module';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartComponent } from '../transaction-balance-chart/transaction-balance-chart.component';

@@ -1,4 +1,4 @@
-import { Person } from "@app/association/library/models/person";
+import { Person } from "@app/models/person";
 
 export class BookLending {
   number = -1;

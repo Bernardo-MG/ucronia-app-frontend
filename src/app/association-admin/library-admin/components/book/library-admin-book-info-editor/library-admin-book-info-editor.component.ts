@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Author } from '@app/association/library/models/author';
-import { Book } from '@app/association/library/models/book';
-import { BookType } from '@app/association/library/models/book-type';
-import { GameSystem } from '@app/association/library/models/game-system';
-import { Language } from '@app/association/library/models/language';
-import { Person } from '@app/association/library/models/person';
-import { Publisher } from '@app/association/library/models/publisher';
+import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Author } from '@app/models/library/author';
+import { Book } from '@app/models/library/book';
+import { BookType } from '@app/models/library/book-type';
+import { GameSystem } from '@app/models/library/game-system';
+import { Language } from '@app/models/library/language';
+import { Person } from '@app/models/library/person';
+import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -23,7 +24,6 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
-import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',

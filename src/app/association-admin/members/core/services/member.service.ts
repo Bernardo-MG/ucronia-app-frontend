@@ -9,8 +9,8 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Active } from '../../shared/models/active';
-import { Member } from '../../shared/models/member';
+import { Active } from '../../../../models/members/active';
+import { Member } from '../../../../models/members/member';
 
 @Injectable({
   providedIn: "root"

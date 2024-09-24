@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
-import { TransactionCurrentBalance } from '../../../shared/models/transaction-current-balance';
+import { TransactionCurrentBalance } from '../../../../../models/transactions/transaction-current-balance';
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
 
 @Component({

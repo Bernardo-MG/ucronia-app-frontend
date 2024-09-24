@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Fee } from '@app/association-admin/fees/shared/models/fee';
+import { Fee } from '@app/models/fees/fee';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({

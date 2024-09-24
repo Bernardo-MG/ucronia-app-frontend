@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
-import { Transaction } from '@app/association-admin/funds/shared/models/transaction';
+import { Transaction } from '@app/models/transactions/transaction';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';

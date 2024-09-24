@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MemberFormComponent } from '@app/association-admin/members/core/components/member-form/member-form.component';
 import { MemberInfoComponent } from '@app/association-admin/members/core/components/member-info/member-info.component';
 import { MemberService } from '@app/association-admin/members/core/services/member.service';
-import { Member } from '@app/association-admin/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';

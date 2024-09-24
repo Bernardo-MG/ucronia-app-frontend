@@ -6,9 +6,9 @@ import { Client } from '@app/core/api/client/client';
 import { Month } from '@app/shared/calendar/models/month';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
-import { Transaction } from '../../shared/models/transaction';
-import { TransactionCalendarMonth } from '../../shared/models/transaction-calendar-month';
-import { TransactionCalendarMonthsRange } from '../../shared/models/transaction-calendar-months-range';
+import { Transaction } from '../../../../models/transactions/transaction';
+import { TransactionCalendarMonth } from '../../../../models/transactions/transaction-calendar-month';
+import { TransactionCalendarMonthsRange } from '../../../../models/transactions/transaction-calendar-months-range';
 
 @Injectable({
   providedIn: "root"

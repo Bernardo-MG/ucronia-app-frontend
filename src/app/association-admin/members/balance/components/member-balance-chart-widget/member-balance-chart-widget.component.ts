@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MemberBalance } from '@app/association-admin/members/shared/models/member-balance';
+import { MemberBalance } from '@app/models/members/member-balance';
 import { CardModule } from '@app/shared/card/card.module';
 import { MemberBalanceService } from '../../services/member-balance.service';
 import { MemberBalanceChartComponent } from '../member-balance-chart/member-balance-chart.component';

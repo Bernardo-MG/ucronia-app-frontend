@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
-import { Active } from '@app/association-admin/members/shared/models/active';
+import { Active } from '@app/models/members/active';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { FeeCalendar } from '@app/models/fees/fee-calendar';
+import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { CardModule } from '@app/shared/card/card.module';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
-import { FeeCalendar } from '../../../shared/models/fee-calendar';
-import { FeeCalendarYearsRange } from '../../../shared/models/fee-calendar-years-range';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 
