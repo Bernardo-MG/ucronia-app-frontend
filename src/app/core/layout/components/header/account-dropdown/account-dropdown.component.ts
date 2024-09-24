@@ -10,7 +10,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
   imports: [RouterModule, IconsModule, JustifyCenterDirective],
   templateUrl: './account-dropdown.component.html'
 })
-export class AccountMenuComponent implements OnInit {
+export class AccountDropdownComponent implements OnInit {
 
   public username = '';
 

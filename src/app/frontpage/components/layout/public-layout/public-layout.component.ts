@@ -15,6 +15,10 @@ export class PublicLayoutComponent {
 
   public title = '';
 
+  public showConfig = false;
+
+  public showSecurity = false;
+
   public get loggedIn() {
     return this.authContainer.isLogged();
   }
@@ -27,6 +31,10 @@ export class PublicLayoutComponent {
   ngOnInit(): void {
     // App title
     this.title = this.layoutService.getTitle();
+
+    // Show links
+    this.showConfig = this.layoutService.showSettingsLink();
+    this.showSecurity = this.layoutService.showSecurityLink();
   }
 
 }
