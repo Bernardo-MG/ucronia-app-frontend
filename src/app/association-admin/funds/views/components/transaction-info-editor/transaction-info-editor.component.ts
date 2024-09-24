@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '@app/association/funds/core/service/transaction.service';
-import { Transaction } from '@app/association/funds/shared/models/transaction';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -12,6 +10,8 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../../core/components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../../core/components/transaction-info/transaction-info.component';
+import { Transaction } from '@app/association-admin/funds/shared/models/transaction';
+import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 
 @Component({
   selector: 'assoc-transaction-info-editor',
