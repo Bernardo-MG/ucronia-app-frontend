@@ -5,6 +5,7 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
 import { MENU_OPTIONS } from './menu-options';
+import { ADMIN_MENU_OPTIONS } from './admin-menu-options';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,13 @@ export class AssociationLayoutService {
 
   private menus: Menu[] = [];
 
+  private adminMenus: Menu[] = [];
+
   constructor(
     private authContainer: AuthContainer
   ) {
     this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
+    this.adminMenus = new MenuLoader().load(ADMIN_MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
   }
 
   /**
@@ -26,6 +30,15 @@ export class AssociationLayoutService {
    */
   public getMenus(): Menu[] {
     return this.menus;
+  }
+
+  /**
+   * Get the admin menus options.
+   * 
+   * @returns An array of menu objects.
+   */
+  public getAdminMenus(): Menu[] {
+    return this.adminMenus;
   }
 
   /**

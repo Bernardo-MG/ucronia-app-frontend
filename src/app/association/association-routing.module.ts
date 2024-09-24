@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { AssociationAdminLayoutComponent } from './layout/components/association-admin-layout/association-admin-layout.component';
 import { AssociationLayoutComponent } from './layout/components/association-layout/association-layout.component';
 
 const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
@@ -30,11 +31,6 @@ const routes: Routes = [
         loadChildren: fundsModule
       },
       {
-        path: 'members/admin',
-        canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
-      },
-      {
         path: 'members',
         canActivate: [ResourceGuard("public_member", "view")],
         loadChildren: publicMembersModule
@@ -55,11 +51,6 @@ const routes: Routes = [
         loadChildren: libraryModule
       },
       {
-        path: 'library/admin',
-        canActivate: [ResourceGuard("library_admin", "view")],
-        loadChildren: libraryAdminModule
-      },
-      {
         path: 'library/lend',
         canActivate: [ResourceGuard("library_lending", "view")],
         loadChildren: libraryLendModule
@@ -69,6 +60,27 @@ const routes: Routes = [
         canActivate: [ResourceGuard("association_settings", "view")],
         loadChildren: settingsModule
       }
+    ]
+  },
+  {
+    path: 'admin',
+    component: AssociationAdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        canActivate: [ResourceGuard("member", "view")],
+        loadChildren: membersModule
+      },
+      {
+        path: 'members',
+        canActivate: [ResourceGuard("member", "view")],
+        loadChildren: membersModule
+      },
+      {
+        path: 'library',
+        canActivate: [ResourceGuard("library_admin", "view")],
+        loadChildren: libraryAdminModule
+      },
     ]
   }
 ];

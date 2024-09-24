@@ -16,7 +16,12 @@
         </li>
         <li *ngIf="loggedIn" class="nav-item">
           <a routerLink="/calendar" class="nav-link" aria-label="Login" title="Login">
-            Association
+            Associación
+          </a>
+        </li>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a routerLink="/admin" class="nav-link" aria-label="Login" title="Login">
+            Administración
           </a>
         </li>
         <li *ngIf="loggedIn && showSecurity" class="nav-item">

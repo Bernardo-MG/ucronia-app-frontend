@@ -13,7 +13,6 @@ export const MENU_OPTIONS: MenuOptions = {
     links: [
       new AuthMenuLink('Calendario', '/calendar', 'activity_calendar', IconCalendarComponent),
       new AuthMenuLink('Socios', '/members', 'public_member', IconPersonComponent),
-      new AuthMenuLink('Admin. socios', '/members/admin', 'member', IconPersonComponent),
       new AuthMenuLink('Cuotas', '/fees', 'fee', IconReceiptComponent),
       new AuthMenuLink('Mis cuotas', '/myFees', 'my_fees', IconReceiptComponent),
       new AuthMenuLink('Fondos', '/funds', 'funds', IconCoinsComponent),
