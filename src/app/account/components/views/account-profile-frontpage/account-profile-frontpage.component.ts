@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';

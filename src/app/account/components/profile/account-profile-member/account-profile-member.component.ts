@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/association-admin/members/shared/models/member';
 
 @Component({
   selector: 'account-profile-member',

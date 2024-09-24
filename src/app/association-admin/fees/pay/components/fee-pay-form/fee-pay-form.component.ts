@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FeeCalendarYearsRange } from '@app/association-admin/fees/shared/models/fee-calendar-years-range';
-import { Active } from '@app/association/members/shared/models/active';
+import { Active } from '@app/association-admin/members/shared/models/active';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';

@@ -5,7 +5,7 @@ import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 
 const fundsModule = () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule);
-const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
+const membersModule = () => import('@app/association-admin/members/members.module').then(m => m.MembersModule);
 const libraryAdminModule = () => import('@app/association/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
 
 const routes: Routes = [

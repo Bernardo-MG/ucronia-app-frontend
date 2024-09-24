@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Active } from '@app/association/members/shared/models/active';
-import { Member } from '@app/association/members/shared/models/member';
+import { Active } from '@app/association-admin/members/shared/models/active';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';

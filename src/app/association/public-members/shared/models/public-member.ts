@@ -1,4 +1,4 @@
-import { MemberName } from "@app/association/members/shared/models/member-name";
+import { MemberName } from "@app/association-admin/members/shared/models/member-name";
 
 export class PublicMember {
   number = -1;

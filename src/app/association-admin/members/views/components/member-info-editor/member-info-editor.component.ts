@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MemberFormComponent } from '@app/association/members/core/components/member-form/member-form.component';
-import { MemberInfoComponent } from '@app/association/members/core/components/member-info/member-info.component';
-import { MemberService } from '@app/association/members/core/services/member.service';
-import { Member } from '@app/association/members/shared/models/member';
+import { MemberFormComponent } from '@app/association-admin/members/core/components/member-form/member-form.component';
+import { MemberInfoComponent } from '@app/association-admin/members/core/components/member-info/member-info.component';
+import { MemberService } from '@app/association-admin/members/core/services/member.service';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';

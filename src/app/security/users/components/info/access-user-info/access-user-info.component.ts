@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/association-admin/members/shared/models/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';

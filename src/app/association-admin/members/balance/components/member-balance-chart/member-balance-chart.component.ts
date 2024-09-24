@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
-import { MemberBalance } from '@app/association/members/shared/models/member-balance';
+import { MemberBalance } from '@app/association-admin/members/shared/models/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({

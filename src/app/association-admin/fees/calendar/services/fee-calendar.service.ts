@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association/members/shared/models/active';
+import { Active } from '@app/association-admin/members/shared/models/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
