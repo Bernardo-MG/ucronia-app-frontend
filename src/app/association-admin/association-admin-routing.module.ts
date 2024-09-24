@@ -14,11 +14,6 @@ const routes: Routes = [
     component: AssociationAdminLayoutComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'members',
-        pathMatch: 'prefix'
-      },
-      {
         path: 'members',
         canActivate: [ResourceGuard("member", "view")],
         loadChildren: membersModule
