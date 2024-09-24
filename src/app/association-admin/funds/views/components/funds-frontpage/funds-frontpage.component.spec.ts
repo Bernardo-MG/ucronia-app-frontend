@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TransactionBalanceService } from '@app/association/funds/balance/services/transaction-balance.service';
-import { TransactionCalendarService } from '@app/association/funds/calendar/services/transaction-calendar.service';
+import { TransactionBalanceService } from '@app/association-admin/funds/balance/services/transaction-balance.service';
+import { TransactionCalendarService } from '@app/association-admin/funds/calendar/services/transaction-calendar.service';
 import { FundsFrontpageComponent } from './funds-frontpage.component';
 
 describe('FundsFrontpageComponent', () => {
