@@ -15,8 +15,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
+        redirectTo: 'members',
+        pathMatch: 'prefix'
       },
       {
         path: 'members',
