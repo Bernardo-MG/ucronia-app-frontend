@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { Router } from '@angular/router';
+import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { Author } from '@app/association/library/models/author';
 import { Book } from '@app/association/library/models/book';
 import { BookType } from '@app/association/library/models/book-type';
@@ -11,10 +11,8 @@ import { Person } from '@app/association/library/models/person';
 import { Publisher } from '@app/association/library/models/publisher';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
@@ -26,14 +24,12 @@ import { PublisherAdminService } from '../../../services/publisher-admin.service
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-info-editor',
+  selector: 'assoc-library-admin-book-create',
   standalone: true,
-  imports: [CommonModule, FormModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-info-editor.component.html'
+  imports: [CommonModule, CardModule, LibraryAdminBookFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-create.component.html'
 })
-export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
-
-  private index = -1;
+export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {
 
   public readingBookTypes = false;
 
@@ -58,36 +54,18 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public languages: Language[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
     private gameSystemService: GameSystemAdminService,
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    private authContainer: AuthContainer
+    rt: Router
   ) {
-    super(new Book());
+    super(rt);
   }
 
   public ngOnInit(): void {
-    // Activate edition
-    this.editing = true;
-
-    // Check permissions
-    this.editable = this.authContainer.hasPermission("library_book", "update");
-    this.deletable = this.authContainer.hasPermission("library_book", "delete");
-
-    // Get id
-    this.route.paramMap.subscribe(params => {
-      const indexParam = params.get('index');
-      if (indexParam) {
-        this.index = Number(indexParam);
-      }
-      this.load();
-    });
-
     // Load initial data
     this.onGoToBookTypePage(0);
     this.onGoToGameSystemPage(0);
@@ -95,22 +73,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
 
-    // Load languages
     this.languages = this.service.getLanguages();
-  }
-
-  protected override delete(): void {
-    this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['/library/admin']);
-    });
-  }
-
-  protected override read(): Observable<Book> {
-    return this.service.getOne(this.index);
-  }
-
-  protected override save(toSave: Book): Observable<Book> {
-    return this.service.update(this.data.number, toSave);
   }
 
   public onGoToBookTypePage(page: number) {
@@ -196,6 +159,14 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
         this.readingDonors = false;
       }
     });
+  }
+
+  protected override save(toSave: Book): Observable<Book> {
+    return this.service.create(toSave);
+  }
+
+  protected override getReturnRoute(saved: Book): string {
+    return '/library/admin';
   }
 
 }

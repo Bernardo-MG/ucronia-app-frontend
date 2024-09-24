@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
-import { Person } from '@app/association/library/models/person';
+import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
+import { BookType } from '@app/association/library/models/book-type';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
@@ -10,14 +10,14 @@ import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pa
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'assoc-library-admin-donor-list',
+  selector: 'assoc-library-admin-book-type-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent ],
-  templateUrl: './library-admin-donor-list.component.html'
+  imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
+  templateUrl: './library-admin-book-type-list.component.html'
 })
-export class LibraryAdminDonorListComponent {
-  
-  public page = new PaginatedResponse<Person[]>([]);
+export class LibraryAdminBookTypeListComponent implements OnInit {
+
+  public page = new PaginatedResponse<BookType[]>([]);
 
   /**
    * Loading flag.
@@ -27,7 +27,7 @@ export class LibraryAdminDonorListComponent {
   private sort = new Sort([]);
 
   constructor(
-    private service: DonorAdminService
+    private service: BookTypeAdminService
   ) { }
 
   public ngOnInit(): void {

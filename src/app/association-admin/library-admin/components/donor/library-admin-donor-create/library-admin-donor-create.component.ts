@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { Person } from '@app/association/library/models/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { LibraryAdminBookSelectionComponent } from '@app/association-admin/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Member } from '@app/association-admin/members/shared/models/member';
-import { LibraryAdminBookSelectionComponent } from '@app/association/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/association/library/models/book';
 import { BookLent } from '@app/association/library/models/book-lent';
 import { FormComponent } from '@app/shared/form/components/form/form.component';

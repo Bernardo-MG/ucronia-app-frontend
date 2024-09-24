@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookTypeAdminService } from '@app/association/library-admin/services/book-type-admin.service';
+import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
 import { BookType } from '@app/association/library/models/book-type';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';

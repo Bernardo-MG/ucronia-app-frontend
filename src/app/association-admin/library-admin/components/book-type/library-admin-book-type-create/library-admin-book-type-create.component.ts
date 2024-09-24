@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookTypeAdminService } from '@app/association/library-admin/services/book-type-admin.service';
+import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
 import { BookType } from '@app/association/library/models/book-type';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DonorAdminService } from '@app/association/library-admin/services/donor-admin.service';
+import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { Person } from '@app/association/library/models/person';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
