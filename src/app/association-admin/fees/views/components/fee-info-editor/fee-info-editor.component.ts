@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeEditFormComponent } from '@app/association/fees/core/components/fee-edit-form/fee-edit-form.component';
-import { FeeInfoComponent } from '@app/association/fees/core/components/fee-info/fee-info.component';
+import { FeeEditFormComponent } from '@app/association-admin/fees/core/components/fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '@app/association-admin/fees/core/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';

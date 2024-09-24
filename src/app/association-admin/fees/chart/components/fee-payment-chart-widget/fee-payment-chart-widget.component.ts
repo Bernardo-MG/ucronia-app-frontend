@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FeeReportService } from '@app/association/fees/chart/services/fee-report.service';
-import { FeePaymentReport } from '@app/association/fees/shared/models/fee-payment-report';
+import { FeePaymentReport } from '@app/association-admin/fees/shared/models/fee-payment-report';
 import { CardModule } from '@app/shared/card/card.module';
+import { FeeReportService } from '../../services/fee-report.service';
 import { FeePaymentChartComponent } from '../fee-payment-chart/fee-payment-chart.component';
 
 @Component({

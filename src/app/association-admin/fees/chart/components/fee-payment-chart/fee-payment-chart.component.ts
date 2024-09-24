@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { FeePaymentReport } from '@app/association/fees/shared/models/fee-payment-report';
+import { FeePaymentReport } from '@app/association-admin/fees/shared/models/fee-payment-report';
 import Chart from 'chart.js/auto';
 
 @Component({
