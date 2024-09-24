@@ -35,6 +35,16 @@ const routes: Routes = [
         canActivate: [ResourceGuard("library_admin", "view")],
         loadChildren: libraryAdminModule
       },
+      {
+        path: 'fees',
+        canActivate: [ResourceGuard("fee", "view")],
+        loadChildren: feesModule
+      },
+      {
+        path: 'funds',
+        canActivate: [ResourceGuard("funds", "view")],
+        loadChildren: fundsModule
+      }
     ]
   },
   {
@@ -47,19 +57,9 @@ const routes: Routes = [
         loadChildren: activityCalendarModule
       },
       {
-        path: 'funds',
-        canActivate: [ResourceGuard("funds", "view")],
-        loadChildren: fundsModule
-      },
-      {
         path: 'members',
         canActivate: [ResourceGuard("public_member", "view")],
         loadChildren: publicMembersModule
-      },
-      {
-        path: 'fees',
-        canActivate: [ResourceGuard("fee", "view")],
-        loadChildren: feesModule
       },
       {
         path: 'myFees',
