@@ -6,6 +6,7 @@ import { PublicLayoutComponent } from './core/layout/components/simple-layout/si
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
+const associationAdminModule = () => import('@app/association-admin/association-admin.module').then(m => m.AssociationAdminModule);
 const securityModule = () => import('@app/security/security.module').then(m => m.SecurityModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
@@ -51,6 +52,12 @@ const routes: Routes = [
         // Account
         path: 'account',
         loadChildren: accountModule,
+        canActivate: [LoggedInGuard]
+      },
+      {
+        // Association admin
+        path: 'association/admin',
+        loadChildren: associationAdminModule,
         canActivate: [LoggedInGuard]
       },
       {
