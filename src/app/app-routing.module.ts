@@ -19,11 +19,9 @@ const routes: Routes = [
     children: [
       // Public routes
       {
-        // Logged out frontpage
+        // Logged out
         path: '',
         component: PublicLayoutComponent,
-        canMatch: [LoggedOutGuard],
-        canActivate: [LoggedOutGuard],
         loadChildren: frontpageModule
       },
       {

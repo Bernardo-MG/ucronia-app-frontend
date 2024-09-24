@@ -9,9 +9,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav ms-auto">
-        <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
-          <icon-login></icon-login>
-        </a>
+        <li *ngIf="loggedIn" class="nav-item">
+          <a routerLink="/calendar" class="nav-link" aria-label="Login" title="Login">
+            Association
+          </a>
+        </li>
+        <li *ngIf="loggedOut" class="nav-item">
+          <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
+            <icon-login></icon-login>
+          </a>
+        </li>
       </ul>
     </div>
   </div>

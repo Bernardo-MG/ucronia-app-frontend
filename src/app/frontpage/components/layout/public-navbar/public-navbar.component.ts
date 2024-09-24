@@ -13,4 +13,10 @@ export class PublicNavbarComponent {
 
   @Input() public title = '';
 
+  @Input() public loggedIn = false;
+
+  public get loggedOut() {
+    return !this.loggedIn;
+  }
+
 }

@@ -20,10 +20,6 @@ const routes: Routes = [
     component: AssociationLayoutComponent,
     children: [
       {
-        path: '',
-        loadChildren: activityCalendarModule
-      },
-      {
         path: 'calendar',
         canActivate: [ResourceGuard("activity_calendar", "view")],
         loadChildren: activityCalendarModule
