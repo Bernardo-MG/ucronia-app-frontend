@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssociationAdminLayoutComponent } from '@app/association/layout/components/association-admin-layout/association-admin-layout.component';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { AssociationAdminLayoutComponent } from './layout/components/association-admin-layout/association-admin-layout.component';
 
 const fundsModule = () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule);

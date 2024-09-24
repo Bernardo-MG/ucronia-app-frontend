@@ -4,7 +4,7 @@ import { NavbarComponent } from '@app/core/layout/components/header/navbar/navba
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { Menu } from '@app/shared/menu/models/menu';
-import { AssociationLayoutService } from '../../services/association-layout.service';
+import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 
 @Component({
   selector: 'assoc-association-admin-layout',
@@ -17,12 +17,12 @@ export class AssociationAdminLayoutComponent implements OnInit {
   public menus: Menu[] = [];
 
   constructor(
-    private associationLayoutService: AssociationLayoutService
+    private associationAdminLayoutService: AssociationAdminLayoutService
   ) { }
 
   ngOnInit(): void {
     // Load menus
-    this.menus = this.associationLayoutService.getAdminMenus();
+    this.menus = this.associationAdminLayoutService.getMenus();
   }
 
 }
