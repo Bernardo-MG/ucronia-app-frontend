@@ -8,7 +8,7 @@ import { MenuOptions } from '@app/shared/menu/models/menu-options';
 // Define menu options with titles for each section
 export const ADMIN_MENU_OPTIONS: MenuOptions = {
   association: {
-    title: 'Asociación',
+    title: 'Administración',
     links: [
       new AuthMenuLink('Admin. socios', '/association/admin/members', 'member', IconPersonComponent),
       new AuthMenuLink('Cuotas', '/association/admin/fees', 'fee', IconReceiptComponent),
