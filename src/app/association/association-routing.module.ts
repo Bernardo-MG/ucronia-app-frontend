@@ -17,6 +17,27 @@ const settingsModule = () => import('@app/settings/settings.module').then(m => m
 
 const routes: Routes = [
   {
+    path: 'admin',
+    component: AssociationAdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        canActivate: [ResourceGuard("member", "view")],
+        loadChildren: membersModule
+      },
+      {
+        path: 'members',
+        canActivate: [ResourceGuard("member", "view")],
+        loadChildren: membersModule
+      },
+      {
+        path: 'library',
+        canActivate: [ResourceGuard("library_admin", "view")],
+        loadChildren: libraryAdminModule
+      },
+    ]
+  },
+  {
     path: '',
     component: AssociationLayoutComponent,
     children: [
@@ -60,27 +81,6 @@ const routes: Routes = [
         canActivate: [ResourceGuard("association_settings", "view")],
         loadChildren: settingsModule
       }
-    ]
-  },
-  {
-    path: 'admin',
-    component: AssociationAdminLayoutComponent,
-    children: [
-      {
-        path: '',
-        canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
-      },
-      {
-        path: 'members',
-        canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
-      },
-      {
-        path: 'library',
-        canActivate: [ResourceGuard("library_admin", "view")],
-        loadChildren: libraryAdminModule
-      },
     ]
   }
 ];

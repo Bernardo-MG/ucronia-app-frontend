@@ -11,12 +11,12 @@ export const MENU_OPTIONS: MenuOptions = {
   association: {
     title: 'Asociación',
     links: [
-      new AuthMenuLink('Calendario', '/calendar', 'activity_calendar', IconCalendarComponent),
-      new AuthMenuLink('Socios', '/members', 'public_member', IconPersonComponent),
-      new AuthMenuLink('Cuotas', '/fees', 'fee', IconReceiptComponent),
-      new AuthMenuLink('Mis cuotas', '/myFees', 'my_fees', IconReceiptComponent),
-      new AuthMenuLink('Fondos', '/funds', 'funds', IconCoinsComponent),
-      new AuthMenuLink('Biblioteca', '/library', 'library', IconBookComponent)
+      new AuthMenuLink('Calendario', '/association/calendar', 'activity_calendar', IconCalendarComponent),
+      new AuthMenuLink('Socios', '/association/members', 'public_member', IconPersonComponent),
+      new AuthMenuLink('Cuotas', '/association/fees', 'fee', IconReceiptComponent),
+      new AuthMenuLink('Mis cuotas', '/association/myFees', 'my_fees', IconReceiptComponent),
+      new AuthMenuLink('Fondos', '/association/funds', 'funds', IconCoinsComponent),
+      new AuthMenuLink('Biblioteca', '/association/library', 'library', IconBookComponent)
     ]
   }
 };

@@ -55,7 +55,7 @@ const routes: Routes = [
       },
       {
         // Association
-        path: '',
+        path: 'association',
         loadChildren: associationModule,
         canActivate: [LoggedInGuard]
       },
