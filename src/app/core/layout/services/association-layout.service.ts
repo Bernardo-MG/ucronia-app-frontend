@@ -4,7 +4,7 @@ import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
-import { MENU_OPTIONS } from './menu-options';
+import { ASSOCIATION_MENU_OPTIONS } from './association-menu-options';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class AssociationLayoutService {
   constructor(
     private authContainer: AuthContainer
   ) {
-    this.menus = new MenuLoader().load(MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
+    this.menus = new MenuLoader().load(ASSOCIATION_MENU_OPTIONS, (links) => this.filterNodes(links as AuthMenuLink[]));
   }
 
   /**

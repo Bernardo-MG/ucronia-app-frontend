@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { AssociationLayoutComponent } from './layout/components/association-layout/association-layout.component';
+import { AssociationLayoutComponent } from '../core/layout/components/association-layout/association-layout.component';
 
 const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
 const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);

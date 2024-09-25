@@ -16,6 +16,10 @@ export class SidebarLayoutComponent implements OnInit {
 
   @Input() public menus: Menu[] = [];
 
+  @Input() public showAssociation = false;
+
+  @Input() public showAdmin = false;
+
   public title = '';
 
   public showSettings = false;

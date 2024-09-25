@@ -20,6 +20,10 @@ export class NavbarComponent {
 
   @Input() public showSecurity = false;
 
+  @Input() public showAssociation = false;
+
+  @Input() public showAdmin = false;
+
   public get loggedOut() {
     return !this.loggedIn;
   }

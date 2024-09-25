@@ -6,7 +6,7 @@ import { IconReceiptComponent } from '@app/shared/icons/components/icon-receipt/
 import { MenuOptions } from '@app/shared/menu/models/menu-options';
 
 // Define menu options with titles for each section
-export const MENU_OPTIONS: MenuOptions = {
+export const ASSOCIATION_ADMIN_MENU_OPTIONS: MenuOptions = {
   association: {
     title: 'Administración',
     links: [

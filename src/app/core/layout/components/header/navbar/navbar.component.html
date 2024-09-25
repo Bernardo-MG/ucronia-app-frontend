@@ -16,12 +16,12 @@
         </li>
       </ul>
       <ul *ngIf="loggedIn" class="nav navbar-nav ms-auto">
-        <li class="nav-item">
+        <li *ngIf="showAssociation" class="nav-item">
           <a routerLink="/association" class="nav-link" aria-label="Associación" title="Associación">
             Associación
           </a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="showAdmin" class="nav-item">
           <a routerLink="/association/admin" class="nav-link" aria-label="Administración" title="Administración">
             Administración
           </a>
