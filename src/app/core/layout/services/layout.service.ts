@@ -3,8 +3,8 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { MenuLink } from '@app/shared/menu/models/menu-link';
 import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
 import { AuthMenuLink } from '../model/auth-menu-link';
-import { ASSOCIATION_ADMIN_MENU_OPTIONS } from './association-admin-menu-options';
-import { ASSOCIATION_MENU_OPTIONS } from './association-menu-options';
+import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
+import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 import { ViewNodeFilter } from './view-node-filter';
 
 /**
