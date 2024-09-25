@@ -16,15 +16,15 @@ export class SidebarLayoutComponent implements OnInit {
 
   @Input() public menus: Menu[] = [];
 
-  @Input() public showAssociation = false;
-
-  @Input() public showAdmin = false;
-
   public title = '';
 
   public showSettings = false;
 
   public showSecurity = false;
+
+  public showAssociation = false;
+
+  public showAdmin = false;
 
   public get loggedIn() {
     return this.authContainer.isLogged();
@@ -42,6 +42,8 @@ export class SidebarLayoutComponent implements OnInit {
     // Show links
     this.showSettings = this.layoutService.showSettingsLink();
     this.showSecurity = this.layoutService.showSecurityLink();
+    this.showAssociation = this.layoutService.showAssociationLink();
+    this.showAdmin = this.layoutService.showAssociationAdminLink();
   }
 
 }
