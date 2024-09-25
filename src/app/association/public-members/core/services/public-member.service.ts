@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Active } from '@app/models/members/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -9,8 +10,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { PublicMember } from '../../shared/models/public-member';
-import { Active } from '@app/association/members/shared/models/active';
+import { PublicMember } from '../../../../models/members/public-member';
 
 @Injectable({
   providedIn: 'root'

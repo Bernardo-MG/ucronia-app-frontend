@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Fee } from '@app/association/fees/shared/models/fee';
 import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';

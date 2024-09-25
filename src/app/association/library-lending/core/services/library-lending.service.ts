@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Book } from '@app/association/library/models/book';
-import { BookLent } from '@app/association/library/models/book-lent';
-import { BookReturned } from '@app/association/library/models/book-returned';
-import { Active } from '@app/association/members/shared/models/active';
-import { Member } from '@app/association/members/shared/models/member';
+import { Active } from '@app/models/members/active';
+import { Member } from '@app/models/members/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -12,6 +9,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { BookLent } from '@app/models/library/book-lent';
+import { BookReturned } from '@app/models/library/book-returned';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

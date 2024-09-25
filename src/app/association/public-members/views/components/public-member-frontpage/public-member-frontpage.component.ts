@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberBalanceChartWidgetComponent } from '@app/association/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
-import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
+import { MemberBalanceChartWidgetComponent } from '@app/association-admin/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
+import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
 import { PublicMemberListComponent } from '@app/association/public-members/core/components/public-member-list/public-member-list.component';
 import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
-import { PublicMember } from '@app/association/public-members/shared/models/public-member';
+import { PublicMember } from '@app/models/members/public-member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';

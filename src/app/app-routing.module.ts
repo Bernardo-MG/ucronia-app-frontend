@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
-import { PublicLayoutComponent } from './frontpage/components/layout/public-layout/public-layout.component';
+import { PublicLayoutComponent } from './core/layout/components/simple-layout/simple-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
+const associationAdminModule = () => import('@app/association-admin/association-admin.module').then(m => m.AssociationAdminModule);
 const securityModule = () => import('@app/security/security.module').then(m => m.SecurityModule);
 const accountModule = () => import('@app/account/account.module').then(m => m.AccountModule);
 const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
@@ -19,11 +20,9 @@ const routes: Routes = [
     children: [
       // Public routes
       {
-        // Logged out frontpage
+        // Logged out
         path: '',
         component: PublicLayoutComponent,
-        canMatch: [LoggedOutGuard],
-        canActivate: [LoggedOutGuard],
         loadChildren: frontpageModule
       },
       {
@@ -56,8 +55,14 @@ const routes: Routes = [
         canActivate: [LoggedInGuard]
       },
       {
+        // Association admin
+        path: 'association/admin',
+        loadChildren: associationAdminModule,
+        canActivate: [LoggedInGuard]
+      },
+      {
         // Association
-        path: '',
+        path: 'association',
         loadChildren: associationModule,
         canActivate: [LoggedInGuard]
       },

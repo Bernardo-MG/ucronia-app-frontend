@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PublicMember } from '@app/association/public-members/shared/models/public-member';
+import { PublicMember } from '@app/models/members/public-member';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';

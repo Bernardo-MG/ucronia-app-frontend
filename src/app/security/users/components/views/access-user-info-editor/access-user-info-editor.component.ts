@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Member } from '@app/association/members/shared/models/member';
+import { Member } from '@app/models/members/member';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
