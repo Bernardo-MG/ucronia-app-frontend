@@ -15,7 +15,7 @@ export class PublicLayoutComponent {
 
   public title = '';
 
-  public showConfig = false;
+  public showSettings = false;
 
   public showSecurity = false;
 
@@ -33,7 +33,7 @@ export class PublicLayoutComponent {
     this.title = this.layoutService.getTitle();
 
     // Show links
-    this.showConfig = this.layoutService.showSettingsLink();
+    this.showSettings = this.layoutService.showSettingsLink();
     this.showSecurity = this.layoutService.showSecurityLink();
   }
 

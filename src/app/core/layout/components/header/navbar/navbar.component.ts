@@ -16,7 +16,7 @@ export class NavbarComponent {
 
   @Input() public loggedIn = false;
 
-  @Input() public showConfig = false;
+  @Input() public showSettings = false;
 
   @Input() public showSecurity = false;
 
