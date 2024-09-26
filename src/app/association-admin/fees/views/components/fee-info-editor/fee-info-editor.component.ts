@@ -61,12 +61,12 @@ export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> imple
   }
 
   public goToTransaction(index: number) {
-    this.router.navigate([`funds/transaction/${index}`]);
+    this.router.navigate([`association/adminfunds/transaction/${index}`]);
   }
 
   protected override delete(): void {
     this.service.delete(this.data.date, this.data.person.number).subscribe(r => {
-      this.router.navigate([`/fees`]);
+      this.router.navigate([`..`], { relativeTo: this.route });
     });
   }
 

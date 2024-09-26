@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { Observable, throwError } from 'rxjs';
@@ -13,7 +13,8 @@ export abstract class CreateComponent<Data> {
   public failures = new FieldFailures();
 
   constructor(
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   public onSave(data: Data): void {
@@ -31,7 +32,7 @@ export abstract class CreateComponent<Data> {
   protected handleSaveSuccess(response: Data) {
     const route = this.getReturnRoute(response);
     if (route) {
-      this.router.navigate([route]);
+      this.router.navigate([route], { relativeTo: this.route });
     }
     this.failures.clear();
 

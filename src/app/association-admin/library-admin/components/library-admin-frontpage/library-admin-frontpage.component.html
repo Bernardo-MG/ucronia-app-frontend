@@ -9,7 +9,7 @@
         <ng-container *ngSwitchCase="'books'">
           <assoc-library-admin-book-list></assoc-library-admin-book-list>
           <div appJustifyCenter>
-            <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/book/add"
+            <button type="button" class="btn btn-primary" aria-label="register" routerLink="book/add"
               [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
               <icon-add></icon-add>
             </button>
@@ -19,7 +19,7 @@
         <ng-container *ngSwitchCase="'authors'">
           <assoc-library-admin-author-list></assoc-library-admin-author-list>
           <div appJustifyCenter>
-            <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/author/add"
+            <button type="button" class="btn btn-primary" aria-label="register" routerLink="author/add"
               [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
               <icon-add></icon-add>
             </button>
@@ -30,7 +30,7 @@
           <assoc-library-admin-publisher-list></assoc-library-admin-publisher-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
-              routerLink="/library/admin/publisher/add" [disabled]="!createPublisherPermission"
+              routerLink="publisher/add" [disabled]="!createPublisherPermission"
               [attr.aria-disabled]="!createPublisherPermission">
               <icon-add></icon-add>
             </button>
@@ -40,7 +40,7 @@
         <ng-container *ngSwitchCase="'book_types'">
           <assoc-library-admin-book-type-list></assoc-library-admin-book-type-list>
           <div appJustifyCenter>
-            <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/bookType/add"
+            <button type="button" class="btn btn-primary" aria-label="register" routerLink="bookType/add"
               [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
               <icon-add></icon-add>
             </button>
@@ -51,7 +51,7 @@
           <assoc-library-admin-game-system-list></assoc-library-admin-game-system-list>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
-              routerLink="/library/admin/gameSystem/add" [disabled]="!createGameSystemPermission"
+              routerLink="gameSystem/add" [disabled]="!createGameSystemPermission"
               [attr.aria-disabled]="!createGameSystemPermission">
               <icon-add></icon-add>
             </button>
@@ -61,7 +61,7 @@
         <ng-container *ngSwitchCase="'donors'">
           <assoc-library-admin-donor-list></assoc-library-admin-donor-list>
           <div appJustifyCenter>
-            <button type="button" class="btn btn-primary" aria-label="register" routerLink="/library/admin/donor/add"
+            <button type="button" class="btn btn-primary" aria-label="register" routerLink="donor/add"
               [disabled]="!createDonorPermission" [attr.aria-disabled]="!createDonorPermission">
               <icon-add></icon-add>
             </button>

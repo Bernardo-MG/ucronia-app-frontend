@@ -4,7 +4,7 @@
     <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
       (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)"></shared-calendar-month>
     <div class="mt-2" appJustifyCenter>
-      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/funds/add"
+      <button type="button" class="btn btn-primary" aria-label="register" routerLink="add"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
         <icon-add></icon-add>
       </button>

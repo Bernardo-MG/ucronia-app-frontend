@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
-import { Active } from '@app/models/members/active';
-import { Member } from '@app/models/members/member';
 import { BookLendingFormComponent } from '@app/association/library-lending/core/components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { LibraryLendingService } from '@app/association/library-lending/core/services/library-lending.service';
@@ -11,6 +9,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
+import { Active } from '@app/models/members/active';
+import { Member } from '@app/models/members/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
@@ -45,9 +45,10 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
   constructor(
     private service: LibraryLendingService,
     private authContainer: AuthContainer,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   public ngOnInit(): void {

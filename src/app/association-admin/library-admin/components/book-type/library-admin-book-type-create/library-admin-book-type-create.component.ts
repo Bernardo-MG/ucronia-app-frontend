@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
 import { BookType } from '@app/models/library/book-type';
 import { CardModule } from '@app/shared/card/card.module';
@@ -19,9 +19,10 @@ export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookTyp
 
   constructor(
     private service: BookTypeAdminService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: BookType): Observable<BookType> {
@@ -29,7 +30,7 @@ export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookTyp
   }
 
   protected override getReturnRoute(saved: BookType): string {
-    return '/library/admin';
+    return '../..';
   }
 
 }

@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { Sort } from '@app/core/api/models/sort';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -9,8 +11,6 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Person } from '@app/models/library/person';
 import { Publisher } from '@app/models/library/publisher';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -60,9 +60,10 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   public ngOnInit(): void {
@@ -166,7 +167,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
   }
 
   protected override getReturnRoute(saved: Book): string {
-    return '/library/admin';
+    return '../..';
   }
 
 }

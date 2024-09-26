@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
+import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
-import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-transaction-calendar-widget',
@@ -33,6 +33,7 @@ export class TransactionCalendarWidgetComponent implements OnInit {
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   constructor(
+    private route: ActivatedRoute,
     private authContainer: AuthContainer,
     private calendarService: TransactionCalendarService,
     private router: Router
@@ -112,7 +113,7 @@ export class TransactionCalendarWidgetComponent implements OnInit {
   }
 
   public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
-    this.router.navigate([`/funds/transaction/${event.meta?.transactionId}`]);
+    this.router.navigate([`transaction/${event.meta?.transactionId}`], { relativeTo: this.route });
   }
 
 }

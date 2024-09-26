@@ -66,7 +66,7 @@ export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member>
 
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate([`/members`]);
+      this.router.navigate([`..`], { relativeTo: this.route });
     });
   }
 

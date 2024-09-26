@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { Person } from '@app/models/library/person';
 import { CardModule } from '@app/shared/card/card.module';
@@ -19,9 +19,10 @@ export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {
 
   constructor(
     private service: DonorAdminService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: Person): Observable<Person> {
@@ -29,6 +30,6 @@ export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {
   }
 
   protected override getReturnRoute(saved: Person): string {
-    return '/library/admin';
+    return '../..';
   }
 }

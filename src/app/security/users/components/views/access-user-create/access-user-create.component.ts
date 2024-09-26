@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@app/core/authentication/models/user';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -19,9 +19,10 @@ export class AccessUserCreateComponent extends CreateComponent<User> {
 
   constructor(
     private service: AccessUserService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: User): Observable<User> {

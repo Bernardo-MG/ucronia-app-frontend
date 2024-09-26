@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -19,9 +19,10 @@ export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publis
 
   constructor(
     private service: PublisherAdminService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: Publisher): Observable<Publisher> {
@@ -29,7 +30,7 @@ export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publis
   }
 
   protected override getReturnRoute(saved: Publisher): string {
-    return '/library/admin';
+    return '../..';
   }
 
 }

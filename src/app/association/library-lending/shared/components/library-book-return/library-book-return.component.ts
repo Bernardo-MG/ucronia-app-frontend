@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
 import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { BookReturnFormComponent } from '@app/association/library-lending/core/components/book-return-form/book-return-form.component';
@@ -33,9 +33,10 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
   constructor(
     private service: LibraryLendingService,
     private authContainer: AuthContainer,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   public ngOnInit(): void {

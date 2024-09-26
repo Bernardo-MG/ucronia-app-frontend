@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Active } from '@app/models/members/active';
-import { Member } from '@app/models/members/member';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { FeePayment } from '@app/models/fees/fee-payment';
+import { Active } from '@app/models/members/active';
+import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -13,7 +14,6 @@ import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-be
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeePayment } from '@app/models/fees/fee-payment';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
 
@@ -42,9 +42,10 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   constructor(
     private service: FeeService,
     private authContainer: AuthContainer,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   public ngOnInit(): void {
@@ -63,7 +64,7 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   }
 
   protected override getReturnRoute(saved: FeePayment): string {
-    return '/fees';
+    return '..';
   }
 
   public onGoToMembersPage(page: number) {

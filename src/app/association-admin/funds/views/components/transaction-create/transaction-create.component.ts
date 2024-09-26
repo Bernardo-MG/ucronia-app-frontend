@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { Transaction } from '@app/models/transactions/transaction';
 import { CardModule } from '@app/shared/card/card.module';
@@ -19,9 +19,10 @@ export class TransactionCreateComponent extends CreateComponent<Transaction> {
 
   constructor(
     private service: TransactionService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: Transaction): Observable<Transaction> {

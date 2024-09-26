@@ -65,7 +65,7 @@ export class PublicMemberFrontpageComponent implements OnInit {
   }
 
   public routeLinkAdapter(data: PublicMember): string {
-    return `/members/${data.number}`;
+    return `${data.number}`;
   }
 
 }

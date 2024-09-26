@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
@@ -19,9 +19,10 @@ export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameS
 
   constructor(
     private service: GameSystemAdminService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: GameSystem): Observable<GameSystem> {
@@ -29,7 +30,7 @@ export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameS
   }
 
   protected override getReturnRoute(saved: GameSystem): string {
-    return '/library/admin';
+    return '../..';
   }
 
 }

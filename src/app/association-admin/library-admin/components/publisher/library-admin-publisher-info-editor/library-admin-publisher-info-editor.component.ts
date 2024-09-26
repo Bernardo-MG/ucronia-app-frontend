@@ -51,7 +51,7 @@ export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusCo
 
   protected override delete(): void {
     this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate(['/library/admin']);
+      this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
 

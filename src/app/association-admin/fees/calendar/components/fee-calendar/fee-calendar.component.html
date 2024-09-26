@@ -39,7 +39,7 @@
             <td>
               <ng-container *ngIf="hasMonth(row.months, month)">
                 <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="/fees/{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
+                  routerLink="{{getMonth(row.months, month)?.fee?.date}}/{{row.member.number}}">
                   <icon-success-or-failure [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
                 </button>
               </ng-container>

@@ -49,7 +49,7 @@ export class TransactionInfoEditorComponent extends InfoEditorStatusComponent<Tr
 
   protected override delete(): void {
     this.service.delete(this.data.index).subscribe(r => {
-      this.router.navigate([`/funds`]);
+      this.router.navigate([`..`], { relativeTo: this.route });
     });
   }
 

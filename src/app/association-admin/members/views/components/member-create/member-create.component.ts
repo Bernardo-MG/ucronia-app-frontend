@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MemberFormComponent } from '@app/association-admin/members/core/components/member-form/member-form.component';
 import { MemberService } from '@app/association-admin/members/core/services/member.service';
 import { Member } from '@app/models/members/member';
@@ -19,9 +19,10 @@ export class MemberCreateComponent extends CreateComponent<Member> {
 
   constructor(
     private service: MemberService,
-    rt: Router
+    rtr: Router,
+    rt: ActivatedRoute
   ) {
-    super(rt);
+    super(rtr, rt);
   }
 
   protected override save(toSave: Member): Observable<Member> {
@@ -29,7 +30,7 @@ export class MemberCreateComponent extends CreateComponent<Member> {
   }
 
   protected override getReturnRoute(saved: Member): string {
-    return '/members';
+    return '..';
   }
 
 }
