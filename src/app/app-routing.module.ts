@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
+import { ResourceGuard } from './core/authentication/guards/resource.guard';
 import { PublicLayoutComponent } from './core/layout/components/simple-layout/simple-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
@@ -12,6 +13,7 @@ const accountModule = () => import('@app/account/account.module').then(m => m.Ac
 const loginModule = () => import('@app/access/login/login.module').then(m => m.LoginModule);
 const activateUserModule = () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule);
 const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
+const settingsModule = () => import('@app/settings/settings.module').then(m => m.SettingsModule);
 
 const routes: Routes = [
   // Main app
@@ -71,6 +73,11 @@ const routes: Routes = [
         path: 'security',
         loadChildren: securityModule,
         canActivate: [LoggedInGuard]
+      },
+      {
+        path: 'settings',
+        loadChildren: settingsModule,
+        canActivate: [LoggedInGuard, ResourceGuard("association_settings", "view")]
       }
     ]
   }
