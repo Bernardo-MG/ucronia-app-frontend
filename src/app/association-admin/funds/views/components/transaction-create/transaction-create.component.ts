@@ -30,7 +30,7 @@ export class TransactionCreateComponent extends CreateComponent<Transaction> {
   }
 
   protected override getReturnRoute(saved: Transaction): string {
-    return '/funds';
+    return '..';
   }
 
 }
