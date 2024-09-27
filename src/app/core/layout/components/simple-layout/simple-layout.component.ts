@@ -11,7 +11,7 @@ import { NavbarComponent } from '../header/navbar/navbar.component';
   imports: [RouterModule, NavbarComponent, SideMenuComponent],
   templateUrl: './simple-layout.component.html'
 })
-export class PublicLayoutComponent {
+export class SimpleLayoutComponent {
 
   public title = '';
 
