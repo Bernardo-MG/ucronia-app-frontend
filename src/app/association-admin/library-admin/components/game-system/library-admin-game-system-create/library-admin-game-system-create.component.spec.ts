@@ -1,7 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibraryAdminGameSystemCreateComponent } from './library-admin-game-system-create.component';
+import { RouterTestingModule } from '@angular/router/testing';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
+import { LibraryAdminGameSystemCreateComponent } from './library-admin-game-system-create.component';
 
 describe('LibraryAdminGameSystemCreateComponent', () => {
   let component: LibraryAdminGameSystemCreateComponent;
@@ -11,6 +12,7 @@ describe('LibraryAdminGameSystemCreateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        RouterTestingModule,
         LibraryAdminGameSystemCreateComponent
       ],
       providers: [

@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleCreateComponent } from './access-role-create.component';
 
@@ -10,6 +11,7 @@ describe('AccessRoleCreateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         HttpClientTestingModule,
         AccessRoleCreateComponent
       ],

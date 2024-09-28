@@ -1,7 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibraryAdminPublisherCreateComponent } from './library-admin-publisher-create.component';
+import { RouterTestingModule } from '@angular/router/testing';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { LibraryAdminPublisherCreateComponent } from './library-admin-publisher-create.component';
 
 describe('LibraryAdminPublisherCreateComponent', () => {
   let component: LibraryAdminPublisherCreateComponent;
@@ -11,6 +12,7 @@ describe('LibraryAdminPublisherCreateComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        RouterTestingModule,
         LibraryAdminPublisherCreateComponent
       ],
       providers: [
