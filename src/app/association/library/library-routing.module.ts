@@ -7,7 +7,7 @@ import { LibraryFrontpageComponent } from './components/views/library-frontpage/
 
 const routes: Routes = [
   { path: '', component: LibraryFrontpageComponent },
-  { path: 'book/:index', component: LibraryBookInfoWidgetComponent, canActivate: [ResourceGuard("library_book", "read")] }
+  { path: ':index', component: LibraryBookInfoWidgetComponent, canActivate: [ResourceGuard("library_book", "read")] }
 ];
 
 @NgModule({

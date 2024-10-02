@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { Book } from '@app/models/library/book';
+import { CardModule } from '@app/shared/card/card.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
-import { Book } from '../../../models/book';
 import { BookService } from '../../../services/book.service';
 import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
-import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'assoc-library-book-list-widget',
@@ -61,7 +61,7 @@ export class LibraryBookListWidgetComponent implements OnInit {
   }
 
   public routeLinkAdapter(data: Book): string {
-    return `/library/book/${data.number}`;
+    return `${data.number}`;
   }
 
 }

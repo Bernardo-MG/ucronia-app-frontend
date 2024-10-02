@@ -1,0 +1,22 @@
+<layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Título<sorting-button property="title"
+            (directionChange)="onChangeDirection($event)"></sorting-button>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let book of page.content; let rowIndex = index" role="button"
+        routerLink="book/{{book.number}}">
+        <!-- Cells -->
+        <td>
+          {{book.title}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</layout-pagination-info-wrapper>

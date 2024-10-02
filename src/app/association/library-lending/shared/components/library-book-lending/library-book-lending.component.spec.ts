@@ -1,5 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { LibraryBookLendingComponent } from './library-book-lending.component';
 
 describe('LibraryBookLendingComponent', () => {
@@ -10,6 +11,7 @@ describe('LibraryBookLendingComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        RouterTestingModule,
         LibraryBookLendingComponent
       ]
     })

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Language } from '@app/association/library/models/language';
+import { Book } from '@app/models/library/book';
+import { Language } from '@app/models/library/language';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
-import { Book } from '../../../models/book';
 
 @Component({
   selector: 'assoc-library-book-info',
