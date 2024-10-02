@@ -4,11 +4,18 @@
     # {{data.number}}
   </div>
 </div>
-<!-- Name -->
+<!-- First name -->
 <div class="row">
   <div class="col-sm-3 text-primary">Nombre</div>
   <div class="col-sm-9" *layoutPlaceholder="waiting">
-    {{data.name.fullName}}
+    {{data.name.firstName}}
+  </div>
+</div>
+<!-- Last name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Apellidos</div>
+  <div class="col-sm-9" *layoutPlaceholder="waiting">
+    {{data.name.lastName}}
   </div>
 </div>
 <!-- Identifier -->
