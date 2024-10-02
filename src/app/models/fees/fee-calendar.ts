@@ -1,8 +1,8 @@
-import { FeeCalendarMember } from "./fee-calendar-member";
+import { PublicMember } from "../members/public-member";
 import { FeeCalendarMonth } from "./fee-month";
 
 export class FeeCalendar {
-  member = new FeeCalendarMember();
+  member = new PublicMember();
   year = -1;
   months: FeeCalendarMonth[] = [];
 }

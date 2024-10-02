@@ -1,4 +1,4 @@
-export class MemberName {
+export class PersonName {
   fullName = '';
   firstName = '';
   lastName = '';

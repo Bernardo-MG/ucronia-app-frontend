@@ -1,9 +1,9 @@
-import { FeePerson } from "./fee-member";
+import { PublicPerson } from "../person/public-person";
 import { FeeTransaction } from "./fee-transaction";
 
 export class Fee {
   date = '';
   paid = false;
   transaction = new FeeTransaction();
-  person = new FeePerson();
+  person = new PublicPerson();
 }

@@ -23,7 +23,7 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
     const query = new PaginatedQuery();
-    query.sort = new Sort([new SortProperty("fullName")]);
+    query.sort = new Sort([new SortProperty("firstName"), new SortProperty("lastName")]);
     query.addParameter('status', active.toString().toUpperCase());
 
     return this.getClient()
