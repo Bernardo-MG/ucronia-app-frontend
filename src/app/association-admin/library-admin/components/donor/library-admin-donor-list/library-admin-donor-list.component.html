@@ -10,7 +10,7 @@
     </thead>
     <tbody class="table-group-divider">
       <tr *ngFor="let donor of page.content; let rowIndex = index" role="button"
-        routerLink="/library/admin/donor/{{donor.number}}">
+        routerLink="donor/{{donor.number}}">
         <!-- Cells -->
         <td>
           {{donor.name.fullName}}

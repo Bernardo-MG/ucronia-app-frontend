@@ -11,7 +11,7 @@
     </thead>
     <tbody class="table-group-divider">
       <tr *ngFor="let gameSystem of page.content; let rowIndex = index" role="button"
-        routerLink="/library/admin/gameSystem/{{gameSystem.name}}">
+        routerLink="gameSystem/{{gameSystem.name}}">
         <!-- Cells -->
         <td>
           {{gameSystem.name}}
