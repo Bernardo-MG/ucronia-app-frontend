@@ -1,6 +1,7 @@
 import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -8,7 +9,6 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Person } from '@app/models/library/person';
 import { Publisher } from '@app/models/library/publisher';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -44,8 +44,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public override set data(value: Book) {
     this.loadData(value);
-    this.bookType = value.bookType.name;
-    this.gameSystem = value.gameSystem.name;
+    this.bookType = value.bookType;
+    this.gameSystem = value.gameSystem;
   }
 
   @Input() public languages: Language[] = [];
@@ -84,19 +84,19 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('donors')?.setValue(data);
   }
 
-  public get bookType(): string {
+  public get bookType(): BookType {
     return this.form.get('bookType')?.value;
   }
 
-  public set bookType(data: string) {
+  public set bookType(data: BookType) {
     this.form.get('bookType')?.setValue(data);
   }
 
-  public get gameSystem(): string {
+  public get gameSystem(): GameSystem {
     return this.form.get('gameSystem')?.value;
   }
 
-  public set gameSystem(data: string) {
+  public set gameSystem(data: GameSystem) {
     this.form.get('gameSystem')?.setValue(data);
   }
 
@@ -108,16 +108,16 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      number: [-1],
+      number: [undefined],
       index: [-1],
       isbn: ['', isbnValidator()],
       title: ['', Validators.required],
       language: ['', Validators.required],
       authors: [[]],
       donors: [[]],
-      bookType: [''],
+      bookType: [new BookType()],
       publishers: [[]],
-      gameSystem: ['']
+      gameSystem: [new GameSystem()]
     });
   }
 
@@ -142,13 +142,13 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
   }
 
   public onSelectBookType(bookType: BookType) {
-    this.bookType = bookType.name;
+    this.bookType = bookType;
     this.selector = ''
     this.closeModal('book_type');
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
-    this.gameSystem = gameSystem.name;
+    this.gameSystem = gameSystem;
     this.selector = '';
     this.closeModal('game_system');
   }

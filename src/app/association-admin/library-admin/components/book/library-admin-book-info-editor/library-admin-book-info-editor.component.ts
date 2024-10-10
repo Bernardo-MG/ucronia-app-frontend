@@ -81,7 +81,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const indexParam = params.get('index');
+      const indexParam = params.get('number');
       if (indexParam) {
         this.index = Number(indexParam);
       }
