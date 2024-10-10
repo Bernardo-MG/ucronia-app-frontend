@@ -26,23 +26,23 @@ export class AuthorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(name: string, data: Author): Observable<Author> {
+  public update(number: number, data: Author): Observable<Author> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<Author>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(name: string): Observable<Author> {
+  public getOne(number: number): Observable<Author> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<Author>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(name: string): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }

@@ -11,7 +11,7 @@
     </thead>
     <tbody class="table-group-divider">
       <tr *ngFor="let author of page.content; let rowIndex = index" role="button"
-        routerLink="author/{{author.name}}">
+        routerLink="author/{{author.number}}">
         <!-- Cells -->
         <td>
           {{author.name}}
