@@ -3,13 +3,9 @@
     <app-card>
       <app-card-body>
         <!-- Form -->
-        <assoc-library-admin-book-form [waiting]="saving" [failures]="failures" [languages]="languages"
-          [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage" [authorPage]="authorPage"
-          [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
-          (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
-          (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
-          (goToDonorPage)="onGoToDonorPage($event)">
-        </assoc-library-admin-book-form>
+        <assoc-library-admin-book-edit-form [waiting]="saving" [failures]="failures" [languages]="languages"
+          (save)="onSave($event)">
+        </assoc-library-admin-book-edit-form>
       </app-card-body>
     </app-card>
   </div>
