@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Person } from '@app/models/library/person';
+import { Person } from '@app/models/person/person';
 import { PagedSelectorComponent } from '@app/shared/form/components/paged-selector/paged-selector.component';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
