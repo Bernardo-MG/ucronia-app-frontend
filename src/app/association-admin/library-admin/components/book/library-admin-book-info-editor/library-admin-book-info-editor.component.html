@@ -5,12 +5,16 @@
       <app-card-body>
         <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures" [readonly]="!formEnabled"
           [languages]="languages" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
-          [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" 
-          (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+          [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
+          (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
           (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
           (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)">
         </assoc-library-admin-book-form>
       </app-card-body>
+      <app-card-footer *ngIf="showMenu">
+        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
+      </app-card-footer>
     </app-card>
   </div>
 </layout-article>
