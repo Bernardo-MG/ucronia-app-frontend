@@ -81,7 +81,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const indexParam = params.get('index');
+      const indexParam = params.get('number');
       if (indexParam) {
         this.index = Number(indexParam);
       }
@@ -101,7 +101,7 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+      this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 

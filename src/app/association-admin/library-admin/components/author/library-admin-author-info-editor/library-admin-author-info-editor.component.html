@@ -1,4 +1,4 @@
-<layout-article title="Datos de autor">
+<layout-article title="#{{data.number}} {{data.name}}">
   <div appResponsiveShortColumns>
     <!-- Form -->
     <app-card>
@@ -7,6 +7,10 @@
           [data]="data" [failures]="failures" (save)="onSave($event)"
           (cancel)="onCancel()"></assoc-library-admin-author-form>
       </app-card-body>
+      <app-card-footer *ngIf="showMenu">
+        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
+      </app-card-footer>
     </app-card>
   </div>
 </layout-article>

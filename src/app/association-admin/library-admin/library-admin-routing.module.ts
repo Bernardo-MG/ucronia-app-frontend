@@ -24,11 +24,11 @@ const routes: Routes = [
   { path: 'donor/add', component: LibraryAdminDonorCreateComponent, canActivate: [ResourceGuard("inventory_donor", "create")] },
   { path: 'gameSystem/add', component: LibraryAdminGameSystemCreateComponent, canActivate: [ResourceGuard("library_game_system", "create")] },
   { path: 'publisher/add', component: LibraryAdminPublisherCreateComponent, canActivate: [ResourceGuard("library_publisher", "create")] },
-  { path: 'author/:name', component: LibraryAdminAuthorInfoEditorComponent, canActivate: [ResourceGuard("library_author", "read")] },
-  { path: 'book/:index', component: LibraryAdminBookInfoEditorComponent, canActivate: [ResourceGuard("library_book", "read")] },
-  { path: 'bookType/:name', component: LibraryAdminBookTypeInfoEditorComponent, canActivate: [ResourceGuard("library_book_type", "read")] },
-  { path: 'gameSystem/:name', component: LibraryAdminGameSystemInfoEditorComponent, canActivate: [ResourceGuard("library_game_system", "read")] },
-  { path: 'publisher/:name', component: LibraryAdminPublisherInfoEditorComponent, canActivate: [ResourceGuard("library_publisher", "read")] },
+  { path: 'author/:number', component: LibraryAdminAuthorInfoEditorComponent, canActivate: [ResourceGuard("library_author", "read")] },
+  { path: 'book/:number', component: LibraryAdminBookInfoEditorComponent, canActivate: [ResourceGuard("library_book", "read")] },
+  { path: 'bookType/:number', component: LibraryAdminBookTypeInfoEditorComponent, canActivate: [ResourceGuard("library_book_type", "read")] },
+  { path: 'gameSystem/:number', component: LibraryAdminGameSystemInfoEditorComponent, canActivate: [ResourceGuard("library_game_system", "read")] },
+  { path: 'publisher/:number', component: LibraryAdminPublisherInfoEditorComponent, canActivate: [ResourceGuard("library_publisher", "read")] },
   { path: 'donor/:number', component: LibraryAdminDonorInfoEditorComponent, canActivate: [ResourceGuard("inventory_donor", "read")] }
 ];
 

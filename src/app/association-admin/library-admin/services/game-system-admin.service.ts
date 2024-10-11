@@ -26,23 +26,23 @@ export class GameSystemAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(name: string, data: GameSystem): Observable<GameSystem> {
+  public update(number: number, data: GameSystem): Observable<GameSystem> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<GameSystem>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(name: string): Observable<GameSystem> {
+  public getOne(number: number): Observable<GameSystem> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<GameSystem>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(name: string): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }

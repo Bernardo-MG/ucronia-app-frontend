@@ -26,23 +26,23 @@ export class PublisherAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(name: string, data: Publisher): Observable<Publisher> {
+  public update(number: number, data: Publisher): Observable<Publisher> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .update<SimpleResponse<Publisher>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(name: string): Observable<Publisher> {
+  public getOne(number: number): Observable<Publisher> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .read<SimpleResponse<Publisher>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(name: string): Observable<boolean> {
+  public delete(number: number): Observable<boolean> {
     return this.getClient()
-      .appendRoute(`/${name}`)
+      .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }

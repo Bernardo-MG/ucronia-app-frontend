@@ -15,12 +15,12 @@ import { LibraryAdminPublisherFormComponent } from '../library-admin-publisher-f
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, CardModule, LibraryAdminPublisherFormComponent, ArticleComponent,ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
 export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {
 
-  private name = '';
+  private number = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,26 +41,26 @@ export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusCo
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const nameParam = params.get('name');
-      if (nameParam) {
-        this.name = nameParam;
+      const numberParam = params.get('number');
+      if (numberParam) {
+        this.number = Number(numberParam);
       }
       this.load();
     });
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+    this.service.delete(this.data.number).subscribe(r => {
+      this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 
   protected override read(): Observable<Publisher> {
-    return this.service.getOne(this.name);
+    return this.service.getOne(this.number);
   }
 
   protected override save(toSave: Publisher): Observable<Publisher> {
-    return this.service.update(this.data.name, toSave);
+    return this.service.update(this.data.number, toSave);
   }
 
 }

@@ -66,7 +66,7 @@ export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> imple
 
   protected override delete(): void {
     this.service.delete(this.data.date, this.data.person.number).subscribe(r => {
-      this.router.navigate([`..`], { relativeTo: this.route });
+      this.router.navigate([`../..`], { relativeTo: this.route });
     });
   }
 

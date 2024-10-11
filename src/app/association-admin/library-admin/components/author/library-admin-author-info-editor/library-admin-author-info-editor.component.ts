@@ -20,7 +20,7 @@ import { LibraryAdminAuthorFormComponent } from '../library-admin-author-form/li
 })
 export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {
 
-  private name = '';
+  private number = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,26 +41,26 @@ export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusCompo
 
     // Get id
     this.route.paramMap.subscribe(params => {
-      const nameParam = params.get('name');
-      if (nameParam) {
-        this.name = nameParam;
+      const numberParam = params.get('number');
+      if (numberParam) {
+        this.number = Number(numberParam);
       }
       this.load();
     });
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+    this.service.delete(this.data.number).subscribe(r => {
+      this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 
   protected override read(): Observable<Author> {
-    return this.service.getOne(this.name);
+    return this.service.getOne(this.number);
   }
 
   protected override save(toSave: Author): Observable<Author> {
-    return this.service.update(this.data.name, toSave);
+    return this.service.update(this.data.number, toSave);
   }
 
 }
