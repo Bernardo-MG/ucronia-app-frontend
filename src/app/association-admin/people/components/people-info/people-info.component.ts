@@ -11,7 +11,7 @@ import * as bootstrap from 'bootstrap';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
 @Component({
-  selector: 'app-people-info',
+  selector: 'assoc-people-info',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
   templateUrl: './people-info.component.html'
