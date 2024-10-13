@@ -2,20 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
-import { BookType } from '@app/models/library/book-type';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BookType } from '@app/models/library/book-type';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../library-admin-book-type-form/library-admin-book-type-form.component';
+import { LibraryAdminBookTypeInfoComponent } from '../library-admin-book-type-info/library-admin-book-type-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-info-editor.component.html'
 })
 export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {
@@ -32,9 +32,6 @@ export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusCom
   }
 
   public ngOnInit(): void {
-    // Activate edition
-    this.editing = true;
-
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_book_type", "update");
     this.deletable = this.authContainer.hasPermission("library_book_type", "delete");

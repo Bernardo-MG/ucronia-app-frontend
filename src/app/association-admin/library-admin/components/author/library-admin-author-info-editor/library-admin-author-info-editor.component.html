@@ -1,16 +1,22 @@
 <layout-article title="#{{data.number}} {{data.name}}">
   <div appResponsiveShortColumns>
-    <!-- Form -->
-    <app-card>
-      <app-card-body>
-        <assoc-library-admin-author-form [waiting]="waiting" [readonly]="!formEnabled"
-          [data]="data" [failures]="failures" (save)="onSave($event)"
-          (cancel)="onCancel()"></assoc-library-admin-author-form>
-      </app-card-body>
-      <app-card-footer *ngIf="showMenu">
-        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
-          (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
-      </app-card-footer>
-    </app-card>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <app-card>
+          <app-card-body>
+            <assoc-library-admin-author-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
+              [data]="data" [failures]="failures" (save)="onSave($event)"
+              (cancel)="onCancel()"></assoc-library-admin-author-form>
+          </app-card-body>
+        </app-card>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-library-admin-author-info [data]="data" [showMenu]="showMenu" [waiting]="waiting" [deletable]="deletable"
+          [editable]="editable" (delete)="onDelete()"
+          (startEditing)="onStartEditing()"></assoc-library-admin-author-info>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>

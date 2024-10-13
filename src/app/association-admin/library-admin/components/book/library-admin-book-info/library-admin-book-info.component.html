@@ -1,0 +1,64 @@
+<app-card>
+  <!-- Member details -->
+  <app-card-body>
+    <!-- Number -->
+    <div class="row">
+      <div class="col-3" *layoutPlaceholder="waiting">
+        # {{data.number}}
+      </div>
+    </div>
+    <!-- First name -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">ISBN</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.isbn}}
+      </div>
+    </div>
+    <!-- Title -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Título</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.title}}
+      </div>
+    </div>
+    <!-- Authors -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Autor</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{authors}}
+      </div>
+    </div>
+    <!-- Donors -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Donante</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{donors}}
+      </div>
+    </div>
+    <!-- Publishers -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Editor</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{publishers}}
+      </div>
+    </div>
+    <!-- Book type -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Tipo</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.bookType}}
+      </div>
+    </div>
+    <!-- Game system -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Sistema</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.gameSystem}}
+      </div>
+    </div>
+  </app-card-body>
+  <app-card-footer *ngIf="showMenu">
+    <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+      (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+  </app-card-footer>
+</app-card>

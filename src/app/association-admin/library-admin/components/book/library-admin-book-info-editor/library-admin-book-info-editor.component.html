@@ -1,20 +1,27 @@
-<layout-article title="Datos de libro">
+<layout-article title="#{{data.number}} {{data.title}}">
   <div appResponsiveShortColumns>
-    <!-- Form -->
-    <app-card>
-      <app-card-body>
-        <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures" [readonly]="!formEnabled"
-          [languages]="languages" [bookTypePage]="bookTypePage" [gameSystemPage]="gameSystemPage"
-          [authorPage]="authorPage" [publisherPage]="publisherPage" [donorPage]="donorPage" (save)="onSave($event)"
-          (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
-          (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
-          (goToPublisherPage)="onGoToPublisherPage($event)" (goToDonorPage)="onGoToDonorPage($event)">
-        </assoc-library-admin-book-form>
-      </app-card-body>
-      <app-card-footer *ngIf="showMenu">
-        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
-          (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
-      </app-card-footer>
-    </app-card>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <app-card>
+          <app-card-body>
+            <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
+              [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
+              [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+              [donorPage]="donorPage" (save)="onSave($event)" (cancel)="onCancel()"
+              (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
+              (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
+              (goToDonorPage)="onGoToDonorPage($event)">
+            </assoc-library-admin-book-form>
+          </app-card-body>
+        </app-card>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-library-admin-book-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
+          [waiting]="waiting" [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
+          (startEditing)="onStartEditing()"></assoc-library-admin-book-info>
+      </ng-container>
+    </ng-container>
   </div>
 </layout-article>
