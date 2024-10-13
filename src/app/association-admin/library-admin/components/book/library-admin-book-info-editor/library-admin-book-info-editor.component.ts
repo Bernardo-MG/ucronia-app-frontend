@@ -24,11 +24,12 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
+import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective, LibraryAdminBookInfoComponent],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
@@ -72,9 +73,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   }
 
   public ngOnInit(): void {
-    // Activate edition
-    this.editing = true;
-
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_book", "update");
     this.deletable = this.authContainer.hasPermission("library_book", "delete");
