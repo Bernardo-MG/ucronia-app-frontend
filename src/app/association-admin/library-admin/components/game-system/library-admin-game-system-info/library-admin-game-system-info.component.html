@@ -1,0 +1,21 @@
+<app-card>
+  <app-card-body>
+    <!-- Number -->
+    <div class="row">
+      <div class="col-3" *layoutPlaceholder="waiting">
+        # {{data.number}}
+      </div>
+    </div>
+    <!-- Name -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Nombre</div>
+      <div class="col-sm-9" *layoutPlaceholder="waiting">
+        {{data.name}}
+      </div>
+    </div>
+  </app-card-body>
+  <app-card-footer *ngIf="showMenu">
+    <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+      (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+  </app-card-footer>
+</app-card>
