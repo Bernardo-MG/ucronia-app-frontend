@@ -37,7 +37,7 @@ export class LibraryAdminBookInfoComponent {
   }
 
   public get donors(): string {
-    return this.data.donors.map(e => e.name).join(", ");
+    return this.data.donors.map(e => e.name.fullName).join(", ");
   }
 
   public get publishers(): string {

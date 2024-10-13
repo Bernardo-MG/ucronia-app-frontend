@@ -46,14 +46,14 @@
     <div class="row">
       <div class="col-sm-3 text-primary">Tipo</div>
       <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.bookType}}
+        {{data.bookType?.name}}
       </div>
     </div>
     <!-- Game system -->
     <div class="row">
       <div class="col-sm-3 text-primary">Sistema</div>
       <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.gameSystem}}
+        {{data.gameSystem?.name}}
       </div>
     </div>
   </app-card-body>
