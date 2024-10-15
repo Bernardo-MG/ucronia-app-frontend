@@ -45,6 +45,13 @@
       <app-input-failure-feedback [failures]="failures.getFailures('phone')"></app-input-failure-feedback>
     </div>
   </div>
+  <!-- Phone -->
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" (change)="onChangeMemberStatus($event)" checked>
+    <label class="form-check-label" for="flexCheckDefault">
+      Socio
+    </label>
+  </div>
   <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
     [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
 </form>
