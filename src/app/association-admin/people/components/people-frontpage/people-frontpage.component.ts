@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Person } from '@app/models/person/person';
 import { Active } from '@app/models/members/active';
+import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
@@ -18,7 +17,7 @@ import { PeopleListComponent } from '../people-list/people-list.component';
 @Component({
   selector: 'assoc-people-frontpage',
   standalone: true,
-  imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
+  imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
   templateUrl: './people-frontpage.component.html'
 })
 export class PeopleFrontpageComponent {
