@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Member } from '@app/models/members/member';
+import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -12,7 +12,6 @@ import { Observable } from 'rxjs';
 import { PeopleService } from '../../services/people.service';
 import { PeopleFormComponent } from '../people-form/people-form.component';
 import { PeopleInfoComponent } from '../people-info/people-info.component';
-import { Membership } from '@app/models/person/membership';
 
 @Component({
   selector: 'assoc-people-info-editor',
