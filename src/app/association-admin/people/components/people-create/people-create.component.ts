@@ -1,24 +1,24 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { LibraryAdminDonorFormComponent } from '../library-admin-donor-form/library-admin-donor-form.component';
+import { PeopleService } from '../../services/people.service';
+import { PeopleFormComponent } from '../people-form/people-form.component';
 
 @Component({
-  selector: 'app-library-admin-donor-create',
+  selector: 'assoc-people-create',
   standalone: true,
-  imports: [CardModule, LibraryAdminDonorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-donor-create.component.html'
+  imports: [CardModule, PeopleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-create.component.html'
 })
-export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {
+export class PeopleCreateComponent extends CreateComponent<Person> {
 
   constructor(
-    private service: DonorAdminService,
+    private service: PeopleService,
     rtr: Router,
     rt: ActivatedRoute
   ) {
@@ -30,6 +30,7 @@ export class LibraryAdminDonorCreateComponent extends CreateComponent<Person> {
   }
 
   protected override getReturnRoute(saved: Person): string {
-    return '../..';
+    return '..';
   }
+
 }

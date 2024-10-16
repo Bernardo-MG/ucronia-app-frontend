@@ -1,0 +1,22 @@
+<layout-article title="Gente">
+  <div class="row">
+    <!-- Member List -->
+    <app-card>
+      <app-card-body>
+        <!-- List -->
+        <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+          <assoc-people-list [people]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+            (changeDirection)="onChangeDirection($event)">
+          </assoc-people-list>
+        </layout-pagination-info-wrapper>
+        <!-- Add -->
+        <div appJustifyCenter>
+          <button type="button" class="btn btn-primary" aria-label="register" routerLink="register"
+            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            Registrar
+          </button>
+        </div>
+      </app-card-body>
+    </app-card>
+  </div>
+</layout-article>

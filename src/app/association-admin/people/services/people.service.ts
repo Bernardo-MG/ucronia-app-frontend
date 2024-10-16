@@ -8,17 +8,30 @@ import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Person } from '@app/models/person/person';
+import { Active } from '@app/models/members/active';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class DonorAdminService {
+export class PeopleService {
 
   constructor(
     private http: HttpClient
   ) { }
+
+  public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Person[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
+    query.pagination = { page };
+    query.sort = sort;
+    query.addParameter('status', active.toString().toUpperCase());
+
+    return this.getClient()
+      .query(query)
+      .read<PaginatedResponse<Person[]>>();
+  }
 
   public create(data: Person): Observable<Person> {
     return this.getClient()
@@ -26,17 +39,10 @@ export class DonorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Person): Observable<Person> {
+  public patch(number: number, data: Person): Observable<Person> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Person>>(data)
-      .pipe(map(r => r.content));
-  }
-
-  public getOne(number: number): Observable<Person> {
-    return this.getClient()
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<Person>>()
+      .patch<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }
 
@@ -47,17 +53,15 @@ export class DonorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Person[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('fullName')]);
-    query.pagination = { page };
-    query.sort = sort;
-
-    return this.getClient().query(query).read();
+  public getOne(number: number): Observable<Person> {
+    return this.getClient()
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<Person>>()
+      .pipe(map(r => r.content));
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/inventory/donor');
+    return new AngularClient(this.http, environment.apiUrl + '/person');
   }
 
 }

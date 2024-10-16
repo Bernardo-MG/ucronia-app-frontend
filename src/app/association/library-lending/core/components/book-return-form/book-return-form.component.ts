@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { LibraryAdminBookSelectionComponent } from '@app/association-admin/library-admin/components/book/library-admin-book-selection/library-admin-book-selection.component';
 import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
-import { Person } from '@app/models/library/person';
+import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';

@@ -7,5 +7,6 @@ export class CardTab {
 
   code: string;
   name: string;
+  disabled = false;
 
 }
