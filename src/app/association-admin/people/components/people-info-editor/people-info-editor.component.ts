@@ -67,6 +67,13 @@ export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person>
     this.onSave(user);
   }
 
+  public onConvertToMember() {
+    const user = this.data;
+    user.membership = new Membership();
+    user.membership.active = true;
+    this.onSave(user);
+  }
+
   public onChangeView(newView: string) {
     this.view = newView;
   }

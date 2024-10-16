@@ -15,7 +15,7 @@
       <ng-container *ngSwitchCase="false">
         <assoc-people-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
           [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
-          (activate)="onActivate()" (deactivate)="onDeactivate()"></assoc-people-info>
+          (activate)="onActivate()" (deactivate)="onDeactivate()" (convertToMember)="onConvertToMember()"></assoc-people-info>
       </ng-container>
     </ng-container>
   </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
@@ -16,7 +16,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
   imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
   templateUrl: './people-info.component.html'
 })
-export class PeopleInfoComponent implements OnChanges {
+export class PeopleInfoComponent {
 
   @Input() public data = new Person();
 
@@ -38,31 +38,34 @@ export class PeopleInfoComponent implements OnChanges {
 
   @Output() public deactivate = new EventEmitter<void>();
 
+  @Output() public convertToMember = new EventEmitter<void>();
+
+  public get isMember() {
+    return this.data.membership !== null;
+  }
+
   public view: string = 'details';
 
-  public tabs = [new CardTab('details', 'Detalles'), new CardTab('member', 'Socio')];
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['data']) {
-      // Disable membership tab when the data is missing
-      this.tabs[1].disabled = !this.data.membership;
-    }
-  }
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('membership', 'Socio')];
 
   public onChangeView(newView: string) {
     this.view = newView;
   }
 
   public onShowActivate() {
-    this.openModal('activate');
+    this.openModal('activateModal');
   }
 
   public onShowDeactivate() {
-    this.openModal('deactivate');
+    this.openModal('deactivateModal');
+  }
+
+  public onShowConvertToMember() {
+    this.openModal('convertToMemberModal');
   }
 
   private openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
+    const modalElement = document.getElementById(`${modalId}`);
     if (modalElement) {
       let modal = bootstrap.Modal.getInstance(modalElement);
       if (!modal) {
