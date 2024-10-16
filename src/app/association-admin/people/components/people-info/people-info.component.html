@@ -37,17 +37,17 @@
       <app-card-footer>
         <ng-container [ngSwitch]="data.membership?.active">
           <ng-container *ngSwitchCase="true">
-            <!-- Enable button -->
-            <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
-                (action)="onShowActivate()">Activar</layout-waiting-button>
-            </div>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
             <!-- Disable button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
                 (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Enable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
+                (action)="onShowActivate()">Activar</layout-waiting-button>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="null">
