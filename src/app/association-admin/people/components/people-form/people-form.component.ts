@@ -38,10 +38,8 @@ export class PeopleFormComponent extends FormComponent<Person> {
     if ((this.data) && (this.data.membership)) {
       if (checkbox.checked) {
         this.data.membership.active = true;
-      } else {
-        if (this.data) {
-          this.data.membership.active = false;
-        }
+      } else if (this.data) {
+        this.data.membership = undefined;
       }
     }
   }
