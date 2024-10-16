@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
@@ -16,7 +16,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
   imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
   templateUrl: './people-info.component.html'
 })
-export class PeopleInfoComponent {
+export class PeopleInfoComponent implements OnChanges {
 
   @Input() public data = new Person();
 
@@ -40,7 +40,14 @@ export class PeopleInfoComponent {
 
   public view: string = 'details';
 
-  public tabs = [new CardTab('details', 'Detalles'),new CardTab('status', 'Estado')];
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('member', 'Socio')];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      // Disable membership tab when the data is missing
+      this.tabs[1].disabled = !this.data.membership;
+    }
+  }
 
   public onChangeView(newView: string) {
     this.view = newView;
