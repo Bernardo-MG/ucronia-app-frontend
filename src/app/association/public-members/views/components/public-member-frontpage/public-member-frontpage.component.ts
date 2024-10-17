@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberBalanceChartWidgetComponent } from '@app/association-admin/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
-import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
+import { MemberBalanceChartWidgetComponent } from '@app/association/public-members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
 import { PublicMemberListComponent } from '@app/association/public-members/core/components/public-member-list/public-member-list.component';
 import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
-import { PublicMember } from '@app/models/members/public-member';
+import { MemberStatusSelectComponent } from '@app/association/public-members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { PublicMember } from '@app/models/members/public-member';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';

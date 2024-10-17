@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MemberStatusSelectComponent } from '@app/association-admin/members/shared/components/member-status-select/member-status-select.component';
 import { BookLendingFormComponent } from '@app/association/library-lending/core/components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { LibraryLendingService } from '@app/association/library-lending/core/services/library-lending.service';
+import { MemberStatusSelectComponent } from '@app/association/public-members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
