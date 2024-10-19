@@ -57,7 +57,7 @@ export class DonorAdminService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/inventory/donor');
+    return new AngularClient(this.http, environment.apiUrl + '/person');
   }
 
 }
