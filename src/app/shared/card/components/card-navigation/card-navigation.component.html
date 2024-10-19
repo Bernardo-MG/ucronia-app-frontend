@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs card-header-tabs">
   <li class="nav-item" *ngFor="let tab of tabs">
-    <a class="nav-link" [class.active]="active === tab.code" aria-current="page" role="button"
+    <a class="nav-link" [class.active]="active === tab.code" [class.disabled]="tab.disabled" [attr.aria-disabled]="tab.disabled"  aria-current="page" role="button"
       (click)="pickTab.emit(tab.code)">{{tab.name}}</a>
   </li>
 </ul>

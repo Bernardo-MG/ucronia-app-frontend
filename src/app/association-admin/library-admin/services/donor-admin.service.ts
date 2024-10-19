@@ -7,7 +7,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Person } from '@app/models/library/person';
+import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -49,7 +49,7 @@ export class DonorAdminService {
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Person[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('fullName')]);
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName')]);
     query.pagination = { page };
     query.sort = sort;
 
@@ -57,7 +57,7 @@ export class DonorAdminService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/inventory/donor');
+    return new AngularClient(this.http, environment.apiUrl + '/person');
   }
 
 }

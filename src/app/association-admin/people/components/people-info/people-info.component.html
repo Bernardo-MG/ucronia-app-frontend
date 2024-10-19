@@ -1,0 +1,79 @@
+<app-card>
+  <app-card-header>
+    <!-- Tabs -->
+    <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
+  </app-card-header>
+  <!-- View-->
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'details'">
+      <!-- Member details -->
+      <app-card-body>
+        <assoc-people-info-details [data]="data" [waiting]="waiting"></assoc-people-info-details>
+      </app-card-body>
+      <app-card-footer *ngIf="showMenu">
+        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+      </app-card-footer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'membership'">
+      <!-- Membership -->
+      <app-card-body>
+        <ng-container [ngSwitch]="isMember">
+          <ng-container *ngSwitchCase="true">
+            <!-- It is a member -->
+          <div class="row">
+            <div class="col-sm-2 text-primary">Activo</div>
+            <div class="col-sm-10">
+              <icon-success-or-failure [success]="data.membership?.active"></icon-success-or-failure>
+            </div>
+          </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- It isn't a member -->
+             No es socio
+          </ng-container>
+        </ng-container>
+      </app-card-body>
+      <app-card-footer>
+        <ng-container [ngSwitch]="data.membership?.active">
+          <ng-container *ngSwitchCase="true">
+            <!-- Disable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
+                (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Enable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
+                (action)="onShowActivate()">Activar</layout-waiting-button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="null">
+            <!-- Convert to member button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
+                (action)="onShowConvertToMember()">Convertir en socio</layout-waiting-button>
+            </div>
+          </ng-container>
+        </ng-container>
+      </app-card-footer>
+    </ng-container>
+  </ng-container>
+</app-card>
+
+<!-- Modal confirmation for deactivating -->
+<layout-modal name="deactivateModal" title="Desactivar socio" acceptText="Desactivar" (accept)="deactivate.emit()">
+  <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for activating -->
+<layout-modal name="activateModal" title="Activar socio" acceptText="Activar" (accept)="activate.emit()">
+  <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for converting to member -->
+<layout-modal name="convertToMemberModal" title="Convertir en socio" acceptText="Convertir" (accept)="convertToMember.emit()">
+  <p>Esto convertirá a esta persona en un socio</p>
+</layout-modal>

@@ -1,0 +1,36 @@
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Person } from '@app/models/person/person';
+import { CardModule } from '@app/shared/card/card.module';
+import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { Observable } from 'rxjs';
+import { PeopleService } from '../../services/people.service';
+import { PeopleFormComponent } from '../people-form/people-form.component';
+
+@Component({
+  selector: 'assoc-people-create',
+  standalone: true,
+  imports: [CardModule, PeopleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-create.component.html'
+})
+export class PeopleCreateComponent extends CreateComponent<Person> {
+
+  constructor(
+    private service: PeopleService,
+    rtr: Router,
+    rt: ActivatedRoute
+  ) {
+    super(rtr, rt);
+  }
+
+  protected override save(toSave: Person): Observable<Person> {
+    return this.service.create(toSave);
+  }
+
+  protected override getReturnRoute(saved: Person): string {
+    return '..';
+  }
+
+}

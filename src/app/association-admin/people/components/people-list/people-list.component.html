@@ -1,0 +1,34 @@
+<!-- List -->
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Headers -->
+      <th scope="col">
+        Nombre <sorting-button property="fullName" (directionChange)="changeDirection.emit($event)"></sorting-button>
+      </th>
+      <th scope="col">
+        Activo <sorting-button property="active" (directionChange)="changeDirection.emit($event)"></sorting-button>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr *ngFor="let person of people; let rowIndex = index"
+      [ngClass]="{ 'table-secondary': !person.membership?.active }" role="button"
+      routerLink="{{routeLinkAdapter(person)}}">
+      <!-- Cells -->
+      <td>
+        {{person.name.fullName}}
+      </td>
+      <td>
+        <ng-container [ngSwitch]="person.membership === null">
+          <ng-container *ngSwitchCase="true">
+            No es socio
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <icon-success-or-failure [success]="person.membership?.active"></icon-success-or-failure>
+          </ng-container>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>

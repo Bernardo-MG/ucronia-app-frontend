@@ -10,14 +10,13 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 import { LibraryAdminAuthorListComponent } from '../author/library-admin-author-list/library-admin-author-list.component';
 import { LibraryAdminBookTypeListComponent } from '../book-type/library-admin-book-type-list/library-admin-book-type-list.component';
 import { LibraryAdminBookListComponent } from '../book/library-admin-book-list/library-admin-book-list.component';
-import { LibraryAdminDonorListComponent } from '../donor/library-admin-donor-list/library-admin-donor-list.component';
 import { LibraryAdminGameSystemListComponent } from '../game-system/library-admin-game-system-list/library-admin-game-system-list.component';
 import { LibraryAdminPublisherListComponent } from '../publisher/library-admin-publisher-list/library-admin-publisher-list.component';
 
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, LibraryAdminDonorListComponent, ArticleComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-frontpage.component.html'
 })
 export class LibraryAdminFrontpageComponent implements OnInit {
@@ -38,7 +37,7 @@ export class LibraryAdminFrontpageComponent implements OnInit {
 
   public tabs = [
     new CardTab('books', 'Libros'), new CardTab('authors', 'Autores'), new CardTab('publishers', 'Editores'),
-    new CardTab('book_types', 'Tipos'), new CardTab('game_systems', 'Sistemas'), new CardTab('donors', 'Donantes')
+    new CardTab('book_types', 'Tipos'), new CardTab('game_systems', 'Sistemas')
   ];
 
   constructor(

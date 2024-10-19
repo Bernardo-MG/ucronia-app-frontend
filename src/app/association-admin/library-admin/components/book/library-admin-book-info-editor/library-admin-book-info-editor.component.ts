@@ -10,7 +10,7 @@ import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
-import { Person } from '@app/models/library/person';
+import { Person } from '@app/models/person/person';
 import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';

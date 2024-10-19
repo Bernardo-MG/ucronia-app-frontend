@@ -5,7 +5,7 @@ import { AssociationAdminLayoutComponent } from '@app/core/layout/components/ass
 
 const fundsModule = () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule);
-const membersModule = () => import('@app/association-admin/members/members.module').then(m => m.MembersModule);
+const peopleModule = () => import('@app/association-admin/people/people.module').then(m => m.PeopleModule);
 const libraryAdminModule = () => import('@app/association-admin/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
 
 const routes: Routes = [
@@ -14,9 +14,9 @@ const routes: Routes = [
     component: AssociationAdminLayoutComponent,
     children: [
       {
-        path: 'members',
-        canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
+        path: 'people',
+        canActivate: [ResourceGuard("person", "view")],
+        loadChildren: peopleModule
       },
       {
         path: 'library',
