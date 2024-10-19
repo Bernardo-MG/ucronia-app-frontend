@@ -7,8 +7,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Person } from '@app/models/person/person';
 import { Active } from '@app/models/members/active';
+import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class PeopleService {
 
   public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Person[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
     query.addParameter('status', active.toString().toUpperCase());

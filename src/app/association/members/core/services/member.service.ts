@@ -23,7 +23,7 @@ export class MemberService {
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
     query.addParameter('status', Active.Active.toString().toUpperCase());
