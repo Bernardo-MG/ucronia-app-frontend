@@ -5,13 +5,13 @@
         <account-profile-info [account]="account" [waiting]="waiting"></account-profile-info>
       </app-card-body>
     </app-card>
-    <article *ngIf="account.member" class="p-4">
+    <article *ngIf="account.person" class="p-4">
       <header>
         <h2 class="border-bottom">Socio</h2>
       </header>
       <app-card>
         <app-card-body>
-          <account-profile-member [data]="member"></account-profile-member>
+          <account-profile-person [data]="person"></account-profile-person>
         </app-card-body>
       </app-card>
     </article>
