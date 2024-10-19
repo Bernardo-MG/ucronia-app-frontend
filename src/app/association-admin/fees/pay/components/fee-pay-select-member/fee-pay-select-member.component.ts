@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MemberStatusSelectComponent } from '@app/association/public-members/shared/components/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Active } from '@app/models/members/active';
 import { Member } from '@app/models/members/member';

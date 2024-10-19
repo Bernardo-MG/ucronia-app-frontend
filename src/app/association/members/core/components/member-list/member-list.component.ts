@@ -1,22 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PublicMember } from '@app/models/members/public-member';
+import { Member } from '@app/models/members/member';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'assoc-public-member-list',
+  selector: 'assoc-member-list',
   standalone: true,
   imports: [CommonModule, RouterModule, IconsModule, SortingButtonComponent],
-  templateUrl: './public-member-list.component.html'
+  templateUrl: './member-list.component.html'
 })
-export class PublicMemberListComponent {
+export class MemberListComponent {
 
-  @Input() public members: PublicMember[] = [];
+  @Input() public members: Member[] = [];
 
-  @Input() public routeLinkAdapter: (data: PublicMember) => string = (data) => '';
+  @Input() public routeLinkAdapter: (data: Member) => string = (data) => '';
 
   @Output() public changeDirection = new EventEmitter<SortProperty>();
 

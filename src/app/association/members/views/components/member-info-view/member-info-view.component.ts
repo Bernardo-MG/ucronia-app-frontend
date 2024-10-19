@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PublicMemberInfoComponent } from '@app/association/public-members/core/components/public-member-info/public-member-info.component';
-import { PublicMemberService } from '@app/association/public-members/core/services/public-member.service';
-import { PublicMember } from '@app/models/members/public-member';
+import { MemberInfoComponent } from '@app/association/members/core/components/member-info/member-info.component';
+import { MemberService as MemberService } from '@app/association/members/core/services/member.service';
+import { Member } from '@app/models/members/member';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -14,10 +14,10 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'assoc-member-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, ArticleComponent, PublicMemberInfoComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './public-member-info-view.component.html'
+  imports: [CommonModule, CardModule, ArticleComponent, MemberInfoComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './member-info-view.component.html'
 })
-export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<PublicMember> implements OnInit {
+export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
 
   public view: string = 'details';
 
@@ -25,10 +25,10 @@ export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<P
 
   constructor(
     private route: ActivatedRoute,
-    private service: PublicMemberService,
+    private service: MemberService,
     private authContainer: AuthContainer
   ) {
-    super(new PublicMember());
+    super(new Member());
   }
 
   public ngOnInit(): void {
@@ -66,11 +66,11 @@ export class PublicMemberInfoEditorComponent extends InfoEditorStatusComponent<P
     throw new Error('Method not implemented.');
   }
 
-  protected override read(): Observable<PublicMember> {
+  protected override read(): Observable<Member> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: PublicMember): Observable<PublicMember> {
+  protected override save(toSave: Member): Observable<Member> {
     throw new Error('Method not implemented.');
   }
 

@@ -10,18 +10,18 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { PublicMember } from '../../../../models/members/public-member';
+import { Member } from '../../../../models/members/member';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PublicMemberService {
+export class MemberService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<PublicMember[]>> {
+  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
     query.pagination = { page };
@@ -30,13 +30,13 @@ export class PublicMemberService {
 
     return this.getClient()
       .query(query)
-      .read<PaginatedResponse<PublicMember[]>>();
+      .read<PaginatedResponse<Member[]>>();
   }
 
-  public getOne(number: number): Observable<PublicMember> {
+  public getOne(number: number): Observable<Member> {
     return this.getClient()
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<PublicMember>>()
+      .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 

@@ -5,7 +5,7 @@ import { AssociationLayoutComponent } from '../core/layout/components/associatio
 
 const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
 const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
-const publicMembersModule = () => import('@app/association/public-members/public-members.module').then(m => m.PublicMembersModule);
+const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
 const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
 const libraryLendModule = () => import('@app/association/library-lending/library-lending.module').then(m => m.LibraryLendingModule);
 
@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'members',
         canActivate: [ResourceGuard("public_member", "view")],
-        loadChildren: publicMembersModule
+        loadChildren: membersModule
       },
       {
         path: 'myFees',

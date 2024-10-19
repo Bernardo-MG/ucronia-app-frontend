@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { PublicMember } from '@app/models/members/public-member';
+import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
@@ -8,14 +8,14 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import * as bootstrap from 'bootstrap';
 
 @Component({
-  selector: 'assoc-public-member-info',
+  selector: 'assoc-member-info',
   standalone: true,
   imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
-  templateUrl: './public-member-info.component.html'
+  templateUrl: './member-info.component.html'
 })
-export class PublicMemberInfoComponent {
+export class MemberInfoComponent {
 
-  @Input() public data = new PublicMember();
+  @Input() public data = new Member();
 
   @Input() public waiting = false;
 

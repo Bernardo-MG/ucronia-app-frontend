@@ -10,9 +10,9 @@
       <app-card-body>
         <!-- List -->
         <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
-          <assoc-public-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+          <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
             (changeDirection)="onChangeDirection($event)">
-          </assoc-public-member-list>
+          </assoc-member-list>
         </layout-pagination-info-wrapper>
       </app-card-body>
     </app-card>

@@ -1,20 +1,20 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MemberBalanceService } from '@app/association-admin/members/balance/services/member-balance.service';
-import { MemberService } from '@app/association-admin/members/core/services/member.service';
-import { PublicMemberFrontpageComponent } from './public-member-frontpage.component';
+import { MemberBalanceService } from '@app/association/members/balance/services/member-balance.service';
+import { MemberService } from '@app/association/members/core/services/member.service';
+import { MemberFrontpageComponent } from './member-frontpage.component';
 
-describe('PublicMemberFrontpageComponent', () => {
-  let component: PublicMemberFrontpageComponent;
-  let fixture: ComponentFixture<PublicMemberFrontpageComponent>;
+describe('MemberFrontpageComponent', () => {
+  let component: MemberFrontpageComponent;
+  let fixture: ComponentFixture<MemberFrontpageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        PublicMemberFrontpageComponent
+        MemberFrontpageComponent
       ],
       providers: [
         MemberService,
@@ -23,7 +23,7 @@ describe('PublicMemberFrontpageComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PublicMemberFrontpageComponent);
+    fixture = TestBed.createComponent(MemberFrontpageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

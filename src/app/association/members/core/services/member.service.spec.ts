@@ -1,9 +1,9 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PublicMemberService } from './public-member.service';
+import { MemberService } from './member.service';
 
-describe('PublicMemberService', () => {
-  let service: PublicMemberService;
+describe('MemberService', () => {
+  let service: MemberService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -11,7 +11,7 @@ describe('PublicMemberService', () => {
         HttpClientTestingModule
       ]
     });
-    service = TestBed.inject(PublicMemberService);
+    service = TestBed.inject(MemberService);
   });
 
   it('should be created', () => {
