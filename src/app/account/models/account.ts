@@ -1,4 +1,4 @@
-import { Member } from "@app/models/members/member";
+import { Person } from "@app/models/person/person";
 
 
 /**
@@ -18,7 +18,7 @@ export class Account {
    */
   email = '';
   /**
-   * User member.
+   * User person.
    */
-  member: Member | undefined = undefined;
+  person: Person | undefined = undefined;
 }
