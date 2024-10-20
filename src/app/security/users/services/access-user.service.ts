@@ -97,10 +97,8 @@ export class AccessUserService {
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
-    const defaultSort: SortProperty = new SortProperty('firstName');
-
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSort]);
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
     query.pagination = { page };
 
     return this.getClient()

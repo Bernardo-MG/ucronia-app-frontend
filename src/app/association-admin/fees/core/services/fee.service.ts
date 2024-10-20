@@ -52,7 +52,7 @@ export class FeeService {
 
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     const query = new PaginatedQuery();
-    query.sort = new Sort([new SortProperty('fullName'), new SortProperty('number')]);
+    query.sort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
     query.page = page;
     query.addParameter('status', active.toString().toUpperCase());
 

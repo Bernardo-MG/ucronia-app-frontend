@@ -49,7 +49,7 @@ export class DonorAdminService {
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Person[]>> {
     const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName')]);
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
     query.pagination = { page };
     query.sort = sort;
 

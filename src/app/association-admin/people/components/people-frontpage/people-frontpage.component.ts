@@ -53,7 +53,12 @@ export class PeopleFrontpageComponent {
   }
 
   public onChangeDirection(field: SortProperty) {
-    this.sort.addField(field);
+    if (field.property === 'fullName') {
+      this.sort.addField(new SortProperty('firstName', field.direction));
+      this.sort.addField(new SortProperty('lastName', field.direction));
+    } else {
+      this.sort.addField(field);
+    }
 
     // We are working with pages using index 0
     // TODO: the pages should come with the correct index
