@@ -38,6 +38,10 @@ export class PeopleInfoComponent {
 
   @Output() public deactivate = new EventEmitter<void>();
 
+  @Output() public enableRenew = new EventEmitter<void>();
+
+  @Output() public disableRenew = new EventEmitter<void>();
+
   @Output() public convertToMember = new EventEmitter<void>();
 
   public get isMember() {
@@ -58,6 +62,14 @@ export class PeopleInfoComponent {
 
   public onShowDeactivate() {
     this.openModal('deactivateModal');
+  }
+
+  public onShowEnableRenew() {
+    this.openModal('enableRenewModal');
+  }
+
+  public onShowDisableRenew() {
+    this.openModal('disableRenewModal');
   }
 
   public onShowConvertToMember() {

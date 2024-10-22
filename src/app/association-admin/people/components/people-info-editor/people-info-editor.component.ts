@@ -67,6 +67,24 @@ export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person>
     this.onSave(user);
   }
 
+  public onEnableRenew() {
+    const user = this.data;
+    if (user.membership === undefined) {
+      user.membership = new Membership();
+    }
+    user.membership.renew = true;
+    this.onSave(user);
+  }
+
+  public onDisableRenew() {
+    const user = this.data;
+    if (user.membership === undefined) {
+      user.membership = new Membership();
+    }
+    user.membership.renew = false;
+    this.onSave(user);
+  }
+
   public onConvertToMember() {
     const user = this.data;
     user.membership = new Membership();
