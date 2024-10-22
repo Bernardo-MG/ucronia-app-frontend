@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';

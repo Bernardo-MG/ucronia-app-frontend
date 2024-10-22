@@ -4,7 +4,7 @@ import { MemberStatusSelectComponent } from '@app/association/members/shared/com
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { CardModule } from '@app/shared/card/card.module';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';

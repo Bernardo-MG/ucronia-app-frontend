@@ -7,7 +7,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
