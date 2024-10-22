@@ -22,6 +22,7 @@ export class PeopleFormComponent extends FormComponent<Person> {
 
     const membership = new Membership();
     membership.active = true;
+    membership.renew = true;
     this.form = fb.group({
       name: fb.group({
         firstName: [null],
