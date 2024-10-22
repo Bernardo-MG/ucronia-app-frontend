@@ -16,8 +16,8 @@
       </app-card-footer>
     </ng-container>
     <ng-container *ngSwitchCase="'membership'">
-      <!-- Membership -->
       <app-card-body>
+        <!-- Membership -->
         <ng-container [ngSwitch]="isMember">
           <ng-container *ngSwitchCase="true">
             <!-- It is a member -->
@@ -33,6 +33,13 @@
             No es socio
           </ng-container>
         </ng-container>
+        <!-- Renewal -->
+        <div class="row">
+          <div class="col-sm-2 text-primary">Renovación</div>
+          <div class="col-sm-10">
+            <icon-success-or-failure [success]="data.membership?.renew"></icon-success-or-failure>
+          </div>
+        </div>
       </app-card-body>
       <app-card-footer>
         <ng-container [ngSwitch]="data.membership?.active">
@@ -62,15 +69,15 @@
           <ng-container *ngSwitchCase="true">
             <!-- Disable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Deactivate"
-                (action)="onShowEnableRenew()">Desactivar</layout-waiting-button>
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable renewal"
+                (action)="onShowEnableRenew()">Desactivar renovación</layout-waiting-button>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="false">
             <!-- Enable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Activate"
-                (action)="onShowDisableRenew()">Activar</layout-waiting-button>
+              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable renewal"
+                (action)="onShowDisableRenew()">Activar renovación</layout-waiting-button>
             </div>
           </ng-container>
         </ng-container>
