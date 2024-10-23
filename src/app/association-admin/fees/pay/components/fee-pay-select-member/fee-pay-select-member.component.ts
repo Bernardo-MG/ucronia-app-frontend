@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
 import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';

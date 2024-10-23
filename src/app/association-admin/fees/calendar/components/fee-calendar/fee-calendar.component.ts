@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { FeeCalendarMonth } from '@app/models/fees/fee-month';

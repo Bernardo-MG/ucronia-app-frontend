@@ -4,7 +4,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';

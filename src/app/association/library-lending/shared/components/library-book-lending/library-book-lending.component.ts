@@ -9,7 +9,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
-import { Active } from '@app/models/members/active';
+import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
