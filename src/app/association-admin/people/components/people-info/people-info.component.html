@@ -70,14 +70,14 @@
             <!-- Disable button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable renewal"
-                (action)="onShowEnableRenew()">Desactivar renovación</layout-waiting-button>
+                (action)="onShowDisableRenew()">Desactivar renovación</layout-waiting-button>
             </div>
           </ng-container>
           <ng-container *ngSwitchCase="false">
             <!-- Enable button -->
             <div class="col-sm-2 d-grid gap-2">
               <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable renewal"
-                (action)="onShowDisableRenew()">Activar renovación</layout-waiting-button>
+                (action)="onShowEnableRenew()">Activar renovación</layout-waiting-button>
             </div>
           </ng-container>
         </ng-container>
@@ -99,12 +99,12 @@
 <!-- Modal confirmation for disabling renewal -->
 <layout-modal name="disableRenewModal" title="Desactivar renovación" acceptText="Desactivar"
   (accept)="disableRenew.emit()">
-  <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
+  <p>¿Estás seguro de que quieres desactivar la renovación del socio?</p>
 </layout-modal>
 
 <!-- Modal confirmation for enabling renewal -->
 <layout-modal name="enableRenewModal" title="Activar renovación" acceptText="Activar" (accept)="enableRenew.emit()">
-  <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
+  <p>¿Estás seguro de que quieres activar la renovación del socio?</p>
 </layout-modal>
 
 <!-- Modal confirmation for converting to member -->
