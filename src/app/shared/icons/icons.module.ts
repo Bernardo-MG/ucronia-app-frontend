@@ -10,6 +10,7 @@ import { IconCoinsComponent } from './components/icon-coins/icon-coins.component
 import { IconCreateComponent } from './components/icon-create/icon-create.component';
 import { DeleteIconComponent } from './components/icon-delete/icon-delete.component';
 import { IconEditComponent } from './components/icon-edit/icon-edit.component';
+import { IconExcelComponent } from './components/icon-excel/icon-excel.component';
 import { IconFailureComponent } from './components/icon-failure/icon-failure.component';
 import { FastBackwardIconComponent } from './components/icon-fast-backward/icon-fast-backward.component';
 import { FastForwardIconComponent } from './components/icon-fast-forward/icon-fast-forward.component';
@@ -23,11 +24,11 @@ import { IconSaveComponent } from './components/icon-save/icon-save.component';
 import { IconSearchComponent } from './components/icon-search/icon-search.component';
 import { IconSettingsComponent } from './components/icon-settings/icon-settings.component';
 import { IconShieldComponent } from './components/icon-shield/icon-shield.component';
+import { IconSuccessOrFailureComponent } from './components/icon-success-or-failure/icon-success-or-failure.component';
 import { IconSuccessComponent } from './components/icon-success/icon-success.component';
-import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
 import { IconTakeInComponent } from './components/icon-take-in/icon-take-in.component';
 import { IconTakeOutComponent } from './components/icon-take-out/icon-take-out.component';
-import { IconSuccessOrFailureComponent } from './components/icon-success-or-failure/icon-success-or-failure.component';
+import { IconWaitingComponent } from './components/icon-waiting/icon-waiting.component';
 
 
 
@@ -59,7 +60,8 @@ import { IconSuccessOrFailureComponent } from './components/icon-success-or-fail
     IconMailComponent,
     IconTakeInComponent,
     IconTakeOutComponent,
-    IconSuccessOrFailureComponent
+    IconSuccessOrFailureComponent,
+    IconExcelComponent
   ],
   imports: [
     CommonModule,
@@ -92,7 +94,8 @@ import { IconSuccessOrFailureComponent } from './components/icon-success-or-fail
     IconMailComponent,
     IconTakeInComponent,
     IconTakeOutComponent,
-    IconSuccessOrFailureComponent
+    IconSuccessOrFailureComponent,
+    IconExcelComponent
   ]
 })
 export class IconsModule { }
