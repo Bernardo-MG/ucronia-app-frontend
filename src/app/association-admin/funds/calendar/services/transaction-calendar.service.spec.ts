@@ -11,9 +11,6 @@ describe('TransactionCalendarService', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule
-      ],
-      providers: [
-        TransactionCalendarService
       ]
     });
     service = TestBed.inject(TransactionCalendarService);
