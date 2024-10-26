@@ -1,5 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TransactionReportWidgetComponent } from './transaction-report-widget.component';
 
 describe('TransactionReportWidgetComponent', () => {
@@ -8,10 +8,13 @@ describe('TransactionReportWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransactionReportWidgetComponent]
+      imports: [
+        HttpClientTestingModule,
+        TransactionReportWidgetComponent
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(TransactionReportWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
