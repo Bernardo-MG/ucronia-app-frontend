@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
-import { BookReturnFormComponent } from '@app/association/library-lending/core/components/book-return-form/book-return-form.component';
-import { LibraryLendingService } from '@app/association/library-lending/core/services/library-lending.service';
+import { BookLendingMemberSelectionComponent } from '@app/association-admin/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
+import { BookReturnFormComponent } from '@app/association-admin/library-lending/core/components/book-return-form/book-return-form.component';
+import { LibraryLendingService } from '@app/association-admin/library-lending/core/services/library-lending.service';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';

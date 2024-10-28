@@ -22,6 +22,36 @@
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
           (startEditing)="onStartEditing()"></assoc-library-admin-book-info>
       </ng-container>
+      <app-card-footer *ngIf="lendPermission">
+        <ng-container [ngSwitch]="data.lent">
+          <ng-container *ngSwitchCase="true">
+            <!-- Return button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
+              data-bs-target="#returnModal">
+              <icon-take-in></icon-take-in>Devolver
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Lend button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
+              data-bs-target="#lendModal">
+              <icon-take-out></icon-take-out>Prestar
+            </button>
+          </ng-container>
+        </ng-container>
+      </app-card-footer>
     </ng-container>
   </div>
 </layout-article>
+
+<!-- Lend dialog -->
+<layout-modal name="lendModal" title="Préstamo de libro">
+  <assoc-library-book-lending [book]="data" (saved)="onCloseLend()"></assoc-library-book-lending>
+</layout-modal>
+
+<!-- Return dialog -->
+<layout-modal name="returnModal" title="Devolución de libro">
+  <assoc-library-book-return [book]="data" (saved)="onCloseReturn()"></assoc-library-book-return>
+</layout-modal>

@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
+import { LibraryBookLendingComponent } from '@app/association-admin/library-lending/shared/components/library-book-lending/library-book-lending.component';
+import { LibraryBookReturnComponent } from '@app/association-admin/library-lending/shared/components/library-book-return/library-book-return.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -10,12 +12,14 @@ import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
-import { Person } from '@app/models/person/person';
 import { Publisher } from '@app/models/library/publisher';
+import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { FormModule } from '@app/shared/form/form.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
@@ -29,10 +33,14 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, ResponsiveShortColumnsDirective, LibraryAdminBookInfoComponent],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryBookLendingComponent, LibraryBookReturnComponent, LibraryAdminBookInfoComponent, ModalComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
+
+  @ViewChild('lendCloseButton') lendCloseButton: any;
+
+  @ViewChild('returnCloseButton') returnCloseButton: any;
 
   private index = -1;
 
@@ -58,6 +66,12 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   public languages: Language[] = [];
 
+  public lendPermission = false;
+  
+  public get lendDisabled() {
+    return this.waiting || !this.lendPermission;
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -76,6 +90,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_book", "update");
     this.deletable = this.authContainer.hasPermission("library_book", "delete");
+    // Check permissions
+    this.lendPermission = this.authContainer.hasPermission("library_lending", "update");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -101,6 +117,16 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['../..'], { relativeTo: this.route });
     });
+  }
+
+  public onCloseLend() {
+    this.lendCloseButton.nativeElement.click();
+    this.load();
+  }
+
+  public onCloseReturn() {
+    this.returnCloseButton.nativeElement.click();
+    this.load();
   }
 
   protected override read(): Observable<Book> {
