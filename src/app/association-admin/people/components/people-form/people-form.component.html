@@ -45,9 +45,9 @@
       <app-input-failure-feedback [failures]="failures.getFailures('phone')"></app-input-failure-feedback>
     </div>
   </div>
-  <!-- Phone -->
+  <!-- Membership -->
   <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" (change)="onChangeMemberStatus($event)" checked>
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" (change)="onChangeMemberStatus($event)" [checked]="member">
     <label class="form-check-label" for="flexCheckDefault">
       Socio
     </label>
