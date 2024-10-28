@@ -41,7 +41,7 @@ export class MemberService {
   }
 
   private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/member/public');
+    return new AngularClient(this.http, environment.apiUrl + '/member');
   }
 
 }
