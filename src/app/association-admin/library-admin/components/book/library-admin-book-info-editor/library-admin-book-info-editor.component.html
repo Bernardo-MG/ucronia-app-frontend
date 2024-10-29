@@ -43,6 +43,17 @@
         </ng-container>
       </app-card-footer>
     </ng-container>
+    <!-- Lendings -->
+    <div appResponsiveShortColumns>
+      <app-card>
+        <app-card-header>
+          <h2>Préstamos</h2>
+        </app-card-header>
+        <app-card-body>
+          <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
+        </app-card-body>
+      </app-card>
+    </div>
   </div>
 </layout-article>
 

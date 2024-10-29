@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { LibraryBookLendingComponent } from '@app/association-admin/library-lending/shared/components/library-book-lending/library-book-lending.component';
 import { LibraryBookReturnComponent } from '@app/association-admin/library-lending/shared/components/library-book-return/library-book-return.component';
+import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
@@ -33,7 +34,7 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryBookLendingComponent, LibraryBookReturnComponent, LibraryAdminBookInfoComponent, ModalComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryBookLendingComponent, LibraryBookReturnComponent, LibraryAdminBookInfoComponent, ModalComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
