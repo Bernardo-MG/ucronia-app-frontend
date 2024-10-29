@@ -22,26 +22,6 @@
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
           (startEditing)="onStartEditing()"></assoc-library-admin-book-info>
       </ng-container>
-      <app-card-footer *ngIf="lendPermission">
-        <ng-container [ngSwitch]="data.lent">
-          <ng-container *ngSwitchCase="true">
-            <!-- Return button -->
-            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
-              data-bs-target="#returnModal">
-              <icon-take-in></icon-take-in>Devolver
-            </button>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- Lend button -->
-            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
-              data-bs-target="#lendModal">
-              <icon-take-out></icon-take-out>Prestar
-            </button>
-          </ng-container>
-        </ng-container>
-      </app-card-footer>
     </ng-container>
     <!-- Lendings -->
     <div appResponsiveShortColumns>
@@ -52,6 +32,26 @@
         <app-card-body>
           <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
         </app-card-body>
+        <app-card-footer *ngIf="lendPermission">
+          <ng-container [ngSwitch]="data.lent">
+            <ng-container *ngSwitchCase="true">
+              <!-- Return button -->
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
+                data-bs-target="#returnModal">
+                <icon-take-in></icon-take-in>Devolver
+              </button>
+            </ng-container>
+            <ng-container *ngSwitchCase="false">
+              <!-- Lend button -->
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
+                data-bs-target="#lendModal">
+                <icon-take-out></icon-take-out>Prestar
+              </button>
+            </ng-container>
+          </ng-container>
+        </app-card-footer>
       </app-card>
     </div>
   </div>
