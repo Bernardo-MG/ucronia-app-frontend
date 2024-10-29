@@ -37,16 +37,14 @@
             <ng-container *ngSwitchCase="true">
               <!-- Return button -->
               <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
-                data-bs-target="#returnModal">
+                routerLink="return" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-in></icon-take-in>Devolver
               </button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!-- Lend button -->
               <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled" data-bs-toggle="modal"
-                data-bs-target="#lendModal">
+                routerLink="lend" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-out></icon-take-out>Prestar
               </button>
             </ng-container>
@@ -56,11 +54,6 @@
     </div>
   </div>
 </layout-article>
-
-<!-- Lend dialog -->
-<layout-modal name="lendModal" title="Préstamo de libro">
-  <assoc-library-book-lending [book]="data" (saved)="onCloseLend()"></assoc-library-book-lending>
-</layout-modal>
 
 <!-- Return dialog -->
 <layout-modal name="returnModal" title="Devolución de libro">
