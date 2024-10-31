@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { BookReturnFormComponent } from '@app/association/library-lending/core/components/book-return-form/book-return-form.component';
 import { LibraryLendingService } from '@app/association/library-lending/core/services/library-lending.service';
@@ -32,11 +31,9 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
 
   constructor(
     private service: LibraryLendingService,
-    private authContainer: AuthContainer,
-    rtr: Router,
-    rt: ActivatedRoute
+    private authContainer: AuthContainer
   ) {
-    super(rtr, rt);
+    super();
   }
 
   public ngOnInit(): void {
@@ -58,12 +55,8 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
     return this.service.return(toSave);
   }
 
-  protected override getReturnRoute(saved: BookReturned): string {
-    return '';
-  }
-
-  protected override handleSaveSuccess(response: BookReturned) {
-    super.handleSaveSuccess(response);
+  protected override handleSaveSuccess(saved: BookReturned) {
+    super.handleSaveSuccess(saved);
     this.saved.emit();
   }
 

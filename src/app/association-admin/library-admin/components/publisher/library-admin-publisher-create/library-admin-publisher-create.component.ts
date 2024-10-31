@@ -19,18 +19,19 @@ export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publis
 
   constructor(
     private service: PublisherAdminService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: Publisher): Observable<Publisher> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: Publisher): string {
-    return '../..';
+  protected override handleSaveSuccess(saved: Publisher) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }
