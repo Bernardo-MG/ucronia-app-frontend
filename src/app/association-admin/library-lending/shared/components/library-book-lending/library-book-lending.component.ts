@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BookLendingFormComponent } from '@app/association-admin/library-lending/core/components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '@app/association-admin/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { LibraryLendingService } from '@app/association-admin/library-lending/core/services/library-lending.service';
@@ -43,7 +44,9 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
 
   constructor(
     private service: LibraryLendingService,
-    private authContainer: AuthContainer
+    private authContainer: AuthContainer,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     super();
   }
@@ -93,7 +96,8 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
 
   protected override handleSaveSuccess(saved: BookLent) {
     super.handleSaveSuccess(saved);
-    this.saved.emit();
+    //this.saved.emit();
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }
