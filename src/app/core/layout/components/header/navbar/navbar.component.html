@@ -3,42 +3,44 @@
     <a class="navbar-brand" routerLink="/">
       <img src="assets/resources/img/brand-icon.png" alt="Ucronía" width="19.85" height="24" class="me-2">{{title}}
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main-menu"
-      aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbar-main-menu">
-      <ul *ngIf="loggedOut" class="nav navbar-nav ms-auto">
-        <li class="nav-item">
-          <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
-            <icon-login></icon-login>
-          </a>
-        </li>
-      </ul>
-      <ul *ngIf="loggedIn" class="nav navbar-nav ms-auto">
-        <li *ngIf="showAssociation" class="nav-item">
-          <a routerLink="/association" class="nav-link" aria-label="Asociación" title="Asociación">
-            Associación
-          </a>
-        </li>
-        <li *ngIf="showAdmin" class="nav-item">
-          <a routerLink="/association/admin" class="nav-link" aria-label="Administración" title="Administración">
-            Administración
-          </a>
-        </li>
-        <li *ngIf="showSecurity" class="nav-item">
-          <a routerLink="/security" class="nav-link" aria-label="Seguridad" title="Seguridad">
-            <icon-shield></icon-shield>
-          </a>
-        </li>
-        <li *ngIf="showSettings" class="nav-item">
-          <a routerLink="/settings" class="nav-link" aria-label="Configuración" title="Configuración">
-            <icon-settings></icon-settings>
-          </a>
-        </li>
-        <!-- Account menu -->
-        <layout-account-dropdown></layout-account-dropdown>
-      </ul>
-    </div>
+    <ul *ngIf="loggedOut" class="nav navbar-nav ms-auto">
+      <li class="nav-item">
+        <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
+          <icon-login></icon-login>
+        </a>
+      </li>
+    </ul>
+    <ng-container *ngIf="loggedIn">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main-menu"
+        aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div *ngIf="loggedIn" class="collapse navbar-collapse" id="navbar-main-menu">
+        <ul class="nav navbar-nav ms-auto">
+          <li *ngIf="showAssociation" class="nav-item">
+            <a routerLink="/association" class="nav-link" aria-label="Asociación" title="Asociación">
+              Associación
+            </a>
+          </li>
+          <li *ngIf="showAdmin" class="nav-item">
+            <a routerLink="/association/admin" class="nav-link" aria-label="Administración" title="Administración">
+              Administración
+            </a>
+          </li>
+          <li *ngIf="showSecurity" class="nav-item">
+            <a routerLink="/security" class="nav-link" aria-label="Seguridad" title="Seguridad">
+              <icon-shield></icon-shield>
+            </a>
+          </li>
+          <li *ngIf="showSettings" class="nav-item">
+            <a routerLink="/settings" class="nav-link" aria-label="Configuración" title="Configuración">
+              <icon-settings></icon-settings>
+            </a>
+          </li>
+          <!-- Account menu -->
+          <layout-account-dropdown></layout-account-dropdown>
+        </ul>
+      </div>
+    </ng-container>
   </div>
 </nav>
