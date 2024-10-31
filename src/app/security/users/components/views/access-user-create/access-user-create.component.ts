@@ -19,18 +19,19 @@ export class AccessUserCreateComponent extends CreateComponent<User> {
 
   constructor(
     private service: AccessUserService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: User): Observable<User> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: User): string {
-    return `/security/users/${saved.username}`;
+  protected override handleSaveSuccess(saved: User) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate([`/security/users/${saved.username}`], { relativeTo: this.route });
   }
 
 }

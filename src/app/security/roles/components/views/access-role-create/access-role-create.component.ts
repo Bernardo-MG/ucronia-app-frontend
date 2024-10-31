@@ -19,18 +19,19 @@ export class AccessRoleCreateComponent extends CreateComponent<Role> {
 
   constructor(
     private service: AccessRoleService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: Role): Observable<Role> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: Role): string {
-    return `/security/roles/${saved.name}`;
+  protected override handleSaveSuccess(saved: Role) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate([`/security/roles/${saved.name}`], { relativeTo: this.route });
   }
 
 }

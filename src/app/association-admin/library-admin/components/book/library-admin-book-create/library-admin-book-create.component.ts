@@ -9,8 +9,8 @@ import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
-import { Person } from '@app/models/person/person';
 import { Publisher } from '@app/models/library/publisher';
+import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -60,10 +60,10 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   public ngOnInit(): void {
@@ -166,8 +166,9 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: Book): string {
-    return '../..';
+  protected override handleSaveSuccess(saved: Book) {
+    super.handleSaveSuccess(saved);
+      this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }

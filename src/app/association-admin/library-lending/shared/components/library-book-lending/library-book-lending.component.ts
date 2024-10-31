@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { BookLendingFormComponent } from '@app/association-admin/library-lending/core/components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '@app/association-admin/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
 import { LibraryLendingService } from '@app/association-admin/library-lending/core/services/library-lending.service';
@@ -44,11 +43,9 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
 
   constructor(
     private service: LibraryLendingService,
-    private authContainer: AuthContainer,
-    rtr: Router,
-    rt: ActivatedRoute
+    private authContainer: AuthContainer
   ) {
-    super(rtr, rt);
+    super();
   }
 
   public ngOnInit(): void {
@@ -94,12 +91,8 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
     return this.service.lend(toSave);
   }
 
-  protected override getReturnRoute(saved: BookLent): string {
-    return '';
-  }
-
-  protected override handleSaveSuccess(response: BookLent) {
-    super.handleSaveSuccess(response);
+  protected override handleSaveSuccess(saved: BookLent) {
+    super.handleSaveSuccess(saved);
     this.saved.emit();
   }
 

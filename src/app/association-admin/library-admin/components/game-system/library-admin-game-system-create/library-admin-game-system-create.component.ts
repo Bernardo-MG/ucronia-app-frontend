@@ -19,18 +19,19 @@ export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameS
 
   constructor(
     private service: GameSystemAdminService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: GameSystem): Observable<GameSystem> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: GameSystem): string {
-    return '../..';
+  protected override handleSaveSuccess(saved: GameSystem) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }

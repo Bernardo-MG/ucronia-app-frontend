@@ -41,11 +41,9 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   constructor(
     private service: FeeService,
-    private authContainer: AuthContainer,
-    rtr: Router,
-    rt: ActivatedRoute
+    private authContainer: AuthContainer
   ) {
-    super(rtr, rt);
+    super();
   }
 
   public ngOnInit(): void {
@@ -61,10 +59,6 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   protected override save(toSave: FeePayment): Observable<FeePayment> {
     return this.service.pay(toSave);
-  }
-
-  protected override getReturnRoute(saved: FeePayment): string {
-    return '..';
   }
 
   public onGoToMembersPage(page: number) {
