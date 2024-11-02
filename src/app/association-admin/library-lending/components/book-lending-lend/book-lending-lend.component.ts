@@ -5,7 +5,7 @@ import { Book } from '@app/models/library/book';
 import { LibraryBookLendingComponent } from '../../shared/components/library-book-lending/library-book-lending.component';
 
 @Component({
-  selector: 'app-book-lending-lend',
+  selector: 'assoc-book-lending-lend',
   standalone: true,
   imports: [LibraryBookLendingComponent],
   templateUrl: './book-lending-lend.component.html'
