@@ -168,7 +168,7 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   protected override handleSaveSuccess(saved: Book) {
     super.handleSaveSuccess(saved);
-      this.router.navigate(['../..'], { relativeTo: this.route });
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }
