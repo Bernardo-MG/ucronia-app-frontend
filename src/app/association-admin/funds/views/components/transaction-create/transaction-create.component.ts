@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { Transaction } from '@app/models/transactions/transaction';
 import { CardModule } from '@app/shared/card/card.module';
@@ -18,19 +17,13 @@ import { TransactionFormComponent } from '../../../core/components/transaction-f
 export class TransactionCreateComponent extends CreateComponent<Transaction> {
 
   constructor(
-    private service: TransactionService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private service: TransactionService
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: Transaction): Observable<Transaction> {
     return this.service.create(toSave);
-  }
-
-  protected override getReturnRoute(saved: Transaction): string {
-    return '..';
   }
 
 }

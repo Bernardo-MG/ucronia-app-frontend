@@ -15,6 +15,10 @@ import { FormModule } from '@app/shared/form/form.module';
 })
 export class PeopleFormComponent extends FormComponent<Person> {
 
+  public get member() {
+    return ((this.data) && (this.data.membership));
+  }
+
   constructor(
     fb: FormBuilder
   ) {
@@ -40,7 +44,7 @@ export class PeopleFormComponent extends FormComponent<Person> {
       if (checkbox.checked) {
         this.data.membership.active = true;
       } else if (this.data) {
-        this.data.membership = undefined;
+        this.form.membership.setValue(undefined);
       }
     }
   }

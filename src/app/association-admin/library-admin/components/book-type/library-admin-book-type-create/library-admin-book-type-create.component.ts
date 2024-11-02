@@ -19,18 +19,19 @@ export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookTyp
 
   constructor(
     private service: BookTypeAdminService,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   protected override save(toSave: BookType): Observable<BookType> {
     return this.service.create(toSave);
   }
 
-  protected override getReturnRoute(saved: BookType): string {
-    return '../..';
+  protected override handleSaveSuccess(saved: BookType) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }

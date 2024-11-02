@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { BookLendingLendComponent } from '../library-lending/components/book-lending-lend/book-lending-lend.component';
+import { BookLendingReturnComponent } from '../library-lending/components/book-lending-return/book-lending-return.component';
 import { LibraryAdminAuthorCreateComponent } from './components/author/library-admin-author-create/library-admin-author-create.component';
 import { LibraryAdminAuthorInfoEditorComponent } from './components/author/library-admin-author-info-editor/library-admin-author-info-editor.component';
 import { LibraryAdminBookTypeCreateComponent } from './components/book-type/library-admin-book-type-create/library-admin-book-type-create.component';
@@ -25,7 +27,9 @@ const routes: Routes = [
   { path: 'book/:number', component: LibraryAdminBookInfoEditorComponent, canActivate: [ResourceGuard("library_book", "read")] },
   { path: 'bookType/:number', component: LibraryAdminBookTypeInfoEditorComponent, canActivate: [ResourceGuard("library_book_type", "read")] },
   { path: 'gameSystem/:number', component: LibraryAdminGameSystemInfoEditorComponent, canActivate: [ResourceGuard("library_game_system", "read")] },
-  { path: 'publisher/:number', component: LibraryAdminPublisherInfoEditorComponent, canActivate: [ResourceGuard("library_publisher", "read")] }
+  { path: 'publisher/:number', component: LibraryAdminPublisherInfoEditorComponent, canActivate: [ResourceGuard("library_publisher", "read")] },
+  { path: 'book/:number/lend', component: BookLendingLendComponent, canActivate: [ResourceGuard("library_lending", "view")] },
+  { path: 'book/:number/return', component: BookLendingReturnComponent, canActivate: [ResourceGuard("library_lending", "view")] }
 ];
 
 @NgModule({

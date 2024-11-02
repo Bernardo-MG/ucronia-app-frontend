@@ -1,20 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookLendingFormComponent } from '@app/association/library-lending/core/components/book-lending-form/book-lending-form.component';
-import { BookLendingMemberSelectionComponent } from '@app/association/library-lending/core/components/book-lending-member-selection/book-lending-member-selection.component';
-import { LibraryLendingService } from '@app/association/library-lending/core/services/library-lending.service';
+import { BookLendingMemberSelectionComponent } from '@app/association-admin/library-lending/components/book-lending-member-selection/book-lending-member-selection.component';
+import { LibraryLendingService } from '@app/association-admin/library-lending/services/library-lending.service';
+import { Active } from '@app/association/members/model/active';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
-import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { Observable } from 'rxjs';
+import { BookLendingFormComponent } from '../book-lending-form/book-lending-form.component';
 
 @Component({
   selector: 'assoc-library-book-lending',
@@ -45,10 +45,10 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
   constructor(
     private service: LibraryLendingService,
     private authContainer: AuthContainer,
-    rtr: Router,
-    rt: ActivatedRoute
+    private router: Router,
+    private route: ActivatedRoute
   ) {
-    super(rtr, rt);
+    super();
   }
 
   public ngOnInit(): void {
@@ -94,13 +94,10 @@ export class LibraryBookLendingComponent extends CreateComponent<BookLent> imple
     return this.service.lend(toSave);
   }
 
-  protected override getReturnRoute(saved: BookLent): string {
-    return '';
-  }
-
-  protected override handleSaveSuccess(response: BookLent) {
-    super.handleSaveSuccess(response);
-    this.saved.emit();
+  protected override handleSaveSuccess(saved: BookLent) {
+    super.handleSaveSuccess(saved);
+    //this.saved.emit();
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }
