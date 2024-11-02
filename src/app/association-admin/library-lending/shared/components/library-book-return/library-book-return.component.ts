@@ -11,6 +11,7 @@ import { BookReturned } from '@app/models/library/book-returned';
 import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { Observable } from 'rxjs';
 
