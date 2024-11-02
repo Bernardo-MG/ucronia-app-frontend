@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
@@ -36,10 +36,6 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
-
-  @ViewChild('lendCloseButton') lendCloseButton: any;
-
-  @ViewChild('returnCloseButton') returnCloseButton: any;
 
   private index = -1;
 
@@ -116,16 +112,6 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
     this.service.delete(this.data.number).subscribe(r => {
       this.router.navigate(['../..'], { relativeTo: this.route });
     });
-  }
-
-  public onCloseLend() {
-    this.lendCloseButton.nativeElement.click();
-    this.load();
-  }
-
-  public onCloseReturn() {
-    this.returnCloseButton.nativeElement.click();
-    this.load();
   }
 
   protected override read(): Observable<Book> {
