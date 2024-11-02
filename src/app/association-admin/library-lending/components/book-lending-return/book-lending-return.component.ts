@@ -4,7 +4,7 @@ import { BookAdminService } from '@app/association-admin/library-admin/services/
 import { Book } from '@app/models/library/book';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { LibraryBookReturnComponent } from '../../shared/components/library-book-return/library-book-return.component';
+import { LibraryBookReturnComponent } from '../library-book-return/library-book-return.component';
 
 @Component({
   selector: 'assoc-book-lending-return',

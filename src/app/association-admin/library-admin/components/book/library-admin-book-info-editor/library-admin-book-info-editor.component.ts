@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
-import { LibraryBookReturnComponent } from '@app/association-admin/library-lending/shared/components/library-book-return/library-book-return.component';
+import { LibraryBookReturnComponent } from '@app/association-admin/library-lending/components/library-book-return/library-book-return.component';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
