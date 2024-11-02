@@ -41,7 +41,9 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   constructor(
     private service: FeeService,
-    private authContainer: AuthContainer
+    private authContainer: AuthContainer,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     super();
   }
@@ -91,6 +93,11 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public isReturnDisabled() {
     return this.currentStep < 2;
+  }
+
+  protected override handleSaveSuccess(saved: FeePayment) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }
