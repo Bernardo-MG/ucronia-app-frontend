@@ -7,6 +7,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../../core/components/transaction-form/transaction-form.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'assoc-transaction-create',
@@ -17,13 +18,20 @@ import { TransactionFormComponent } from '../../../core/components/transaction-f
 export class TransactionCreateComponent extends CreateComponent<Transaction> {
 
   constructor(
-    private service: TransactionService
+    private service: TransactionService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     super();
   }
 
   protected override save(toSave: Transaction): Observable<Transaction> {
     return this.service.create(toSave);
+  }
+
+  protected override handleSaveSuccess(saved: Transaction) {
+    super.handleSaveSuccess(saved);
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }
