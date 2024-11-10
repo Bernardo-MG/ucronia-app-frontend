@@ -7,7 +7,6 @@ import { LoginWidgetComponent } from './login-widget.component';
 describe('LoginWidgetComponent', () => {
   let component: LoginWidgetComponent;
   let fixture: ComponentFixture<LoginWidgetComponent>;
-  let loginService: LoginService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -21,8 +20,6 @@ describe('LoginWidgetComponent', () => {
       ]
     })
       .compileComponents();
-
-    loginService = TestBed.inject(LoginService);
   });
 
   beforeEach(() => {

@@ -83,11 +83,12 @@ export class LoginWidgetComponent implements OnInit {
             this.router.navigate([this.returnRoute]);
 
             this.failedLogin = false;
-            this.loading = false;
           } else {
             this.failedLogin = true;
-            this.loading = false;
           }
+
+          // Reactivate form
+          this.loading = false;
         },
         error: error => {
           // Failed request
