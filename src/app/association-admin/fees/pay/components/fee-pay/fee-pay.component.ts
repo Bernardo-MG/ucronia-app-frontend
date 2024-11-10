@@ -56,6 +56,8 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("fee", "create");
+
+    // Load members
     this.onGoToMembersPage(0);
   }
 
@@ -113,7 +115,12 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   }
 
   public onChangePay(event: any) {
-    this.pay = event.checked;
+    if (event.checked === undefined) {
+      // If the status was not received, fall back to default
+      this.pay = true;
+    } else {
+      this.pay = event.checked;
+    }
   }
 
   protected override handleSaveSuccess(saved: FeePayment) {
