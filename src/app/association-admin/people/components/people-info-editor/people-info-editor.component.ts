@@ -55,6 +55,7 @@ export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person>
       user.membership = new Membership();
     }
     user.membership.active = true;
+    user.membership.renew = true;
     this.onSave(user);
   }
 
@@ -64,6 +65,7 @@ export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person>
       user.membership = new Membership();
     }
     user.membership.active = false;
+    user.membership.renew = false;
     this.onSave(user);
   }
 
