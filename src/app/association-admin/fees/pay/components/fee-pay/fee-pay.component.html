@@ -32,7 +32,8 @@
               </ng-container>
               <ng-container *ngSwitchCase="false">
                 <!-- Create form -->
-                <assoc-fee-create-form></assoc-fee-create-form>
+                <assoc-fee-create-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+                  [member]="member" (save)="onCreateUnpaid($event)"></assoc-fee-create-form>
               </ng-container>
             </ng-container>
           </ng-container>

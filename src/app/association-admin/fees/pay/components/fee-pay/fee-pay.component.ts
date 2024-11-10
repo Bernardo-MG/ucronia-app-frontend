@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { FeeCreation } from '@app/models/fees/fee-creation';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
@@ -61,6 +62,18 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public onChangeActiveFilter(active: Active) {
     this.activeFilter = active;
     this.onGoToMembersPage(0);
+  }
+
+  public onCreateUnpaid(data: FeeCreation): void {
+    this.saving = true;
+    this.service.create(data).subscribe({
+      next: response => {
+        this.handleSaveSuccess(response);
+      },
+      error: error => {
+        return this.handleSaveFailure(error);
+      }
+    });
   }
 
   protected override save(toSave: FeePayment): Observable<FeePayment> {
