@@ -1,26 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
+import { FeeCreateFormComponent } from '../fee-create-form/fee-create-form.component';
 import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
 
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, IconsModule, CardModule, FeePayFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreateFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.component.html'
 })
 export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
@@ -38,6 +40,8 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   public activeFilter = Active.Active;
 
   public currentStep = 1;
+
+  public pay = true;
 
   constructor(
     private service: FeeService,
@@ -93,6 +97,10 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
 
   public isReturnDisabled() {
     return this.currentStep < 2;
+  }
+
+  public onChangePay(event: any) {
+    this.pay = event.checked;
   }
 
   protected override handleSaveSuccess(saved: FeePayment) {

@@ -1,13 +1,13 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FeePayment } from '@app/models/fees/fee-payment';
 import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { FeePayment } from '@app/models/fees/fee-payment';
 
 @Component({
   selector: 'assoc-fee-pay-form',
@@ -31,7 +31,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
       member: fb.group({
         number: [null, Validators.required]
       }),
-      feeDates: fb.array([], Validators.required)
+      feeDates: fb.array([''], Validators.required)
     });
   }
 
