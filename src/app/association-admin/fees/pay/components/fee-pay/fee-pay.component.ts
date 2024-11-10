@@ -115,11 +115,11 @@ export class FeePayComponent extends CreateComponent<FeePayment> implements OnIn
   }
 
   public onChangePay(event: any) {
-    if (event.checked) {
-      this.pay = event.checked;
-    } else {
+    if (event.checked === undefined) {
       // If the status was not received, fall back to default
       this.pay = true;
+    } else {
+      this.pay = event.checked;
     }
   }
 
