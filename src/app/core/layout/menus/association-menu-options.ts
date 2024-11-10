@@ -11,7 +11,7 @@ export const ASSOCIATION_MENU_OPTIONS: MenuOptions = {
     title: 'Asociación',
     links: [
       new AuthMenuLink('Calendario', '/association/calendar', 'activity_calendar', IconCalendarComponent),
-      new AuthMenuLink('Socios', '/association/members', 'public_member', IconPersonComponent),
+      new AuthMenuLink('Socios', '/association/members', 'member', IconPersonComponent),
       new AuthMenuLink('Mis cuotas', '/association/myFees', 'my_fees', IconReceiptComponent),
       new AuthMenuLink('Biblioteca', '/association/library', 'library', IconBookComponent)
     ]

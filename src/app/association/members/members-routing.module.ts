@@ -6,8 +6,8 @@ import { MemberInfoEditorComponent } from './views/components/member-info-view/m
 
 
 const routes: Routes = [
-  { path: '', component: MemberFrontpageComponent, canActivate: [ResourceGuard("public_member", "read")] },
-  { path: ':number', component: MemberInfoEditorComponent, canActivate: [ResourceGuard("public_member", "read")] }
+  { path: '', component: MemberFrontpageComponent, canActivate: [ResourceGuard("member", "read")] },
+  { path: ':number', component: MemberInfoEditorComponent, canActivate: [ResourceGuard("member", "read")] }
 ];
 
 @NgModule({
