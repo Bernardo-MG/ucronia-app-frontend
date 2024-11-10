@@ -25,7 +25,7 @@ const routes: Routes = [
       },
       {
         path: 'members',
-        canActivate: [ResourceGuard("public_member", "view")],
+        canActivate: [ResourceGuard("member", "view")],
         loadChildren: membersModule
       },
       {
