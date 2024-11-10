@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
-import { Member } from '@app/models/members/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { PaginatedQuery } from '@app/core/api/models/paginated-query';
@@ -9,7 +8,9 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { FeeCreation } from '@app/models/fees/fee-creation';
 import { FeePayment } from '@app/models/fees/fee-payment';
+import { Member } from '@app/models/members/member';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Fee } from '../../../../models/fees/fee';
@@ -23,8 +24,15 @@ export class FeeService {
     private http: HttpClient
   ) { }
 
+  public create(data: FeeCreation): Observable<FeePayment> {
+    return this.getClient()
+      .create<SimpleResponse<FeePayment>>(data)
+      .pipe(map(r => r.content));
+  }
+
   public pay(data: FeePayment): Observable<FeePayment> {
     return this.getClient()
+      .appendRoute('/pay')
       .create<SimpleResponse<FeePayment>>(data)
       .pipe(map(r => r.content));
   }

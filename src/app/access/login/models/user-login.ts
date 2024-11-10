@@ -10,4 +10,14 @@ export class UserLogin {
    * password for the login attempt.
    */
   password = '';
+  
+  constructor(username: string | undefined, password: string | undefined) {
+    if(username) {
+      this.username = username;
+    }
+    if(password) {
+      this.password = password;
+    }
+  }
+
 }
