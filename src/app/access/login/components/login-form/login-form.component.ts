@@ -69,14 +69,16 @@ export class LoginFormComponent {
   /**
    * Form structure.
    */
-  public form = this.formBuilder.nonNullable.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required]
-  });
+  public form;
 
   constructor(
-    private formBuilder: FormBuilder
-  ) { }
+    formBuilder: FormBuilder
+  ) {
+    this.form = formBuilder.nonNullable.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
 
   /**
    * Handler for the login event.
@@ -84,14 +86,7 @@ export class LoginFormComponent {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const user = new UserLogin();
-      if (this.form.value.username) {
-        user.username = this.form.value.username;
-      }
-      if (this.form.value.password) {
-        user.password = this.form.value.password;
-      }
-
+      const user = new UserLogin(this.form.value.username, this.form.value.password);
       this.login.emit(user);
     }
   }
