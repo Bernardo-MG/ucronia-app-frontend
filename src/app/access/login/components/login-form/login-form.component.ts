@@ -60,6 +60,13 @@ export class LoginFormComponent {
   }
 
   /**
+   * Remember me enabled flag.
+   */
+  public get rememberMeEnabled(): boolean {
+    return (!this.waiting);
+  }
+
+  /**
    * Form structure.
    */
   public form = this.formBuilder.nonNullable.group({
@@ -127,15 +134,6 @@ export class LoginFormComponent {
     }
 
     return invalid;
-  }
-
-  /**
-   * Returns true if the remember me check is enabled.
-   * 
-   * @returns true if the remember me check is enabled, false otherwise
-   */
-  public isRememberMeEnabled(): boolean {
-    return (!this.waiting);
   }
 
 }

@@ -16,7 +16,7 @@
     <div JustifyCenterDirective>
       <div class="form-check form-switch mb-3 mb-md-0">
         <input id="rememberMe" type="checkbox" (change)="onRememberMe($event.target)" class="form-check-input"
-          [disabled]="!isRememberMeEnabled()" [attr.aria-disabled]="!isRememberMeEnabled()">
+          [disabled]="!rememberMeEnabled" [attr.aria-disabled]="!rememberMeEnabled">
         <label for="rememberMe" class="form-check-label">Mantener sesión</label>
       </div>
     </div>
