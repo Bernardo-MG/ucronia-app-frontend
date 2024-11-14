@@ -4,14 +4,12 @@ import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
   selector: 'assoc-library-admin-book-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, WaitingButtonComponent, ModalComponent, PlaceholderDirective],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, PlaceholderDirective],
   templateUrl: './library-admin-book-info.component.html'
 })
 export class LibraryAdminBookInfoComponent {

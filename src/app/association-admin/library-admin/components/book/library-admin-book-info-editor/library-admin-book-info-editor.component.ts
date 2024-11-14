@@ -18,7 +18,6 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
@@ -32,7 +31,7 @@ import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/librar
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, ModalComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
