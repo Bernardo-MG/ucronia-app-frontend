@@ -7,14 +7,13 @@ import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
-import { Person } from '@app/models/person/person';
 import { Publisher } from '@app/models/library/publisher';
+import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
@@ -27,7 +26,7 @@ import { LibraryAdminPublisherSelectionComponent } from '../../publisher/library
 @Component({
   selector: 'assoc-library-admin-book-form',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, LibraryAdminDonorSelectionComponent, ModalComponent, SaveControlsComponent, JustifyCenterDirective],
+  imports: [CommonModule, FormModule, IconsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, LibraryAdminDonorSelectionComponent, ModalComponent, SaveControlsComponent, JustifyCenterDirective],
   templateUrl: './library-admin-book-form.component.html'
 })
 export class LibraryAdminBookFormComponent extends FormComponent<Book> {
@@ -111,7 +110,11 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       number: [undefined],
       index: [-1],
       isbn: ['', isbnValidator()],
-      title: ['', Validators.required],
+      title: fb.group({
+        pretitle: [''],
+        title: ['', Validators.required],
+        subtitle: ['']
+      }),
       language: ['', Validators.required],
       authors: [[]],
       donors: [[]],
