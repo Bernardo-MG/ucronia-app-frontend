@@ -1,6 +1,6 @@
 
 export class Title {
-  pretitle = '';
+  supertitle = '';
   title = '';
   subtitle = '';
   fullTitle = '';

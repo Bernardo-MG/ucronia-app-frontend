@@ -35,7 +35,7 @@ export class LibraryAdminBookCreateFormComponent extends FormComponent<Book> {
       index: [-1],
       isbn: ['', isbnValidator()],
       title: fb.group({
-        pretitle: [''],
+        supertitle: [''],
         title: ['', Validators.required],
         subtitle: ['']
       }),

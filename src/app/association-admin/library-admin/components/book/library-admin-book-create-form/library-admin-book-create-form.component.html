@@ -9,14 +9,14 @@
         <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
       </div>
     </div>
-    <!-- Pretitle -->
+    <!-- Supertitle -->
     <div class="row mb-2">
       <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
       <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="pretitle" class="form-control"
-          appInvalidField="title.pretitle" [backendFailure]="failures.hasFailures('title.pretitle')"
+        <input type="text" id="titleInput" formControlName="supertitle" class="form-control"
+          appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
           aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.pretitle')"></app-input-failure-feedback>
+        <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Title -->
