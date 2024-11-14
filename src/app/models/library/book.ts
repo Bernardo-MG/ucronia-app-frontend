@@ -1,5 +1,5 @@
-import { Person } from "../person/person";
 import { Author } from "./author";
+import { BookDonation } from "./book-donation";
 import { BookLending } from "./book-lending";
 import { BookType } from "./book-type";
 import { GameSystem } from "./game-system";
@@ -13,11 +13,10 @@ export class Book {
   isbn = '';
   language = '';
   publishDate = '';
-  donationDate = '';
   authors: Author[] = [];
-  donors: Person[] = [];
   lendings: BookLending[] = [];
   publishers: Publisher[] = [];
+  donation = new BookDonation();
   bookType = new BookType();
   gameSystem = new GameSystem();
 }
