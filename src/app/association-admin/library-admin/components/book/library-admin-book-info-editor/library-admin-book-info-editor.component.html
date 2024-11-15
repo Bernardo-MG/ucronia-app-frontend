@@ -24,7 +24,7 @@
       </ng-container>
     </ng-container>
     <!-- Lendings -->
-    <div class="pt-2">
+    <div *ngIf="!editing" class="pt-2">
       <app-card>
         <app-card-header>
           <h2>Préstamos</h2>
@@ -36,15 +36,15 @@
           <ng-container [ngSwitch]="data.lent">
             <ng-container *ngSwitchCase="true">
               <!-- Return button -->
-              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                routerLink="return" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-in></icon-take-in>Devolver
               </button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!-- Lend button -->
-              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                routerLink="lend" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-out></icon-take-out>Prestar
               </button>
             </ng-container>
