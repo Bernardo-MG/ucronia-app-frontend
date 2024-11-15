@@ -7,6 +7,6 @@ import { Publisher } from "./publisher";
 import { Title } from "./title";
 
 export class BookDonation {
-  donationDate = '';
+  date = '';
   donors: Person[] = [];
 }
