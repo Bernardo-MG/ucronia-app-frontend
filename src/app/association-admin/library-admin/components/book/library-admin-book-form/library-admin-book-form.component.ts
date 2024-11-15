@@ -43,8 +43,16 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public override set data(value: Book) {
     this.loadData(value);
-    this.bookType = value.bookType;
-    this.gameSystem = value.gameSystem;
+    if (value.bookType) {
+      this.bookType = value.bookType;
+    } else {
+      this.bookType = new BookType();
+    }
+    if (value.gameSystem) {
+      this.gameSystem = value.gameSystem;
+    } else {
+      this.gameSystem = new GameSystem();
+    }
   }
 
   @Input() public languages: Language[] = [];

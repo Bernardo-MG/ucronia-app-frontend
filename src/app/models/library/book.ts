@@ -16,7 +16,7 @@ export class Book {
   authors: Author[] = [];
   lendings: BookLending[] = [];
   publishers: Publisher[] = [];
-  donation = new BookDonation();
-  bookType = new BookType();
-  gameSystem = new GameSystem();
+  donation: BookDonation | undefined;
+  bookType: BookType | undefined;
+  gameSystem: GameSystem | undefined;
 }
