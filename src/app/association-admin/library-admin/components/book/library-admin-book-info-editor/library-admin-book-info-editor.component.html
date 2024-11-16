@@ -1,4 +1,7 @@
-<layout-article title="#{{data.number}} {{data.title.fullTitle}}">
+<article class="p-4">
+  <header>
+    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.title.fullTitle}}</h1>
+  </header>
   <div appResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
@@ -66,4 +69,4 @@
       </app-card>
     </div>
   </div>
-</layout-article>
+</article>

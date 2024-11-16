@@ -5,7 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
@@ -15,7 +15,7 @@ import { LibraryAdminPublisherInfoComponent } from '../library-admin-publisher-i
 @Component({
   selector: 'assoc-library-admin-publisher-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-publisher-info-editor.component.html'
 })
 export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {

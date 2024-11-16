@@ -5,7 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { GameSystem } from '@app/models/library/game-system';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
@@ -15,7 +15,7 @@ import { LibraryAdminGameSystemInfoComponent } from '../library-admin-game-syste
 @Component({
   selector: 'assoc-library-admin-game-system-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-game-system-info-editor.component.html'
 })
 export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusComponent<GameSystem> implements OnInit {

@@ -1,4 +1,7 @@
-<layout-article title="#{{data.number}} {{data.title.fullTitle}}">
+<article class="p-4">
+  <header>
+    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.title.fullTitle}}</h1>
+  </header>
   <div class="col-md-6 offset-md-3 pb-2">
     <app-card>
       <app-card-body>
@@ -18,4 +21,4 @@
       </app-card-body>
     </app-card>
   </div>
-</layout-article>
+</article>

@@ -5,7 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
@@ -15,7 +15,7 @@ import { LibraryAdminAuthorInfoComponent } from '../library-admin-author-info/li
 @Component({
   selector: 'assoc-library-admin-author-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-author-info-editor.component.html'
 })
 export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {
