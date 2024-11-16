@@ -25,13 +25,14 @@ import { BookAdminService } from '../../../services/book-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { LibraryAdminBookDonorsFormComponent } from '../library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, ArticleComponent, LibraryAdminBookFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
@@ -65,6 +66,8 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
   public get lendDisabled() {
     return this.waiting || !this.lendPermission;
   }
+
+  public view: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -119,6 +122,11 @@ export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusCompone
 
   protected override save(toSave: Book): Observable<Book> {
     return this.service.update(this.data.number, toSave);
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    super.onStartEditing();
   }
 
   public onGoToBookTypePage(page: number) {

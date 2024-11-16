@@ -3,24 +3,38 @@
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <app-card>
-          <app-card-body>
-            <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
-              [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
-              [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-              [donorPage]="donorPage" (save)="onSave($event)" (cancel)="onCancel()"
-              (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
-              (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
-              (goToDonorPage)="onGoToDonorPage($event)">
-            </assoc-library-admin-book-form>
-          </app-card-body>
-        </app-card>
+        <ng-container [ngSwitch]="view">
+          <ng-container *ngSwitchCase="'details'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
+                  [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+                  [donorPage]="donorPage" (save)="onSave($event)" (cancel)="onCancel()"
+                  (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
+                  (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
+                  (goToDonorPage)="onGoToDonorPage($event)">
+                </assoc-library-admin-book-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+          <ng-container *ngSwitchCase="'donors'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [donorPage]="donorPage" (save)="onSave($event)"
+                  (cancel)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
+                </assoc-library-admin-book-donors-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+        </ng-container>
       </ng-container>
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-library-admin-book-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
-          (startEditing)="onStartEditing()"></assoc-library-admin-book-info>
+          (startEditing)="onStartEditingView($event)"></assoc-library-admin-book-info>
       </ng-container>
     </ng-container>
     <!-- Lendings -->

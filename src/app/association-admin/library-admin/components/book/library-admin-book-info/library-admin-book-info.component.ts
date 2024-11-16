@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
+import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
@@ -28,7 +29,11 @@ export class LibraryAdminBookInfoComponent {
 
   @Output() public delete = new EventEmitter<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  @Output() public startEditing = new EventEmitter<string>();
+
+  public view: string = 'details';
+
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes')];
 
   public get authors(): string {
     return this.data.authors.map(e => e.name).join(", ");
@@ -47,6 +52,10 @@ export class LibraryAdminBookInfoComponent {
 
   public get publishers(): string {
     return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public onChangeView(newView: string) {
+    this.view = newView;
   }
 
 }

@@ -1,5 +1,5 @@
 import { Author } from "./author";
-import { BookDonation } from "./book-donation";
+import { Donation } from "./donation";
 import { BookLending } from "./book-lending";
 import { BookType } from "./book-type";
 import { GameSystem } from "./game-system";
@@ -16,7 +16,7 @@ export class Book {
   authors: Author[] = [];
   lendings: BookLending[] = [];
   publishers: Publisher[] = [];
-  donation: BookDonation | undefined;
+  donation: Donation | undefined;
   bookType: BookType | undefined;
   gameSystem: GameSystem | undefined;
 }

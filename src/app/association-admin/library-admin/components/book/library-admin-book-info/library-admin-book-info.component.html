@@ -1,71 +1,83 @@
 <app-card>
+  <app-card-header>
+    <!-- Tabs -->
+    <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
+  </app-card-header>
   <!-- Member details -->
-  <app-card-body>
-    <!-- Number -->
-    <div class="row">
-      <div class="col-3" *layoutPlaceholder="waiting">
-        # {{data.number}}
-      </div>
-    </div>
-    <!-- First name -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">ISBN</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.isbn}}
-      </div>
-    </div>
-    <!-- Title -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Título</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.title.fullTitle}}
-      </div>
-    </div>
-    <!-- Authors -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Autor</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{authors}}
-      </div>
-    </div>
-    <!-- Donation date -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Fecha de donación</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.donation?.date}}
-      </div>
-    </div>
-    <!-- Donors -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Donante</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{donors}}
-      </div>
-    </div>
-    <!-- Publishers -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Editor</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{publishers}}
-      </div>
-    </div>
-    <!-- Book type -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Tipo</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.bookType?.name}}
-      </div>
-    </div>
-    <!-- Game system -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Sistema</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.gameSystem?.name}}
-      </div>
-    </div>
-  </app-card-body>
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'details'">
+      <app-card-body>
+        <!-- Number -->
+        <div class="row">
+          <div class="col-3" *layoutPlaceholder="waiting">
+            # {{data.number}}
+          </div>
+        </div>
+        <!-- First name -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">ISBN</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.isbn}}
+          </div>
+        </div>
+        <!-- Title -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Título</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.title.fullTitle}}
+          </div>
+        </div>
+        <!-- Authors -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Autor</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{authors}}
+          </div>
+        </div>
+        <!-- Publishers -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Editor</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{publishers}}
+          </div>
+        </div>
+        <!-- Book type -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Tipo</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.bookType?.name}}
+          </div>
+        </div>
+        <!-- Game system -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Sistema</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.gameSystem?.name}}
+          </div>
+        </div>
+      </app-card-body>
+    </ng-container>
+    <ng-container *ngSwitchCase="'donors'">
+      <app-card-body>
+        <!-- Donation date -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Fecha de donación</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.donation?.date}}
+          </div>
+        </div>
+        <!-- Donors -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Donante</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{donors}}
+          </div>
+        </div>
+      </app-card-body>
+    </ng-container>
+  </ng-container>
   <app-card-footer *ngIf="showMenu">
     <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
-      (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+      (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
   </app-card-footer>
 </app-card>
