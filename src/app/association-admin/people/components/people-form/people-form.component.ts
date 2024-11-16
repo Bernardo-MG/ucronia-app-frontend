@@ -16,7 +16,7 @@ import { FormModule } from '@app/shared/form/form.module';
 export class PeopleFormComponent extends FormComponent<Person> {
 
   public get member() {
-    return ((this.data) && (this.data.membership));
+    return !!((this.data) && (this.data.membership));
   }
 
   constructor(
