@@ -30,7 +30,7 @@
     </thead>
     <tbody class="table-group-divider">
       <ng-template ngFor let-row [ngForOf]="rows">
-        <tr [ngClass]="{ 'table-warning': !row.member.active }">
+        <tr [ngClass]="{ 'table-warning': !row.active }">
           <td>
             {{row.member.name.fullName}}
           </td>

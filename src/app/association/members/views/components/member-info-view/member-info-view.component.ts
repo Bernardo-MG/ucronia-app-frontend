@@ -46,18 +46,6 @@ export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member>
     });
   }
 
-  public onActivate() {
-    const user = this.data;
-    user.active = true;
-    this.onSave(user);
-  }
-
-  public onDeactivate() {
-    const user = this.data;
-    user.active = false;
-    this.onSave(user);
-  }
-
   public onChangeView(newView: string) {
     this.view = newView;
   }
