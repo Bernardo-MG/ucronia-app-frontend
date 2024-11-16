@@ -119,45 +119,7 @@
       </div>
       <div appJustifyCenter>
         <button (click)="onShowPublisherSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-          aria-label="Add donor">
-          <icon-add></icon-add>
-        </button>
-      </div>
-    </div>
-    <!-- Donors -->
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <h2>Donantes</h2>
-      </div>
-      <div class="col-sm-12">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">
-              </th>
-              <th scope="col">
-                Nombre
-              </th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <ng-template ngFor let-donor let-i="index" [ngForOf]="donors">
-              <tr>
-                <td>
-                  <button (click)="onRemoveDonor(donor)" [disabled]="!formEnabled" type="button"
-                    class="btn btn-link link-dark" role="button" aria-label="Remove donor">
-                    <icon-delete></icon-delete>
-                  </button>
-                </td>
-                <td>{{donor.name.fullName}}</td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </table>
-      </div>
-      <div appJustifyCenter>
-        <button (click)="onShowDonorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-          aria-label="Add donor">
+          aria-label="Add publisher">
           <icon-add></icon-add>
         </button>
       </div>
@@ -231,11 +193,4 @@
   <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
     [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
     (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
-</layout-modal>
-
-<!-- Donor modal -->
-<layout-modal name="donorModal" title="Donante">
-  <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
-    [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
-    (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
 </layout-modal>

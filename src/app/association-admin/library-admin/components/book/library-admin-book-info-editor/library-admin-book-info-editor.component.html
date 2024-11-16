@@ -10,10 +10,9 @@
                 <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
                   [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-                  [donorPage]="donorPage" (save)="onSave($event)" (cancel)="onCancel()"
-                  (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
-                  (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
-                  (goToDonorPage)="onGoToDonorPage($event)">
+                  (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+                  (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+                  (goToPublisherPage)="onGoToPublisherPage($event)">
                 </assoc-library-admin-book-form>
               </app-card-body>
             </app-card>
