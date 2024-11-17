@@ -1,5 +1,14 @@
 <ng-container>
   <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+    <!-- Date -->
+    <div class="row mb-2">
+      <label for="donationDateInput" id="donationDateLabel" class="col-sm-2 col-form-label">Fecha</label>
+      <div formGroupName="donation" class="col-sm-10">
+        <input type="date" id="donationDateInput" formControlName="date" class="form-control"
+          appInvalidField="donationDate" [backendFailure]="failures.hasFailures('donationDate')">
+        <app-input-failure-feedback [failures]="failures.getFailures('donationDate')"></app-input-failure-feedback>
+      </div>
+    </div>
     <!-- Donors -->
     <div class="row mb-2">
       <div class="col-sm-12">

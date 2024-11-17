@@ -52,7 +52,10 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
       }),
       language: ['', Validators.required],
       authors: [[]],
-      donation: [new Donation()],
+      donation: fb.group({
+        date: [''],
+        donors: [[]]
+      }),
       bookType: [new BookType()],
       publishers: [[]],
       gameSystem: [new GameSystem()]
