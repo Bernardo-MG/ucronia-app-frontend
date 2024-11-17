@@ -37,20 +37,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  @Input() public override set data(value: Book) {
-    this.loadData(value);
-    if (value.bookType) {
-      this.bookType = value.bookType;
-    } else {
-      this.bookType = new BookType();
-    }
-    if (value.gameSystem) {
-      this.gameSystem = value.gameSystem;
-    } else {
-      this.gameSystem = new GameSystem();
-    }
-  }
-
   @Input() public languages: Language[] = [];
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
@@ -69,28 +55,28 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('authors')?.setValue(data);
   }
 
-  public get publishers(): Author[] {
+  public get publishers(): Publisher[] {
     return this.form.get('publishers')?.value;
   }
 
-  public set publishers(data: Author[]) {
+  public set publishers(data: Publisher[]) {
     this.form.get('publishers')?.setValue(data);
   }
 
-  public get bookType(): BookType {
-    return this.form.get('bookType')?.value;
+  public get bookType(): BookType | undefined {
+    return this.form.get('bookType').value;
   }
 
-  public set bookType(data: BookType) {
-    this.form.get('bookType')?.setValue(data);
+  public set bookType(data: BookType | undefined) {
+    this.form.get('bookType').setValue(data);
   }
 
-  public get gameSystem(): GameSystem {
-    return this.form.get('gameSystem')?.value;
+  public get gameSystem(): GameSystem | undefined {
+    return this.form.get('gameSystem').value;
   }
 
-  public set gameSystem(data: GameSystem) {
-    this.form.get('gameSystem')?.setValue(data);
+  public set gameSystem(data: GameSystem | undefined) {
+    this.form.get('gameSystem').setValue(data);
   }
 
   public selector = '';
