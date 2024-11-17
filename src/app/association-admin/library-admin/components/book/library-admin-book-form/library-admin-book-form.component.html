@@ -19,9 +19,9 @@
     </div>
     <!-- Supertitle -->
     <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
+      <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
       <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="supertitle" class="form-control"
+        <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
           appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
           aria-describedby="titleLabel" maxlength="100">
         <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
@@ -38,9 +38,9 @@
     </div>
     <!-- Subtitle -->
     <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
+      <label for="subtitleInput" id="subtitleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
       <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
+        <input type="text" id="subtitleInput" formControlName="subtitle" class="form-control"
           appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
           aria-describedby="titleLabel" maxlength="100">
         <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
@@ -56,6 +56,16 @@
             {{selectionLanguage.name}}</option>
         </select>
         <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
+      </div>
+    </div>
+    <!-- Publish date -->
+    <div class="row mb-2">
+      <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
+      <div class="col-sm-10">
+        <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
+          appInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
+          aria-describedby="publishDateLabel" maxlength="100">
+        <app-input-failure-feedback [failures]="failures.getFailures('publishDate')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Book type -->

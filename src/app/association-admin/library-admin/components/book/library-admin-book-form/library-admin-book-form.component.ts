@@ -110,11 +110,12 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
         subtitle: ['']
       }),
       language: ['', Validators.required],
+      publishDate: [''],
       authors: [[]],
       donors: [[]],
-      bookType: [new BookType()],
+      bookType: [],
       publishers: [[]],
-      gameSystem: [new GameSystem()]
+      gameSystem: []
     });
   }
 
