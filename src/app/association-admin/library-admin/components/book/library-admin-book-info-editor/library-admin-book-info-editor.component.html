@@ -1,30 +1,46 @@
-<layout-article title="#{{data.number}} {{data.title}}">
+<article class="p-4">
+  <header>
+    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.title.fullTitle}}</h1>
+  </header>
   <div appResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <app-card>
-          <app-card-body>
-            <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
-              [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
-              [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
-              [donorPage]="donorPage" (save)="onSave($event)" (cancel)="onCancel()"
-              (goToBookTypePage)="onGoToBookTypePage($event)" (goToGameSystemPage)="onGoToGameSystemPage($event)"
-              (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)"
-              (goToDonorPage)="onGoToDonorPage($event)">
-            </assoc-library-admin-book-form>
-          </app-card-body>
-        </app-card>
+        <ng-container [ngSwitch]="view">
+          <ng-container *ngSwitchCase="'details'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
+                  [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+                  (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+                  (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+                  (goToPublisherPage)="onGoToPublisherPage($event)">
+                </assoc-library-admin-book-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+          <ng-container *ngSwitchCase="'donors'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [donorPage]="donorPage" (save)="onSave($event)"
+                  (cancel)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
+                </assoc-library-admin-book-donors-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+        </ng-container>
       </ng-container>
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
         <assoc-library-admin-book-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
-          (startEditing)="onStartEditing()"></assoc-library-admin-book-info>
+          (startEditing)="onStartEditingView($event)"></assoc-library-admin-book-info>
       </ng-container>
     </ng-container>
     <!-- Lendings -->
-    <div class="pt-2">
+    <div *ngIf="!editing" class="pt-2">
       <app-card>
         <app-card-header>
           <h2>Préstamos</h2>
@@ -36,15 +52,15 @@
           <ng-container [ngSwitch]="data.lent">
             <ng-container *ngSwitchCase="true">
               <!-- Return button -->
-              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                routerLink="return" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-in></icon-take-in>Devolver
               </button>
             </ng-container>
             <ng-container *ngSwitchCase="false">
               <!-- Lend button -->
-              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend"
-                routerLink="lend" [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
                 <icon-take-out></icon-take-out>Prestar
               </button>
             </ng-container>
@@ -53,4 +69,4 @@
       </app-card>
     </div>
   </div>
-</layout-article>
+</article>

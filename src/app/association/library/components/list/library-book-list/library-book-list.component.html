@@ -14,7 +14,7 @@
     <tr *ngFor="let book of books; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(book)}}">
       <!-- Cells -->
       <td>
-        {{book.title}}
+        {{book.title.fullTitle}}
       </td>
       <td>
         <icon-success-or-failure [success]="!book.lent"></icon-success-or-failure>

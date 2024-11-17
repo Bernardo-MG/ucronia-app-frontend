@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { BookService } from '../../../services/book.service';
@@ -14,7 +14,7 @@ import { LibraryBookLendingsComponent } from '../../info/library-book-lendings/l
 @Component({
   selector: 'assoc-library-book-info-widget',
   standalone: true,
-  imports: [CommonModule, CardModule, ArticleComponent, LibraryBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-book-info-widget.component.html'
 })
 export class LibraryBookInfoWidgetComponent implements OnInit {

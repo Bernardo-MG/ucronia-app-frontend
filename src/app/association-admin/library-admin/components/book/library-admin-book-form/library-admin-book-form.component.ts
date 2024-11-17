@@ -7,27 +7,24 @@ import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
-import { Person } from '@app/models/person/person';
 import { Publisher } from '@app/models/library/publisher';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
 import { LibraryAdminAuthorSelectionComponent } from '../../author/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '../../book-type/library-admin-book-type-selection/library-admin-book-type-selection.component';
-import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '../../game-system/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '../../publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-book-form',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, LibraryAdminDonorSelectionComponent, ModalComponent, SaveControlsComponent, JustifyCenterDirective],
+  imports: [CommonModule, FormModule, IconsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, JustifyCenterDirective],
   templateUrl: './library-admin-book-form.component.html'
 })
 export class LibraryAdminBookFormComponent extends FormComponent<Book> {
@@ -40,14 +37,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
 
-  @Input() public donorPage = new PaginatedResponse<Person[]>([]);
-
-  @Input() public override set data(value: Book) {
-    this.loadData(value);
-    this.bookType = value.bookType;
-    this.gameSystem = value.gameSystem;
-  }
-
   @Input() public languages: Language[] = [];
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
@@ -58,8 +47,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   @Output() public goToPublisherPage = new EventEmitter<number>();
 
-  @Output() public goToDonorPage = new EventEmitter<number>();
-
   public get authors(): Author[] {
     return this.form.get('authors')?.value;
   }
@@ -68,36 +55,28 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.form.get('authors')?.setValue(data);
   }
 
-  public get publishers(): Author[] {
+  public get publishers(): Publisher[] {
     return this.form.get('publishers')?.value;
   }
 
-  public set publishers(data: Author[]) {
+  public set publishers(data: Publisher[]) {
     this.form.get('publishers')?.setValue(data);
   }
 
-  public get donors(): Person[] {
-    return this.form.get('donors')?.value;
+  public get bookType(): BookType | undefined {
+    return this.form.get('bookType').value;
   }
 
-  public set donors(data: Person[]) {
-    this.form.get('donors')?.setValue(data);
+  public set bookType(data: BookType | undefined) {
+    this.form.get('bookType').setValue(data);
   }
 
-  public get bookType(): BookType {
-    return this.form.get('bookType')?.value;
+  public get gameSystem(): GameSystem | undefined {
+    return this.form.get('gameSystem').value;
   }
 
-  public set bookType(data: BookType) {
-    this.form.get('bookType')?.setValue(data);
-  }
-
-  public get gameSystem(): GameSystem {
-    return this.form.get('gameSystem')?.value;
-  }
-
-  public set gameSystem(data: GameSystem) {
-    this.form.get('gameSystem')?.setValue(data);
+  public set gameSystem(data: GameSystem | undefined) {
+    this.form.get('gameSystem').setValue(data);
   }
 
   public selector = '';
@@ -111,13 +90,18 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
       number: [undefined],
       index: [-1],
       isbn: ['', isbnValidator()],
-      title: ['', Validators.required],
+      title: fb.group({
+        supertitle: [''],
+        title: ['', Validators.required],
+        subtitle: ['']
+      }),
       language: ['', Validators.required],
+      publishDate: [''],
       authors: [[]],
       donors: [[]],
-      bookType: [new BookType()],
+      bookType: [],
       publishers: [[]],
-      gameSystem: [new GameSystem()]
+      gameSystem: []
     });
   }
 
@@ -135,10 +119,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onShowPublisherSelection() {
     this.openModal('publisher');
-  }
-
-  public onShowDonorSelection() {
-    this.openModal('donor');
   }
 
   public onSelectBookType(bookType: BookType) {
@@ -169,20 +149,8 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
     this.closeModal('publisher');
   }
 
-  public onSelectDonor(donor: Person) {
-    if (!this.donors.find(d => d.number === donor.number)) {
-      this.donors.push(donor);
-    }
-    this.selector = '';
-    this.closeModal('donor');
-  }
-
   public onRemoveAuthor(author: Author) {
     this.authors = this.authors.filter(a => a.name !== author.name);
-  }
-
-  public onRemoveDonor(donor: Person) {
-    this.donors = this.donors.filter(d => d.number !== donor.number);
   }
 
   public onRemovePublisher(publisher: Publisher) {
@@ -203,10 +171,6 @@ export class LibraryAdminBookFormComponent extends FormComponent<Book> {
 
   public onGoToPublisherPage(page: number) {
     this.goToPublisherPage.emit(page);
-  }
-
-  public onGoToDonorPage(page: number) {
-    this.goToDonorPage.emit(page);
   }
 
   private openModal(modalId: string): void {

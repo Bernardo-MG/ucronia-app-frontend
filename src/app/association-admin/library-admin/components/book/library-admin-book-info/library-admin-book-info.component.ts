@@ -2,16 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
+import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
   selector: 'assoc-library-admin-book-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, WaitingButtonComponent, ModalComponent, PlaceholderDirective],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, PlaceholderDirective],
   templateUrl: './library-admin-book-info.component.html'
 })
 export class LibraryAdminBookInfoComponent {
@@ -30,18 +29,33 @@ export class LibraryAdminBookInfoComponent {
 
   @Output() public delete = new EventEmitter<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  @Output() public startEditing = new EventEmitter<string>();
+
+  public view: string = 'details';
+
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes')];
 
   public get authors(): string {
     return this.data.authors.map(e => e.name).join(", ");
   }
 
   public get donors(): string {
-    return this.data.donors.map(e => e.name.fullName).join(", ");
+    let donors;
+    if(this.data.donation) {
+      donors = this.data.donation.donors.map(e => e.name.fullName).join(", ");
+    } else {
+      donors = '';
+    }
+
+    return donors;
   }
 
   public get publishers(): string {
     return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public onChangeView(newView: string) {
+    this.view = newView;
   }
 
 }

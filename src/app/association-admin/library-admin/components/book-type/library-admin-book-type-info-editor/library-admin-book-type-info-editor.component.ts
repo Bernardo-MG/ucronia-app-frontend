@@ -6,7 +6,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { BookType } from '@app/models/library/book-type';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../library-admin-book-type-form/library-admin-book-type-form.component';
@@ -15,7 +15,7 @@ import { LibraryAdminBookTypeInfoComponent } from '../library-admin-book-type-in
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-book-type-info-editor.component.html'
 })
 export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {

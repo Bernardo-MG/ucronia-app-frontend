@@ -15,7 +15,7 @@
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Título</div>
   <div class="col-sm-10" *layoutPlaceholder="waiting">
-    {{data.title}}
+    {{data.title.fullTitle}}
   </div>
 </div>
 <!-- Language -->
@@ -23,6 +23,13 @@
   <div class="col-sm-2 text-primary">Idioma</div>
   <div class="col-sm-10" *layoutPlaceholder="waiting">
     {{language}}
+  </div>
+</div>
+<!-- Publish date -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Fecha de publicación</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.publishDate}}
   </div>
 </div>
 <!-- Book type -->
@@ -53,6 +60,12 @@
     {{editors}}
   </div>
 </div>
+<!-- Donation date -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Fecha de donación</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.donation?.date}}
+  </div>
 <!-- Donors -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Donantes</div>

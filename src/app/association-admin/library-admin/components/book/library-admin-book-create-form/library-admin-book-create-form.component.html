@@ -9,13 +9,33 @@
         <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
       </div>
     </div>
+    <!-- Supertitle -->
+    <div class="row mb-2">
+      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
+      <div formGroupName="title" class="col-sm-10">
+        <input type="text" id="titleInput" formControlName="supertitle" class="form-control"
+          appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
+          aria-describedby="titleLabel" maxlength="100">
+        <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
+      </div>
+    </div>
     <!-- Title -->
     <div class="row mb-2">
       <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
-      <div class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField
-          [backendFailure]="failures.hasFailures('title')" aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title')"></app-input-failure-feedback>
+      <div formGroupName="title" class="col-sm-10">
+        <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
+          [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100">
+        <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
+      </div>
+    </div>
+    <!-- Subtitle -->
+    <div class="row mb-2">
+      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
+      <div formGroupName="title" class="col-sm-10">
+        <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
+          appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
+          aria-describedby="titleLabel" maxlength="100">
+        <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
       </div>
     </div>
     <!-- Language -->
