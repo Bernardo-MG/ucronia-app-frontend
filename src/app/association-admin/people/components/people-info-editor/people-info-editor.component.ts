@@ -10,13 +10,13 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { PeopleService } from '../../services/people.service';
-import { PeopleFormComponent } from '../people-form/people-form.component';
+import { PeopleUpdateFormComponent } from '../people-update-form/people-update-form.component';
 import { PeopleInfoComponent } from '../people-info/people-info.component';
 
 @Component({
   selector: 'assoc-people-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, PeopleFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, PeopleUpdateFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-info-editor.component.html'
 })
 export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {

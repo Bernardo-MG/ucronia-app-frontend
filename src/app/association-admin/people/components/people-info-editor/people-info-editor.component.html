@@ -5,9 +5,9 @@
       <ng-container *ngSwitchCase="true">
         <app-card>
           <app-card-body>
-            <assoc-people-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+            <assoc-people-update-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
               [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()" (startEditing)="onStartEditing()">
-            </assoc-people-form>
+            </assoc-people-update-form>
           </app-card-body>
         </app-card>
       </ng-container>

@@ -7,12 +7,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { PeopleService } from '../../services/people.service';
-import { PeopleFormComponent } from '../people-form/people-form.component';
+import { PeopleCreateFormComponent } from '../people-create-form/people-create-form.component';
 
 @Component({
   selector: 'assoc-people-create',
   standalone: true,
-  imports: [CardModule, PeopleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, PeopleCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-create.component.html'
 })
 export class PeopleCreateComponent extends CreateComponent<Person> {
