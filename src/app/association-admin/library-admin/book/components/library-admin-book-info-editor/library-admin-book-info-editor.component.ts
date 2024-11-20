@@ -21,13 +21,13 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
-import { BookAdminService } from '../../../services/book-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 import { LibraryAdminBookDonorsFormComponent } from '../library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminBookUpdateFormComponent } from '../library-admin-book-update-form/library-admin-book-update-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
+import { LibraryAdminBookUpdateFormComponent } from '../library-admin-book-update-form/library-admin-book-update-form.component';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',

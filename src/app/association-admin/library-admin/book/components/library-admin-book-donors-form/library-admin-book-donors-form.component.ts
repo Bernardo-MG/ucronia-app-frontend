@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/components/donor/library-admin-donor-selection/library-admin-donor-selection.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Book } from '@app/models/library/book';
-import { BookType } from '@app/models/library/book-type';
-import { GameSystem } from '@app/models/library/game-system';
+import { Donation } from '@app/models/library/donation';
 import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
@@ -13,8 +13,6 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
-import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
-import { Donation as Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',

@@ -17,10 +17,10 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
-import { BookAdminService } from '../../../services/book-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 import { LibraryAdminBookCreateFormComponent } from '../library-admin-book-create-form/library-admin-book-create-form.component';
 
 @Component({
