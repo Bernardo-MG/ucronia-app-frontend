@@ -1,56 +1,54 @@
-<ng-container>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-    <!-- ISBN -->
-    <div class="row mb-2">
-      <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
-      <div class="col-sm-10">
-        <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField
-          [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
-        <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
-      </div>
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- ISBN -->
+  <div class="row mb-2">
+    <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
+    <div class="col-sm-10">
+      <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField
+        [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
+      <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
     </div>
-    <!-- Supertitle -->
-    <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="supertitle" class="form-control"
-          appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
-          aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Supertitle -->
+  <div class="row mb-2">
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="titleInput" formControlName="supertitle" class="form-control"
+        appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
+        aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
     </div>
-    <!-- Title -->
-    <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
-          [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Title -->
+  <div class="row mb-2">
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
+        [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
     </div>
-    <!-- Subtitle -->
-    <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
-          appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
-          aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Subtitle -->
+  <div class="row mb-2">
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
+        appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
+        aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
     </div>
-    <!-- Language -->
-    <div class="row mb-2">
-      <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
-      <div class="col-sm-10">
-        <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField
-          [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
-          <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
-            {{selectionLanguage.name}}</option>
-        </select>
-        <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Language -->
+  <div class="row mb-2">
+    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
+    <div class="col-sm-10">
+      <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField
+        [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
+        <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
+          {{selectionLanguage.name}}</option>
+      </select>
+      <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
     </div>
-    <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-      [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
-  </form>
-</ng-container>
+  </div>
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
+</form>

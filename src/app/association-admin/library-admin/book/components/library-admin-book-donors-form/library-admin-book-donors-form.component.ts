@@ -80,10 +80,6 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
   }
 
-  public onGoToDonorPage(page: number) {
-    this.goToDonorPage.emit(page);
-  }
-
   private openModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
     if (modalElement) {

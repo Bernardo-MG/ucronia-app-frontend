@@ -17,13 +17,7 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 })
 export class LibraryAdminBookCreateFormComponent extends FormComponent<Book> {
 
-  @Input() public override set data(value: Book) {
-    this.loadData(value);
-  }
-
   @Input() public languages: Language[] = [];
-
-  public selector = '';
 
   constructor(
     fb: FormBuilder
@@ -31,8 +25,6 @@ export class LibraryAdminBookCreateFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      number: [undefined],
-      index: [-1],
       isbn: ['', isbnValidator()],
       title: fb.group({
         supertitle: [''],

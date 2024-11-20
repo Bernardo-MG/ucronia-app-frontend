@@ -1,206 +1,204 @@
-<ng-container>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-    <!-- Number -->
-    <div class="row mb-2">
-      <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Número</label>
-      <div class="col-sm-10">
-        <input type="text" formControlName="number" id="indexInput" [readonly]="true" class="form-control"
-          aria-describedby="indexLabel">
-      </div>
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Number -->
+  <div class="row mb-2">
+    <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Número</label>
+    <div class="col-sm-10">
+      <input type="text" formControlName="number" id="indexInput" [readonly]="true" class="form-control"
+        aria-describedby="indexLabel">
     </div>
-    <!-- ISBN -->
-    <div class="row mb-2">
-      <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
-      <div class="col-sm-10">
-        <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField
-          [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
-        <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- ISBN -->
+  <div class="row mb-2">
+    <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
+    <div class="col-sm-10">
+      <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField
+        [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
+      <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
     </div>
-    <!-- Supertitle -->
-    <div class="row mb-2">
-      <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
-          appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
-          aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Supertitle -->
+  <div class="row mb-2">
+    <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Pretítulo</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
+        appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
+        aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
     </div>
-    <!-- Title -->
-    <div class="row mb-2">
-      <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
-          [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Title -->
+  <div class="row mb-2">
+    <label for="titleInput" id="titleLabel" class="col-sm-2 col-form-label">Título</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
+        [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
     </div>
-    <!-- Subtitle -->
-    <div class="row mb-2">
-      <label for="subtitleInput" id="subtitleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
-      <div formGroupName="title" class="col-sm-10">
-        <input type="text" id="subtitleInput" formControlName="subtitle" class="form-control"
-          appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
-          aria-describedby="titleLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Subtitle -->
+  <div class="row mb-2">
+    <label for="subtitleInput" id="subtitleLabel" class="col-sm-2 col-form-label">Subtítulo</label>
+    <div formGroupName="title" class="col-sm-10">
+      <input type="text" id="subtitleInput" formControlName="subtitle" class="form-control"
+        appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
+        aria-describedby="titleLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
     </div>
-    <!-- Language -->
-    <div class="row mb-2">
-      <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
-      <div class="col-sm-10">
-        <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField
-          [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
-          <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
-            {{selectionLanguage.name}}</option>
-        </select>
-        <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Language -->
+  <div class="row mb-2">
+    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
+    <div class="col-sm-10">
+      <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField
+        [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
+        <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
+          {{selectionLanguage.name}}</option>
+      </select>
+      <app-input-failure-feedback [failures]="failures.getFailures('language')"></app-input-failure-feedback>
     </div>
-    <!-- Publish date -->
-    <div class="row mb-2">
-      <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
-      <div class="col-sm-10">
-        <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
-          appInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
-          aria-describedby="publishDateLabel" maxlength="100">
-        <app-input-failure-feedback [failures]="failures.getFailures('publishDate')"></app-input-failure-feedback>
-      </div>
+  </div>
+  <!-- Publish date -->
+  <div class="row mb-2">
+    <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
+    <div class="col-sm-10">
+      <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
+        appInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
+        aria-describedby="publishDateLabel" maxlength="100">
+      <app-input-failure-feedback [failures]="failures.getFailures('publishDate')"></app-input-failure-feedback>
     </div>
-    <!-- Book type -->
-    <div class="row mb-2">
-      <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
-      <div class="col-sm-9">
-        <input type="text" [value]="bookType?.name" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
-          class="form-control" aria-describedby="bookTypeLabel">
-      </div>
-      <div class="col-sm-1">
-        <button (click)="onShowBookTypeSelection()" [disabled]="!formEnabled" type="button"
-          class="btn btn-link link-dark" role="button" aria-label="Pick book type">
-          <icon-search></icon-search>
-        </button>
-      </div>
+  </div>
+  <!-- Book type -->
+  <div class="row mb-2">
+    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="bookType?.name" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
+        class="form-control" aria-describedby="bookTypeLabel">
     </div>
-    <!-- Game system -->
-    <div class="row mb-2">
-      <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
-      <div class="col-sm-9">
-        <input type="text" [value]="gameSystem?.name" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
-          class="form-control" aria-describedby="gameSystemLabel">
-      </div>
-      <div class="col-sm-1">
-        <button (click)="onShowGameSystemSelection()" [disabled]="!formEnabled" type="button"
-          class="btn btn-link link-dark" role="button" aria-label="Pick game system">
-          <icon-search></icon-search>
-        </button>
-      </div>
+    <div class="col-sm-1">
+      <button (click)="onShowBookTypeSelection()" [disabled]="!formEnabled" type="button" class="btn btn-link link-dark"
+        role="button" aria-label="Pick book type">
+        <icon-search></icon-search>
+      </button>
     </div>
-    <!-- Publishers -->
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <h2>Editores</h2>
-      </div>
-      <div class="col-sm-12">
-        <table class="table">
-          <thead>
+  </div>
+  <!-- Game system -->
+  <div class="row mb-2">
+    <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="gameSystem?.name" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
+        class="form-control" aria-describedby="gameSystemLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowGameSystemSelection()" [disabled]="!formEnabled" type="button"
+        class="btn btn-link link-dark" role="button" aria-label="Pick game system">
+        <icon-search></icon-search>
+      </button>
+    </div>
+  </div>
+  <!-- Publishers -->
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h2>Editores</h2>
+    </div>
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <ng-template ngFor let-publisher let-i="index" [ngForOf]="publishers">
             <tr>
-              <th scope="col">
-              </th>
-              <th scope="col">
-                Nombre
-              </th>
+              <td>
+                <button (click)="onRemovePublisher(publisher)" [disabled]="!formEnabled" type="button"
+                  class="btn btn-link link-dark" role="button" aria-label="Remove publisher">
+                  <icon-delete></icon-delete>
+                </button>
+              </td>
+              <td>{{publisher.name}}</td>
             </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <ng-template ngFor let-publisher let-i="index" [ngForOf]="publishers">
-              <tr>
-                <td>
-                  <button (click)="onRemovePublisher(publisher)" [disabled]="!formEnabled" type="button"
-                    class="btn btn-link link-dark" role="button" aria-label="Remove publisher">
-                    <icon-delete></icon-delete>
-                  </button>
-                </td>
-                <td>{{publisher.name}}</td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </table>
-      </div>
-      <div appJustifyCenter>
-        <button (click)="onShowPublisherSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-          aria-label="Add publisher">
-          <icon-add></icon-add>
-        </button>
-      </div>
+          </ng-template>
+        </tbody>
+      </table>
     </div>
-    <!-- Authors -->
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <h2>Autores</h2>
-      </div>
-      <div class="col-sm-12">
-        <table class="table">
-          <thead>
+    <div appJustifyCenter>
+      <button (click)="onShowPublisherSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
+        aria-label="Add publisher">
+        <icon-add></icon-add>
+      </button>
+    </div>
+  </div>
+  <!-- Authors -->
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h2>Autores</h2>
+    </div>
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <ng-template ngFor let-author [ngForOf]="authors">
             <tr>
-              <th scope="col">
-              </th>
-              <th scope="col">
-                Nombre
-              </th>
+              <td>
+                <button (click)="onRemoveAuthor(author)" [disabled]="!formEnabled" type="button"
+                  class="btn btn-link link-dark" role="button" aria-label="Remove author">
+                  <icon-delete></icon-delete>
+                </button>
+              </td>
+              <td>{{author.name}}</td>
             </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <ng-template ngFor let-author [ngForOf]="authors">
-              <tr>
-                <td>
-                  <button (click)="onRemoveAuthor(author)" [disabled]="!formEnabled" type="button"
-                    class="btn btn-link link-dark" role="button" aria-label="Remove author">
-                    <icon-delete></icon-delete>
-                  </button>
-                </td>
-                <td>{{author.name}}</td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </table>
-      </div>
-      <div appJustifyCenter>
-        <button (click)="onShowAuthorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-          aria-label="Add author">
-          <icon-add></icon-add>
-        </button>
-      </div>
+          </ng-template>
+        </tbody>
+      </table>
     </div>
-    <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-      [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
-  </form>
-</ng-container>
+    <div appJustifyCenter>
+      <button (click)="onShowAuthorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
+        aria-label="Add author">
+        <icon-add></icon-add>
+      </button>
+    </div>
+  </div>
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
+</form>
 
 <!-- Book type modal-->
 <layout-modal name="book_typeModal" title="Tipo de libro">
   <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
     [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
-    (goToPage)="onGoToBookTypePage($event)"></assoc-library-admin-book-type-selection>
+    (goToPage)="this.goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
 </layout-modal>
 
 <!-- Game system modal -->
 <layout-modal name="game_systemModal" title="Sistema de juego">
   <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
     [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
-    (goToPage)="onGoToGameSystemPage($event)"></assoc-library-admin-game-system-selection>
+    (goToPage)="this.goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
 </layout-modal>
 
 <!-- Author modal -->
 <layout-modal name="authorModal" title="Autor">
   <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
     [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
-    (goToPage)="onGoToAuthorPage($event)"></assoc-library-admin-author-selection>
+    (goToPage)="this.goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
 </layout-modal>
 
 <!-- Publisher modal -->
 <layout-modal name="publisherModal" title="Editor">
   <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
     [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
-    (goToPage)="onGoToPublisherPage($event)"></assoc-library-admin-publisher-selection>
+    (goToPage)="this.goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
 </layout-modal>

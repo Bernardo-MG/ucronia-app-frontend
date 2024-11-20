@@ -1,60 +1,58 @@
-<ng-container>
-  <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-    <!-- Date -->
-    <div class="row mb-2">
-      <label for="donationDateInput" id="donationDateLabel" class="col-sm-2 col-form-label">Fecha</label>
-      <div formGroupName="donation" class="col-sm-10">
-        <input type="date" id="donationDateInput" formControlName="date" class="form-control"
-          appInvalidField="donationDate" [backendFailure]="failures.hasFailures('donationDate')">
-        <app-input-failure-feedback [failures]="failures.getFailures('donationDate')"></app-input-failure-feedback>
-      </div>
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Date -->
+  <div class="row mb-2">
+    <label for="donationDateInput" id="donationDateLabel" class="col-sm-2 col-form-label">Fecha</label>
+    <div formGroupName="donation" class="col-sm-10">
+      <input type="date" id="donationDateInput" formControlName="date" class="form-control"
+        appInvalidField="donationDate" [backendFailure]="failures.hasFailures('donationDate')">
+      <app-input-failure-feedback [failures]="failures.getFailures('donationDate')"></app-input-failure-feedback>
     </div>
-    <!-- Donors -->
-    <div class="row mb-2">
-      <div class="col-sm-12">
-        <h2>Donantes</h2>
-      </div>
-      <div class="col-sm-12">
-        <table class="table">
-          <thead>
+  </div>
+  <!-- Donors -->
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h2>Donantes</h2>
+    </div>
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <ng-template ngFor let-donor let-i="index" [ngForOf]="donation?.donors">
             <tr>
-              <th scope="col">
-              </th>
-              <th scope="col">
-                Nombre
-              </th>
+              <td>
+                <button (click)="onRemoveDonor(donor)" [disabled]="!formEnabled" type="button"
+                  class="btn btn-link link-dark" role="button" aria-label="Remove donor">
+                  <icon-delete></icon-delete>
+                </button>
+              </td>
+              <td>{{donor.name.fullName}}</td>
             </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            <ng-template ngFor let-donor let-i="index" [ngForOf]="donation?.donors">
-              <tr>
-                <td>
-                  <button (click)="onRemoveDonor(donor)" [disabled]="!formEnabled" type="button"
-                    class="btn btn-link link-dark" role="button" aria-label="Remove donor">
-                    <icon-delete></icon-delete>
-                  </button>
-                </td>
-                <td>{{donor.name.fullName}}</td>
-              </tr>
-            </ng-template>
-          </tbody>
-        </table>
-      </div>
-      <div appJustifyCenter>
-        <button (click)="onShowDonorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-          aria-label="Add donor">
-          <icon-add></icon-add>
-        </button>
-      </div>
+          </ng-template>
+        </tbody>
+      </table>
     </div>
-    <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-      [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
-  </form>
-</ng-container>
+    <div appJustifyCenter>
+      <button (click)="onShowDonorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
+        aria-label="Add donor">
+        <icon-add></icon-add>
+      </button>
+    </div>
+  </div>
+  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (save)="onSave()" (cancel)="onCancel()"></app-save-controls>
+</form>
 
 <!-- Donor modal -->
 <layout-modal name="donorModal" title="Donante">
   <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
     [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
-    (goToPage)="onGoToDonorPage($event)"></assoc-library-admin-donor-selection>
+    (goToPage)="this.goToDonorPage.emit($event)"></assoc-library-admin-donor-selection>
 </layout-modal>

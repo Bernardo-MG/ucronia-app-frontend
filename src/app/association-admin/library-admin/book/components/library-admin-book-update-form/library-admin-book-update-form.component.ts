@@ -157,22 +157,6 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
     this.publishers = this.publishers.filter(d => d.name !== publisher.name);
   }
 
-  public onGoToBookTypePage(page: number) {
-    this.goToBookTypePage.emit(page);
-  }
-
-  public onGoToGameSystemPage(page: number) {
-    this.goToGameSystemPage.emit(page);
-  }
-
-  public onGoToAuthorPage(page: number) {
-    this.goToAuthorPage.emit(page);
-  }
-
-  public onGoToPublisherPage(page: number) {
-    this.goToPublisherPage.emit(page);
-  }
-
   private openModal(modalId: string): void {
     const modalElement = document.getElementById(`${modalId}Modal`);
     if (modalElement) {

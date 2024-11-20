@@ -13,7 +13,6 @@ import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
@@ -26,7 +25,7 @@ import { LibraryAdminBookCreateFormComponent } from '../library-admin-book-creat
 @Component({
   selector: 'assoc-library-admin-book-create',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookCreateFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-create.component.html'
 })
 export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {
