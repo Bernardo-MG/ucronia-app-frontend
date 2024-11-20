@@ -17,9 +17,9 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
+import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'assoc-library-admin-book-update-form',
@@ -81,6 +81,8 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
 
   public selector = '';
 
+  private modalHandler = new ModalHandler();
+
   constructor(
     fb: FormBuilder
   ) {
@@ -106,31 +108,31 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-    this.openModal('book_type');
+    this.modalHandler.openModal('book_type');
   }
 
   public onShowGameSystemSelection() {
-    this.openModal('game_system');
+    this.modalHandler.openModal('game_system');
   }
 
   public onShowAuthorSelection() {
-    this.openModal('author');
+    this.modalHandler.openModal('author');
   }
 
   public onShowPublisherSelection() {
-    this.openModal('publisher');
+    this.modalHandler.openModal('publisher');
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType;
     this.selector = ''
-    this.closeModal('book_type');
+    this.modalHandler.closeModal('book_type');
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem;
     this.selector = '';
-    this.closeModal('game_system');
+    this.modalHandler.closeModal('game_system');
   }
 
   public onSelectAuthor(author: Author) {
@@ -138,7 +140,7 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
       this.authors = this.authors.concat([author]);
     }
     this.selector = '';
-    this.closeModal('author');
+    this.modalHandler.closeModal('author');
   }
 
   public onSelectPublisher(publisher: Publisher) {
@@ -146,7 +148,7 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
       this.publishers = this.publishers.concat([publisher]);
     }
     this.selector = '';
-    this.closeModal('publisher');
+    this.modalHandler.closeModal('publisher');
   }
 
   public onRemoveAuthor(author: Author) {
@@ -155,27 +157,6 @@ export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
 
   public onRemovePublisher(publisher: Publisher) {
     this.publishers = this.publishers.filter(d => d.name !== publisher.name);
-  }
-
-  private openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-      }
-      modal.show();
-    }
-  }
-
-  private closeModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) {
-        modal.toggle();
-      }
-    }
   }
 
 }

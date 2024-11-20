@@ -11,6 +11,7 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
+import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
 
@@ -33,6 +34,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   public set donation(data: Donation) {
     this.form.get('donation')?.setValue(data);
   }
+
+  private modalHandler = new ModalHandler();
 
   constructor(
     fb: FormBuilder
@@ -62,7 +65,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   }
 
   public onShowDonorSelection() {
-    this.openModal('donor');
+    this.modalHandler.openModal('donor');
   }
 
   public onSelectDonor(donor: Person) {
@@ -73,7 +76,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     if (!this.donation.donors.find(d => d.number === donor.number)) {
       this.donation.donors.push(donor);
     }
-    this.closeModal('donor');
+    this.modalHandler.closeModal('donor');
   }
 
   public onRemoveDonor(donor: Person) {
@@ -82,27 +85,6 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     }
 
     this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
-  }
-
-  private openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-      }
-      modal.show();
-    }
-  }
-
-  private closeModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      const modal = bootstrap.Modal.getInstance(modalElement);
-      if (modal) {
-        modal.toggle();
-      }
-    }
   }
 
 }
