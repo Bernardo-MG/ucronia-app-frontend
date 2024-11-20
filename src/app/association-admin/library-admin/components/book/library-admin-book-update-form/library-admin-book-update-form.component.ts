@@ -22,12 +22,12 @@ import { LibraryAdminGameSystemSelectionComponent } from '../../game-system/libr
 import { LibraryAdminPublisherSelectionComponent } from '../../publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-form',
+  selector: 'assoc-library-admin-book-update-form',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, JustifyCenterDirective],
-  templateUrl: './library-admin-book-form.component.html'
+  templateUrl: './library-admin-book-update-form.component.html'
 })
-export class LibraryAdminBookFormComponent extends FormComponent<Book> {
+export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
 
   @Input() public bookTypePage = new PaginatedResponse<BookType[]>([]);
 

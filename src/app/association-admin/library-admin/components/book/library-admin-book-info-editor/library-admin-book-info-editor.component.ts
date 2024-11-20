@@ -26,13 +26,13 @@ import { BookTypeAdminService } from '../../../services/book-type-admin.service'
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookDonorsFormComponent } from '../library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminBookFormComponent } from '../library-admin-book-form/library-admin-book-form.component';
+import { LibraryAdminBookUpdateFormComponent } from '../library-admin-book-update-form/library-admin-book-update-form.component';
 import { LibraryAdminBookInfoComponent } from '../library-admin-book-info/library-admin-book-info.component';
 
 @Component({
   selector: 'assoc-library-admin-book-info-editor',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookUpdateFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-book-info-editor.component.html'
 })
 export class LibraryAdminBookInfoEditorComponent extends InfoEditorStatusComponent<Book> implements OnInit {
