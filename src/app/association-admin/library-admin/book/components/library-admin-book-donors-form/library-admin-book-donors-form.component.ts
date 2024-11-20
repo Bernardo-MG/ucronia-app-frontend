@@ -26,8 +26,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
   @Output() public goToDonorPage = new EventEmitter<number>();
 
-  public get donation(): Donation {
-    return this.form.get('donation')?.value;
+  public get donation(): Donation | undefined {
+    return this.form.get('donation').value;
   }
 
   public set donation(data: Donation) {
@@ -77,6 +77,10 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   }
 
   public onRemoveDonor(donor: Person) {
+    if (!this.donation) {
+      this.donation = new Donation();
+    }
+
     this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
   }
 
