@@ -14,7 +14,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 })
 export class LibraryAdminGameSystemSelectionComponent extends PagedSelectorComponent<GameSystem> {
 
-  public override nameRenderer(data: GameSystem): string {
+  public nameRenderer(data: GameSystem): string {
     return data.name;
   }
 

@@ -14,7 +14,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 })
 export class LibraryAdminDonorSelectionComponent extends PagedSelectorComponent<Person> {
 
-  public override nameRenderer(data: Person): string {
+  public nameRenderer(data: Person): string {
     return data.name.fullName;
   }
 

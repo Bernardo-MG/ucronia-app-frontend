@@ -13,7 +13,7 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 })
 export class LibraryAdminAuthorSelectionComponent extends PagedSelectorComponent<Author> {
 
-  public override nameRenderer(data: Author): string {
+  public nameRenderer(data: Author): string {
     return data.name;
   }
 
