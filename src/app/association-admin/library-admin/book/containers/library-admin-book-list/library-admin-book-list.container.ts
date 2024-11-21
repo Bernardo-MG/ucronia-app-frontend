@@ -13,9 +13,9 @@ import { BookAdminService } from '../../services/book-admin.service';
   selector: 'assoc-library-admin-book-list',
   standalone: true,
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-admin-book-list.component.html'
+  templateUrl: './library-admin-book-list.container.html'
 })
-export class LibraryAdminBookListComponent implements OnInit {
+export class LibraryAdminBookListContainer implements OnInit {
 
   public page = new PaginatedResponse<Book[]>([]);
 

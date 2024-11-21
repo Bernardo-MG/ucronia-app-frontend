@@ -7,7 +7,7 @@ import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { LibraryAdminBookListComponent } from '../../book/components/library-admin-book-list/library-admin-book-list.component';
+import { LibraryAdminBookListContainer } from '../../book/containers/library-admin-book-list/library-admin-book-list.container';
 import { LibraryAdminAuthorListComponent } from '../author/library-admin-author-list/library-admin-author-list.component';
 import { LibraryAdminBookTypeListComponent } from '../book-type/library-admin-book-type-list/library-admin-book-type-list.component';
 import { LibraryAdminGameSystemListComponent } from '../game-system/library-admin-game-system-list/library-admin-game-system-list.component';
@@ -16,7 +16,7 @@ import { LibraryAdminPublisherListComponent } from '../publisher/library-admin-p
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListComponent, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, ArticleComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListContainer, LibraryAdminBookTypeListComponent, LibraryAdminGameSystemListComponent, LibraryAdminAuthorListComponent, LibraryAdminPublisherListComponent, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-frontpage.component.html'
 })
 export class LibraryAdminFrontpageComponent implements OnInit {

@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
+import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -12,23 +14,30 @@ import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { FormModule } from '@app/shared/form/form.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
+import { LibraryAdminBookInfoComponent } from '../../components/library-admin-book-info/library-admin-book-info.component';
+import { LibraryAdminBookUpdateFormComponent } from '../../components/library-admin-book-update-form/library-admin-book-update-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { LibraryAdminBookCreateFormComponent } from '../library-admin-book-create-form/library-admin-book-create-form.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-create',
+  selector: 'assoc-library-admin-book-edition',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookCreateFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-create.component.html'
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookUpdateFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  templateUrl: './library-admin-book-edition.container.html'
 })
-export class LibraryAdminBookCreateComponent extends CreateComponent<Book> implements OnInit {
+export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
+
+  private index = -1;
 
   public readingBookTypes = false;
 
@@ -52,20 +61,44 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
 
   public languages: Language[] = [];
 
+  public lendPermission = false;
+  
+  public get lendDisabled() {
+    return this.waiting || !this.lendPermission;
+  }
+
+  public view: string = '';
+
   constructor(
+    private route: ActivatedRoute,
+    private router: Router,
     private service: BookAdminService,
     private bookTypeService: BookTypeAdminService,
     private gameSystemService: GameSystemAdminService,
     private authorService: AuthorAdminService,
     private publisherService: PublisherAdminService,
     private donorService: DonorAdminService,
-    private router: Router,
-    private route: ActivatedRoute
+    private authContainer: AuthContainer
   ) {
-    super();
+    super(new Book());
   }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.editable = this.authContainer.hasPermission("library_book", "update");
+    this.deletable = this.authContainer.hasPermission("library_book", "delete");
+    // Check permissions
+    this.lendPermission = this.authContainer.hasPermission("library_lending", "update");
+
+    // Get id
+    this.route.paramMap.subscribe(params => {
+      const indexParam = params.get('number');
+      if (indexParam) {
+        this.index = Number(indexParam);
+      }
+      this.load();
+    });
+
     // Load initial data
     this.onGoToBookTypePage(0);
     this.onGoToGameSystemPage(0);
@@ -73,7 +106,27 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
 
+    // Load languages
     this.languages = this.service.getLanguages();
+  }
+
+  protected override delete(): void {
+    this.service.delete(this.data.number).subscribe(r => {
+      this.router.navigate(['../..'], { relativeTo: this.route });
+    });
+  }
+
+  protected override read(): Observable<Book> {
+    return this.service.getOne(this.index);
+  }
+
+  protected override save(toSave: Book): Observable<Book> {
+    return this.service.update(this.data.number, toSave);
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    super.onStartEditing();
   }
 
   public onGoToBookTypePage(page: number) {
@@ -159,15 +212,6 @@ export class LibraryAdminBookCreateComponent extends CreateComponent<Book> imple
         this.readingDonors = false;
       }
     });
-  }
-
-  protected override save(toSave: Book): Observable<Book> {
-    return this.service.create(toSave);
-  }
-
-  protected override handleSaveSuccess(saved: Book) {
-    super.handleSaveSuccess(saved);
-    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }
