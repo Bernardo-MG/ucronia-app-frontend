@@ -10,13 +10,13 @@
           <ng-container *ngSwitchCase="'details'">
             <app-card>
               <app-card-body>
-                <assoc-library-admin-book-update-form [data]="data" [waiting]="saving" [failures]="failures"
+                <assoc-library-admin-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
                   [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
                   (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
                   (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
                   (goToPublisherPage)="onGoToPublisherPage($event)">
-                </assoc-library-admin-book-update-form>
+                </assoc-library-admin-book-edition-form>
               </app-card-body>
             </app-card>
           </ng-container>

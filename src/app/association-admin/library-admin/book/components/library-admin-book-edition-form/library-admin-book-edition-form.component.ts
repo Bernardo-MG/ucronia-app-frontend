@@ -22,12 +22,12 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
-  selector: 'assoc-library-admin-book-update-form',
+  selector: 'assoc-library-admin-book-edition-form',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, JustifyCenterDirective],
-  templateUrl: './library-admin-book-update-form.component.html'
+  templateUrl: './library-admin-book-edition-form.component.html'
 })
-export class LibraryAdminBookUpdateFormComponent extends FormComponent<Book> {
+export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
   @Input() public bookTypePage = new PaginatedResponse<BookType[]>([]);
 

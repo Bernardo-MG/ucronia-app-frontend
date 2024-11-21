@@ -26,13 +26,13 @@ import { GameSystemAdminService } from '../../../services/game-system-admin.serv
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookInfoComponent } from '../../components/library-admin-book-info/library-admin-book-info.component';
-import { LibraryAdminBookUpdateFormComponent } from '../../components/library-admin-book-update-form/library-admin-book-update-form.component';
+import { LibraryAdminBookEditionFormComponent } from '../../components/library-admin-book-edition-form/library-admin-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-edition',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookUpdateFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {

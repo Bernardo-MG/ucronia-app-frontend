@@ -19,13 +19,13 @@ import { AuthorAdminService } from '../../../services/author-admin.service';
 import { BookTypeAdminService } from '../../../services/book-type-admin.service';
 import { GameSystemAdminService } from '../../../services/game-system-admin.service';
 import { PublisherAdminService } from '../../../services/publisher-admin.service';
-import { LibraryAdminBookCreateFormComponent } from '../../components/library-admin-book-create-form/library-admin-book-create-form.component';
+import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-creation',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookCreateFormComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookCreationFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-creation.container.html'
 })
 export class LibraryAdminBookCreationContainer extends CreateComponent<Book> implements OnInit {
