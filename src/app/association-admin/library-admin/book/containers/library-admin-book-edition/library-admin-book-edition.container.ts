@@ -39,6 +39,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   private index = -1;
 
+  // TODO: these flags are not being used
   public readingBookTypes = false;
 
   public readingGameSystems = false;
