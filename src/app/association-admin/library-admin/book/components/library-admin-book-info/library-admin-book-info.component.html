@@ -3,9 +3,9 @@
     <!-- Tabs -->
     <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
   </app-card-header>
-  <!-- Member details -->
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
+      <!-- Member details -->
       <app-card-body>
         <!-- Number -->
         <div class="row">
@@ -72,6 +72,7 @@
       </app-card-body>
     </ng-container>
     <ng-container *ngSwitchCase="'donors'">
+      <!-- Donors -->
       <app-card-body>
         <!-- Donation date -->
         <div class="row">
