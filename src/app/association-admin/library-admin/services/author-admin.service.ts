@@ -47,11 +47,13 @@ export class AuthorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Author[]>> {
+  public getAll(page: number, sort?: Sort): Observable<PaginatedResponse<Author[]>> {
     const query = new PaginatedQuery();
     query.defaultSort = new Sort([new SortProperty('name')]);
     query.pagination = { page };
-    query.sort = sort;
+    if (sort) {
+      query.sort = sort;
+    }
 
     return this.getClient().query(query).read();
   }

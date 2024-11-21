@@ -132,7 +132,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToBookTypePage(page: number) {
     this.readingBookTypes = true;
     // TODO: The page correction should be done automatically
-    this.bookTypeService.getAll(page, new Sort([])).subscribe({
+    this.bookTypeService.getAll(page).subscribe({
       next: response => {
         this.bookTypePage = response;
 
@@ -149,7 +149,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToGameSystemPage(page: number) {
     this.readingGameSystems = true;
     // TODO: The page correction should be done automatically
-    this.gameSystemService.getAll(page, new Sort([])).subscribe({
+    this.gameSystemService.getAll(page).subscribe({
       next: response => {
         this.gameSystemPage = response;
 
@@ -166,7 +166,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToAuthorPage(page: number) {
     this.readingAuthors = true;
     // TODO: The page correction should be done automatically
-    this.authorService.getAll(page, new Sort([])).subscribe({
+    this.authorService.getAll(page).subscribe({
       next: response => {
         this.authorPage = response;
 
@@ -183,7 +183,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToPublisherPage(page: number) {
     this.readingPublishers = true;
     // TODO: The page correction should be done automatically
-    this.publisherService.getAll(page, new Sort([])).subscribe({
+    this.publisherService.getAll(page).subscribe({
       next: response => {
         this.publisherPage = response;
 
@@ -200,7 +200,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToDonorPage(page: number) {
     this.readingDonors = true;
     // TODO: The page correction should be done automatically
-    this.donorService.getAll(page, new Sort([])).subscribe({
+    this.donorService.getAll(page).subscribe({
       next: response => {
         this.donorPage = response;
 
