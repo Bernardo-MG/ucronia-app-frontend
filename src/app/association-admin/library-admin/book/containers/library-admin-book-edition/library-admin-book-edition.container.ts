@@ -73,11 +73,6 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     private route: ActivatedRoute,
     private router: Router,
     private service: BookAdminService,
-    private bookTypeService: BookTypeAdminService,
-    private gameSystemService: GameSystemAdminService,
-    private authorService: AuthorAdminService,
-    private publisherService: PublisherAdminService,
-    private donorService: DonorAdminService,
     private authContainer: AuthContainer
   ) {
     super(new Book());
@@ -131,8 +126,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public onGoToBookTypePage(page: number) {
     this.readingBookTypes = true;
-    // TODO: The page correction should be done automatically
-    this.bookTypeService.getAll(page).subscribe({
+    this.service.getBookTypes(page).subscribe({
       next: response => {
         this.bookTypePage = response;
 
@@ -148,8 +142,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public onGoToGameSystemPage(page: number) {
     this.readingGameSystems = true;
-    // TODO: The page correction should be done automatically
-    this.gameSystemService.getAll(page).subscribe({
+    this.service.getGameSystems(page).subscribe({
       next: response => {
         this.gameSystemPage = response;
 
@@ -165,8 +158,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public onGoToAuthorPage(page: number) {
     this.readingAuthors = true;
-    // TODO: The page correction should be done automatically
-    this.authorService.getAll(page).subscribe({
+    this.service.getAuthors(page).subscribe({
       next: response => {
         this.authorPage = response;
 
@@ -182,8 +174,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public onGoToPublisherPage(page: number) {
     this.readingPublishers = true;
-    // TODO: The page correction should be done automatically
-    this.publisherService.getAll(page).subscribe({
+    this.service.getPublishers(page).subscribe({
       next: response => {
         this.publisherPage = response;
 
@@ -200,7 +191,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public onGoToDonorPage(page: number) {
     this.readingDonors = true;
     // TODO: The page correction should be done automatically
-    this.donorService.getAll(page).subscribe({
+    this.service.getDonors(page).subscribe({
       next: response => {
         this.donorPage = response;
 

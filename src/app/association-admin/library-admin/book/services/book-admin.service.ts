@@ -7,8 +7,13 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
+import { BookType } from '@app/models/library/book-type';
+import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
+import { Publisher } from '@app/models/library/publisher';
+import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -61,8 +66,68 @@ export class BookAdminService {
     return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
   }
 
+  public getBookTypes(page: number): Observable<PaginatedResponse<BookType[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('name')]);
+    query.pagination = { page };
+
+    return this.getBookTypeClient().query(query).read();
+  }
+
+  public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('name')]);
+    query.pagination = { page };
+
+    return this.getGameSystemClient().query(query).read();
+  }
+
+  public getAuthors(page: number): Observable<PaginatedResponse<Author[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('name')]);
+    query.pagination = { page };
+
+    return this.getAuthorClient().query(query).read();
+  }
+
+  public getPublishers(page: number): Observable<PaginatedResponse<Publisher[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('name')]);
+    query.pagination = { page };
+
+    return this.getPublisherClient().query(query).read();
+  }
+
+  public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
+    const query = new PaginatedQuery();
+    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
+    query.pagination = { page };
+
+    return this.getDonorClient().query(query).read();
+  }
+
   private getClient(): Client {
     return new AngularClient(this.http, environment.apiUrl + '/library/book');
+  }
+
+  private getAuthorClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/library/author');
+  }
+
+  private getBookTypeClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/library/bookType');
+  }
+
+  private getDonorClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/person');
+  }
+
+  private getGameSystemClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/library/gameSystem');
+  }
+
+  private getPublisherClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/library/publisher');
   }
 
 }
