@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Book } from '@app/models/library/book';
+import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
@@ -27,6 +28,8 @@ export class LibraryAdminBookInfoComponent {
 
   @Input() public editable = false;
 
+  @Input() public languages: Language[] = [];
+
   @Output() public delete = new EventEmitter<void>();
 
   @Output() public startEditing = new EventEmitter<string>();
@@ -52,6 +55,11 @@ export class LibraryAdminBookInfoComponent {
 
   public get publishers(): string {
     return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public get language(): string {
+    const language = this.languages.find(lang => lang.code === this.data.language);
+    return language ? language.name : this.data.language;
   }
 
   public onChangeView(newView: string) {
