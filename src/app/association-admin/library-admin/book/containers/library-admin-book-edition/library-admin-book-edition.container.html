@@ -34,9 +34,9 @@
       </ng-container>
       <!-- Info -->
       <ng-container *ngSwitchCase="false">
-        <assoc-library-admin-book-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
+        <assoc-library-admin-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" [languages]="languages"
-          (delete)="onDelete()" (startEditing)="onStartEditingView($event)"></assoc-library-admin-book-info>
+          (delete)="onDelete()" (startEditing)="onStartEditingView($event)"></assoc-library-admin-book-details>
       </ng-container>
     </ng-container>
     <!-- Lendings -->

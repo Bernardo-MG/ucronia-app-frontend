@@ -1,10 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { DonorAdminService } from '@app/association-admin/library-admin/services/donor-admin.service';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
@@ -20,19 +18,15 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { AuthorAdminService } from '../../../services/author-admin.service';
-import { BookTypeAdminService } from '../../../services/book-type-admin.service';
-import { GameSystemAdminService } from '../../../services/game-system-admin.service';
-import { PublisherAdminService } from '../../../services/publisher-admin.service';
+import { LibraryAdminBookDetailsComponent } from '../../components/library-admin-book-details/library-admin-book-details.component';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminBookInfoComponent } from '../../components/library-admin-book-info/library-admin-book-info.component';
 import { LibraryAdminBookEditionFormComponent } from '../../components/library-admin-book-edition-form/library-admin-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-edition',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {

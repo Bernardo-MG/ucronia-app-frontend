@@ -9,12 +9,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'assoc-library-admin-book-info',
+  selector: 'assoc-library-admin-book-details',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, CardModule, PlaceholderDirective],
-  templateUrl: './library-admin-book-info.component.html'
+  templateUrl: './library-admin-book-details.component.html'
 })
-export class LibraryAdminBookInfoComponent {
+export class LibraryAdminBookDetailsComponent {
 
   @Input() public data = new Book();
 
