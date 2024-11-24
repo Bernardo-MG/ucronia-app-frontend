@@ -1,6 +1,6 @@
-import { Person } from "../person/person";
+import { Donor } from "./donor";
 
 export class Donation {
   date = '';
-  donors: Person[] = [];
+  donors: Donor[] = [];
 }

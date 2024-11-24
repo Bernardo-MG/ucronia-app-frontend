@@ -5,6 +5,7 @@ import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/libr
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Book } from '@app/models/library/book';
 import { Donation } from '@app/models/library/donation';
+import { Donor } from '@app/models/library/donor';
 import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
@@ -79,12 +80,16 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     this.modalHandler.closeModal('donor');
   }
 
-  public onRemoveDonor(donor: Person) {
+  public onRemoveDonor(donor: Donor) {
     if (!this.donation) {
       this.donation = new Donation();
     }
 
     this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
+  }
+
+  public onGoToDonorPage(page: number) {
+    this.goToDonorPage.emit(page);
   }
 
 }

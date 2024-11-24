@@ -6,6 +6,7 @@ import { LibraryLendingService } from '@app/association-admin/library-lending/se
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
+import { Borrower } from '@app/models/library/borrower';
 import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -25,7 +26,7 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
 
   public createPermission = false;
 
-  public person = new Person();
+  public borrower = new Borrower();
 
   constructor(
     private service: LibraryLendingService,
@@ -44,9 +45,9 @@ export class LibraryBookReturnComponent extends CreateComponent<BookReturned> im
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['book']) {
       if (this.book.lendings.length > 0) {
-        this.person = this.book.lendings[this.book.lendings.length - 1].person;
+        this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
       } else {
-        this.person = new Person();
+        this.borrower = new Person();
       }
     }
   }
