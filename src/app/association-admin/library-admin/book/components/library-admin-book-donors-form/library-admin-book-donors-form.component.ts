@@ -14,7 +14,6 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
