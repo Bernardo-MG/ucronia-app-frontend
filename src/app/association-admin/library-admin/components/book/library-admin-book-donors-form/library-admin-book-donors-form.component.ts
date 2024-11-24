@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Book } from '@app/models/library/book';
-import { BookType } from '@app/models/library/book-type';
-import { GameSystem } from '@app/models/library/game-system';
+import { Donation } from '@app/models/library/donation';
+import { Donor } from '@app/models/library/donor';
 import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
@@ -14,7 +14,6 @@ import { ModalComponent } from '@app/shared/layout/components/modal/modal.compon
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import * as bootstrap from 'bootstrap';
 import { LibraryAdminDonorSelectionComponent } from '../../donor/library-admin-donor-selection/library-admin-donor-selection.component';
-import { Donation as Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
@@ -78,7 +77,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     this.closeModal('donor');
   }
 
-  public onRemoveDonor(donor: Person) {
+  public onRemoveDonor(donor: Donor) {
     this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
   }
 
