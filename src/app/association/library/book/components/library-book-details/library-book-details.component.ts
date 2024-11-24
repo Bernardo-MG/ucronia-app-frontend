@@ -5,12 +5,12 @@ import { Language } from '@app/models/library/language';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'assoc-library-book-info',
+  selector: 'assoc-library-book-details',
   standalone: true,
   imports: [CommonModule, PlaceholderDirective],
-  templateUrl: './library-book-info.component.html'
+  templateUrl: './library-book-details.component.html'
 })
-export class LibraryBookInfoComponent {
+export class LibraryBookDetailsComponent {
 
   @Input() data = new Book();
 

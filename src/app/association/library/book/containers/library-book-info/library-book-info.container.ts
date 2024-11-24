@@ -8,13 +8,13 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { BookService } from '../../../services/book.service';
-import { LibraryBookInfoComponent } from '../../components/library-book-info/library-book-info.component';
+import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
 import { LibraryBookLendingsComponent } from '../../../components/info/library-book-lendings/library-book-lendings.component';
 
 @Component({
   selector: 'assoc-library-book-info',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, CardModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-book-info.container.html'
 })
 export class LibraryBookInfoContainer implements OnInit {
