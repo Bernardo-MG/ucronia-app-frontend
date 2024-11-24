@@ -8,16 +8,16 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { BookService } from '../../../services/book.service';
-import { LibraryBookInfoComponent } from '../../info/library-book-info/library-book-info.component';
-import { LibraryBookLendingsComponent } from '../../info/library-book-lendings/library-book-lendings.component';
+import { LibraryBookInfoComponent } from '../../components/library-book-info/library-book-info.component';
+import { LibraryBookLendingsComponent } from '../../../components/info/library-book-lendings/library-book-lendings.component';
 
 @Component({
-  selector: 'assoc-library-book-info-widget',
+  selector: 'assoc-library-book-info',
   standalone: true,
   imports: [CommonModule, CardModule, LibraryBookInfoComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-book-info-widget.component.html'
+  templateUrl: './library-book-info.container.html'
 })
-export class LibraryBookInfoWidgetComponent implements OnInit {
+export class LibraryBookInfoContainer implements OnInit {
 
   public languages: Language[] = [];
 
