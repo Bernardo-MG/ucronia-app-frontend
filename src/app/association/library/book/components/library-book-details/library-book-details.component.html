@@ -15,7 +15,9 @@
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Título</div>
   <div class="col-sm-10" *layoutPlaceholder="waiting">
-    {{data.title.fullTitle}}
+    <sup>{{data.title.supertitle}}</sup>
+    {{data.title.title}}
+    <sub>{{data.title.subtitle}}</sub>
   </div>
 </div>
 <!-- Language -->
