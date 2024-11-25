@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { LibraryBookLendingsComponent } from '@app/association/library/components/info/library-book-lendings/library-book-lendings.component';
+import { LibraryBookLendingsComponent } from '@app/association/library/book/components/library-book-lendings/library-book-lendings.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';

@@ -1,21 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { BookService } from '@app/association/library/book/services/book.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
-import { BookService } from '../../../services/book.service';
-import { LibraryBookListComponent } from '../library-book-list/library-book-list.component';
+import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'assoc-library-book-list-widget',
+  selector: 'assoc-library-book-list',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryBookListComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-book-list-widget.component.html'
+  imports: [CommonModule, RouterModule, CardModule, IconsModule, PaginationInfoWrapperComponent, SortingButtonComponent],
+  templateUrl: './library-book-list.container.html'
 })
-export class LibraryBookListWidgetComponent implements OnInit {
+export class LibraryBookListContainer implements OnInit {
 
   public page = new PaginatedResponse<Book[]>([]);
 
