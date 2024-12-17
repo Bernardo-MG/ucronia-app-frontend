@@ -2,39 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Publisher } from '@app/models/library/publisher';
+import { GameSystem } from '@app/models/library/game-system';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { LibraryAdminPublisherFormComponent } from '../../components/library-admin-publisher-form/library-admin-publisher-form.component';
-import { LibraryAdminPublisherInfoComponent } from '../../components/library-admin-publisher-info/library-admin-publisher-info.component';
-import { PublisherAdminService } from '../../services/publisher-admin.service';
+import { LibraryAdminGameSystemFormComponent } from '../../components/library-admin-game-system-form/library-admin-game-system-form.component';
+import { LibraryAdminGameSystemInfoComponent } from '../../components/library-admin-game-system-info/library-admin-game-system-info.component';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-info-editor',
+  selector: 'assoc-library-admin-game-system-edition',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-publisher-info-editor.component.html'
+  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  templateUrl: './library-admin-game-system-edition.component.html'
 })
-export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {
+export class LibraryAdminGameSystemInfoEditorComponent extends InfoEditorStatusComponent<GameSystem> implements OnInit {
 
   private number = -1;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: PublisherAdminService,
+    private service: GameSystemAdminService,
     private authContainer: AuthContainer
   ) {
-    super(new Publisher());
+    super(new GameSystem());
   }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_publisher", "update");
-    this.deletable = this.authContainer.hasPermission("library_publisher", "delete");
+    this.editable = this.authContainer.hasPermission("library_game_system", "update");
+    this.deletable = this.authContainer.hasPermission("library_game_system", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -52,11 +52,11 @@ export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusCo
     });
   }
 
-  protected override read(): Observable<Publisher> {
+  protected override read(): Observable<GameSystem> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: Publisher): Observable<Publisher> {
+  protected override save(toSave: GameSystem): Observable<GameSystem> {
     return this.service.update(this.data.number, toSave);
   }
 
