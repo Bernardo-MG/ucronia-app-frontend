@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { LibraryAdminAuthorCreateComponent } from './author/components/library-admin-author-create/library-admin-author-create.component';
+import { LibraryAdminAuthorInfoEditorComponent } from './author/components/library-admin-author-info-editor/library-admin-author-info-editor.component';
+import { LibraryAdminBookTypeCreateComponent } from './book-type/components/library-admin-book-type-create/library-admin-book-type-create.component';
+import { LibraryAdminBookTypeInfoEditorComponent } from './book-type/components/library-admin-book-type-info-editor/library-admin-book-type-info-editor.component';
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
-import { LibraryAdminAuthorCreateComponent } from './components/author/library-admin-author-create/library-admin-author-create.component';
-import { LibraryAdminAuthorInfoEditorComponent } from './components/author/library-admin-author-info-editor/library-admin-author-info-editor.component';
-import { LibraryAdminBookTypeCreateComponent } from './components/book-type/library-admin-book-type-create/library-admin-book-type-create.component';
-import { LibraryAdminBookTypeInfoEditorComponent } from './components/book-type/library-admin-book-type-info-editor/library-admin-book-type-info-editor.component';
-import { LibraryAdminGameSystemCreateComponent } from './components/game-system/library-admin-game-system-create/library-admin-game-system-create.component';
-import { LibraryAdminGameSystemInfoEditorComponent } from './components/game-system/library-admin-game-system-info-editor/library-admin-game-system-info-editor.component';
-import { LibraryAdminFrontpageComponent } from './components/library-admin-frontpage/library-admin-frontpage.component';
-import { LibraryAdminPublisherCreateComponent } from './components/publisher/library-admin-publisher-create/library-admin-publisher-create.component';
-import { LibraryAdminPublisherInfoEditorComponent } from './components/publisher/library-admin-publisher-info-editor/library-admin-publisher-info-editor.component';
+import { LibraryAdminGameSystemCreateComponent } from './game-system/components/library-admin-game-system-create/library-admin-game-system-create.component';
+import { LibraryAdminGameSystemInfoEditorComponent } from './game-system/components/library-admin-game-system-info-editor/library-admin-game-system-info-editor.component';
 import { BookLendingLendComponent } from './lending/containers/book-lending-lending/book-lending-lending.component';
 import { BookLendingReturnComponent } from './lending/containers/book-lending-returning/book-lending-returning.component';
+import { LibraryAdminFrontpageComponent } from './library-admin-frontpage/library-admin-frontpage.component';
+import { LibraryAdminPublisherCreateComponent } from './publisher/library-admin-publisher-create/library-admin-publisher-create.component';
+import { LibraryAdminPublisherInfoEditorComponent } from './publisher/library-admin-publisher-info-editor/library-admin-publisher-info-editor.component';
 
 
 const routes: Routes = [

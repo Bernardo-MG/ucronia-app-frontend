@@ -1,10 +1,10 @@
 import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/components/author/library-admin-author-selection/library-admin-author-selection.component';
-import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/components/book-type/library-admin-book-type-selection/library-admin-book-type-selection.component';
-import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/components/game-system/library-admin-game-system-selection/library-admin-game-system-selection.component';
-import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/components/publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
+import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
+import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
+import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
+import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/library-admin-publisher-selection/library-admin-publisher-selection.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
