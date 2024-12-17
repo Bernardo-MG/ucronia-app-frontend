@@ -1,11 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
-import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -19,7 +18,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
   imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './book-lending-returning.component.html'
 })
-export class BookLendingReturnComponent extends CreateComponent<BookReturned> implements OnInit, OnChanges {
+export class BookLendingReturnComponent extends CreateComponent<BookReturned> implements OnInit {
 
   public book = new Book();
 
@@ -60,20 +59,11 @@ export class BookLendingReturnComponent extends CreateComponent<BookReturned> im
     this.bookService.getOne(this.index).subscribe({
       next: response => {
         this.book = response;
+        this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
       },
       error: error => {
       }
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['book']) {
-      if (this.book.lendings.length > 0) {
-        this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
-      } else {
-        this.borrower = new Person();
-      }
-    }
   }
 
   protected override save(toSave: BookReturned): Observable<BookReturned> {
