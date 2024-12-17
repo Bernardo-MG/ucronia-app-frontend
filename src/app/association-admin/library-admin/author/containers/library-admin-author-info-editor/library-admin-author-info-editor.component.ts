@@ -2,39 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { BookType } from '@app/models/library/book-type';
+import { Author } from '@app/models/library/author';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { BookTypeAdminService } from '../../services/book-type-admin.service';
-import { LibraryAdminBookTypeFormComponent } from '../library-admin-book-type-form/library-admin-book-type-form.component';
-import { LibraryAdminBookTypeInfoComponent } from '../library-admin-book-type-info/library-admin-book-type-info.component';
+import { AuthorAdminService } from '../../services/author-admin.service';
+import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
+import { LibraryAdminAuthorInfoComponent } from '../../components/library-admin-author-info/library-admin-author-info.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-info-editor',
+  selector: 'assoc-library-admin-author-info-editor',
   standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-book-type-info-editor.component.html'
+  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  templateUrl: './library-admin-author-info-editor.component.html'
 })
-export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {
+export class LibraryAdminAuthorInfoEditorComponent extends InfoEditorStatusComponent<Author> implements OnInit {
 
   private number = -1;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: BookTypeAdminService,
+    private service: AuthorAdminService,
     private authContainer: AuthContainer
   ) {
-    super(new BookType());
+    super(new Author());
   }
 
   public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_book_type", "update");
-    this.deletable = this.authContainer.hasPermission("library_book_type", "delete");
+    this.editable = this.authContainer.hasPermission("library_author", "update");
+    this.deletable = this.authContainer.hasPermission("library_author", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -52,11 +52,11 @@ export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusCom
     });
   }
 
-  protected override read(): Observable<BookType> {
+  protected override read(): Observable<Author> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: BookType): Observable<BookType> {
+  protected override save(toSave: Author): Observable<Author> {
     return this.service.update(this.data.number, toSave);
   }
 

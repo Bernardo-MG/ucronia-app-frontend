@@ -7,7 +7,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Publisher } from '@app/models/library/publisher';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { PublisherAdminService } from '../services/publisher-admin.service';
+import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-list',

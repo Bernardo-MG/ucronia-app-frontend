@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GameSystem } from '@app/models/library/game-system';
+import { Author } from '@app/models/library/author';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { GameSystemAdminService } from '../../services/game-system-admin.service';
-import { LibraryAdminGameSystemFormComponent } from '../library-admin-game-system-form/library-admin-game-system-form.component';
+import { AuthorAdminService } from '../../services/author-admin.service';
+import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-create',
+  selector: 'assoc-library-admin-author-create',
   standalone: true,
-  imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-game-system-create.component.html'
+  imports: [CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-author-create.component.html'
 })
-export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameSystem> {
+export class LibraryAdminAuthorCreateComponent extends CreateComponent<Author> {
 
   constructor(
-    private service: GameSystemAdminService,
+    private service: AuthorAdminService,
     private router: Router,
     private route: ActivatedRoute
   ) {
     super();
   }
 
-  protected override save(toSave: GameSystem): Observable<GameSystem> {
+  protected override save(toSave: Author): Observable<Author> {
     return this.service.create(toSave);
   }
 
-  protected override handleSaveSuccess(saved: GameSystem) {
+  protected override handleSaveSuccess(saved: Author) {
     super.handleSaveSuccess(saved);
     this.router.navigate(['../..'], { relativeTo: this.route });
   }
