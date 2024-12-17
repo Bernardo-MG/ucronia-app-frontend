@@ -18,7 +18,7 @@ export class BookReturnFormComponent extends FormComponent<BookReturned> impleme
 
   @Input() public borrower = new Borrower();
 
-  @Input() public book = new Book();
+  @Input() public book = -1;
 
   @Output() public goToPersonPage = new EventEmitter<number>();
 
@@ -41,7 +41,7 @@ export class BookReturnFormComponent extends FormComponent<BookReturned> impleme
       this.form.get('borrower')?.setValue(this.borrower.number);
     }
     if (changes['book']) {
-      this.form.get('book')?.setValue(this.book.number);
+      this.form.get('book')?.setValue(this.book);
     }
   }
 

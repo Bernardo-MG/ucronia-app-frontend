@@ -1,7 +1,7 @@
 <layout-article title="Devolución de libro">
   <div appResponsiveShortColumns>
     <assoc-book-return-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-      [borrower]="borrower" [book]="book" (save)="onSave($event)">
+      [borrower]="borrower" [book]="book.number" (save)="onSave($event)">
     </assoc-book-return-form>
   </div>
 </layout-article>
