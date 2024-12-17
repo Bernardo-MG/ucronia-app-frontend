@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
@@ -23,6 +22,8 @@ export class BookReturnFormComponent extends FormComponent<BookReturned> impleme
   @Output() public goToPersonPage = new EventEmitter<number>();
 
   @Output() public goToBookPage = new EventEmitter<number>();
+
+  public today = new Date().toISOString().split('T')[0];
 
   constructor(
     fb: FormBuilder
