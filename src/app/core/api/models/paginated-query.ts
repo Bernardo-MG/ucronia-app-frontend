@@ -55,7 +55,7 @@ export class PaginatedQuery {
   }
 
   public set page(page: number) {
-    this.parameters['page'] = page - 1;
+    this.parameters['page'] = page;
   }
 
   public set defaultSort(defaultSort: Sort) {
