@@ -5,4 +5,5 @@ export class BookLending {
   borrower = new Borrower();
   lendingDate = '';
   returnDate = '';
+  days = 0;
 }
