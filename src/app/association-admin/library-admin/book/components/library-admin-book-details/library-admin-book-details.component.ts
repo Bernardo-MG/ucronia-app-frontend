@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { LibraryBookLendingsComponent } from '@app/association/library/book/components/library-book-lendings/library-book-lendings.component';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';
@@ -11,7 +13,7 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 @Component({
   selector: 'assoc-library-admin-book-details',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, PlaceholderDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryBookLendingsComponent, PlaceholderDirective],
   templateUrl: './library-admin-book-details.component.html'
 })
 export class LibraryAdminBookDetailsComponent {
@@ -28,6 +30,8 @@ export class LibraryAdminBookDetailsComponent {
 
   @Input() public editable = false;
 
+  @Input() public lendDisabled = false;
+
   @Input() public languages: Language[] = [];
 
   @Output() public delete = new EventEmitter<void>();
@@ -36,7 +40,7 @@ export class LibraryAdminBookDetailsComponent {
 
   public view: string = 'details';
 
-  public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes')];
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes'), new CardTab('lendings', 'Préstamos')];
 
   public get authors(): string {
     return this.data.authors.map(e => e.name).join(", ");
@@ -44,7 +48,7 @@ export class LibraryAdminBookDetailsComponent {
 
   public get donors(): string {
     let donors;
-    if(this.data.donation) {
+    if (this.data.donation) {
       donors = this.data.donation.donors.map(e => e.name.fullName).join(", ");
     } else {
       donors = '';

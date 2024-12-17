@@ -26,7 +26,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 @Component({
   selector: 'assoc-library-admin-book-edition',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
