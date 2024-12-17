@@ -12,7 +12,9 @@
       <tr *ngFor="let book of page.content; let rowIndex = index" role="button" routerLink="book/{{book.number}}">
         <!-- Cells -->
         <td>
-          {{book.title.fullTitle}}
+          <sup>{{book.title.supertitle}}</sup>
+          {{book.title.title}}
+          <sub>{{book.title.subtitle}}</sub>
         </td>
       </tr>
     </tbody>
