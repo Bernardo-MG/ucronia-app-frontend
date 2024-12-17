@@ -11,7 +11,7 @@ import { LibraryAdminGameSystemCreateComponent } from './game-system/containers/
 import { LibraryAdminGameSystemInfoEditorComponent } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.component';
 import { BookLendingLendComponent } from './lending/containers/book-lending-lending/book-lending-lending.component';
 import { BookLendingReturnComponent } from './lending/containers/book-lending-returning/book-lending-returning.component';
-import { LibraryAdminFrontpageComponent } from './library-admin-frontpage/library-admin-frontpage.component';
+import { LibraryAdminFrontpageComponent } from './frontpage/containers/library-admin-frontpage/library-admin-frontpage.component';
 import { LibraryAdminPublisherCreateComponent } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.component';
 import { LibraryAdminPublisherInfoEditorComponent } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.component';
 
