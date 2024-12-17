@@ -7,7 +7,6 @@ const fundsModule = () => import('@app/association-admin/funds/funds.module').th
 const feesModule = () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule);
 const peopleModule = () => import('@app/association-admin/people/people.module').then(m => m.PeopleModule);
 const libraryAdminModule = () => import('@app/association-admin/library-admin/library-admin.module').then(m => m.LibraryAdminModule);
-const libraryAdminLendingModule = () => import('@app/association-admin/library-lending/library-admin-lending.module').then(m => m.LibraryAdminLendingModule);
 
 const routes: Routes = [
   {
@@ -23,11 +22,6 @@ const routes: Routes = [
         path: 'library',
         canActivate: [ResourceGuard("library_admin", "view")],
         loadChildren: libraryAdminModule
-      },
-      {
-        path: 'library',
-        canActivate: [ResourceGuard("library_admin", "view")],
-        loadChildren: libraryAdminLendingModule
       },
       {
         path: 'fees',

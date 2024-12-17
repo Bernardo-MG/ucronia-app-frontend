@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookReturnFormComponent } from '@app/association-admin/library-lending/components/book-return-form/book-return-form.component';
-import { LibraryLendingService } from '@app/association-admin/library-lending/services/library-lending.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
@@ -11,6 +9,8 @@ import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { Observable } from 'rxjs';
+import { LibraryLendingService } from '../../services/library-lending.service';
+import { BookReturnFormComponent } from '../book-return-form/book-return-form.component';
 
 @Component({
   selector: 'assoc-library-book-return',

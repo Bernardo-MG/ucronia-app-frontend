@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { Book } from '@app/models/library/book';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { LibraryBookLendingComponent } from '../library-book-lending/library-book-lending.component';
-import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
+import { LibraryBookLendingComponent } from '../../components/library-book-lending/library-book-lending.component';
 
 @Component({
-  selector: 'assoc-book-lending-lend',
+  selector: 'assoc-book-lending-lending',
   standalone: true,
   imports: [LibraryBookLendingComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './book-lending-lend.component.html'
+  templateUrl: './book-lending-lending.component.html'
 })
 export class BookLendingLendComponent implements OnInit {
 

@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookLendingMemberSelectionComponent } from '@app/association-admin/library-lending/components/book-lending-member-selection/book-lending-member-selection.component';
-import { LibraryLendingService } from '@app/association-admin/library-lending/services/library-lending.service';
 import { Active } from '@app/association/members/model/active';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -14,7 +12,9 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { Observable } from 'rxjs';
+import { LibraryLendingService } from '../../services/library-lending.service';
 import { BookLendingFormComponent } from '../book-lending-form/book-lending-form.component';
+import { BookLendingMemberSelectionComponent } from '../book-lending-member-selection/book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-book-lending',

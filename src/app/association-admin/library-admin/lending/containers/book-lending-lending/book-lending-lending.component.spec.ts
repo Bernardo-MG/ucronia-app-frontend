@@ -1,23 +1,23 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { BookLendingReturnComponent } from './book-lending-return.component';
+import { BookLendingLendComponent } from './book-lending-lending.component';
 
-describe('BookLendingReturnComponent', () => {
-  let component: BookLendingReturnComponent;
-  let fixture: ComponentFixture<BookLendingReturnComponent>;
+describe('BookLendingLendComponent', () => {
+  let component: BookLendingLendComponent;
+  let fixture: ComponentFixture<BookLendingLendComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        BookLendingReturnComponent
+        BookLendingLendComponent
       ]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(BookLendingReturnComponent);
+    fixture = TestBed.createComponent(BookLendingLendComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
