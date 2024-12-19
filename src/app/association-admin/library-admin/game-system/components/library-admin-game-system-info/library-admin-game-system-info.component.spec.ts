@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryAdminGameSystemInfoComponent } from './library-admin-game-system-info.component';
 
 describe('LibraryAdminGameSystemInfoComponent', () => {

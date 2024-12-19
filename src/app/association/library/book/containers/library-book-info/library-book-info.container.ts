@@ -7,8 +7,8 @@ import { CardModule } from '@app/shared/card/card.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
+import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { BookService } from '../../services/book.service';
 
 @Component({

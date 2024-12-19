@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LibraryAdminPublisherSelectionComponent } from './library-admin-publisher-selection.component';
 
 describe('LibraryAdminPublisherSelectionComponent', () => {

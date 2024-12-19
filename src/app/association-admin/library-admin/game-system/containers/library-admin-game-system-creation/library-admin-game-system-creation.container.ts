@@ -6,8 +6,8 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { GameSystemAdminService } from '../../services/game-system-admin.service';
 import { LibraryAdminGameSystemFormComponent } from '../../components/library-admin-game-system-form/library-admin-game-system-form.component';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-system-creation',
