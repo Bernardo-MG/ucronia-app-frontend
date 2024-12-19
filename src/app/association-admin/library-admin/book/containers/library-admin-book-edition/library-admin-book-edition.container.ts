@@ -99,21 +99,6 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     this.languages = this.service.getLanguages();
   }
 
-  protected override delete(): void {
-    // TODO: shouldn't the delete return the observable, to keep consistency?
-    this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['../..'], { relativeTo: this.route });
-    });
-  }
-
-  protected override read(): Observable<Book> {
-    return this.service.getOne(this.index);
-  }
-
-  protected override save(toSave: Book): Observable<Book> {
-    return this.service.update(this.data.number, toSave);
-  }
-
   public onStartEditingView(view: string): void {
     this.view = view;
     super.onStartEditing();
@@ -198,6 +183,21 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
         this.readingDonors = false;
       }
     });
+  }
+
+  protected override delete(): void {
+    // TODO: shouldn't the delete return the observable, to keep consistency?
+    this.service.delete(this.data.number).subscribe(r => {
+      this.router.navigate(['../..'], { relativeTo: this.route });
+    });
+  }
+
+  protected override read(): Observable<Book> {
+    return this.service.getOne(this.index);
+  }
+
+  protected override save(toSave: Book): Observable<Book> {
+    return this.service.update(this.data.number, toSave);
   }
 
 }

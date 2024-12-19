@@ -6,7 +6,6 @@ import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { Observable } from 'rxjs';
 import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { BookService } from '../../services/book.service';
@@ -42,8 +41,8 @@ export class LibraryBookInfoContainer implements OnInit {
       const indexParam = params.get('index');
       if (indexParam) {
         this.index = Number(indexParam);
+        this.load();
       }
-      this.load();
     });
 
     // Load languages
@@ -52,7 +51,7 @@ export class LibraryBookInfoContainer implements OnInit {
 
   private load(): void {
     this.waiting = true;
-    this.read()
+    this.service.getOne(this.index)
       .subscribe({
         next: response => {
           this.data = response;
@@ -62,10 +61,6 @@ export class LibraryBookInfoContainer implements OnInit {
           this.waiting = false;
         }
       });
-  }
-
-  private read(): Observable<Book> {
-    return this.service.getOne(this.index);
   }
 
 }
