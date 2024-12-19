@@ -28,6 +28,7 @@ export class PeopleEditionFormComponent extends FormComponent<Person> {
     membership.active = true;
     membership.renew = true;
     this.form = fb.group({
+      number: [-1],
       name: fb.group({
         firstName: [null],
         lastName: ['']
