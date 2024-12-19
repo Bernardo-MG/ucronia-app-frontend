@@ -17,7 +17,7 @@
         </ng-container>
         <!-- Authors -->
         <ng-container *ngSwitchCase="'authors'">
-          <assoc-library-admin-author-list></assoc-library-admin-author-list>
+          <assoc-library-admin-author-listing></assoc-library-admin-author-listing>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="author/add"
               [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
@@ -27,7 +27,7 @@
         </ng-container>
         <!-- Publishers -->
         <ng-container *ngSwitchCase="'publishers'">
-          <assoc-library-admin-publisher-list></assoc-library-admin-publisher-list>
+          <assoc-library-admin-publisher-listing></assoc-library-admin-publisher-listing>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
               routerLink="publisher/add" [disabled]="!createPublisherPermission"
@@ -38,7 +38,7 @@
         </ng-container>
         <!-- Book types -->
         <ng-container *ngSwitchCase="'book_types'">
-          <assoc-library-admin-book-type-list></assoc-library-admin-book-type-list>
+          <assoc-library-admin-book-type-listing></assoc-library-admin-book-type-listing>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="bookType/add"
               [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
@@ -48,7 +48,7 @@
         </ng-container>
         <!-- Game systems -->
         <ng-container *ngSwitchCase="'game_systems'">
-          <assoc-library-admin-game-system-list></assoc-library-admin-game-system-list>
+          <assoc-library-admin-game-system-listing></assoc-library-admin-game-system-listing>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register"
               routerLink="gameSystem/add" [disabled]="!createGameSystemPermission"

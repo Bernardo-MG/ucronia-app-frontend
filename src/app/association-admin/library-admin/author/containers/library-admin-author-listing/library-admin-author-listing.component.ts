@@ -4,20 +4,20 @@ import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Publisher } from '@app/models/library/publisher';
+import { Author } from '@app/models/library/author';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { PublisherAdminService } from '../../services/publisher-admin.service';
+import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-list',
+  selector: 'assoc-library-admin-author-listing',
   standalone: true,
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-admin-publisher-list.container.html'
+  templateUrl: './library-admin-author-listing.component.html'
 })
-export class LibraryAdminPublisherListComponent implements OnInit {
+export class LibraryAdminAuthorListingComponent implements OnInit {
 
-  public page = new PaginatedResponse<Publisher[]>([]);
+  public page = new PaginatedResponse<Author[]>([]);
 
   /**
    * Loading flag.
@@ -27,7 +27,7 @@ export class LibraryAdminPublisherListComponent implements OnInit {
   private sort = new Sort([]);
 
   constructor(
-    private service: PublisherAdminService
+    private service: AuthorAdminService
   ) { }
 
   public ngOnInit(): void {

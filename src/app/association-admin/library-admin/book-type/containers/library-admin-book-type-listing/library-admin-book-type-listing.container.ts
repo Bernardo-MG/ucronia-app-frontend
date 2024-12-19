@@ -10,12 +10,12 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-list',
+  selector: 'assoc-library-admin-book-type-listing',
   standalone: true,
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-admin-book-type-list.container.html'
+  templateUrl: './library-admin-book-type-listing.container.html'
 })
-export class LibraryAdminBookTypeListComponent implements OnInit {
+export class LibraryAdminBookTypeListingComponent implements OnInit {
 
   public page = new PaginatedResponse<BookType[]>([]);
 

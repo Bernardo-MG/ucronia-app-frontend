@@ -1,29 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Book } from '@app/models/library/book';
-import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { GameSystem } from '@app/models/library/game-system';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
-import { BookService } from '../../services/book.service';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-list',
+  selector: 'assoc-library-admin-game-system-listing',
   standalone: true,
-  imports: [RouterModule, IconsModule, CardModule, PaginationInfoWrapperComponent, SortingButtonComponent, LibraryBookListComponent, ArticleComponent],
-  templateUrl: './library-list.container.html'
+  imports: [ CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent ],
+  templateUrl: './library-admin-game-system-listing.container.html'
 })
-export class LibraryListContainer implements OnInit {
+export class LibraryAdminGameSystemListingComponent implements OnInit {
 
-  public adminPermission = false;
-
-  public page = new PaginatedResponse<Book[]>([]);
+  public page = new PaginatedResponse<GameSystem[]>([]);
 
   /**
    * Loading flag.
@@ -33,13 +27,10 @@ export class LibraryListContainer implements OnInit {
   private sort = new Sort([]);
 
   constructor(
-    private service: BookService,
-    private authContainer: AuthContainer
+    private service: GameSystemAdminService
   ) { }
 
   public ngOnInit(): void {
-    // Check permissions
-    this.adminPermission = this.authContainer.hasPermission("library_admin", "view");
     // Load books
     this.load(0)
   }
@@ -67,10 +58,6 @@ export class LibraryListContainer implements OnInit {
         this.reading = false;
       }
     });
-  }
-
-  public routeLinkAdapter(data: Book): string {
-    return `${data.number}`;
   }
 
 }

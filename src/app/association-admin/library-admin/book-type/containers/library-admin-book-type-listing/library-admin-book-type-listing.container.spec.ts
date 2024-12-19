@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
-import { LibraryAdminBookTypeListComponent } from './library-admin-book-type-list.container';
+import { LibraryAdminBookTypeListingComponent } from './library-admin-book-type-listing.container';
 
-describe('LibraryAdminBookTypeListComponent', () => {
-  let component: LibraryAdminBookTypeListComponent;
-  let fixture: ComponentFixture<LibraryAdminBookTypeListComponent>;
+describe('LibraryAdminBookTypeListingComponent', () => {
+  let component: LibraryAdminBookTypeListingComponent;
+  let fixture: ComponentFixture<LibraryAdminBookTypeListingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        LibraryAdminBookTypeListComponent
+        LibraryAdminBookTypeListingComponent
       ],
       providers: [
         BookTypeAdminService
@@ -19,7 +19,7 @@ describe('LibraryAdminBookTypeListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminBookTypeListComponent);
+    fixture = TestBed.createComponent(LibraryAdminBookTypeListingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
