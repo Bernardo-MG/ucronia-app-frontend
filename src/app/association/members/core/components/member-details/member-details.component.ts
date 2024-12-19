@@ -8,12 +8,12 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 
 @Component({
-  selector: 'assoc-member-info',
+  selector: 'assoc-member-details',
   standalone: true,
   imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
-  templateUrl: './member-info.component.html'
+  templateUrl: './member-details.component.html'
 })
-export class MemberInfoComponent {
+export class MemberDetailsComponent {
 
   @Input() public data = new Member();
 

@@ -15,12 +15,12 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 
 @Component({
-  selector: 'assoc-member-frontpage',
+  selector: 'assoc-member-listing',
   standalone: true,
   imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './member-frontpage.component.html'
+  templateUrl: './member-listing.component.html'
 })
-export class MemberFrontpageComponent implements OnInit {
+export class MemberListingComponent implements OnInit {
 
   public page = new PaginatedResponse<Member[]>([]);
 

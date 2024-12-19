@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MemberInfoComponent } from '@app/association/members/core/components/member-info/member-info.component';
-import { MemberService as MemberService } from '@app/association/members/core/services/member.service';
-import { Member } from '@app/models/members/member';
+import { MemberDetailsComponent } from '@app/association/members/core/components/member-details/member-details.component';
+import { MemberService } from '@app/association/members/core/services/member.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -12,12 +12,12 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'assoc-member-info-editor',
+  selector: 'assoc-member-info',
   standalone: true,
-  imports: [CommonModule, CardModule, ArticleComponent, MemberInfoComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './member-info-view.component.html'
+  imports: [CommonModule, CardModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './member-info.component.html'
 })
-export class MemberInfoEditorComponent extends InfoEditorStatusComponent<Member> implements OnInit {
+export class MemberInfoComponent extends InfoEditorStatusComponent<Member> implements OnInit {
 
   public view: string = 'details';
 
