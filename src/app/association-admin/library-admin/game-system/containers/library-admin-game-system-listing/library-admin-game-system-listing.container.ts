@@ -15,7 +15,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [ CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent ],
   templateUrl: './library-admin-game-system-listing.container.html'
 })
-export class LibraryAdminGameSystemListingComponent implements OnInit {
+export class LibraryAdminGameSystemListingContainer implements OnInit {
 
   public page = new PaginatedResponse<GameSystem[]>([]);
 

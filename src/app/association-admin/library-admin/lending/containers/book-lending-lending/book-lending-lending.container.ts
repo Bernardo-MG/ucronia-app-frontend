@@ -25,7 +25,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
   imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './book-lending-lending.container.html'
 })
-export class BookLendingLendComponent extends CreateComponent<BookLent> implements OnInit {
+export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 
   public book = new Book();
 

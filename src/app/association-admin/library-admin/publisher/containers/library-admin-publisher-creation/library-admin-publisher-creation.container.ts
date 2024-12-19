@@ -15,7 +15,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-creation.container.html'
 })
-export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publisher> {
+export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publisher> {
 
   constructor(
     private service: PublisherAdminService,

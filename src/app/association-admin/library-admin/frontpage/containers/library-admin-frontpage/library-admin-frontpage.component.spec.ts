@@ -6,18 +6,18 @@ import { BookTypeAdminService } from '@app/association-admin/library-admin/book-
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
-import { LibraryAdminFrontpageComponent } from './library-admin-frontpage.component';
+import { LibraryAdminFrontpageContainer } from './library-admin-frontpage.component';
 
-describe('LibraryAdminFrontpageComponent', () => {
-  let component: LibraryAdminFrontpageComponent;
-  let fixture: ComponentFixture<LibraryAdminFrontpageComponent>;
+describe('LibraryAdminFrontpageContainer', () => {
+  let component: LibraryAdminFrontpageContainer;
+  let fixture: ComponentFixture<LibraryAdminFrontpageContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        LibraryAdminFrontpageComponent
+        LibraryAdminFrontpageContainer
       ],
       providers: [
         BookAdminService,
@@ -29,7 +29,7 @@ describe('LibraryAdminFrontpageComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LibraryAdminFrontpageComponent);
+    fixture = TestBed.createComponent(LibraryAdminFrontpageContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,19 +7,19 @@ import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { LibraryAdminAuthorListingComponent } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
-import { LibraryAdminBookTypeListingComponent } from '../../../book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
+import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
+import { LibraryAdminBookTypeListingContainer } from '../../../book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookListingContainer } from '../../../book/containers/library-admin-book-listing/library-admin-book-listing.container';
-import { LibraryAdminGameSystemListingComponent } from '../../../game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
-import { LibraryAdminPublisherListingComponent } from '../../../publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
+import { LibraryAdminGameSystemListingContainer } from '../../../game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
+import { LibraryAdminPublisherListingContainer } from '../../../publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
 
 @Component({
   selector: 'assoc-library-admin-frontpage',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingComponent, LibraryAdminGameSystemListingComponent, LibraryAdminAuthorListingComponent, LibraryAdminPublisherListingComponent, ArticleComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-frontpage.component.html'
 })
-export class LibraryAdminFrontpageComponent implements OnInit {
+export class LibraryAdminFrontpageContainer implements OnInit {
 
   public view = 'books';
 

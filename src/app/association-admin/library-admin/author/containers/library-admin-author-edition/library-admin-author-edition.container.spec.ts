@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthorAdminService } from '../../services/author-admin.service';
-import { LibraryAdminAuthorInfoEditorComponent } from './library-admin-author-edition.container';
+import { LibraryAdminAuthorInfoEditorContainer } from './library-admin-author-edition.container';
 
-describe('LibraryAdminAuthorInfoEditorComponent', () => {
-  let component: LibraryAdminAuthorInfoEditorComponent;
-  let fixture: ComponentFixture<LibraryAdminAuthorInfoEditorComponent>;
+describe('LibraryAdminAuthorInfoEditorContainer', () => {
+  let component: LibraryAdminAuthorInfoEditorContainer;
+  let fixture: ComponentFixture<LibraryAdminAuthorInfoEditorContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LibraryAdminAuthorInfoEditorComponent
+        LibraryAdminAuthorInfoEditorContainer
       ],
       providers: [
         AuthorAdminService
@@ -21,7 +21,7 @@ describe('LibraryAdminAuthorInfoEditorComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LibraryAdminAuthorInfoEditorComponent);
+    fixture = TestBed.createComponent(LibraryAdminAuthorInfoEditorContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

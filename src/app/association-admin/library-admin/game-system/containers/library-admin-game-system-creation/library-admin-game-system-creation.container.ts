@@ -15,7 +15,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-creation.container.html'
 })
-export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameSystem> {
+export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {
 
   constructor(
     private service: GameSystemAdminService,
