@@ -8,12 +8,13 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
+import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
 @Component({
   selector: 'assoc-people-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, PeopleEditionMembershipButtonsComponent, ModalComponent],
   templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {

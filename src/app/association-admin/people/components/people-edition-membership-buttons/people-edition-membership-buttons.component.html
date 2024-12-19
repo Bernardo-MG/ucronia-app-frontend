@@ -1,0 +1,66 @@
+<ng-container [ngSwitch]="active">
+  <ng-container *ngSwitchCase="true">
+    <!-- Disable button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Deactivate"
+        (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="false">
+    <!-- Enable button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Activate"
+        (action)="onShowActivate()">Activar</layout-waiting-button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="null">
+    <!-- Convert to member button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Convert to member"
+        (action)="onShowConvertToMember()">Convertir en socio</layout-waiting-button>
+    </div>
+  </ng-container>
+</ng-container>
+<ng-container [ngSwitch]="renew">
+  <ng-container *ngSwitchCase="true">
+    <!-- Disable button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Enable renewal"
+        (action)="onShowDisableRenew()">Desactivar renovación</layout-waiting-button>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="false">
+    <!-- Enable button -->
+    <div class="col-sm-2 d-grid gap-2">
+      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Disable renewal"
+        (action)="onShowEnableRenew()">Activar renovación</layout-waiting-button>
+    </div>
+  </ng-container>
+</ng-container>
+
+<!-- Modal confirmation for deactivating -->
+<layout-modal name="deactivateModal" title="Desactivar socio" acceptText="Desactivar" (accept)="deactivate.emit()">
+  <p>¿Estás seguro de que quieres marcar como no activo al socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for activating -->
+<layout-modal name="activateModal" title="Activar socio" acceptText="Activar" (accept)="activate.emit()">
+  <p>¿Estás seguro de que quieres marcar como activo al socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for disabling renewal -->
+<layout-modal name="disableRenewModal" title="Desactivar renovación" acceptText="Desactivar"
+  (accept)="disableRenew.emit()">
+  <p>¿Estás seguro de que quieres desactivar la renovación del socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for enabling renewal -->
+<layout-modal name="enableRenewModal" title="Activar renovación" acceptText="Activar" (accept)="enableRenew.emit()">
+  <p>¿Estás seguro de que quieres activar la renovación del socio?</p>
+</layout-modal>
+
+<!-- Modal confirmation for converting to member -->
+<layout-modal name="convertToMemberModal" title="Convertir en socio" acceptText="Convertir"
+  (accept)="convertToMember.emit()">
+  <p>Esto convertirá a esta persona en un socio</p>
+</layout-modal>
