@@ -14,12 +14,12 @@ import { PeopleUpdateFormComponent } from '../../components/people-update-form/p
 import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
 
 @Component({
-  selector: 'assoc-people-info-editor',
+  selector: 'assoc-people-edition',
   standalone: true,
   imports: [CommonModule, CardModule, PeopleUpdateFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-info-editor.container.html'
+  templateUrl: './people-edition.container.html'
 })
-export class PeopleInfoEditorContainer extends InfoEditorStatusComponent<Person> implements OnInit {
+export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 
   public view: string = 'details';
 

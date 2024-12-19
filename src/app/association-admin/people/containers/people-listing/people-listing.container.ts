@@ -15,12 +15,12 @@ import { PeopleService } from '../../services/people.service';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 
 @Component({
-  selector: 'assoc-people-frontpage',
+  selector: 'assoc-people-listing',
   standalone: true,
   imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './people-frontpage.container.html'
+  templateUrl: './people-listing.container.html'
 })
-export class PeopleFrontpageContainer {
+export class PeopleListingContainer {
 
   public activeFilter = Active.Active;
 

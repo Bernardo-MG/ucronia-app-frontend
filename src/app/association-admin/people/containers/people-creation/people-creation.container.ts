@@ -10,12 +10,12 @@ import { PeopleService } from '../../services/people.service';
 import { PeopleCreateFormComponent } from '../../components/people-create-form/people-create-form.component';
 
 @Component({
-  selector: 'assoc-people-create',
+  selector: 'assoc-people-creation',
   standalone: true,
   imports: [CardModule, PeopleCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-create.container.html'
+  templateUrl: './people-creation.container.html'
 })
-export class PeopleCreateContainer extends CreateComponent<Person> {
+export class PeopleCreationContainer extends CreateComponent<Person> {
 
   constructor(
     private service: PeopleService,
