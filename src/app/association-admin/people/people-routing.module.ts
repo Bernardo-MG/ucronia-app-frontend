@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 import { PeopleCreationContainer } from './containers/people-creation/people-creation.container';
-import { PeopleListingContainer } from './containers/people-listing/people-listing.container';
 import { PeopleInfoEditionContainer } from './containers/people-edition/people-edition.container';
+import { PeopleListingContainer } from './containers/people-listing/people-listing.container';
 
 
 const routes: Routes = [

@@ -1,18 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { Active } from '@app/association/members/model/active';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
-import { PeopleService } from '../../services/people.service';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
+import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
@@ -20,7 +20,7 @@ import { PeopleListComponent } from '../../components/people-list/people-list.co
   imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
   templateUrl: './people-listing.container.html'
 })
-export class PeopleListingContainer {
+export class PeopleListingContainer implements OnInit {
 
   public activeFilter = Active.Active;
 
