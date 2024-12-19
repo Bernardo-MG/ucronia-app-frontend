@@ -13,9 +13,9 @@ import { PeopleCreateFormComponent } from '../../components/people-create-form/p
   selector: 'assoc-people-create',
   standalone: true,
   imports: [CardModule, PeopleCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-create.component.html'
+  templateUrl: './people-create.container.html'
 })
-export class PeopleCreateComponent extends CreateComponent<Person> {
+export class PeopleCreateContainer extends CreateComponent<Person> {
 
   constructor(
     private service: PeopleService,

@@ -1,23 +1,23 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PeopleInfoEditorComponent } from './people-info-editor.component';
+import { PeopleFrontpageContainer } from './people-frontpage.container';
 
-describe('PeopleInfoEditorComponent', () => {
-  let component: PeopleInfoEditorComponent;
-  let fixture: ComponentFixture<PeopleInfoEditorComponent>;
+describe('PeopleFrontpageContainer', () => {
+  let component: PeopleFrontpageContainer;
+  let fixture: ComponentFixture<PeopleFrontpageContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        PeopleInfoEditorComponent
+        PeopleFrontpageContainer
       ]
     })
-    .compileComponents();
-    
-    fixture = TestBed.createComponent(PeopleInfoEditorComponent);
+      .compileComponents();
+
+    fixture = TestBed.createComponent(PeopleFrontpageContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

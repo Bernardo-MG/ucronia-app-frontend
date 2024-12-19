@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { PeopleFrontpageComponent } from './containers/people-frontpage/people-frontpage.component';
-import { PeopleCreateComponent } from './containers/people-create/people-create.component';
-import { PeopleInfoEditorComponent } from './containers/people-info-editor/people-info-editor.component';
+import { PeopleCreateContainer } from './containers/people-create/people-create.container';
+import { PeopleFrontpageContainer } from './containers/people-frontpage/people-frontpage.container';
+import { PeopleInfoEditorContainer } from './containers/people-info-editor/people-info-editor.container';
 
 
 const routes: Routes = [
-  { path: '', component: PeopleFrontpageComponent, canActivate: [ResourceGuard("person", "read")] },
-  { path: 'register', component: PeopleCreateComponent, canActivate: [ResourceGuard("person", "create")] },
-  { path: ':number', component: PeopleInfoEditorComponent, canActivate: [ResourceGuard("person", "read")] }
+  { path: '', component: PeopleFrontpageContainer, canActivate: [ResourceGuard("person", "read")] },
+  { path: 'register', component: PeopleCreateContainer, canActivate: [ResourceGuard("person", "create")] },
+  { path: ':number', component: PeopleInfoEditorContainer, canActivate: [ResourceGuard("person", "read")] }
 ];
 
 @NgModule({

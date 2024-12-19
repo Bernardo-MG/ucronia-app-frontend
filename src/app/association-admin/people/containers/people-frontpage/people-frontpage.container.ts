@@ -18,9 +18,9 @@ import { PeopleListComponent } from '../../components/people-list/people-list.co
   selector: 'assoc-people-frontpage',
   standalone: true,
   imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './people-frontpage.component.html'
+  templateUrl: './people-frontpage.container.html'
 })
-export class PeopleFrontpageComponent {
+export class PeopleFrontpageContainer {
 
   public activeFilter = Active.Active;
 

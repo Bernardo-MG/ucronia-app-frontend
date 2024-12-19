@@ -17,9 +17,9 @@ import { PeopleInfoComponent } from '../../components/people-info/people-info.co
   selector: 'assoc-people-info-editor',
   standalone: true,
   imports: [CommonModule, CardModule, PeopleUpdateFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-info-editor.component.html'
+  templateUrl: './people-info-editor.container.html'
 })
-export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {
+export class PeopleInfoEditorContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 
   public view: string = 'details';
 
