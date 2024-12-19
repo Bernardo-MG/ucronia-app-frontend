@@ -15,7 +15,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
   templateUrl: './library-admin-book-type-listing.container.html'
 })
-export class LibraryAdminBookTypeListingComponent implements OnInit {
+export class LibraryAdminBookTypeListingContainer implements OnInit {
 
   public page = new PaginatedResponse<BookType[]>([]);
 

@@ -15,7 +15,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
   imports: [CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-creation.container.html'
 })
-export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookType> {
+export class LibraryAdminBookTypeCreateContainer extends CreateComponent<BookType> {
 
   constructor(
     private service: BookTypeAdminService,

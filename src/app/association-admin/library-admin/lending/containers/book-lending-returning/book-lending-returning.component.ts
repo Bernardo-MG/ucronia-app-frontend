@@ -18,7 +18,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
   imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './book-lending-returning.component.html'
 })
-export class BookLendingReturnComponent extends CreateComponent<BookReturned> implements OnInit {
+export class BookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 
   public book = new Book();
 

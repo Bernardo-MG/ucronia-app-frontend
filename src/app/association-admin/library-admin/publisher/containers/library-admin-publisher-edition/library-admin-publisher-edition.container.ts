@@ -18,7 +18,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
   templateUrl: './library-admin-publisher-edition.container.html'
 })
-export class LibraryAdminPublisherInfoEditorComponent extends InfoEditorStatusComponent<Publisher> implements OnInit {
+export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> implements OnInit {
 
   private number = -1;
 

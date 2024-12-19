@@ -15,7 +15,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
   templateUrl: './library-admin-author-listing.component.html'
 })
-export class LibraryAdminAuthorListingComponent implements OnInit {
+export class LibraryAdminAuthorListingContainer implements OnInit {
 
   public page = new PaginatedResponse<Author[]>([]);
 

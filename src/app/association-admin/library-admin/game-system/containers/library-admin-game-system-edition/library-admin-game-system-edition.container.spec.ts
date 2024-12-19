@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
-import { LibraryAdminGameSystemInfoEditorComponent } from './library-admin-game-system-edition.container';
+import { LibraryAdminGameSystemInfoEditorContainer } from './library-admin-game-system-edition.container';
 
-describe('LibraryAdminGameSystemInfoEditorComponent', () => {
-  let component: LibraryAdminGameSystemInfoEditorComponent;
-  let fixture: ComponentFixture<LibraryAdminGameSystemInfoEditorComponent>;
+describe('LibraryAdminGameSystemInfoEditorContainer', () => {
+  let component: LibraryAdminGameSystemInfoEditorContainer;
+  let fixture: ComponentFixture<LibraryAdminGameSystemInfoEditorContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        LibraryAdminGameSystemInfoEditorComponent
+        LibraryAdminGameSystemInfoEditorContainer
       ],
       providers: [
         GameSystemAdminService
@@ -21,7 +21,7 @@ describe('LibraryAdminGameSystemInfoEditorComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LibraryAdminGameSystemInfoEditorComponent);
+    fixture = TestBed.createComponent(LibraryAdminGameSystemInfoEditorContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
