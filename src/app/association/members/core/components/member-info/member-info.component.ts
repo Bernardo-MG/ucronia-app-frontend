@@ -5,7 +5,7 @@ import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
-import * as bootstrap from 'bootstrap';
+import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 
 @Component({
   selector: 'assoc-member-info',
@@ -23,27 +23,18 @@ export class MemberInfoComponent {
 
   public tabs = [new CardTab('details', 'Detalles'),new CardTab('status', 'Estado')];
 
+  private modalHandler = new ModalHandler();
+
   public onChangeView(newView: string) {
     this.view = newView;
   }
 
   public onShowActivate() {
-    this.openModal('activate');
+    this.modalHandler.openModal('activate');
   }
 
   public onShowDeactivate() {
-    this.openModal('deactivate');
-  }
-
-  private openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}Modal`);
-    if (modalElement) {
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-      }
-      modal.show();
-    }
+    this.modalHandler.openModal('deactivate');
   }
 
 }

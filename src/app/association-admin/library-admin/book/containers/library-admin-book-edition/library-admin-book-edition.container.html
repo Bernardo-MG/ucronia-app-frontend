@@ -1,0 +1,44 @@
+<article class="p-4">
+  <header>
+    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.title.fullTitle}}</h1>
+  </header>
+  <div appResponsiveShortColumns>
+    <ng-container [ngSwitch]="editing">
+      <!-- Form -->
+      <ng-container *ngSwitchCase="true">
+        <ng-container [ngSwitch]="view">
+          <ng-container *ngSwitchCase="'details'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
+                  [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+                  (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
+                  (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+                  (goToPublisherPage)="onGoToPublisherPage($event)">
+                </assoc-library-admin-book-edition-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+          <ng-container *ngSwitchCase="'donors'">
+            <app-card>
+              <app-card-body>
+                <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
+                  [readonly]="!formEnabled" [cancellable]="true" [donorPage]="donorPage" (save)="onSave($event)"
+                  (cancel)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
+                </assoc-library-admin-book-donors-form>
+              </app-card-body>
+            </app-card>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <!-- Info -->
+      <ng-container *ngSwitchCase="false">
+        <assoc-library-admin-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
+          [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
+          [languages]="languages" (delete)="onDelete()"
+          (startEditing)="onStartEditingView($event)"></assoc-library-admin-book-details>
+      </ng-container>
+    </ng-container>
+  </div>
+</article>

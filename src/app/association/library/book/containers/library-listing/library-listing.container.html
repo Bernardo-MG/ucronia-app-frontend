@@ -1,0 +1,11 @@
+<layout-article title="Biblioteca">
+  <!-- Books list -->
+  <app-card>
+    <app-card-body>
+      <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+        <assoc-library-book-list [books]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+          (directionChange)="onChangeDirection($event)"></assoc-library-book-list>
+      </layout-pagination-info-wrapper>
+    </app-card-body>
+  </app-card>
+</layout-article>

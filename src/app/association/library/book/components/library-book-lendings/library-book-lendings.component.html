@@ -1,0 +1,37 @@
+<!-- List -->
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Socio
+        </th>
+        <th scope="col">
+          Prestado
+        </th>
+        <th scope="col">
+          Devuelto
+        </th>
+        <th scope="col">
+          Días
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let lending of lendings; let rowIndex = index">
+        <!-- Cells -->
+        <td>
+          {{lending.borrower.name.fullName}}
+        </td>
+        <td>
+          {{lending.lendingDate}}
+        </td>
+        <td>
+          {{lending.returnDate}}
+        </td>
+        <td>
+          {{lending.days}}
+        </td>
+      </tr>
+    </tbody>
+  </table>

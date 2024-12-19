@@ -1,0 +1,15 @@
+<article class="p-4">
+  <header>
+    <h1 class="border-bottom">Registro de libro</h1>
+  </header>
+  <div appResponsiveShortColumns>
+    <app-card>
+      <app-card-body>
+        <!-- Form -->
+        <assoc-library-admin-book-creation-form [waiting]="saving" [failures]="failures" [languages]="languages"
+          (save)="onSave($event)">
+        </assoc-library-admin-book-creation-form>
+      </app-card-body>
+    </app-card>
+  </div>
+</article>
