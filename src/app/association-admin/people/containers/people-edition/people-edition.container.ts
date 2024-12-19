@@ -9,17 +9,17 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
+import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
+import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
 import { PeopleService } from '../../services/people.service';
-import { PeopleUpdateFormComponent } from '../people-update-form/people-update-form.component';
-import { PeopleInfoComponent } from '../people-info/people-info.component';
 
 @Component({
-  selector: 'assoc-people-info-editor',
+  selector: 'assoc-people-edition',
   standalone: true,
-  imports: [CommonModule, CardModule, PeopleUpdateFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-info-editor.component.html'
+  imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-edition.container.html'
 })
-export class PeopleInfoEditorComponent extends InfoEditorStatusComponent<Person> implements OnInit {
+export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 
   public view: string = 'details';
 

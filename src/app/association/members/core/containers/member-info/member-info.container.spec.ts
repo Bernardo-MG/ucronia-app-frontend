@@ -1,23 +1,27 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PeopleFrontpageComponent } from './people-frontpage.component';
+import { MemberService } from '@app/association/members/core/services/member.service';
+import { MemberInfoContainer } from './member-info.container';
 
-describe('PeopleFrontpageComponent', () => {
-  let component: PeopleFrontpageComponent;
-  let fixture: ComponentFixture<PeopleFrontpageComponent>;
+describe('MemberInfoContainer', () => {
+  let component: MemberInfoContainer;
+  let fixture: ComponentFixture<MemberInfoContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         RouterTestingModule,
-        PeopleFrontpageComponent
+        HttpClientTestingModule,
+        MemberInfoContainer
+      ],
+      providers: [
+        MemberService
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PeopleFrontpageComponent);
+    fixture = TestBed.createComponent(MemberInfoContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

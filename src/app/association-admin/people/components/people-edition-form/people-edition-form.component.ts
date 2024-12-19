@@ -8,12 +8,12 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 
 @Component({
-  selector: 'assoc-people-create-form',
+  selector: 'assoc-people-edition-form',
   standalone: true,
   imports: [CommonModule, FormModule, SaveControlsComponent],
-  templateUrl: './people-create-form.component.html'
+  templateUrl: './people-edition-form.component.html'
 })
-export class PeopleCreateFormComponent extends FormComponent<Person> {
+export class PeopleEditionFormComponent extends FormComponent<Person> {
 
   public get member() {
     return !!((this.data) && (this.data.membership));
@@ -28,10 +28,14 @@ export class PeopleCreateFormComponent extends FormComponent<Person> {
     membership.active = true;
     membership.renew = true;
     this.form = fb.group({
+      number: [-1],
       name: fb.group({
         firstName: [null],
         lastName: ['']
       }),
+      identifier: [''],
+      birthDate: [''],
+      phone: [''],
       membership: membership
     });
   }

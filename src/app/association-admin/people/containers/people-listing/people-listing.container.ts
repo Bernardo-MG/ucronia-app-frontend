@@ -1,28 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberBalanceChartWidgetComponent } from '@app/association/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
-import { MemberListComponent } from '@app/association/members/core/components/member-list/member-list.component';
-import { MemberService } from '@app/association/members/core/services/member.service';
-import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
+import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Member } from '@app/models/members/member';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
+import { PeopleListComponent } from '../../components/people-list/people-list.component';
+import { PeopleService } from '../../services/people.service';
 
 @Component({
-  selector: 'assoc-member-frontpage',
+  selector: 'assoc-people-listing',
   standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './member-frontpage.component.html'
+  imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
+  templateUrl: './people-listing.container.html'
 })
-export class MemberFrontpageComponent implements OnInit {
+export class PeopleListingContainer implements OnInit {
 
-  public page = new PaginatedResponse<Member[]>([]);
+  public activeFilter = Active.Active;
+
+  public createPermission = false;
+
+  public page = new PaginatedResponse<Person[]>([]);
 
   private sort = new Sort([]);
 
@@ -32,15 +36,29 @@ export class MemberFrontpageComponent implements OnInit {
   public reading = false;
 
   constructor(
-    private service: MemberService
+    private authContainer: AuthContainer,
+    private service: PeopleService
   ) { }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.createPermission = this.authContainer.hasPermission("person", "create");
+
+    this.load(0);
+  }
+
+  public onChangeActiveFilter(active: Active) {
+    this.activeFilter = active;
     this.load(0);
   }
 
   public onChangeDirection(field: SortProperty) {
-    this.sort.addField(field);
+    if (field.property === 'fullName') {
+      this.sort.addField(new SortProperty('firstName', field.direction));
+      this.sort.addField(new SortProperty('lastName', field.direction));
+    } else {
+      this.sort.addField(field);
+    }
 
     // We are working with pages using index 0
     // TODO: the pages should come with the correct index
@@ -50,7 +68,7 @@ export class MemberFrontpageComponent implements OnInit {
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAll(page, this.sort).subscribe({
+    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
         this.page = response;
 
@@ -64,7 +82,7 @@ export class MemberFrontpageComponent implements OnInit {
     });
   }
 
-  public routeLinkAdapter(data: Member): string {
+  public routeLinkAdapter(data: Person): string {
     return `${data.number}`;
   }
 

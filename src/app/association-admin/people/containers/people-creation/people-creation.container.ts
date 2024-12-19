@@ -6,16 +6,16 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
+import { PeopleCreationFormComponent } from '../../components/people-creation-form/people-creation-form.component';
 import { PeopleService } from '../../services/people.service';
-import { PeopleCreateFormComponent } from '../people-create-form/people-create-form.component';
 
 @Component({
-  selector: 'assoc-people-create',
+  selector: 'assoc-people-creation',
   standalone: true,
-  imports: [CardModule, PeopleCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-create.component.html'
+  imports: [CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-creation.container.html'
 })
-export class PeopleCreateComponent extends CreateComponent<Person> {
+export class PeopleCreationContainer extends CreateComponent<Person> {
 
   constructor(
     private service: PeopleService,

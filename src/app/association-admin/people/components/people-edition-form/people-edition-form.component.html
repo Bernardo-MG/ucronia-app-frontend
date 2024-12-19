@@ -3,8 +3,8 @@
   <div class="row mb-2">
     <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Número</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data?.number" id="numberInput" [readonly]="true" class="form-control"
-        aria-describedby="numberLabel">
+      <input type="text" id="firstNameInput" formControlName="number" class="form-control" [readonly]="true"
+        aria-describedby="firstNameLabel" maxlength="50">
     </div>
   </div>
   <!-- First name -->
