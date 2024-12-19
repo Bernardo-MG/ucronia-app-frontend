@@ -7,7 +7,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { PeopleService } from '../../services/people.service';
-import { PeopleCreateFormComponent } from '../people-create-form/people-create-form.component';
+import { PeopleCreateFormComponent } from '../../components/people-create-form/people-create-form.component';
 
 @Component({
   selector: 'assoc-people-create',

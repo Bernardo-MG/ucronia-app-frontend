@@ -12,7 +12,7 @@ import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pa
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 import { PeopleService } from '../../services/people.service';
-import { PeopleListComponent } from '../people-list/people-list.component';
+import { PeopleListComponent } from '../../components/people-list/people-list.component';
 
 @Component({
   selector: 'assoc-people-frontpage',

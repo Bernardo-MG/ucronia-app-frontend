@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { PeopleFrontpageComponent } from '../people/components/people-frontpage/people-frontpage.component';
-import { PeopleCreateComponent } from './components/people-create/people-create.component';
-import { PeopleInfoEditorComponent } from './components/people-info-editor/people-info-editor.component';
+import { PeopleFrontpageComponent } from './containers/people-frontpage/people-frontpage.component';
+import { PeopleCreateComponent } from './containers/people-create/people-create.component';
+import { PeopleInfoEditorComponent } from './containers/people-info-editor/people-info-editor.component';
 
 
 const routes: Routes = [

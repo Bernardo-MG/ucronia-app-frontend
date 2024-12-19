@@ -10,8 +10,8 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { PeopleService } from '../../services/people.service';
-import { PeopleUpdateFormComponent } from '../people-update-form/people-update-form.component';
-import { PeopleInfoComponent } from '../people-info/people-info.component';
+import { PeopleUpdateFormComponent } from '../../components/people-update-form/people-update-form.component';
+import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
 
 @Component({
   selector: 'assoc-people-info-editor',
