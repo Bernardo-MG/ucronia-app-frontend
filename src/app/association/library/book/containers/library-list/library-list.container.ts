@@ -1,23 +1,26 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BookService } from '@app/association/library/book/services/book.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'assoc-library-book-list',
+  selector: 'assoc-library-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, CardModule, IconsModule, PaginationInfoWrapperComponent, SortingButtonComponent],
-  templateUrl: './library-book-list.container.html'
+  imports: [RouterModule, IconsModule, CardModule, PaginationInfoWrapperComponent, SortingButtonComponent, ArticleComponent],
+  templateUrl: './library-list.container.html'
 })
-export class LibraryBookListContainer implements OnInit {
+export class LibraryListContainer implements OnInit {
+
+  public adminPermission = false;
 
   public page = new PaginatedResponse<Book[]>([]);
 
@@ -29,10 +32,13 @@ export class LibraryBookListContainer implements OnInit {
   private sort = new Sort([]);
 
   constructor(
-    private service: BookService
+    private service: BookService,
+    private authContainer: AuthContainer
   ) { }
 
   public ngOnInit(): void {
+    // Check permissions
+    this.adminPermission = this.authContainer.hasPermission("library_admin", "view");
     // Load books
     this.load(0)
   }
