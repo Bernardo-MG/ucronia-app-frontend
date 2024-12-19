@@ -6,13 +6,13 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { PeopleCreateFormComponent } from '../../components/people-create-form/people-create-form.component';
+import { PeopleCreationFormComponent } from '../../components/people-creation-form/people-creation-form.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-creation',
   standalone: true,
-  imports: [CardModule, PeopleCreateFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-creation.container.html'
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {

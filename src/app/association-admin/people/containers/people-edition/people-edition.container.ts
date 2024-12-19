@@ -9,14 +9,14 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
+import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
 import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
-import { PeopleUpdateFormComponent } from '../../components/people-update-form/people-update-form.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-edition',
   standalone: true,
-  imports: [CommonModule, CardModule, PeopleUpdateFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
