@@ -10,12 +10,13 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'assoc-library-list',
   standalone: true,
-  imports: [RouterModule, IconsModule, CardModule, PaginationInfoWrapperComponent, SortingButtonComponent, ArticleComponent],
+  imports: [RouterModule, IconsModule, CardModule, PaginationInfoWrapperComponent, SortingButtonComponent, LibraryBookListComponent, ArticleComponent],
   templateUrl: './library-list.container.html'
 })
 export class LibraryListContainer implements OnInit {

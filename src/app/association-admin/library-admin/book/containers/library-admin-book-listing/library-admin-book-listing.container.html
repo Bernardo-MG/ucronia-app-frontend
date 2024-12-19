@@ -1,0 +1,4 @@
+<layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
+  <assoc-library-admin-book-list [books]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+    (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
+</layout-pagination-info-wrapper>

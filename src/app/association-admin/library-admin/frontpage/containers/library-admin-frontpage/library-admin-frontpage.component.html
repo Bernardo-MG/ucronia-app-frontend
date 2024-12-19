@@ -7,7 +7,7 @@
       <ng-container [ngSwitch]="view">
         <!-- Books -->
         <ng-container *ngSwitchCase="'books'">
-          <assoc-library-admin-book-list></assoc-library-admin-book-list>
+          <assoc-library-admin-book-listing></assoc-library-admin-book-listing>
           <div appJustifyCenter>
             <button type="button" class="btn btn-primary" aria-label="register" routerLink="book/add"
               [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">

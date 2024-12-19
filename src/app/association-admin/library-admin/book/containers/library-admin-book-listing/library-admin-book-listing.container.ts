@@ -7,15 +7,16 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-list',
+  selector: 'assoc-library-admin-book-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-admin-book-list.container.html'
+  imports: [CommonModule, RouterModule, SortingButtonComponent, LibraryAdminBookListComponent, PaginationInfoWrapperComponent],
+  templateUrl: './library-admin-book-listing.container.html'
 })
-export class LibraryAdminBookListContainer implements OnInit {
+export class LibraryAdminBookListingContainer implements OnInit {
 
   public page = new PaginatedResponse<Book[]>([]);
 
@@ -58,6 +59,10 @@ export class LibraryAdminBookListContainer implements OnInit {
         this.reading = false;
       }
     });
+  }
+
+  public routeLinkAdapter(data: Book): string {
+    return `book/${data.number}`;
   }
 
 }
