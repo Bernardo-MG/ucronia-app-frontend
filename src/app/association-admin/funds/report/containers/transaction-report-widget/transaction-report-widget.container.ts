@@ -8,14 +8,14 @@ import { TransactionReportService } from '../../service/transaction-report.servi
   selector: 'assoc-transaction-report-widget',
   standalone: true,
   imports: [CommonModule, IconsModule, CardModule],
-  templateUrl: './transaction-report-widget.component.html'
+  templateUrl: './transaction-report-widget.container.html'
 })
-export class TransactionReportWidgetComponent {
+export class TransactionReportWidgetContainer {
 
   constructor(private transactionService: TransactionReportService) { }
 
   download() {
-    this.transactionService.downloadTransactionFile().subscribe();
+    this.transactionService.downloadExcelReport().subscribe();
   }
 
 }

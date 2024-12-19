@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TransactionReportWidgetComponent } from '@app/association-admin/funds/report/components/transaction-report-widget/transaction-report-widget.component';
+import { TransactionReportWidgetContainer } from '@app/association-admin/funds/report/containers/transaction-report-widget/transaction-report-widget.container';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -10,7 +10,7 @@ import { TransactionBalanceChartWidgetComponent } from '../../../chart/component
 @Component({
   selector: 'app-transaction-frontpage',
   standalone: true,
-  imports: [IconsModule, CardModule, TransactionBalanceChartWidgetComponent, FundsCurrentBalanceWidgetComponent, TransactionCalendarWidgetComponent, ArticleComponent, TransactionReportWidgetComponent],
+  imports: [IconsModule, CardModule, TransactionBalanceChartWidgetComponent, FundsCurrentBalanceWidgetComponent, TransactionCalendarWidgetComponent, ArticleComponent, TransactionReportWidgetContainer],
   templateUrl: './funds-frontpage.component.html'
 })
 export class FundsFrontpageComponent {

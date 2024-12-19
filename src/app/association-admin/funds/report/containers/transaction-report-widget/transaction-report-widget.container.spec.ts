@@ -1,21 +1,21 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TransactionReportWidgetComponent } from './transaction-report-widget.component';
+import { TransactionReportWidgetContainer } from './transaction-report-widget.container';
 
-describe('TransactionReportWidgetComponent', () => {
-  let component: TransactionReportWidgetComponent;
-  let fixture: ComponentFixture<TransactionReportWidgetComponent>;
+describe('TransactionReportWidgetContainer', () => {
+  let component: TransactionReportWidgetContainer;
+  let fixture: ComponentFixture<TransactionReportWidgetContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        TransactionReportWidgetComponent
+        TransactionReportWidgetContainer
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionReportWidgetComponent);
+    fixture = TestBed.createComponent(TransactionReportWidgetContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
