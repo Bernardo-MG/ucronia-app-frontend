@@ -1,42 +1,40 @@
-<ng-container [ngSwitch]="active">
-  <ng-container *ngSwitchCase="true">
-    <!-- Disable button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Deactivate"
-        (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+<div class="container text-center">
+  <div class="row">
+    <div class="col-sm-6 pb-2">
+      <ng-container [ngSwitch]="active">
+        <ng-container *ngSwitchCase="true">
+          <!-- Disable button -->
+          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Deactivate"
+            (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+        </ng-container>
+        <ng-container *ngSwitchCase="false">
+          <!-- Enable button -->
+          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Activate"
+            (action)="onShowActivate()">Activar</layout-waiting-button>
+        </ng-container>
+        <ng-container *ngSwitchCase="null">
+          <!-- Convert to member button -->
+          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Convert to member"
+            (action)="onShowConvertToMember()">Convertir en socio</layout-waiting-button>
+        </ng-container>
+      </ng-container>
     </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="false">
-    <!-- Enable button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Activate"
-        (action)="onShowActivate()">Activar</layout-waiting-button>
+    <div class="col-sm-6">
+      <ng-container [ngSwitch]="renew">
+        <ng-container *ngSwitchCase="true">
+          <!-- Disable button -->
+          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Enable renewal"
+            (action)="onShowDisableRenew()">Desactivar renovación</layout-waiting-button>
+        </ng-container>
+        <ng-container *ngSwitchCase="false">
+          <!-- Enable button -->
+          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Disable renewal"
+            (action)="onShowEnableRenew()">Activar renovación</layout-waiting-button>
+        </ng-container>
+      </ng-container>
     </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="null">
-    <!-- Convert to member button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Convert to member"
-        (action)="onShowConvertToMember()">Convertir en socio</layout-waiting-button>
-    </div>
-  </ng-container>
-</ng-container>
-<ng-container [ngSwitch]="renew">
-  <ng-container *ngSwitchCase="true">
-    <!-- Disable button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Enable renewal"
-        (action)="onShowDisableRenew()">Desactivar renovación</layout-waiting-button>
-    </div>
-  </ng-container>
-  <ng-container *ngSwitchCase="false">
-    <!-- Enable button -->
-    <div class="col-sm-2 d-grid gap-2">
-      <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Disable renewal"
-        (action)="onShowEnableRenew()">Activar renovación</layout-waiting-button>
-    </div>
-  </ng-container>
-</ng-container>
+  </div>
+</div>
 
 <!-- Modal confirmation for deactivating -->
 <layout-modal name="deactivateModal" title="Desactivar socio" acceptText="Desactivar" (accept)="deactivate.emit()">
