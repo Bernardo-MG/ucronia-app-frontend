@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AuthorAdminService } from '../../../services/author-admin.service';
+import { AuthorAdminService } from '../../services/author-admin.service';
 import { LibraryAdminAuthorListComponent } from './library-admin-author-list.component';
 
 describe('LibraryAdminAuthorListComponent', () => {
