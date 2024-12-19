@@ -15,9 +15,9 @@ import { Observable } from 'rxjs';
   selector: 'assoc-member-info',
   standalone: true,
   imports: [CommonModule, CardModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './member-info.component.html'
+  templateUrl: './member-info.container.html'
 })
-export class MemberInfoComponent extends InfoEditorStatusComponent<Member> implements OnInit {
+export class MemberInfoContainer extends InfoEditorStatusComponent<Member> implements OnInit {
 
   public view: string = 'details';
 

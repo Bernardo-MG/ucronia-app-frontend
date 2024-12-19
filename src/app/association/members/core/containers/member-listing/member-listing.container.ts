@@ -18,9 +18,9 @@ import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.di
   selector: 'assoc-member-listing',
   standalone: true,
   imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
-  templateUrl: './member-listing.component.html'
+  templateUrl: './member-listing.container.html'
 })
-export class MemberListingComponent implements OnInit {
+export class MemberListingContainer implements OnInit {
 
   public page = new PaginatedResponse<Member[]>([]);
 

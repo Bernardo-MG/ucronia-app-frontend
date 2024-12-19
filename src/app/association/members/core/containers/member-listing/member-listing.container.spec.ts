@@ -3,18 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MemberBalanceService } from '@app/association/members/balance/services/member-balance.service';
 import { MemberService } from '@app/association/members/core/services/member.service';
-import { MemberListingComponent } from './member-listing.component';
+import { MemberListingContainer } from './member-listing.container';
 
-describe('MemberListingComponent', () => {
-  let component: MemberListingComponent;
-  let fixture: ComponentFixture<MemberListingComponent>;
+describe('MemberListingContainer', () => {
+  let component: MemberListingContainer;
+  let fixture: ComponentFixture<MemberListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        MemberListingComponent
+        MemberListingContainer
       ],
       providers: [
         MemberService,
@@ -23,7 +23,7 @@ describe('MemberListingComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MemberListingComponent);
+    fixture = TestBed.createComponent(MemberListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
