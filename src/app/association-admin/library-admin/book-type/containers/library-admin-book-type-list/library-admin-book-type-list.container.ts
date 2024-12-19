@@ -4,20 +4,20 @@ import { RouterModule } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { GameSystem } from '@app/models/library/game-system';
+import { BookType } from '@app/models/library/book-type';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { GameSystemAdminService } from '../../services/game-system-admin.service';
+import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-list',
+  selector: 'assoc-library-admin-book-type-list',
   standalone: true,
-  imports: [ CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent ],
-  templateUrl: './library-admin-game-system-list.component.html'
+  imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
+  templateUrl: './library-admin-book-type-list.container.html'
 })
-export class LibraryAdminGameSystemListComponent implements OnInit {
+export class LibraryAdminBookTypeListComponent implements OnInit {
 
-  public page = new PaginatedResponse<GameSystem[]>([]);
+  public page = new PaginatedResponse<BookType[]>([]);
 
   /**
    * Loading flag.
@@ -27,7 +27,7 @@ export class LibraryAdminGameSystemListComponent implements OnInit {
   private sort = new Sort([]);
 
   constructor(
-    private service: GameSystemAdminService
+    private service: BookTypeAdminService
   ) { }
 
   public ngOnInit(): void {

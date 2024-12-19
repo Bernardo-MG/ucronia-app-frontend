@@ -16,7 +16,7 @@ import { LibraryAdminBookTypeInfoComponent } from '../../components/library-admi
   selector: 'assoc-library-admin-book-type-info-editor',
   standalone: true,
   imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-book-type-info-editor.component.html'
+  templateUrl: './library-admin-book-type-info-editor.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorComponent extends InfoEditorStatusComponent<BookType> implements OnInit {
 

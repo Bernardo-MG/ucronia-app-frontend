@@ -13,7 +13,7 @@ import { LibraryAdminBookTypeFormComponent } from '../../components/library-admi
   selector: 'assoc-library-admin-book-type-creation',
   standalone: true,
   imports: [CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-type-creation.component.html'
+  templateUrl: './library-admin-book-type-creation.container.html'
 })
 export class LibraryAdminBookTypeCreateComponent extends CreateComponent<BookType> {
 

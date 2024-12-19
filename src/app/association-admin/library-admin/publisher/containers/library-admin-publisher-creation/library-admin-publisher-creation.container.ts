@@ -13,7 +13,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   selector: 'assoc-library-admin-publisher-creation',
   standalone: true,
   imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-publisher-creation.component.html'
+  templateUrl: './library-admin-publisher-creation.container.html'
 })
 export class LibraryAdminPublisherCreateComponent extends CreateComponent<Publisher> {
 

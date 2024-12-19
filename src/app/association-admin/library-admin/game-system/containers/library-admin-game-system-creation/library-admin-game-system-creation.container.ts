@@ -13,7 +13,7 @@ import { LibraryAdminGameSystemFormComponent } from '../../components/library-ad
   selector: 'assoc-library-admin-game-system-creation',
   standalone: true,
   imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-game-system-creation.component.html'
+  templateUrl: './library-admin-game-system-creation.container.html'
 })
 export class LibraryAdminGameSystemCreateComponent extends CreateComponent<GameSystem> {
 

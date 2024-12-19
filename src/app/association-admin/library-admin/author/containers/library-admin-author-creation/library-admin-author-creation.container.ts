@@ -13,7 +13,7 @@ import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-
   selector: 'assoc-library-admin-author-creation',
   standalone: true,
   imports: [CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-author-creation.component.html'
+  templateUrl: './library-admin-author-creation.container.html'
 })
 export class LibraryAdminAuthorCreateComponent extends CreateComponent<Author> {
 

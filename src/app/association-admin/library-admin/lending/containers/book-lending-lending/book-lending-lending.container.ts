@@ -23,7 +23,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
   selector: 'assoc-book-lending-lending',
   standalone: true,
   imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-  templateUrl: './book-lending-lending.component.html'
+  templateUrl: './book-lending-lending.container.html'
 })
 export class BookLendingLendComponent extends CreateComponent<BookLent> implements OnInit {
 

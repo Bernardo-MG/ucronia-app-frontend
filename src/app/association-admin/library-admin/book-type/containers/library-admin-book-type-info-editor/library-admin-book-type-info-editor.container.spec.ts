@@ -1,25 +1,27 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { BookTypeAdminService } from '@app/association-admin/library-admin/services/book-type-admin.service';
-import { LibraryAdminBookTypeListComponent } from './library-admin-book-type-list.component';
+import { LibraryAdminBookTypeInfoEditorComponent } from './library-admin-book-type-info-editor.container';
 
-describe('LibraryAdminBookTypeListComponent', () => {
-  let component: LibraryAdminBookTypeListComponent;
-  let fixture: ComponentFixture<LibraryAdminBookTypeListComponent>;
+describe('LibraryAdminBookTypeInfoEditorComponent', () => {
+  let component: LibraryAdminBookTypeInfoEditorComponent;
+  let fixture: ComponentFixture<LibraryAdminBookTypeInfoEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        RouterTestingModule,
         HttpClientTestingModule,
-        LibraryAdminBookTypeListComponent
+        LibraryAdminBookTypeInfoEditorComponent
       ],
       providers: [
         BookTypeAdminService
       ]
     })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(LibraryAdminBookTypeListComponent);
+    .compileComponents();
+    
+    fixture = TestBed.createComponent(LibraryAdminBookTypeInfoEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

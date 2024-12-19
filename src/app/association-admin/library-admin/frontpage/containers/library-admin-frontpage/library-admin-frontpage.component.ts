@@ -8,10 +8,10 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { LibraryAdminAuthorListComponent } from '../../../author/containers/library-admin-author-list/library-admin-author-list.component';
-import { LibraryAdminBookTypeListComponent } from '../../../book-type/containers/library-admin-book-type-list/library-admin-book-type-list.component';
+import { LibraryAdminBookTypeListComponent } from '../../../book-type/containers/library-admin-book-type-list/library-admin-book-type-list.container';
 import { LibraryAdminBookListContainer } from '../../../book/containers/library-admin-book-list/library-admin-book-list.container';
-import { LibraryAdminGameSystemListComponent } from '../../../game-system/containers/library-admin-game-system-list/library-admin-game-system-list.component';
-import { LibraryAdminPublisherListComponent } from '../../../publisher/containers/library-admin-publisher-list/library-admin-publisher-list.component';
+import { LibraryAdminGameSystemListComponent } from '../../../game-system/containers/library-admin-game-system-list/library-admin-game-system-list.container';
+import { LibraryAdminPublisherListComponent } from '../../../publisher/containers/library-admin-publisher-list/library-admin-publisher-list.container';
 
 @Component({
   selector: 'assoc-library-admin-frontpage',

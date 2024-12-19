@@ -13,7 +13,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   selector: 'assoc-library-admin-publisher-list',
   standalone: true,
   imports: [CommonModule, RouterModule, SortingButtonComponent, PaginationInfoWrapperComponent],
-  templateUrl: './library-admin-publisher-list.component.html'
+  templateUrl: './library-admin-publisher-list.container.html'
 })
 export class LibraryAdminPublisherListComponent implements OnInit {
 
