@@ -15,7 +15,7 @@ export class BookReportService {
       'Accept': 'application/vnd.ms-excel'
     });
 
-    return this.http.get(`${environment.apiUrl}/funds/transaction`, {
+    return this.http.get(`${environment.apiUrl}/library/book`, {
       headers,
       responseType: 'blob'
     }).pipe(
@@ -24,7 +24,7 @@ export class BookReportService {
         const url = window.URL.createObjectURL(blob);
         const anchor = document.createElement('a');
         anchor.href = url;
-        anchor.download = 'transactions.xlsx';
+        anchor.download = 'books.xlsx';
         anchor.click();
         window.URL.revokeObjectURL(url);
       })
