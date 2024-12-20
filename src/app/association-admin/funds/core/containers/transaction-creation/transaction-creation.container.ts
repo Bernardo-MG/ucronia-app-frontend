@@ -6,16 +6,16 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { TransactionFormComponent } from '../../../core/components/transaction-form/transaction-form.component';
+import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'assoc-transaction-create',
+  selector: 'assoc-transaction-creation',
   standalone: true,
   imports: [CardModule, ArticleComponent, TransactionFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-create.component.html'
+  templateUrl: './transaction-creation.container.html'
 })
-export class TransactionCreateComponent extends CreateComponent<Transaction> {
+export class TransactionCreationComponent extends CreateComponent<Transaction> {
 
   constructor(
     private service: TransactionService,

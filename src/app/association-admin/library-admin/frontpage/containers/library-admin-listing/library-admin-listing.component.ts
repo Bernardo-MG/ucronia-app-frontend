@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BookReportWidgetComponent } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
@@ -14,12 +15,12 @@ import { LibraryAdminGameSystemListingContainer } from '../../../game-system/con
 import { LibraryAdminPublisherListingContainer } from '../../../publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
 
 @Component({
-  selector: 'assoc-library-admin-frontpage',
+  selector: 'assoc-library-admin-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, JustifyCenterDirective],
-  templateUrl: './library-admin-frontpage.component.html'
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, BookReportWidgetComponent, ArticleComponent, JustifyCenterDirective],
+  templateUrl: './library-admin-listing.component.html'
 })
-export class LibraryAdminFrontpageContainer implements OnInit {
+export class LibraryAdminListingContainer implements OnInit {
 
   public view = 'books';
 
@@ -44,7 +45,7 @@ export class LibraryAdminFrontpageContainer implements OnInit {
     private authContainer: AuthContainer
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Check permissions
     this.createBookPermission = this.authContainer.hasPermission("library_book", "create");
     this.createBookTypePermission = this.authContainer.hasPermission("library_book_type", "create");

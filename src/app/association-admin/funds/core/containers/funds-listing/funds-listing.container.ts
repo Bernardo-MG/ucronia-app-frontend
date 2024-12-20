@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TransactionReportWidgetComponent } from '@app/association-admin/funds/report/components/transaction-report-widget/transaction-report-widget.component';
+import { TransactionReportWidgetContainer } from '@app/association-admin/funds/report/containers/transaction-report-widget/transaction-report-widget.container';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
@@ -8,11 +8,11 @@ import { TransactionCalendarWidgetComponent } from '../../../calendar/components
 import { TransactionBalanceChartWidgetComponent } from '../../../chart/components/transaction-balance-chart-widget/transaction-balance-chart-widget.component';
 
 @Component({
-  selector: 'app-transaction-frontpage',
+  selector: 'app-transaction-listing',
   standalone: true,
-  imports: [IconsModule, CardModule, TransactionBalanceChartWidgetComponent, FundsCurrentBalanceWidgetComponent, TransactionCalendarWidgetComponent, ArticleComponent, TransactionReportWidgetComponent],
-  templateUrl: './funds-frontpage.component.html'
+  imports: [IconsModule, CardModule, TransactionBalanceChartWidgetComponent, FundsCurrentBalanceWidgetComponent, TransactionCalendarWidgetComponent, ArticleComponent, TransactionReportWidgetContainer],
+  templateUrl: './funds-listing.container.html'
 })
-export class FundsFrontpageComponent {
+export class FundsListingComponent {
 
 }
