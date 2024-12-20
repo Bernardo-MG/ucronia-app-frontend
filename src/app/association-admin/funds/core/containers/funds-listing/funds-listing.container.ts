@@ -8,11 +8,11 @@ import { TransactionCalendarWidgetComponent } from '../../../calendar/components
 import { TransactionBalanceChartWidgetComponent } from '../../../chart/components/transaction-balance-chart-widget/transaction-balance-chart-widget.component';
 
 @Component({
-  selector: 'app-transaction-frontpage',
+  selector: 'app-transaction-listing',
   standalone: true,
   imports: [IconsModule, CardModule, TransactionBalanceChartWidgetComponent, FundsCurrentBalanceWidgetComponent, TransactionCalendarWidgetComponent, ArticleComponent, TransactionReportWidgetContainer],
-  templateUrl: './funds-frontpage.component.html'
+  templateUrl: './funds-listing.container.html'
 })
-export class FundsFrontpageComponent {
+export class FundsListingComponent {
 
 }
