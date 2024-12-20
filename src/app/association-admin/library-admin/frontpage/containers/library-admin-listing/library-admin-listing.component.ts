@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BookReportWidgetComponent } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
@@ -16,7 +17,7 @@ import { LibraryAdminPublisherListingContainer } from '../../../publisher/contai
 @Component({
   selector: 'assoc-library-admin-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, BookReportWidgetComponent, ArticleComponent, JustifyCenterDirective],
   templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {
