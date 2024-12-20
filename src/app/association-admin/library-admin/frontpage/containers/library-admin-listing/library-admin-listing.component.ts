@@ -44,7 +44,7 @@ export class LibraryAdminListingContainer implements OnInit {
     private authContainer: AuthContainer
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Check permissions
     this.createBookPermission = this.authContainer.hasPermission("library_book", "create");
     this.createBookTypePermission = this.authContainer.hasPermission("library_book_type", "create");
