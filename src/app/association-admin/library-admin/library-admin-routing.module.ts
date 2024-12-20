@@ -7,7 +7,7 @@ import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/libr
 import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
-import { LibraryAdminFrontpageContainer } from './frontpage/containers/library-admin-frontpage/library-admin-frontpage.component';
+import { LibraryAdminListingContainer } from './frontpage/containers/library-admin-listing/library-admin-listing.component';
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
 import { BookLendingLendContainer } from './lending/containers/book-lending-lending/book-lending-lending.container';
@@ -17,7 +17,7 @@ import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers
 
 
 const routes: Routes = [
-  { path: '', component: LibraryAdminFrontpageContainer },
+  { path: '', component: LibraryAdminListingContainer },
   { path: 'author/add', component: LibraryAdminAuthorCreateContainer, canActivate: [ResourceGuard("library_author", "create")] },
   { path: 'bookType/add', component: LibraryAdminBookTypeCreateContainer, canActivate: [ResourceGuard("library_book_type", "create")] },
   { path: 'gameSystem/add', component: LibraryAdminGameSystemCreateContainer, canActivate: [ResourceGuard("library_game_system", "create")] },
