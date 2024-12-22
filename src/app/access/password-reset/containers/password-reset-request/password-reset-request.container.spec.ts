@@ -1,19 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetComponent } from './password-reset.component';
+import { PasswordResetRequestContainer } from './password-reset-request.container';
 
-describe('PasswordResetComponent', () => {
-  let component: PasswordResetComponent;
-  let fixture: ComponentFixture<PasswordResetComponent>;
+describe('PasswordResetRequestContainer', () => {
+  let component: PasswordResetRequestContainer;
+  let fixture: ComponentFixture<PasswordResetRequestContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        PasswordResetComponent
+        PasswordResetRequestContainer
       ],
       providers: [
         PasswordResetService
@@ -21,14 +19,10 @@ describe('PasswordResetComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetComponent);
+    fixture = TestBed.createComponent(PasswordResetRequestContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  // **************************************************************************
-  // General tests
-  // **************************************************************************
 
   it('should create', () => {
     expect(component).toBeTruthy();

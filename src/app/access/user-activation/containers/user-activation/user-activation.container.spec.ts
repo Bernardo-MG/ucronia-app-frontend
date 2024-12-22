@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccessUserActivateService } from '../../services/user-activate.service';
-import { UserActivationComponent } from './user-activation.component';
+import { UserActivationContainer } from './user-activation.container';
 
-describe('UserActivationComponent', () => {
-  let component: UserActivationComponent;
-  let fixture: ComponentFixture<UserActivationComponent>;
+describe('UserActivationContainer', () => {
+  let component: UserActivationContainer;
+  let fixture: ComponentFixture<UserActivationContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         HttpClientTestingModule,
-        UserActivationComponent
+        UserActivationContainer
       ],
       providers: [
         AccessUserActivateService
@@ -21,7 +21,7 @@ describe('UserActivationComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivationComponent);
+    fixture = TestBed.createComponent(UserActivationContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

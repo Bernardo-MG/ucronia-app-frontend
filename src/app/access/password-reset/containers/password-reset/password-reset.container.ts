@@ -7,7 +7,7 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { throwError } from 'rxjs';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetFormComponent } from '../password-reset-form/password-reset-form.component';
+import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
 
 /**
  * Password reset. Changes the password for an existing user, identified by a token.
@@ -18,9 +18,9 @@ import { PasswordResetFormComponent } from '../password-reset-form/password-rese
   selector: 'login-password-reset',
   standalone: true,
   imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
-  templateUrl: './password-reset.component.html'
+  templateUrl: './password-reset.container.html'
 })
-export class PasswordResetComponent implements OnInit {
+export class PasswordResetContainer implements OnInit {
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.

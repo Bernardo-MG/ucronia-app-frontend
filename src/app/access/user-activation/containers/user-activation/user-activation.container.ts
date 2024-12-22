@@ -8,7 +8,7 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { throwError } from 'rxjs';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
-import { UserActivationFormComponent } from '../user-activation-form/user-activation-form.component';
+import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
@@ -19,9 +19,9 @@ import { UserActivationFormComponent } from '../user-activation-form/user-activa
   selector: 'access-user-activation',
   standalone: true,
   imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUiDirective],
-  templateUrl: './user-activation.component.html'
+  templateUrl: './user-activation.container.html'
 })
-export class UserActivationComponent implements OnInit {
+export class UserActivationContainer implements OnInit {
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.

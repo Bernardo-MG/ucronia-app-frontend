@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserLogin } from '../../models/user-login';
 import { LoginService } from '../../services/login.service';
-import { LoginFormComponent } from '../login-form/login-form.component';
+import { LoginFormComponent } from '../../components/login-form/login-form.component';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -21,12 +21,12 @@ import { LoginFormComponent } from '../login-form/login-form.component';
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login-widget',
+  selector: 'login',
   standalone: true,
   imports: [RouterModule, LoginFormComponent],
-  templateUrl: './login-widget.component.html'
+  templateUrl: './login.container.html'
 })
-export class LoginWidgetComponent implements OnInit {
+export class LoginWidgetContainer implements OnInit {
 
   /**
    * Failed login flag.

@@ -6,7 +6,7 @@ import { CardModule } from '@app/shared/card/card.module';
 import { throwError } from 'rxjs';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetRequestFormComponent } from '../password-reset-request-form/password-reset-request-form.component';
+import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
@@ -15,9 +15,9 @@ import { PasswordResetRequestFormComponent } from '../password-reset-request-for
   selector: 'login-password-reset-request',
   standalone: true,
   imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
-  templateUrl: './password-reset-request.component.html'
+  templateUrl: './password-reset-request.container.html'
 })
-export class PasswordResetRequestComponent {
+export class PasswordResetRequestContainer {
 
   /**
    * Finished flag. If set to true the component is finished and allows no furter operation.
