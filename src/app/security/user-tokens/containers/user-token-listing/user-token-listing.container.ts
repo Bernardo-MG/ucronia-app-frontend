@@ -7,7 +7,7 @@ import { UserTokenService } from '@app/security/user-tokens/services/user-token.
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { UserTokenSelectionListComponent } from '../../components/data/user-token-selection-list/user-token-selection-list.component';
+import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
   selector: 'access-user-token-listing',
