@@ -6,16 +6,16 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { AccessUserService } from '../../../services/access-user.service';
-import { AccessUserFormComponent } from '../../form/access-user-form/access-user-form.component';
+import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserFormComponent } from '../../components/form/access-user-form/access-user-form.component';
 
 @Component({
-  selector: 'access-user-create',
+  selector: 'access-user-creation',
   standalone: true,
   imports: [CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-user-create.component.html'
+  templateUrl: './access-user-creation.container.html'
 })
-export class AccessUserCreateComponent extends CreateComponent<User> {
+export class AccessUserCreationContainer extends CreateComponent<User> {
 
   constructor(
     private service: AccessUserService,

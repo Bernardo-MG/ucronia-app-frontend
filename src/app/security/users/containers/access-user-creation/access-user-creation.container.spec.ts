@@ -1,19 +1,21 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AccessUserService } from '../../../services/access-user.service';
-import { AccessFrontpageComponent } from './access-user-frontpage.component';
+import { AccessUserService } from '../../services/access-user.service';
+import { AccessUserCreationContainer } from './access-user-creation.container';
 
-describe('AccessFrontpageComponent', () => {
-  let component: AccessFrontpageComponent;
-  let fixture: ComponentFixture<AccessFrontpageComponent>;
+describe('AccessUserCreationContainer', () => {
+  let component: AccessUserCreationContainer;
+  let fixture: ComponentFixture<AccessUserCreationContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        AccessFrontpageComponent
+        ReactiveFormsModule,
+        AccessUserCreationContainer
       ],
       providers: [
         AccessUserService
@@ -21,7 +23,7 @@ describe('AccessFrontpageComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessFrontpageComponent);
+    fixture = TestBed.createComponent(AccessUserCreationContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
