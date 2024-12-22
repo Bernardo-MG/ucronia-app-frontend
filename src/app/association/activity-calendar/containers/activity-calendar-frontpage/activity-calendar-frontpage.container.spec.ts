@@ -1,21 +1,21 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivityCalendarFrontpageComponent } from './activity-calendar-frontpage.component';
+import { ActivityCalendarFrontpageContainer } from './activity-calendar-frontpage.container';
 
-describe('ActivityCalendarFrontpageComponent', () => {
-  let component: ActivityCalendarFrontpageComponent;
-  let fixture: ComponentFixture<ActivityCalendarFrontpageComponent>;
+describe('ActivityCalendarFrontpageContainer', () => {
+  let component: ActivityCalendarFrontpageContainer;
+  let fixture: ComponentFixture<ActivityCalendarFrontpageContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ActivityCalendarFrontpageComponent
+        ActivityCalendarFrontpageContainer
       ]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(ActivityCalendarFrontpageComponent);
+    fixture = TestBed.createComponent(ActivityCalendarFrontpageContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
