@@ -5,14 +5,14 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { FrontpageCalendarComponent } from '../frontpage-calendar/frontpage-calendar.component';
+import { FrontpageCalendarComponent } from '../../components/frontpage-calendar/frontpage-calendar.component';
 
 @Component({
   selector: 'app-frontpage-frontpage',
   standalone: true,
   imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, FrontpageCalendarComponent, GoogleMapsComponent, BlockUiDirective],
-  templateUrl: './frontpage.component.html',
-  styleUrls: ['./frontpage.component.sass']
+  templateUrl: './frontpage.container.html',
+  styleUrls: ['./frontpage.container.sass']
 })
 export class FrontpageComponent implements OnInit {
 
