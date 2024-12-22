@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Active } from '@app/association/members/model/active';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { Active } from '@app/association/members/model/active';
 import { CardModule } from '@app/shared/card/card.module';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { IconsModule } from '@app/shared/icons/icons.module';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
@@ -14,7 +14,7 @@ import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 @Component({
   selector: 'assoc-fee-calendar-widget',
   standalone: true,
-  imports: [CardModule, RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective, JustifyCenterDirective],
+  imports: [CardModule, RouterModule, IconsModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective],
   templateUrl: './fee-calendar-widget.component.html'
 })
 export class FeeCalendarWidgetComponent implements OnInit {
