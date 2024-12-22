@@ -8,14 +8,13 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
 
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, JustifyCenterDirective],
+  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {
