@@ -9,13 +9,13 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'assoc-member-listing',
   standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
+  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, PaginationInfoComponent, JustifyCenterDirective],
   templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer implements OnInit {

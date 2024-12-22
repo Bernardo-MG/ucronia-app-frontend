@@ -8,15 +8,14 @@ import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'assoc-library-listing',
   standalone: true,
-  imports: [RouterModule, IconsModule, CardModule, PaginationInfoWrapperComponent, SortingButtonComponent, LibraryBookListComponent, ArticleComponent],
+  imports: [RouterModule, IconsModule, CardModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent],
   templateUrl: './library-listing.container.html'
 })
 export class LibraryListingContainer implements OnInit {

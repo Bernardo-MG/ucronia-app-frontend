@@ -1,7 +1,8 @@
 <app-card>
   <app-card-body>
-    <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
-      <assoc-my-fees-list [fees]="page.content"></assoc-my-fees-list>
-    </layout-pagination-info-wrapper>
+    <assoc-my-fees-list [fees]="page.content"></assoc-my-fees-list>
   </app-card-body>
+  <app-card-footer>
+    <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+  </app-card-footer>
 </app-card>
