@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccessUserService } from '../../../services/access-user.service';
+import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserRolesComponent } from './access-user-roles.component';
 
 describe('AccessUserRolesComponent', () => {

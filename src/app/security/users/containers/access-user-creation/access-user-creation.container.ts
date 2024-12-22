@@ -7,7 +7,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserFormComponent } from '../../components/form/access-user-form/access-user-form.component';
+import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 
 @Component({
   selector: 'access-user-creation',

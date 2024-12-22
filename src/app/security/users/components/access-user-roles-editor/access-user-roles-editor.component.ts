@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
-import { AccessUserRolesComponent } from '../../info/access-user-roles/access-user-roles.component';
-import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
 import { IconsModule } from '@app/shared/icons/icons.module';
+import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
+import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles.component';
 
 @Component({
   selector: 'access-user-roles-editor',

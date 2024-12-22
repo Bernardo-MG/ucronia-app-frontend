@@ -13,12 +13,12 @@ import { ModalComponent } from '@app/shared/layout/components/modal/modal.compon
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { AccessUserFormComponent } from '../../components/form/access-user-form/access-user-form.component';
-import { AccessUserMemberEditorComponent } from '../../components/form/access-user-member-editor/access-user-member-editor.component';
-import { AccessUserRolesEditorComponent } from '../../components/form/access-user-roles-editor/access-user-roles-editor.component';
-import { AccessUserInfoDetailsComponent } from '../../components/info/access-user-info-details/access-user-info-details.component';
-import { AccessUserInfoComponent } from '../../components/info/access-user-info/access-user-info.component';
-import { AccessUserStatusComponent } from '../../components/info/access-user-status/access-user-status.component';
+import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
+import { AccessUserMemberEditorComponent } from '../../components/access-user-member-editor/access-user-member-editor.component';
+import { AccessUserRolesEditorComponent } from '../../components/access-user-roles-editor/access-user-roles-editor.component';
+import { AccessUserInfoDetailsComponent } from '../../components/access-user-info-details/access-user-info-details.component';
+import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
+import { AccessUserStatusComponent } from '../../components/access-user-status/access-user-status.component';
 import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 

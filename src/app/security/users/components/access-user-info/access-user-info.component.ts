@@ -7,8 +7,8 @@ import { User } from '@app/core/authentication/models/user';
 import { CardModule } from '@app/shared/card/card.module';
 import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { AccessUserMemberEditorComponent } from '../../form/access-user-member-editor/access-user-member-editor.component';
-import { AccessUserRolesEditorComponent } from '../../form/access-user-roles-editor/access-user-roles-editor.component';
+import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
+import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
 import { AccessUserStatusComponent } from '../access-user-status/access-user-status.component';
 
