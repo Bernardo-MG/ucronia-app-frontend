@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 import { FeePayContainer } from './pay/containers/fee-pay/fee-pay.container';
-import { FeeFrontpageComponent } from './views/components/fee-frontpage/fee-frontpage.component';
-import { FeeInfoEditorComponent } from './views/components/fee-info-editor/fee-info-editor.component';
+import { FeeInfoEditorComponent } from './views/containers/fee-info-editor/fee-info-editor.component';
+import { FeeFrontpageComponent } from './views/containers/fee-listing/fee-listing.container';
 
 
 const routes: Routes = [

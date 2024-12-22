@@ -5,10 +5,10 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 
 @Component({
-  selector: 'assoc-fee-frontpage',
+  selector: 'assoc-fee-listing',
   standalone: true,
   imports: [FeeCalendarWidgetContainer, ArticleComponent, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-frontpage.component.html'
+  templateUrl: './fee-listing.container.html'
 })
 export class FeeFrontpageComponent {
 

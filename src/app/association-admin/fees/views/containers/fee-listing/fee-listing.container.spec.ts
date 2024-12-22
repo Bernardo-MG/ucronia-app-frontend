@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FeeReportService } from '@app/association-admin/fees/chart/services/fee-report.service';
 import { FeeCalendarService } from '../../../calendar/services/fee-calendar.service';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeeFrontpageComponent } from './fee-frontpage.component';
+import { FeeFrontpageComponent } from './fee-listing.container';
 
 describe('FeeFrontpageComponent', () => {
   let component: FeeFrontpageComponent;
