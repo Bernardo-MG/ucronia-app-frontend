@@ -7,7 +7,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { AccessRoleService } from '../../../services/access-role.service';
 import { AccessRoleSelectionListComponent } from '../access-role-selection-list/access-role-selection-list.component';
@@ -15,7 +15,7 @@ import { AccessRoleSelectionListComponent } from '../access-role-selection-list/
 @Component({
   selector: 'access-role-selection-list-widget',
   standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
+  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, JustifyCenterDirective],
   templateUrl: './access-role-selection-list-widget.component.html'
 })
 export class AccessRoleSelectionListWidgetComponent implements OnInit {

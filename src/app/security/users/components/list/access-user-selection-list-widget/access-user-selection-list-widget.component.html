@@ -1,9 +1,7 @@
 <app-card>
   <app-card-body>
-    <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
       <access-user-selection-list [users]="page.content" [routeLinkAdapter]="routeLinkAdapter"
         (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
-    </layout-pagination-info-wrapper>
     <!-- Add -->
     <div appJustifyCenter>
       <button type="button" class="btn btn-primary" aria-label="register" routerLink="/security/users/add"
@@ -12,4 +10,7 @@
       </button>
     </div>
   </app-card-body>
+  <app-card-footer>
+    <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+  </app-card-footer>
 </app-card>
