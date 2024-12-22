@@ -1,16 +1,17 @@
 <app-card>
+  <app-card-header>
+    <!-- Add role -->
+      <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/roles/add"
+      [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+      <icon-add></icon-add>
+    </button>
+  </app-card-header>
   <app-card-body>
     <!-- List -->
-    <layout-pagination-info-wrapper [waiting]="reading" [page]="page" (goTo)="load($event)">
-      <access-role-selection-list [roles]="page.content" (changeDirection)="onChangeDirection($event)"
-        [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
-    </layout-pagination-info-wrapper>
-    <!-- Add -->
-    <div appJustifyCenter>
-      <button type="button" class="btn btn-primary" aria-label="register" routerLink="/security/roles/add"
-        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-        <icon-add></icon-add>
-      </button>
-    </div>
+    <access-role-selection-list [roles]="page.content" (changeDirection)="onChangeDirection($event)"
+      [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
   </app-card-body>
+  <app-card-footer>
+    <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+  </app-card-footer>
 </app-card>

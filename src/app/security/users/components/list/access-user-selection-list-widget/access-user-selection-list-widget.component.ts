@@ -5,17 +5,16 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { AccessUserService } from '../../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
-import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
+  imports: [CardModule, RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {

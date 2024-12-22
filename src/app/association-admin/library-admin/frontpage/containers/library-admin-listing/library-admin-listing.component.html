@@ -1,68 +1,50 @@
 <layout-article title="Administración de biblioteca">
   <div class="row pb-2">
-    <div class="col-md-4 pb-2">
+    <div class="col-md-2 pb-2">
       <assoc-book-report-widget></assoc-book-report-widget>
     </div>
   </div>
   <div class="row">
     <app-card>
       <app-card-header>
+        <button type="button" class="btn btn-link" aria-label="register" [routerLink]="creationRoute"
+          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+          <icon-add></icon-add>
+        </button>
         <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
       </app-card-header>
       <app-card-body>
         <ng-container [ngSwitch]="view">
           <!-- Books -->
           <ng-container *ngSwitchCase="'books'">
-            <assoc-library-admin-book-listing></assoc-library-admin-book-listing>
-            <div appJustifyCenter>
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="book/add"
-                [disabled]="!createBookPermission" [attr.aria-disabled]="!createBookPermission">
-                <icon-add></icon-add>
-              </button>
-            </div>
+            <assoc-library-admin-book-listing [pageNumber]="pageNumber" (wait)="onWait($event)"
+              (changePage)="onChangePage($event)"></assoc-library-admin-book-listing>
           </ng-container>
           <!-- Authors -->
           <ng-container *ngSwitchCase="'authors'">
-            <assoc-library-admin-author-listing></assoc-library-admin-author-listing>
-            <div appJustifyCenter>
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="author/add"
-                [disabled]="!createAuthorPermission" [attr.aria-disabled]="!createAuthorPermission">
-                <icon-add></icon-add>
-              </button>
-            </div>
+            <assoc-library-admin-author-listing [pageNumber]="pageNumber" (wait)="onWait($event)"
+              (changePage)="onChangePage($event)"></assoc-library-admin-author-listing>
           </ng-container>
           <!-- Publishers -->
           <ng-container *ngSwitchCase="'publishers'">
-            <assoc-library-admin-publisher-listing></assoc-library-admin-publisher-listing>
-            <div appJustifyCenter>
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="publisher/add"
-                [disabled]="!createPublisherPermission" [attr.aria-disabled]="!createPublisherPermission">
-                <icon-add></icon-add>
-              </button>
-            </div>
+            <assoc-library-admin-publisher-listing [pageNumber]="pageNumber" (wait)="onWait($event)"
+              (changePage)="onChangePage($event)"></assoc-library-admin-publisher-listing>
           </ng-container>
           <!-- Book types -->
           <ng-container *ngSwitchCase="'book_types'">
-            <assoc-library-admin-book-type-listing></assoc-library-admin-book-type-listing>
-            <div appJustifyCenter>
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="bookType/add"
-                [disabled]="!createBookTypePermission" [attr.aria-disabled]="!createBookTypePermission">
-                <icon-add></icon-add>
-              </button>
-            </div>
+            <assoc-library-admin-book-type-listing [pageNumber]="pageNumber" (wait)="onWait($event)"
+              (changePage)="onChangePage($event)"></assoc-library-admin-book-type-listing>
           </ng-container>
           <!-- Game systems -->
           <ng-container *ngSwitchCase="'game_systems'">
-            <assoc-library-admin-game-system-listing></assoc-library-admin-game-system-listing>
-            <div appJustifyCenter>
-              <button type="button" class="btn btn-primary" aria-label="register" routerLink="gameSystem/add"
-                [disabled]="!createGameSystemPermission" [attr.aria-disabled]="!createGameSystemPermission">
-                <icon-add></icon-add>
-              </button>
-            </div>
+            <assoc-library-admin-game-system-listing [pageNumber]="pageNumber" (wait)="onWait($event)"
+              (changePage)="onChangePage($event)"></assoc-library-admin-game-system-listing>
           </ng-container>
         </ng-container>
       </app-card-body>
+      <app-card-footer>
+        <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+      </app-card-footer>
     </app-card>
   </div>
 </layout-article>

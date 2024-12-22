@@ -4,7 +4,7 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { LoginRegister } from '../../../models/login-register';
 import { AccessAuditLoginService } from '../../../services/access-audit-login.service';
 import { AccessAuditLoginListComponent } from '../../list/access-audit-login-list/access-audit-login-list.component';
@@ -12,7 +12,7 @@ import { AccessAuditLoginListComponent } from '../../list/access-audit-login-lis
 @Component({
   selector: 'access-audit-login',
   standalone: true,
-  imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoWrapperComponent],
+  imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './access-audit-login.component.html'
 })
 export class AccessAuditLoginComponent implements OnInit {
