@@ -1,6 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccessRoleService } from '../../../services/access-role.service';
+import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
 
 describe('AccessRoleAddPermissionComponent', () => {

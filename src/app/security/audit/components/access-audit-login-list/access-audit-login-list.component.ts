@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { LoginRegister } from '../../../models/login-register';
+import { LoginRegister } from '../../models/login-register';
 
 @Component({
   selector: 'access-audit-login-list',

@@ -15,9 +15,9 @@ import { ModalComponent } from '@app/shared/layout/components/modal/modal.compon
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { AccessRoleService } from '../../services/access-role.service';
-import { AccessRoleAddPermissionComponent } from '../../components/data/access-role-add-permission/access-role-add-permission.component';
-import { AccessRoleInfoComponent } from '../../components/data/access-role-info/access-role-info.component';
-import { AccessRolePermissionsComponent } from '../../components/data/access-role-permissions/access-role-permissions.component';
+import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
+import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
+import { AccessRolePermissionsComponent } from '../../components/access-role-permissions/access-role-permissions.component';
 import { CardModule } from '@app/shared/card/card.module';
 
 @Component({

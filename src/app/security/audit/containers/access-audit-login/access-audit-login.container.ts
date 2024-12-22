@@ -5,9 +5,9 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
 import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
-import { AccessAuditLoginListComponent } from '../../components/list/access-audit-login-list/access-audit-login-list.component';
 
 @Component({
   selector: 'access-audit-login',
