@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { AccessRoleSelectionListWidgetComponent } from '../../list/access-role-selection-list-widget/access-role-selection-list-widget.component';
+import { AccessRoleSelectionListWidgetComponent } from '../../components/list/access-role-selection-list-widget/access-role-selection-list-widget.component';
 
 @Component({
-  selector: 'access-role-frontpage',
+  selector: 'access-role-listing',
   standalone: true,
   imports: [AccessRoleSelectionListWidgetComponent, ArticleComponent],
-  templateUrl: './access-role-frontpage.component.html'
+  templateUrl: './access-role-listing.container.html'
 })
-export class AccessRoleFrontpageComponent implements OnInit {
+export class AccessRoleListingContainer implements OnInit {
 
   public createPermission = false;
 

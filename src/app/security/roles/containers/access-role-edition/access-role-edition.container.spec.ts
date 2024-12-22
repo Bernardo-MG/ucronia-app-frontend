@@ -1,19 +1,19 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AccessRoleService } from '../../../services/access-role.service';
-import { AccessRoleCreateComponent } from './access-role-create.component';
+import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleInfoEditionContainer } from './access-role-edition.container';
 
-describe('AccessRoleCreateComponent', () => {
-  let component: AccessRoleCreateComponent;
-  let fixture: ComponentFixture<AccessRoleCreateComponent>;
+describe('AccessRoleInfoEditionContainer', () => {
+  let component: AccessRoleInfoEditionContainer;
+  let fixture: ComponentFixture<AccessRoleInfoEditionContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         HttpClientTestingModule,
-        AccessRoleCreateComponent
+        RouterTestingModule,
+        AccessRoleInfoEditionContainer
       ],
       providers: [
         AccessRoleService
@@ -21,7 +21,7 @@ describe('AccessRoleCreateComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleCreateComponent);
+    fixture = TestBed.createComponent(AccessRoleInfoEditionContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

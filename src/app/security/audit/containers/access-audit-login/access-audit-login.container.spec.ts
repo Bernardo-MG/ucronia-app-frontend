@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
 import { AccessAuditLoginContainer } from './access-audit-login.container';
 
-describe('AccessAuditLoginComponent', () => {
+describe('AccessAuditLoginContainer', () => {
   let component: AccessAuditLoginContainer;
   let fixture: ComponentFixture<AccessAuditLoginContainer>;
 

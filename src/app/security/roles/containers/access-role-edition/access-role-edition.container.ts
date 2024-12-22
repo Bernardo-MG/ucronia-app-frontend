@@ -14,19 +14,19 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { AccessRoleService } from '../../../services/access-role.service';
-import { AccessRoleAddPermissionComponent } from '../../data/access-role-add-permission/access-role-add-permission.component';
-import { AccessRoleInfoComponent } from '../../data/access-role-info/access-role-info.component';
-import { AccessRolePermissionsComponent } from '../../data/access-role-permissions/access-role-permissions.component';
+import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleAddPermissionComponent } from '../../components/data/access-role-add-permission/access-role-add-permission.component';
+import { AccessRoleInfoComponent } from '../../components/data/access-role-info/access-role-info.component';
+import { AccessRolePermissionsComponent } from '../../components/data/access-role-permissions/access-role-permissions.component';
 import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
-  selector: 'access-role-info-editor',
+  selector: 'access-role-edition',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, CardModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-role-info-editor.component.html'
+  templateUrl: './access-role-edition.container.html'
 })
-export class AccessRoleInfoEditorComponent extends InfoEditorStatusComponent<Role> implements OnInit {
+export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
 
   public permissions = new PaginatedResponse<ResourcePermission[]>([]);
 
