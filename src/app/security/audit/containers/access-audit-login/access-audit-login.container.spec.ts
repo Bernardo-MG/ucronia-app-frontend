@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { AccessAuditLoginService } from '../../../services/access-audit-login.service';
-import { AccessAuditLoginComponent } from './access-audit-login.component';
+import { AccessAuditLoginService } from '../../services/access-audit-login.service';
+import { AccessAuditLoginContainer } from './access-audit-login.container';
 
 describe('AccessAuditLoginComponent', () => {
-  let component: AccessAuditLoginComponent;
-  let fixture: ComponentFixture<AccessAuditLoginComponent>;
+  let component: AccessAuditLoginContainer;
+  let fixture: ComponentFixture<AccessAuditLoginContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        AccessAuditLoginComponent
+        AccessAuditLoginContainer
       ],
       providers: [
         AccessAuditLoginService
@@ -19,7 +19,7 @@ describe('AccessAuditLoginComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AccessAuditLoginComponent);
+    fixture = TestBed.createComponent(AccessAuditLoginContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

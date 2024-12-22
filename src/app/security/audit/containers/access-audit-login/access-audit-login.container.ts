@@ -5,17 +5,17 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { LoginRegister } from '../../../models/login-register';
-import { AccessAuditLoginService } from '../../../services/access-audit-login.service';
-import { AccessAuditLoginListComponent } from '../../list/access-audit-login-list/access-audit-login-list.component';
+import { LoginRegister } from '../../models/login-register';
+import { AccessAuditLoginService } from '../../services/access-audit-login.service';
+import { AccessAuditLoginListComponent } from '../../components/list/access-audit-login-list/access-audit-login-list.component';
 
 @Component({
   selector: 'access-audit-login',
   standalone: true,
   imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './access-audit-login.component.html'
+  templateUrl: './access-audit-login.container.html'
 })
-export class AccessAuditLoginComponent implements OnInit {
+export class AccessAuditLoginContainer implements OnInit {
 
   public page = new PaginatedResponse<LoginRegister[]>([]);
 
