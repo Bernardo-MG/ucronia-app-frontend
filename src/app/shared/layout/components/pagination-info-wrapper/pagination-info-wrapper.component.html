@@ -1,15 +1,4 @@
-<!-- List -->
+<!-- Content -->
 <ng-content *layoutBlockUi="waiting"></ng-content>
 <!-- Pagination info -->
-<!-- Total -->
-<div class="row">
-  <div class="col-md-1">
-    <p>Total: {{page.totalElements}}</p>
-  </div>
-</div>
-<!-- Page navigation -->
-<div appJustifyCenter class="mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
-    (goTo)="goTo.emit($event)">
-  </pagination-navigation>
-</div>
+<layout-pagination-info [waiting]="waiting" [page]="page" (goTo)="goTo.emit($event)"></layout-pagination-info>
