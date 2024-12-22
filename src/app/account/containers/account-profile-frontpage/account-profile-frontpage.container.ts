@@ -1,21 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
+import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { AccountProfileInfoComponent } from '../../profile/account-profile-info/account-profile-info.component';
-import { AccountProfilePersonComponent } from '../../profile/account-profile-person/account-profile-person.component';
 
 @Component({
   selector: 'account-profile-frontpage',
   standalone: true,
   imports: [CommonModule, ArticleComponent, CardModule, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './account-profile-frontpage.component.html'
+  templateUrl: './account-profile-frontpage.container.html'
 })
-export class AccountProfileFrontpageComponent implements OnInit {
+export class AccountProfileFrontpageContainer implements OnInit {
 
   public account = new Account();
 

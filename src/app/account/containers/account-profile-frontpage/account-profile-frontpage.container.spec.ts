@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from '@app/account/services/account.service';
-import { AccountProfileFrontpageComponent } from './account-profile-frontpage.component';
+import { AccountProfileFrontpageContainer } from './account-profile-frontpage.container';
 
-describe('AccountProfileFrontpageComponent', () => {
-  let component: AccountProfileFrontpageComponent;
-  let fixture: ComponentFixture<AccountProfileFrontpageComponent>;
+describe('AccountProfileFrontpageContainer', () => {
+  let component: AccountProfileFrontpageContainer;
+  let fixture: ComponentFixture<AccountProfileFrontpageContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        AccountProfileFrontpageComponent
+        AccountProfileFrontpageContainer
       ],
       providers: [
         AccountService
@@ -19,7 +19,7 @@ describe('AccountProfileFrontpageComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AccountProfileFrontpageComponent);
+    fixture = TestBed.createComponent(AccountProfileFrontpageContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

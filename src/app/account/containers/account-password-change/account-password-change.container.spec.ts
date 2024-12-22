@@ -3,18 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountChangePasswordFormComponent } from '@app/account/components/password-change/account-change-password-form/account-change-password-form.component';
 import { AccountService } from '@app/account/services/account.service';
-import { AccountPasswordChangeComponent } from './account-password-change.component';
+import { AccountPasswordChangeContainer } from './account-password-change.container';
 
-describe('AccountPasswordChangeComponent', () => {
-  let component: AccountPasswordChangeComponent;
-  let fixture: ComponentFixture<AccountPasswordChangeComponent>;
+describe('AccountPasswordChangeContainer', () => {
+  let component: AccountPasswordChangeContainer;
+  let fixture: ComponentFixture<AccountPasswordChangeContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        AccountPasswordChangeComponent,
+        AccountPasswordChangeContainer,
         AccountChangePasswordFormComponent
       ],
       providers: [
@@ -23,7 +23,7 @@ describe('AccountPasswordChangeComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountPasswordChangeComponent);
+    fixture = TestBed.createComponent(AccountPasswordChangeContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
