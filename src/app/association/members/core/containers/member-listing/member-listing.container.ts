@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { MemberBalanceChartWidgetComponent } from '@app/association/members/balance/components/member-balance-chart-widget/member-balance-chart-widget.component';
 import { MemberListComponent } from '@app/association/members/core/components/member-list/member-list.component';
 import { MemberService } from '@app/association/members/core/services/member.service';
-import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
@@ -12,12 +11,11 @@ import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 
 @Component({
   selector: 'assoc-member-listing',
   standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, MemberStatusSelectComponent, PaginationInfoWrapperComponent, JustifyEndDirective, JustifyCenterDirective],
+  imports: [RouterModule, CardModule, MemberBalanceChartWidgetComponent, ArticleComponent, MemberListComponent, PaginationInfoWrapperComponent, JustifyCenterDirective],
   templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer implements OnInit {
