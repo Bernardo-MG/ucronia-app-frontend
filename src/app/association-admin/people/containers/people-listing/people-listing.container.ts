@@ -9,14 +9,14 @@ import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoWrapperComponent } from '@app/shared/layout/components/pagination-info-wrapper/pagination-info-wrapper.component';
+import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
   standalone: true,
-  imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoWrapperComponent],
+  imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent],
   templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
