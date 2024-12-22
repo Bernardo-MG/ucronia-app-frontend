@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SimpleLayoutComponent } from '@app/core/layout/components/simple-layout/simple-layout.component';
-import { SettingsInfoEditorComponent } from './components/views/settings-info-editor/settings-info-editor.component';
+import { SettingsInfoEditorContainer } from './containers/settings-info-editor/settings-info-editor.container';
 
 
 const routes: Routes = [
@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: SettingsInfoEditorComponent
+        component: SettingsInfoEditorContainer
       }
     ]
   }

@@ -1,17 +1,17 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssociationSettingsService } from '@app/settings/service/association-settings.service';
-import { SettingsInfoEditorComponent } from './settings-info-editor.component';
+import { SettingsInfoEditorContainer } from './settings-info-editor.container';
 
-describe('SettingsInfoEditorComponent', () => {
-  let component: SettingsInfoEditorComponent;
-  let fixture: ComponentFixture<SettingsInfoEditorComponent>;
+describe('SettingsInfoEditorContainer', () => {
+  let component: SettingsInfoEditorContainer;
+  let fixture: ComponentFixture<SettingsInfoEditorContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        SettingsInfoEditorComponent
+        SettingsInfoEditorContainer
       ],
       providers: [
         AssociationSettingsService
@@ -19,7 +19,7 @@ describe('SettingsInfoEditorComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SettingsInfoEditorComponent);
+    fixture = TestBed.createComponent(SettingsInfoEditorContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

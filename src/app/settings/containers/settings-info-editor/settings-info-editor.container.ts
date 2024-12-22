@@ -4,16 +4,16 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Setting } from '@app/settings/models/setting';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { AssociationSettingsService as AssociationSettingsService } from '../../../service/association-settings.service';
-import { SettingValuesEditorComponent } from '../../editor/settings-values-editor/settings-values-editor.component';
+import { AssociationSettingsService as AssociationSettingsService } from '../../service/association-settings.service';
+import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
 
 @Component({
   selector: 'assoc-settings-info-editor',
   standalone: true,
   imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
-  templateUrl: './settings-info-editor.component.html'
+  templateUrl: './settings-info-editor.container.html'
 })
-export class SettingsInfoEditorComponent implements OnInit {
+export class SettingsInfoEditorContainer implements OnInit {
 
   public settings: Setting[] = [];
 
