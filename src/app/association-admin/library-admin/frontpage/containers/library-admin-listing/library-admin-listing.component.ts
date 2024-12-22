@@ -9,7 +9,6 @@ import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
 import { LibraryAdminBookTypeListingContainer } from '../../../book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookListingContainer } from '../../../book/containers/library-admin-book-listing/library-admin-book-listing.container';
@@ -19,7 +18,7 @@ import { LibraryAdminPublisherListingContainer } from '../../../publisher/contai
 @Component({
   selector: 'assoc-library-admin-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, BookReportWidgetComponent, ArticleComponent, PaginationInfoComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, BookReportWidgetComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {
