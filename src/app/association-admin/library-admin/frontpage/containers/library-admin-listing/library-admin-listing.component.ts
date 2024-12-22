@@ -51,6 +51,31 @@ export class LibraryAdminListingContainer implements OnInit {
     return permission;
   }
 
+  public get creationRoute() {
+    let route;
+    switch (this.view) {
+      case 'authors':
+        route = "author/add";
+        break;
+      case 'books':
+        route = "book/add";
+        break;
+      case 'book_types':
+        route = "bookType/add";
+        break;
+      case 'game_systems':
+        route = "gameSystem/add";
+        break;
+      case 'publishers':
+        route = "publisher/add";
+        break;
+      default:
+        route = '';
+    }
+
+    return route;
+  }
+
   public reading = false;
 
   public page = new PaginatedResponse<any[]>([]);
