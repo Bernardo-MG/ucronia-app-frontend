@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MyFeesFrontpageComponent } from './containers/my-fees-listing/my-fees-listing.container';
+import { MyFeesFrontpageContainer } from './containers/my-fees-listing/my-fees-listing.container';
 
 
 const routes: Routes = [
-  { path: '', component: MyFeesFrontpageComponent }
+  { path: '', component: MyFeesFrontpageContainer }
 ];
 
 @NgModule({

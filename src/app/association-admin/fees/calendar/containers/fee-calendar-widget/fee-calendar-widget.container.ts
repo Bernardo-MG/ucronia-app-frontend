@@ -8,16 +8,16 @@ import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
+import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
-import { FeeCalendarComponent } from '../fee-calendar/fee-calendar.component';
 
 @Component({
   selector: 'assoc-fee-calendar-widget',
   standalone: true,
   imports: [CardModule, RouterModule, IconsModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective],
-  templateUrl: './fee-calendar-widget.component.html'
+  templateUrl: './fee-calendar-widget.container.html'
 })
-export class FeeCalendarWidgetComponent implements OnInit {
+export class FeeCalendarWidgetContainer implements OnInit {
 
   public createPermission = false;
 

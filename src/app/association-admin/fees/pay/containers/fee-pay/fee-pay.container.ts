@@ -16,17 +16,17 @@ import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-be
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeeCreateFormComponent } from '../fee-create-form/fee-create-form.component';
-import { FeePayFormComponent } from '../fee-pay-form/fee-pay-form.component';
-import { FeePaySelectMemberComponent } from '../fee-pay-select-member/fee-pay-select-member.component';
+import { FeeCreateFormComponent } from '../../components/fee-create-form/fee-create-form.component';
+import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
+import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-member/fee-pay-select-member.component';
 
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreateFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-pay.component.html'
+  templateUrl: './fee-pay.container.html'
 })
-export class FeePayComponent extends CreateComponent<FeePayment> implements OnInit {
+export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
 
   public readingMembers = false;
 

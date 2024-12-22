@@ -13,7 +13,7 @@ import { MyFeesService } from '../../services/my-fees.service';
   imports: [ArticleComponent, CardModule, MyFeesListComponent, PaginationInfoComponent],
   templateUrl: './my-fees-listing.container.html'
 })
-export class MyFeesFrontpageComponent implements OnInit {
+export class MyFeesFrontpageContainer implements OnInit {
 
   public page = new PaginatedResponse<Fee[]>([]);
 

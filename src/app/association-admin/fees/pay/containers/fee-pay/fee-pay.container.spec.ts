@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeePayComponent } from './fee-pay.component';
+import { FeePayContainer } from './fee-pay.container';
 
-describe('FeePayComponent', () => {
-  let component: FeePayComponent;
-  let fixture: ComponentFixture<FeePayComponent>;
+describe('FeePayContainer', () => {
+  let component: FeePayContainer;
+  let fixture: ComponentFixture<FeePayContainer>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -19,7 +19,7 @@ describe('FeePayComponent', () => {
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FeePayComponent
+        FeePayContainer
       ],
       providers: [
         { provide: FeeService, useValue: service }
@@ -27,7 +27,7 @@ describe('FeePayComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeePayComponent);
+    fixture = TestBed.createComponent(FeePayContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
