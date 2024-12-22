@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MyFeesFrontpageComponent } from './components/views/my-fees-frontpage/my-fees-frontpage.component';
+import { MyFeesFrontpageComponent } from './containers/my-fees-listing/my-fees-listing.container';
 
 
 const routes: Routes = [

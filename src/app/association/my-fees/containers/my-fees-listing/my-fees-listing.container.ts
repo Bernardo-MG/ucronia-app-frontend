@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { MyFeesService } from '@app/association/my-fees/services/my-fees.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
+import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { MyFeesListComponent } from '../../list/my-fees-list/my-fees-list.component';
+import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
+import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
-  selector: 'assoc-my-fees-list-widget',
+  selector: 'app-my-fees-listing',
   standalone: true,
-  imports: [CardModule, MyFeesListComponent, PaginationInfoComponent],
-  templateUrl: './my-fees-list-widget.component.html'
+  imports: [ArticleComponent, CardModule, MyFeesListComponent, PaginationInfoComponent],
+  templateUrl: './my-fees-listing.container.html'
 })
-export class MyFeesListWidgetComponent implements OnInit {
+export class MyFeesFrontpageComponent implements OnInit {
 
   public page = new PaginatedResponse<Fee[]>([]);
 
