@@ -1,21 +1,21 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserTokenFrontpageComponent } from './user-token-frontpage.component';
+import { UserTokenListingContainer } from './user-token-listing.container';
 
-describe('UserTokenFrontpageComponent', () => {
-  let component: UserTokenFrontpageComponent;
-  let fixture: ComponentFixture<UserTokenFrontpageComponent>;
+describe('UserTokenListingContainer', () => {
+  let component: UserTokenListingContainer;
+  let fixture: ComponentFixture<UserTokenListingContainer>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        UserTokenFrontpageComponent
+        UserTokenListingContainer
       ]
     });
-    fixture = TestBed.createComponent(UserTokenFrontpageComponent);
+    fixture = TestBed.createComponent(UserTokenListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

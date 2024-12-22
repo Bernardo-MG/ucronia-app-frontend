@@ -47,7 +47,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
     super(new Role());
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Check permissions
     this.editable = false;
     this.deletable = this.authContainer.hasPermission("user", "delete");

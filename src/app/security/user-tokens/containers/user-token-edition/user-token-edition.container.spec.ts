@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UserTokenInfoEditorComponent } from './user-token-info-editor.component';
+import { UserTokenEditionContainer } from './user-token-edition.container';
 
-describe('UserTokenInfoEditorComponent', () => {
-  let component: UserTokenInfoEditorComponent;
-  let fixture: ComponentFixture<UserTokenInfoEditorComponent>;
+describe('UserTokenEditionContainer', () => {
+  let component: UserTokenEditionContainer;
+  let fixture: ComponentFixture<UserTokenEditionContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        UserTokenInfoEditorComponent
+        UserTokenEditionContainer
       ],
       providers: [
         { provide: FormGroupDirective, useValue: { form: { get: () => null } } },
@@ -22,7 +22,7 @@ describe('UserTokenInfoEditorComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UserTokenInfoEditorComponent);
+    fixture = TestBed.createComponent(UserTokenEditionContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

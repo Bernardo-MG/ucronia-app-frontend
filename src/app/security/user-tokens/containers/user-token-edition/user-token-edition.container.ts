@@ -11,17 +11,17 @@ import { ModalComponent } from '@app/shared/layout/components/modal/modal.compon
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { UserTokenService } from '../../../services/user-token.service';
-import { UserTokenInfoComponent } from '../../data/user-token-info/user-token-info.component';
-import { UserTokenStatusComponent } from '../../data/user-token-status/user-token-status.component';
+import { UserTokenService } from '../../services/user-token.service';
+import { UserTokenInfoComponent } from '../../components/data/user-token-info/user-token-info.component';
+import { UserTokenStatusComponent } from '../../components/data/user-token-status/user-token-status.component';
 
 @Component({
-  selector: 'access-user-token-info-editor',
+  selector: 'access-user-token-edition',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './user-token-info-editor.component.html'
+  templateUrl: './user-token-edition.container.html'
 })
-export class UserTokenInfoEditorComponent extends InfoEditorStatusComponent<UserToken> implements OnInit {
+export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> implements OnInit {
 
   public extendExpirationForm;
 

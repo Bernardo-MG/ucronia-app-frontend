@@ -7,15 +7,15 @@ import { UserTokenService } from '@app/security/user-tokens/services/user-token.
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
-import { UserTokenSelectionListComponent } from '../../data/user-token-selection-list/user-token-selection-list.component';
+import { UserTokenSelectionListComponent } from '../../components/data/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
-  selector: 'access-user-token-frontpage',
+  selector: 'access-user-token-listing',
   standalone: true,
   imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './user-token-frontpage.component.html'
+  templateUrl: './user-token-listing.container.html'
 })
-export class UserTokenFrontpageComponent implements OnInit {
+export class UserTokenListingContainer implements OnInit {
 
   public page = new PaginatedResponse<UserToken[]>([]);
 
