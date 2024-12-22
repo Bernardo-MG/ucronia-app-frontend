@@ -1,23 +1,23 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
-import { TransactionBalanceChartWidgetComponent } from './transaction-balance-chart-widget.component';
+import { TransactionBalanceChartWidgetContainer } from './transaction-balance-chart-widget.container';
 
-describe('TransactionBalanceChartWidgetComponent', () => {
-  let component: TransactionBalanceChartWidgetComponent;
-  let fixture: ComponentFixture<TransactionBalanceChartWidgetComponent>;
+describe('TransactionBalanceChartWidgetContainer', () => {
+  let component: TransactionBalanceChartWidgetContainer;
+  let fixture: ComponentFixture<TransactionBalanceChartWidgetContainer>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        TransactionBalanceChartWidgetComponent
+        TransactionBalanceChartWidgetContainer
       ],
       providers: [
         TransactionBalanceService
       ]
     });
-    fixture = TestBed.createComponent(TransactionBalanceChartWidgetComponent);
+    fixture = TestBed.createComponent(TransactionBalanceChartWidgetContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -3,15 +3,15 @@ import { Component, OnInit } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import { CardModule } from '@app/shared/card/card.module';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
-import { TransactionBalanceChartComponent } from '../transaction-balance-chart/transaction-balance-chart.component';
+import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-widget',
   standalone: true,
   imports: [CommonModule, CardModule, TransactionBalanceChartComponent],
-  templateUrl: './transaction-balance-chart-widget.component.html'
+  templateUrl: './transaction-balance-chart-widget.container.html'
 })
-export class TransactionBalanceChartWidgetComponent implements OnInit {
+export class TransactionBalanceChartWidgetContainer implements OnInit {
 
   public balance: TransactionMonthlyBalance[] = [];
 

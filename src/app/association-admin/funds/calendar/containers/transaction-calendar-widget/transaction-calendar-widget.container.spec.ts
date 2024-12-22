@@ -3,18 +3,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
-import { TransactionCalendarWidgetComponent } from './transaction-calendar-widget.component';
+import { TransactionCalendarWidgetContainer } from './transaction-calendar-widget.container';
 
-describe('TransactionCalendarWidgetComponent', () => {
-  let component: TransactionCalendarWidgetComponent;
-  let fixture: ComponentFixture<TransactionCalendarWidgetComponent>;
+describe('TransactionCalendarWidgetContainer', () => {
+  let component: TransactionCalendarWidgetContainer;
+  let fixture: ComponentFixture<TransactionCalendarWidgetContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        TransactionCalendarWidgetComponent
+        TransactionCalendarWidgetContainer
       ],
       providers: [
         TransactionCalendarService,
@@ -23,7 +23,7 @@ describe('TransactionCalendarWidgetComponent', () => {
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TransactionCalendarWidgetComponent);
+    fixture = TestBed.createComponent(TransactionCalendarWidgetContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

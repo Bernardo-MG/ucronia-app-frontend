@@ -7,9 +7,9 @@ import { TransactionBalanceService } from '../../services/transaction-balance.se
   selector: 'assoc-transaction-current-balance-widget',
   standalone: true,
   imports: [BlockUiDirective],
-  templateUrl: './transaction-current-balance-widget.component.html'
+  templateUrl: './transaction-current-balance-widget.container.html'
 })
-export class FundsCurrentBalanceWidgetComponent implements OnInit {
+export class FundsCurrentBalanceWidgetContainer implements OnInit {
 
   public readingBalance = false;
 

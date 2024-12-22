@@ -15,9 +15,9 @@ import { TransactionCalendarService } from '../../services/transaction-calendar.
   selector: 'assoc-transaction-calendar-widget',
   standalone: true,
   imports: [CommonModule, RouterModule, IconsModule, CardModule, ScheduleModule, JustifyCenterDirective],
-  templateUrl: './transaction-calendar-widget.component.html'
+  templateUrl: './transaction-calendar-widget.container.html'
 })
-export class TransactionCalendarWidgetComponent implements OnInit {
+export class TransactionCalendarWidgetContainer implements OnInit {
 
   public months: Month[] = [];
 
