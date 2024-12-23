@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -14,7 +13,7 @@ import { UserLogin } from '../../models/user-login';
 @Component({
   selector: 'login-login-form',
   standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent, JustifyCenterDirective],
+  imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
