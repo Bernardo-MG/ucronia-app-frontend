@@ -21,12 +21,12 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login',
+  selector: 'login-card',
   standalone: true,
   imports: [RouterModule, LoginFormComponent],
   templateUrl: './login.container.html'
 })
-export class LoginWidgetContainer implements OnInit {
+export class LoginContainer implements OnInit {
 
   /**
    * Failed login flag.

@@ -2,18 +2,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginService } from '../../services/login.service';
-import { LoginWidgetContainer } from './login.container';
+import { LoginContainer } from './login.container';
 
-describe('LoginWidgetContainer', () => {
-  let component: LoginWidgetContainer;
-  let fixture: ComponentFixture<LoginWidgetContainer>;
+describe('LoginContainer', () => {
+  let component: LoginContainer;
+  let fixture: ComponentFixture<LoginContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        LoginWidgetContainer
+        LoginContainer
       ],
       providers: [
         LoginService
@@ -23,7 +23,7 @@ describe('LoginWidgetContainer', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginWidgetContainer);
+    fixture = TestBed.createComponent(LoginContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
