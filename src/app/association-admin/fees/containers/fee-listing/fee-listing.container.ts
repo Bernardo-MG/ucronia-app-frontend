@@ -10,6 +10,6 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
   imports: [FeeCalendarWidgetContainer, ArticleComponent, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
   templateUrl: './fee-listing.container.html'
 })
-export class FeeFrontpageComponent {
+export class FeeListingContainer {
 
 }

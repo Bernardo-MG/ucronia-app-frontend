@@ -13,7 +13,7 @@ import { FeePayment } from '@app/models/fees/fee-payment';
 import { Member } from '@app/models/members/member';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Fee } from '../../../../models/fees/fee';
+import { Fee } from '../../../models/fees/fee';
 
 @Injectable({
   providedIn: "root"

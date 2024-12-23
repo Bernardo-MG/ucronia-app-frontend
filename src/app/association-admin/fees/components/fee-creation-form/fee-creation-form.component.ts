@@ -8,12 +8,12 @@ import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-fee-create-form',
+  selector: 'assoc-fee-creation-form',
   standalone: true,
   imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './fee-create-form.component.html'
+  templateUrl: './fee-creation-form.component.html'
 })
-export class FeeCreateFormComponent extends FormComponent<FeeCreation> implements OnChanges {
+export class FeeCreationFormComponent extends FormComponent<FeeCreation> implements OnChanges {
 
   @Input() public member = new Member();
 
