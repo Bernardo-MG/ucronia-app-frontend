@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BookReportWidgetComponent } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.component';
+import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
@@ -18,7 +18,7 @@ import { LibraryAdminPublisherListingContainer } from '../../../publisher/contai
 @Component({
   selector: 'assoc-library-admin-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, BookReportWidgetComponent, ArticleComponent, PaginationInfoComponent],
+  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent],
   templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {
@@ -83,6 +83,8 @@ export class LibraryAdminListingContainer implements OnInit {
 
   public waiting = false;
 
+  public downloading = false;
+
   public tabs = [
     new CardTab('books', 'Libros'), new CardTab('authors', 'Autores'), new CardTab('publishers', 'Editores'),
     new CardTab('book_types', 'Tipos'), new CardTab('game_systems', 'Sistemas')
@@ -99,7 +101,8 @@ export class LibraryAdminListingContainer implements OnInit {
   private createPublisherPermission = false;
 
   constructor(
-    private authContainer: AuthContainer
+    private authContainer: AuthContainer,
+    private reportService: BookReportService
   ) { }
 
   public ngOnInit(): void {
@@ -125,6 +128,21 @@ export class LibraryAdminListingContainer implements OnInit {
 
   public onChangePage(page: PaginatedResponse<any[]>) {
     this.page = page;
+  }
+
+  public downloadExcel() {
+    this.downloading = true;
+
+    this.reportService.downloadExcelReport().subscribe({
+      next: response => {
+        // Reactivate view
+        this.downloading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.downloading = false;
+      }
+    });
   }
 
 }

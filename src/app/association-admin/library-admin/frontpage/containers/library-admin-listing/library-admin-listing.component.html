@@ -1,15 +1,13 @@
 <layout-article title="Administración de biblioteca">
-  <div class="row pb-2">
-    <div class="col-md-2 pb-2">
-      <assoc-book-report-widget></assoc-book-report-widget>
-    </div>
-  </div>
   <div class="row">
     <app-card>
       <app-card-header>
         <button type="button" class="btn btn-link" aria-label="register" [routerLink]="creationRoute"
           [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
           <icon-add></icon-add>
+        </button>
+        <button type="button" class="btn btn-link" aria-label="Download excel" [disabled]="downloading" (click)="downloadExcel()">
+          <icon-excel></icon-excel>
         </button>
         <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
       </app-card-header>
