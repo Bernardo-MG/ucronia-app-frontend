@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../../core/services/fee.service';
-import { FeeInfoEditionContainer } from './fee-edition.container';
+import { FeeEditionContainer } from './fee-edition.container';
+import { FeeService } from '../../core/services/fee.service';
 
-describe('FeeInfoEditionContainer', () => {
-  let component: FeeInfoEditionContainer;
-  let fixture: ComponentFixture<FeeInfoEditionContainer>;
+describe('FeeEditionContainer', () => {
+  let component: FeeEditionContainer;
+  let fixture: ComponentFixture<FeeEditionContainer>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -17,7 +17,7 @@ describe('FeeInfoEditionContainer', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FeeInfoEditionContainer
+        FeeEditionContainer
       ],
       providers: [
         { provide: FeeService, useValue: service }
@@ -25,7 +25,7 @@ describe('FeeInfoEditionContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeInfoEditionContainer);
+    fixture = TestBed.createComponent(FeeEditionContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

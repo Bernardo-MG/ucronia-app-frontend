@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditFormComponent } from '@app/association-admin/fees/core/components/fee-edit-form/fee-edit-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/core/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { FeeService } from '../../../core/services/fee.service';
-import { Fee } from '../../../../../models/fees/fee';
+import { FeeService } from '../../core/services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edition',
@@ -18,7 +18,7 @@ import { Fee } from '../../../../../models/fees/fee';
   imports: [CardModule, CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
-export class FeeInfoEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
+export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
 
   private date: string = "";
 
