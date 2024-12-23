@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeEditFormComponent } from '@app/association-admin/fees/components/fee-edit-form/fee-edit-form.component';
+import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
@@ -15,7 +15,7 @@ import { FeeService } from '../../services/fee.service';
 @Component({
   selector: 'assoc-fee-edition',
   standalone: true,
-  imports: [CardModule, CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {

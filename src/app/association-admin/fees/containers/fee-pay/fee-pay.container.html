@@ -33,8 +33,8 @@
               </ng-container>
               <ng-container *ngSwitchCase="false">
                 <!-- Create unpaid form -->
-                <assoc-fee-create-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [member]="member" (save)="onCreateUnpaid($event)"></assoc-fee-create-form>
+                <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+                  [member]="member" (save)="onCreateUnpaid($event)"></assoc-fee-creation-form>
               </ng-container>
             </ng-container>
           </ng-container>

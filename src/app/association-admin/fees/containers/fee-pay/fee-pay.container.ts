@@ -16,14 +16,14 @@ import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-be
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
-import { FeeCreateFormComponent } from '../../components/fee-create-form/fee-create-form.component';
+import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
 import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
 import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-member/fee-pay-select-member.component';
 
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreateFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {

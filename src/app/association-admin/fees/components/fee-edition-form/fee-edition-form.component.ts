@@ -8,12 +8,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-  selector: 'assoc-fee-edit-form',
+  selector: 'assoc-fee-edition-form',
   standalone: true,
   imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
-  templateUrl: './fee-edit-form.component.html'
+  templateUrl: './fee-edition-form.component.html'
 })
-export class FeeEditFormComponent extends FormComponent<Fee> {
+export class FeeEditionFormComponent extends FormComponent<Fee> {
 
   @Input() public override set data(value: Fee) {
     super.loadData(value);
