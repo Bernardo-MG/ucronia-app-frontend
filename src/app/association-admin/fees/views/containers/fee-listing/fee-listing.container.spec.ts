@@ -4,18 +4,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FeeReportService } from '@app/association-admin/fees/chart/services/fee-report.service';
 import { FeeCalendarService } from '../../../calendar/services/fee-calendar.service';
 import { FeeService } from '../../../core/services/fee.service';
-import { FeeFrontpageComponent } from './fee-listing.container';
+import { FeeListingContainer } from './fee-listing.container';
 
-describe('FeeFrontpageComponent', () => {
-  let component: FeeFrontpageComponent;
-  let fixture: ComponentFixture<FeeFrontpageComponent>;
+describe('FeeListingContainer', () => {
+  let component: FeeListingContainer;
+  let fixture: ComponentFixture<FeeListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
         RouterTestingModule,
-        FeeFrontpageComponent
+        FeeListingContainer
       ],
       providers: [
         FeeCalendarService,
@@ -25,7 +25,7 @@ describe('FeeFrontpageComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeFrontpageComponent);
+    fixture = TestBed.createComponent(FeeListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -13,12 +13,12 @@ import { FeeService } from '../../../core/services/fee.service';
 import { Fee } from '../../../../../models/fees/fee';
 
 @Component({
-  selector: 'assoc-fee-info-editor',
+  selector: 'assoc-fee-edition',
   standalone: true,
   imports: [CardModule, CommonModule, FeeEditFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-info-editor.component.html'
+  templateUrl: './fee-edition.container.html'
 })
-export class FeeInfoEditorComponent extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
+export class FeeInfoEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
 
   private date: string = "";
 
