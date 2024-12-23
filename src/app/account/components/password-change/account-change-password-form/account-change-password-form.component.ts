@@ -14,7 +14,7 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {
 
-  checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const pass = group.get('newPassword')?.value;
     const confirmPass = group.get('passwordRepeat')?.value
     return pass === confirmPass ? null : { notSame: true }

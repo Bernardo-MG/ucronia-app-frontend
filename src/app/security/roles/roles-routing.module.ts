@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { AccessRoleCreateComponent } from './components/views/access-role-create/access-role-create.component';
-import { AccessRoleFrontpageComponent } from './components/views/access-role-frontpage/access-role-frontpage.component';
-import { AccessRoleInfoEditorComponent } from './components/views/access-role-info-editor/access-role-info-editor.component';
+import { AccessRoleCreationContainer } from './containers/access-role-creation/access-role-creation.container';
+import { AccessRoleListingContainer } from './containers/access-role-listing/access-role-listing.container';
+import { AccessRoleInfoEditionContainer } from './containers/access-role-edition/access-role-edition.container';
 
 const routes: Routes = [
-  { path: '', component: AccessRoleFrontpageComponent },
-  { path: 'add', component: AccessRoleCreateComponent, canActivate: [ResourceGuard("role", "create")] },
-  { path: ':role', component: AccessRoleInfoEditorComponent, canActivate: [ResourceGuard("role", "read")] }
+  { path: '', component: AccessRoleListingContainer },
+  { path: 'add', component: AccessRoleCreationContainer, canActivate: [ResourceGuard("role", "create")] },
+  { path: ':role', component: AccessRoleInfoEditionContainer, canActivate: [ResourceGuard("role", "read")] }
 ];
 
 @NgModule({

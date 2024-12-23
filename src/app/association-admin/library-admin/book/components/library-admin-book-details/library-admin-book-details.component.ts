@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LibraryBookLendingsComponent } from '@app/association/library/book/components/library-book-lendings/library-book-lendings.component';
+import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';

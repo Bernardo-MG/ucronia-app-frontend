@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { LibraryBookInfoContainer } from './book/containers/library-book-info/library-book-info.container';
-import { LibraryListingContainer } from './book/containers/library-listing/library-listing.container';
+import { LibraryBookInfoContainer } from './containers/library-book-info/library-book-info.container';
+import { LibraryListingContainer } from './containers/library-listing/library-listing.container';
 
 
 const routes: Routes = [

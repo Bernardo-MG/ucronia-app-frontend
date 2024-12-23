@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { UserTokenFrontpageComponent } from './components/views/user-token-frontpage/user-token-frontpage.component';
-import { UserTokenInfoEditorComponent } from './components/views/user-token-info-editor/user-token-info-editor.component';
+import { UserTokenListingContainer } from './containers/user-token-listing/user-token-listing.container';
+import { UserTokenEditionContainer } from './containers/user-token-edition/user-token-edition.container';
 
 const routes: Routes = [
-  { path: '', component: UserTokenFrontpageComponent },
-  { path: ':token', component: UserTokenInfoEditorComponent, canActivate: [ResourceGuard("user_token", "read")] }
+  { path: '', component: UserTokenListingContainer },
+  { path: ':token', component: UserTokenEditionContainer, canActivate: [ResourceGuard("user_token", "read")] }
 ];
 
 @NgModule({
