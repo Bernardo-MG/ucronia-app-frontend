@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { FeePayContainer } from './containers/fee-pay/fee-pay.container';
-import { FeeListingContainer } from './containers/fee-listing/fee-listing.container';
 import { FeeEditionContainer } from './containers/fee-edition/fee-edition.container';
+import { FeeListingContainer } from './containers/fee-listing/fee-listing.container';
+import { FeePayContainer } from './containers/fee-pay/fee-pay.container';
 
 
 const routes: Routes = [
