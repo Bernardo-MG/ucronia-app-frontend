@@ -6,20 +6,13 @@
       <th scope="col">
         Nombre <sorting-button property="fullName" (directionChange)="changeDirection.emit($event)"></sorting-button>
       </th>
-      <th scope="col">
-        Activo <sorting-button property="active" (directionChange)="changeDirection.emit($event)"></sorting-button>
-      </th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let member of members; let rowIndex = index"
-      [ngClass]="{ 'table-secondary': !member.active }" role="button" routerLink="{{routeLinkAdapter(member)}}">
+    <tr *ngFor="let member of members; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(member)}}">
       <!-- Cells -->
       <td>
         {{member.name.fullName}}
-      </td>
-      <td>
-        <icon-success-or-failure [success]="member.active"></icon-success-or-failure>
       </td>
     </tr>
   </tbody>

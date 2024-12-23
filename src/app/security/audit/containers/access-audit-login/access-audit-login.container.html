@@ -1,0 +1,11 @@
+<layout-article title="Auditoría">
+  <app-card>
+    <app-card-body>
+      <!-- List -->
+      <access-audit-login-list [page]="page" (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
+    </app-card-body>
+    <app-card-footer>
+      <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+    </app-card-footer>
+  </app-card>
+</layout-article>

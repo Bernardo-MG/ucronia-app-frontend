@@ -1,0 +1,21 @@
+<layout-article title="Socios">
+  <div class="row pb-2">
+    <div appJustifyCenter>
+      <assoc-member-balance-chart-widget></assoc-member-balance-chart-widget>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Member List -->
+    <app-card>
+      <app-card-body>
+        <!-- List -->
+        <assoc-member-list [members]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+          (changeDirection)="onChangeDirection($event)">
+        </assoc-member-list>
+      </app-card-body>
+      <app-card-footer>
+        <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+      </app-card-footer>
+    </app-card>
+  </div>
+</layout-article>

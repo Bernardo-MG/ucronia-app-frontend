@@ -7,13 +7,14 @@ import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import * as bootstrap from 'bootstrap';
+import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
+import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
 @Component({
   selector: 'assoc-people-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, ModalComponent],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, PeopleEditionMembershipButtonsComponent, ModalComponent],
   templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {
@@ -52,39 +53,30 @@ export class PeopleInfoComponent {
 
   public tabs = [new CardTab('details', 'Detalles'), new CardTab('membership', 'Socio')];
 
+  private modalHandler = new ModalHandler();
+
   public onChangeView(newView: string) {
     this.view = newView;
   }
 
   public onShowActivate() {
-    this.openModal('activateModal');
+    this.modalHandler.openModal('activateModal');
   }
 
   public onShowDeactivate() {
-    this.openModal('deactivateModal');
+    this.modalHandler.openModal('deactivateModal');
   }
 
   public onShowEnableRenew() {
-    this.openModal('enableRenewModal');
+    this.modalHandler.openModal('enableRenewModal');
   }
 
   public onShowDisableRenew() {
-    this.openModal('disableRenewModal');
+    this.modalHandler.openModal('disableRenewModal');
   }
 
   public onShowConvertToMember() {
-    this.openModal('convertToMemberModal');
-  }
-
-  private openModal(modalId: string): void {
-    const modalElement = document.getElementById(`${modalId}`);
-    if (modalElement) {
-      let modal = bootstrap.Modal.getInstance(modalElement);
-      if (!modal) {
-        modal = new bootstrap.Modal(modalElement);
-      }
-      modal.show();
-    }
+    this.modalHandler.openModal('convertToMemberModal');
   }
 
 }

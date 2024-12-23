@@ -1,8 +1,9 @@
-import { Person } from "../person/person";
+import { Borrower } from "./borrower";
 
 
 export class BookLending {
-  person = new Person();
+  borrower = new Borrower();
   lendingDate = '';
   returnDate = '';
+  days = 0;
 }

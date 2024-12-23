@@ -1,0 +1,77 @@
+<!-- Number -->
+<div class="row mb-2">
+  <div class="col" *layoutPlaceholder="waiting">
+    # {{data.number}}
+  </div>
+</div>
+<!-- ISBN -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">ISBN</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.isbn}}
+  </div>
+</div>
+<!-- Title -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Título</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    <sup>{{data.title.supertitle}}</sup>
+    {{data.title.title}}
+    <sub>{{data.title.subtitle}}</sub>
+  </div>
+</div>
+<!-- Language -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Idioma</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{language}}
+  </div>
+</div>
+<!-- Publish date -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Fecha de publicación</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.publishDate}}
+  </div>
+</div>
+<!-- Book type -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Tipo</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.bookType?.name}}
+  </div>
+</div>
+<!-- Game system -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Sistema</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.gameSystem?.name}}
+  </div>
+</div>
+<!-- Authors -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Autores</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{authors}}
+  </div>
+</div>
+<!-- Publishers -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Editoriales</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{editors}}
+  </div>
+</div>
+<!-- Donation date -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Fecha de donación</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{data.donation?.date}}
+  </div>
+<!-- Donors -->
+<div class="row mb-2">
+  <div class="col-sm-2 text-primary">Donantes</div>
+  <div class="col-sm-10" *layoutPlaceholder="waiting">
+    {{donors}}
+  </div>
+</div>

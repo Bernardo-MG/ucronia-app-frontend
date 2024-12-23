@@ -32,8 +32,4 @@ export class PagedSelectorComponent<Data> {
     this.goToPage.emit(page);
   }
 
-  public nameRenderer(data: Data): string {
-    return '';
-  }
-
 }

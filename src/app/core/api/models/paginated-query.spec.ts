@@ -36,9 +36,9 @@ describe('PaginatedQuery', () => {
   });
 
   describe('page', () => {
-    it('should set page parameter correctly (0-indexed)', () => {
+    it('should set page parameter correctly', () => {
       paginatedQuery.page = 3;
-      expect(paginatedQuery.parameters['page']).toBe(2);
+      expect(paginatedQuery.parameters['page']).toBe(3);
     });
   });
 
@@ -112,7 +112,7 @@ describe('PaginatedQuery', () => {
       const pagination = new Pagination(2, 20);
       paginatedQuery.pagination = pagination;
 
-      expect(paginatedQuery.parameters['page']).toBe(1);
+      expect(paginatedQuery.parameters['page']).toBe(2);
       expect(paginatedQuery.parameters['size']).toBe(20);
     });
 

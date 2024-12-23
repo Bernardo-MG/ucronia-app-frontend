@@ -1,0 +1,19 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <!-- Headers -->
+      <th scope="col">
+        Nombre<sorting-button property="title" (directionChange)="onChangeDirection($event)"></sorting-button>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr *ngFor="let bookType of data; let rowIndex = index" role="button"
+      routerLink="bookType/{{bookType.number}}">
+      <!-- Cells -->
+      <td>
+        {{bookType.name}}
+      </td>
+    </tr>
+  </tbody>
+</table>
