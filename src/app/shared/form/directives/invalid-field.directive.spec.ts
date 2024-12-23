@@ -26,6 +26,9 @@ describe('InvalidFieldDirective', () => {
             return new FormControl('', { updateOn: 'blur' });
           }
           return null;
+        }),
+        contains: jasmine.createSpy('contains').and.callFake((controlName: string) => {
+          return controlName === 'name.firstName';
         })
       }
     } as unknown as FormGroupDirective;
