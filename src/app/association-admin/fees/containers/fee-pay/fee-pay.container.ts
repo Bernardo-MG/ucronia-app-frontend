@@ -15,10 +15,10 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { FeeService } from '../../core/services/fee.service';
-import { FeeCreateFormComponent } from '../../pay/components/fee-create-form/fee-create-form.component';
-import { FeePayFormComponent } from '../../pay/components/fee-pay-form/fee-pay-form.component';
-import { FeePaySelectMemberComponent } from '../../pay/components/fee-pay-select-member/fee-pay-select-member.component';
+import { FeeService } from '../../services/fee.service';
+import { FeeCreateFormComponent } from '../../components/fee-create-form/fee-create-form.component';
+import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
+import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-member/fee-pay-select-member.component';
 
 @Component({
   selector: 'assoc-fee-create',

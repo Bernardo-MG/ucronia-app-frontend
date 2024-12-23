@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeEditFormComponent } from '@app/association-admin/fees/core/components/fee-edit-form/fee-edit-form.component';
-import { FeeInfoComponent } from '@app/association-admin/fees/core/components/fee-info/fee-info.component';
+import { FeeEditFormComponent } from '@app/association-admin/fees/components/fee-edit-form/fee-edit-form.component';
+import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
@@ -10,7 +10,7 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { FeeService } from '../../core/services/fee.service';
+import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edition',

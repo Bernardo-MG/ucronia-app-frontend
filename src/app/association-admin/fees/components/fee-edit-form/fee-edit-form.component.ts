@@ -5,7 +5,7 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { Fee } from '../../../../../models/fees/fee';
+import { Fee } from '../../../../models/fees/fee';
 
 @Component({
   selector: 'assoc-fee-edit-form',

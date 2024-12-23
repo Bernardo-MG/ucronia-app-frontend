@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY } from 'rxjs';
 import { FeeEditionContainer } from './fee-edition.container';
-import { FeeService } from '../../core/services/fee.service';
+import { FeeService } from '../../services/fee.service';
 
 describe('FeeEditionContainer', () => {
   let component: FeeEditionContainer;
