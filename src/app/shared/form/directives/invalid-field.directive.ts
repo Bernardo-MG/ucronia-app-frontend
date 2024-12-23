@@ -71,7 +71,7 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     // Fall back to using formControlName if appInvalidField is not provided
     if (!formControl && this.controlDir) {
       const formControlName = this.controlDir.name as string | readonly (string | number)[];
-      if (formControlName) {
+      if ((formControlName) && (this.formGroupDirective.form.contains(formControlName as string))) {
         formControl = this.formGroupDirective.form.get(formControlName) as FormControl;
       }
     }
