@@ -23,7 +23,7 @@
   </tbody>
 </table>
 <div appJustifyCenter class="mt-1">
-  <pagination-navigation [disabled]="waiting" [current]="members.page + 1" [pages]="members.totalPages"
+  <pagination-navigation [disabled]="waiting" [current]="members.page" [pages]="members.totalPages"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

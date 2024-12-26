@@ -5,17 +5,24 @@
     <icon-success-or-failure [success]="data.enabled"></icon-success-or-failure>
   </div>
 </div>
+<!-- Expired -->
+<div class="row">
+  <div class="col-sm-3 text-primary">No expirado</div>
+  <div class="col-sm-9">
+    <icon-success-or-failure [success]="data.notExpired"></icon-success-or-failure>
+  </div>
+</div>
 <!-- Password expired -->
 <div class="row">
-  <div class="col-sm-3 text-primary">Clave expirada</div>
+  <div class="col-sm-3 text-primary">Clave no expirada</div>
   <div class="col-sm-9">
-    <icon-success-or-failure [success]="data.passwordExpired"></icon-success-or-failure>
+    <icon-success-or-failure [success]="data.passwordNotExpired"></icon-success-or-failure>
   </div>
 </div>
 <!-- Locked -->
 <div class="row">
-  <div class="col-sm-3 text-primary">Bloqueado</div>
+  <div class="col-sm-3 text-primary">Desbloqueado</div>
   <div class="col-sm-9">
-    <icon-success-or-failure [success]="data.locked"></icon-success-or-failure>
+    <icon-success-or-failure [success]="data.notLocked"></icon-success-or-failure>
   </div>
 </div>

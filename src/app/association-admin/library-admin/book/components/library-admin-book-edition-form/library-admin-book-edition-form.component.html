@@ -170,28 +170,28 @@
 
 <!-- Book type modal-->
 <layout-modal name="book_typeModal" title="Tipo de libro">
-  <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page + 1"
+  <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page"
     [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
     (goToPage)="this.goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
 </layout-modal>
 
 <!-- Game system modal -->
 <layout-modal name="game_systemModal" title="Sistema de juego">
-  <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page + 1"
+  <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page"
     [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
     (goToPage)="this.goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
 </layout-modal>
 
 <!-- Author modal -->
 <layout-modal name="authorModal" title="Autor">
-  <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page + 1"
+  <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page"
     [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
     (goToPage)="this.goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
 </layout-modal>
 
 <!-- Publisher modal -->
 <layout-modal name="publisherModal" title="Editor">
-  <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page + 1"
+  <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page"
     [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
     (goToPage)="this.goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
 </layout-modal>

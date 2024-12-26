@@ -19,7 +19,7 @@
             </div>
           </div>
           <assoc-book-lending-member-selection *layoutBlockUi="readingMembers" [values]="memberPage.content"
-            [current]="memberPage.page + 1" [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
+            [current]="memberPage.page" [pages]="memberPage.totalPages" (selectMember)="onSelectMember($event)"
             (goToPage)="onGoToMembersPage($event)">
           </assoc-book-lending-member-selection>
         </div>

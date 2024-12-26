@@ -45,9 +45,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
+    this.load(this.page.page);
   }
 
   public load(page: number) {
