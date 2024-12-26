@@ -73,8 +73,6 @@ export class PaginationNavigationComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
-      // We are working with pages using index 0
-      // TODO: the pages should come with the correct index
       this.invalid = ((this.current < 1) || (this.current > this.pages));
 
       if (this.invalid) {
