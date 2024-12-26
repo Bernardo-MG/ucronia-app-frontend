@@ -5,7 +5,8 @@ export class User {
   name = '';
   email = '';
   enabled = false;
-  passwordExpired = false;
-  locked = false;
+  notExpired = true;
+  passwordNotExpired = true;
+  notLocked = true;
   roles: Role[] = [];
 }

@@ -3,6 +3,6 @@ export class UserUpdate {
   name = '';
   email = '';
   enabled = false;
-  passwordExpired = false;
+  passwordNotExpired = true;
   roles: string[] = [];
 }
