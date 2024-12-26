@@ -11,7 +11,7 @@ export class ListPaginatedResponse<T> extends SimpleResponse<T[]> {
 
 
   constructor(cont: T[], page: number, size: number) {
-    super(cont.slice(size * page, size * (page + 1)));
+    super(cont.slice(size * page, size * page));
 
     this.page = page;
     this.size = size;

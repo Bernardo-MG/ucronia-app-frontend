@@ -29,7 +29,7 @@
 </div>
 <!-- Page navigation -->
 <div appJustifyCenter class="mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
+  <pagination-navigation [current]="page.page" [pages]="page.totalPages" [disabled]="waiting"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

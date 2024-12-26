@@ -52,7 +52,7 @@
 
 <!-- Donor modal -->
 <layout-modal name="donorModal" title="Donante">
-  <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page + 1"
+  <assoc-library-admin-donor-selection [values]="donorPage.content" [current]="donorPage.page"
     [pages]="donorPage.totalPages" (choose)="onSelectDonor($event)"
     (goToPage)="this.goToDonorPage.emit($event)"></assoc-library-admin-donor-selection>
 </layout-modal>
