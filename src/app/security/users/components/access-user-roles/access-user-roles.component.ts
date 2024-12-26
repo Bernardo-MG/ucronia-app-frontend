@@ -5,12 +5,11 @@ import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'access-user-roles',
   standalone: true,
-  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, BlockUiDirective],
+  imports: [CommonModule, IconsModule, PaginationNavigationComponent, BlockUiDirective],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
