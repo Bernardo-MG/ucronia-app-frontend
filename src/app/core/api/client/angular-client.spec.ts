@@ -95,9 +95,32 @@ describe('AngularClient', () => {
     expect(client['route']).toBe('/test/route');
   });
 
+  it('should construct the final URL correctly', () => {
+    client.appendRoute('/test').appendRoute('/route');
+    const finalUrl = client['getFinalUrl']();
+    expect(finalUrl).toBe('http://test.com/api/test/route');
+  });
+
   it('should set parameters correctly', () => {
     client.parameter('key', 'value');
     const params = new HttpParams().append('key', 'value');
+    expect(client['options'].params).toEqual(params);
+  });
+
+  it('should load parameters correctly', () => {
+    const mockParams = {
+      load: (callback: (key: string, value: any) => void) => {
+        callback('key1', 'value1');
+        callback('key2', 'value2');
+      },
+    };
+
+    client.parameters(mockParams as any);
+
+    const params = new HttpParams()
+      .append('key1', 'value1')
+      .append('key2', 'value2');
+
     expect(client['options'].params).toEqual(params);
   });
 
