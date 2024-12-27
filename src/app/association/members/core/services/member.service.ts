@@ -11,6 +11,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Member } from '../../../../models/members/member';
+import { Sorting } from '@app/core/api/models/sorting';
 
 @Injectable({
   providedIn: 'root'
@@ -22,14 +23,14 @@ export class MemberService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Member[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
-    query.pagination = { page };
-    query.sort = sort;
-    query.addParameter('status', Active.Active.toString().toUpperCase());
+    const sorting = new Sorting();
+    sorting.defaultProperties = [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')];
+    sorting.properties = sort.properties;
 
     return this.getClient()
-      .query(query)
+      .page(page)
+      .parameters(sorting)
+      .parameter('status', Active.Active.toString().toUpperCase())
       .read<PaginatedResponse<Member[]>>();
   }
 

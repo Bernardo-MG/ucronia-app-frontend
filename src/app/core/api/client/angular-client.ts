@@ -3,8 +3,10 @@ import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { SortDirection } from '../models/sort-direction';
+import { Sorting } from '../models/sorting';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
+import { Params } from './params';
 
 /**
  * Request implementation for Angular.
@@ -93,9 +95,28 @@ export class AngularClient implements Client {
     return this;
   }
 
+  public parameters(parameters: Params): AngularClient {
+    parameters.load(this.parameter);
+
+    return this;
+  }
+
   public sort(toSort: Sort): AngularClient {
     const properties = toSort.properties.filter((field) => field.direction !== SortDirection.Unsorted);
     properties.forEach((property) => this.parameter('sort', `${String(property.property)},${property.direction}`));
+
+    return this;
+  }
+
+  public pagination(page: number, size: number): AngularClient {
+    this.parameter('page', page);
+    this.parameter('size', size);
+
+    return this;
+  }
+
+  public page(page: number): AngularClient {
+    this.parameter('page', page);
 
     return this;
   }
