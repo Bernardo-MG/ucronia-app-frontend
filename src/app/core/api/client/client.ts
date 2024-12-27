@@ -59,6 +59,11 @@ export interface Client {
    */
   parameter(name: string, value: any): Client;
 
+  /**
+   * Adds request parameters and returns an updated Request.
+   * 
+   * @param parameters parameters to load
+   */
   parameters(parameters: Params): Client;
 
 }

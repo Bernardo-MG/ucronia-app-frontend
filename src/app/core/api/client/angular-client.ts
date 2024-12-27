@@ -92,7 +92,7 @@ export class AngularClient implements Client {
   }
 
   public parameters(parameters: Params): AngularClient {
-    parameters.load(this.parameter);
+    parameters.load(this.parameter.bind(this));
 
     return this;
   }
