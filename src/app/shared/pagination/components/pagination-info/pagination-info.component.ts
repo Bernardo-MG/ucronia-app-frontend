@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { PaginationInfo } from '../../models/pagination-info';
 
 @Component({
-  selector: 'layout-pagination-info',
+  selector: 'pagination-info',
   standalone: true,
   imports: [PaginationNavigationComponent, JustifyCenterDirective],
   templateUrl: './pagination-info.component.html'

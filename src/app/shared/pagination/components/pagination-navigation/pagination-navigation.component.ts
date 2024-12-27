@@ -71,7 +71,7 @@ export class PaginationNavigationComponent implements OnChanges {
     return ((this.invalid) || (this.current >= this.pages));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
       this.invalid = ((this.current < 1) || (this.current > this.pages));
 

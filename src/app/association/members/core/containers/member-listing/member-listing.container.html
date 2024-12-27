@@ -14,8 +14,8 @@
         </assoc-member-list>
       </app-card-body>
       <app-card-footer>
-        <layout-pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-          [totalElements]="data.totalElements" (goTo)="load($event)"></layout-pagination-info>
+        <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+          [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
       </app-card-footer>
     </app-card>
   </div>
