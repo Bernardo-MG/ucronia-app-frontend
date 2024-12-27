@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
+import { SortDirection } from '../models/sort-direction';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
-import { SortDirection } from '../models/sort-direction';
 
 /**
  * Request implementation for Angular.

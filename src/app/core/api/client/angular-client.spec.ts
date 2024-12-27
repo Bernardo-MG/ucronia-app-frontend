@@ -1,12 +1,11 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
-import { AngularClient } from './angular-client';
-import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { SortDirection } from '../models/sort-direction';
+import { AngularClient } from './angular-client';
+import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 
 describe('AngularClient', () => {
   let client: AngularClient;
