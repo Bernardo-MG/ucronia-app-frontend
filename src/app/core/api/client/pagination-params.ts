@@ -1,4 +1,4 @@
-import { ParamLoader } from "../client/param-loader";
+import { ParamLoader } from "./param-loader";
 
 export class PaginationParams implements ParamLoader {
 
