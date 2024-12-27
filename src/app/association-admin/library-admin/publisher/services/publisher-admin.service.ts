@@ -51,7 +51,7 @@ export class PublisherAdminService {
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Publisher[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name')]
+      [new SortProperty('name'), new SortProperty('number')]
     );
 
     return this.getClient()

@@ -51,7 +51,7 @@ export class AuthorAdminService {
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Author[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name')]
+      [new SortProperty('name'), new SortProperty('number')]
     );
 
     return this.getClient()
