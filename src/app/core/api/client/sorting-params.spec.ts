@@ -1,5 +1,5 @@
-import { SortDirection } from "./sort-direction";
-import { SortProperty } from "./sort-field";
+import { SortDirection } from "../models/sort-direction";
+import { SortProperty } from "../models/sort-field";
 import { SortingParams } from "./sorting-params";
 
 describe("SortingParams", () => {
@@ -26,8 +26,8 @@ describe("SortingParams", () => {
       ]);
 
     expect(sortingParams.getFinalProperties()).toEqual([
-      new SortProperty('age', SortDirection.Descending),
-      new SortProperty('name', SortDirection.Ascending)
+      new SortProperty('name', SortDirection.Ascending),
+      new SortProperty('age', SortDirection.Descending)
     ]);
   });
 
@@ -41,8 +41,8 @@ describe("SortingParams", () => {
       ]);
 
     expect(sortingParams.getFinalProperties()).toEqual([
-      new SortProperty('age', SortDirection.Ascending),
-      new SortProperty('name', SortDirection.Ascending)
+      new SortProperty('name', SortDirection.Ascending),
+      new SortProperty('age', SortDirection.Ascending)
     ]);
   });
 
@@ -58,20 +58,20 @@ describe("SortingParams", () => {
     );
 
     expect(sortingParams.getFinalProperties()).toEqual([
-      new SortProperty('age', SortDirection.Ascending),
-      new SortProperty('name', SortDirection.Ascending)
+      new SortProperty('name', SortDirection.Ascending),
+      new SortProperty('age', SortDirection.Ascending)
     ]);
   });
 
-  it('should sort properties alphabetically by property name', () => {
+  it('should not sort properties', () => {
     const sortingParams = new SortingParams([
       new SortProperty('zname', SortDirection.Ascending),
       new SortProperty('aname', SortDirection.Descending)
     ]);
 
     expect(sortingParams.getFinalProperties()).toEqual([
-      new SortProperty('aname', SortDirection.Descending),
-      new SortProperty('zname', SortDirection.Ascending)
+      new SortProperty('zname', SortDirection.Ascending),
+      new SortProperty('aname', SortDirection.Descending)
     ]);
   });
 

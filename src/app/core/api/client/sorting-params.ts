@@ -1,6 +1,6 @@
 import { ParamLoader } from "../client/param-loader";
-import { SortDirection } from "./sort-direction";
-import { SortProperty } from "./sort-field";
+import { SortDirection } from "../models/sort-direction";
+import { SortProperty } from "../models/sort-field";
 
 export class SortingParams implements ParamLoader {
 
@@ -42,22 +42,9 @@ export class SortingParams implements ParamLoader {
     }
 
     // Remove duplicates
-    const uniqueFields = sortFields.filter((field, index, self) =>
+    return sortFields.filter((field, index, self) =>
       index === self.findIndex(f => f.property === field.property)
     );
-
-    // Sort fields alphabetically
-    return uniqueFields.sort((a, b) => {
-      let direction;
-
-      if (a.property.toString() < b.property.toString()) {
-        direction = -1;
-      } else {
-        direction = 1;
-      }
-
-      return direction;
-    });
   }
 
 }
