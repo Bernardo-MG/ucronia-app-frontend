@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
-import { PaginatedQuery } from '../models/paginated-query';
-import { Sort } from '../models/sort';
+import { Params } from './params';
 
 /**
  * Sets up and executes requests.
@@ -61,17 +60,10 @@ export interface Client {
   parameter(name: string, value: any): Client;
 
   /**
-   * Adds sorting and returns an updated Request.
+   * Adds request parameters and returns an updated Request.
    * 
-   * @param sort sorting to apply
+   * @param parameters parameters to load
    */
-  sort(sort: Sort): Client;
-
-  /**
-   * Adds a pagination query and returns an updated Request.
-   * 
-   * @param sort pagination query to apply
-   */
-  query(query: PaginatedQuery): Client;
+  parameters(parameters: Params): Client;
 
 }

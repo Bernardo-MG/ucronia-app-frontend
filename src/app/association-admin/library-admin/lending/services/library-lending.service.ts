@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
@@ -34,13 +34,10 @@ export class LibraryLendingService {
   }
 
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
-    const query = new PaginatedQuery();
-    query.sort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
-    query.page = page;
-    query.addParameter('status', active.toString().toUpperCase());
-
     return this.getMemberClient()
-      .query(query)
+      .parameters(new PaginationParams(page))
+      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Member[]>>();
   }
 

@@ -1,10 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { PaginatedQuery } from '../models/paginated-query';
-import { Sort } from '../models/sort';
-import { SortDirection } from '../models/sort-direction';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
+import { Params } from './params';
 
 /**
  * Request implementation for Angular.
@@ -93,24 +91,8 @@ export class AngularClient implements Client {
     return this;
   }
 
-  public sort(toSort: Sort): AngularClient {
-    const properties = toSort.properties.filter((field) => field.direction !== SortDirection.Unsorted);
-    properties.forEach((property) => this.parameter('sort', `${String(property.property)},${property.direction}`));
-
-    return this;
-  }
-
-  public query(query: PaginatedQuery): AngularClient {
-    // Sort
-    this.sort(query.sort);
-
-    // Other parameters
-    for (const key in query.parameters) {
-      const value = query.parameters[key];
-      if (value) {
-        this.parameter(key, value);
-      }
-    }
+  public parameters(parameters: Params): AngularClient {
+    parameters.load(this.parameter.bind(this));
 
     return this;
   }

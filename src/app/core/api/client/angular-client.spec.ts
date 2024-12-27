@@ -1,9 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PaginatedQuery } from '../models/paginated-query';
-import { Sort } from '../models/sort';
-import { SortDirection } from '../models/sort-direction';
 import { AngularClient } from './angular-client';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 
@@ -98,43 +95,32 @@ describe('AngularClient', () => {
     expect(client['route']).toBe('/test/route');
   });
 
+  it('should construct the final URL correctly', () => {
+    client.appendRoute('/test').appendRoute('/route');
+    const finalUrl = client['getFinalUrl']();
+    expect(finalUrl).toBe('http://test.com/api/test/route');
+  });
+
   it('should set parameters correctly', () => {
     client.parameter('key', 'value');
     const params = new HttpParams().append('key', 'value');
     expect(client['options'].params).toEqual(params);
   });
 
-  it('should sort ascending correctly', () => {
-    const sort = new Sort([{ property: 'name', direction: SortDirection.Ascending }]);
-    client.sort(sort);
-    const params = new HttpParams().append('sort', 'name,asc');
-    expect(client['options'].params).toEqual(params);
-  });
+  it('should load parameters correctly', () => {
+    const mockParams = {
+      load: (callback: (key: string, value: any) => void) => {
+        callback('key1', 'value1');
+        callback('key2', 'value2');
+      },
+    };
 
-  it('should sort descending correctly', () => {
-    const sort = new Sort([{ property: 'name', direction: SortDirection.Descending }]);
-    client.sort(sort);
-    const params = new HttpParams().append('sort', 'name,desc');
-    expect(client['options'].params).toEqual(params);
-  });
+    client.parameters(mockParams as any);
 
-  it('should ignore unsorted sorting', () => {
-    const sort = new Sort([{ property: 'name', direction: SortDirection.Unsorted }]);
-    client.sort(sort);
-    expect(client['options'].params).toEqual(undefined);
-  });
-
-  it('should handle query parameters correctly', () => {
-    const sort = new Sort([{ property: 'name', direction: SortDirection.Ascending }]);
-    const query = new PaginatedQuery();
-    query.sort = sort;
-    query.parameters = { key1: 'value1', key2: 'value2' };
-
-    client.query(query);
     const params = new HttpParams()
-      .append('sort', 'name,asc')
       .append('key1', 'value1')
       .append('key2', 'value2');
+
     expect(client['options'].params).toEqual(params);
   });
 
