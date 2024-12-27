@@ -23,9 +23,10 @@ export class MemberService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Member[]>> {
-    const sorting = new Sorting();
-    sorting.defaultProperties = [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')];
-    sorting.properties = sort.properties;
+    const sorting = new Sorting(
+      sort.properties,
+      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
+    );
 
     return this.getClient()
       .page(page)

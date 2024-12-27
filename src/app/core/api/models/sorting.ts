@@ -5,28 +5,33 @@ import { SortProperty } from "./sort-field";
 
 export class Sorting implements Params {
 
-  _properties: SortProperty[] = [];
+  private defaultProperties: SortProperty[] = [];
 
-  private _defaultSort: SortProperty[] = [];
-
-  public set properties(properties: SortProperty[]) {
-    this._properties = properties;
+  constructor(
+    private properties: SortProperty[],
+    defaults?: SortProperty[]
+  ) {
+    if (defaults) {
+      this.defaultProperties = defaults;
+    } else {
+      this.defaultProperties = [];
+    }
   }
 
   public get sort(): Sort {
     let sortFields;
 
     // Remove unsorted fields
-    const validSortings = this._properties.filter(f => f.direction != SortDirection.Unsorted);
+    const validSortings = this.properties.filter(f => f.direction != SortDirection.Unsorted);
     if (validSortings.length === 0) {
       // Use default sorts if no sorting was received
-      sortFields = this._defaultSort;
+      sortFields = this.defaultProperties;
     } else {
       // Merge default sorting with the received one
 
       // Apply default sortings to those fields which are not sorted
       const sortedProperties = validSortings.map(f => f.property);
-      const defaultSortFields = this._defaultSort.filter(f =>
+      const defaultSortFields = this.defaultProperties.filter(f =>
         (f.direction == SortDirection.Unsorted) || (!sortedProperties.includes(f.property))
       );
 
@@ -47,10 +52,6 @@ export class Sorting implements Params {
     });
 
     return new Sort(sortedFields);
-  }
-
-  public set defaultProperties(defaultSort: SortProperty[]) {
-    this._defaultSort = defaultSort;
   }
 
   public load(loader: (name: string, value: any) => void): void {
