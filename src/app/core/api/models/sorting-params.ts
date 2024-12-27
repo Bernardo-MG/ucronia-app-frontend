@@ -3,16 +3,16 @@ import { Sort } from "./sort";
 import { SortDirection } from "./sort-direction";
 import { SortProperty } from "./sort-field";
 
-export class Sorting implements Params {
+export class SortingParams implements Params {
 
   private defaultProperties: SortProperty[] = [];
 
   constructor(
     private properties: SortProperty[],
-    defaults?: SortProperty[]
+    defaultProperties?: SortProperty[]
   ) {
-    if (defaults) {
-      this.defaultProperties = defaults;
+    if (defaultProperties) {
+      this.defaultProperties = defaultProperties;
     } else {
       this.defaultProperties = [];
     }

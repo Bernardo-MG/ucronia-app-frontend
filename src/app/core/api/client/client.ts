@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
-import { Sorting } from '../models/sorting';
+import { SortingParams } from '../models/sorting-params';
 import { Params } from './params';
 
 /**

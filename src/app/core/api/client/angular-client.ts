@@ -3,7 +3,7 @@ import { Observable, catchError } from 'rxjs';
 import { PaginatedQuery } from '../models/paginated-query';
 import { Sort } from '../models/sort';
 import { SortDirection } from '../models/sort-direction';
-import { Sorting } from '../models/sorting';
+import { SortingParams } from '../models/sorting-params';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
 import { Params } from './params';

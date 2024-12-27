@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Member } from '@app/models/members/member';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
+import { Member } from '@app/models/members/member';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
@@ -25,16 +25,14 @@ export class AccessUserService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<User[]>> {
-    const defaultSort = new SortProperty('name');
-    defaultSort.direction = SortDirection.Ascending;
-
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSort]);
-    query.pagination = { page };
-    query.sort = sort;
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('name')]
+    );
 
     return this.getClient()
-      .query(query)
+      .parameters(new PaginationParams(page))
+      .parameters(sorting)
       .read();
   }
 
@@ -68,14 +66,13 @@ export class AccessUserService {
   // ROLES
 
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort: SortProperty = new SortProperty('name');
-
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSort]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('name')]
+    );
 
     return this.getClient()
-      .query(query)
+      .parameters(new PaginationParams(page))
+      .parameters(sorting)
       .appendRoute(`/${username}/role/available`)
       .read<PaginatedResponse<Role[]>>();
   }
@@ -84,7 +81,7 @@ export class AccessUserService {
 
   public getMember(username: string): Observable<Member> {
     return this.getClient()
-    .appendRoute(`/${username}/person`)
+      .appendRoute(`/${username}/person`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
@@ -97,13 +94,14 @@ export class AccessUserService {
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
+    );
 
     return this.getClient()
       .appendRoute(`/${username}/person/available`)
-      .query(query)
+      .parameters(new PaginationParams(page))
+      .parameters(sorting)
       .read<PaginatedResponse<Member[]>>();
   }
 

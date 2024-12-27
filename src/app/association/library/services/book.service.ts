@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { environment } from 'environments/environment';
@@ -29,12 +30,15 @@ export class BookService {
   }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Book[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('title')]);
-    query.pagination = { page };
-    query.sort = sort;
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('title')]
+    );
 
-    return this.getClient().query(query).read();
+    return this.getClient()
+      .parameters(new PaginationParams(page))
+      .parameters(sorting)
+      .read();
   }
 
   private getClient(): Client {

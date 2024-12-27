@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
+import { SimpleResponse } from '@app/core/api/models/simple-response';
+import { SortDirection } from '@app/core/api/models/sort-direction';
+import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '../../../../models/transactions/transaction-current-balance';
@@ -31,13 +30,14 @@ export class TransactionBalanceService {
     const defaultSortDate = new SortProperty('month');
     defaultSortDate.direction = SortDirection.Ascending;
 
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSortDate]);
-    query.addParameter("startDate", startDate);
-    query.addParameter("endDate", endDate);
+    const sorting = new SortingParams(
+      [defaultSortDate]
+    );
 
     return this.getMonthlyClient()
-      .query(query)
+      .parameters(sorting)
+      .parameter('startDate', startDate)
+      .parameter('endDate', endDate)
       .read<SimpleResponse<TransactionMonthlyBalance[]>>()
       .pipe(map(r => r.content));
   }
