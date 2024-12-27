@@ -1,4 +1,3 @@
-import { query } from '@angular/animations';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
@@ -24,12 +23,9 @@ export class UserTokenService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<UserToken[]>> {
-    const sortDate = new SortProperty('creationDate');
-    sortDate.direction = SortDirection.Descending;
-
     const sorting = new SortingParams(
       sort.properties,
-      [sortDate, new SortProperty('username')]
+      [new SortProperty('creationDate', SortDirection.Descending), new SortProperty('username')]
     );
 
     return this.getClient()

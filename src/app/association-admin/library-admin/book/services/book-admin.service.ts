@@ -115,13 +115,9 @@ export class BookAdminService {
   }
 
   public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
-    const sorting = new SortingParams(
-      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
-    );
-
     return this.getDonorClient()
       .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .read();
   }
 

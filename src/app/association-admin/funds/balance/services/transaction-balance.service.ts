@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { SortingParams } from '@app/core/api/models/sorting-params';
 import { environment } from 'environments/environment';
@@ -27,15 +26,8 @@ export class TransactionBalanceService {
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<TransactionMonthlyBalance[]> {
-    const defaultSortDate = new SortProperty('month');
-    defaultSortDate.direction = SortDirection.Ascending;
-
-    const sorting = new SortingParams(
-      [defaultSortDate]
-    );
-
     return this.getMonthlyClient()
-      .parameters(sorting)
+      .parameters(new SortingParams([new SortProperty('month')]))
       .parameter('startDate', startDate)
       .parameter('endDate', endDate)
       .read<SimpleResponse<TransactionMonthlyBalance[]>>()

@@ -66,13 +66,9 @@ export class AccessUserService {
   // ROLES
 
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
-    const sorting = new SortingParams(
-      [new SortProperty('name')]
-    );
-
     return this.getClient()
       .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .parameters(new SortingParams([new SortProperty('name')]))
       .appendRoute(`/${username}/role/available`)
       .read<PaginatedResponse<Role[]>>();
   }
@@ -94,14 +90,10 @@ export class AccessUserService {
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
-    const sorting = new SortingParams(
-      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
-    );
-
     return this.getClient()
       .appendRoute(`/${username}/person/available`)
       .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .read<PaginatedResponse<Member[]>>();
   }
 

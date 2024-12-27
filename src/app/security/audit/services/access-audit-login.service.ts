@@ -22,12 +22,9 @@ export class AccessAuditLoginService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<LoginRegister[]>> {
-    const defaultSort = new SortProperty('date');
-    defaultSort.direction = SortDirection.Descending;
-
     const sorting = new SortingParams(
       sort.properties,
-      [defaultSort]
+      [new SortProperty('date', SortDirection.Descending)]
     );
 
     return this.getClient()
