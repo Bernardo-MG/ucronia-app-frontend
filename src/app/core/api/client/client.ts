@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs';
-import { PaginatedQuery } from '../models/paginated-query';
-import { Sort } from '../models/sort';
+import { ParamLoader } from './param-loader';
 
 /**
  * Sets up and executes requests.
@@ -46,14 +45,14 @@ export interface Client {
   patch<T>(body: any): Observable<T>;
 
   /**
-   * Appends the route and returns an updated Request.
+   * Appends the route and returns an updated Client.
    * 
    * @param route route to append
    */
   appendRoute(route: string): Client;
 
   /**
-   * Adds a request parameter and returns an updated Request.
+   * Adds a request parameter and returns an updated Client.
    * 
    * @param name parameter name
    * @param value parameter value
@@ -61,17 +60,10 @@ export interface Client {
   parameter(name: string, value: any): Client;
 
   /**
-   * Adds sorting and returns an updated Request.
+   * Adds parameters through a loader and returns an updated Client.
    * 
-   * @param sort sorting to apply
+   * @param loader parameter loader
    */
-  sort(sort: Sort): Client;
-
-  /**
-   * Adds a pagination query and returns an updated Request.
-   * 
-   * @param sort pagination query to apply
-   */
-  query(query: PaginatedQuery): Client;
+  loadParameters(loader: ParamLoader): Client;
 
 }

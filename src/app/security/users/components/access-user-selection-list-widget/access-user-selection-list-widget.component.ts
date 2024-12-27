@@ -7,7 +7,7 @@ import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
@@ -21,7 +21,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
 
   public createPermission = false;
 
-  public page = new PaginatedResponse<User[]>([]);
+  public data = new PaginatedResponse<User[]>([]);
 
   /**
    * Loading flag.
@@ -45,16 +45,14 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
     this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

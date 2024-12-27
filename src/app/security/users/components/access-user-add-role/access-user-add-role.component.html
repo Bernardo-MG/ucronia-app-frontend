@@ -24,7 +24,7 @@
   </table>
 </div>
 <div appJustifyCenter class="mt-1">
-  <pagination-navigation [disabled]="waiting" [current]="roles.page + 1" [pages]="roles.totalPages"
+  <pagination-navigation [disabled]="waiting" [current]="roles.page" [pages]="roles.totalPages"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

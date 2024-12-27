@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Active } from '@app/association/members/model/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { Active } from '@app/association/members/model/active';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -22,14 +23,15 @@ export class PeopleService {
   ) { }
 
   public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Person[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
-    query.pagination = { page };
-    query.sort = sort;
-    query.addParameter('status', active.toString().toUpperCase());
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
+    );
 
     return this.getClient()
-      .query(query)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Person[]>>();
   }
 

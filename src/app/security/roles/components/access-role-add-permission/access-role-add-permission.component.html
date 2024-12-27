@@ -27,6 +27,6 @@
 </table>
 <!-- Permissions navigation -->
 <div appJustifyCenter class="mt-1">
-  <pagination-navigation [current]="permissions.page + 1" [pages]="permissions.totalPages" (goTo)="onGoTo($event)">
+  <pagination-navigation [current]="permissions.page" [pages]="permissions.totalPages" (goTo)="onGoTo($event)">
   </pagination-navigation>
 </div>

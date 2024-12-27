@@ -5,12 +5,11 @@ import { Role } from '@app/core/authentication/models/role';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
   selector: 'access-user-roles',
   standalone: true,
-  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, BlockUiDirective],
+  imports: [CommonModule, IconsModule, PaginationNavigationComponent, BlockUiDirective],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
@@ -25,18 +24,18 @@ export class AccessUserRolesComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<Role>();
 
-  public page = new ListPaginatedResponse<Role>([], 0, 0);
+  public data = new ListPaginatedResponse<Role>([], 0, 0);
 
   private pageSize = 10;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
-      this.page = this.buildPage(0);
+      this.data = this.buildPage(0);
     }
   }
 
   public onGoToPage(page: number) {
-    this.page = this.buildPage(page - 1);
+    this.data = this.buildPage(page - 1);
   }
 
   public onRemove(role: Role): void {

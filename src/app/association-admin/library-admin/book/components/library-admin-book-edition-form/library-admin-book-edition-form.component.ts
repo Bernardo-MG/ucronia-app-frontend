@@ -29,13 +29,13 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
-  @Input() public bookTypePage = new PaginatedResponse<BookType[]>([]);
+  @Input() public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
 
-  @Input() public gameSystemPage = new PaginatedResponse<GameSystem[]>([]);
+  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
 
-  @Input() public authorPage = new PaginatedResponse<Author[]>([]);
+  @Input() public authorsSelection = new PaginatedResponse<Author[]>([]);
 
-  @Input() public publisherPage = new PaginatedResponse<Publisher[]>([]);
+  @Input() public publishersSelection = new PaginatedResponse<Publisher[]>([]);
 
   @Input() public languages: Language[] = [];
 

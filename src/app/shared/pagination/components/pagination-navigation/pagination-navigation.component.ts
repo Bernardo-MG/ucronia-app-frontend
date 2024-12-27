@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { PaginationRanges } from '../../models/range/pagination-ranges';
+import { PaginationRanges } from '../../models/pagination-ranges';
 import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
 
 /**
@@ -71,10 +71,8 @@ export class PaginationNavigationComponent implements OnChanges {
     return ((this.invalid) || (this.current >= this.pages));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
-      // We are working with pages using index 0
-      // TODO: the pages should come with the correct index
       this.invalid = ((this.current < 1) || (this.current > this.pages));
 
       if (this.invalid) {

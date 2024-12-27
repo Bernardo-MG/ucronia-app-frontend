@@ -8,7 +8,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessRoleSelectionListComponent } from '../../components/access-role-selection-list/access-role-selection-list.component';
 import { AccessRoleService } from '../../services/access-role.service';
 
@@ -22,7 +22,7 @@ export class AccessRoleListingContainer implements OnInit {
 
   public createPermission = false;
 
-  public page = new PaginatedResponse<Role[]>([]);
+  public data = new PaginatedResponse<Role[]>([]);
 
   /**
    * Loading flag.
@@ -46,16 +46,14 @@ export class AccessRoleListingContainer implements OnInit {
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
     this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

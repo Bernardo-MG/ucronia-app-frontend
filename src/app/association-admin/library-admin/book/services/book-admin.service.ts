@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -54,12 +55,15 @@ export class BookAdminService {
   }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Book[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('title')]);
-    query.pagination = { page };
-    query.sort = sort;
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('title')]
+    );
 
-    return this.getClient().query(query).read();
+    return this.getClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
   }
 
   public getLanguages(): Language[] {
@@ -67,43 +71,54 @@ export class BookAdminService {
   }
 
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('name')]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('name')]
+    );
 
-    return this.getBookTypeClient().query(query).read();
+    return this.getBookTypeClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
   }
 
   public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('name')]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('name')]
+    );
 
-    return this.getGameSystemClient().query(query).read();
+    return this.getGameSystemClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
   }
 
   public getAuthors(page: number): Observable<PaginatedResponse<Author[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('name')]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('name')]
+    );
 
-    return this.getAuthorClient().query(query).read();
+    return this.getAuthorClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
   }
 
   public getPublishers(page: number): Observable<PaginatedResponse<Publisher[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('name')]);
-    query.pagination = { page };
+    const sorting = new SortingParams(
+      [new SortProperty('name')]
+    );
 
-    return this.getPublisherClient().query(query).read();
+    return this.getPublisherClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
   }
 
   public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]);
-    query.pagination = { page };
-
-    return this.getDonorClient().query(query).read();
+    return this.getDonorClient()
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .read();
   }
 
   private getClient(): Client {

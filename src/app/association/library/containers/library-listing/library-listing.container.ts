@@ -8,7 +8,7 @@ import { Book } from '@app/models/library/book';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
@@ -22,7 +22,7 @@ export class LibraryListingContainer implements OnInit {
 
   public adminPermission = false;
 
-  public page = new PaginatedResponse<Book[]>([]);
+  public data = new PaginatedResponse<Book[]>([]);
 
   /**
    * Loading flag.
@@ -46,9 +46,7 @@ export class LibraryListingContainer implements OnInit {
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    // We are working with pages using index 0
-    // TODO: the pages should come with the correct index
-    this.load(this.page.page + 1);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
@@ -56,7 +54,7 @@ export class LibraryListingContainer implements OnInit {
 
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

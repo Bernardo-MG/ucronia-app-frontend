@@ -1,10 +1,11 @@
 <layout-article title="Mis cuotas">
-    <app-card>
-        <app-card-body>
-          <assoc-my-fees-list [fees]="page.content"></assoc-my-fees-list>
-        </app-card-body>
-        <app-card-footer>
-          <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
-        </app-card-footer>
-      </app-card>
+  <app-card>
+    <app-card-body>
+      <assoc-my-fees-list [fees]="data.content"></assoc-my-fees-list>
+    </app-card-body>
+    <app-card-footer>
+      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    </app-card-footer>
+  </app-card>
 </layout-article>

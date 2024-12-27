@@ -1,12 +1,12 @@
 <!-- Total -->
 <div class="row">
   <div class="col-md-1">
-    <p>Total: {{page.totalElements}}</p>
+    <p>Total: {{totalElements}}</p>
   </div>
 </div>
 <!-- Page navigation -->
 <div appJustifyCenter class="mt-1">
-  <pagination-navigation [current]="page.page + 1" [pages]="page.totalPages" [disabled]="waiting"
+  <pagination-navigation [current]="current" [pages]="pages" [disabled]="waiting"
     (goTo)="goTo.emit($event)">
   </pagination-navigation>
 </div>

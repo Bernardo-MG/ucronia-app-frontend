@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { environment } from 'environments/environment';
@@ -22,12 +21,9 @@ export class FeeCalendarService {
   ) { }
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
-    const query = new PaginatedQuery();
-    query.sort = new Sort([new SortProperty("firstName"), new SortProperty("lastName")]);
-    query.addParameter('status', active.toString().toUpperCase());
-
     return this.getClient()
-      .query(query)
+      .loadParameters(new SortingParams([new SortProperty("firstName"), new SortProperty("lastName")]))
+      .parameter('status', active.toString().toUpperCase())
       .appendRoute(`/${year}`)
       .read<SimpleResponse<FeeCalendar[]>>()
       .pipe(map(r => r.content));

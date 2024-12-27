@@ -11,8 +11,9 @@
             <app-card>
               <app-card-body>
                 <assoc-library-admin-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
-                  [readonly]="!formEnabled" [cancellable]="true" [languages]="languages" [bookTypePage]="bookTypePage"
-                  [gameSystemPage]="gameSystemPage" [authorPage]="authorPage" [publisherPage]="publisherPage"
+                  [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
+                  [bookTypesSelection]="bookTypesSelection" [gameSystemsSelection]="gameSystemsSelection"
+                  [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
                   (save)="onSave($event)" (cancel)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
                   (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
                   (goToPublisherPage)="onGoToPublisherPage($event)">
@@ -24,7 +25,7 @@
             <app-card>
               <app-card-body>
                 <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
-                  [readonly]="!formEnabled" [cancellable]="true" [donorPage]="donorPage" (save)="onSave($event)"
+                  [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSave($event)"
                   (cancel)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
                 </assoc-library-admin-book-donors-form>
               </app-card-body>

@@ -11,7 +11,7 @@
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="false">
             <!-- Member selection -->
-            <app-fee-pay-select-member [memberPage]="memberPage" [waiting]="readingMembers"
+            <app-fee-pay-select-member [data]="memberPage" [waiting]="readingMembers"
               (change)="onChangePay($event.target)" (selectMember)="onSelectMember($event)"
               (goToPage)="onGoToMembersPage($event)"
               (changeFilter)="onChangeActiveFilter($event)"></app-fee-pay-select-member>

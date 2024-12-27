@@ -37,7 +37,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
 
   public createPermission = false;
 
-  public memberPage = new PaginatedResponse<Member[]>([]);
+  public members = new PaginatedResponse<Member[]>([]);
 
   public member = new Member();
 
@@ -93,7 +93,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
     // TODO: The page correction should be done automatically
     this.service.getMembers(page, this.activeFilter).subscribe({
       next: response => {
-        this.memberPage = response;
+        this.members = response;
 
         // Reactivate view
         this.readingMembers = false;

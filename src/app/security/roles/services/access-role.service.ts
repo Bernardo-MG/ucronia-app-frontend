@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularClient } from '@app/core/api/client/angular-client';
 import { Client } from '@app/core/api/client/client';
-import { PaginatedQuery } from '@app/core/api/models/paginated-query';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
+import { PaginationParams } from '@app/core/api/models/pagination-params';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { Sort } from '@app/core/api/models/sort';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortingParams } from '@app/core/api/models/sorting-params';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { environment } from 'environments/environment';
@@ -23,30 +23,26 @@ export class AccessRoleService {
   ) { }
 
   public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Role[]>> {
-    const defaultSort = new SortProperty('name');
-    defaultSort.direction = SortDirection.Ascending;
-
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([defaultSort]);
-    query.pagination = { page };
-    query.sort = sort;
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('name')]
+    );
 
     return this.getClient()
-      .query(query)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read<PaginatedResponse<Role[]>>();
   }
 
   public getAvailablePermissions(role: string, page: number, sort: Sort): Observable<PaginatedResponse<ResourcePermission[]>> {
-    const sortResource: SortProperty = new SortProperty('resource');
-    const sortAction: SortProperty = new SortProperty('action');
-
-    const query = new PaginatedQuery();
-    query.defaultSort = new Sort([sortResource, sortAction]);
-    query.pagination = { page };
-    query.sort = sort;
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortProperty('resource'), new SortProperty('action')]
+    );
 
     return this.getClient()
-      .query(query)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .appendRoute(`/${role}/permission/available`)
       .read<PaginatedResponse<ResourcePermission[]>>();
   }

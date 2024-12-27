@@ -7,10 +7,10 @@
     </button>
   </app-card-header>
   <app-card-body>
-    <access-user-selection-list [users]="page.content" [routeLinkAdapter]="routeLinkAdapter"
+    <access-user-selection-list [users]="data.content" [routeLinkAdapter]="routeLinkAdapter"
       (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
   </app-card-body>
   <app-card-footer>
-    <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages" [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
   </app-card-footer>
 </app-card>

@@ -5,10 +5,10 @@
       (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
   </div>
 </div>
-  <layout-button-list [values]="memberPage.content" [renderer]="nameRenderer" *layoutBlockUi="waiting"
+  <layout-button-list [values]="data.content" [renderer]="nameRenderer" *layoutBlockUi="waiting"
     (pick)="selectMember.emit($event)"></layout-button-list>
 <div JustifyCenterDirective class="mt-1">
-  <pagination-navigation [disabled]="waiting" [current]="memberPage.page + 1" [pages]="memberPage.totalPages"
+  <pagination-navigation [disabled]="waiting" [current]="data.page" [pages]="data.totalPages"
     (goTo)="goToPage.emit($event)">
   </pagination-navigation>
 </div>
