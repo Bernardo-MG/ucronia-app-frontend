@@ -3,7 +3,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
 import { MyFeesService } from '../../services/my-fees.service';
 
@@ -15,7 +15,7 @@ import { MyFeesService } from '../../services/my-fees.service';
 })
 export class MyFeesFrontpageContainer implements OnInit {
 
-  public page = new PaginatedResponse<Fee[]>([]);
+  public data = new PaginatedResponse<Fee[]>([]);
 
   /**
    * Loading flag.
@@ -35,7 +35,7 @@ export class MyFeesFrontpageContainer implements OnInit {
 
     this.service.getAll(page).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

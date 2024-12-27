@@ -8,7 +8,7 @@ import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
 import { LibraryAdminBookTypeListingContainer } from '../../../book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookListingContainer } from '../../../book/containers/library-admin-book-listing/library-admin-book-listing.container';
@@ -77,7 +77,7 @@ export class LibraryAdminListingContainer implements OnInit {
 
   public reading = false;
 
-  public page = new PaginatedResponse<any[]>([]);
+  public data = new PaginatedResponse<any[]>([]);
 
   public pageNumber = 0;
 
@@ -127,7 +127,7 @@ export class LibraryAdminListingContainer implements OnInit {
   }
 
   public onChangePage(page: PaginatedResponse<any[]>) {
-    this.page = page;
+    this.data = page;
   }
 
   public downloadExcel() {

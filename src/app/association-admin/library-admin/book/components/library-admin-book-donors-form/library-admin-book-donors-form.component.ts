@@ -23,7 +23,7 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
-  @Input() public donorPage = new PaginatedResponse<Person[]>([]);
+  @Input() public donors = new PaginatedResponse<Person[]>([]);
 
   @Output() public goToDonorPage = new EventEmitter<number>();
 

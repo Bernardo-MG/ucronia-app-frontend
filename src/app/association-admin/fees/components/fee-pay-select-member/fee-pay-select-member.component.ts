@@ -16,7 +16,7 @@ import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-be
 })
 export class FeePaySelectMemberComponent {
 
-  @Input() public memberPage = new PaginatedResponse<Member[]>([]);
+  @Input() public data = new PaginatedResponse<Member[]>([]);
 
   @Input() public waiting = false;
   

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { PaginationRanges } from '../../models/range/pagination-ranges';
+import { PaginationRanges } from '../../models/pagination-ranges';
 import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
 
 /**

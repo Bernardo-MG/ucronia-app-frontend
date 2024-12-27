@@ -170,28 +170,29 @@
 
 <!-- Book type modal-->
 <layout-modal name="book_typeModal" title="Tipo de libro">
-  <assoc-library-admin-book-type-selection [values]="bookTypePage.content" [current]="bookTypePage.page"
-    [pages]="bookTypePage.totalPages" (choose)="onSelectBookType($event)"
+  <assoc-library-admin-book-type-selection [values]="bookTypesSelection.content" [current]="bookTypesSelection.page"
+    [pages]="bookTypesSelection.totalPages" (choose)="onSelectBookType($event)"
     (goToPage)="this.goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
 </layout-modal>
 
 <!-- Game system modal -->
 <layout-modal name="game_systemModal" title="Sistema de juego">
-  <assoc-library-admin-game-system-selection [values]="gameSystemPage.content" [current]="gameSystemPage.page"
-    [pages]="gameSystemPage.totalPages" (choose)="onSelectGameSystem($event)"
+  <assoc-library-admin-game-system-selection [values]="gameSystemsSelection.content"
+    [current]="gameSystemsSelection.page" [pages]="gameSystemsSelection.totalPages"
+    (choose)="onSelectGameSystem($event)"
     (goToPage)="this.goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
 </layout-modal>
 
 <!-- Author modal -->
 <layout-modal name="authorModal" title="Autor">
-  <assoc-library-admin-author-selection [values]="authorPage.content" [current]="authorPage.page"
-    [pages]="authorPage.totalPages" (choose)="onSelectAuthor($event)"
+  <assoc-library-admin-author-selection [values]="authorsSelection.content" [current]="authorsSelection.page"
+    [pages]="authorsSelection.totalPages" (choose)="onSelectAuthor($event)"
     (goToPage)="this.goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
 </layout-modal>
 
 <!-- Publisher modal -->
 <layout-modal name="publisherModal" title="Editor">
-  <assoc-library-admin-publisher-selection [values]="publisherPage.content" [current]="publisherPage.page"
-    [pages]="publisherPage.totalPages" (choose)="onSelectPublisher($event)"
+  <assoc-library-admin-publisher-selection [values]="publishersSelection.content" [current]="publishersSelection.page"
+    [pages]="publishersSelection.totalPages" (choose)="onSelectPublisher($event)"
     (goToPage)="this.goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
 </layout-modal>

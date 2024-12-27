@@ -9,7 +9,7 @@ import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
@@ -25,7 +25,7 @@ export class PeopleListingContainer implements OnInit {
 
   public createPermission = false;
 
-  public page = new PaginatedResponse<Person[]>([]);
+  public data = new PaginatedResponse<Person[]>([]);
 
   private sort = new Sort([]);
 
@@ -59,7 +59,7 @@ export class PeopleListingContainer implements OnInit {
       this.sort.addField(field);
     }
 
-    this.load(this.page.page);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
@@ -67,7 +67,7 @@ export class PeopleListingContainer implements OnInit {
 
     this.service.getAll(page, this.sort, this.activeFilter).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

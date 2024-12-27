@@ -9,7 +9,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Member } from '@app/models/members/member';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
@@ -20,7 +20,7 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 })
 export class MemberListingContainer implements OnInit {
 
-  public page = new PaginatedResponse<Member[]>([]);
+  public data = new PaginatedResponse<Member[]>([]);
 
   private sort = new Sort([]);
 
@@ -40,7 +40,7 @@ export class MemberListingContainer implements OnInit {
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    this.load(this.page.page);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
@@ -48,7 +48,7 @@ export class MemberListingContainer implements OnInit {
 
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

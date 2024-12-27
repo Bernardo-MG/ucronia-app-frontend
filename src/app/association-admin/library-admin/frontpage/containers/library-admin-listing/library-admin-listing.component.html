@@ -6,7 +6,8 @@
           [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
           <icon-add></icon-add>
         </button>
-        <button type="button" class="btn btn-link" aria-label="Download excel" [disabled]="downloading" (click)="downloadExcel()">
+        <button type="button" class="btn btn-link" aria-label="Download excel" [disabled]="downloading"
+          (click)="downloadExcel()">
           <icon-excel></icon-excel>
         </button>
         <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
@@ -41,7 +42,8 @@
         </ng-container>
       </app-card-body>
       <app-card-footer>
-        <layout-pagination-info [waiting]="reading" [page]="page" (goTo)="load($event)"></layout-pagination-info>
+        <layout-pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+          [totalElements]="data.totalElements" (goTo)="load($event)"></layout-pagination-info>
       </app-card-footer>
     </app-card>
   </div>

@@ -43,13 +43,13 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public readingDonors = false;
 
-  public bookTypePage = new PaginatedResponse<BookType[]>([]);
+  public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
 
-  public gameSystemPage = new PaginatedResponse<GameSystem[]>([]);
+  public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
 
-  public authorPage = new PaginatedResponse<Author[]>([]);
+  public authorsSelection = new PaginatedResponse<Author[]>([]);
 
-  public publisherPage = new PaginatedResponse<Publisher[]>([]);
+  public publishersSelection = new PaginatedResponse<Publisher[]>([]);
 
   public donorPage = new PaginatedResponse<Person[]>([]);
 
@@ -108,7 +108,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     this.readingBookTypes = true;
     this.service.getBookTypes(page).subscribe({
       next: response => {
-        this.bookTypePage = response;
+        this.bookTypesSelection = response;
 
         // Reactivate view
         this.readingBookTypes = false;
@@ -124,7 +124,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     this.readingGameSystems = true;
     this.service.getGameSystems(page).subscribe({
       next: response => {
-        this.gameSystemPage = response;
+        this.gameSystemsSelection = response;
 
         // Reactivate view
         this.readingGameSystems = false;
@@ -140,7 +140,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     this.readingAuthors = true;
     this.service.getAuthors(page).subscribe({
       next: response => {
-        this.authorPage = response;
+        this.authorsSelection = response;
 
         // Reactivate view
         this.readingAuthors = false;
@@ -156,7 +156,7 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
     this.readingPublishers = true;
     this.service.getPublishers(page).subscribe({
       next: response => {
-        this.publisherPage = response;
+        this.publishersSelection = response;
 
         // Reactivate view
         this.readingPublishers = false;

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { PaginationInfo } from '../../models/pagination-info';
 
 @Component({
   selector: 'layout-pagination-info',
@@ -13,7 +13,11 @@ export class PaginationInfoComponent {
 
   @Input() public waiting = false;
 
-  @Input() public page = new PaginatedResponse<any[]>([]);
+  @Input() public current = 1;
+
+  @Input() public pages = 0;
+
+  @Input() public totalElements = 0;
 
   @Output() public goTo = new EventEmitter<number>();
 

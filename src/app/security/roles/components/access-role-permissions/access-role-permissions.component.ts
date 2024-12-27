@@ -5,13 +5,12 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
   selector: 'access-role-permissions',
   standalone: true,
-  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+  imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {
@@ -24,18 +23,18 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<ResourcePermission>();
 
-  public page = new ListPaginatedResponse<ResourcePermission>([], 0, 0);
+  public data = new ListPaginatedResponse<ResourcePermission>([], 0, 0);
 
   private pageSize = 10;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['permissions']) {
-      this.page = this.buildPage(0);
+      this.data = this.buildPage(0);
     }
   }
 
   public onGoToPage(page: number) {
-    this.page = this.buildPage(page - 1);
+    this.data = this.buildPage(page - 1);
   }
 
   public onRemove(permission: ResourcePermission): void {

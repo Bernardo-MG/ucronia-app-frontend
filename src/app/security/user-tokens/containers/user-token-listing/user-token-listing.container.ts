@@ -6,7 +6,7 @@ import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { PaginationInfoComponent } from '@app/shared/layout/components/pagination-info/pagination-info.component';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
@@ -17,7 +17,7 @@ import { UserTokenSelectionListComponent } from '../../components/user-token-sel
 })
 export class UserTokenListingContainer implements OnInit {
 
-  public page = new PaginatedResponse<UserToken[]>([]);
+  public data = new PaginatedResponse<UserToken[]>([]);
 
   private sort = new Sort([]);
 
@@ -30,21 +30,21 @@ export class UserTokenListingContainer implements OnInit {
     private service: UserTokenService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.load(0);
   }
 
   public onChangeDirection(field: SortProperty) {
     this.sort.addField(field);
 
-    this.load(this.page.page);
+    this.load(this.data.page);
   }
 
   public load(page: number) {
     this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.page = response;
+        this.data = response;
 
         // Reactivate view
         this.reading = false;

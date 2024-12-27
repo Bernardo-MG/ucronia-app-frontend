@@ -24,18 +24,18 @@ export class AccessUserRolesComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<Role>();
 
-  public page = new ListPaginatedResponse<Role>([], 0, 0);
+  public data = new ListPaginatedResponse<Role>([], 0, 0);
 
   private pageSize = 10;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
-      this.page = this.buildPage(0);
+      this.data = this.buildPage(0);
     }
   }
 
   public onGoToPage(page: number) {
-    this.page = this.buildPage(page - 1);
+    this.data = this.buildPage(page - 1);
   }
 
   public onRemove(role: Role): void {
