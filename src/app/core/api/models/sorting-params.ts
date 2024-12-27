@@ -1,5 +1,4 @@
 import { ParamLoader } from "../client/param-loader";
-import { Sort } from "./sort";
 import { SortDirection } from "./sort-direction";
 import { SortProperty } from "./sort-field";
 
@@ -18,7 +17,11 @@ export class SortingParams implements ParamLoader {
     }
   }
 
-  public get sort(): Sort {
+  public load(setParameter: (name: string, value: any) => void): void {
+    this.getFinalProperties().forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));
+  }
+
+  public getFinalProperties(): SortProperty[] {
     let sortFields;
 
     // Remove unsorted fields
@@ -38,8 +41,13 @@ export class SortingParams implements ParamLoader {
       sortFields = validSortings.concat(defaultSortFields);
     }
 
+    // Remove duplicates
+    const uniqueFields = sortFields.filter((field, index, self) =>
+      index === self.findIndex(f => f.property === field.property)
+    );
+
     // Sort fields alphabetically
-    const sortedFields = sortFields.sort((a, b) => {
+    return uniqueFields.sort((a, b) => {
       let direction;
 
       if (a.property.toString() < b.property.toString()) {
@@ -50,13 +58,6 @@ export class SortingParams implements ParamLoader {
 
       return direction;
     });
-
-    return new Sort(sortedFields);
-  }
-
-  public load(setParameter: (name: string, value: any) => void): void {
-    const validProperties = this.properties.filter((field) => field.direction !== SortDirection.Unsorted);
-    validProperties.forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));
   }
 
 }
