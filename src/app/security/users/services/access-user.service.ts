@@ -31,8 +31,8 @@ export class AccessUserService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
@@ -67,8 +67,8 @@ export class AccessUserService {
 
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(new SortingParams([new SortProperty('name')]))
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('name')]))
       .appendRoute(`/${username}/role/available`)
       .read<PaginatedResponse<Role[]>>();
   }
@@ -92,8 +92,8 @@ export class AccessUserService {
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
     return this.getClient()
       .appendRoute(`/${username}/person/available`)
-      .parameters(new PaginationParams(page))
-      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .read<PaginatedResponse<Member[]>>();
   }
 

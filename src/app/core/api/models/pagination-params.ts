@@ -1,15 +1,15 @@
-import { Params } from "../client/params";
+import { ParamLoader } from "../client/param-loader";
 
-export class PaginationParams implements Params {
+export class PaginationParams implements ParamLoader {
 
   constructor(private page?: number, private size?: number) { }
 
-  public load(loader: (name: string, value: any) => void): void {
+  public load(setParameter: (name: string, value: any) => void): void {
     if (this.page) {
-      loader('page', this.page);
+      setParameter('page', this.page);
     }
     if (this.size) {
-      loader('size', this.size);
+      setParameter('size', this.size);
     }
   }
 

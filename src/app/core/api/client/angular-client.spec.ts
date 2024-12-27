@@ -115,7 +115,7 @@ describe('AngularClient', () => {
       },
     };
 
-    client.parameters(mockParams as any);
+    client.loadParameters(mockParams as any);
 
     const params = new HttpParams()
       .append('key1', 'value1')

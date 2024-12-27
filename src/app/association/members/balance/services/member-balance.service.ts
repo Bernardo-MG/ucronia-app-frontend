@@ -20,7 +20,7 @@ export class MemberBalanceService {
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
     return this.getClient()
-      .parameters(new SortingParams([new SortProperty('month')]))
+      .loadParameters(new SortingParams([new SortProperty('month')]))
       .parameter('startDate', startDate)
       .parameter('endDate', endDate)
       .read<SimpleResponse<MemberBalance[]>>()

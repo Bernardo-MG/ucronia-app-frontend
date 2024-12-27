@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
 import { Client } from './client';
-import { Params } from './params';
+import { ParamLoader } from './param-loader';
 
 /**
  * Request implementation for Angular.
@@ -91,7 +91,7 @@ export class AngularClient implements Client {
     return this;
   }
 
-  public parameters(parameters: Params): AngularClient {
+  public loadParameters(parameters: ParamLoader): AngularClient {
     parameters.load(this.parameter.bind(this));
 
     return this;

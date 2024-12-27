@@ -55,8 +55,8 @@ export class AuthorAdminService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 

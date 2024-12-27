@@ -1,9 +1,9 @@
-import { Params } from "../client/params";
+import { ParamLoader } from "../client/param-loader";
 import { Sort } from "./sort";
 import { SortDirection } from "./sort-direction";
 import { SortProperty } from "./sort-field";
 
-export class SortingParams implements Params {
+export class SortingParams implements ParamLoader {
 
   private defaultProperties: SortProperty[] = [];
 
@@ -54,9 +54,9 @@ export class SortingParams implements Params {
     return new Sort(sortedFields);
   }
 
-  public load(loader: (name: string, value: any) => void): void {
+  public load(setParameter: (name: string, value: any) => void): void {
     const validProperties = this.properties.filter((field) => field.direction !== SortDirection.Unsorted);
-    validProperties.forEach((property) => loader('sort', `${String(property.property)},${property.direction}`));
+    validProperties.forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));
   }
 
 }

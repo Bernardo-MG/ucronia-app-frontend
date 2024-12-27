@@ -60,8 +60,8 @@ export class FeeService {
 
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     return this.getMemberClient()
-      .parameters(new PaginationParams(page))
-      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Member[]>>();
   }

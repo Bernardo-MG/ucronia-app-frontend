@@ -22,7 +22,7 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
     return this.getClient()
-      .parameters(new SortingParams([new SortProperty("firstName"), new SortProperty("lastName")]))
+      .loadParameters(new SortingParams([new SortProperty("firstName"), new SortProperty("lastName")]))
       .parameter('status', active.toString().toUpperCase())
       .appendRoute(`/${year}`)
       .read<SimpleResponse<FeeCalendar[]>>()

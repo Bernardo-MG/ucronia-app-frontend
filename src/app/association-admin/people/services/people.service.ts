@@ -29,8 +29,8 @@ export class PeopleService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Person[]>>();
   }

@@ -61,8 +61,8 @@ export class BookAdminService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
@@ -76,8 +76,8 @@ export class BookAdminService {
     );
 
     return this.getBookTypeClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
@@ -87,8 +87,8 @@ export class BookAdminService {
     );
 
     return this.getGameSystemClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
@@ -98,8 +98,8 @@ export class BookAdminService {
     );
 
     return this.getAuthorClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
@@ -109,15 +109,15 @@ export class BookAdminService {
     );
 
     return this.getPublisherClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read();
   }
 
   public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
     return this.getDonorClient()
-      .parameters(new PaginationParams(page))
-      .parameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .read();
   }
 

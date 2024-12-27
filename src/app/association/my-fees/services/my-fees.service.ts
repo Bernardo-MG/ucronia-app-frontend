@@ -22,8 +22,8 @@ export class MyFeesService {
 
   public getAll(page: number): Observable<PaginatedResponse<Fee[]>> {
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(new SortingParams([new SortProperty('date', SortDirection.Descending)]))
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(new SortingParams([new SortProperty('date', SortDirection.Descending)]))
       .read<PaginatedResponse<Fee[]>>();
   }
 

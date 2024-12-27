@@ -29,8 +29,8 @@ export class AccessRoleService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .read<PaginatedResponse<Role[]>>();
   }
 
@@ -41,8 +41,8 @@ export class AccessRoleService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .appendRoute(`/${role}/permission/available`)
       .read<PaginatedResponse<ResourcePermission[]>>();
   }

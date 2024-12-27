@@ -30,8 +30,8 @@ export class MemberService {
     );
 
     return this.getClient()
-      .parameters(new PaginationParams(page))
-      .parameters(sorting)
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
       .parameter('status', Active.Active.toString().toUpperCase())
       .read<PaginatedResponse<Member[]>>();
   }
