@@ -100,7 +100,10 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
       language: ['', Validators.required],
       publishDate: [''],
       authors: [[]],
-      donors: [[]],
+      donation: fb.group({
+        date: [''],
+        donors: [[]]
+      }),
       bookType: [],
       publishers: [[]],
       gameSystem: []
