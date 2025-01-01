@@ -5,13 +5,14 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { GameSystem } from '@app/models/library/game-system';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-system-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
   templateUrl: './library-admin-game-system-listing.container.html'
 })
 export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges {
