@@ -75,8 +75,6 @@ export class LibraryAdminListingContainer implements OnInit {
     return route;
   }
 
-  public reading = false;
-
   public data = new PaginatedResponse<any[]>([]);
 
   public pageNumber = 0;
