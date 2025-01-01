@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, EmbeddedViewRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Directive, EmbeddedViewRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[layoutBlockUi]',
@@ -14,8 +14,7 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
-    private renderer: Renderer2,
-    private el: ElementRef
+    private renderer: Renderer2
   ) { }
 
   public ngAfterViewInit() {

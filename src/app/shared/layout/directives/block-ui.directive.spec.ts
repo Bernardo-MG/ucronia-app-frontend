@@ -1,4 +1,4 @@
-import { TemplateRef, ViewContainerRef, Renderer2, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { EmbeddedViewRef, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { BlockUiDirective } from './block-ui.directive';
 
 describe('BlockUiDirective', () => {
@@ -6,7 +6,6 @@ describe('BlockUiDirective', () => {
   let templateRefMock: jasmine.SpyObj<TemplateRef<any>>;
   let viewContainerRefMock: jasmine.SpyObj<ViewContainerRef>;
   let rendererMock: jasmine.SpyObj<Renderer2>;
-  let elementRefMock: jasmine.SpyObj<ElementRef>;
   let nativeElement: HTMLElement;
   let parentElement: HTMLElement;
   let overlayElement: HTMLElement;
@@ -34,10 +33,7 @@ describe('BlockUiDirective', () => {
     // Mock the ViewContainerRef to return the EmbeddedViewRef mock
     viewContainerRefMock.createEmbeddedView.and.returnValue(embeddedViewRefMock);
 
-    // Assign the native element with a parent element to the mock
-    elementRefMock = jasmine.createSpyObj('ElementRef', [], { nativeElement });
-
-    directive = new BlockUiDirective(templateRefMock, viewContainerRefMock, rendererMock, elementRefMock);
+    directive = new BlockUiDirective(templateRefMock, viewContainerRefMock, rendererMock);
   });
 
   it('should create an instance', () => {
