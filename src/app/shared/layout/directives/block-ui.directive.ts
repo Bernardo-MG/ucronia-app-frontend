@@ -10,7 +10,7 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
 
   private overlayElement: HTMLElement | null = null;
   private embeddedView: EmbeddedViewRef<any> | null = null;
-  
+
   constructor(
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
@@ -18,29 +18,34 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
   ) { }
 
   public ngAfterViewInit() {
+    this.initView();
     if (this.layoutBlockUi) {
       this.showOverlay();
     }
   }
 
   public ngOnChanges() {
+    this.initView();
     if (this.layoutBlockUi) {
       this.showOverlay();
     } else {
-      this.removeOverlay();
+      this.hideOverlay();
     }
   }
 
   public ngOnDestroy() {
-    this.removeOverlay();
+    this.hideOverlay();
+    this.viewContainer.clear();
+  }
+
+  private initView() {
+    if (!this.embeddedView) {
+      this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
+    }
   }
 
   private showOverlay() {
-    if (!this.overlayElement) {
-      // Create and insert the embedded view
-      this.viewContainer.clear();
-      this.embeddedView = this.viewContainer.createEmbeddedView(this.templateRef);
-
+    if (!this.overlayElement && this.embeddedView) {
       const targetElement = this.embeddedView.rootNodes[0];
 
       // Ensure the target element has a position style
@@ -63,15 +68,11 @@ export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
     }
   }
 
-  private removeOverlay() {
-    if (this.overlayElement) {
-      const targetElement = this.embeddedView?.rootNodes[0];
-      if (targetElement) {
-        this.renderer.removeChild(targetElement, this.overlayElement);
-      }
+  private hideOverlay() {
+    if (this.overlayElement && this.embeddedView) {
+      const targetElement = this.embeddedView.rootNodes[0];
+      this.renderer.removeChild(targetElement, this.overlayElement);
       this.overlayElement = null;
-    } else {
-      this.viewContainer.createEmbeddedView(this.templateRef);
     }
   }
 }
