@@ -42,7 +42,7 @@
         </ng-container>
       </app-card-body>
       <app-card-footer>
-        <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        <pagination-info [waiting]="waiting" [current]="data.page" [pages]="data.totalPages"
           [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
       </app-card-footer>
     </app-card>

@@ -1,4 +1,4 @@
-import { TemplateRef, ViewContainerRef, Renderer2, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { EmbeddedViewRef, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { BlockUiDirective } from './block-ui.directive';
 
 describe('BlockUiDirective', () => {
@@ -6,7 +6,6 @@ describe('BlockUiDirective', () => {
   let templateRefMock: jasmine.SpyObj<TemplateRef<any>>;
   let viewContainerRefMock: jasmine.SpyObj<ViewContainerRef>;
   let rendererMock: jasmine.SpyObj<Renderer2>;
-  let elementRefMock: jasmine.SpyObj<ElementRef>;
   let nativeElement: HTMLElement;
   let parentElement: HTMLElement;
   let overlayElement: HTMLElement;
@@ -28,16 +27,13 @@ describe('BlockUiDirective', () => {
       return document.createElement(tagName);
     });
 
-    // Create an EmbeddedViewRef mock with rootNodes containing the overlay element
-    embeddedViewRefMock = jasmine.createSpyObj('EmbeddedViewRef', [], { rootNodes: [overlayElement] });
+    // Create an EmbeddedViewRef mock with rootNodes containing the native element
+    embeddedViewRefMock = jasmine.createSpyObj('EmbeddedViewRef', [], { rootNodes: [nativeElement] });
 
     // Mock the ViewContainerRef to return the EmbeddedViewRef mock
     viewContainerRefMock.createEmbeddedView.and.returnValue(embeddedViewRefMock);
 
-    // Assign the native element with a parent element to the mock
-    elementRefMock = jasmine.createSpyObj('ElementRef', [], { nativeElement });
-
-    directive = new BlockUiDirective(templateRefMock, viewContainerRefMock, rendererMock, elementRefMock);
+    directive = new BlockUiDirective(templateRefMock, viewContainerRefMock, rendererMock);
   });
 
   it('should create an instance', () => {
@@ -51,7 +47,8 @@ describe('BlockUiDirective', () => {
 
     expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
     expect(rendererMock.createElement).toHaveBeenCalledWith('div');
-    expect(rendererMock.appendChild).toHaveBeenCalledWith(nativeElement, overlayElement);
+    expect(rendererMock.appendChild).toHaveBeenCalledWith(nativeElement, jasmine.any(HTMLElement));
+    expect(directive['overlayElement']).toBeTruthy();
   });
 
   it('should remove the overlay when layoutBlockUi is false', () => {
@@ -60,10 +57,11 @@ describe('BlockUiDirective', () => {
     directive.ngAfterViewInit();
 
     // Then, remove the overlay
+    const currentOverlay = directive['overlayElement'];
     directive.layoutBlockUi = false;
     directive.ngOnChanges();
 
-    expect(rendererMock.removeChild).toHaveBeenCalledWith(nativeElement, overlayElement);
+    expect(rendererMock.removeChild).toHaveBeenCalledWith(nativeElement, currentOverlay);
     expect(directive['overlayElement']).toBeNull();
   });
 
@@ -71,9 +69,10 @@ describe('BlockUiDirective', () => {
     directive.layoutBlockUi = true;
     directive.ngAfterViewInit();
 
+    const currentOverlay = directive['overlayElement'];
     directive.ngOnDestroy();
 
-    expect(rendererMock.removeChild).toHaveBeenCalledWith(nativeElement, overlayElement);
+    expect(rendererMock.removeChild).toHaveBeenCalledWith(nativeElement, currentOverlay);
     expect(directive['overlayElement']).toBeNull();
   });
 
@@ -102,5 +101,18 @@ describe('BlockUiDirective', () => {
     directive.ngAfterViewInit();
 
     expect(rendererMock.setStyle).not.toHaveBeenCalledWith(nativeElement, 'position', 'relative');
+  });
+
+  it('should not recreate the embedded view on subsequent changes', () => {
+    directive.layoutBlockUi = true;
+    directive.ngAfterViewInit();
+
+    directive.layoutBlockUi = false;
+    directive.ngOnChanges();
+
+    directive.layoutBlockUi = true;
+    directive.ngOnChanges();
+
+    expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(1);
   });
 });

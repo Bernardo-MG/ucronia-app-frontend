@@ -8,7 +8,7 @@ import { GameSystemAdminService } from '@app/association-admin/library-admin/gam
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
 import { LibraryAdminListingContainer } from './library-admin-listing.component';
 
-describe('LibraryAdminFrontpageContainer', () => {
+describe('LibraryAdminListingContainer', () => {
   let component: LibraryAdminListingContainer;
   let fixture: ComponentFixture<LibraryAdminListingContainer>;
 

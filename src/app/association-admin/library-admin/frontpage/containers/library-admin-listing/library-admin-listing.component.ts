@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -75,8 +75,6 @@ export class LibraryAdminListingContainer implements OnInit {
     return route;
   }
 
-  public reading = false;
-
   public data = new PaginatedResponse<any[]>([]);
 
   public pageNumber = 0;
@@ -102,7 +100,8 @@ export class LibraryAdminListingContainer implements OnInit {
 
   constructor(
     private authContainer: AuthContainer,
-    private reportService: BookReportService
+    private reportService: BookReportService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   public ngOnInit(): void {
@@ -120,6 +119,7 @@ export class LibraryAdminListingContainer implements OnInit {
 
   public onWait(wait: boolean) {
     this.waiting = wait;
+    this.cdr.detectChanges();
   }
 
   public load(page: number) {

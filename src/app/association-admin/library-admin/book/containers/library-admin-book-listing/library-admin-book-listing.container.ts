@@ -5,13 +5,14 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
+import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-listing',
   standalone: true,
-  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent],
+  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, BlockUiDirective],
   templateUrl: './library-admin-book-listing.container.html'
 })
 export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
