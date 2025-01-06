@@ -8,7 +8,6 @@ import { SortingParams } from '@app/core/api/client/sorting-params';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { FeeCreation } from '@app/models/fees/fee-creation';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Member } from '@app/models/members/member';
 import { environment } from 'environments/environment';
@@ -24,7 +23,7 @@ export class FeeService {
     private http: HttpClient
   ) { }
 
-  public create(data: FeeCreation): Observable<FeePayment> {
+  public create(data: Fee): Observable<FeePayment> {
     return this.getClient()
       .create<SimpleResponse<FeePayment>>(data)
       .pipe(map(r => r.content));

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { FeeCreation } from '@app/models/fees/fee-creation';
+import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -13,7 +13,7 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
   imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './fee-creation-form.component.html'
 })
-export class FeeCreationFormComponent extends FormComponent<FeeCreation> implements OnChanges {
+export class FeeCreationFormComponent extends FormComponent<Fee> implements OnChanges {
 
   @Input() public member = new Member();
 

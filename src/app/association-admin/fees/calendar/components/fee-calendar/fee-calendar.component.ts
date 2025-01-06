@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { FeeCalendarMonth } from '@app/models/fees/fee-month';
+import { FeeCalendarMonth } from '@app/models/fees/fee-calendar-month';
 import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';

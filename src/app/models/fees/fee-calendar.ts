@@ -1,5 +1,5 @@
 import { Member } from "../members/member";
-import { FeeCalendarMonth } from "./fee-month";
+import { FeeCalendarMonth } from "./fee-calendar-month";
 
 export class FeeCalendar {
   member = new Member();
