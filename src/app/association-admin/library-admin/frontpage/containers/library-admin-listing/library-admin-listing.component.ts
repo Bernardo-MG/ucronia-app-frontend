@@ -79,7 +79,7 @@ export class LibraryAdminListingContainer implements OnInit {
 
   public pageNumber = 0;
 
-  public waiting = false;
+  public waiting = true;
 
   public downloading = false;
 
