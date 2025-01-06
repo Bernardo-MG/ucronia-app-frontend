@@ -75,19 +75,19 @@ export class FeeCalendarComponent implements OnChanges {
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
-    return months.find(m => m.month === month) !== undefined;
+    return months.find(m => m.monthNumber === month) !== undefined;
   }
 
   public isPaid(months: FeeCalendarMonth[], month: number): boolean {
-    return this.getCalendarMonth(months, month).fee.paid;
+    return this.getCalendarMonth(months, month).paid;
   }
 
   public getMonth(months: FeeCalendarMonth[], month: number): string {
-    return this.getCalendarMonth(months, month).fee.month;
+    return this.getCalendarMonth(months, month).month;
   }
 
   private getCalendarMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth {
-    return months.find(m => m.month === month) as FeeCalendarMonth;
+    return months.find(m => m.monthNumber === month) as FeeCalendarMonth;
   }
 
 }
