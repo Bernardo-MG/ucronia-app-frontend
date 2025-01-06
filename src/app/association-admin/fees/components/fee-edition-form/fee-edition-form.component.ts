@@ -28,7 +28,7 @@ export class FeeEditionFormComponent extends FormComponent<Fee> {
     super();
 
     this.form = fb.group({
-      date: [null, Validators.required]
+      month: [null, Validators.required]
     });
   }
 
