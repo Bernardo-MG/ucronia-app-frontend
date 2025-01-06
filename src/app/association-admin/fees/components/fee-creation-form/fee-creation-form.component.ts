@@ -35,14 +35,4 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
     });
   }
 
-  public addDate() {
-    const dates = this.form.get('feeDates') as FormArray;
-    dates.push(this.fb.control(''));
-  }
-
-  public removeDate(index: number): void {
-    const feeDatesArray = this.form.get('feeDates') as FormArray;
-    feeDatesArray.removeAt(index);
-  }
-
 }

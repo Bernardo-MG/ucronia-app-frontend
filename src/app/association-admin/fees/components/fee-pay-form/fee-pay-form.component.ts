@@ -36,17 +36,17 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
       member: fb.group({
         number: [null, Validators.required]
       }),
-      feeDates: fb.array([''], Validators.required)
+      feeMonths: fb.array([''], Validators.required)
     });
   }
 
   public addDate() {
-    const dates = this.form.get('feeDates') as FormArray;
+    const dates = this.form.get('feeMonths') as FormArray;
     dates.push(this.fb.control(''));
   }
 
   public removeDate(index: number): void {
-    const feeDatesArray = this.form.get('feeDates') as FormArray;
+    const feeDatesArray = this.form.get('feeMonths') as FormArray;
     feeDatesArray.removeAt(index);
   }
 
