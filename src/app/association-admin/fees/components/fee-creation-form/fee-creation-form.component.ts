@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
@@ -13,9 +13,11 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
   imports: [CommonModule, FormModule, WaitingButtonComponent],
   templateUrl: './fee-creation-form.component.html'
 })
-export class FeeCreationFormComponent extends FormComponent<Fee> implements OnChanges {
+export class FeeCreationFormComponent extends FormComponent<Fee> {
 
-  @Input() public member = new Member();
+  @Input() public set member(value: Member) {
+    this.form.get('member')?.get('number')?.setValue(value.number);
+  }
 
   constructor(
     private fb: FormBuilder
@@ -28,12 +30,6 @@ export class FeeCreationFormComponent extends FormComponent<Fee> implements OnCh
       }),
       month: ['', Validators.required]
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['member']) {
-      this.form.get('member')?.get('number')?.setValue(this.member.number);
-    }
   }
 
   public addDate() {
