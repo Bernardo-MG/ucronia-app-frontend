@@ -26,13 +26,13 @@ export class FeeCalendarComponent implements OnChanges {
    */
   @Input() public waiting = false;
 
-  @Input() public rows: FeeCalendar[] = [];
+  @Input() public feeCalendar: FeeCalendar[] = [];
   
   @Output() public goToYear = new EventEmitter<number>();
 
   public year = new Date().getFullYear();
 
-  public months: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public monthNumbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   private index = 0;
 
@@ -78,8 +78,16 @@ export class FeeCalendarComponent implements OnChanges {
     return months.find(m => m.month === month) !== undefined;
   }
 
-  public getMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth | undefined {
-    return months.find(m => m.month === month);
+  public isPaid(months: FeeCalendarMonth[], month: number): boolean {
+    return this.getCalendarMonth(months, month).fee.paid;
+  }
+
+  public getMonth(months: FeeCalendarMonth[], month: number): string {
+    return this.getCalendarMonth(months, month).fee.month;
+  }
+
+  private getCalendarMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth {
+    return months.find(m => m.month === month) as FeeCalendarMonth;
   }
 
 }

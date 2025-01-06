@@ -25,24 +25,22 @@
     <thead class="thead-light">
       <tr>
         <th scope="col">Socio</th>
-        <th scope="col" *ngFor="let month of months"> {{month}}</th>
+        <th scope="col" *ngFor="let monthNumber of monthNumbers"> {{monthNumber}}</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-row [ngForOf]="rows">
-        <tr [ngClass]="{ 'table-warning': !row.active }">
+      <ng-template ngFor let-memberFees [ngForOf]="feeCalendar">
+        <tr [ngClass]="{ 'table-warning': !memberFees.active }">
           <td>
-            {{row.member.name.fullName}}
+            {{memberFees.member.name.fullName}}
           </td>
           <!-- Month fees -->
-          <ng-template ngFor let-month [ngForOf]="months">
+          <ng-template ngFor let-monthNumber [ngForOf]="monthNumbers">
             <td>
-              <ng-container *ngIf="hasMonth(row.months, month)">
-                <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="{{getMonth(row.months, month)?.fee?.month}}/{{row.member.number}}">
-                  <icon-success-or-failure [success]="getMonth(row.months, month)?.fee?.paid"></icon-success-or-failure>
-                </button>
-              </ng-container>
+              <button *ngIf="hasMonth(memberFees.months, monthNumber)" type="button" class="btn btn-secondary btn-sm" role="button"
+                routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}">
+                <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)"></icon-success-or-failure>
+              </button>
             </td>
           </ng-template>
         </tr>

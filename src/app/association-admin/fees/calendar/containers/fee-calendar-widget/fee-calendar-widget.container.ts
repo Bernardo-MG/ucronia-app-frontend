@@ -34,7 +34,7 @@ export class FeeCalendarWidgetContainer implements OnInit {
    */
   public readingCalendar = false;
 
-  public rows: FeeCalendar[] = [];
+  public feeCalendar: FeeCalendar[] = [];
 
   constructor(
     private authContainer: AuthContainer,
@@ -73,7 +73,7 @@ export class FeeCalendarWidgetContainer implements OnInit {
 
     this.service.getCalendar(year, this.activeFilter).subscribe({
       next: data => {
-        this.rows = data;
+        this.feeCalendar = data;
         this.readingCalendar = false;
       },
       error: error => {
