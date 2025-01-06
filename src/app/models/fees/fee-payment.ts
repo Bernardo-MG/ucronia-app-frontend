@@ -2,7 +2,7 @@
 export class FeePayment {
   member = new FeePaymentMember();
   transaction = new FeePaymentTransaction();
-  feeDates: Date[] = [];
+  feeMonths: Date[] = [];
 }
 
 export class FeePaymentTransaction {

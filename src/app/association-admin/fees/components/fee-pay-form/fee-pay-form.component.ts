@@ -46,8 +46,8 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
   }
 
   public removeDate(index: number): void {
-    const feeDatesArray = this.form.get('feeMonths') as FormArray;
-    feeDatesArray.removeAt(index);
+    const feeMonthsArray = this.form.get('feeMonths') as FormArray;
+    feeMonthsArray.removeAt(index);
   }
 
 }

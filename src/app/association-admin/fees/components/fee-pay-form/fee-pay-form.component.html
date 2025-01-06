@@ -22,11 +22,11 @@
     <label class="col-sm-2 col-form-label">Cuotas</label>
     <div class="col-sm-10">
       <!-- Each fee -->
-      <div *ngFor="let date of form.get('feeDates').controls; let i = index" formGroupName="feeDates" class="row">
+      <div *ngFor="let date of form.get('feeMonths').controls; let i = index" formGroupName="feeMonths" class="row">
         <div class="col-md-6 mb-2">
           <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
-            appInvalidField="feeDates[]" [backendFailure]="failures.hasFailures('feeDates[]')">
-          <app-input-failure-feedback [failures]="failures.getFailures('feeDates[]')"></app-input-failure-feedback>
+            appInvalidField="feeMonths[]" [backendFailure]="failures.hasFailures('feeMonths[]')">
+          <app-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></app-input-failure-feedback>
         </div>
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
