@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Member } from '@app/models/members/member';
@@ -15,9 +15,14 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
   imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './fee-pay-form.component.html'
 })
-export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
+export class FeePayFormComponent extends FormComponent<FeePayment> {
 
-  @Input() public member = new Member();
+  @Input() public set member(value: Member) {
+    this.form.get('member')?.get('number')?.setValue(value.number);
+    this.fullname = value.name.fullName;
+  }
+
+  public fullname = "";
 
   constructor(
     private fb: FormBuilder
@@ -33,12 +38,6 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
       }),
       feeDates: fb.array([''], Validators.required)
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['member']) {
-      this.form.get('member')?.get('number')?.setValue(this.member.number);
-    }
   }
 
   public addDate() {

@@ -17,7 +17,10 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.get('number')?.setValue(value.number);
+    this.fullname = value.name.fullName;
   }
+
+  public fullname = "";
 
   constructor(
     private fb: FormBuilder
