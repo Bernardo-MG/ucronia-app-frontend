@@ -1,10 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
   <div class="row mb-2">
-    <label for="memberNameInput" class="col-sm-2 col-form-label">Socio</label>
+    <label for="fullNameInput" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
-      <input disabled type="text" id="memberNameInput" [value]="fullname" readonly="true"
-        class="form-control" aria-describedby="memberNameLabel">
+      <input disabled type="text" id="fullNameInput" [value]="fullname" readonly="true" class="form-control"
+        aria-describedby="fullNameLabel">
     </div>
   </div>
   <!-- Payment date -->

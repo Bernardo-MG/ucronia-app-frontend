@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
-      <input type="text" [value]="fee.person.name.fullName" id="fullNameInput" readonly="true" class="form-control"
+      <input disabled type="text" [value]="fee.person.name.fullName" id="fullNameInput" readonly="true" class="form-control"
         aria-describedby="fullNameLabel">
     </div>
   </div>
@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Mes</label>
     <div class="col-sm-10">
-      <input type="month" [value]="fee.month" id="monthInput" readonly="true" class="form-control"
+      <input disabled type="month" [value]="fee.month" id="monthInput" readonly="true" class="form-control"
         aria-describedby="monthLabel">
     </div>
   </div>
@@ -24,10 +24,12 @@
   </div>
   <!-- Payment date -->
   <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Fecha de pago</label>
-    <div class="col-sm-10">
-      <input type="date" [value]="fee.transaction.date" id="paymentDateInput" [readonly]="true" class="form-control"
+    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
+    <div formGroupName="transaction" class="col-sm-10">
+      <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
+        appInvalidField="transaction.date" [backendFailure]="failures.hasFailures('transaction.date')"
         aria-describedby="paymentDateLabel">
+      <app-input-failure-feedback [failures]="failures.getFailures('transaction.date')"></app-input-failure-feedback>
     </div>
   </div>
   <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
