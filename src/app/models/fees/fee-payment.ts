@@ -1,6 +1,6 @@
 
 export class FeePayment {
-  member = new FeePaymentMember();
+  person = new FeePaymentPerson();
   transaction = new FeePaymentTransaction();
   feeMonths: Date[] = [];
 }
@@ -9,6 +9,6 @@ export class FeePaymentTransaction {
   date = new Date();
 }
 
-export class FeePaymentMember {
+export class FeePaymentPerson {
   number = -1;
 }
