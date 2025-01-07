@@ -11,9 +11,8 @@
   <div class="row mb-2">
     <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Mes</label>
     <div class="col-sm-10">
-      <input type="month" id="monthInput" formControlName="month" class="form-control" appInvalidField
-        [backendFailure]="failures.hasFailures('month')" aria-describedby="monthLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('month')"></app-input-failure-feedback>
+      <input type="month" [value]="fee.month" id="monthInput" readonly="true" class="form-control"
+        aria-describedby="monthLabel">
     </div>
   </div>
   <!-- Paid -->
