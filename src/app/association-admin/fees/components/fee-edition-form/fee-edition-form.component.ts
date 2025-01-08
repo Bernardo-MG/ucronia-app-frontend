@@ -32,7 +32,7 @@ export class FeeEditionFormComponent extends FormComponent<Fee> {
         number: [null, Validators.required]
       }),
       month: ['', Validators.required],
-      transaction: fb.group({
+      payment: fb.group({
         index: [null, Validators.required],
         date: ['', Validators.required]
       })

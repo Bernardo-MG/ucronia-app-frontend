@@ -25,11 +25,11 @@
   <!-- Payment date -->
   <div class="row mb-2">
     <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
-    <div formGroupName="transaction" class="col-sm-10">
+    <div formGroupName="payment" class="col-sm-10">
       <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-        appInvalidField="transaction.date" [backendFailure]="failures.hasFailures('transaction.date')"
+        appInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
         aria-describedby="paymentDateLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('transaction.date')"></app-input-failure-feedback>
+      <app-input-failure-feedback [failures]="failures.getFailures('payment.date')"></app-input-failure-feedback>
     </div>
   </div>
   <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"

@@ -30,12 +30,12 @@ export class FeeInfoComponent {
 
   @Output() public goToTransaction = new EventEmitter<number>();
 
-  public selectTransaction() {
-    this.goToTransaction.emit(this.data.transaction?.index);
+  public selectPayment() {
+    this.goToTransaction.emit(this.data.payment?.index);
   }
 
-  public isTransactionDisabled(): boolean {
-    return (this.waiting) || (this.data.transaction === null);
+  public isPaymentDisabled(): boolean {
+    return (this.waiting) || (this.data.payment === null);
   }
 
 }

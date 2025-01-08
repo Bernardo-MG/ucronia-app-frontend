@@ -19,7 +19,7 @@
       </td>
       <td>
         <ng-container *ngIf="fee.paid">
-          {{fee.transaction?.date}}
+          {{fee.payment?.date}}
         </ng-container>
         <ng-container *ngIf="!fee.paid">
           <icon-failure class="text-danger"></icon-failure>
