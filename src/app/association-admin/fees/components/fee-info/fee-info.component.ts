@@ -31,11 +31,11 @@ export class FeeInfoComponent {
   @Output() public goToTransaction = new EventEmitter<number>();
 
   public selectTransaction() {
-    this.goToTransaction.emit(this.data.transaction.index);
+    this.goToTransaction.emit(this.data.transaction?.index);
   }
 
   public isTransactionDisabled(): boolean {
-    return (this.waiting) || (this.data.transaction.date === null);
+    return (this.waiting) || (this.data.transaction === null);
   }
 
 }
