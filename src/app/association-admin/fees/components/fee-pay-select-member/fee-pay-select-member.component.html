@@ -6,7 +6,7 @@
   </div>
 </div>
   <layout-button-list [values]="data.content" [renderer]="nameRenderer" *layoutBlockUi="waiting"
-    (pick)="selectMember.emit($event)"></layout-button-list>
+    (pick)="selectPerson.emit($event)"></layout-button-list>
 <div JustifyCenterDirective class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="data.page" [pages]="data.totalPages"
     (goTo)="goToPage.emit($event)">

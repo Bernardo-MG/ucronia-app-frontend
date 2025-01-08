@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Member } from '@app/models/members/member';
+import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -17,8 +17,8 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
 
-  @Input() public set member(value: Member) {
-    this.form.get('member')?.get('number')?.setValue(value.number);
+  @Input() public set person(value: Person) {
+    this.form.get('person')?.get('number')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
 
@@ -33,7 +33,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
       transaction: fb.group({
         date: [null, Validators.required]
       }),
-      member: fb.group({
+      person: fb.group({
         number: [null, Validators.required]
       }),
       feeMonths: fb.array([''], Validators.required)

@@ -6,7 +6,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Member } from '@app/models/members/member';
+import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { FormModule } from '@app/shared/form/form.module';
@@ -34,9 +34,9 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
 
   public createPermission = false;
 
-  public memberPage = new PaginatedResponse<Member[]>([]);
+  public personPage = new PaginatedResponse<Person[]>([]);
 
-  public member = new Member();
+  public person = new Person();
 
   public activeFilter = Active.Active;
 
@@ -85,9 +85,9 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
   public onGoToMembersPage(page: number) {
     this.readingMembers = true;
     // TODO: The page correction should be done automatically
-    this.service.getMembers(page, this.activeFilter).subscribe({
+    this.service.getPersons(page, this.activeFilter).subscribe({
       next: response => {
-        this.memberPage = response;
+        this.personPage = response;
 
         // Reactivate view
         this.readingMembers = false;
@@ -104,8 +104,8 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
     this.currentStep = 1;
   }
 
-  public onSelectMember(member: Member) {
-    this.member = member;
+  public onSelectPerson(person: Person) {
+    this.person = person;
     this.selectedMember = true;
     this.currentStep = 2;
   }

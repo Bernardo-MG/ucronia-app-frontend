@@ -15,20 +15,20 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {
 
-  @Input() public set member(value: Member) {
-    this.form.get('member')?.get('number')?.setValue(value.number);
+  @Input() public set person(value: Member) {
+    this.form.get('person')?.get('number')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
 
   public fullname = "";
 
   constructor(
-    private fb: FormBuilder
+    fb: FormBuilder
   ) {
     super();
 
     this.form = fb.group({
-      member: fb.group({
+      person: fb.group({
         number: [null, Validators.required]
       }),
       month: ['', Validators.required]
