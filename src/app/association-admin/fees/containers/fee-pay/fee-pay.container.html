@@ -11,8 +11,8 @@
         <ng-container [ngSwitch]="selectedMember">
           <ng-container *ngSwitchCase="false">
             <!-- Member selection -->
-            <app-fee-pay-select-member [data]="memberPage" [waiting]="readingMembers"
-              (change)="onChangePay($event.target)" (selectMember)="onSelectMember($event)"
+            <app-fee-pay-select-member [data]="personPage" [waiting]="readingMembers"
+              (change)="onChangePay($event.target)" (selectPerson)="onSelectPerson($event)"
               (goToPage)="onGoToMembersPage($event)"
               (changeFilter)="onChangeActiveFilter($event)"></app-fee-pay-select-member>
           </ng-container>
@@ -28,13 +28,13 @@
               <ng-container *ngSwitchCase="true">
                 <!-- Pay form -->
                 <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [member]="member" (save)="onSave($event)">
+                  [person]="person" (save)="onSave($event)">
                 </assoc-fee-pay-form>
               </ng-container>
               <ng-container *ngSwitchCase="false">
                 <!-- Create unpaid form -->
                 <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [member]="member" (save)="onCreateUnpaid($event)"></assoc-fee-creation-form>
+                  [person]="person" (save)="onCreateUnpaid($event)"></assoc-fee-creation-form>
               </ng-container>
             </ng-container>
           </ng-container>

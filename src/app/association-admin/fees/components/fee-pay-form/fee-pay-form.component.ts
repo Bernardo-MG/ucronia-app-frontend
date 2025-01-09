@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Member } from '@app/models/members/member';
+import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -15,9 +15,14 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
   imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
   templateUrl: './fee-pay-form.component.html'
 })
-export class FeePayFormComponent extends FormComponent<FeePayment> implements OnChanges {
+export class FeePayFormComponent extends FormComponent<FeePayment> {
 
-  @Input() public member = new Member();
+  @Input() public set person(value: Person) {
+    this.form.get('person')?.get('number')?.setValue(value.number);
+    this.fullname = value.name.fullName;
+  }
+
+  public fullname = "";
 
   constructor(
     private fb: FormBuilder
@@ -25,30 +30,24 @@ export class FeePayFormComponent extends FormComponent<FeePayment> implements On
     super();
 
     this.form = fb.group({
-      transaction: fb.group({
+      payment: fb.group({
         date: [null, Validators.required]
       }),
-      member: fb.group({
+      person: fb.group({
         number: [null, Validators.required]
       }),
-      feeDates: fb.array([''], Validators.required)
+      feeMonths: fb.array([''], Validators.required)
     });
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['member']) {
-      this.form.get('member')?.get('number')?.setValue(this.member.number);
-    }
-  }
-
   public addDate() {
-    const dates = this.form.get('feeDates') as FormArray;
+    const dates = this.form.get('feeMonths') as FormArray;
     dates.push(this.fb.control(''));
   }
 
   public removeDate(index: number): void {
-    const feeDatesArray = this.form.get('feeDates') as FormArray;
-    feeDatesArray.removeAt(index);
+    const feeMonthsArray = this.form.get('feeMonths') as FormArray;
+    feeMonthsArray.removeAt(index);
   }
 
 }

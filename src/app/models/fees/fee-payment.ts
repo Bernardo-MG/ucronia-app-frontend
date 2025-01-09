@@ -1,8 +1,14 @@
-import { FeePaymentMember } from "./fee-payment-member";
-import { FeePaymentTransaction } from "./fee-payment-transaction";
 
 export class FeePayment {
-  member = new FeePaymentMember();
+  person = new FeePaymentPerson();
   transaction = new FeePaymentTransaction();
-  feeDates: Date[] = [];
+  feeMonths: Date[] = [];
+}
+
+export class FeePaymentTransaction {
+  date = new Date();
+}
+
+export class FeePaymentPerson {
+  number = -1;
 }

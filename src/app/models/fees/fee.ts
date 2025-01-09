@@ -1,9 +1,13 @@
 import { PublicPerson } from "../person/public-person";
-import { FeeTransaction } from "./fee-transaction";
 
 export class Fee {
-  date = '';
+  month = '';
   paid = false;
-  transaction = new FeeTransaction();
+  payment: FeeTransaction | undefined;
   person = new PublicPerson();
+}
+
+export class FeeTransaction {
+  date = '';
+  index = -1;
 }
