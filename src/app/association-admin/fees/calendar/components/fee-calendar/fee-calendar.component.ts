@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Active } from '@app/association/members/model/active';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -16,8 +15,6 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
   styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
-
-  @Input() public activeFilter = Active.Active;
 
   @Input() public range = new FeeCalendarYearsRange();
 
