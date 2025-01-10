@@ -8,7 +8,7 @@
   <div class="w-25 px-3">
     <!-- Current year -->
     <select class="form-select" aria-label="Select year" [disabled]="waiting" (change)="onGoTo($event)">
-      <option *ngFor="let selectionYear of range.years.slice().reverse()" [selected]="selectionYear === year"
+      <option *ngFor="let selectionYear of range.years.slice().reverse()" [selected]="selectionYear === year.toString()"
         [value]="selectionYear">
         {{selectionYear}}</option>
     </select>
