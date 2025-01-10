@@ -47,6 +47,7 @@ export class FeeCalendarWidgetContainer implements OnInit {
     this.service.getRange().subscribe(d => {
       this.range = d;
       const lastYear = Number(this.range.years[this.range.years.length - 1]);
+      // If the current year is after the last year, move backwards to the last year
       if (this.year > lastYear) {
         this.year = lastYear;
       }
