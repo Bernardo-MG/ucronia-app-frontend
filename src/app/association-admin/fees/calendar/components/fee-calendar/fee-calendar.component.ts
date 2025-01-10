@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Active } from '@app/association/members/model/active';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { IconsModule } from '@app/shared/icons/icons.module';
@@ -17,8 +16,6 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 })
 export class FeeCalendarComponent implements OnChanges {
 
-  @Input() public activeFilter = Active.Active;
-
   @Input() public range = new FeeCalendarYearsRange();
 
   /**
@@ -27,7 +24,7 @@ export class FeeCalendarComponent implements OnChanges {
   @Input() public waiting = false;
 
   @Input() public feeCalendar: FeeCalendar[] = [];
-  
+
   @Output() public goToYear = new EventEmitter<number>();
 
   public year = new Date().getFullYear();
@@ -44,33 +41,31 @@ export class FeeCalendarComponent implements OnChanges {
     return (this.index > 0);
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['year']) {
-      this.index = this.range.years.indexOf(this.year);
-    }
-    if (changes['range']) {
-      const lastYear = this.range.years[this.range.years.length - 1];
+  public ngOnChanges({ range }: SimpleChanges): void {
+    if (range) {
+      const lastYear = Number(this.range.years[this.range.years.length - 1]);
       if (this.year > lastYear) {
         this.year = lastYear;
       }
-      this.index = this.range.years.indexOf(this.year);
+      this.index = this.range.years.indexOf(this.year.toString());
     }
   }
 
   public onGoTo(event: any) {
     this.year = Number(event.target.value);
+    this.index = this.range.years.indexOf(this.year.toString());
     this.goToYear.emit(this.year);
   }
 
   public onGoPrevious() {
     this.index = this.index - 1;
-    this.year = this.range.years[this.index];
+    this.year = Number(this.range.years[this.index]);
     this.goToYear.emit(this.year);
   }
 
   public onGoNext() {
     this.index = this.index + 1;
-    this.year = this.range.years[this.index];
+    this.year = Number(this.range.years[this.index]);
     this.goToYear.emit(this.year);
   }
 

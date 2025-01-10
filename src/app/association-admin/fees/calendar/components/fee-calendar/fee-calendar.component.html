@@ -8,7 +8,7 @@
   <div class="w-25 px-3">
     <!-- Current year -->
     <select class="form-select" aria-label="Select year" [disabled]="waiting" (change)="onGoTo($event)">
-      <option *ngFor="let selectionYear of range.years.slice().reverse()" [selected]="selectionYear === year"
+      <option *ngFor="let selectionYear of range.years.slice().reverse()" [selected]="selectionYear === year.toString()"
         [value]="selectionYear">
         {{selectionYear}}</option>
     </select>
@@ -30,15 +30,15 @@
     </thead>
     <tbody class="table-group-divider">
       <ng-template ngFor let-memberFees [ngForOf]="feeCalendar">
-        <tr [ngClass]="{ 'table-warning': !memberFees.active }">
+        <tr [ngClass]="{ 'table-warning': !memberFees.person.membership.active}">
           <td>
-            {{memberFees.member.name.fullName}}
+            {{memberFees.person.name.fullName}}
           </td>
           <!-- Month fees -->
           <ng-template ngFor let-monthNumber [ngForOf]="monthNumbers">
             <td>
               <button *ngIf="hasMonth(memberFees.months, monthNumber)" type="button" class="btn btn-secondary btn-sm" role="button"
-                routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}">
+                routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.person.number}}">
                 <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)"></icon-success-or-failure>
               </button>
             </td>
