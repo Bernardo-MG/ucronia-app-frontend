@@ -33,7 +33,7 @@ export class FeeEditionFormComponent extends FormComponent<Fee> {
       }),
       month: ['', Validators.required],
       payment: fb.group({
-        index: [null, Validators.required],
+        index: [null],
         date: ['', Validators.required]
       })
     });
