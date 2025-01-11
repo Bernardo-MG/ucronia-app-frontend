@@ -8,9 +8,8 @@ import { SortingParams } from '@app/core/api/client/sorting-params';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SimpleResponse } from '@app/core/api/models/simple-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { FeeCreation } from '@app/models/fees/fee-creation';
 import { FeePayment } from '@app/models/fees/fee-payment';
-import { Member } from '@app/models/members/member';
+import { Person } from '@app/models/person/person';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Fee } from '../../../models/fees/fee';
@@ -24,7 +23,7 @@ export class FeeService {
     private http: HttpClient
   ) { }
 
-  public create(data: FeeCreation): Observable<FeePayment> {
+  public create(data: Fee): Observable<FeePayment> {
     return this.getClient()
       .create<SimpleResponse<FeePayment>>(data)
       .pipe(map(r => r.content));
@@ -58,18 +57,18 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
-    return this.getMemberClient()
+  public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person[]>> {
+    return this.getPersonClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Member[]>>();
+      .read<PaginatedResponse<Person[]>>();
   }
 
-  public getOneMember(id: number): Observable<Member> {
-    return this.getMemberClient()
+  public getOnePerson(id: number): Observable<Person> {
+    return this.getPersonClient()
       .appendRoute(`/${id}`)
-      .read<SimpleResponse<Member>>()
+      .read<SimpleResponse<Person>>()
       .pipe(map(r => r.content));
   }
 
@@ -77,8 +76,8 @@ export class FeeService {
     return new AngularClient(this.http, environment.apiUrl + '/fee');
   }
 
-  private getMemberClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/member');
+  private getPersonClient(): Client {
+    return new AngularClient(this.http, environment.apiUrl + '/person');
   }
 
 }

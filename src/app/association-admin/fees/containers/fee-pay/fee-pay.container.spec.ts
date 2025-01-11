@@ -11,8 +11,8 @@ describe('FeePayContainer', () => {
   let service: FeeService;
 
   beforeEach(async () => {
-    service = jasmine.createSpyObj('FeeService', ['getMembers', 'getFields']);
-    (service as any).getMembers.and.returnValue(EMPTY);
+    service = jasmine.createSpyObj('FeeService', ['getPersons', 'getFields']);
+    (service as any).getPersons.and.returnValue(EMPTY);
     (service as any).getFields.and.returnValue([]);
 
     await TestBed.configureTestingModule({

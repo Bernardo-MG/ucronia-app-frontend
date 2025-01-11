@@ -15,11 +15,11 @@
     <tr *ngFor="let fee of fees; let rowIndex = index" [ngClass]="{ 'table-warning': !fee.paid }">
       <!-- Cells -->
       <td>
-        {{fee.date}}
+        {{fee.month}}
       </td>
       <td>
         <ng-container *ngIf="fee.paid">
-          {{fee.transaction.date}}
+          {{fee.payment?.date}}
         </ng-container>
         <ng-container *ngIf="!fee.paid">
           <icon-failure class="text-danger"></icon-failure>

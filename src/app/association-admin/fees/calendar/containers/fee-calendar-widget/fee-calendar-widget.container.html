@@ -19,7 +19,7 @@
   </app-card-header>
   <app-card-body>
     <!-- Calendar -->
-    <assoc-fee-calendar [activeFilter]="activeFilter" [range]="range" [waiting]="readingCalendar" [rows]="rows"
+    <assoc-fee-calendar [range]="range" [waiting]="readingCalendar" [feeCalendar]="feeCalendar"
       (goToYear)="onGoToYear($event)"></assoc-fee-calendar>
   </app-card-body>
 </app-card>

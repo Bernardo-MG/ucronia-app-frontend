@@ -1,19 +1,19 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
   <div class="row mb-2">
-    <label for="memberNameInput" class="col-sm-2 col-form-label">Socio</label>
+    <label for="fullNameInput" class="col-sm-2 col-form-label">Socio</label>
     <div class="col-sm-10">
-      <input disabled type="text" id="memberNameInput" [value]="member.name.fullName" readonly="true"
-        class="form-control" aria-describedby="memberNameLabel">
+      <input disabled type="text" [value]="fullname" id="fullNameInput" readonly="true" class="form-control"
+        aria-describedby="fullNameLabel">
     </div>
   </div>
-  <!-- Fee -->
+  <!-- Month -->
   <div class="row mb-2">
-    <label for="feeDateInput" id="feeDateLabel" class="col-sm-2 col-form-label">Cuota</label>
+    <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Cuota</label>
     <div class="col-sm-10">
-      <input type="month" id="feeDateInput" formControlName="month" class="form-control" appInvalidField="feeDate"
-        [backendFailure]="failures.hasFailures('feeDate')">
-      <app-input-failure-feedback [failures]="failures.getFailures('feeDate')"></app-input-failure-feedback>
+      <input type="month" id="monthInput" formControlName="month" class="form-control" appInvalidField="month"
+        [backendFailure]="failures.hasFailures('month')">
+      <app-input-failure-feedback [failures]="failures.getFailures('month')"></app-input-failure-feedback>
     </div>
   </div>
 

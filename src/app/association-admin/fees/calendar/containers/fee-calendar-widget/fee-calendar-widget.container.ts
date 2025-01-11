@@ -27,14 +27,12 @@ export class FeeCalendarWidgetContainer implements OnInit {
 
   public year = new Date().getFullYear();
 
-  public index = 0;
-
   /**
    * Loading flag. Shows the loading visual cue.
    */
   public readingCalendar = false;
 
-  public rows: FeeCalendar[] = [];
+  public feeCalendar: FeeCalendar[] = [];
 
   constructor(
     private authContainer: AuthContainer,
@@ -48,11 +46,11 @@ export class FeeCalendarWidgetContainer implements OnInit {
     // Load range
     this.service.getRange().subscribe(d => {
       this.range = d;
-      const lastYear = this.range.years[this.range.years.length - 1];
+      const lastYear = Number(this.range.years[this.range.years.length - 1]);
+      // If the current year is after the last year, move backwards to the last year
       if (this.year > lastYear) {
         this.year = lastYear;
       }
-      this.index = this.range.years.indexOf(this.year);
 
       // Load initial year
       this.load(this.year);
@@ -73,7 +71,7 @@ export class FeeCalendarWidgetContainer implements OnInit {
 
     this.service.getCalendar(year, this.activeFilter).subscribe({
       next: data => {
-        this.rows = data;
+        this.feeCalendar = data;
         this.readingCalendar = false;
       },
       error: error => {
