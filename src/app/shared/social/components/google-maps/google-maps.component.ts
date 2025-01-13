@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-google-maps',
@@ -8,21 +8,21 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class GoogleMapsComponent implements OnChanges {
 
-  @Input() public code = '';
+  @Input() public code: string | undefined;
 
-  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  public url: SafeResourceUrl | undefined;
 
   constructor(
     private sanitizer: DomSanitizer
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['code']) {
       if (this.code) {
         const rawUrl = `https://www.google.com/maps/embed?pb=${this.code}`;
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
       } else {
-        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+        this.url = undefined;
       }
     }
   }

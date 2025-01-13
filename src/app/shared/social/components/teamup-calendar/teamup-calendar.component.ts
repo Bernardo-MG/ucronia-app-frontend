@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teamup-calendar',
@@ -8,7 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class TeamupCalendarComponent implements OnChanges {
 
-  @Input() public code = '';
+  @Input() public code: string | undefined;
 
   @Input() public showLogo = false;
 
@@ -30,19 +30,19 @@ export class TeamupCalendarComponent implements OnChanges {
 
   @Input() public showYearViewHeader = false;
 
-  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  public url: SafeResourceUrl | undefined;
 
   constructor(
     private sanitizer: DomSanitizer
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['code']) {
       if (this.code) {
         const rawUrl = `https://teamup.com/${this.code}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
       } else {
-        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+        this.url = undefined;
       }
     }
   }

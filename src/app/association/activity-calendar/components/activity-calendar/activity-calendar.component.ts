@@ -9,6 +9,6 @@ import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-ca
 })
 export class ActivityCalendarWidgetComponent {
 
-  @Input() public calendarCode = '';
+  @Input() public calendarCode: string | undefined;
 
 }
