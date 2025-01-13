@@ -4,7 +4,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-google-maps',
   standalone: true,
-  imports: [],
   templateUrl: './google-maps.component.html'
 })
 export class GoogleMapsComponent {
@@ -27,7 +26,11 @@ export class GoogleMapsComponent {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['code']) {
-      this.url = `https://www.google.com/maps/embed?pb=${this.code}`;
+      if(this.code) {
+        this.url = `https://www.google.com/maps/embed?pb=${this.code}`;
+      } else {
+        this.url = '';
+      }
     }
   }
 
