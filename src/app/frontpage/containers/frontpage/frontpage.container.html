@@ -9,7 +9,9 @@
     <!-- Activities -->
     <div class="row">
       <layout-article title="Actividades">
-        <frontpage-calendar [calendarCode]="calendarCode"></frontpage-calendar>
+        <app-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+          [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true"
+          [disableSidePanel]="true"></app-teamup-calendar>
       </layout-article>
     </div>
     <!-- Location -->

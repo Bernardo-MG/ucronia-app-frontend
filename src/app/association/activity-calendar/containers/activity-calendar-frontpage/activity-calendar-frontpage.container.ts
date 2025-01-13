@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ActivityCalendarWidgetComponent } from '../../components/activity-calendar/activity-calendar.component';
+import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
   selector: 'app-activity-calendar-frontpage',
   standalone: true,
-  imports: [CardModule, ArticleComponent, ActivityCalendarWidgetComponent],
+  imports: [CardModule, ArticleComponent, TeamupCalendarComponent],
   templateUrl: './activity-calendar-frontpage.container.html'
 })
 export class ActivityCalendarFrontpageContainer implements OnInit {

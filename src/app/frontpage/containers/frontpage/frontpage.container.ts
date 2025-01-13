@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
-import { FrontpageCalendarComponent } from '../../components/frontpage-calendar/frontpage-calendar.component';
+import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 
 @Component({
   selector: 'app-frontpage-frontpage',
   standalone: true,
-  imports: [CommonModule, ArticleComponent, FrontpageCalendarComponent, GoogleMapsComponent],
+  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
   templateUrl: './frontpage.container.html',
   styleUrls: ['./frontpage.container.sass']
 })
