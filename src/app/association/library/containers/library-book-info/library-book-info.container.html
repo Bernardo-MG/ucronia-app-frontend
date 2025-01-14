@@ -1,9 +1,9 @@
 <article class="p-4">
-  <header>
-    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.title.fullTitle}}</h1>
-  </header>
   <div class="col-md-6 offset-md-3 pb-2">
     <app-card>
+      <app-card-header>
+        <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
+      </app-card-header>
       <app-card-body>
         <!-- Book info -->
         <assoc-library-book-details [data]="data" [languages]="languages" [waiting]="waiting"></assoc-library-book-details>
