@@ -5,8 +5,7 @@ import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
@@ -14,7 +13,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
 @Component({
   selector: 'assoc-people-info',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, WaitingButtonComponent, PeopleEditionMembershipButtonsComponent, ModalComponent],
+  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective],
   templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {

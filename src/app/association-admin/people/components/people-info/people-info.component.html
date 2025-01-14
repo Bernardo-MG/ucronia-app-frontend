@@ -1,5 +1,6 @@
 <app-card>
   <app-card-header>
+    <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
     <!-- Tabs -->
     <app-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></app-card-navigation>
   </app-card-header>
