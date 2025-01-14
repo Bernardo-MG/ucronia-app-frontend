@@ -1,26 +1,18 @@
 <app-card>
+  <app-card-header>
+    <h2 *layoutPlaceholder="waiting">{{data.month}} {{data.person.name.fullName}}</h2>
+    <ng-container [ngSwitch]="data.paid">
+      <ng-container *ngSwitchCase="true">
+        <!-- Active -->
+        <div class="text-success" *layoutPlaceholder="waiting">Pagado</div>
+      </ng-container>
+      <ng-container *ngSwitchCase="false">
+        <!-- Not active -->
+        <div class="text-danger" *layoutPlaceholder="waiting">No pagado</div>
+      </ng-container>
+    </ng-container>
+  </app-card-header>
   <app-card-body>
-    <!-- Member -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Socio</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.person.name.fullName}}
-      </div>
-    </div>
-    <!-- Month -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Mes</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        {{data.month}}
-      </div>
-    </div>
-    <!-- Paid -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Pagado</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
-        <icon-success-or-failure [success]="data.paid"></icon-success-or-failure>
-      </div>
-    </div>
     <!-- Payment date -->
     <div class="row">
       <div class="col-sm-3 text-primary">Fecha de pago</div>
@@ -28,8 +20,8 @@
         {{data.payment?.date}}
       </div>
       <div class="col-sm-1">
-        <button [disabled]="isPaymentDisabled()" (click)="selectPayment()" type="button"
-          class="btn btn-link link-dark" role="button" aria-label="Back">
+        <button [disabled]="isPaymentDisabled()" (click)="selectPayment()" type="button" class="btn btn-link link-dark"
+          role="button" aria-label="Back">
           <icon-search></icon-search>
         </button>
       </div>
