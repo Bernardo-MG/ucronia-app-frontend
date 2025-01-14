@@ -61,7 +61,7 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   }
 
   public goToTransaction(index: number) {
-    this.router.navigate([`association/adminfunds/transaction/${index}`]);
+    this.router.navigate([`association/admin/funds/transaction/${index}`]);
   }
 
   protected override delete(): void {
