@@ -30,7 +30,7 @@ export class TeamupCalendarComponent implements OnChanges {
 
   @Input() public showYearViewHeader = false;
 
-  public url: SafeResourceUrl | undefined;
+  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
   constructor(
     private sanitizer: DomSanitizer
@@ -42,7 +42,7 @@ export class TeamupCalendarComponent implements OnChanges {
         const rawUrl = `https://teamup.com/${this.code}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
       } else {
-        this.url = undefined;
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
       }
     }
   }

@@ -10,7 +10,7 @@ export class GoogleMapsComponent implements OnChanges {
 
   @Input() public code: string | undefined;
 
-  public url: SafeResourceUrl | undefined;
+  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
   constructor(
     private sanitizer: DomSanitizer
@@ -22,7 +22,7 @@ export class GoogleMapsComponent implements OnChanges {
         const rawUrl = `https://www.google.com/maps/embed?pb=${this.code}`;
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
       } else {
-        this.url = undefined;
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
       }
     }
   }
