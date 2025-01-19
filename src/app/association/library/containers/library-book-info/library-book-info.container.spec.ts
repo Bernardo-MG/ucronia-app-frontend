@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookService } from '../../services/book.service';
@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 import { Book } from '@app/models/library/book';
 import { of, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryBookInfoContainer', () => {
   let component: LibraryBookInfoContainer;
@@ -18,21 +19,20 @@ describe('LibraryBookInfoContainer', () => {
     mockService = jasmine.createSpyObj('BookService', ['getOne', 'getLanguages']);
 
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        HttpClientTestingModule,
-        LibraryBookInfoContainer
-      ],
-      providers: [
+    imports: [RouterTestingModule.withRoutes([]),
+        LibraryBookInfoContainer],
+    providers: [
         { provide: BookService, useValue: mockService },
         {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of({ get: (key: string) => (key === 'index' ? '1' : null) })
-          }
-        }
-      ]
-    })
+            provide: ActivatedRoute,
+            useValue: {
+                paramMap: of({ get: (key: string) => (key === 'index' ? '1' : null) })
+            }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(LibraryBookInfoContainer);

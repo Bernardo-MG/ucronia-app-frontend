@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '@app/core/core.module';
 import { AccountLayoutComponent } from './account-layout.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccountLayoutComponent', () => {
   let component: AccountLayoutComponent;
@@ -10,13 +11,11 @@ describe('AccountLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        CoreModule,
+    imports: [CoreModule,
         RouterTestingModule,
-        HttpClientTestingModule,
-        AccountLayoutComponent
-      ]
-    })
+        AccountLayoutComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(AccountLayoutComponent);

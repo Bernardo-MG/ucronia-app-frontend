@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionBalanceChartComponent } from './transaction-balance-chart.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TransactionBalanceChartComponent', () => {
   let component: TransactionBalanceChartComponent;
@@ -8,11 +9,9 @@ describe('TransactionBalanceChartComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        TransactionBalanceChartComponent
-      ]
-    });
+    imports: [TransactionBalanceChartComponent],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     fixture = TestBed.createComponent(TransactionBalanceChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

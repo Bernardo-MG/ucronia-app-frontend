@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { UserTokenEditionContainer } from './user-token-edition.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserTokenEditionContainer', () => {
   let component: UserTokenEditionContainer;
@@ -10,16 +11,15 @@ describe('UserTokenEditionContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        UserTokenEditionContainer
-      ],
-      providers: [
+    imports: [RouterTestingModule,
+        UserTokenEditionContainer],
+    providers: [
         { provide: FormGroupDirective, useValue: { form: { get: () => null } } },
-        { provide: NgControl, useValue: { control: new FormControl() } }
-      ]
-    })
+        { provide: NgControl, useValue: { control: new FormControl() } },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
 
     fixture = TestBed.createComponent(UserTokenEditionContainer);

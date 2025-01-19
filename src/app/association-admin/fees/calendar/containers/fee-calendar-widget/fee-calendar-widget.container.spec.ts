@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 import { FeeCalendarWidgetContainer } from './fee-calendar-widget.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FeeCalendarWidgetContainer', () => {
   let component: FeeCalendarWidgetContainer;
@@ -10,15 +11,14 @@ describe('FeeCalendarWidgetContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
-        FeeCalendarWidgetContainer
-      ],
-      providers: [
-        FeeCalendarService
-      ]
-    })
+    imports: [RouterTestingModule,
+        FeeCalendarWidgetContainer],
+    providers: [
+        FeeCalendarService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(FeeCalendarWidgetContainer);

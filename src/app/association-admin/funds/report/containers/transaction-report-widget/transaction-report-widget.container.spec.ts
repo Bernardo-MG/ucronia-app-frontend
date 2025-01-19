@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionReportWidgetContainer } from './transaction-report-widget.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TransactionReportWidgetContainer', () => {
   let component: TransactionReportWidgetContainer;
@@ -8,11 +9,9 @@ describe('TransactionReportWidgetContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        TransactionReportWidgetContainer
-      ]
-    })
+    imports: [TransactionReportWidgetContainer],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(TransactionReportWidgetContainer);

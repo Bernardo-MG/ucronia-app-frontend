@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 import { LibraryAdminBookTypeCreateContainer } from './library-admin-book-type-creation.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryAdminBookTypeCreateContainer', () => {
   let component: LibraryAdminBookTypeCreateContainer;
@@ -10,15 +11,14 @@ describe('LibraryAdminBookTypeCreateContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        LibraryAdminBookTypeCreateContainer
-      ],
-      providers: [
-        BookTypeAdminService
-      ]
-    })
+    imports: [RouterTestingModule,
+        LibraryAdminBookTypeCreateContainer],
+    providers: [
+        BookTypeAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(LibraryAdminBookTypeCreateContainer);

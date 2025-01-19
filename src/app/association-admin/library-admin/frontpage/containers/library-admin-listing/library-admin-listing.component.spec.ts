@@ -1,4 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthorAdminService } from '@app/association-admin/library-admin/author/services/author-admin.service';
@@ -7,6 +7,7 @@ import { BookAdminService } from '@app/association-admin/library-admin/book/serv
 import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
 import { LibraryAdminListingContainer } from './library-admin-listing.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryAdminListingContainer', () => {
   let component: LibraryAdminListingContainer;
@@ -14,19 +15,18 @@ describe('LibraryAdminListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        LibraryAdminListingContainer
-      ],
-      providers: [
+    imports: [RouterTestingModule,
+        LibraryAdminListingContainer],
+    providers: [
         BookAdminService,
         BookTypeAdminService,
         GameSystemAdminService,
         AuthorAdminService,
-        PublisherAdminService
-      ]
-    })
+        PublisherAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(LibraryAdminListingContainer);

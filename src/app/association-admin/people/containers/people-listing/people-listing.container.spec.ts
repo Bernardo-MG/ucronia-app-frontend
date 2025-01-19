@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PeopleListingContainer } from './people-listing.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PeopleListingContainer', () => {
   let component: PeopleListingContainer;
@@ -9,12 +10,10 @@ describe('PeopleListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        PeopleListingContainer
-      ]
-    })
+    imports: [RouterTestingModule,
+        PeopleListingContainer],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(PeopleListingContainer);
