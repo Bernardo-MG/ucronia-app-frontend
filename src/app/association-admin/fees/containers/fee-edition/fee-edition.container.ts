@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BreadcrumbComponent } from '@app/core/layout/components/breadcrumb/breadcrumb.component';
 import { Fee } from '@app/models/fees/fee';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
@@ -11,11 +12,12 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 
 @Component({
   selector: 'assoc-fee-edition',
   standalone: true,
-  imports: [CardModule, CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, CommonModule, RouterModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, BreadcrumbComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
@@ -23,6 +25,8 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   private date: string = "";
 
   private memberNumber = -1;
+
+  public levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
 
   constructor(
     private route: ActivatedRoute,

@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BreadcrumbComponent } from '@app/core/layout/components/breadcrumb/breadcrumb.component';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
@@ -23,7 +25,7 @@ import { FeeService } from '../../services/fee.service';
 @Component({
   selector: 'assoc-fee-create',
   standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormModule, RouterModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BreadcrumbComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
@@ -43,6 +45,8 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
   public currentStep = 1;
 
   public pay = true;
+
+  public levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Pago', '')];
 
   constructor(
     private service: FeeService,
