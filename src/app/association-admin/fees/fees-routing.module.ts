@@ -7,9 +7,25 @@ import { FeePayContainer } from './containers/fee-pay/fee-pay.container';
 
 
 const routes: Routes = [
-  { path: '', component: FeeListingContainer },
-  { path: 'pay', component: FeePayContainer, canActivate: [ResourceGuard("fee", "create")] },
-  { path: ':date/:memberNumber', component: FeeEditionContainer, canActivate: [ResourceGuard("fee", "read")] }
+  {
+    path: '',
+    component: FeeListingContainer,
+    data: { breadcrumb: 'Cuotas' },
+    children: [
+      {
+        path: 'pay',
+        component: FeePayContainer,
+        canActivate: [ResourceGuard("fee", "create")],
+        data: { breadcrumb: 'Pagar' }
+      },
+      {
+        path: ':date/:memberNumber',
+        component: FeeEditionContainer,
+        canActivate: [ResourceGuard("fee", "read")],
+        data: { breadcrumb: 'Editar' }
+      }
+    ]
+  }
 ];
 
 @NgModule({
