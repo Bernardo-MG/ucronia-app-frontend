@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Account } from '@app/account/models/account';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
     selector: 'account-profile-info',
-    imports: [ArticleComponent, PlaceholderDirective],
+    imports: [PlaceholderDirective],
     templateUrl: './account-profile-info.component.html'
 })
 export class AccountProfileInfoComponent {
