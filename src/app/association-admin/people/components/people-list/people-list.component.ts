@@ -7,10 +7,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'assoc-people-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, SortingButtonComponent],
-  templateUrl: './people-list.component.html'
+    selector: 'assoc-people-list',
+    imports: [CommonModule, RouterModule, IconsModule, SortingButtonComponent],
+    templateUrl: './people-list.component.html'
 })
 export class PeopleListComponent {
 

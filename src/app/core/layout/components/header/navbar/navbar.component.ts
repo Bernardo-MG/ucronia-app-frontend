@@ -5,10 +5,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.component';
 
 @Component({
-  selector: 'layout-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, AccountDropdownComponent],
-  templateUrl: './navbar.component.html'
+    selector: 'layout-navbar',
+    imports: [CommonModule, RouterModule, IconsModule, AccountDropdownComponent],
+    templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
 

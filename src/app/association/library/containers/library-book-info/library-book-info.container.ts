@@ -11,10 +11,9 @@ import { LibraryBookLendingsComponent } from '../../components/library-book-lend
 import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'assoc-library-book-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-book-info.container.html'
+    selector: 'assoc-library-book-info',
+    imports: [CommonModule, CardModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+    templateUrl: './library-book-info.container.html'
 })
 export class LibraryBookInfoContainer implements OnInit {
 

@@ -16,10 +16,9 @@ import { LibraryAdminGameSystemListingContainer } from '../../../game-system/con
 import { LibraryAdminPublisherListingContainer } from '../../../publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
 
 @Component({
-  selector: 'assoc-library-admin-listing',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './library-admin-listing.component.html'
+    selector: 'assoc-library-admin-listing',
+    imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent],
+    templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {
 

@@ -11,10 +11,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'assoc-library-admin-book-details',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryBookLendingsComponent, PlaceholderDirective],
-  templateUrl: './library-admin-book-details.component.html'
+    selector: 'assoc-library-admin-book-details',
+    imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryBookLendingsComponent, PlaceholderDirective],
+    templateUrl: './library-admin-book-details.component.html'
 })
 export class LibraryAdminBookDetailsComponent {
 

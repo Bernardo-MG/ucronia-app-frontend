@@ -13,10 +13,9 @@ import { LibraryAdminAuthorInfoComponent } from '../../components/library-admin-
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-author-edition',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-author-edition.container.html'
+    selector: 'assoc-library-admin-author-edition',
+    imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+    templateUrl: './library-admin-author-edition.container.html'
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> implements OnInit {
 

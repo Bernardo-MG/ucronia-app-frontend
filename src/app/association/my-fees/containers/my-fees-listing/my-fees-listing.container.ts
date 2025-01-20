@@ -8,10 +8,9 @@ import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-
 import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
-  selector: 'app-my-fees-listing',
-  standalone: true,
-  imports: [ArticleComponent, CardModule, MyFeesListComponent, PaginationInfoComponent],
-  templateUrl: './my-fees-listing.container.html'
+    selector: 'app-my-fees-listing',
+    imports: [ArticleComponent, CardModule, MyFeesListComponent, PaginationInfoComponent],
+    templateUrl: './my-fees-listing.container.html'
 })
 export class MyFeesFrontpageContainer implements OnInit {
 

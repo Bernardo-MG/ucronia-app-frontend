@@ -5,10 +5,9 @@ import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-ca
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
-  selector: 'app-activity-calendar-frontpage',
-  standalone: true,
-  imports: [CardModule, ArticleComponent, TeamupCalendarComponent],
-  templateUrl: './activity-calendar-frontpage.container.html'
+    selector: 'app-activity-calendar-frontpage',
+    imports: [CardModule, ArticleComponent, TeamupCalendarComponent],
+    templateUrl: './activity-calendar-frontpage.container.html'
 })
 export class ActivityCalendarFrontpageContainer implements OnInit {
 

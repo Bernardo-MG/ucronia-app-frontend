@@ -7,10 +7,9 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, SaveControlsComponent],
-  templateUrl: './library-admin-publisher-form.component.html'
+    selector: 'assoc-library-admin-publisher-form',
+    imports: [CommonModule, FormModule, SaveControlsComponent],
+    templateUrl: './library-admin-publisher-form.component.html'
 })
 export class LibraryAdminPublisherFormComponent extends FormComponent<Publisher> {
 

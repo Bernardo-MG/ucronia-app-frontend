@@ -8,10 +8,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'access-user-add-role',
-  standalone: true,
-  imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './access-user-add-role.component.html'
+    selector: 'access-user-add-role',
+    imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnInit {
 

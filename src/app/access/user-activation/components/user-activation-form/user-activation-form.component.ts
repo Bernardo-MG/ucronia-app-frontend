@@ -10,10 +10,9 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
  * User activation form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'access-user-activation-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './user-activation-form.component.html'
+    selector: 'access-user-activation-form',
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
+    templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
 

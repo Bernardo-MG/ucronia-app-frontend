@@ -10,10 +10,9 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
-  selector: 'access-user-token-listing',
-  standalone: true,
-  imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './user-token-listing.container.html'
+    selector: 'access-user-token-listing',
+    imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
+    templateUrl: './user-token-listing.container.html'
 })
 export class UserTokenListingContainer implements OnInit {
 

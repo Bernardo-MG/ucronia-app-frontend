@@ -7,10 +7,9 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-form',
-  standalone: true,
-  imports: [ CommonModule, FormModule, SaveControlsComponent ],
-  templateUrl: './library-admin-game-system-form.component.html'
+    selector: 'assoc-library-admin-game-system-form',
+    imports: [CommonModule, FormModule, SaveControlsComponent],
+    templateUrl: './library-admin-game-system-form.component.html'
 })
 export class LibraryAdminGameSystemFormComponent extends FormComponent<GameSystem> {
 

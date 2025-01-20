@@ -14,10 +14,9 @@ import { Transaction } from '@app/models/transactions/transaction';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 
 @Component({
-  selector: 'assoc-transaction-edition',
-  standalone: true,
-  imports: [CommonModule, FormModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-edition.component.html'
+    selector: 'assoc-transaction-edition',
+    imports: [CommonModule, FormModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {
 

@@ -10,10 +10,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'access-role-add-permission',
-  standalone: true,
-  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './access-role-add-permission.component.html'
+    selector: 'access-role-add-permission',
+    imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
 

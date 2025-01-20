@@ -10,10 +10,9 @@ import { AccessRoleFormComponent } from '../../components/access-role-form/acces
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-creation',
-  standalone: true,
-  imports: [CardModule, AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-role-creation.container.html'
+    selector: 'access-role-creation',
+    imports: [CardModule, AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './access-role-creation.container.html'
 })
 export class AccessRoleCreationContainer extends CreateComponent<Role> {
 

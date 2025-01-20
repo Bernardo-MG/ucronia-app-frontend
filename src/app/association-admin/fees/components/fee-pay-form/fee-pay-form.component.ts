@@ -10,10 +10,9 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-fee-pay-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
-  templateUrl: './fee-pay-form.component.html'
+    selector: 'assoc-fee-pay-form',
+    imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
+    templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
 

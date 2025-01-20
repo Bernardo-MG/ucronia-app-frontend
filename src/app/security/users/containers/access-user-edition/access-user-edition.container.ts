@@ -18,10 +18,9 @@ import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-user-edition',
-  standalone: true,
-  imports: [CommonModule, CardModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-user-edition.container.html'
+    selector: 'access-user-edition',
+    imports: [CommonModule, CardModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> implements OnInit {
 

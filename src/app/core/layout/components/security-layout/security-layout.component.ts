@@ -7,10 +7,9 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { SecurityLayoutService } from '../../services/security-layout.service';
 
 @Component({
-  selector: 'access-sidebar',
-  standalone: true,
-  imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
-  templateUrl: './security-layout.component.html'
+    selector: 'access-sidebar',
+    imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
+    templateUrl: './security-layout.component.html'
 })
 export class SecurityLayoutComponent implements OnInit {
 

@@ -8,10 +8,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-book-return-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './book-return-form.component.html'
+    selector: 'assoc-book-return-form',
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
+    templateUrl: './book-return-form.component.html'
 })
 export class BookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
 

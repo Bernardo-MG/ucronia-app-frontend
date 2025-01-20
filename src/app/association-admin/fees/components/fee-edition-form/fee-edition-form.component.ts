@@ -8,10 +8,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-  selector: 'assoc-fee-edition-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
-  templateUrl: './fee-edition-form.component.html'
+    selector: 'assoc-fee-edition-form',
+    imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
+    templateUrl: './fee-edition-form.component.html'
 })
 export class FeeEditionFormComponent extends FormComponent<Fee> {
 

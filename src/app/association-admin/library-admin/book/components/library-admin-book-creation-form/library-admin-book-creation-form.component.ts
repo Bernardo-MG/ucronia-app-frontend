@@ -10,10 +10,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
-  selector: 'assoc-library-admin-book-creation-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
-  templateUrl: './library-admin-book-creation-form.component.html'
+    selector: 'assoc-library-admin-book-creation-form',
+    imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
+    templateUrl: './library-admin-book-creation-form.component.html'
 })
 export class LibraryAdminBookCreationFormComponent extends FormComponent<Book> {
 

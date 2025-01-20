@@ -7,10 +7,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
-  selector: 'assoc-transaction-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, SaveControlsComponent],
-  templateUrl: './transaction-form.component.html'
+    selector: 'assoc-transaction-form',
+    imports: [CommonModule, FormModule, SaveControlsComponent],
+    templateUrl: './transaction-form.component.html'
 })
 export class TransactionFormComponent extends FormComponent<Transaction> {
 

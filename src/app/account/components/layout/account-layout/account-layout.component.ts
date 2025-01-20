@@ -7,10 +7,9 @@ import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layo
 import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
-  selector: 'account-layout',
-  standalone: true,
-  imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
-  templateUrl: './account-layout.component.html'
+    selector: 'account-layout',
+    imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
+    templateUrl: './account-layout.component.html'
 })
 export class AccountLayoutComponent implements OnInit {
 

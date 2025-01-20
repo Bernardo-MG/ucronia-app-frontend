@@ -11,10 +11,9 @@ import { LibraryAdminBookCreationFormComponent } from '../../components/library-
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-creation',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookCreationFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-creation.container.html'
+    selector: 'assoc-library-admin-book-creation',
+    imports: [CommonModule, CardModule, LibraryAdminBookCreationFormComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-book-creation.container.html'
 })
 export class LibraryAdminBookCreationContainer extends CreateComponent<Book> implements OnInit {
 

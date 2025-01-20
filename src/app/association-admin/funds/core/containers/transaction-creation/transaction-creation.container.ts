@@ -10,10 +10,9 @@ import { TransactionFormComponent } from '../../components/transaction-form/tran
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'assoc-transaction-creation',
-  standalone: true,
-  imports: [CardModule, ArticleComponent, TransactionFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-creation.container.html'
+    selector: 'assoc-transaction-creation',
+    imports: [CardModule, ArticleComponent, TransactionFormComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './transaction-creation.container.html'
 })
 export class TransactionCreationComponent extends CreateComponent<Transaction> {
 

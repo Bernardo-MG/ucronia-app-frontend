@@ -10,10 +10,9 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { throwError } from 'rxjs';
 
 @Component({
-  selector: 'account-password-change',
-  standalone: true,
-  imports: [CardModule, ArticleComponent, AccountChangePasswordFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './account-password-change.container.html'
+    selector: 'account-password-change',
+    imports: [CardModule, ArticleComponent, AccountChangePasswordFormComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './account-password-change.container.html'
 })
 export class AccountPasswordChangeContainer {
 

@@ -7,10 +7,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { LoginRegister } from '../../models/login-register';
 
 @Component({
-  selector: 'access-audit-login-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent, IconsModule],
-  templateUrl: './access-audit-login-list.component.html'
+    selector: 'access-audit-login-list',
+    imports: [CommonModule, RouterModule, SortingButtonComponent, IconsModule],
+    templateUrl: './access-audit-login-list.component.html'
 })
 export class AccessAuditLoginListComponent {
 

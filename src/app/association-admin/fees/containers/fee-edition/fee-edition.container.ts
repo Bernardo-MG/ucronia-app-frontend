@@ -13,10 +13,9 @@ import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'assoc-fee-edition',
-  standalone: true,
-  imports: [CardModule, CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-edition.container.html'
+    selector: 'assoc-fee-edition',
+    imports: [CardModule, CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
 

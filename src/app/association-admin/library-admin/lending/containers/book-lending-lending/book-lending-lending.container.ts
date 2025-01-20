@@ -20,10 +20,9 @@ import { BookLendingMemberSelectionComponent } from '../../components/book-lendi
 import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
-  selector: 'assoc-book-lending-lending',
-  standalone: true,
-  imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-  templateUrl: './book-lending-lending.container.html'
+    selector: 'assoc-book-lending-lending',
+    imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+    templateUrl: './book-lending-lending.container.html'
 })
 export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 

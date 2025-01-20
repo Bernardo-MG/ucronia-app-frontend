@@ -2,8 +2,9 @@ import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 
 @Component({
-  selector: 'app-input-failure-feedback',
-  templateUrl: './input-failure-feedback.component.html'
+    selector: 'app-input-failure-feedback',
+    templateUrl: './input-failure-feedback.component.html',
+    standalone: false
 })
 export class InputFailureFeedbackComponent implements AfterViewInit {
 

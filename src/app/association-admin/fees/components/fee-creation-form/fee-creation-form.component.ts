@@ -8,10 +8,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-fee-creation-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './fee-creation-form.component.html'
+    selector: 'assoc-fee-creation-form',
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
+    templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {
 

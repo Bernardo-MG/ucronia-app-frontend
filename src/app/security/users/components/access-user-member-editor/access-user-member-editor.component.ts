@@ -7,10 +7,9 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({
-  selector: 'access-user-member-editor',
-  standalone: true,
-  imports: [CommonModule, IconsModule, AccessUserSelectMemberComponent, BlockUiDirective],
-  templateUrl: './access-user-member-editor.component.html'
+    selector: 'access-user-member-editor',
+    imports: [CommonModule, IconsModule, AccessUserSelectMemberComponent, BlockUiDirective],
+    templateUrl: './access-user-member-editor.component.html'
 })
 export class AccessUserMemberEditorComponent {
 

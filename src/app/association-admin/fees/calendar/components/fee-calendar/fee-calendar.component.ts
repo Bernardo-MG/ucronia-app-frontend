@@ -8,11 +8,10 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-fee-calendar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './fee-calendar.component.html',
-  styleUrl: './fee-calendar.component.sass'
+    selector: 'assoc-fee-calendar',
+    imports: [CommonModule, RouterModule, IconsModule, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './fee-calendar.component.html',
+    styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
 

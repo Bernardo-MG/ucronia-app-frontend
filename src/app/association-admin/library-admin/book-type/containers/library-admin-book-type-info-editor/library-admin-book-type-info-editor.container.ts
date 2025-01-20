@@ -13,10 +13,9 @@ import { LibraryAdminBookTypeInfoComponent } from '../../components/library-admi
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-info-editor',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-book-type-info-editor.container.html'
+    selector: 'assoc-library-admin-book-type-info-editor',
+    imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+    templateUrl: './library-admin-book-type-info-editor.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> implements OnInit {
 

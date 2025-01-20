@@ -7,10 +7,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'access-user-token-info',
-  standalone: true,
-  imports: [CommonModule, FormModule, PlaceholderDirective],
-  templateUrl: './user-token-info.component.html'
+    selector: 'access-user-token-info',
+    imports: [CommonModule, FormModule, PlaceholderDirective],
+    templateUrl: './user-token-info.component.html'
 })
 export class UserTokenInfoComponent {
 

@@ -6,10 +6,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, FormModule, PlaceholderDirective],
-  templateUrl: './library-admin-book-type-info.component.html'
+    selector: 'assoc-library-admin-book-type-info',
+    imports: [CommonModule, CardModule, FormModule, PlaceholderDirective],
+    templateUrl: './library-admin-book-type-info.component.html'
 })
 export class LibraryAdminBookTypeInfoComponent {
 

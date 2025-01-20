@@ -7,10 +7,9 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-  selector: 'assoc-fee-info',
-  standalone: true,
-  imports: [CommonModule, IconsModule, CardModule, FormModule, PlaceholderDirective],
-  templateUrl: './fee-info.component.html'
+    selector: 'assoc-fee-info',
+    imports: [CommonModule, IconsModule, CardModule, FormModule, PlaceholderDirective],
+    templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {
 

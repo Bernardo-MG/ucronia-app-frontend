@@ -13,10 +13,9 @@ import { AccessUserInfoDetailsComponent } from '../access-user-info-details/acce
 import { AccessUserStatusComponent } from '../access-user-status/access-user-status.component';
 
 @Component({
-  selector: 'access-user-info',
-  standalone: true,
-  imports: [CommonModule, FormModule, CardModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
-  templateUrl: './access-user-info.component.html'
+    selector: 'access-user-info',
+    imports: [CommonModule, FormModule, CardModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent],
+    templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {
 

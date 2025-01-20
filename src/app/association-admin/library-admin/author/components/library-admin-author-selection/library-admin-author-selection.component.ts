@@ -6,10 +6,9 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 
 @Component({
-  selector: 'assoc-library-admin-author-selection',
-  standalone: true,
-  imports: [ButtonListComponent, PaginationNavigationComponent, BlockUiDirective],
-  templateUrl: './library-admin-author-selection.component.html'
+    selector: 'assoc-library-admin-author-selection',
+    imports: [ButtonListComponent, PaginationNavigationComponent, BlockUiDirective],
+    templateUrl: './library-admin-author-selection.component.html'
 })
 export class LibraryAdminAuthorSelectionComponent extends PagedSelectorComponent<Author> {
 

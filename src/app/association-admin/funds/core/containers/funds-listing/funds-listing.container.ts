@@ -8,10 +8,9 @@ import { FundsCurrentBalanceWidgetContainer } from '../../../balance/containers/
 import { TransactionCalendarWidgetContainer } from '../../../calendar/containers/transaction-calendar-widget/transaction-calendar-widget.container';
 
 @Component({
-  selector: 'app-transaction-listing',
-  standalone: true,
-  imports: [IconsModule, CardModule, TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionCalendarWidgetContainer, ArticleComponent, TransactionReportWidgetContainer],
-  templateUrl: './funds-listing.container.html'
+    selector: 'app-transaction-listing',
+    imports: [IconsModule, CardModule, TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionCalendarWidgetContainer, ArticleComponent, TransactionReportWidgetContainer],
+    templateUrl: './funds-listing.container.html'
 })
 export class FundsListingComponent {
 

@@ -5,10 +5,9 @@ import { Setting } from '@app/settings/models/setting';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'assoc-settings-values-editor',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
-  templateUrl: './settings-values-editor.component.html'
+    selector: 'assoc-settings-values-editor',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
+    templateUrl: './settings-values-editor.component.html'
 })
 export class SettingValuesEditorComponent {
 

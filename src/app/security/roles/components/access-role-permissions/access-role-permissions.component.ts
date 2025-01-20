@@ -8,10 +8,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'access-role-permissions',
-  standalone: true,
-  imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './access-role-permissions.component.html'
+    selector: 'access-role-permissions',
+    imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {
 

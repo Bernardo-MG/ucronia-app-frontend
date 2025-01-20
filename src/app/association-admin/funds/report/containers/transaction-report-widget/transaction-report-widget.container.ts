@@ -6,10 +6,9 @@ import { JustifyCenterDirective } from '@app/shared/style/directives/justify-cen
 import { TransactionReportService } from '../../services/transaction-report.service';
 
 @Component({
-  selector: 'assoc-transaction-report-widget',
-  standalone: true,
-  imports: [CommonModule, IconsModule, CardModule, JustifyCenterDirective],
-  templateUrl: './transaction-report-widget.container.html'
+    selector: 'assoc-transaction-report-widget',
+    imports: [CommonModule, IconsModule, CardModule, JustifyCenterDirective],
+    templateUrl: './transaction-report-widget.container.html'
 })
 export class TransactionReportWidgetContainer {
 

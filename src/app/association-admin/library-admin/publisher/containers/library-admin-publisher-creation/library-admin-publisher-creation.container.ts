@@ -10,10 +10,9 @@ import { LibraryAdminPublisherFormComponent } from '../../components/library-adm
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-creation',
-  standalone: true,
-  imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-publisher-creation.container.html'
+    selector: 'assoc-library-admin-publisher-creation',
+    imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-publisher-creation.container.html'
 })
 export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publisher> {
 

@@ -12,10 +12,9 @@ import { PasswordResetRequestFormComponent } from '../../components/password-res
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'login-password-reset-request',
-  standalone: true,
-  imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
-  templateUrl: './password-reset-request.container.html'
+    selector: 'login-password-reset-request',
+    imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
+    templateUrl: './password-reset-request.container.html'
 })
 export class PasswordResetRequestContainer {
 

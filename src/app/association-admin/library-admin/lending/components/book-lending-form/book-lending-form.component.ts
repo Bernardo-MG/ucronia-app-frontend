@@ -10,10 +10,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-book-lending-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent],
-  templateUrl: './book-lending-form.component.html'
+    selector: 'assoc-book-lending-form',
+    imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent],
+    templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {
 

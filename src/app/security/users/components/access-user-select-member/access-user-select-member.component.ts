@@ -8,10 +8,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'access-user-select-member',
-  standalone: true,
-  imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './access-user-select-member.component.html'
+    selector: 'access-user-select-member',
+    imports: [CommonModule, IconsModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './access-user-select-member.component.html'
 })
 export class AccessUserSelectMemberComponent implements OnInit {
 

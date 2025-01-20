@@ -7,10 +7,9 @@ import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directi
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 
 @Component({
-  selector: 'access-user-roles',
-  standalone: true,
-  imports: [CommonModule, IconsModule, PaginationNavigationComponent, BlockUiDirective],
-  templateUrl: './access-user-roles.component.html'
+    selector: 'access-user-roles',
+    imports: [CommonModule, IconsModule, PaginationNavigationComponent, BlockUiDirective],
+    templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
 

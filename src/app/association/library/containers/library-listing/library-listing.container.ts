@@ -13,10 +13,9 @@ import { LibraryBookListComponent } from '../../components/library-book-list/lib
 import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'assoc-library-listing',
-  standalone: true,
-  imports: [RouterModule, IconsModule, CardModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent],
-  templateUrl: './library-listing.container.html'
+    selector: 'assoc-library-listing',
+    imports: [RouterModule, IconsModule, CardModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent],
+    templateUrl: './library-listing.container.html'
 })
 export class LibraryListingContainer implements OnInit {
 

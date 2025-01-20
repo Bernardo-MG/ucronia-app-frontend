@@ -6,10 +6,9 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
-  selector: 'assoc-transaction-info',
-  standalone: true,
-  imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
-  templateUrl: './transaction-info.component.html'
+    selector: 'assoc-transaction-info',
+    imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
+    templateUrl: './transaction-info.component.html'
 })
 export class TransactionInfoComponent {
 

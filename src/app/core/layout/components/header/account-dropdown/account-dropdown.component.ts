@@ -5,10 +5,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'layout-account-dropdown',
-  standalone: true,
-  imports: [RouterModule, IconsModule, JustifyCenterDirective],
-  templateUrl: './account-dropdown.component.html'
+    selector: 'layout-account-dropdown',
+    imports: [RouterModule, IconsModule, JustifyCenterDirective],
+    templateUrl: './account-dropdown.component.html'
 })
 export class AccountDropdownComponent implements OnInit {
 

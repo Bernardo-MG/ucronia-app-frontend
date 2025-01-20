@@ -4,10 +4,9 @@ import { CardModule } from '@app/shared/card/card.module';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'access-user-status',
-  standalone: true,
-  imports: [IconsModule, CardModule],
-  templateUrl: './access-user-status.component.html'
+    selector: 'access-user-status',
+    imports: [IconsModule, CardModule],
+    templateUrl: './access-user-status.component.html'
 })
 export class AccessUserStatusComponent {
 

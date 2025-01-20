@@ -5,11 +5,10 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
-  selector: 'layout-side-menu',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule],
-  templateUrl: './side-menu.component.html',
-  styleUrl: './side-menu.component.sass'
+    selector: 'layout-side-menu',
+    imports: [CommonModule, RouterModule, IconsModule],
+    templateUrl: './side-menu.component.html',
+    styleUrl: './side-menu.component.sass'
 })
 export class SideMenuComponent {
 

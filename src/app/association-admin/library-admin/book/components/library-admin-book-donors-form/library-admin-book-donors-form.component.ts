@@ -16,10 +16,9 @@ import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
-  selector: 'assoc-library-admin-book-donors-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent],
-  templateUrl: './library-admin-book-donors-form.component.html'
+    selector: 'assoc-library-admin-book-donors-form',
+    imports: [CommonModule, FormModule, IconsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent],
+    templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 

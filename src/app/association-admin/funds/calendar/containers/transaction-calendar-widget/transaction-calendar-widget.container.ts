@@ -12,10 +12,9 @@ import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({
-  selector: 'assoc-transaction-calendar-widget',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, ScheduleModule, JustifyCenterDirective],
-  templateUrl: './transaction-calendar-widget.container.html'
+    selector: 'assoc-transaction-calendar-widget',
+    imports: [CommonModule, RouterModule, IconsModule, CardModule, ScheduleModule, JustifyCenterDirective],
+    templateUrl: './transaction-calendar-widget.container.html'
 })
 export class TransactionCalendarWidgetContainer implements OnInit {
 

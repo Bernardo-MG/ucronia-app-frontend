@@ -7,10 +7,9 @@ import { LayoutService } from '@app/core/layout/services/layout.service';
 import { Menu } from '@app/shared/menu/models/menu';
 
 @Component({
-  selector: 'layout-sidebar',
-  standalone: true,
-  imports: [RouterModule, SideMenuComponent, NavbarComponent],
-  templateUrl: './sidebar-layout.component.html'
+    selector: 'layout-sidebar',
+    imports: [RouterModule, SideMenuComponent, NavbarComponent],
+    templateUrl: './sidebar-layout.component.html'
 })
 export class SidebarLayoutComponent implements OnInit {
 

@@ -5,11 +5,12 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from './waiting-button.component';
 
 @Component({
-  template: `
+    template: `
     <layout-waiting-button [name]="name" [waiting]="waiting" [disabled]="disabled">
       {{buttonText}}
     </layout-waiting-button>
-  `
+  `,
+    standalone: false
 })
 class TestHostComponent {
   name = 'Submit';

@@ -21,10 +21,9 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login-card',
-  standalone: true,
-  imports: [RouterModule, LoginFormComponent],
-  templateUrl: './login.container.html'
+    selector: 'login-card',
+    imports: [RouterModule, LoginFormComponent],
+    templateUrl: './login.container.html'
 })
 export class LoginContainer implements OnInit {
 

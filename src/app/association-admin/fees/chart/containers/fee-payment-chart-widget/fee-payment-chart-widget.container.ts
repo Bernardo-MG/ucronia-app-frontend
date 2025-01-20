@@ -5,10 +5,9 @@ import { FeeReportService } from '../../services/fee-report.service';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
 
 @Component({
-  selector: 'assoc-fee-payment-chart-widget',
-  standalone: true,
-  imports: [CardModule, FeePaymentChartComponent],
-  templateUrl: './fee-payment-chart-widget.container.html'
+    selector: 'assoc-fee-payment-chart-widget',
+    imports: [CardModule, FeePaymentChartComponent],
+    templateUrl: './fee-payment-chart-widget.container.html'
 })
 export class FeePaymentChartWidgetContainer implements OnInit {
 

@@ -21,10 +21,9 @@ import { AccessRolePermissionsComponent } from '../../components/access-role-per
 import { CardModule } from '@app/shared/card/card.module';
 
 @Component({
-  selector: 'access-role-edition',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-role-edition.container.html'
+    selector: 'access-role-edition',
+    imports: [CommonModule, FormModule, IconsModule, CardModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './access-role-edition.container.html'
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
 

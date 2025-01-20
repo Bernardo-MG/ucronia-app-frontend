@@ -13,10 +13,9 @@ import { AccessRoleSelectionListComponent } from '../../components/access-role-s
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-listing',
-  standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, ArticleComponent],
-  templateUrl: './access-role-listing.container.html'
+    selector: 'access-role-listing',
+    imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, ArticleComponent],
+    templateUrl: './access-role-listing.container.html'
 })
 export class AccessRoleListingContainer implements OnInit {
 

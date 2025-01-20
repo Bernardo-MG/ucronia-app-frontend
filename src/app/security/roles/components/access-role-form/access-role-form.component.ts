@@ -7,10 +7,9 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 
 @Component({
-  selector: 'access-role-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, SaveControlsComponent],
-  templateUrl: './access-role-form.component.html'
+    selector: 'access-role-form',
+    imports: [CommonModule, FormModule, SaveControlsComponent],
+    templateUrl: './access-role-form.component.html'
 })
 export class AccessRoleFormComponent extends FormComponent<Role> {
 

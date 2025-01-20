@@ -6,10 +6,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, FormModule, PlaceholderDirective],
-  templateUrl: './library-admin-publisher-info.component.html'
+    selector: 'assoc-library-admin-publisher-info',
+    imports: [CommonModule, CardModule, FormModule, PlaceholderDirective],
+    templateUrl: './library-admin-publisher-info.component.html'
 })
 export class LibraryAdminPublisherInfoComponent {
 

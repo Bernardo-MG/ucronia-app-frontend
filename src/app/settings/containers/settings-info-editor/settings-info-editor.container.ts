@@ -8,10 +8,9 @@ import { AssociationSettingsService as AssociationSettingsService } from '../../
 import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
 
 @Component({
-  selector: 'assoc-settings-info-editor',
-  standalone: true,
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
-  templateUrl: './settings-info-editor.container.html'
+    selector: 'assoc-settings-info-editor',
+    imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
+    templateUrl: './settings-info-editor.container.html'
 })
 export class SettingsInfoEditorContainer implements OnInit {
 

@@ -10,10 +10,9 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 
 @Component({
-  selector: 'account-profile-frontpage',
-  standalone: true,
-  imports: [CommonModule, ArticleComponent, CardModule, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './account-profile-frontpage.container.html'
+    selector: 'account-profile-frontpage',
+    imports: [CommonModule, ArticleComponent, CardModule, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './account-profile-frontpage.container.html'
 })
 export class AccountProfileFrontpageContainer implements OnInit {
 

@@ -10,10 +10,9 @@ import { LibraryAdminBookTypeFormComponent } from '../../components/library-admi
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-creation',
-  standalone: true,
-  imports: [CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-type-creation.container.html'
+    selector: 'assoc-library-admin-book-type-creation',
+    imports: [CardModule, LibraryAdminBookTypeFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-book-type-creation.container.html'
 })
 export class LibraryAdminBookTypeCreateContainer extends CreateComponent<BookType> {
 

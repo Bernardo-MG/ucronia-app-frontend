@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'icon-success-or-failure',
-  templateUrl: './icon-success-or-failure.component.html'
+    selector: 'icon-success-or-failure',
+    templateUrl: './icon-success-or-failure.component.html',
+    standalone: false
 })
 export class IconSuccessOrFailureComponent {
 

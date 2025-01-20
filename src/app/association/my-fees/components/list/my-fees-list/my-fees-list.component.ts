@@ -4,10 +4,9 @@ import { Fee } from '@app/models/fees/fee';
 import { IconsModule } from '@app/shared/icons/icons.module';
 
 @Component({
-  selector: 'assoc-my-fees-list',
-  standalone: true,
-  imports: [CommonModule, IconsModule],
-  templateUrl: './my-fees-list.component.html'
+    selector: 'assoc-my-fees-list',
+    imports: [CommonModule, IconsModule],
+    templateUrl: './my-fees-list.component.html'
 })
 export class MyFeesListComponent {
 

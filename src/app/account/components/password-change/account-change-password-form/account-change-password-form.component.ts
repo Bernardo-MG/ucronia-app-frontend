@@ -7,10 +7,9 @@ import { FormModule } from '@app/shared/form/form.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'account-change-password-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './account-change-password-form.component.html'
+    selector: 'account-change-password-form',
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
+    templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {
 

@@ -16,10 +16,9 @@ import { UserActivationFormComponent } from '../../components/user-activation-fo
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'access-user-activation',
-  standalone: true,
-  imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUiDirective],
-  templateUrl: './user-activation.container.html'
+    selector: 'access-user-activation',
+    imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUiDirective],
+    templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer implements OnInit {
 

@@ -7,10 +7,9 @@ import { IconsModule } from '@app/shared/icons/icons.module';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'assoc-library-book-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent, IconsModule],
-  templateUrl: './library-book-list.component.html'
+    selector: 'assoc-library-book-list',
+    imports: [CommonModule, RouterModule, SortingButtonComponent, IconsModule],
+    templateUrl: './library-book-list.component.html'
 })
 export class LibraryBookListComponent {
 

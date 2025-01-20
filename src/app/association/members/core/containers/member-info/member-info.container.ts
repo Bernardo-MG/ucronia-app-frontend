@@ -12,10 +12,9 @@ import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/re
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'assoc-member-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './member-info.container.html'
+    selector: 'assoc-member-info',
+    imports: [CommonModule, CardModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './member-info.container.html'
 })
 export class MemberInfoContainer extends InfoEditorStatusComponent<Member> implements OnInit {
 

@@ -7,10 +7,9 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { FormModule } from '@app/shared/form/form.module';
 
 @Component({
-  selector: 'access-user-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, SaveControlsComponent],
-  templateUrl: './access-user-form.component.html'
+    selector: 'access-user-form',
+    imports: [CommonModule, FormModule, SaveControlsComponent],
+    templateUrl: './access-user-form.component.html'
 })
 export class AccessUserFormComponent extends FormComponent<User> {
 

@@ -6,10 +6,9 @@ import { LayoutService } from '@app/core/layout/services/layout.service';
 import { NavbarComponent } from '../header/navbar/navbar.component';
 
 @Component({
-  selector: 'app-simple-layout',
-  standalone: true,
-  imports: [RouterModule, NavbarComponent, SideMenuComponent],
-  templateUrl: './simple-layout.component.html'
+    selector: 'app-simple-layout',
+    imports: [RouterModule, NavbarComponent, SideMenuComponent],
+    templateUrl: './simple-layout.component.html'
 })
 export class SimpleLayoutComponent {
 

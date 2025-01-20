@@ -4,10 +4,9 @@ import { MemberBalance } from '@app/models/members/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'assoc-member-balance-chart',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './member-balance-chart.component.html'
+    selector: 'assoc-member-balance-chart',
+    imports: [CommonModule],
+    templateUrl: './member-balance-chart.component.html'
 })
 export class MemberBalanceChartComponent implements OnChanges, OnDestroy {
 

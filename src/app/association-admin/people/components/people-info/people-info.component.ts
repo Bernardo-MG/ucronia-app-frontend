@@ -11,10 +11,9 @@ import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membe
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
 @Component({
-  selector: 'assoc-people-info',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective],
-  templateUrl: './people-info.component.html'
+    selector: 'assoc-people-info',
+    imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective],
+    templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {
 

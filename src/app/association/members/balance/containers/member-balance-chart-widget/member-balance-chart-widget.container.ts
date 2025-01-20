@@ -6,10 +6,9 @@ import { MemberBalanceChartComponent } from '../../components/member-balance-cha
 import { MemberBalanceService } from '../../services/member-balance.service';
 
 @Component({
-  selector: 'assoc-member-balance-chart-widget',
-  standalone: true,
-  imports: [CommonModule, CardModule, MemberBalanceChartComponent],
-  templateUrl: './member-balance-chart-widget.container.html'
+    selector: 'assoc-member-balance-chart-widget',
+    imports: [CommonModule, CardModule, MemberBalanceChartComponent],
+    templateUrl: './member-balance-chart-widget.container.html'
 })
 export class MemberBalanceChartWidgetContainer implements OnInit {
 

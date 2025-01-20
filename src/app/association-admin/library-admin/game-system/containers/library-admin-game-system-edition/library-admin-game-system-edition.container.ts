@@ -13,10 +13,9 @@ import { LibraryAdminGameSystemInfoComponent } from '../../components/library-ad
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-edition',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-game-system-edition.container.html'
+    selector: 'assoc-library-admin-game-system-edition',
+    imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+    templateUrl: './library-admin-game-system-edition.container.html'
 })
 export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> implements OnInit {
 

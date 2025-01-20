@@ -10,10 +10,9 @@ import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
 
 @Component({
-  selector: 'access-audit-login',
-  standalone: true,
-  imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './access-audit-login.container.html'
+    selector: 'access-audit-login',
+    imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
+    templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer implements OnInit {
 

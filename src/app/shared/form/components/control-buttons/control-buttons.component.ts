@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'form-control-buttons',
-  templateUrl: './control-buttons.component.html'
+    selector: 'form-control-buttons',
+    templateUrl: './control-buttons.component.html',
+    standalone: false
 })
 export class ControlButtonsComponent {
 

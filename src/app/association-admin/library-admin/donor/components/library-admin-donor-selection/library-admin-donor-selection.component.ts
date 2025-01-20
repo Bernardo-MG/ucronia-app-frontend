@@ -7,10 +7,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-library-admin-donor-selection',
-  standalone: true,
-  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './library-admin-donor-selection.component.html'
+    selector: 'assoc-library-admin-donor-selection',
+    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './library-admin-donor-selection.component.html'
 })
 export class LibraryAdminDonorSelectionComponent extends PagedSelectorComponent<Person> {
 

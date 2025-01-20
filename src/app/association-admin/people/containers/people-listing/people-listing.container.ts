@@ -14,10 +14,9 @@ import { PeopleListComponent } from '../../components/people-list/people-list.co
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-  selector: 'assoc-people-listing',
-  standalone: true,
-  imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent],
-  templateUrl: './people-listing.container.html'
+    selector: 'assoc-people-listing',
+    imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent],
+    templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
 

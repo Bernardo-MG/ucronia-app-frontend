@@ -10,10 +10,9 @@ import { LibraryAdminGameSystemFormComponent } from '../../components/library-ad
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-creation',
-  standalone: true,
-  imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-game-system-creation.container.html'
+    selector: 'assoc-library-admin-game-system-creation',
+    imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-game-system-creation.container.html'
 })
 export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {
 

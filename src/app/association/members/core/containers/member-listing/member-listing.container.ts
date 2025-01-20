@@ -13,10 +13,9 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-member-listing',
-  standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetContainer, ArticleComponent, MemberListComponent, PaginationInfoComponent, JustifyCenterDirective],
-  templateUrl: './member-listing.container.html'
+    selector: 'assoc-member-listing',
+    imports: [RouterModule, CardModule, MemberBalanceChartWidgetContainer, ArticleComponent, MemberListComponent, PaginationInfoComponent, JustifyCenterDirective],
+    templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer implements OnInit {
 

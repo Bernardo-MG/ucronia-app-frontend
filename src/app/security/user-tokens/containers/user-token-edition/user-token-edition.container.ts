@@ -16,10 +16,9 @@ import { UserTokenInfoComponent } from '../../components/user-token-info/user-to
 import { UserTokenStatusComponent } from '../../components/user-token-status/user-token-status.component';
 
 @Component({
-  selector: 'access-user-token-edition',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './user-token-edition.container.html'
+    selector: 'access-user-token-edition',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './user-token-edition.container.html'
 })
 export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> implements OnInit {
 

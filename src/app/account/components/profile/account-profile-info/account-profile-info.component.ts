@@ -4,10 +4,9 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'account-profile-info',
-  standalone: true,
-  imports: [ArticleComponent, PlaceholderDirective],
-  templateUrl: './account-profile-info.component.html'
+    selector: 'account-profile-info',
+    imports: [ArticleComponent, PlaceholderDirective],
+    templateUrl: './account-profile-info.component.html'
 })
 export class AccountProfileInfoComponent {
 

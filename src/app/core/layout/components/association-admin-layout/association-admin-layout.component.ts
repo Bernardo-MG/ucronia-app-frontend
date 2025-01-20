@@ -7,10 +7,9 @@ import { Menu } from '@app/shared/menu/models/menu';
 import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 
 @Component({
-  selector: 'assoc-association-admin-layout',
-  standalone: true,
-  imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
-  templateUrl: './association-admin-layout.component.html'
+    selector: 'assoc-association-admin-layout',
+    imports: [RouterModule, SideMenuComponent, NavbarComponent, SidebarLayoutComponent],
+    templateUrl: './association-admin-layout.component.html'
 })
 export class AssociationAdminLayoutComponent implements OnInit {
 

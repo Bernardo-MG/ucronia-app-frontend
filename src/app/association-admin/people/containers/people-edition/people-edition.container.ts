@@ -14,10 +14,9 @@ import { PeopleInfoComponent } from '../../components/people-info/people-info.co
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-  selector: 'assoc-people-edition',
-  standalone: true,
-  imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-edition.container.html'
+    selector: 'assoc-people-edition',
+    imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 

@@ -6,10 +6,9 @@ import { TransactionBalanceService } from '../../../balance/services/transaction
 import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
 
 @Component({
-  selector: 'assoc-transaction-balance-chart-widget',
-  standalone: true,
-  imports: [CommonModule, CardModule, TransactionBalanceChartComponent],
-  templateUrl: './transaction-balance-chart-widget.container.html'
+    selector: 'assoc-transaction-balance-chart-widget',
+    imports: [CommonModule, CardModule, TransactionBalanceChartComponent],
+    templateUrl: './transaction-balance-chart-widget.container.html'
 })
 export class TransactionBalanceChartWidgetContainer implements OnInit {
 

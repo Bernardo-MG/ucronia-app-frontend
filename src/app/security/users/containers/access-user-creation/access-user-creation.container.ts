@@ -10,10 +10,9 @@ import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 
 @Component({
-  selector: 'access-user-creation',
-  standalone: true,
-  imports: [CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-user-creation.container.html'
+    selector: 'access-user-creation',
+    imports: [CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './access-user-creation.container.html'
 })
 export class AccessUserCreationContainer extends CreateComponent<User> {
 

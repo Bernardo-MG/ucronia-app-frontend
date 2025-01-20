@@ -10,10 +10,9 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'login-password-reset-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './password-reset-form.component.html'
+    selector: 'login-password-reset-form',
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
+    templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
 

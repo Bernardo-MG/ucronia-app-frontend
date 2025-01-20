@@ -12,10 +12,9 @@ import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
-  selector: 'assoc-fee-calendar-widget',
-  standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective],
-  templateUrl: './fee-calendar-widget.container.html'
+    selector: 'assoc-fee-calendar-widget',
+    imports: [CardModule, RouterModule, IconsModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective],
+    templateUrl: './fee-calendar-widget.container.html'
 })
 export class FeeCalendarWidgetContainer implements OnInit {
 

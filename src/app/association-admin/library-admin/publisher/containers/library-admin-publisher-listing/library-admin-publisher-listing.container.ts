@@ -10,10 +10,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-listing',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
-  templateUrl: './library-admin-publisher-listing.container.html'
+    selector: 'assoc-library-admin-publisher-listing',
+    imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
+    templateUrl: './library-admin-publisher-listing.container.html'
 })
 export class LibraryAdminPublisherListingContainer implements OnInit, OnChanges {
 

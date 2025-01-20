@@ -21,10 +21,9 @@ import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-mem
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'assoc-fee-create',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-pay.container.html'
+    selector: 'assoc-fee-create',
+    imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+    templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
 

@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTab } from '../../shared/models/card-tab';
 
 @Component({
-  selector: 'app-card-navigation',
-  templateUrl: './card-navigation.component.html'
-  })
+    selector: 'app-card-navigation',
+    templateUrl: './card-navigation.component.html',
+    standalone: false
+})
 export class CardNavigationComponent {
 
   @Input() public active = '';
