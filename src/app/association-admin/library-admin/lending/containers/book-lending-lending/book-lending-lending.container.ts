@@ -10,7 +10,7 @@ import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -21,7 +21,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
     selector: 'assoc-book-lending-lending',
-    imports: [CommonModule, IconsModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+    imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, BackwardIconComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
     templateUrl: './book-lending-lending.container.html'
 })
 export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {

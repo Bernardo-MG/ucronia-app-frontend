@@ -4,7 +4,7 @@ import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
@@ -12,7 +12,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
 
 @Component({
     selector: 'assoc-people-info',
-    imports: [CommonModule, FormModule, IconsModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective],
+    imports: [CommonModule, FormModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent],
     templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {

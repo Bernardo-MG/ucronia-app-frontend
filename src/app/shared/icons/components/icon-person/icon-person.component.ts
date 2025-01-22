@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faPerson } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'icon-person',
-    templateUrl: './icon-person.component.html',
-    standalone: false
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './icon-person.component.html'
 })
 export class IconPersonComponent {
 

@@ -10,14 +10,15 @@ import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
     selector: 'assoc-library-admin-book-donors-form',
-    imports: [CommonModule, FormModule, IconsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent],
+    imports: [CommonModule, FormModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, DeleteIconComponent],
     templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {

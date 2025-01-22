@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconEditComponent } from './icon-edit.component';
+import { EditIconComponent } from './icon-edit.component';
 
-describe('IconEditComponent', () => {
-  let component: IconEditComponent;
-  let fixture: ComponentFixture<IconEditComponent>;
+describe('EditIconComponent', () => {
+  let component: EditIconComponent;
+  let fixture: ComponentFixture<EditIconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -12,12 +12,12 @@ describe('IconEditComponent', () => {
         FontAwesomeModule
       ],
       declarations: [
-        IconEditComponent
+        EditIconComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(IconEditComponent);
+    fixture = TestBed.createComponent(EditIconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,14 +6,14 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
 import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
     selector: 'assoc-fee-calendar-widget',
-    imports: [CardModule, RouterModule, IconsModule, FeeCalendarComponent, MemberStatusSelectComponent, JustifyEndDirective],
+    imports: [CardModule, RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
     templateUrl: './fee-calendar-widget.container.html'
 })
 export class FeeCalendarWidgetContainer implements OnInit {

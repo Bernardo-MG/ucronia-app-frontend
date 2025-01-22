@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { EditIconComponent } from '@app/shared/icons/components/icon-edit/icon-edit.component';
 
 @Component({
     selector: 'assoc-settings-values-editor',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, IconsModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, EditIconComponent],
     templateUrl: './settings-values-editor.component.html'
 })
 export class SettingValuesEditorComponent {

@@ -6,7 +6,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessRoleSelectionListComponent } from '../../components/access-role-selection-list/access-role-selection-list.component';
@@ -14,7 +14,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
     selector: 'access-role-listing',
-    imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, ArticleComponent],
+    imports: [CardModule, RouterModule, AccessRoleSelectionListComponent, PaginationInfoComponent, IconAddComponent, ArticleComponent],
     templateUrl: './access-role-listing.container.html'
 })
 export class AccessRoleListingContainer implements OnInit {

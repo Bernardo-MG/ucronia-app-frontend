@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAccountComponent } from '@app/shared/icons/components/icon-account/icon-account.component';
+import { LogoutIconComponent } from '@app/shared/icons/components/icon-logout/icon-logout.component';
+import { IconSettingsComponent } from '@app/shared/icons/components/icon-settings/icon-settings.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
     selector: 'layout-account-dropdown',
-    imports: [RouterModule, IconsModule, JustifyCenterDirective],
+    imports: [RouterModule, IconAccountComponent, IconSettingsComponent, LogoutIconComponent, JustifyCenterDirective],
     templateUrl: './account-dropdown.component.html'
 })
 export class AccountDropdownComponent implements OnInit {

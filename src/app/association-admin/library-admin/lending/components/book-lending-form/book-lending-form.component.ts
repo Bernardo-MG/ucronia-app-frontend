@@ -6,12 +6,11 @@ import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
     selector: 'assoc-book-lending-form',
-    imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent],
+    imports: [CommonModule, FormModule, WaitingButtonComponent],
     templateUrl: './book-lending-form.component.html'
 })
 export class BookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {

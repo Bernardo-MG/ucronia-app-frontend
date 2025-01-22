@@ -6,7 +6,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { IconExcelComponent } from '@app/shared/icons/components/icon-excel/icon-excel.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
@@ -17,7 +18,7 @@ import { LibraryAdminPublisherListingContainer } from '../../../publisher/contai
 
 @Component({
     selector: 'assoc-library-admin-listing',
-    imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent],
+    imports: [CommonModule, RouterModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent, IconExcelComponent, IconAddComponent],
     templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {

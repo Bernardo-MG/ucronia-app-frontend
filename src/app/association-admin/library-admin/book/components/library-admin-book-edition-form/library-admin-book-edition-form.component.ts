@@ -15,7 +15,9 @@ import { Publisher } from '@app/models/library/publisher';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
+import { IconSearchComponent } from '@app/shared/icons/components/icon-search/icon-search.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
@@ -23,7 +25,7 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
     selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormModule, IconsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, JustifyCenterDirective],
+    imports: [CommonModule, FormModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective],
     templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {

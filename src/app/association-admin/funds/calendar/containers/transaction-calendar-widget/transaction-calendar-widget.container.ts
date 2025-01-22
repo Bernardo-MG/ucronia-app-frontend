@@ -5,7 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { ScheduleModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
@@ -13,7 +13,7 @@ import { TransactionCalendarService } from '../../services/transaction-calendar.
 
 @Component({
     selector: 'assoc-transaction-calendar-widget',
-    imports: [CommonModule, RouterModule, IconsModule, CardModule, ScheduleModule, JustifyCenterDirective],
+    imports: [CommonModule, RouterModule, CardModule, ScheduleModule, IconAddComponent, JustifyCenterDirective],
     templateUrl: './transaction-calendar-widget.container.html'
 })
 export class TransactionCalendarWidgetContainer implements OnInit {

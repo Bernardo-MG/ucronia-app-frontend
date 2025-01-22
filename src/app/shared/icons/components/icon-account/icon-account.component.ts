@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'icon-account',
-    templateUrl: './icon-account.component.html',
-    standalone: false
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './icon-account.component.html'
 })
 export class IconAccountComponent {
 

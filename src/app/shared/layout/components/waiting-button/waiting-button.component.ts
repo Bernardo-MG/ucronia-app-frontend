@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconWaitingComponent } from '@app/shared/icons/components/icon-waiting/icon-waiting.component';
 
 @Component({
     selector: 'layout-waiting-button',
-    imports: [CommonModule, IconsModule],
+    imports: [CommonModule, IconWaitingComponent],
     templateUrl: './waiting-button.component.html'
 })
 export class WaitingButtonComponent {

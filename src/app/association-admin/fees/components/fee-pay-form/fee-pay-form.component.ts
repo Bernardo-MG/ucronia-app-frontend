@@ -5,13 +5,14 @@ import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
     selector: 'assoc-fee-pay-form',
-    imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
+    imports: [CommonModule, FormModule, WaitingButtonComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective],
     templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {

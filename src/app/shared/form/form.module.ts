@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IconsModule } from '../icons/icons.module';
+import { DeleteIconComponent } from '../icons/components/icon-delete/icon-delete.component';
+import { EditIconComponent } from '../icons/components/icon-edit/icon-edit.component';
 import { ModalComponent } from '../layout/components/modal/modal.component';
 import { JustifyBetweenDirective } from '../style/directives/justify-between.directive';
 import { ControlButtonsComponent } from './components/control-buttons/control-buttons.component';
@@ -20,9 +21,10 @@ import { InvalidFieldDirective } from './directives/invalid-field.directive';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    IconsModule,
     ModalComponent,
-    JustifyBetweenDirective
+    JustifyBetweenDirective,
+    DeleteIconComponent,
+    EditIconComponent
   ],
   exports: [
     ControlButtonsComponent,

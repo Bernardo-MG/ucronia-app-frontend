@@ -1,10 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'icon-coins',
-    templateUrl: './icon-coins.component.html',
-    standalone: false
+    imports: [CommonModule, FontAwesomeModule],
+    templateUrl: './icon-coins.component.html'
 })
 export class IconCoinsComponent {
 

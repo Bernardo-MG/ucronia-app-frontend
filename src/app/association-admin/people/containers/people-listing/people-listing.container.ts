@@ -7,7 +7,7 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
@@ -15,7 +15,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
     selector: 'assoc-people-listing',
-    imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent],
+    imports: [RouterModule, CardModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent],
     templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {

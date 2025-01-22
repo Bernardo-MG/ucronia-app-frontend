@@ -6,12 +6,11 @@ import { Language } from '@app/models/library/language';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
     selector: 'assoc-library-admin-book-creation-form',
-    imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
+    imports: [CommonModule, FormModule, SaveControlsComponent],
     templateUrl: './library-admin-book-creation-form.component.html'
 })
 export class LibraryAdminBookCreationFormComponent extends FormComponent<Book> {

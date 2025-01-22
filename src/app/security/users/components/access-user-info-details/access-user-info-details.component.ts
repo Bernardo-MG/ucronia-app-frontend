@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '@app/core/authentication/models/user';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
     selector: 'access-user-info-details',
-    imports: [CommonModule, IconsModule, PlaceholderDirective],
+    imports: [CommonModule, PlaceholderDirective],
     templateUrl: './access-user-info-details.component.html'
 })
 export class AccessUserInfoDetailsComponent {
