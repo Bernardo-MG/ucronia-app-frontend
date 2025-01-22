@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -11,7 +12,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 
 @Component({
     selector: 'assoc-library-admin-game-system-creation',
-    imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [LibraryAdminGameSystemFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './library-admin-game-system-creation.container.html'
 })
 export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {

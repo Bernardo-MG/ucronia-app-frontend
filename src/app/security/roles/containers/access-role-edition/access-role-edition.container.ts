@@ -8,7 +8,10 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
@@ -23,7 +26,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
     selector: 'access-role-edition',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
     templateUrl: './access-role-edition.container.html'
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {

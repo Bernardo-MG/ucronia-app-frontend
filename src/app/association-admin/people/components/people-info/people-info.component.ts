@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardNavigationComponent } from '@app/shared/card/components/card-navigation/card-navigation.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
@@ -12,7 +16,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
 
 @Component({
     selector: 'assoc-people-info',
-    imports: [CommonModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent, ControlButtonsComponent],
+    imports: [CommonModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
     templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {

@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { MemberBalanceChartComponent } from '../../components/member-balance-chart/member-balance-chart.component';
 import { MemberBalanceService } from '../../services/member-balance.service';
 
 @Component({
     selector: 'assoc-member-balance-chart-widget',
-    imports: [CommonModule, CardModule, MemberBalanceChartComponent],
+    imports: [CommonModule, MemberBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
     templateUrl: './member-balance-chart-widget.container.html'
 })
 export class MemberBalanceChartWidgetContainer implements OnInit {

@@ -10,7 +10,8 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
@@ -21,7 +22,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
     selector: 'assoc-library-admin-book-edition',
-    imports: [CommonModule, RouterModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, RouterModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {

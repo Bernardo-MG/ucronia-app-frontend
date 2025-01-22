@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
@@ -11,7 +13,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
 
 @Component({
     selector: 'access-audit-login',
-    imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
+    imports: [AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
     templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer implements OnInit {

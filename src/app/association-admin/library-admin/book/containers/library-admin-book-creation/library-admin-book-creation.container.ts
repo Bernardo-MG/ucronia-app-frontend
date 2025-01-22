@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
@@ -12,7 +13,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
     selector: 'assoc-library-admin-book-creation',
-    imports: [CommonModule, CardModule, LibraryAdminBookCreationFormComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './library-admin-book-creation.container.html'
 })
 export class LibraryAdminBookCreationContainer extends CreateComponent<Book> implements OnInit {

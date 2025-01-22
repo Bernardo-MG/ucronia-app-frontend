@@ -3,8 +3,7 @@ import { FieldFailures } from '@app/core/api/models/field-failures';
 
 @Component({
     selector: 'app-form',
-    templateUrl: './form.component.html',
-    standalone: false
+    templateUrl: './form.component.html'
 })
 export class FormComponent<Data> {
 

@@ -4,7 +4,11 @@ import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardNavigationComponent } from '@app/shared/card/components/card-navigation/card-navigation.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconTakeInComponent } from '@app/shared/icons/components/icon-take-in/icon-take-in.component';
@@ -13,7 +17,7 @@ import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.
 
 @Component({
     selector: 'assoc-library-admin-book-details',
-    imports: [CommonModule, RouterModule, CardModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent],
+    imports: [CommonModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
     templateUrl: './library-admin-book-details.component.html'
 })
 export class LibraryAdminBookDetailsComponent {

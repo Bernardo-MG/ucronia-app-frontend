@@ -6,7 +6,8 @@ import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
@@ -19,7 +20,7 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
     selector: 'access-user-edition',
-    imports: [CommonModule, CardModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
     templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> implements OnInit {

@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Publisher } from '@app/models/library/publisher';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
     selector: 'assoc-library-admin-publisher-edition',
-    imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './library-admin-publisher-edition.container.html'
 })
 export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> implements OnInit {

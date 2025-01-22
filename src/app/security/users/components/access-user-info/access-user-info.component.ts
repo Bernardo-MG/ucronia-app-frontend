@@ -5,7 +5,10 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { Member } from '@app/models/members/member';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
@@ -15,7 +18,7 @@ import { AccessUserStatusComponent } from '../access-user-status/access-user-sta
 
 @Component({
     selector: 'access-user-info',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent, ControlButtonsComponent],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
     templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {

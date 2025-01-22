@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { IconExcelComponent } from '@app/shared/icons/components/icon-excel/icon-excel.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { TransactionReportService } from '../../services/transaction-report.service';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 
 @Component({
     selector: 'assoc-transaction-report-widget',
-    imports: [CommonModule, CardModule, IconExcelComponent, JustifyCenterDirective],
+    imports: [CommonModule, IconExcelComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyCenterDirective],
     templateUrl: './transaction-report-widget.container.html'
 })
 export class TransactionReportWidgetContainer {

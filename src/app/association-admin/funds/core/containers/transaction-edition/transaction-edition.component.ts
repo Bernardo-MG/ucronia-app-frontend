@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Transaction } from '@app/models/transactions/transaction';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -14,7 +15,7 @@ import { TransactionInfoComponent } from '../../components/transaction-info/tran
 
 @Component({
     selector: 'assoc-transaction-edition',
-    imports: [CommonModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {

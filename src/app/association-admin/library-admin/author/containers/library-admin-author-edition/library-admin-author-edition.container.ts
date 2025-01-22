@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -14,7 +15,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
     selector: 'assoc-library-admin-author-edition',
-    imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+    imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent],
     templateUrl: './library-admin-author-edition.container.html'
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> implements OnInit {

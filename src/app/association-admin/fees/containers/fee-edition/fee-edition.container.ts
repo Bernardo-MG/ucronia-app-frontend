@@ -5,7 +5,8 @@ import { FeeEditionFormComponent } from '@app/association-admin/fees/components/
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -14,7 +15,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
     selector: 'assoc-fee-edition',
-    imports: [CardModule, CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {

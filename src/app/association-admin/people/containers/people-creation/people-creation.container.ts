@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -11,7 +12,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
     selector: 'assoc-people-creation',
-    imports: [CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [PeopleCreationFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './people-creation.container.html'
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {

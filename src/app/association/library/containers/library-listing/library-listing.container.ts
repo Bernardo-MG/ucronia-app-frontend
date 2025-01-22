@@ -5,7 +5,9 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
@@ -13,7 +15,7 @@ import { BookService } from '../../services/book.service';
 
 @Component({
     selector: 'assoc-library-listing',
-    imports: [RouterModule, CardModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent],
+    imports: [RouterModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent, CardComponent, CardBodyComponent, CardFooterComponent],
     templateUrl: './library-listing.container.html'
 })
 export class LibraryListingContainer implements OnInit {

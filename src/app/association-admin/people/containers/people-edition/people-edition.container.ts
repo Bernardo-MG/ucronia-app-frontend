@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -15,7 +16,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
     selector: 'assoc-people-edition',
-    imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {

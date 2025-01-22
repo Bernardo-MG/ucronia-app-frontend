@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTab } from '../../shared/models/card-tab';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-card-navigation',
-    templateUrl: './card-navigation.component.html',
-    standalone: false
+    imports: [CommonModule],
+    templateUrl: './card-navigation.component.html'
 })
 export class CardNavigationComponent {
 
