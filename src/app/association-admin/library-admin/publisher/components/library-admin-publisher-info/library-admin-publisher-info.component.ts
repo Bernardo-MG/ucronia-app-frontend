@@ -2,12 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Publisher } from '@app/models/library/publisher';
 import { CardModule } from '@app/shared/card/card.module';
-import { FormModule } from '@app/shared/form/form.module';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
     selector: 'assoc-library-admin-publisher-info',
-    imports: [CommonModule, CardModule, FormModule, PlaceholderDirective],
+    imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
     templateUrl: './library-admin-publisher-info.component.html'
 })
 export class LibraryAdminPublisherInfoComponent {

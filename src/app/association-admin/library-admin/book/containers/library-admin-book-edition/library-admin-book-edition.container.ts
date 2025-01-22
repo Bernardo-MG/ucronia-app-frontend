@@ -12,7 +12,6 @@ import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDetailsComponent } from '../../components/library-admin-book-details/library-admin-book-details.component';
@@ -22,7 +21,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
     selector: 'assoc-library-admin-book-edition',
-    imports: [CommonModule, RouterModule, FormModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, RouterModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, ResponsiveShortColumnsDirective],
     templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {

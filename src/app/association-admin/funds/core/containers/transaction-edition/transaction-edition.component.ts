@@ -1,21 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { Transaction } from '@app/models/transactions/transaction';
 import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';
-import { Transaction } from '@app/models/transactions/transaction';
-import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 
 @Component({
     selector: 'assoc-transaction-edition',
-    imports: [CommonModule, FormModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
     templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
@@ -9,7 +10,6 @@ import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
@@ -22,7 +22,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
     selector: 'assoc-fee-create',
-    imports: [CommonModule, FormModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
     templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {

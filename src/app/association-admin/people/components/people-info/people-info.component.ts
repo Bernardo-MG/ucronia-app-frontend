@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { FormModule } from '@app/shared/form/form.module';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
@@ -12,7 +12,7 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
 
 @Component({
     selector: 'assoc-people-info',
-    imports: [CommonModule, FormModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent],
+    imports: [CommonModule, CardModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent, ControlButtonsComponent],
     templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {

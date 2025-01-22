@@ -1,6 +1,6 @@
 import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
@@ -13,8 +13,9 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
-import { FormModule } from '@app/shared/form/form.module';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { IconSearchComponent } from '@app/shared/icons/components/icon-search/icon-search.component';
@@ -25,7 +26,7 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 
 @Component({
     selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, DeleteIconComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
     templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {

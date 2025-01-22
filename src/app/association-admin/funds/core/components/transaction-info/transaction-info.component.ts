@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
-import { FormModule } from '@app/shared/form/form.module';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
     selector: 'assoc-transaction-info',
-    imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
+    imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
     templateUrl: './transaction-info.component.html'
 })
 export class TransactionInfoComponent {

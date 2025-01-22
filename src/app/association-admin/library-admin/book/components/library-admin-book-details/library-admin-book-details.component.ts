@@ -6,14 +6,14 @@ import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { CardModule } from '@app/shared/card/card.module';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { FormModule } from '@app/shared/form/form.module';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconTakeInComponent } from '@app/shared/icons/components/icon-take-in/icon-take-in.component';
 import { IconTakeOutComponent } from '@app/shared/icons/components/icon-take-out/icon-take-out.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
     selector: 'assoc-library-admin-book-details',
-    imports: [CommonModule, RouterModule, FormModule, CardModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective],
+    imports: [CommonModule, RouterModule, CardModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent],
     templateUrl: './library-admin-book-details.component.html'
 })
 export class LibraryAdminBookDetailsComponent {

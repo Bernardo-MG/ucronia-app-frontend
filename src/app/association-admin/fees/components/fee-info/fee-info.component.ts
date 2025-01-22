@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardModule } from '@app/shared/card/card.module';
-import { FormModule } from '@app/shared/form/form.module';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconSearchComponent } from '@app/shared/icons/components/icon-search/icon-search.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
     selector: 'assoc-fee-info',
-    imports: [CommonModule, CardModule, FormModule, IconSearchComponent, PlaceholderDirective],
+    imports: [CommonModule, CardModule, IconSearchComponent, PlaceholderDirective, ControlButtonsComponent],
     templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {
