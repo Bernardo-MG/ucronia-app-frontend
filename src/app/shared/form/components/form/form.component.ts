@@ -52,7 +52,7 @@ export class FormComponent<Data> {
 
   @Output() public save = new EventEmitter<Data>();
 
-  @Output() public cancel = new EventEmitter<void>();
+  @Output() public reject = new EventEmitter<void>();
 
   public form: any;
 
@@ -97,7 +97,7 @@ export class FormComponent<Data> {
    * Handler for the cancel event.
    */
   public onCancel() {
-    this.cancel.emit();
+    this.reject.emit();
   }
 
   /**
