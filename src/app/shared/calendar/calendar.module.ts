@@ -24,4 +24,4 @@ import { CalendarMonthComponent } from './components/calendar-month/calendar-mon
     CalendarMonthComponent
   ]
 })
-export class ScheduleModule { }
+export class CalendarsModule { }
