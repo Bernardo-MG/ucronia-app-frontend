@@ -1,7 +1,8 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    "calendar-month.component.ts"
   ],
   "overrides": [
     {
