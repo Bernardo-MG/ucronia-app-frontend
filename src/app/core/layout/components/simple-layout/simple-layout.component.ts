@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutService } from '@app/core/layout/services/layout.service';
@@ -9,7 +9,7 @@ import { NavbarComponent } from '../header/navbar/navbar.component';
     imports: [RouterModule, NavbarComponent],
     templateUrl: './simple-layout.component.html'
 })
-export class SimpleLayoutComponent {
+export class SimpleLayoutComponent implements OnInit {
 
   public title = '';
 
