@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssociationSettingsService } from '@app/settings/service/association-settings.service';
 import { SettingsInfoEditorContainer } from './settings-info-editor.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('SettingsInfoEditorContainer', () => {
   let component: SettingsInfoEditorContainer;
@@ -9,14 +10,13 @@ describe('SettingsInfoEditorContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        SettingsInfoEditorContainer
-      ],
-      providers: [
-        AssociationSettingsService
-      ]
-    })
+    imports: [SettingsInfoEditorContainer],
+    providers: [
+        AssociationSettingsService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
       .compileComponents();
 
     fixture = TestBed.createComponent(SettingsInfoEditorContainer);

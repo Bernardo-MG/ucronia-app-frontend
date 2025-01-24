@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
@@ -7,24 +8,26 @@ import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
+import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
 import { AccessRolePermissionsComponent } from '../../components/access-role-permissions/access-role-permissions.component';
-import { CardModule } from '@app/shared/card/card.module';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-edition',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-role-edition.container.html'
+    selector: 'access-role-edition',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+    templateUrl: './access-role-edition.container.html'
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
 

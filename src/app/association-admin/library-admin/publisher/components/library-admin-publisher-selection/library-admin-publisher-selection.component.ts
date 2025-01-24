@@ -7,10 +7,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-selection',
-  standalone: true,
-  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './library-admin-publisher-selection.component.html'
+    selector: 'assoc-library-admin-publisher-selection',
+    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './library-admin-publisher-selection.component.html'
 })
 export class LibraryAdminPublisherSelectionComponent extends PagedSelectorComponent<Publisher> {
 

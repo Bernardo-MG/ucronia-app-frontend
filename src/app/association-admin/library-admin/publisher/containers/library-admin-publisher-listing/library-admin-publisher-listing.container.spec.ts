@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 import { LibraryAdminPublisherListingContainer } from './library-admin-publisher-listing.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryAdminPublisherListingContainer', () => {
   let component: LibraryAdminPublisherListingContainer;
@@ -9,14 +10,13 @@ describe('LibraryAdminPublisherListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        LibraryAdminPublisherListingContainer
-      ],
-      providers: [
-        PublisherAdminService
-      ]
-    })
+    imports: [LibraryAdminPublisherListingContainer],
+    providers: [
+        PublisherAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+})
     .compileComponents();
     
     fixture = TestBed.createComponent(LibraryAdminPublisherListingContainer);

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconTakeOutComponent } from './icon-take-out.component';
 
 describe('IconTakeOutComponent', () => {
@@ -9,9 +8,6 @@ describe('IconTakeOutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconTakeOutComponent
       ]
     })

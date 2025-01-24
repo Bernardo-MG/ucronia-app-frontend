@@ -7,7 +7,7 @@ describe('PagedSelectorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+      imports: [
         PagedSelectorComponent
       ]
     })

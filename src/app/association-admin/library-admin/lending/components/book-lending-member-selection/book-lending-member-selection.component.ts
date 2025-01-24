@@ -6,10 +6,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-book-lending-member-selection',
-  standalone: true,
-  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './book-lending-member-selection.component.html'
+    selector: 'assoc-book-lending-member-selection',
+    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+    templateUrl: './book-lending-member-selection.component.html'
 })
 export class BookLendingMemberSelectionComponent {
 

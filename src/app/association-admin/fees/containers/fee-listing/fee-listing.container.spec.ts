@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { FeeReportService } from '@app/association-admin/fees/chart/services/fee-report.service';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar.service';
 import { FeeService } from '../../services/fee.service';
@@ -13,14 +14,15 @@ describe('FeeListingContainer', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
         FeeListingContainer
       ],
       providers: [
         FeeCalendarService,
         FeeService,
-        FeeReportService
+        FeeReportService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
       .compileComponents();

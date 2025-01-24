@@ -6,7 +6,7 @@
         <app-card>
           <app-card-body>
             <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+              [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
             </assoc-transaction-form>
           </app-card-body>
         </app-card>

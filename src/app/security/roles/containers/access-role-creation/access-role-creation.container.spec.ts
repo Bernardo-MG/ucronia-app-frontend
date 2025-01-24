@@ -1,8 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AccessRoleCreationContainer } from './access-role-creation.container';
+import { provideRouter } from '@angular/router';
 import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleCreationContainer } from './access-role-creation.container';
 
 describe('AccessRoleCreationContainer', () => {
   let component: AccessRoleCreationContainer;
@@ -11,12 +12,13 @@ describe('AccessRoleCreationContainer', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
         AccessRoleCreationContainer
       ],
       providers: [
-        AccessRoleService
+        AccessRoleService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
       .compileComponents();

@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html'
+    selector: 'app-form',
+    templateUrl: './form.component.html'
 })
 export class FormComponent<Data> {
 
@@ -52,7 +52,7 @@ export class FormComponent<Data> {
 
   @Output() public save = new EventEmitter<Data>();
 
-  @Output() public cancel = new EventEmitter<void>();
+  @Output() public reject = new EventEmitter<void>();
 
   public form: any;
 
@@ -97,7 +97,7 @@ export class FormComponent<Data> {
    * Handler for the cancel event.
    */
   public onCancel() {
-    this.cancel.emit();
+    this.reject.emit();
   }
 
   /**

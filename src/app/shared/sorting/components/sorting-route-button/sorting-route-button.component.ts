@@ -7,10 +7,9 @@ import { SortDirection } from '../../../../core/api/models/sort-direction';
 import { SortingButtonComponent } from '../sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'sorting-route-button',
-  standalone: true,
-  imports: [SortingButtonComponent],
-  templateUrl: './sorting-route-button.component.html'
+    selector: 'sorting-route-button',
+    imports: [SortingButtonComponent],
+    templateUrl: './sorting-route-button.component.html'
 })
 export class SortingRouteButtonComponent implements OnInit {
 

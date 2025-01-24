@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { SortDirection } from '@app/core/api/models/sort-direction';
 import { Book } from '@app/models/library/book';
 import { LibraryBookListComponent } from './library-book-list.component';
@@ -14,8 +14,10 @@ describe('LibraryBookListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         LibraryBookListComponent
+      ],
+      providers: [
+        provideRouter([])
       ]
     })
       .compileComponents();

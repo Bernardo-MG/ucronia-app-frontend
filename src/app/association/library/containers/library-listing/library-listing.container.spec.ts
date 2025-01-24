@@ -1,8 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BookService } from '../../services/book.service';
 import { LibraryListingContainer } from './library-listing.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryListingContainer', () => {
   let component: LibraryListingContainer;
@@ -11,12 +11,12 @@ describe('LibraryListingContainer', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
         LibraryListingContainer
       ],
       providers: [
-        BookService
+        BookService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     })
       .compileComponents();

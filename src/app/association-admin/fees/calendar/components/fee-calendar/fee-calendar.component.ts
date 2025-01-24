@@ -3,16 +3,17 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { RouterModule } from '@angular/router';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
+import { ForwardIconComponent } from '@app/shared/icons/components/icon-forward/icon-forward.component';
+import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-fee-calendar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './fee-calendar.component.html',
-  styleUrl: './fee-calendar.component.sass'
+    selector: 'assoc-fee-calendar',
+    imports: [CommonModule, RouterModule, JustifyCenterDirective, BackwardIconComponent, ForwardIconComponent, IconSuccessOrFailureComponent, BlockUiDirective],
+    templateUrl: './fee-calendar.component.html',
+    styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
 

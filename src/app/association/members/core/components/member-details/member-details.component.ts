@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { FormModule } from '@app/shared/form/form.module';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 
 @Component({
-  selector: 'assoc-member-details',
-  standalone: true,
-  imports: [CommonModule, FormModule, CardModule, PlaceholderDirective],
-  templateUrl: './member-details.component.html'
+    selector: 'assoc-member-details',
+    imports: [CommonModule, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
+    templateUrl: './member-details.component.html'
 })
 export class MemberDetailsComponent {
 

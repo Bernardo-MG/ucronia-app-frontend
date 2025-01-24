@@ -5,18 +5,20 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessRoleSelectionListComponent } from '../../components/access-role-selection-list/access-role-selection-list.component';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-role-listing',
-  standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessRoleSelectionListComponent, PaginationInfoComponent, ArticleComponent],
-  templateUrl: './access-role-listing.container.html'
+    selector: 'access-role-listing',
+    imports: [RouterModule, AccessRoleSelectionListComponent, PaginationInfoComponent, IconAddComponent, ArticleComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+    templateUrl: './access-role-listing.container.html'
 })
 export class AccessRoleListingContainer implements OnInit {
 

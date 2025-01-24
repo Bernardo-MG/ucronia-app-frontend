@@ -6,18 +6,20 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-  selector: 'assoc-people-listing',
-  standalone: true,
-  imports: [RouterModule, CardModule, IconsModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent],
-  templateUrl: './people-listing.container.html'
+    selector: 'assoc-people-listing',
+    imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+    templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
 

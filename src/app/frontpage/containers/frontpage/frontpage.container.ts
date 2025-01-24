@@ -6,11 +6,10 @@ import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/g
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 
 @Component({
-  selector: 'app-frontpage-frontpage',
-  standalone: true,
-  imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
-  templateUrl: './frontpage.container.html',
-  styleUrls: ['./frontpage.container.sass']
+    selector: 'app-frontpage-frontpage',
+    imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
+    templateUrl: './frontpage.container.html',
+    styleUrls: ['./frontpage.container.sass']
 })
 export class FrontpageComponent implements OnInit {
 

@@ -1,16 +1,16 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MemberService } from './member.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MemberService', () => {
   let service: MemberService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ]
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     service = TestBed.inject(MemberService);
   });
 

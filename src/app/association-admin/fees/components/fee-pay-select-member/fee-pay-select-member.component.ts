@@ -10,10 +10,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 
 @Component({
-  selector: 'app-fee-pay-select-member',
-  standalone: true,
-  imports: [ButtonListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyBetweenDirective, BlockUiDirective],
-  templateUrl: './fee-pay-select-member.component.html'
+    selector: 'app-fee-pay-select-member',
+    imports: [ButtonListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyBetweenDirective, BlockUiDirective],
+    templateUrl: './fee-pay-select-member.component.html'
 })
 export class FeePaySelectMemberComponent {
 

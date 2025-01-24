@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconSettingsComponent } from './icon-settings.component';
 
 describe('IconSettingsComponent', () => {
@@ -9,9 +8,6 @@ describe('IconSettingsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconSettingsComponent
       ]
     })

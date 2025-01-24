@@ -10,10 +10,9 @@ import { LibraryAdminBookListComponent } from '../../components/library-admin-bo
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-listing',
-  standalone: true,
-  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, BlockUiDirective],
-  templateUrl: './library-admin-book-listing.container.html'
+    selector: 'assoc-library-admin-book-listing',
+    imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, BlockUiDirective],
+    templateUrl: './library-admin-book-listing.container.html'
 })
 export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
 

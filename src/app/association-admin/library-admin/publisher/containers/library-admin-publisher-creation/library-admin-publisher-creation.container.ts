@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -10,10 +11,9 @@ import { LibraryAdminPublisherFormComponent } from '../../components/library-adm
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-creation',
-  standalone: true,
-  imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-publisher-creation.container.html'
+    selector: 'assoc-library-admin-publisher-creation',
+    imports: [LibraryAdminPublisherFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-publisher-creation.container.html'
 })
 export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publisher> {
 

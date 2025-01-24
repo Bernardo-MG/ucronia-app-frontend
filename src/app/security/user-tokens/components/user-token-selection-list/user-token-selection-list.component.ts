@@ -6,10 +6,9 @@ import { UserToken } from '@app/core/authentication/models/user-token';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'access-user-token-selection-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent],
-  templateUrl: './user-token-selection-list.component.html'
+    selector: 'access-user-token-selection-list',
+    imports: [CommonModule, RouterModule, SortingButtonComponent],
+    templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent {
 

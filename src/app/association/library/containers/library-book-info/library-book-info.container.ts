@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
@@ -11,10 +13,9 @@ import { LibraryBookLendingsComponent } from '../../components/library-book-lend
 import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'assoc-library-book-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-book-info.container.html'
+    selector: 'assoc-library-book-info',
+    imports: [CommonModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
+    templateUrl: './library-book-info.container.html'
 })
 export class LibraryBookInfoContainer implements OnInit {
 

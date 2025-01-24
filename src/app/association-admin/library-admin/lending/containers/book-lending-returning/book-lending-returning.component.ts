@@ -13,10 +13,9 @@ import { BookReturnFormComponent } from '../../components/book-return-form/book-
 import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
-  selector: 'assoc-book-lending-returning',
-  standalone: true,
-  imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './book-lending-returning.component.html'
+    selector: 'assoc-book-lending-returning',
+    imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './book-lending-returning.component.html'
 })
 export class BookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 

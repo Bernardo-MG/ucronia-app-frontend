@@ -1,5 +1,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { PaginationNavigationComponent } from './pagination-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
@@ -10,6 +11,9 @@ describe('PaginationNavigationComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         PaginationNavigationComponent
+      ],
+      providers: [
+        provideRouter([])
       ]
     })
       .compileComponents();

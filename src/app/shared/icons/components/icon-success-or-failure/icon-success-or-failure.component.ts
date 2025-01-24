@@ -1,8 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconFailureComponent } from '../icon-failure/icon-failure.component';
+import { IconSuccessComponent } from '../icon-success/icon-success.component';
 
 @Component({
-  selector: 'icon-success-or-failure',
-  templateUrl: './icon-success-or-failure.component.html'
+    selector: 'icon-success-or-failure',
+    imports: [CommonModule, FontAwesomeModule, IconFailureComponent, IconSuccessComponent],
+    templateUrl: './icon-success-or-failure.component.html'
 })
 export class IconSuccessOrFailureComponent {
 

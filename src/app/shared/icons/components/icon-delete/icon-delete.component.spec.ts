@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DeleteIconComponent } from './icon-delete.component';
 
 describe('DeleteIconComponent', () => {
@@ -9,9 +8,6 @@ describe('DeleteIconComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         DeleteIconComponent
       ]
     })
