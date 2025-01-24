@@ -17,7 +17,7 @@ export class AccountLayoutComponent implements OnInit {
     private accountLayoutService: AccountLayoutService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Load menu
     this.menus = this.accountLayoutService.getMenus();
   }
