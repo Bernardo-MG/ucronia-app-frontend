@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconMailComponent } from './icon-mail.component';
 
 describe('IconMailComponent', () => {
@@ -9,9 +8,6 @@ describe('IconMailComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconMailComponent
       ]
     })

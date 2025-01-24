@@ -9,9 +9,6 @@ describe('IconShieldComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconShieldComponent
       ]
     })

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { SettingValuesEditorComponent } from './settings-values-editor.component';
 
 describe('SettingValuesEditorComponent', () => {
@@ -14,7 +13,6 @@ describe('SettingValuesEditorComponent', () => {
       imports: [
         CommonModule,
         FormsModule,
-        IconsModule,
         SettingValuesEditorComponent
       ]
     }).compileComponents();

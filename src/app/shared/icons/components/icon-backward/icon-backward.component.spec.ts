@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BackwardIconComponent } from './icon-backward.component';
 
 describe('BackwardIconComponent', () => {
@@ -9,9 +8,6 @@ describe('BackwardIconComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         BackwardIconComponent
       ]
     })

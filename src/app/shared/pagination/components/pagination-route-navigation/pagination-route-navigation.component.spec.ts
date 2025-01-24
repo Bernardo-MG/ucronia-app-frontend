@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { PaginationNavigationComponent } from '../../components/pagination-navigation/pagination-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
@@ -11,7 +10,6 @@ describe('PaginationNavigationComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        IconsModule,
         PaginationNavigationComponent
       ]
     })

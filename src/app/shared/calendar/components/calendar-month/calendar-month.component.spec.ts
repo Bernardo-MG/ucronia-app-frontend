@@ -1,6 +1,5 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -18,7 +17,6 @@ describe('CalendarMonthComponent', () => {
           provide: DateAdapter,
           useFactory: adapterFactory,
         }),
-        IconsModule,
         BlockUiDirective
       ],
       declarations: [CalendarMonthComponent]

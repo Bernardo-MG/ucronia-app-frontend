@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EditIconComponent } from './icon-edit.component';
 
 describe('EditIconComponent', () => {
@@ -9,9 +8,6 @@ describe('EditIconComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         EditIconComponent
       ]
     })

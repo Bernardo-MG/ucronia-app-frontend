@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LogoutIconComponent } from './icon-logout.component';
 
 describe('LogoutIconComponent', () => {
@@ -9,9 +8,6 @@ describe('LogoutIconComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         LogoutIconComponent
       ]
     })
