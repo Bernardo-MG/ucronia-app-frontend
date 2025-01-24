@@ -3,17 +3,15 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'access-role-add-permission',
-  standalone: true,
-  imports: [CommonModule, IconsModule, SortingButtonComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './access-role-add-permission.component.html'
+    selector: 'access-role-add-permission',
+    imports: [CommonModule, SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
+    templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
 

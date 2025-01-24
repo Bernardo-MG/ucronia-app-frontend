@@ -5,8 +5,9 @@ import { Month } from '../../models/month';
 
 
 @Component({
-  selector: 'shared-calendar-month',
-  templateUrl: './calendar-month.component.html'
+    selector: 'shared-calendar-month',
+    templateUrl: './calendar-month.component.html',
+    standalone: false
 })
 export class CalendarMonthComponent implements OnChanges {
 

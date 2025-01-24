@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { FormModule } from '@app/shared/form/form.module';
+import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-fee-creation-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './fee-creation-form.component.html'
+    selector: 'assoc-fee-creation-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+    templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {
 

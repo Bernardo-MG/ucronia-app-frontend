@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconExcelComponent } from './icon-excel.component';
 
 describe('IconExcelComponent', () => {
@@ -9,9 +8,6 @@ describe('IconExcelComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconExcelComponent
       ]
     })

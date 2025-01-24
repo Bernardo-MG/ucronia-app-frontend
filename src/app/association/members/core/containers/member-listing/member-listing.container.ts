@@ -7,16 +7,17 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Member } from '@app/models/members/member';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-member-listing',
-  standalone: true,
-  imports: [RouterModule, CardModule, MemberBalanceChartWidgetContainer, ArticleComponent, MemberListComponent, PaginationInfoComponent, JustifyCenterDirective],
-  templateUrl: './member-listing.container.html'
+    selector: 'assoc-member-listing',
+    imports: [RouterModule, MemberBalanceChartWidgetContainer, ArticleComponent, MemberListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent, JustifyCenterDirective],
+    templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer implements OnInit {
 

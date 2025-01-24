@@ -3,10 +3,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'pagination-info',
-  standalone: true,
-  imports: [PaginationNavigationComponent, JustifyCenterDirective],
-  templateUrl: './pagination-info.component.html'
+    selector: 'pagination-info',
+    imports: [PaginationNavigationComponent, JustifyCenterDirective],
+    templateUrl: './pagination-info.component.html'
 })
 export class PaginationInfoComponent {
 

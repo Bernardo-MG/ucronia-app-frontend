@@ -2,20 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { throwError } from 'rxjs';
+import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'login-password-reset-request',
-  standalone: true,
-  imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
-  templateUrl: './password-reset-request.container.html'
+    selector: 'login-password-reset-request',
+    imports: [CommonModule, PasswordResetRequestFormComponent, CardComponent, CardBodyComponent],
+    templateUrl: './password-reset-request.container.html'
 })
 export class PasswordResetRequestContainer {
 

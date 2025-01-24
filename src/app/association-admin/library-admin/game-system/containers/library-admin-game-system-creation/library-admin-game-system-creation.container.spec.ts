@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 import { LibraryAdminGameSystemCreateContainer } from './library-admin-game-system-creation.container';
 
@@ -11,16 +12,17 @@ describe('LibraryAdminGameSystemCreateContainer', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
         LibraryAdminGameSystemCreateContainer
       ],
       providers: [
-        GameSystemAdminService
+        GameSystemAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminGameSystemCreateContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

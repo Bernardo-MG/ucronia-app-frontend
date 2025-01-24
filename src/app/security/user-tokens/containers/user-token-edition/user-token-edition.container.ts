@@ -4,22 +4,24 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
-import { UserTokenService } from '../../services/user-token.service';
 import { UserTokenInfoComponent } from '../../components/user-token-info/user-token-info.component';
 import { UserTokenStatusComponent } from '../../components/user-token-status/user-token-status.component';
+import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
-  selector: 'access-user-token-edition',
-  standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, CardModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './user-token-edition.container.html'
+    selector: 'access-user-token-edition',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './user-token-edition.container.html'
 })
 export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> implements OnInit {
 

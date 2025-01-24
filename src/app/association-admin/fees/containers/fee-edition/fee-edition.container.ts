@@ -6,7 +6,8 @@ import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-inf
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { BreadcrumbComponent } from '@app/core/layout/components/breadcrumb/breadcrumb.component';
 import { Fee } from '@app/models/fees/fee';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -15,10 +16,9 @@ import { FeeService } from '../../services/fee.service';
 import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 
 @Component({
-  selector: 'assoc-fee-edition',
-  standalone: true,
-  imports: [CardModule, CommonModule, RouterModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, BreadcrumbComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-edition.container.html'
+    selector: 'assoc-fee-edition',
+    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, BreadcrumbComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
 

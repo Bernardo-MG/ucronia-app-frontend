@@ -5,10 +5,9 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 
 @Component({
-  selector: 'assoc-people-edition-membership-buttons',
-  standalone: true,
-  imports: [CommonModule, WaitingButtonComponent, ModalComponent],
-  templateUrl: './people-edition-membership-buttons.component.html'
+    selector: 'assoc-people-edition-membership-buttons',
+    imports: [CommonModule, WaitingButtonComponent, ModalComponent],
+    templateUrl: './people-edition-membership-buttons.component.html'
 })
 export class PeopleEditionMembershipButtonsComponent {
 

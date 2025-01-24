@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { LoginIconComponent } from '@app/shared/icons/components/icon-login/icon-login.component';
+import { IconSettingsComponent } from '@app/shared/icons/components/icon-settings/icon-settings.component';
+import { IconShieldComponent } from '@app/shared/icons/components/icon-shield/icon-shield.component';
 import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.component';
 
 @Component({
-  selector: 'layout-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, AccountDropdownComponent],
-  templateUrl: './navbar.component.html'
+    selector: 'layout-navbar',
+    imports: [CommonModule, RouterModule, LoginIconComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownComponent],
+    templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
 

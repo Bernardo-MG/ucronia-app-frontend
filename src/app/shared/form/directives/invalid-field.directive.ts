@@ -3,7 +3,7 @@ import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive({
-  selector: '[appInvalidField]'
+    selector: '[appInvalidField]'
 })
 export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 

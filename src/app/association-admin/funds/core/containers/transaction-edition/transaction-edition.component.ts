@@ -1,23 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
+import { Transaction } from '@app/models/transactions/transaction';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';
-import { Transaction } from '@app/models/transactions/transaction';
-import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 
 @Component({
-  selector: 'assoc-transaction-edition',
-  standalone: true,
-  imports: [CommonModule, FormModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-edition.component.html'
+    selector: 'assoc-transaction-edition',
+    imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {
 

@@ -8,10 +8,9 @@ import { SortDirection } from '../../../../core/api/models/sort-direction';
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-  selector: 'sorting-button',
-  standalone: true,
-  imports: [FontAwesomeModule],
-  templateUrl: './sorting-button.component.html'
+    selector: 'sorting-button',
+    imports: [FontAwesomeModule],
+    templateUrl: './sorting-button.component.html'
 })
 export class SortingButtonComponent implements OnChanges {
 

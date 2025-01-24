@@ -4,10 +4,9 @@ import { TransactionCurrentBalance } from '../../../../../models/transactions/tr
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
 
 @Component({
-  selector: 'assoc-transaction-current-balance-widget',
-  standalone: true,
-  imports: [BlockUiDirective],
-  templateUrl: './transaction-current-balance-widget.container.html'
+    selector: 'assoc-transaction-current-balance-widget',
+    imports: [BlockUiDirective],
+    templateUrl: './transaction-current-balance-widget.container.html'
 })
 export class FundsCurrentBalanceWidgetContainer implements OnInit {
 

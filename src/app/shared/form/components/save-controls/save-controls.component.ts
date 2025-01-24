@@ -4,10 +4,9 @@ import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-bu
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 
 @Component({
-  selector: 'app-save-controls',
-  standalone: true,
-  imports: [CommonModule, WaitingButtonComponent, JustifyBetweenDirective],
-  templateUrl: './save-controls.component.html'
+    selector: 'app-save-controls',
+    imports: [CommonModule, WaitingButtonComponent, JustifyBetweenDirective],
+    templateUrl: './save-controls.component.html'
 })
 export class SaveControlsComponent {
 
@@ -21,6 +20,6 @@ export class SaveControlsComponent {
 
   @Output() public save = new EventEmitter<void>();
 
-  @Output() public cancel = new EventEmitter<void>();
+  @Output() public reject = new EventEmitter<void>();
 
 }

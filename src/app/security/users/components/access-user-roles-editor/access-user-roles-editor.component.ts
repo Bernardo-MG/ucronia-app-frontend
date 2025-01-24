@@ -2,15 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
 import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles.component';
 
 @Component({
-  selector: 'access-user-roles-editor',
-  standalone: true,
-  imports: [CommonModule, IconsModule, AccessUserAddRoleComponent, AccessUserRolesComponent],
-  templateUrl: './access-user-roles-editor.component.html'
+    selector: 'access-user-roles-editor',
+    imports: [CommonModule, AccessUserAddRoleComponent, AccessUserRolesComponent, IconAddComponent],
+    templateUrl: './access-user-roles-editor.component.html'
 })
 export class AccessUserRolesEditorComponent {
 

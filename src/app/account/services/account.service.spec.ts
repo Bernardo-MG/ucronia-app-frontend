@@ -1,9 +1,9 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { EMPTY } from 'rxjs';
 import { AccountService } from './account.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccountService', () => {
   let service: AccountService;
@@ -14,13 +14,11 @@ describe('AccountService', () => {
     (authContainer as any).getStatus.and.returnValue(EMPTY);
 
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
       providers: [
         AccountService,
-        { provide: AuthContainer, useValue: authContainer }
+        { provide: AuthContainer, useValue: authContainer },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     });
     service = TestBed.inject(AccountService);

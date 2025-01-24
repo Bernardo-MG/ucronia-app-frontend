@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconCalendarComponent } from './icon-calendar.component';
 
 describe('IconCalendarComponent', () => {
@@ -9,9 +8,6 @@ describe('IconCalendarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         IconCalendarComponent
       ]
     })

@@ -5,15 +5,15 @@ import { AccountProfilePersonComponent } from '@app/account/components/profile/a
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 
 @Component({
-  selector: 'account-profile-frontpage',
-  standalone: true,
-  imports: [CommonModule, ArticleComponent, CardModule, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './account-profile-frontpage.container.html'
+    selector: 'account-profile-frontpage',
+    imports: [CommonModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+    templateUrl: './account-profile-frontpage.container.html'
 })
 export class AccountProfileFrontpageContainer implements OnInit {
 

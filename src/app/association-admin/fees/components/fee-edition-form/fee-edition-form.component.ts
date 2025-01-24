@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
+import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
-import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
+import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-  selector: 'assoc-fee-edition-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, SaveControlsComponent],
-  templateUrl: './fee-edition-form.component.html'
+    selector: 'assoc-fee-edition-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, IconSuccessOrFailureComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+    templateUrl: './fee-edition-form.component.html'
 })
 export class FeeEditionFormComponent extends FormComponent<Fee> {
 

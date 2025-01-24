@@ -5,17 +5,15 @@ import { MemberDetailsComponent } from '@app/association/members/core/components
 import { MemberService } from '@app/association/members/core/services/member.service';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
-import { CardModule } from '@app/shared/card/card.module';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'assoc-member-info',
-  standalone: true,
-  imports: [CommonModule, CardModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './member-info.container.html'
+    selector: 'assoc-member-info',
+    imports: [CommonModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './member-info.container.html'
 })
 export class MemberInfoContainer extends InfoEditorStatusComponent<Member> implements OnInit {
 

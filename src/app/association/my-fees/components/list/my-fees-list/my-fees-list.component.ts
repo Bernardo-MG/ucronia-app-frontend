@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconFailureComponent } from '@app/shared/icons/components/icon-failure/icon-failure.component';
 
 @Component({
-  selector: 'assoc-my-fees-list',
-  standalone: true,
-  imports: [CommonModule, IconsModule],
-  templateUrl: './my-fees-list.component.html'
+    selector: 'assoc-my-fees-list',
+    imports: [CommonModule, IconFailureComponent],
+    templateUrl: './my-fees-list.component.html'
 })
 export class MyFeesListComponent {
 
