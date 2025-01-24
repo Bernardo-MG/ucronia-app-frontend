@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AssociationAdminLayoutComponent } from './association-admin-layout.component';
 
 describe('AssociationAdminLayoutComponent', () => {
@@ -9,12 +9,14 @@ describe('AssociationAdminLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         AssociationAdminLayoutComponent
+      ],
+      providers: [
+        provideRouter([])
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AssociationAdminLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

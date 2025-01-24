@@ -1,10 +1,10 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserCreationContainer } from './access-user-creation.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccessUserCreationContainer', () => {
   let component: AccessUserCreationContainer;
@@ -12,15 +12,17 @@ describe('AccessUserCreationContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
+      imports: [
         ReactiveFormsModule,
-        AccessUserCreationContainer],
-    providers: [
+        AccessUserCreationContainer
+      ],
+      providers: [
         AccessUserService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(AccessUserCreationContainer);

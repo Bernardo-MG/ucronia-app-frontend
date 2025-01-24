@@ -1,6 +1,5 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BookService } from '../../services/book.service';
 import { LibraryBookInfoContainer } from './library-book-info.container';
 import { By } from '@angular/platform-browser';
@@ -19,20 +18,21 @@ describe('LibraryBookInfoContainer', () => {
     mockService = jasmine.createSpyObj('BookService', ['getOne', 'getLanguages']);
 
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule.withRoutes([]),
-        LibraryBookInfoContainer],
-    providers: [
+      imports: [
+        LibraryBookInfoContainer
+      ],
+      providers: [
         { provide: BookService, useValue: mockService },
         {
-            provide: ActivatedRoute,
-            useValue: {
-                paramMap: of({ get: (key: string) => (key === 'index' ? '1' : null) })
-            }
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: of({ get: (key: string) => (key === 'index' ? '1' : null) })
+          }
         },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(LibraryBookInfoContainer);

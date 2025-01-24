@@ -13,7 +13,6 @@ describe('SortingRouteButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         SortingRouteButtonComponent
       ],
       providers: [

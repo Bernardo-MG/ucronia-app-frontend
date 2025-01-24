@@ -1,9 +1,9 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserEditionContainer } from './access-user-edition.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccessUserEditionContainer', () => {
   let component: AccessUserEditionContainer;
@@ -11,14 +11,16 @@ describe('AccessUserEditionContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        AccessUserEditionContainer],
-    providers: [
+      imports: [
+        AccessUserEditionContainer
+      ],
+      providers: [
         AccessUserService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(AccessUserEditionContainer);

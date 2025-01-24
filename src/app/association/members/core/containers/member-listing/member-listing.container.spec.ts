@@ -1,6 +1,5 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { MemberBalanceService } from '@app/association/members/balance/services/member-balance.service';
 import { MemberService } from '@app/association/members/core/services/member.service';
 import { MemberListingContainer } from './member-listing.container';
@@ -12,17 +11,18 @@ describe('MemberListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        MemberListingContainer],
-    providers: [
+      imports: [
+        MemberListingContainer
+      ],
+      providers: [
         MemberService,
         MemberBalanceService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
-    .compileComponents();
-    
+      ]
+    })
+      .compileComponents();
+
     fixture = TestBed.createComponent(MemberListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

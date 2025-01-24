@@ -1,9 +1,9 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AccessUserActivateService } from '../../services/user-activate.service';
 import { UserActivationContainer } from './user-activation.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserActivationContainer', () => {
   let component: UserActivationContainer;
@@ -11,14 +11,16 @@ describe('UserActivationContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        UserActivationContainer],
-    providers: [
+      imports: [
+        UserActivationContainer
+      ],
+      providers: [
         AccessUserActivateService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(UserActivationContainer);

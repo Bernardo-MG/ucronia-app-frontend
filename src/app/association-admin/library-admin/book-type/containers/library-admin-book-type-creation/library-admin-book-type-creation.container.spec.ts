@@ -1,9 +1,9 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 import { LibraryAdminBookTypeCreateContainer } from './library-admin-book-type-creation.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryAdminBookTypeCreateContainer', () => {
   let component: LibraryAdminBookTypeCreateContainer;
@@ -11,14 +11,16 @@ describe('LibraryAdminBookTypeCreateContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        LibraryAdminBookTypeCreateContainer],
-    providers: [
+      imports: [
+        LibraryAdminBookTypeCreateContainer
+      ],
+      providers: [
         BookTypeAdminService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-    ]
-})
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(LibraryAdminBookTypeCreateContainer);
@@ -30,3 +32,4 @@ describe('LibraryAdminBookTypeCreateContainer', () => {
     expect(component).toBeTruthy();
   });
 });
+

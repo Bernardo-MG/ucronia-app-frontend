@@ -1,6 +1,5 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BookService } from '../../services/book.service';
 import { LibraryListingContainer } from './library-listing.container';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
@@ -11,14 +10,15 @@ describe('LibraryListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        LibraryListingContainer],
-    providers: [
+      imports: [
+        LibraryListingContainer
+      ],
+      providers: [
         BookService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(LibraryListingContainer);

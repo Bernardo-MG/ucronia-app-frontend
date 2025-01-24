@@ -1,8 +1,8 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { UserTokenSelectionListComponent } from './user-token-selection-list.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserTokenSelectionListComponent', () => {
   let component: UserTokenSelectionListComponent;
@@ -10,10 +10,15 @@ describe('UserTokenSelectionListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
-        UserTokenSelectionListComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [
+        UserTokenSelectionListComponent
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    });
     fixture = TestBed.createComponent(UserTokenSelectionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
