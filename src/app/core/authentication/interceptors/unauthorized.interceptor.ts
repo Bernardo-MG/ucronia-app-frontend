@@ -5,7 +5,7 @@ import { catchError, throwError } from 'rxjs';
 /**
  * Unauthorized error interceptor. Logs out the user in session on an authorization error.
  */
-export const jwtAuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
+export const unauthorizedInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(catchError(error => {
 
     const isApiUrl = req.url.startsWith(environment.apiUrl);

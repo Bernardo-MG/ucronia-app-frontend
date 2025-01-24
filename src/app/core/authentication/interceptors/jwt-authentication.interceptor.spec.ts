@@ -1,27 +1,28 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { JwtAuthenticationInterceptor } from './jwt-authentication.interceptor';
-import { AuthContainer } from '../services/auth.service';
+import { TestBed } from '@angular/core/testing';
 import { environment } from 'environments/environment';
+import { AuthContainer } from '../services/auth.service';
+import { jwtAuthenticationInterceptor } from './jwt-authentication.interceptor';
 
-describe('JwtAuthenticationInterceptor', () => {
+describe('jwtAuthenticationInterceptor', () => {
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
   let authContainer: jasmine.SpyObj<AuthContainer>;
 
   beforeEach(() => {
+    const interceptor: HttpInterceptorFn = (req, next) =>
+      TestBed.runInInjectionContext(() => jwtAuthenticationInterceptor(req, next));
     const authContainerSpy = jasmine.createSpyObj('AuthContainer', ['isLogged', 'getToken']);
 
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtAuthenticationInterceptor, multi: true },
+      imports: [],
+      providers: [
         { provide: AuthContainer, useValue: authContainerSpy },
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptors([interceptor])),
         provideHttpClientTesting()
-    ]
-});
+      ]
+    });
 
     httpMock = TestBed.inject(HttpTestingController);
     httpClient = TestBed.inject(HttpClient);
