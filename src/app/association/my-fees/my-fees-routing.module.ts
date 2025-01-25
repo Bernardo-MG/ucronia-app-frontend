@@ -4,7 +4,11 @@ import { MyFeesFrontpageContainer } from './containers/my-fees-listing/my-fees-l
 
 
 const routes: Routes = [
-  { path: '', component: MyFeesFrontpageContainer }
+  {
+    path: '',
+    component: MyFeesFrontpageContainer,
+    data: { breadcrumb: 'Mis cuotas' }
+  }
 ];
 
 @NgModule({

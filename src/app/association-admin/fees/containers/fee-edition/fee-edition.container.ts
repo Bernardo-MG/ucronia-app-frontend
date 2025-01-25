@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
@@ -23,6 +24,8 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   private date: string = "";
 
   private memberNumber = -1;
+
+  public levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
 
   constructor(
     private route: ActivatedRoute,

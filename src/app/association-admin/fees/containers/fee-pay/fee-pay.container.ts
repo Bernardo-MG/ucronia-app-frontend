@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
@@ -43,6 +44,8 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
   public currentStep = 1;
 
   public pay = true;
+
+  public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
 
   constructor(
     private service: FeeService,

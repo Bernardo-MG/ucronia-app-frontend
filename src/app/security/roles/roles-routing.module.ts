@@ -6,9 +6,30 @@ import { AccessRoleListingContainer } from './containers/access-role-listing/acc
 import { AccessRoleInfoEditionContainer } from './containers/access-role-edition/access-role-edition.container';
 
 const routes: Routes = [
-  { path: '', component: AccessRoleListingContainer },
-  { path: 'add', component: AccessRoleCreationContainer, canActivate: [ResourceGuard("role", "create")] },
-  { path: ':role', component: AccessRoleInfoEditionContainer, canActivate: [ResourceGuard("role", "read")] }
+  {
+    path: '',
+    data: { breadcrumb: 'Roles' },
+    children: [
+      {
+        path: '',
+        component: AccessRoleListingContainer,
+        canActivate: [ResourceGuard("role", "read")],
+        data: { breadcrumb: '' }
+      },
+      {
+        path: 'add',
+        component: AccessRoleCreationContainer,
+        canActivate: [ResourceGuard("role", "create")],
+        data: { breadcrumb: 'Registrar' }
+      },
+      {
+        path: ':role',
+        component: AccessRoleInfoEditionContainer,
+        canActivate: [ResourceGuard("role", "read")],
+        data: { breadcrumb: 'Editar' }
+      }
+    ]
+  }
 ];
 
 @NgModule({

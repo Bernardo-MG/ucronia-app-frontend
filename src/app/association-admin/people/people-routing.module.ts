@@ -7,9 +7,30 @@ import { PeopleListingContainer } from './containers/people-listing/people-listi
 
 
 const routes: Routes = [
-  { path: '', component: PeopleListingContainer, canActivate: [ResourceGuard("person", "read")] },
-  { path: 'register', component: PeopleCreationContainer, canActivate: [ResourceGuard("person", "create")] },
-  { path: ':number', component: PeopleInfoEditionContainer, canActivate: [ResourceGuard("person", "read")] }
+  {
+    path: '',
+    data: { breadcrumb: 'Personas' },
+    children: [
+      {
+        path: '',
+        component: PeopleListingContainer,
+        canActivate: [ResourceGuard("person", "read")],
+        data: { breadcrumb: '' }
+      },
+      {
+        path: 'register',
+        component: PeopleCreationContainer,
+        canActivate: [ResourceGuard("person", "create")],
+        data: { breadcrumb: 'Añadir' }
+      },
+      {
+        path: ':number',
+        component: PeopleInfoEditionContainer,
+        canActivate: [ResourceGuard("person", "read")],
+        data: { breadcrumb: 'Editar' }
+      }
+    ]
+  }
 ];
 
 @NgModule({

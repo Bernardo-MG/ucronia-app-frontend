@@ -1,0 +1,11 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li *ngFor="let level of levels" class="breadcrumb-item" [class.active]="!level.route"
+      [attr.aria-current]="!level.route ? 'page' : null">
+      <ng-container *ngIf="level.route; else plainText">
+        <a [routerLink]="level.route">{{ level.name }}</a>
+      </ng-container>
+      <ng-template #plainText>{{ level.name }}</ng-template>
+    </li>
+  </ol>
+</nav>
