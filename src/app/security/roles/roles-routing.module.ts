@@ -8,7 +8,7 @@ import { AccessRoleInfoEditionContainer } from './containers/access-role-edition
 const routes: Routes = [
   {
     path: '',
-    data: { breadcrumb: 'roles' },
+    data: { breadcrumb: 'Roles' },
     children: [
       {
         path: '',

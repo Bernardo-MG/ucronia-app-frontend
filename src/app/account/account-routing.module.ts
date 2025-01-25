@@ -9,10 +9,23 @@ const routes: Routes = [
   {
     path: '',
     component: AccountLayoutComponent,
+    data: { breadcrumb: 'Cuenta' },
     children: [
-      { path: '', component: AccountProfileFrontpageContainer },
-      { path: 'profile', component: AccountProfileFrontpageContainer },
-      { path: 'password', component: AccountPasswordChangeContainer }
+      {
+        path: '',
+        redirectTo: 'profile',
+        pathMatch: 'full'
+      },
+      {
+        path: 'profile',
+        component: AccountProfileFrontpageContainer,
+        data: { breadcrumb: 'Perfil' }
+      },
+      {
+        path: 'password',
+        component: AccountPasswordChangeContainer,
+        data: { breadcrumb: 'Contraseña' }
+      }
     ]
   }
 ];
