@@ -46,7 +46,7 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
 
   public pay = true;
 
-  public levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Pago', '')];
+  public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
 
   constructor(
     private service: FeeService,
