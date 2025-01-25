@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { BreadcrumbComponent } from '@app/core/layout/components/breadcrumb/breadcrumb.component';
+import { RouterBreadcrumbComponent } from '@app/core/layout/components/router-breadcrumb/router-breadcrumb.component';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
@@ -13,11 +14,10 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
-import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 
 @Component({
     selector: 'assoc-fee-edition',
-    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, BreadcrumbComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, RouterBreadcrumbComponent, ResponsiveShortColumnsDirective],
     templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
