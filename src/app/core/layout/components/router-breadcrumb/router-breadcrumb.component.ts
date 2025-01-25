@@ -16,36 +16,40 @@ export class RouterBreadcrumbComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    // Build breadcrumbs initially for page reload
-    this.breadcrumbs = this.buildBreadcrumbs(this.route.root);
+    // Handle initial load
+    this.breadcrumbs = this.buildBreadcrumbs();
 
-    // Update breadcrumbs on route change
+    // Build breadcrumbs on initialization and on route change
     this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd),
-        map(() => this.buildBreadcrumbs(this.route.root))
-      )
-      .subscribe((breadcrumbs) => (this.breadcrumbs = breadcrumbs));
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.breadcrumbs = this.buildBreadcrumbs();
+      });
   }
 
-  private buildBreadcrumbs(route: ActivatedRoute, url: string = '', breadcrumbs: BreadcrumbLink[] = []): BreadcrumbLink[] {
-    const children = route.children;
+  private buildBreadcrumbs(): BreadcrumbLink[] {
+    const breadcrumbs: BreadcrumbLink[] = [];
+    let currentRoute: ActivatedRoute | null = this.route.root;
+    let url = '';
 
-    for (const child of children) {
-      const routeURL = child.snapshot.url.map((segment) => segment.path).join('/');
-      if (routeURL !== '') {
-        url += `/${routeURL}`;
+    while (currentRoute) {
+      // Process each level of the route tree
+      // Build the relative URL for the current route
+      const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
+      url += `/${routeURL}`;
+
+      // Add breadcrumb if the route has 'breadcrumb' data
+      if (currentRoute.snapshot.data['breadcrumb']) {
+        breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
       }
 
-      if (child.snapshot.data['breadcrumb']) {
-        breadcrumbs.push(
-          new BreadcrumbLink(child.snapshot.data['breadcrumb'], url)
-        );
-      }
-
-      return this.buildBreadcrumbs(child, url, breadcrumbs);
+      // Move to the first child route, if any
+      currentRoute = currentRoute.firstChild;
     }
 
+    if (breadcrumbs.length > 0) {
+      breadcrumbs[breadcrumbs.length - 1].route = '';
+    }
     return breadcrumbs;
   }
 
