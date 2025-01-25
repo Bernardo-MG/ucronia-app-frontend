@@ -12,6 +12,8 @@ import { BookLendingLendContainer } from './lending/containers/book-lending-lend
 import { BookLendingReturnContainer } from './lending/containers/book-lending-returning/book-lending-returning.component';
 import { LibraryAdminPublisherCreateContainer } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container';
 import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container';
+import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/library-admin-book-type-creation/library-admin-book-type-creation.container';
+import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
 
 
 const routes: Routes = [
@@ -41,13 +43,13 @@ const routes: Routes = [
         path: 'book/:number/lend',
         component: BookLendingLendContainer,
         canActivate: [ResourceGuard("library_lending", "update")],
-        data: { breadcrumb: 'Prestar' }
+        data: { breadcrumb: 'Préstamo' }
       },
       {
         path: 'book/:number/return',
         component: BookLendingReturnContainer,
         canActivate: [ResourceGuard("library_lending", "update")],
-        data: { breadcrumb: 'Devolver' }
+        data: { breadcrumb: 'Devolución' }
       },
       {
         path: 'author/add',
@@ -63,13 +65,13 @@ const routes: Routes = [
       },
       {
         path: 'bookType/add',
-        component: LibraryAdminAuthorCreateContainer,
+        component: LibraryAdminBookTypeCreateContainer,
         canActivate: [ResourceGuard("library_book_type", "create")],
         data: { breadcrumb: 'Registrar tipo' }
       },
       {
         path: 'bookType/:number',
-        component: LibraryAdminAuthorInfoEditorContainer,
+        component: LibraryAdminBookTypeInfoEditorContainer,
         canActivate: [ResourceGuard("library_book_type", "read")],
         data: { breadcrumb: 'Editar tipo' }
       },
