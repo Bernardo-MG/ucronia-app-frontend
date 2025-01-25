@@ -21,13 +21,13 @@ const routes: Routes = [
         path: 'add',
         component: TransactionCreationComponent,
         canActivate: [ResourceGuard("transaction", "create")],
-        data: { breadcrumb: 'Añadir' }
+        data: { breadcrumb: 'Registro de transacción' }
       },
       {
         path: 'transaction/:index',
         component: TransactionEditionComponent,
         canActivate: [ResourceGuard("transaction", "read")],
-        data: { breadcrumb: 'Editar' }
+        data: { breadcrumb: 'Edición de transacción' }
       }
     ]
   }
