@@ -9,9 +9,13 @@ import { FeePayContainer } from './containers/fee-pay/fee-pay.container';
 const routes: Routes = [
   {
     path: '',
-    component: FeeListingContainer,
-    data: { breadcrumb: 'Cuotas' },
     children: [
+      {
+        path: '',
+        component: FeeListingContainer,
+        canActivate: [ResourceGuard("fee", "read")],
+        data: { breadcrumb: 'Cuotas' }
+      },
       {
         path: 'pay',
         component: FeePayContainer,
