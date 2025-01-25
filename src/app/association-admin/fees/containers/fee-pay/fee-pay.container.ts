@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { RouterBreadcrumbComponent } from '@app/core/layout/components/router-breadcrumb/router-breadcrumb.component';
 import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
@@ -25,7 +24,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
     selector: 'assoc-fee-create',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, CardComponent, CardBodyComponent, RouterBreadcrumbComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
     templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {

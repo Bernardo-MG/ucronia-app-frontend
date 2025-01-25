@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { RouterBreadcrumbComponent } from '@app/core/layout/components/router-breadcrumb/router-breadcrumb.component';
 import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
@@ -17,7 +16,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
     selector: 'assoc-fee-edition',
-    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, RouterBreadcrumbComponent, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
     templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
