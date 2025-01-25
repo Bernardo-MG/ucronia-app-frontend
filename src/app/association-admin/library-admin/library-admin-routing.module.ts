@@ -24,7 +24,7 @@ const routes: Routes = [
       {
         path: '',
         component: LibraryAdminListingContainer,
-        canActivate: [ResourceGuard("library", "view")],
+        canActivate: [ResourceGuard("library_admin", "view")],
         data: { breadcrumb: '' }
       },
       {
