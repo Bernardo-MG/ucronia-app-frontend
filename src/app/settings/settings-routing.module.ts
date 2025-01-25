@@ -8,6 +8,7 @@ const routes: Routes = [
   {
     path: '',
     component: SimpleLayoutComponent,
+    data: { breadcrumb: 'Configuración' },
     children: [
       {
         path: '',

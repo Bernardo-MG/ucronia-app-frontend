@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 
 @Component({
-  selector: 'assoc-fee-pay-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, WaitingButtonComponent, JustifyCenterDirective],
-  templateUrl: './fee-pay-form.component.html'
+    selector: 'assoc-fee-pay-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
+    templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
 

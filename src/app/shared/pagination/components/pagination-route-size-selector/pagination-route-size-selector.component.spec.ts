@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { PaginationSizeSelectorComponent as PaginationRouteSizeSelectorComponent } from './pagination-route-size-selector.component';
 
 describe('PaginationRouteSizeSelectorComponent', () => {
@@ -9,8 +9,10 @@ describe('PaginationRouteSizeSelectorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
         PaginationRouteSizeSelectorComponent
+      ],
+      providers: [
+        provideRouter([])
       ]
     })
       .compileComponents();

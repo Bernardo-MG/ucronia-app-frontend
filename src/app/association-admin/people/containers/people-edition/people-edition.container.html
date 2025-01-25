@@ -1,4 +1,4 @@
-<layout-article title="#{{data.number}} {{data.name.fullName}}">
+<layout-article>
   <div appResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
@@ -6,7 +6,7 @@
         <app-card>
           <app-card-body>
             <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-              [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()" (startEditing)="onStartEditing()">
+              [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()">
             </assoc-people-edition-form>
           </app-card-body>
         </app-card>

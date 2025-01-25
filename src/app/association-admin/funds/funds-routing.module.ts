@@ -7,9 +7,30 @@ import { TransactionEditionComponent } from './core/containers/transaction-editi
 
 
 const routes: Routes = [
-  { path: '', component: FundsListingComponent },
-  { path: 'add', component: TransactionCreationComponent, canActivate: [ResourceGuard("transaction", "create")] },
-  { path: 'transaction/:index', component: TransactionEditionComponent, canActivate: [ResourceGuard("transaction", "read")] }
+  {
+    path: '',
+    data: { breadcrumb: 'Fondos' },
+    children: [
+      {
+        path: '',
+        component: FundsListingComponent,
+        canActivate: [ResourceGuard("transaction", "read")],
+        data: { breadcrumb: '' }
+      },
+      {
+        path: 'add',
+        component: TransactionCreationComponent,
+        canActivate: [ResourceGuard("transaction", "create")],
+        data: { breadcrumb: 'Registro de transacción' }
+      },
+      {
+        path: 'transaction/:index',
+        component: TransactionEditionComponent,
+        canActivate: [ResourceGuard("transaction", "read")],
+        data: { breadcrumb: 'Edición de transacción' }
+      }
+    ]
+  }
 ];
 
 @NgModule({

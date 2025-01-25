@@ -10,10 +10,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-game-system-listing',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
-  templateUrl: './library-admin-game-system-listing.container.html'
+    selector: 'assoc-library-admin-game-system-listing',
+    imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
+    templateUrl: './library-admin-game-system-listing.container.html'
 })
 export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges {
 

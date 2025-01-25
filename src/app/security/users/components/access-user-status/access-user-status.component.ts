@@ -1,13 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { User } from '@app/core/authentication/models/user';
-import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 
 @Component({
-  selector: 'access-user-status',
-  standalone: true,
-  imports: [IconsModule, CardModule],
-  templateUrl: './access-user-status.component.html'
+    selector: 'access-user-status',
+    imports: [IconSuccessOrFailureComponent],
+    templateUrl: './access-user-status.component.html'
 })
 export class AccessUserStatusComponent {
 

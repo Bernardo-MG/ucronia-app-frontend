@@ -1,10 +1,10 @@
 import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { IconsModule } from '@app/shared/icons/icons.module';
 import { WaitingButtonComponent } from './waiting-button.component';
 
 @Component({
+  imports: [WaitingButtonComponent],
   template: `
     <layout-waiting-button [name]="name" [waiting]="waiting" [disabled]="disabled">
       {{buttonText}}
@@ -26,10 +26,9 @@ describe('WaitingButtonComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        IconsModule,
-        WaitingButtonComponent
-      ],
-      declarations: [TestHostComponent]
+        WaitingButtonComponent,
+        TestHostComponent
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
@@ -77,7 +76,7 @@ describe('WaitingButtonComponent', () => {
 
     const waitingButtonComponent = fixture.debugElement.query(By.directive(WaitingButtonComponent)).componentInstance;
     spyOn(waitingButtonComponent.action, 'emit');
-    
+
     buttonElement = fixture.debugElement.query(By.css('button'));
     buttonElement.nativeElement.click();
 

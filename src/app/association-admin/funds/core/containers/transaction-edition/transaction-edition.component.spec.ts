@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { TransactionEditionComponent } from './transaction-edition.component';
 
@@ -11,12 +12,13 @@ describe('TransactionEditionComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
         TransactionEditionComponent
       ],
       providers: [
-        TransactionService
+        TransactionService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
       .compileComponents();

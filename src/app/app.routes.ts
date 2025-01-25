@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
@@ -15,7 +14,7 @@ const activateUserModule = () => import('@app/access/user-activation/user-activa
 const resetPasswordModule = () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule);
 const settingsModule = () => import('@app/settings/settings.module').then(m => m.SettingsModule);
 
-const routes: Routes = [
+export const routes: Routes = [
   // Main app
   {
     path: '',
@@ -82,9 +81,3 @@ const routes: Routes = [
     ]
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

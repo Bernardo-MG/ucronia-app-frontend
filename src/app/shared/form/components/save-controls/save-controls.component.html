@@ -4,6 +4,6 @@
     (action)="save.emit()">Guardar</layout-waiting-button>
   <!-- Cancel button -->
   <ng-template [ngIf]="cancellable">
-    <button class="btn btn-warning" [disabled]="cancelDisabled" name="Cancel" (click)="cancel.emit()">Cancelar</button>
+    <button class="btn btn-warning" [disabled]="cancelDisabled" name="Cancel" (click)="reject.emit()">Cancelar</button>
   </ng-template>
 </div>

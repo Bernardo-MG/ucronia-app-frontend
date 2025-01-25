@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Setting } from '@app/settings/models/setting';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { AssociationSettingsService as AssociationSettingsService } from '../../service/association-settings.service';
 import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
+import { AssociationSettingsService } from '../../service/association-settings.service';
 
 @Component({
-  selector: 'assoc-settings-info-editor',
-  standalone: true,
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
-  templateUrl: './settings-info-editor.container.html'
+    selector: 'assoc-settings-info-editor',
+    imports: [ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent, CardComponent, CardBodyComponent],
+    templateUrl: './settings-info-editor.container.html'
 })
 export class SettingsInfoEditorContainer implements OnInit {
 

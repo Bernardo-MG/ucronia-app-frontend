@@ -1,4 +1,4 @@
-<layout-article title="Editar usuario">
+<layout-article>
   <div appResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
@@ -6,7 +6,7 @@
         <app-card>
           <app-card-body>
             <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (cancel)="onCancel()">
+              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
             </access-user-form>
           </app-card-body>
         </app-card>

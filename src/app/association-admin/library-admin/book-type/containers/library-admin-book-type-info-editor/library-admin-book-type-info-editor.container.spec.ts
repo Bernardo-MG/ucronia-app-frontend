@@ -1,6 +1,7 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 import { LibraryAdminBookTypeInfoEditorContainer } from './library-admin-book-type-info-editor.container';
 
@@ -11,16 +12,17 @@ describe('LibraryAdminBookTypeInfoEditorContainer', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientTestingModule,
         LibraryAdminBookTypeInfoEditorContainer
       ],
       providers: [
-        BookTypeAdminService
+        BookTypeAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminBookTypeInfoEditorContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

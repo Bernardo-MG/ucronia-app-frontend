@@ -1,16 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teamup-calendar',
   standalone: true,
-  imports: [BlockUiDirective],
   templateUrl: './teamup-calendar.component.html'
 })
 export class TeamupCalendarComponent implements OnChanges {
 
-  @Input() public code = '';
+  @Input() public code: string | undefined;
 
   @Input() public showLogo = false;
 
@@ -32,23 +30,24 @@ export class TeamupCalendarComponent implements OnChanges {
 
   @Input() public showYearViewHeader = false;
 
-  public url = '';
-
-  public get sanitizedUrl() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-  }
+  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
   constructor(
     private sanitizer: DomSanitizer
   ) { }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['code']) {
-      this.url = `https://teamup.com/${this.code}?showLogo=${this.convert(this.showLogo)}&showSearch=${this.convert(this.showSearch)}&showProfileAndInfo=${this.convert(this.showProfile)}&showSidepanel=${this.convert(this.showSidePanel)}&disableSidepanel=${this.convert(this.disableSidePanel)}&showViewSelector=${this.convert(this.showViewSelector)}&showMenu=${this.convert(this.showMenu)}&showAgendaHeader=${this.convert(this.showAgendaHeader)}&showAgendaDetails=${this.convert(this.showAgendaDetails)}&showYearViewHeader=${this.convert(this.showYearViewHeader)}&showTitle=0&view=m`;
+      if (this.code) {
+        const rawUrl = `https://teamup.com/${this.code}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+      } else {
+        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+      }
     }
   }
 
-  private convert(flag: boolean) {
+  private parseBoolean(flag: boolean): string {
     let value;
 
     if (flag) {

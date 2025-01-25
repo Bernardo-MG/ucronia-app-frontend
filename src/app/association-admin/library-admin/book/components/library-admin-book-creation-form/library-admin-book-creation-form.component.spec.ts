@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { LibraryAdminBookCreationFormComponent } from './library-admin-book-creation-form.component';
 
 describe('LibraryAdminBookCreationFormComponent', () => {
@@ -7,10 +8,15 @@ describe('LibraryAdminBookCreationFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryAdminBookCreationFormComponent]
+      imports: [
+        LibraryAdminBookCreationFormComponent
+      ],
+      providers: [
+        provideRouter([])
+      ]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminBookCreationFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

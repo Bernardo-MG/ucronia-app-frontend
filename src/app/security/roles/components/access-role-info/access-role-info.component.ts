@@ -3,10 +3,9 @@ import { Role } from '@app/core/authentication/models/role';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 
 @Component({
-  selector: 'access-role-info',
-  standalone: true,
-  imports: [PlaceholderDirective],
-  templateUrl: './access-role-info.component.html'
+    selector: 'access-role-info',
+    imports: [PlaceholderDirective],
+    templateUrl: './access-role-info.component.html'
 })
 export class AccessRoleInfoComponent {
 

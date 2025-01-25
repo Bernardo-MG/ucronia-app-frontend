@@ -1,8 +1,9 @@
-<layout-article title="Calendario">
+<layout-article>
   <app-card>
     <app-card-body>
-      <assoc-activity-calendar [calendarCode]="calendarCode"
-        *layoutBlockUi="readingCalendarCode"></assoc-activity-calendar>
+      <app-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+        [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true"
+        [disableSidePanel]="true"></app-teamup-calendar>
     </app-card-body>
   </app-card>
 </layout-article>

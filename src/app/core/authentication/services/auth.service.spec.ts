@@ -1,21 +1,22 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { SecurityDetails } from '../models/security-details';
 import { AuthContainer } from './auth.service';
 import { LoginStatus } from '../models/login-status';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuhtContainer', () => {
   let service: AuthContainer;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        AuthContainer
-      ]
-    });
+    imports: [],
+    providers: [
+        AuthContainer,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     service = TestBed.inject(AuthContainer);
     service.logout();
   });

@@ -4,7 +4,11 @@ import { AccessAuditLoginContainer } from './containers/access-audit-login/acces
 
 
 const routes: Routes = [
-  { path: '', component: AccessAuditLoginContainer }
+  {
+    path: '',
+    component: AccessAuditLoginContainer,
+    data: { breadcrumb: 'Auditoría' }
+  }
 ];
 
 @NgModule({

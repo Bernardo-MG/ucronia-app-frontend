@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { FormModule } from '@app/shared/form/form.module';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { UserLogin } from '../../models/user-login';
 
@@ -11,10 +11,9 @@ import { UserLogin } from '../../models/user-login';
  * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
-  selector: 'login-login-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './login-form.component.html'
+    selector: 'login-login-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InvalidFieldDirective],
+    templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
 

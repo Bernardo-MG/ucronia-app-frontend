@@ -1,7 +1,4 @@
 <article class="p-4">
-  <header>
-    <h1 class="border-bottom" *layoutPlaceholder="waiting">#{{data.number}} {{data.name}}</h1>
-  </header>
   <div appResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
@@ -9,7 +6,7 @@
         <app-card>
           <app-card-body>
             <assoc-library-admin-publisher-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
-              [data]="data" [failures]="failures" (save)="onSave($event)" (cancel)="onCancel()">
+              [data]="data" [failures]="failures" (save)="onSave($event)" (reject)="onCancel()">
             </assoc-library-admin-publisher-form>
           </app-card-body>
         </app-card>

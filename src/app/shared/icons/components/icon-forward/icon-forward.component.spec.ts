@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ForwardIconComponent } from './icon-forward.component';
 
 describe('ForwardIconComponent', () => {
@@ -9,9 +8,6 @@ describe('ForwardIconComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FontAwesomeModule
-      ],
-      declarations: [
         ForwardIconComponent
       ]
     })

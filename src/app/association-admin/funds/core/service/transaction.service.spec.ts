@@ -1,6 +1,6 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { TransactionService } from './transaction.service';
 
 describe('TransactionService', () => {
@@ -8,14 +8,12 @@ describe('TransactionService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ],
-      providers: [
-        TransactionService
-      ]
-    });
+    providers: [
+        TransactionService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     service = TestBed.inject(TransactionService);
   });
 

@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberBalanceService } from '../../services/member-balance.service';
 import { MemberBalanceChartWidgetContainer } from './member-balance-chart-widget.container';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MemberBalanceChartWidgetContainer', () => {
   let component: MemberBalanceChartWidgetContainer;
@@ -9,14 +10,13 @@ describe('MemberBalanceChartWidgetContainer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        MemberBalanceChartWidgetContainer
-      ],
-      providers: [
-        MemberBalanceService
-      ]
-    });
+    imports: [MemberBalanceChartWidgetContainer],
+    providers: [
+        MemberBalanceService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     fixture = TestBed.createComponent(MemberBalanceChartWidgetContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { FormModule } from '@app/shared/form/form.module';
+import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
+import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 
 @Component({
-  selector: 'assoc-book-return-form',
-  standalone: true,
-  imports: [CommonModule, FormModule, WaitingButtonComponent],
-  templateUrl: './book-return-form.component.html'
+    selector: 'assoc-book-return-form',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+    templateUrl: './book-return-form.component.html'
 })
 export class BookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
 

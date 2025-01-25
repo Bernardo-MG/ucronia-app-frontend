@@ -4,9 +4,14 @@ import { RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardNavigationComponent } from '@app/shared/card/components/card-navigation/card-navigation.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
+import { IconExcelComponent } from '@app/shared/icons/components/icon-excel/icon-excel.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
@@ -16,10 +21,9 @@ import { LibraryAdminGameSystemListingContainer } from '../../../game-system/con
 import { LibraryAdminPublisherListingContainer } from '../../../publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
 
 @Component({
-  selector: 'assoc-library-admin-listing',
-  standalone: true,
-  imports: [CommonModule, RouterModule, IconsModule, CardModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent],
-  templateUrl: './library-admin-listing.component.html'
+    selector: 'assoc-library-admin-listing',
+    imports: [CommonModule, RouterModule, LibraryAdminBookListingContainer, LibraryAdminBookTypeListingContainer, LibraryAdminGameSystemListingContainer, LibraryAdminAuthorListingContainer, LibraryAdminPublisherListingContainer, ArticleComponent, PaginationInfoComponent, IconExcelComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, CardNavigationComponent],
+    templateUrl: './library-admin-listing.component.html'
 })
 export class LibraryAdminListingContainer implements OnInit {
 

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
@@ -13,10 +13,9 @@ import { LibraryAdminAuthorInfoComponent } from '../../components/library-admin-
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-author-edition',
-  standalone: true,
-  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-author-edition.container.html'
+    selector: 'assoc-library-admin-author-edition',
+    imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+    templateUrl: './library-admin-author-edition.container.html'
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> implements OnInit {
 

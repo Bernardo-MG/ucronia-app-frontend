@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse } from '@app/core/api/models/failure-response';
 import { FieldFailures } from '@app/core/api/models/field-failures';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { throwError } from 'rxjs';
+import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 import { UserActivate } from '../../models/user-activate';
 import { AccessUserActivateService } from '../../services/user-activate.service';
-import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
@@ -16,10 +17,9 @@ import { UserActivationFormComponent } from '../../components/user-activation-fo
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'access-user-activation',
-  standalone: true,
-  imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUiDirective],
-  templateUrl: './user-activation.container.html'
+    selector: 'access-user-activation',
+    imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
+    templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer implements OnInit {
 

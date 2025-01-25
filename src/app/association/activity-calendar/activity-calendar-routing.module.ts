@@ -4,7 +4,11 @@ import { ActivityCalendarFrontpageContainer } from './containers/activity-calend
 
 
 const routes: Routes = [
-  { path: '', component: ActivityCalendarFrontpageContainer }
+  {
+    path: '',
+    component: ActivityCalendarFrontpageContainer,
+    data: { breadcrumb: 'Actividades' }
+  }
 ];
 
 @NgModule({

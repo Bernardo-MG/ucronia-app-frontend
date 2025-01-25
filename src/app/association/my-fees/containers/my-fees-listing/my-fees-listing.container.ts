@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Fee } from '@app/models/fees/fee';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
 import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
-  selector: 'app-my-fees-listing',
-  standalone: true,
-  imports: [ArticleComponent, CardModule, MyFeesListComponent, PaginationInfoComponent],
-  templateUrl: './my-fees-listing.container.html'
+    selector: 'app-my-fees-listing',
+    imports: [ArticleComponent, MyFeesListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+    templateUrl: './my-fees-listing.container.html'
 })
 export class MyFeesFrontpageContainer implements OnInit {
 

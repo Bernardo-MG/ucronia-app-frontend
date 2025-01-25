@@ -6,8 +6,24 @@ import { LibraryListingContainer } from './containers/library-listing/library-li
 
 
 const routes: Routes = [
-  { path: '', component: LibraryListingContainer },
-  { path: ':index', component: LibraryBookInfoContainer, canActivate: [ResourceGuard("library_book", "read")] }
+  {
+    path: '',
+    data: { breadcrumb: 'Biblioteca' },
+    children: [
+          {
+            path: '',
+            component: LibraryListingContainer,
+            canActivate: [ResourceGuard("library", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: ':index',
+            component: LibraryBookInfoContainer,
+            canActivate: [ResourceGuard("library_book", "read")],
+            data: { breadcrumb: 'Libro' }
+          }
+    ]
+  }
 ];
 
 @NgModule({

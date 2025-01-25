@@ -1,11 +1,8 @@
 <app-card>
+  <app-card-header>
+    <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
+  </app-card-header>
   <app-card-body>
-    <!-- Number -->
-    <div class="row">
-      <div class="col-3" *layoutPlaceholder="waiting">
-        # {{data.number}}
-      </div>
-    </div>
     <!-- Name -->
     <div class="row">
       <div class="col-sm-3 text-primary">Nombre</div>

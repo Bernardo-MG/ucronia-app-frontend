@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
@@ -21,10 +23,9 @@ import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-mem
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-  selector: 'assoc-fee-create',
-  standalone: true,
-  imports: [CommonModule, FormModule, IconsModule, CardModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-pay.container.html'
+    selector: 'assoc-fee-create',
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+    templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
 
@@ -43,6 +44,8 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
   public currentStep = 1;
 
   public pay = true;
+
+  public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
 
   constructor(
     private service: FeeService,

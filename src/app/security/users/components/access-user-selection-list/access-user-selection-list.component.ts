@@ -6,10 +6,9 @@ import { User } from '@app/core/authentication/models/user';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 
 @Component({
-  selector: 'access-user-selection-list',
-  standalone: true,
-  imports: [CommonModule, RouterModule, SortingButtonComponent],
-  templateUrl: './access-user-selection-list.component.html'
+    selector: 'access-user-selection-list',
+    imports: [CommonModule, RouterModule, SortingButtonComponent],
+    templateUrl: './access-user-selection-list.component.html'
 })
 export class AccessUserSelectionListComponent {
 

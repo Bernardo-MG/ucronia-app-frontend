@@ -10,11 +10,9 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { CardModule } from '@app/shared/card/card.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { FormModule } from '@app/shared/form/form.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDetailsComponent } from '../../components/library-admin-book-details/library-admin-book-details.component';
@@ -23,10 +21,9 @@ import { LibraryAdminBookEditionFormComponent } from '../../components/library-a
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-edition',
-  standalone: true,
-  imports: [CommonModule, RouterModule, FormModule, IconsModule, CardModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
-  templateUrl: './library-admin-book-edition.container.html'
+    selector: 'assoc-library-admin-book-edition',
+    imports: [CommonModule, RouterModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+    templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
 

@@ -1,51 +1,42 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { AuthContainer } from '../services/auth.service';
+import { HttpInterceptorFn } from '@angular/common/http';
+import { inject } from '@angular/core';
 import { environment } from 'environments/environment';
-import { Observable } from 'rxjs';
+import { AuthContainer } from '../services/auth.service';
+
+
+const tokenHeaderKey = 'Authorization';
+const tokenHeaderIdentifier = 'Bearer'
 
 /**
  * JWT authentication interceptor. Adds the bearer authentication token to all request to
  * API requests, as long as the user in session is correctly logged in.
  */
-@Injectable()
-export class JwtAuthenticationInterceptor implements HttpInterceptor {
+export const jwtAuthenticationInterceptor: HttpInterceptorFn = (req, next) => {
+  const authContainer = inject(AuthContainer);
+  let authReq;
 
-  private tokenHeaderKey = 'Authorization';
+  const isApiUrl = req.url.startsWith(environment.apiUrl);
 
-  private tokenHeaderIdentifier = 'Bearer'
+  if (isApiUrl) {
+    // It is a request to our API
 
-  constructor(
-    private authContainer: AuthContainer
-  ) { }
+    // Acquire the current user token
+    const logged = authContainer.isLogged();
+    const token = authContainer.getToken();
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let authReq;
-
-    const isApiUrl = request.url.startsWith(environment.apiUrl);
-
-    if (isApiUrl) {
-      // It is a request to our API
-
-      // Acquire the current user token
-      const logged = this.authContainer.isLogged();
-      const token = this.authContainer.getToken();
-
-      if ((logged) && (token)) {
-        // Has token
-        // It is added to the request
-        authReq = request.clone({ headers: request.headers.set(this.tokenHeaderKey, `${this.tokenHeaderIdentifier} ${token}`) });
-      } else {
-        // No token
-        // No changes to request
-        authReq = request;
-      }
+    if ((logged) && (token)) {
+      // Has token
+      // It is added to the request
+      authReq = req.clone({ headers: req.headers.set(tokenHeaderKey, `${tokenHeaderIdentifier} ${token}`) });
     } else {
-      // External API
-      authReq = request;
+      // No token
+      // No changes to request
+      authReq = req;
     }
-
-    return next.handle(authReq);
+  } else {
+    // External API
+    authReq = req;
   }
 
-}
+  return next(authReq);
+};

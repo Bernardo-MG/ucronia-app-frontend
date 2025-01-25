@@ -1,19 +1,20 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { FeeCalendarService } from './fee-calendar.service';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FeeCalendarService', () => {
   let service: FeeCalendarService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule
-      ],
-      providers: [
-        FeeCalendarService
-      ]
-    });
+    imports: [],
+    providers: [
+        FeeCalendarService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
     service = TestBed.inject(FeeCalendarService);
   });
 

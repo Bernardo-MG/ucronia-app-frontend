@@ -1,12 +1,12 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BookService } from '../../services/book.service';
 import { LibraryBookInfoContainer } from './library-book-info.container';
 import { By } from '@angular/platform-browser';
 import { Book } from '@app/models/library/book';
 import { of, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryBookInfoContainer', () => {
   let component: LibraryBookInfoContainer;
@@ -19,8 +19,6 @@ describe('LibraryBookInfoContainer', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes([]),
-        HttpClientTestingModule,
         LibraryBookInfoContainer
       ],
       providers: [
@@ -30,7 +28,9 @@ describe('LibraryBookInfoContainer', () => {
           useValue: {
             paramMap: of({ get: (key: string) => (key === 'index' ? '1' : null) })
           }
-        }
+        },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
       ]
     })
       .compileComponents();

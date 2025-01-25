@@ -5,17 +5,19 @@ import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { User } from '@app/core/authentication/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardModule } from '@app/shared/card/card.module';
-import { IconsModule } from '@app/shared/icons/icons.module';
+import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
+import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
+import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
+import { CardComponent } from '@app/shared/card/components/card/card.component';
+import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
-  standalone: true,
-  imports: [CardModule, RouterModule, IconsModule, AccessUserSelectionListComponent, PaginationInfoComponent],
-  templateUrl: './access-user-selection-list-widget.component.html'
+    selector: 'access-user-selection-list-widget',
+    imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+    templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {
 
