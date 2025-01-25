@@ -1,19 +1,25 @@
-import { Component } from '@angular/core';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { BreadcrumbLink } from '../../model/breadcrumb-link';
+import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 @Component({
   selector: 'app-router-breadcrumb',
   imports: [BreadcrumbComponent],
   templateUrl: './router-breadcrumb.component.html'
 })
-export class RouterBreadcrumbComponent {
+export class RouterBreadcrumbComponent implements OnInit {
 
   breadcrumbs: BreadcrumbLink[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute) { }
+
+  public ngOnInit(): void {
+    // Build breadcrumbs initially for page reload
+    this.breadcrumbs = this.buildBreadcrumbs(this.route.root);
+
+    // Update breadcrumbs on route change
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
