@@ -5,8 +5,24 @@ import { UserTokenListingContainer } from './containers/user-token-listing/user-
 import { UserTokenEditionContainer } from './containers/user-token-edition/user-token-edition.container';
 
 const routes: Routes = [
-  { path: '', component: UserTokenListingContainer },
-  { path: ':token', component: UserTokenEditionContainer, canActivate: [ResourceGuard("user_token", "read")] }
+  {
+    path: '',
+    data: { breadcrumb: 'Tokens de usuario' },
+    children: [
+      {
+        path: '',
+        component: UserTokenListingContainer,
+        canActivate: [ResourceGuard("user_token", "read")],
+        data: { breadcrumb: '' }
+      },
+      {
+        path: ':token',
+        component: UserTokenEditionContainer,
+        canActivate: [ResourceGuard("user_token", "read")],
+        data: { breadcrumb: 'Editar' }
+      }
+    ]
+  }
 ];
 
 @NgModule({
