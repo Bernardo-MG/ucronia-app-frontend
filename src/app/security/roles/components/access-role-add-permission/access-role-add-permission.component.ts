@@ -3,10 +3,10 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { IconAddComponent } from 'icons';
 
 @Component({
     selector: 'access-role-add-permission',

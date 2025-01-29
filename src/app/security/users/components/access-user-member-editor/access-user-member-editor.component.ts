@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Member } from '@app/models/members/member';
-import { IconSearchComponent } from '@app/shared/icons/components/icon-search/icon-search.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { IconSearchComponent } from 'icons';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({

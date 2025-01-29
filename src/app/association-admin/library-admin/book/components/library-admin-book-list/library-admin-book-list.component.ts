@@ -3,8 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
-import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { IconSuccessOrFailureComponent } from 'icons';
 
 @Component({
     selector: 'assoc-library-admin-book-list',

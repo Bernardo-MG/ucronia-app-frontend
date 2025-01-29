@@ -10,11 +10,11 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
+import { IconAddComponent } from 'icons';
 
 @Component({
     selector: 'assoc-people-listing',

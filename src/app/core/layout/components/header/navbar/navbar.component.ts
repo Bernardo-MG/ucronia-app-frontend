@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LoginIconComponent } from '@app/shared/icons/components/icon-login/icon-login.component';
-import { IconSettingsComponent } from '@app/shared/icons/components/icon-settings/icon-settings.component';
-import { IconShieldComponent } from '@app/shared/icons/components/icon-shield/icon-shield.component';
+import { IconSettingsComponent, IconShieldComponent, LoginIconComponent } from 'icons';
 import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.component';
 
 @Component({

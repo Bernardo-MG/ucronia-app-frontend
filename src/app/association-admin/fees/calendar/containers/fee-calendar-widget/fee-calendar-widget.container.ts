@@ -8,8 +8,8 @@ import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { JustifyEndDirective } from '@app/shared/style/directives/justify-end.directive';
+import { IconAddComponent } from 'icons';
 import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 

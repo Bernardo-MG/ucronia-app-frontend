@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserToken } from '@app/core/authentication/models/user-token';
-import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
+import { IconSuccessOrFailureComponent } from 'icons';
 
 @Component({
     selector: 'access-user-token-status',

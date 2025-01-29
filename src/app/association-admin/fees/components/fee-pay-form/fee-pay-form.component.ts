@@ -6,10 +6,9 @@ import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
-import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { DeleteIconComponent, IconAddComponent } from 'icons';
 
 @Component({
     selector: 'assoc-fee-pay-form',

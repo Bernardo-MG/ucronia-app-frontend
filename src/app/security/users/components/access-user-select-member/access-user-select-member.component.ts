@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Member } from '@app/models/members/member';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { IconAddComponent } from 'icons';
 
 @Component({
     selector: 'access-user-select-member',
