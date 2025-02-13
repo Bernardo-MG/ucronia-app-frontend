@@ -22,8 +22,6 @@ jobs:
       run: npm ci
     - name: Install Angular CLI
       run: npm install -g @angular/cli
-    - name: Build libraries
-      run: npm run build-libs
     - name: Run linter
       run: npm run lint
 
