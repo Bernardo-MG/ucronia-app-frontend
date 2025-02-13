@@ -20,8 +20,6 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm install || true
-    - name: Install ng-packagr
-      run: npm install ng-packagr --no-save
     - name: Install Angular CLI
       run: npm install -g @angular/cli
     - name: Build libraries
