@@ -18,6 +18,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
+    "build-libs": "ng build @bernardomg/icons",
     "build": "ng build",
     "build-production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
