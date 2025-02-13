@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconShieldComponent } from './icon-shield.component';
 
 describe('IconShieldComponent', () => {
