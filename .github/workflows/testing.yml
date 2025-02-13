@@ -23,7 +23,7 @@ jobs:
     - name: Install Angular build
       run: npm install -g @angular/build
     - name: Install Angular build devkit
-      run: npm install -g @angular-devkit/build-angular
+      run: npm install --save-dev @angular-devkit/build-angular ng-packagr
     - name: Build libraries
       run: npm run build-libs
     - name: Install dependencies
