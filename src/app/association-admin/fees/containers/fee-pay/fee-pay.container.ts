@@ -12,10 +12,10 @@ import { Person } from '@app/models/person/person';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
 import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
@@ -24,7 +24,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
     selector: 'assoc-fee-create',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, BackwardIconComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
     templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {

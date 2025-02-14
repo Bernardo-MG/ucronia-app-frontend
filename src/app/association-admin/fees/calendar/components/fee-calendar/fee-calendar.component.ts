@@ -3,15 +3,13 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { RouterModule } from '@angular/router';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
-import { ForwardIconComponent } from '@app/shared/icons/components/icon-forward/icon-forward.component';
-import { IconSuccessOrFailureComponent } from '@app/shared/icons/components/icon-success-or-failure/icon-success-or-failure.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-fee-calendar',
-    imports: [CommonModule, RouterModule, JustifyCenterDirective, BackwardIconComponent, ForwardIconComponent, IconSuccessOrFailureComponent, BlockUiDirective],
+    imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
     templateUrl: './fee-calendar.component.html',
     styleUrl: './fee-calendar.component.sass'
 })

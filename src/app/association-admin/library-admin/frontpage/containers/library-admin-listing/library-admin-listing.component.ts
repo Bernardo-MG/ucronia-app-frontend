@@ -10,10 +10,9 @@ import { CardHeaderComponent } from '@app/shared/card/components/card-header/car
 import { CardNavigationComponent } from '@app/shared/card/components/card-navigation/card-navigation.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
-import { IconExcelComponent } from '@app/shared/icons/components/icon-excel/icon-excel.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { IconAddComponent, IconExcelComponent } from '@bernardo-mg/icons';
 import { LibraryAdminAuthorListingContainer } from '../../../author/containers/library-admin-author-listing/library-admin-author-listing.component';
 import { LibraryAdminBookTypeListingContainer } from '../../../book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookListingContainer } from '../../../book/containers/library-admin-book-listing/library-admin-book-listing.container';

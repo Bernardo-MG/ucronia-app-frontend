@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconWaitingComponent } from '@app/shared/icons/components/icon-waiting/icon-waiting.component';
+import { IconWaitingComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'layout-waiting-button',

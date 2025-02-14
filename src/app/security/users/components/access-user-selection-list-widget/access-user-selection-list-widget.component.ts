@@ -9,8 +9,8 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { IconAddComponent } from '@bernardo-mg/icons';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
