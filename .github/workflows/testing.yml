@@ -45,7 +45,7 @@ jobs:
       run: npm ci
     - name: Install Angular CLI
       run: npm install -g @angular/cli
-    - name: Install dependencies
+    - name: Build libraries
       run: npm run build-libs
     - name: Run tests
       run: npm test -- --configuration=ci
