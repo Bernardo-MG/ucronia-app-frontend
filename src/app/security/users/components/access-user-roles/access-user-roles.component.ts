@@ -2,13 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { Role } from '@app/core/authentication/models/role';
-import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { IconDeleteComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-user-roles',
-    imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, DeleteIconComponent],
+    imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, IconDeleteComponent],
     templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {

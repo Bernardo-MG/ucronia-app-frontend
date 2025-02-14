@@ -10,10 +10,10 @@ import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { BackwardIconComponent } from '@app/shared/icons/components/icon-backward/icon-backward.component';
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { Observable } from 'rxjs';
 import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
@@ -21,7 +21,7 @@ import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
     selector: 'assoc-book-lending-lending',
-    imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, BackwardIconComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+    imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
     templateUrl: './book-lending-lending.container.html'
 })
 export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {

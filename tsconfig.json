@@ -4,7 +4,12 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@app/*": ["app/*"]
+      "@app/*": [
+        "app/*"
+      ],
+      "@bernardo-mg/icons": [
+        "./dist/bernardo-mg/icons"
+      ]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
-import { IconFailureComponent } from '@app/shared/icons/components/icon-failure/icon-failure.component';
+import { IconFailureComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-my-fees-list',

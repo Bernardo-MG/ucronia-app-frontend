@@ -6,14 +6,13 @@ import { Person } from '@app/models/person/person';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { IconAddComponent } from '@app/shared/icons/components/icon-add/icon-add.component';
-import { DeleteIconComponent } from '@app/shared/icons/components/icon-delete/icon-delete.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { IconDeleteComponent, IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-fee-pay-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
     templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
