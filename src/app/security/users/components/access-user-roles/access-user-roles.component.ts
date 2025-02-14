@@ -4,11 +4,11 @@ import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-respo
 import { Role } from '@app/core/authentication/models/role';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { DeleteIconComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-user-roles',
-    imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, DeleteIconComponent],
+    imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, IconDeleteComponent],
     templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {

@@ -8,11 +8,11 @@ import { InputFailureFeedbackComponent } from '@app/shared/form/components/input
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { DeleteIconComponent, IconAddComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent, IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-fee-pay-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, DeleteIconComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
     templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {

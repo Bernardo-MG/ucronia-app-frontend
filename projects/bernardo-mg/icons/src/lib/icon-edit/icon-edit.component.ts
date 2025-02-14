@@ -8,7 +8,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-edit.component.html'
 })
-export class EditIconComponent {
+export class IconEditComponent {
 
   public icon = faPenToSquare;
 

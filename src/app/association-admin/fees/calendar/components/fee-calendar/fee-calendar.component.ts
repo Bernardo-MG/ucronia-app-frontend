@@ -5,11 +5,11 @@ import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { BackwardIconComponent, ForwardIconComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
+import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-fee-calendar',
-    imports: [CommonModule, RouterModule, JustifyCenterDirective, BackwardIconComponent, ForwardIconComponent, IconSuccessOrFailureComponent, BlockUiDirective],
+    imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
     templateUrl: './fee-calendar.component.html',
     styleUrl: './fee-calendar.component.sass'
 })

@@ -14,11 +14,11 @@ import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { DeleteIconComponent, IconAddComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent, IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-library-admin-book-donors-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, DeleteIconComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
     templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {

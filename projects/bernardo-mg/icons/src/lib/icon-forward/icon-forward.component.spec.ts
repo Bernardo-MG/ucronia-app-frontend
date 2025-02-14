@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ForwardIconComponent } from './icon-forward.component';
+import { IconForwardComponent } from './icon-forward.component';
 
-describe('ForwardIconComponent', () => {
-  let component: ForwardIconComponent;
-  let fixture: ComponentFixture<ForwardIconComponent>;
+describe('IconForwardComponent', () => {
+  let component: IconForwardComponent;
+  let fixture: ComponentFixture<IconForwardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ForwardIconComponent
+        IconForwardComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ForwardIconComponent);
+    fixture = TestBed.createComponent(IconForwardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

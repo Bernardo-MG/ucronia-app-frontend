@@ -5,11 +5,11 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { DeleteIconComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-role-permissions',
-    imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, DeleteIconComponent, BlockUiDirective],
+    imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconDeleteComponent, BlockUiDirective],
     templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent implements OnChanges {

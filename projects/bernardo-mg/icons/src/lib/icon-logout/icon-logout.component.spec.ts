@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogoutIconComponent } from './icon-logout.component';
+import { IconLogoutComponent } from './icon-logout.component';
 
-describe('LogoutIconComponent', () => {
-  let component: LogoutIconComponent;
-  let fixture: ComponentFixture<LogoutIconComponent>;
+describe('IconLogoutComponent', () => {
+  let component: IconLogoutComponent;
+  let fixture: ComponentFixture<IconLogoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LogoutIconComponent
+        IconLogoutComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LogoutIconComponent);
+    fixture = TestBed.createComponent(IconLogoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

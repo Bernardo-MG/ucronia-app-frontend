@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconAccountComponent, IconSettingsComponent, LogoutIconComponent } from '@bernardo-mg/icons';
+import { IconAccountComponent, IconSettingsComponent, IconLogoutComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'layout-account-dropdown',
-    imports: [RouterModule, IconAccountComponent, IconSettingsComponent, LogoutIconComponent, JustifyCenterDirective],
+    imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
     templateUrl: './account-dropdown.component.html'
 })
 export class AccountDropdownComponent implements OnInit {

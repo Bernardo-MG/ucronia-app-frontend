@@ -8,7 +8,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-backward.component.html'
 })
-export class BackwardIconComponent {
+export class IconBackwardComponent {
 
   public icon = faChevronLeft;
 

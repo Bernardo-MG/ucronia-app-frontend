@@ -8,7 +8,7 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-logout.component.html'
 })
-export class LogoutIconComponent {
+export class IconLogoutComponent {
 
   public icon = faRightFromBracket;
 

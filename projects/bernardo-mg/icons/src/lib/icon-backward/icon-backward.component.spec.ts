@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BackwardIconComponent } from './icon-backward.component';
+import { IconBackwardComponent } from './icon-backward.component';
 
-describe('BackwardIconComponent', () => {
-  let component: BackwardIconComponent;
-  let fixture: ComponentFixture<BackwardIconComponent>;
+describe('IconBackwardComponent', () => {
+  let component: IconBackwardComponent;
+  let fixture: ComponentFixture<IconBackwardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BackwardIconComponent
+        IconBackwardComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(BackwardIconComponent);
+    fixture = TestBed.createComponent(IconBackwardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

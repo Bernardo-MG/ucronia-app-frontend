@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { IconSettingsComponent, IconShieldComponent, LoginIconComponent } from '@bernardo-mg/icons';
+import { IconSettingsComponent, IconShieldComponent, IconLoginComponent } from '@bernardo-mg/icons';
 import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.component';
 
 @Component({
     selector: 'layout-navbar',
-    imports: [CommonModule, RouterModule, LoginIconComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownComponent],
+    imports: [CommonModule, RouterModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownComponent],
     templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {

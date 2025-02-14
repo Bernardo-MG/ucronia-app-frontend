@@ -8,7 +8,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-forward.component.html'
 })
-export class ForwardIconComponent {
+export class IconForwardComponent {
 
   public icon = faChevronRight;
 

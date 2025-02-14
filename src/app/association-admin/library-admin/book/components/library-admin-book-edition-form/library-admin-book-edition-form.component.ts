@@ -20,11 +20,11 @@ import { ModalComponent } from '@app/shared/layout/components/modal/modal.compon
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { DeleteIconComponent, IconAddComponent, IconSearchComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent, IconAddComponent, IconSearchComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, DeleteIconComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
     templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {

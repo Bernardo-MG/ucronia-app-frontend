@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { DeleteIconComponent, EditIconComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent, IconEditComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'form-control-buttons',
-    imports: [DeleteIconComponent, EditIconComponent, ModalComponent],
+    imports: [IconDeleteComponent, IconEditComponent, ModalComponent],
     templateUrl: './control-buttons.component.html'
 })
 export class ControlButtonsComponent {

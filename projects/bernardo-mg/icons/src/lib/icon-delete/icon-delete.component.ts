@@ -8,7 +8,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-delete.component.html'
 })
-export class DeleteIconComponent {
+export class IconDeleteComponent {
 
   public icon = faTrashCan;
 

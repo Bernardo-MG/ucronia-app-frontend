@@ -8,7 +8,7 @@ import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
     imports: [CommonModule, FontAwesomeModule],
     templateUrl: './icon-login.component.html'
 })
-export class LoginIconComponent {
+export class IconLoginComponent {
 
   public icon = faRightToBracket;
 
