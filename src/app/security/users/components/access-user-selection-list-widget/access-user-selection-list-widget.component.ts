@@ -10,7 +10,7 @@ import { CardFooterComponent } from '@app/shared/card/components/card-footer/car
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 

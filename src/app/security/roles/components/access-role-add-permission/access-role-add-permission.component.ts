@@ -6,7 +6,7 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-role-add-permission',

@@ -5,7 +5,7 @@ import { Member } from '@app/models/members/member';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-user-select-member',

@@ -5,7 +5,7 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { DeleteIconComponent } from 'icons';
+import { DeleteIconComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-role-permissions',

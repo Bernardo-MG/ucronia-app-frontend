@@ -13,7 +13,7 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { BackwardIconComponent } from 'icons';
+import { BackwardIconComponent } from '@bernardo-mg/icons';
 import { Observable } from 'rxjs';
 import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';

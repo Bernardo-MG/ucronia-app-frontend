@@ -12,7 +12,7 @@ import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
-import { IconTakeInComponent, IconTakeOutComponent } from 'icons';
+import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-library-admin-book-details',

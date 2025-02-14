@@ -17,7 +17,7 @@ import { InfoEditorStatusComponent } from '@app/shared/form/components/info-edit
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';

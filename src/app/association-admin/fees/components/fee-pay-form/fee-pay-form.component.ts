@@ -8,7 +8,7 @@ import { InputFailureFeedbackComponent } from '@app/shared/form/components/input
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { DeleteIconComponent, IconAddComponent } from 'icons';
+import { DeleteIconComponent, IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-fee-pay-form',

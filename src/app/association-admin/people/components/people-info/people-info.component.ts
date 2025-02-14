@@ -10,7 +10,7 @@ import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
-import { IconSuccessOrFailureComponent } from 'icons';
+import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 

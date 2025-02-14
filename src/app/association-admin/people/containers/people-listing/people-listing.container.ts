@@ -14,7 +14,7 @@ import { ArticleComponent } from '@app/shared/layout/components/article/article.
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-people-listing',

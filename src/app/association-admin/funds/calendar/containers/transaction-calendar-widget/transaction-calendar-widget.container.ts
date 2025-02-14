@@ -10,7 +10,7 @@ import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarEvent } from 'angular-calendar';
-import { IconAddComponent } from 'icons';
+import { IconAddComponent } from '@bernardo-mg/icons';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({

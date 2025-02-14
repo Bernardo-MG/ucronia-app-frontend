@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Member } from '@app/models/members/member';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
-import { IconSearchComponent } from 'icons';
+import { IconSearchComponent } from '@bernardo-mg/icons';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({

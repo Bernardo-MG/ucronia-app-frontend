@@ -7,8 +7,8 @@
       "@app/*": [
         "app/*"
       ],
-      "icons": [
-        "./dist/icons"
+      "@bernardo-mg/icons": [
+        "./dist/bernardo-mg/icons"
       ]
     },
     "outDir": "./dist/out-tsc",

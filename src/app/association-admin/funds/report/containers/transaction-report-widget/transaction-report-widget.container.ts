@@ -4,7 +4,7 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconExcelComponent } from 'icons';
+import { IconExcelComponent } from '@bernardo-mg/icons';
 import { TransactionReportService } from '../../services/transaction-report.service';
 
 @Component({

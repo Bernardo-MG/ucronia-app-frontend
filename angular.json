@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "preserveSymlinks": true,
             "outputPath": "dist/ucronia-app-frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
@@ -124,23 +125,23 @@
         }
       }
     },
-    "icons": {
+    "@bernardo-mg/icons": {
       "projectType": "library",
-      "root": "projects/icons",
-      "sourceRoot": "projects/icons/src",
+      "root": "projects/bernardo-mg/icons",
+      "sourceRoot": "projects/bernardo-mg/icons/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/icons/ng-package.json"
+            "project": "projects/bernardo-mg/icons/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/icons/tsconfig.lib.prod.json"
+              "tsConfig": "projects/bernardo-mg/icons/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/icons/tsconfig.lib.json"
+              "tsConfig": "projects/bernardo-mg/icons/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -148,7 +149,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "tsConfig": "projects/icons/tsconfig.spec.json",
+            "tsConfig": "projects/bernardo-mg/icons/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -159,8 +160,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/icons/**/*.ts",
-              "projects/icons/**/*.html"
+              "projects/bernardo-mg/icons/**/*.ts",
+              "projects/bernardo-mg/icons/**/*.html"
             ]
           }
         }

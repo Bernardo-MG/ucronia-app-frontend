@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Person } from '@app/models/person/person';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { IconSuccessOrFailureComponent } from 'icons';
+import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-people-list',

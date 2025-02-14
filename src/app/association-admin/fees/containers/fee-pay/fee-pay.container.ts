@@ -15,7 +15,7 @@ import { CreateComponent } from '@app/shared/form/components/create/create.compo
 import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { BackwardIconComponent } from 'icons';
+import { BackwardIconComponent } from '@bernardo-mg/icons';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
 import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';

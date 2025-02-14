@@ -4,7 +4,7 @@ import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-respo
 import { Role } from '@app/core/authentication/models/role';
 import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { DeleteIconComponent } from 'icons';
+import { DeleteIconComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-user-roles',

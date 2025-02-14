@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { User } from '@app/core/authentication/models/user';
-import { IconSuccessOrFailureComponent } from 'icons';
+import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'access-user-status',
