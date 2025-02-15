@@ -11,8 +11,8 @@ import { CardNavigationComponent } from '@app/shared/card/components/card-naviga
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
+import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-library-admin-book-details',

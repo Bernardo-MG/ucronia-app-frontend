@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { BlockUiDirective } from '@bernardo-mg/layout';
 import { TransactionCurrentBalance } from '../../../../../models/transactions/transaction-current-balance';
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
 

@@ -6,7 +6,7 @@ import { CardHeaderComponent } from '@app/shared/card/components/card-header/car
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconSearchComponent } from '@bernardo-mg/icons';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { PlaceholderDirective } from '@bernardo-mg/layout';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({

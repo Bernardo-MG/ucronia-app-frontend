@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Failure } from '@app/core/api/models/failure';
 import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'access-user-token-info',
