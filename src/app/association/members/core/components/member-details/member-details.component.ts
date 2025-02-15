@@ -5,8 +5,7 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CardTab } from '@app/shared/card/shared/models/card-tab';
-import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
-import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { ModalHandler, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-member-details',
