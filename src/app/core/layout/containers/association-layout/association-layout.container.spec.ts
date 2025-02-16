@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
-import { SidebarLayoutComponent } from './sidebar-layout.component';
+import { AssociationLayoutContainer } from './association-layout.container';
 
-describe('SidebarLayoutComponent', () => {
-  let component: SidebarLayoutComponent;
-  let fixture: ComponentFixture<SidebarLayoutComponent>;
+describe('AssociationLayoutContainer', () => {
+  let component: AssociationLayoutContainer;
+  let fixture: ComponentFixture<AssociationLayoutContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        NavbarComponent
+        AssociationLayoutContainer
       ],
       providers: [
         provideRouter([])
@@ -18,7 +17,7 @@ describe('SidebarLayoutComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SidebarLayoutComponent);
+    fixture = TestBed.createComponent(AssociationLayoutContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

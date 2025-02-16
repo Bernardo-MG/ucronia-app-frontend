@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { LoggedInGuard } from './core/authentication/guards/logged-in.guard';
 import { LoggedOutGuard } from './core/authentication/guards/logged-out.guard';
 import { ResourceGuard } from './core/authentication/guards/resource.guard';
-import { SimpleLayoutComponent } from './core/layout/components/simple-layout/simple-layout.component';
+import { SimpleLayoutContainer } from './core/layout/containers/simple-layout/simple-layout.container';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -23,27 +23,27 @@ export const routes: Routes = [
       {
         // Logged out
         path: '',
-        component: SimpleLayoutComponent,
+        component: SimpleLayoutContainer,
         loadChildren: frontpageModule
       },
       {
         // Log in form
         path: 'login',
-        component: SimpleLayoutComponent,
+        component: SimpleLayoutContainer,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         // Password reset form
         path: 'password/reset',
-        component: SimpleLayoutComponent,
+        component: SimpleLayoutContainer,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
       {
         // Activate user form
         path: 'users/activate',
-        component: SimpleLayoutComponent,
+        component: SimpleLayoutContainer,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },

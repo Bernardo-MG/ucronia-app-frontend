@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
-import { SecurityLayoutComponent } from './security-layout.component';
+import { SidebarLayoutContainer } from './sidebar-layout.container';
 
-describe('SecurityLayoutComponent', () => {
-  let component: SecurityLayoutComponent;
-  let fixture: ComponentFixture<SecurityLayoutComponent>;
+describe('SidebarLayoutContainer', () => {
+  let component: SidebarLayoutContainer;
+  let fixture: ComponentFixture<SidebarLayoutContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        NavbarComponent
+        SidebarLayoutContainer
       ],
       providers: [
         provideRouter([])
@@ -18,7 +17,7 @@ describe('SecurityLayoutComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SecurityLayoutComponent);
+    fixture = TestBed.createComponent(SidebarLayoutContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -27,4 +26,3 @@ describe('SecurityLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-

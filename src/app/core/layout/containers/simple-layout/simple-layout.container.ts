@@ -1,20 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
-import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
+import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { Menu } from '@bernardo-mg/layout';
-import { RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-sidebar',
-    imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
-    templateUrl: './sidebar-layout.component.html'
+    selector: 'layout-simple-layout-layout',
+    imports: [RouterModule, NavbarComponent],
+    templateUrl: './simple-layout.container.html'
 })
-export class SidebarLayoutComponent implements OnInit {
-
-  @Input() public menus: Menu[] = [];
+export class SimpleLayoutContainer implements OnInit {
 
   public title = '';
 
