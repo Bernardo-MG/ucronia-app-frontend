@@ -10,7 +10,7 @@ import { CardFooterComponent } from '@app/shared/card/components/card-footer/car
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { WaitingButtonComponent } from '@bernardo-mg/layout';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
