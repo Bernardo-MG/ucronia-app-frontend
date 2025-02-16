@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CardTab } from '../../shared/models/card-tab';
+import { CardTab } from '../../models/card-tab';
 import { CommonModule } from '@angular/common';
 
 @Component({

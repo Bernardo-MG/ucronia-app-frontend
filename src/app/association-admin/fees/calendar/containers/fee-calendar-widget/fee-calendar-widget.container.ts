@@ -5,11 +5,8 @@ import { MemberStatusSelectComponent } from '@app/association/members/shared/com
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { JustifyEndDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyEndDirective } from '@bernardo-mg/layout';
 import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 

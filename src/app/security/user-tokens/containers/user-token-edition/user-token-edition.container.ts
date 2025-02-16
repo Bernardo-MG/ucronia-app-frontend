@@ -4,12 +4,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, ModalComponent, ResponsiveShortColumnsDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { UserTokenInfoComponent } from '../../components/user-token-info/user-token-info.component';
 import { UserTokenStatusComponent } from '../../components/user-token-status/user-token-status.component';

@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Setting } from '@app/settings/models/setting';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
 import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
 import { AssociationSettingsService } from '../../service/association-settings.service';
 

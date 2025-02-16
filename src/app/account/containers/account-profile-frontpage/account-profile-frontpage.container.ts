@@ -5,9 +5,7 @@ import { AccountProfilePersonComponent } from '@app/account/components/profile/a
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'account-profile-frontpage',
