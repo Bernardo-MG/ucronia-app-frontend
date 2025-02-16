@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { IconExcelComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
 import { TransactionReportService } from '../../services/transaction-report.service';
 
 @Component({

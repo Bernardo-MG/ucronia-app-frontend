@@ -11,8 +11,7 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-member-listing',

@@ -7,10 +7,10 @@ import { Month } from '@app/shared/calendar/models/month';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { Colors } from '@app/shared/utils/colors';
-import { CalendarEvent } from 'angular-calendar';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({

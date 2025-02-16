@@ -1,9 +1,9 @@
 import { ElementRef, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { JustifyEndDirective } from './justify-end.directive';
+import { JustifyBetweenDirective } from '../../../../../../src/app/shared/style/directives/justify-between.directive';
 
-describe('JustifyEndDirective', () => {
-  let directive: JustifyEndDirective;
+describe('JustifyBetweenDirective', () => {
+  let directive: JustifyBetweenDirective;
   let elementRefMock: ElementRef;
   let rendererMock: Renderer2;
   
@@ -13,13 +13,13 @@ describe('JustifyEndDirective', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        JustifyEndDirective,
+        JustifyBetweenDirective,
         { provide: ElementRef, useValue: elementRefMock },
         { provide: Renderer2, useValue: rendererMock }
       ]
     });
 
-    directive = TestBed.inject(JustifyEndDirective);
+    directive = TestBed.inject(JustifyBetweenDirective);
   });
 
   it('should create an instance', () => {
