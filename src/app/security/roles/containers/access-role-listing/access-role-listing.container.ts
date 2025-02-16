@@ -9,9 +9,9 @@ import { CardBodyComponent } from '@app/shared/card/components/card-body/card-bo
 import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { AccessRoleSelectionListComponent } from '../../components/access-role-selection-list/access-role-selection-list.component';
 import { AccessRoleService } from '../../services/access-role.service';
 

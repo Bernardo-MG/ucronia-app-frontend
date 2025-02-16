@@ -14,10 +14,10 @@ import { CardHeaderComponent } from '@app/shared/card/components/card-header/car
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';

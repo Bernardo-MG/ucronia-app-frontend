@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({

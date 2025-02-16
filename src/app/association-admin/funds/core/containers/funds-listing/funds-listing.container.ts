@@ -4,7 +4,7 @@ import { TransactionReportWidgetContainer } from '@app/association-admin/funds/r
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { FundsCurrentBalanceWidgetContainer } from '../../../balance/containers/transaction-current-balance-widget/transaction-current-balance-widget.container';
 import { TransactionCalendarWidgetContainer } from '../../../calendar/containers/transaction-calendar-widget/transaction-calendar-widget.container';
 
