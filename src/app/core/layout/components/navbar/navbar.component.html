@@ -22,10 +22,18 @@
               Asociación
             </a>
           </li>
-          <li *ngIf="showAdmin" class="nav-item">
-            <a routerLink="/association/admin" class="nav-link" aria-label="Administración" title="Administración">
+          <li *ngIf="showAdmin" class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="adminMenuDropdown" data-bs-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">
               Administración
             </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenuDropdown">
+              <li>
+                <a routerLink="/association/admin" class="nav-link" aria-label="Asociación" title="Asociación">
+                  Main
+                </a>
+              </li>
+            </ul>
           </li>
           <li *ngIf="showSecurity" class="nav-item">
             <a routerLink="/security" class="nav-link" aria-label="Seguridad" title="Seguridad">
