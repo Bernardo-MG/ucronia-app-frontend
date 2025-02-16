@@ -16,11 +16,10 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
-import { ModalHandler } from '@bernardo-mg/layout';
+import { ModalComponent, ModalHandler } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-library-admin-book-edition-form',
