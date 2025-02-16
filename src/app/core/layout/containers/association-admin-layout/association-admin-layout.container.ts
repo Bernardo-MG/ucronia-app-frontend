@@ -5,7 +5,7 @@ import { AssociationAdminLayoutService } from '@app/core/layout/services/associa
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-association-admin-layout',
+    selector: 'layout-association-admin-layout',
     imports: [RouterModule, SidebarLayoutContainer],
     templateUrl: './association-admin-layout.container.html'
 })

@@ -5,7 +5,7 @@ import { AssociationLayoutService } from '@app/core/layout/services/association-
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-association-layout',
+    selector: 'layout-association-layout',
     imports: [RouterModule, SidebarLayoutContainer],
     templateUrl: './association-layout.container.html'
 })

@@ -7,7 +7,7 @@ import { LayoutService } from '@app/core/layout/services/layout.service';
 import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-sidebar',
+    selector: 'layout-sidebar-layout',
     imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
     templateUrl: './sidebar-layout.container.html'
 })

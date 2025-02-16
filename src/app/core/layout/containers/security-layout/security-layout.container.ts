@@ -5,7 +5,7 @@ import { SecurityLayoutService } from '@app/core/layout/services/security-layout
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'access-sidebar',
+    selector: 'layout-security-layout',
     imports: [RouterModule, SidebarLayoutContainer],
     templateUrl: './security-layout.container.html'
 })

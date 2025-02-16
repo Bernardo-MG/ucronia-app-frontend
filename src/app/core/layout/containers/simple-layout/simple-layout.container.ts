@@ -5,7 +5,7 @@ import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.compo
 import { LayoutService } from '@app/core/layout/services/layout.service';
 
 @Component({
-    selector: 'app-simple-layout',
+    selector: 'layout-simple-layout-layout',
     imports: [RouterModule, NavbarComponent],
     templateUrl: './simple-layout.container.html'
 })
