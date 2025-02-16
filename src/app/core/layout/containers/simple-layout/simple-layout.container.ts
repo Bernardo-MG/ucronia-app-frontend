@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 
 @Component({
     selector: 'app-simple-layout',

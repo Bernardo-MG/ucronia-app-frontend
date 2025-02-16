@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
+import { AssociationAdminLayoutService } from '@app/core/layout/services/association-admin-layout.service';
 import { Menu } from '@bernardo-mg/layout';
-import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 
 @Component({
     selector: 'assoc-association-admin-layout',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
+import { SecurityLayoutService } from '@app/core/layout/services/security-layout.service';
 import { Menu } from '@bernardo-mg/layout';
-import { SecurityLayoutService } from '../../services/security-layout.service';
 
 @Component({
     selector: 'access-sidebar',
