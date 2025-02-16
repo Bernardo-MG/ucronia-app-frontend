@@ -5,7 +5,7 @@ import { BreadcrumbLink } from '../../models/breadcrumb-link';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 @Component({
-  selector: 'app-router-breadcrumb',
+  selector: 'layout-router-breadcrumb',
   imports: [BreadcrumbComponent],
   templateUrl: './router-breadcrumb.component.html'
 })
