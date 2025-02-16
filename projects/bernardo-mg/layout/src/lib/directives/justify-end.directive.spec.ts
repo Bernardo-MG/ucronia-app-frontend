@@ -1,6 +1,6 @@
 import { ElementRef, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { JustifyEndDirective } from '../../../../../../src/app/shared/style/directives/justify-end.directive';
+import { JustifyEndDirective } from './justify-end.directive';
 
 describe('JustifyEndDirective', () => {
   let directive: JustifyEndDirective;

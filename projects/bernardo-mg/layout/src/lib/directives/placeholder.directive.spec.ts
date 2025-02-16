@@ -1,4 +1,4 @@
-import { TemplateRef, ViewContainerRef, Renderer2, ElementRef } from '@angular/core';
+import { Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { PlaceholderDirective } from './placeholder.directive';
 
 describe('PlaceholderDirective', () => {

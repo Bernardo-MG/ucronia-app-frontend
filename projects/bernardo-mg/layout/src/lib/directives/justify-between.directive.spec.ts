@@ -1,6 +1,6 @@
 import { ElementRef, Renderer2 } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { JustifyBetweenDirective } from '../../../../../../src/app/shared/style/directives/justify-between.directive';
+import { JustifyBetweenDirective } from './justify-between.directive';
 
 describe('JustifyBetweenDirective', () => {
   let directive: JustifyBetweenDirective;
