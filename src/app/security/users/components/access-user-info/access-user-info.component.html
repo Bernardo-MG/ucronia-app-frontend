@@ -1,5 +1,5 @@
-<app-card>
-  <app-card-header>
+<layout-card>
+  <layout-card-header>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
@@ -18,28 +18,28 @@
           (click)="onChangeView('member')">Socio</a>
       </li>
     </ul>
-  </app-card-header>
+  </layout-card-header>
   <ng-container [ngSwitch]="view">
     <!-- User -->
     <ng-container *ngSwitchCase="'user'">
-      <app-card-body>
+      <layout-card-body>
         <access-user-info-details [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
           [waiting]="waiting" (delete)="delete.emit()" (startEditing)="startEditing.emit()"></access-user-info-details>
-      </app-card-body>
-      <app-card-footer *ngIf="showMenu">
+      </layout-card-body>
+      <layout-card-footer *ngIf="showMenu">
         <div>
           <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
             (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
         </div>
-      </app-card-footer>
+      </layout-card-footer>
     </ng-container>
     <!-- Status -->
     <ng-container *ngSwitchCase="'status'">
       <!-- Enable/disable button -->
-      <app-card-body>
+      <layout-card-body>
         <access-user-status [data]="data"></access-user-status>
-      </app-card-body>
-      <app-card-footer>
+      </layout-card-body>
+      <layout-card-footer>
         <div class="row">
           <ng-template [ngIf]="!data.enabled">
             <!-- Enable button -->
@@ -56,27 +56,27 @@
             </div>
           </ng-template>
         </div>
-      </app-card-footer>
+      </layout-card-footer>
     </ng-container>
     <!-- Roles -->
     <ng-container *ngSwitchCase="'roles'">
       <!-- Roles -->
-      <app-card-body>
+      <layout-card-body>
         <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
           [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
           [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
           (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
-      </app-card-body>
+      </layout-card-body>
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
       <!-- Member -->
-      <app-card-body>
+      <layout-card-body>
         <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
           [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
           (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
           (selectMember)="selectMember.emit($event)"></access-user-member-editor>
-      </app-card-body>
+      </layout-card-body>
     </ng-container>
   </ng-container>
-</app-card>
+</layout-card>

@@ -1,5 +1,5 @@
-<app-card>
-  <app-card-header>
+<layout-card>
+  <layout-card-header>
     <div class="row">
       <div class="col-sm-3">
         <!-- Pay fee -->
@@ -10,16 +10,16 @@
       </div>
       <div class="col-sm-9">
         <!-- Date selector -->
-        <div appJustifyEnd>
+        <div layoutJustifyEnd>
           <assoc-member-status-select [disabled]="readingCalendar"
             (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
         </div>
       </div>
     </div>
-  </app-card-header>
-  <app-card-body>
+  </layout-card-header>
+  <layout-card-body>
     <!-- Calendar -->
     <assoc-fee-calendar [range]="range" [waiting]="readingCalendar" [feeCalendar]="feeCalendar"
       (goToYear)="onGoToYear($event)"></assoc-fee-calendar>
-  </app-card-body>
-</app-card>
+  </layout-card-body>
+</layout-card>

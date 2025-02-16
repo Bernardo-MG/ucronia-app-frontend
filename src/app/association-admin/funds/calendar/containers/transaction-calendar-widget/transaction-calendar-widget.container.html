@@ -1,15 +1,15 @@
-<app-card>
-  <app-card-header>
+<layout-card>
+  <layout-card-header>
     <!-- Add transaction -->
     <button type="button" class="btn btn-link" aria-label="register" routerLink="add" [disabled]="!createPermission"
       [attr.aria-disabled]="!createPermission">
       <icon-add></icon-add>
     </button>
-  </app-card-header>
-  <app-card-body>
+  </layout-card-header>
+  <layout-card-body>
     <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
       (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)"></shared-calendar-month>
-    <div class="mt-2" appJustifyCenter>
+    <div class="mt-2" layoutJustifyCenter>
     </div>
-  </app-card-body>
-</app-card>
+  </layout-card-body>
+</layout-card>

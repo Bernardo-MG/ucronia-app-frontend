@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appResponsiveShortColumns]',
+  selector: '[layoutResponsiveShortColumns]',
   standalone: true
 })
 export class ResponsiveShortColumnsDirective {

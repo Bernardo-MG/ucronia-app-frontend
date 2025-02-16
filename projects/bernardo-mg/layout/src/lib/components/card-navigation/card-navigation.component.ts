@@ -3,7 +3,7 @@ import { CardTab } from '../../models/card-tab';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-card-navigation',
+    selector: 'layout-card-navigation',
     imports: [CommonModule],
     templateUrl: './card-navigation.component.html'
 })

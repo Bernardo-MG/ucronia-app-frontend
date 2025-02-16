@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-card-header',
+    selector: 'layout-card-header',
     templateUrl: './card-header.component.html'
 })
 export class CardHeaderComponent {
