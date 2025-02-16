@@ -22,4 +22,5 @@ export * from './lib/models/card-tab';
 export * from './lib/models/menu-link';
 export * from './lib/models/menu-options';
 export * from './lib/models/menu';
+export * from './lib/utils/menu-loader';
 export * from './lib/utils/ModalHandler';

@@ -1,4 +1,6 @@
-import { Menu, MenuLink, MenuOptions } from "@bernardo-mg/layout";
+import { Menu } from "../models/menu";
+import { MenuLink } from "../models/menu-link";
+import { MenuOptions } from "../models/menu-options";
 
 export class MenuLoader {
 
