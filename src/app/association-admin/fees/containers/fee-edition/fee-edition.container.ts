@@ -9,8 +9,7 @@ import { Fee } from '@app/models/fees/fee';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 

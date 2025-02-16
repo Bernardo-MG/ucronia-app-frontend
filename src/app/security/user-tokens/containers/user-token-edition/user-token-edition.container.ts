@@ -10,8 +10,7 @@ import { CardHeaderComponent } from '@app/shared/card/components/card-header/car
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { ArticleComponent, ModalComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { UserTokenInfoComponent } from '../../components/user-token-info/user-token-info.component';
 import { UserTokenStatusComponent } from '../../components/user-token-status/user-token-status.component';

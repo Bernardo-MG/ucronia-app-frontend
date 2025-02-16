@@ -6,7 +6,7 @@ import { Language } from '@app/models/library/language';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { BookAdminService } from '../../services/book-admin.service';

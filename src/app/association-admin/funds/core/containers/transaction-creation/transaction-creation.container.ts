@@ -5,8 +5,7 @@ import { Transaction } from '@app/models/transactions/transaction';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CenteredFrameComponent } from '@app/shared/layout/components/centered-frame/centered-frame.component';
+import { CenteredFrameComponent } from '@bernardo-mg/layout';
 import { PasswordResetRequestContainer } from './containers/password-reset-request/password-reset-request.container';
 import { PasswordResetContainer } from './containers/password-reset/password-reset.container';
 

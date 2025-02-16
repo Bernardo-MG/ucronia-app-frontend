@@ -6,8 +6,7 @@ import { MemberService } from '@app/association/members/core/services/member.ser
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 
 @Component({

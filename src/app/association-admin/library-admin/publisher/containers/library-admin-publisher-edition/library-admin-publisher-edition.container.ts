@@ -6,7 +6,7 @@ import { Publisher } from '@app/models/library/publisher';
 import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
 import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminPublisherFormComponent } from '../../components/library-admin-publisher-form/library-admin-publisher-form.component';
 import { LibraryAdminPublisherInfoComponent } from '../../components/library-admin-publisher-info/library-admin-publisher-info.component';

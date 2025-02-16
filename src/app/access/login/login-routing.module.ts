@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CenteredFrameComponent } from '@app/shared/layout/components/centered-frame/centered-frame.component';
+import { CenteredFrameComponent } from '@bernardo-mg/layout';
 import { LoginContainer } from './containers/login/login.container';
 
 
