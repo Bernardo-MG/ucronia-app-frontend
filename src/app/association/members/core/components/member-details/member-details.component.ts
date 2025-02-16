@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, ModalHandler, PlaceholderDirective } from '@bernardo-mg/layout';
+import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-member-details',

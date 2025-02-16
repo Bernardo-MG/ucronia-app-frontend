@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
+import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, ModalHandler, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 

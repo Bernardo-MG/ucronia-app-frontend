@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModalComponent, ModalHandler, WaitingButtonComponent } from '@bernardo-mg/layout';
+import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
+import { ModalComponent, WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-people-edition-membership-buttons',
