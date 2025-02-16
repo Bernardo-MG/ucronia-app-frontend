@@ -4,15 +4,10 @@ import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardNavigationComponent } from '@app/shared/card/components/card-navigation/card-navigation.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { CardTab } from '@app/shared/card/shared/models/card-tab';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardTab } from '../../../../../../../projects/bernardo-mg/layout/src/lib/models/card-tab';
 
 @Component({
     selector: 'assoc-library-admin-book-details',

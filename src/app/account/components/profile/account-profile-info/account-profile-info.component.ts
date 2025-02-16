@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Account } from '@app/account/models/account';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'account-profile-info',

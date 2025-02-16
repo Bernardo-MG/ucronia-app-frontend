@@ -5,8 +5,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { GameSystem } from '@app/models/library/game-system';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { BlockUiDirective } from '@bernardo-mg/layout';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({

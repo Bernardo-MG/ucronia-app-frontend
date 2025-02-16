@@ -4,7 +4,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { Menu } from '@app/shared/menu/models/menu';
+import { Menu } from '@bernardo-mg/layout';
 import { RouterBreadcrumbComponent } from '../router-breadcrumb/router-breadcrumb.component';
 
 @Component({

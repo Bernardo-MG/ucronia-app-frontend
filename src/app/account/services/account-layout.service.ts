@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Menu } from '@app/shared/menu/models/menu';
+import { Menu, MenuLoader } from '@bernardo-mg/layout';
 import { MENU_OPTIONS } from './menu-options';
-import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
 
 @Injectable({
   providedIn: 'root'

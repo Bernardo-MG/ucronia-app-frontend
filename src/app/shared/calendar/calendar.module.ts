@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { BlockUiDirective } from '../layout/directives/block-ui.directive';
-import { JustifyCenterDirective } from '../style/directives/justify-center.directive';
 import { CalendarMonthComponent } from './components/calendar-month/calendar-month.component';
 
 

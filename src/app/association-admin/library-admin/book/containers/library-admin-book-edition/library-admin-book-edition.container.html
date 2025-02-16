@@ -1,12 +1,12 @@
 <article class="p-4">
-  <div appResponsiveShortColumns>
+  <div layoutResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <app-card>
-              <app-card-body>
+            <layout-card>
+              <layout-card-body>
                 <assoc-library-admin-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
                   [bookTypesSelection]="bookTypesSelection" [gameSystemsSelection]="gameSystemsSelection"
@@ -15,18 +15,18 @@
                   (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
                   (goToPublisherPage)="onGoToPublisherPage($event)">
                 </assoc-library-admin-book-edition-form>
-              </app-card-body>
-            </app-card>
+              </layout-card-body>
+            </layout-card>
           </ng-container>
           <ng-container *ngSwitchCase="'donors'">
-            <app-card>
-              <app-card-body>
+            <layout-card>
+              <layout-card-body>
                 <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSave($event)"
                   (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
                 </assoc-library-admin-book-donors-form>
-              </app-card-body>
-            </app-card>
+              </layout-card-body>
+            </layout-card>
           </ng-container>
         </ng-container>
       </ng-container>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconAccountComponent, IconSettingsComponent, IconLogoutComponent } from '@bernardo-mg/icons';
+import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'layout-account-dropdown',

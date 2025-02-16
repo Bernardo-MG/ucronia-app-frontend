@@ -1,4 +1,4 @@
-import { MenuLink } from "../../../shared/menu/models/menu-link";
+import { MenuLink } from "@bernardo-mg/layout";
 
 export class AuthMenuLink extends MenuLink {
   resource = '';

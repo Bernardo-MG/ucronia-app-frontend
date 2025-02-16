@@ -1,11 +1,11 @@
 <layout-article>
-  <div appResponsiveShortColumns>
-    <app-card>
-      <app-card-body>
+  <div layoutResponsiveShortColumns>
+    <layout-card>
+      <layout-card-body>
         <!-- Form -->
         <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
         </access-role-form>
-      </app-card-body>
-    </app-card>
+      </layout-card-body>
+    </layout-card>
   </div>
 </layout-article>

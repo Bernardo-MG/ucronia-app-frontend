@@ -1,5 +1,5 @@
 <layout-article>
-  <div appResponsiveShortColumns>
+  <div layoutResponsiveShortColumns>
     <assoc-book-return-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
       [borrower]="borrower" [book]="book.number" (save)="onSave($event)">
     </assoc-book-return-form>

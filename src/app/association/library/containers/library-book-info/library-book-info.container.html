@@ -1,24 +1,24 @@
 <article class="p-4">
   <div class="col-md-6 offset-md-3 pb-2">
-    <app-card>
-      <app-card-header>
+    <layout-card>
+      <layout-card-header>
         <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
-      </app-card-header>
-      <app-card-body>
+      </layout-card-header>
+      <layout-card-body>
         <!-- Book info -->
         <assoc-library-book-details [data]="data" [languages]="languages" [waiting]="waiting"></assoc-library-book-details>
-      </app-card-body>
-    </app-card>
+      </layout-card-body>
+    </layout-card>
   </div>
   <!-- Lendings -->
-  <div appResponsiveShortColumns>
-    <app-card>
-      <app-card-header>
+  <div layoutResponsiveShortColumns>
+    <layout-card>
+      <layout-card-header>
         <h2>Préstamos</h2>
-      </app-card-header>
-      <app-card-body>
+      </layout-card-header>
+      <layout-card-body>
         <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
-      </app-card-body>
-    </app-card>
+      </layout-card-body>
+    </layout-card>
   </div>
 </article>

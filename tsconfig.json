@@ -9,6 +9,9 @@
       ],
       "@bernardo-mg/icons": [
         "./dist/bernardo-mg/icons"
+      ],
+      "@bernardo-mg/layout": [
+        "./dist/bernardo-mg/layout"
       ]
     },
     "outDir": "./dist/out-tsc",

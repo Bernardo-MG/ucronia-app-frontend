@@ -1,21 +1,21 @@
 <layout-article>
   <!-- List -->
-  <app-card>
-    <app-card-header>
+  <layout-card>
+    <layout-card-header>
       <!-- Add role -->
       <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/roles/add"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
         <icon-add></icon-add>
       </button>
-    </app-card-header>
-    <app-card-body>
+    </layout-card-header>
+    <layout-card-body>
       <!-- List -->
       <access-role-selection-list [roles]="data.content" (changeDirection)="onChangeDirection($event)"
         [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
-    </app-card-body>
-    <app-card-footer>
+    </layout-card-body>
+    <layout-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </app-card-footer>
-  </app-card>
+    </layout-card-footer>
+  </layout-card>
 </layout-article>

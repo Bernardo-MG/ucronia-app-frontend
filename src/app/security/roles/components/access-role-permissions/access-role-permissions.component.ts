@@ -2,10 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'access-role-permissions',

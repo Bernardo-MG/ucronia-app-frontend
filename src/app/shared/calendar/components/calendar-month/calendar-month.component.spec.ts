@@ -1,6 +1,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { BlockUiDirective } from '@bernardo-mg/layout';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Month } from '../../models/month';

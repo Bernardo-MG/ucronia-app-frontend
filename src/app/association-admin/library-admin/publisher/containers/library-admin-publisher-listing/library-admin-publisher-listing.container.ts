@@ -5,8 +5,8 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Publisher } from '@app/models/library/publisher';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { BlockUiDirective } from '@bernardo-mg/layout';
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({

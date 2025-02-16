@@ -18,7 +18,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
-    "build-libs": "ng build @bernardo-mg/icons",
+    "build-libs": "ng build @bernardo-mg/icons && ng build @bernardo-mg/layout",
     "build": "ng build",
     "build-production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
@@ -35,7 +35,8 @@
     "@angular/platform-browser-dynamic": "~19.1.2",
     "@angular/router": "~19.1.2",
     "@auth0/angular-jwt": "^5.2.0",
-    "@bernardo-mg/icons": "0.0.1",
+    "@bernardo-mg/icons": "file:dist/bernardo-mg/icons",
+    "@bernardo-mg/layout": "file:dist/bernardo-mg/layout",
     "@fortawesome/angular-fontawesome": "~1.0.0",
     "@fortawesome/fontawesome-svg-core": "~6.7.2",
     "@fortawesome/free-solid-svg-icons": "~6.7.2",

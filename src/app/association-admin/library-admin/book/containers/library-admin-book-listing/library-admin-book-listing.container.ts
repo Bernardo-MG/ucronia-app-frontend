@@ -5,7 +5,7 @@ import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Sort } from '@app/core/api/models/sort';
 import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { BlockUiDirective } from '@bernardo-mg/layout';
 import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 

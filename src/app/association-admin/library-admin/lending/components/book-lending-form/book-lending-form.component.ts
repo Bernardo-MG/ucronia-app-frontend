@@ -7,7 +7,7 @@ import { Member } from '@app/models/members/member';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-book-lending-form',
