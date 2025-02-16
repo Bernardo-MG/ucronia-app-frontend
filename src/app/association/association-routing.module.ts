@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { AssociationLayoutComponent } from '../core/layout/components/association-layout/association-layout.component';
+import { AssociationLayoutContainer } from '../core/layout/containers/association-layout/association-layout.container';
 
 const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
 const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
@@ -11,7 +11,7 @@ const libraryModule = () => import('@app/association/library/library.module').th
 const routes: Routes = [
   {
     path: '',
-    component: AssociationLayoutComponent,
+    component: AssociationLayoutContainer,
     children: [
       {
         path: '',

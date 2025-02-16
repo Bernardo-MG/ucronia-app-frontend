@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
+import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
 import { Menu } from '@bernardo-mg/layout';
 import { SecurityLayoutService } from '../../services/security-layout.service';
 
 @Component({
     selector: 'access-sidebar',
-    imports: [RouterModule, SidebarLayoutComponent],
-    templateUrl: './security-layout.component.html'
+    imports: [RouterModule, SidebarLayoutContainer],
+    templateUrl: './security-layout.container.html'
 })
-export class SecurityLayoutComponent implements OnInit {
+export class SecurityLayoutContainer implements OnInit {
 
   public menus: Menu[] = [];
 

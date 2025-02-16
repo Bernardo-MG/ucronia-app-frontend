@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountLayoutService } from '@app/account/services/account-layout.service';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
+import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'account-layout',
-    imports: [RouterModule, SidebarLayoutComponent],
+    imports: [RouterModule, SidebarLayoutContainer],
     templateUrl: './account-layout.component.html'
 })
 export class AccountLayoutComponent implements OnInit {

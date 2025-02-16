@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { LayoutService } from '@app/core/layout/services/layout.service';
-import { NavbarComponent } from '../header/navbar/navbar.component';
+import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
 
 @Component({
     selector: 'app-simple-layout',
     imports: [RouterModule, NavbarComponent],
-    templateUrl: './simple-layout.component.html'
+    templateUrl: './simple-layout.container.html'
 })
-export class SimpleLayoutComponent implements OnInit {
+export class SimpleLayoutContainer implements OnInit {
 
   public title = '';
 

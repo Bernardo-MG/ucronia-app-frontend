@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
+import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
 import { Menu } from '@bernardo-mg/layout';
 import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 
 @Component({
     selector: 'assoc-association-admin-layout',
-    imports: [RouterModule, SidebarLayoutComponent],
-    templateUrl: './association-admin-layout.component.html'
+    imports: [RouterModule, SidebarLayoutContainer],
+    templateUrl: './association-admin-layout.container.html'
 })
-export class AssociationAdminLayoutComponent implements OnInit {
+export class AssociationAdminLayoutContainer implements OnInit {
 
   public menus: Menu[] = [];
 

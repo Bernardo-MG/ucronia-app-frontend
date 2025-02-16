@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SimpleLayoutComponent } from '@app/core/layout/components/simple-layout/simple-layout.component';
+import { SimpleLayoutContainer } from '@app/core/layout/containers/simple-layout/simple-layout.container';
 import { SettingsInfoEditorContainer } from './containers/settings-info-editor/settings-info-editor.container';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: SimpleLayoutComponent,
+    component: SimpleLayoutContainer,
     data: { breadcrumb: 'Configuración' },
     children: [
       {

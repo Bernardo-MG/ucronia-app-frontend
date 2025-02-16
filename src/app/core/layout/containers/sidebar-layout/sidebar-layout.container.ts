@@ -10,9 +10,9 @@ import { RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 @Component({
     selector: 'layout-sidebar',
     imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
-    templateUrl: './sidebar-layout.component.html'
+    templateUrl: './sidebar-layout.container.html'
 })
-export class SidebarLayoutComponent implements OnInit {
+export class SidebarLayoutContainer implements OnInit {
 
   @Input() public menus: Menu[] = [];
 

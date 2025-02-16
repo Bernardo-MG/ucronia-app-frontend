@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AssociationAdminLayoutComponent } from './association-admin-layout.component';
+import { NavbarComponent } from '@app/core/layout/components/header/navbar/navbar.component';
+import { SecurityLayoutContainer } from './security-layout.container';
 
-describe('AssociationAdminLayoutComponent', () => {
-  let component: AssociationAdminLayoutComponent;
-  let fixture: ComponentFixture<AssociationAdminLayoutComponent>;
+describe('SecurityLayoutContainer', () => {
+  let component: SecurityLayoutContainer;
+  let fixture: ComponentFixture<SecurityLayoutContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AssociationAdminLayoutComponent
+        NavbarComponent
       ],
       providers: [
         provideRouter([])
@@ -17,7 +18,7 @@ describe('AssociationAdminLayoutComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AssociationAdminLayoutComponent);
+    fixture = TestBed.createComponent(SecurityLayoutContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -26,3 +27,4 @@ describe('AssociationAdminLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
