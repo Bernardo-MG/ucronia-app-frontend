@@ -7,9 +7,9 @@ import { Menu } from '@bernardo-mg/layout';
 @Component({
     selector: 'account-layout',
     imports: [RouterModule, SidebarLayoutContainer],
-    templateUrl: './account-layout.component.html'
+    templateUrl: './account-layout.container.html'
 })
-export class AccountLayoutComponent implements OnInit {
+export class AccountLayoutContainer implements OnInit {
 
   public menus: Menu[] = [];
 

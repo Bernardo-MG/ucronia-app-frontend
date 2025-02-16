@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountLayoutComponent } from './components/layout/account-layout/account-layout.component';
+import { AccountLayoutContainer } from './containers/account-layout/account-layout.container';
 import { AccountPasswordChangeContainer } from './containers/account-password-change/account-password-change.container';
 import { AccountProfileFrontpageContainer } from './containers/account-profile-frontpage/account-profile-frontpage.container';
 
@@ -8,7 +8,7 @@ import { AccountProfileFrontpageContainer } from './containers/account-profile-f
 const routes: Routes = [
   {
     path: '',
-    component: AccountLayoutComponent,
+    component: AccountLayoutContainer,
     data: { breadcrumb: 'Cuenta' },
     children: [
       {
