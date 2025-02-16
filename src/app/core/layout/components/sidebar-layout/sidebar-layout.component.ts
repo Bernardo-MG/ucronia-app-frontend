@@ -5,7 +5,7 @@ import { NavbarComponent } from '@app/core/layout/components/header/navbar/navba
 import { SideMenuComponent } from '@app/core/layout/components/side/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
 import { Menu } from '@bernardo-mg/layout';
-import { RouterBreadcrumbComponent } from '../router-breadcrumb/router-breadcrumb.component';
+import { RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'layout-sidebar',

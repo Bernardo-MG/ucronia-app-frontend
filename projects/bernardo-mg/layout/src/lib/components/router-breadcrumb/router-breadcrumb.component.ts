@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
-import { BreadcrumbLink } from '../../model/breadcrumb-link';
+import { BreadcrumbLink } from '../../models/breadcrumb-link';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 @Component({
