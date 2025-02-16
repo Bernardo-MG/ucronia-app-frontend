@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/members/member';
-import { ButtonListComponent } from '@app/shared/layout/components/button-list/button-list.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { BlockUiDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-book-lending-member-selection',
