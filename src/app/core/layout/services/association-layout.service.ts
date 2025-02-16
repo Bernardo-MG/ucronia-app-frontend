@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
-import { Menu } from '@app/shared/menu/models/menu';
 import { MenuLoader } from '@app/shared/menu/utils/menu-loader';
+import { Menu } from '@bernardo-mg/layout';
 import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 import { ViewNodeFilter } from './view-node-filter';
 

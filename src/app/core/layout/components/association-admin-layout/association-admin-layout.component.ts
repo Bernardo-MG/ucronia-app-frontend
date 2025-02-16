@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
-import { Menu } from '@app/shared/menu/models/menu';
+import { Menu } from '@bernardo-mg/layout';
 import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 
 @Component({

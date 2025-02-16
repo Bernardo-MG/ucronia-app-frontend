@@ -19,4 +19,7 @@ export * from './lib/directives/justify-end.directive';
 export * from './lib/directives/placeholder.directive';
 export * from './lib/directives/responsive-columns.directive';
 export * from './lib/models/card-tab';
+export * from './lib/models/menu-link';
+export * from './lib/models/menu-options';
+export * from './lib/models/menu';
 export * from './lib/utils/ModalHandler';

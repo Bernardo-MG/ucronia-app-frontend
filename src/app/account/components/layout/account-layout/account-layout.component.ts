@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountLayoutService } from '@app/account/services/account-layout.service';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
-import { Menu } from '@app/shared/menu/models/menu';
+import { Menu } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'account-layout',
