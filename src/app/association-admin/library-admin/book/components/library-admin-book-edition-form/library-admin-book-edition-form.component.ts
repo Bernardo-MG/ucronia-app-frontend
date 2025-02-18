@@ -16,10 +16,10 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, ModalComponent } from '@bernardo-mg/layout';
+import { Modal } from 'bootstrap';
 
 @Component({
     selector: 'assoc-library-admin-book-edition-form',
@@ -80,8 +80,6 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
   public selector = '';
 
-  private modalHandler = new ModalHandler();
-
   constructor(
     fb: FormBuilder
   ) {
@@ -110,31 +108,49 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-    this.modalHandler.openModal('book_type');
+      const modal = document.getElementById('book_typeModal');
+      if (modal) {
+        new Modal(modal).show();
+      }
   }
 
   public onShowGameSystemSelection() {
-    this.modalHandler.openModal('game_system');
+    const modal = document.getElementById('game_systemModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowAuthorSelection() {
-    this.modalHandler.openModal('author');
+    const modal = document.getElementById('authorModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowPublisherSelection() {
-    this.modalHandler.openModal('publisher');
+    const modal = document.getElementById('publisherModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType;
     this.selector = ''
-    this.modalHandler.closeModal('book_type');
+    const modal = document.getElementById('book_typeModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem;
     this.selector = '';
-    this.modalHandler.closeModal('game_system');
+    const modal = document.getElementById('game_systemModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onSelectAuthor(author: Author) {
@@ -142,7 +158,10 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
       this.authors = this.authors.concat([author]);
     }
     this.selector = '';
-    this.modalHandler.closeModal('author');
+    const modal = document.getElementById('authorModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onSelectPublisher(publisher: Publisher) {
@@ -150,7 +169,10 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
       this.publishers = this.publishers.concat([publisher]);
     }
     this.selector = '';
-    this.modalHandler.closeModal('publisher');
+    const modal = document.getElementById('publisherModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onRemoveAuthor(author: Author) {

@@ -11,15 +11,15 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { ModalComponent } from '@bernardo-mg/layout';
+import { Modal } from 'bootstrap';
 
 @Component({
-    selector: 'assoc-library-admin-book-donors-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './library-admin-book-donors-form.component.html'
+  selector: 'assoc-library-admin-book-donors-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
@@ -34,8 +34,6 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   public set donation(data: Donation) {
     this.form.get('donation')?.setValue(data);
   }
-
-  private modalHandler = new ModalHandler();
 
   constructor(
     fb: FormBuilder
@@ -65,7 +63,10 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   }
 
   public onShowDonorSelection() {
-    this.modalHandler.openModal('donor');
+    const modal = document.getElementById('donorModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onSelectDonor(donor: Person) {
@@ -76,7 +77,10 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     if (!this.donation.donors.find(d => d.number === donor.number)) {
       this.donation.donors.push(donor);
     }
-    this.modalHandler.closeModal('donor');
+    const modal = document.getElementById('donorModal');
+    if (modal) {
+      new Modal(modal).toggle();
+    }
   }
 
   public onRemoveDonor(donor: Donor) {

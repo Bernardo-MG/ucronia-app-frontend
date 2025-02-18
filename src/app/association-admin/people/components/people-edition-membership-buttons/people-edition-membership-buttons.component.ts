@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { ModalComponent, WaitingButtonComponent } from '@bernardo-mg/layout';
+import { Modal } from 'bootstrap';
 
 @Component({
-    selector: 'assoc-people-edition-membership-buttons',
-    imports: [CommonModule, WaitingButtonComponent, ModalComponent],
-    templateUrl: './people-edition-membership-buttons.component.html'
+  selector: 'assoc-people-edition-membership-buttons',
+  imports: [CommonModule, WaitingButtonComponent, ModalComponent],
+  templateUrl: './people-edition-membership-buttons.component.html'
 })
 export class PeopleEditionMembershipButtonsComponent {
 
@@ -28,26 +28,39 @@ export class PeopleEditionMembershipButtonsComponent {
 
   @Output() public convertToMember = new EventEmitter<void>();
 
-  private modalHandler = new ModalHandler();
-
   public onShowActivate() {
-    this.modalHandler.openModal('activate');
+    const modal = document.getElementById('activateModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowDeactivate() {
-    this.modalHandler.openModal('deactivate');
+    const modal = document.getElementById('deactivateModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowEnableRenew() {
-    this.modalHandler.openModal('enableRenew');
+    const modal = document.getElementById('enableRenewModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowDisableRenew() {
-    this.modalHandler.openModal('disableRenew');
+    const modal = document.getElementById('disableRenewModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
   public onShowConvertToMember() {
-    this.modalHandler.openModal('convertToMember');
+    const modal = document.getElementById('convertToMemberModal');
+    if (modal) {
+      new Modal(modal).show();
+    }
   }
 
 }
