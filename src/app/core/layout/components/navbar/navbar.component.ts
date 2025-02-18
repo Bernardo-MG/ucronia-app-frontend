@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '@bernardo-mg/icons';
-import { Menu } from '@bernardo-mg/layout';
+import { Menu, MenuLink } from '@bernardo-mg/layout';
 import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.component';
 import { LayoutService } from '../../services/layout.service';
@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
   public showAdmin = false;
 
-  public adminMenus: Menu[] = [];
+  public adminLinks: MenuLink[] = [];
 
   constructor(
     private layoutService: LayoutService,
@@ -41,9 +41,9 @@ export class NavbarComponent implements OnInit {
     // Load menus
     this.showAdmin = this.layoutService.showAssociationAdminLink();
     if(this.showAdmin) {
-      this.adminMenus = this.associationAdminLayoutService.getMenus();
+      this.adminLinks = this.associationAdminLayoutService.getLinks();
     } else {
-      this.adminMenus = [];
+      this.adminLinks = [];
     }
   }
 

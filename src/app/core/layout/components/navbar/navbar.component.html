@@ -28,9 +28,9 @@
               Administración
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenuDropdown">
-              <li>
-                <a routerLink="/association/admin" class="nav-link" aria-label="Asociación" title="Asociación">
-                  Main
+              <li *ngFor="let link of adminLinks">
+                <a routerLink="{{link.path}}" class="dropdown-item" attr.aria-label="{{link.title}}" title="{{link.title}}">
+                  {{link.title}}
                 </a>
               </li>
             </ul>
