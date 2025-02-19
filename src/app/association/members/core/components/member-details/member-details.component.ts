@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'assoc-member-details',
@@ -21,20 +20,6 @@ export class MemberDetailsComponent {
 
   public onChangeView(newView: string) {
     this.view = newView;
-  }
-
-  public onShowActivate() {
-    const modal = document.getElementById('activateModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
-  }
-
-  public onShowDeactivate() {
-    const modal = document.getElementById('deactivateModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
   }
 
 }
