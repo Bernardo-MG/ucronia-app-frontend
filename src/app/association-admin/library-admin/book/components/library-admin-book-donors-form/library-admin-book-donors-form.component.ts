@@ -13,12 +13,10 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
-import { ModalComponent } from '@bernardo-mg/layout';
-import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
@@ -26,6 +24,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   @Input() public donors = new PaginatedResponse<Person[]>([]);
 
   @Output() public goToDonorPage = new EventEmitter<number>();
+  
+  public selectingDonor = false;
 
   public get donation(): Donation | undefined {
     return this.form.get('donation').value;
@@ -62,11 +62,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     });
   }
 
-  public onShowDonorSelection() {
-    const modal = document.getElementById('donorModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+  public onStartSelectingDonor() {
+    this.selectingDonor = true;
   }
 
   public onSelectDonor(donor: Person) {
@@ -77,10 +74,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     if (!this.donation.donors.find(d => d.number === donor.number)) {
       this.donation.donors.push(donor);
     }
-    const modal = document.getElementById('donorModal');
-    if (modal) {
-      new Modal(modal).toggle();
-    }
+    this.selectingDonor = false;
   }
 
   public onRemoveDonor(donor: Donor) {
