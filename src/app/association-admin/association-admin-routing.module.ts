@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { AssociationAdminFeesLayoutContainer } from '@app/core/layout/containers/association-admin-fees-layout/association-admin-fees-layout.container';
 import { AssociationAdminLayoutContainer } from '@app/core/layout/containers/association-admin-layout/association-admin-layout.container';
 import { SimpleLayoutContainer } from '@app/core/layout/containers/simple-layout/simple-layout.container';
 
@@ -26,16 +27,25 @@ const routes: Routes = [
         loadChildren: libraryAdminModule
       },
       {
-        path: 'fees',
-        component: AssociationAdminLayoutContainer,
-        canActivate: [ResourceGuard("fee", "view")],
-        loadChildren: feesModule
-      },
-      {
-        path: 'funds',
-        component: AssociationAdminLayoutContainer,
-        canActivate: [ResourceGuard("funds", "view")],
-        loadChildren: fundsModule
+        path: 'money',
+        component: AssociationAdminFeesLayoutContainer,
+        children: [
+          {
+            path: '',
+            redirectTo: 'funds',
+            pathMatch: 'full'
+          },
+          {
+            path: 'fees',
+            canActivate: [ResourceGuard("fee", "view")],
+            loadChildren: feesModule
+          },
+          {
+            path: 'funds',
+            canActivate: [ResourceGuard("funds", "view")],
+            loadChildren: fundsModule
+          }
+        ]
       }
     ]
   }

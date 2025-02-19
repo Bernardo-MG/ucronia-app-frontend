@@ -4,7 +4,6 @@ import { IconBookComponent, IconCoinsComponent, IconPersonComponent, IconReceipt
 // Define menu options with titles for each section
 export const ASSOCIATION_ADMIN_MENU_LINKS = [
   new AuthMenuLink('Gente', '/association/admin/people', 'person', IconPersonComponent),
-  new AuthMenuLink('Cuotas', '/association/admin/fees', 'fee', IconReceiptComponent),
-  new AuthMenuLink('Fondos', '/association/admin/funds', 'funds', IconCoinsComponent),
+  new AuthMenuLink('Fondos', '/association/admin/money', 'funds', IconCoinsComponent),
   new AuthMenuLink('Biblioteca', '/association/admin/library', 'library', IconBookComponent)
 ];

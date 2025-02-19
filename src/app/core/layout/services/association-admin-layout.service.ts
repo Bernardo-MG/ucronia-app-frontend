@@ -5,6 +5,7 @@ import { Menu, MenuLink, MenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
 import { ASSOCIATION_ADMIN_MENU_LINKS } from '../menus/association-admin-menu-links';
 import { ViewNodeFilter } from './view-node-filter';
+import { ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS } from '../menus/association-admin-funds-menu-options';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,15 @@ export class AssociationAdminLayoutService {
 
   private links: MenuLink[] = [];
 
+  private feeMenus: Menu[] = [];
+
   constructor(
     authContainer: AuthContainer
   ) {
     const nodeFilter = new ViewNodeFilter(authContainer);
     this.menus = new MenuLoader().load(ASSOCIATION_ADMIN_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
     this.links = nodeFilter.filterNodes(ASSOCIATION_ADMIN_MENU_LINKS);
+    this.feeMenus = new MenuLoader().load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
   }
 
   /**
@@ -30,6 +34,15 @@ export class AssociationAdminLayoutService {
    */
   public getMenus(): Menu[] {
     return this.menus;
+  }
+
+  /**
+   * Get the menus options.
+   * 
+   * @returns An array of menu objects.
+   */
+  public getFundsMenus(): Menu[] {
+    return this.feeMenus;
   }
 
   public getLinks(): MenuLink[] {
