@@ -4,7 +4,6 @@ import { Person } from '@app/models/person/person';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
-import { Modal } from 'bootstrap';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
@@ -51,41 +50,6 @@ export class PeopleInfoComponent {
 
   public onChangeView(newView: string) {
     this.view = newView;
-  }
-
-  public onShowActivate() {
-    const modal = document.getElementById('activateModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
-  }
-
-  public onShowDeactivate() {
-    const modal = document.getElementById('deactivateModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
-  }
-
-  public onShowEnableRenew() {
-    const modal = document.getElementById('enableRenewModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
-  }
-
-  public onShowDisableRenew() {
-    const modal = document.getElementById('disableRenewModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
-  }
-
-  public onShowConvertToMember() {
-    const modal = document.getElementById('convertToMemberModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
   }
 
 }

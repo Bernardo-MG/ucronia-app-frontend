@@ -4,18 +4,22 @@
       <ng-container [ngSwitch]="active">
         <ng-container *ngSwitchCase="true">
           <!-- Disable button -->
-          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Deactivate"
-            (action)="onShowDeactivate()">Desactivar</layout-waiting-button>
+          <layout-waiting-button-wrapper [waiting]="waiting" [disabled]="disabled" name="Deactivate">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deactivateModal">Desactivar</button>
+          </layout-waiting-button-wrapper>
         </ng-container>
         <ng-container *ngSwitchCase="false">
           <!-- Enable button -->
-          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Activate"
-            (action)="onShowActivate()">Activar</layout-waiting-button>
+          <layout-waiting-button-wrapper [waiting]="waiting" [disabled]="disabled" name="Activate">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#activateModal">Activar</button>
+          </layout-waiting-button-wrapper>
         </ng-container>
         <ng-container *ngSwitchCase="null">
           <!-- Convert to member button -->
-          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Convert to member"
-            (action)="onShowConvertToMember()">Convertir en socio</layout-waiting-button>
+          <layout-waiting-button-wrapper [waiting]="waiting" [disabled]="disabled" name="Convert to member">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#convertToMemberModal">Convertir en
+              socio</button>
+          </layout-waiting-button-wrapper>
         </ng-container>
       </ng-container>
     </div>
@@ -23,13 +27,17 @@
       <ng-container [ngSwitch]="renew">
         <ng-container *ngSwitchCase="true">
           <!-- Disable button -->
-          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Enable renewal"
-            (action)="onShowDisableRenew()">Desactivar renovación</layout-waiting-button>
+          <layout-waiting-button-wrapper [waiting]="waiting" [disabled]="disabled" name="Disable renewal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disableRenewModal">Desactivar
+              renovación</button>
+          </layout-waiting-button-wrapper>
         </ng-container>
         <ng-container *ngSwitchCase="false">
           <!-- Enable button -->
-          <layout-waiting-button [waiting]="waiting" [disabled]="disabled" name="Disable renewal"
-            (action)="onShowEnableRenew()">Activar renovación</layout-waiting-button>
+          <layout-waiting-button-wrapper [waiting]="waiting" [disabled]="disabled" name="Enable renewal">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#convertToMemberModal">Activar
+              renovación</button>
+          </layout-waiting-button-wrapper>
         </ng-container>
       </ng-container>
     </div>

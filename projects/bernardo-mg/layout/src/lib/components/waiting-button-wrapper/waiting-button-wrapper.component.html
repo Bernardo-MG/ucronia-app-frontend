@@ -1,0 +1,11 @@
+<ng-container>
+  <div *ngIf="waiting; then waiting_cue else active"></div>
+  <ng-template #waiting_cue>
+    <!-- Waiting cue on button-->
+    <button type='{{type}}' class="btn btn-primary" name="{{name}}" attr.aria-label="{{name}}"
+      disabled><icon-waiting></icon-waiting></button>
+  </ng-template>
+  <ng-template #active>
+    <ng-content></ng-content>
+  </ng-template>
+</ng-container>
