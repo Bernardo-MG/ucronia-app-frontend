@@ -18,13 +18,12 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective, ModalComponent } from '@bernardo-mg/layout';
-import { Modal } from 'bootstrap';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
-    templateUrl: './library-admin-book-edition-form.component.html'
+  selector: 'assoc-library-admin-book-edition-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
@@ -45,6 +44,8 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   @Output() public goToAuthorPage = new EventEmitter<number>();
 
   @Output() public goToPublisherPage = new EventEmitter<number>();
+
+  public view = 'form';
 
   public get authors(): Author[] {
     return this.form.get('authors')?.value;
@@ -78,8 +79,6 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
     this.form.get('gameSystem').setValue(data);
   }
 
-  public selector = '';
-
   constructor(
     fb: FormBuilder
   ) {
@@ -108,71 +107,43 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-      const modal = document.getElementById('book_typeModal');
-      if (modal) {
-        new Modal(modal).show();
-      }
+    this.view = 'book_type';
   }
 
   public onShowGameSystemSelection() {
-    const modal = document.getElementById('game_systemModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'game_system';
   }
 
   public onShowAuthorSelection() {
-    const modal = document.getElementById('authorModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'author';
   }
 
   public onShowPublisherSelection() {
-    const modal = document.getElementById('publisherModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'publisher';
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType;
-    this.selector = ''
-    const modal = document.getElementById('book_typeModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'form';
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem;
-    this.selector = '';
-    const modal = document.getElementById('game_systemModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'form';
   }
 
   public onSelectAuthor(author: Author) {
     if (!this.authors.find(a => a.name === author.name)) {
       this.authors = this.authors.concat([author]);
     }
-    this.selector = '';
-    const modal = document.getElementById('authorModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'form';
   }
 
   public onSelectPublisher(publisher: Publisher) {
     if (!this.publishers.find(p => p.name === publisher.name)) {
       this.publishers = this.publishers.concat([publisher]);
     }
-    this.selector = '';
-    const modal = document.getElementById('publisherModal');
-    if (modal) {
-      new Modal(modal).show();
-    }
+    this.view = 'form';
   }
 
   public onRemoveAuthor(author: Author) {
