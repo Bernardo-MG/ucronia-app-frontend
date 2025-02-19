@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 import { AssociationAdminFeesLayoutContainer } from '@app/core/layout/containers/association-admin-fees-layout/association-admin-fees-layout.container';
-import { AssociationAdminLayoutContainer } from '@app/core/layout/containers/association-admin-layout/association-admin-layout.container';
+import { AssociationAdminLibraryLayoutContainer } from '@app/core/layout/containers/association-admin-library-layout/association-admin-library-layout.container';
 import { SimpleLayoutContainer } from '@app/core/layout/containers/simple-layout/simple-layout.container';
 
 const fundsModule = () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule);
@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'library',
-        component: AssociationAdminLayoutContainer,
+        component: AssociationAdminLibraryLayoutContainer,
         canActivate: [ResourceGuard("library_admin", "view")],
         loadChildren: libraryAdminModule
       },
