@@ -2,8 +2,8 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 import { Book } from '@app/models/library/book';
+import { SortDirection } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from './library-book-list.component';
 
 describe('LibraryBookListComponent', () => {

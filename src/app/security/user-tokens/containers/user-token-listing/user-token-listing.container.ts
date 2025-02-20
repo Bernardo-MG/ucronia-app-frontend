@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({

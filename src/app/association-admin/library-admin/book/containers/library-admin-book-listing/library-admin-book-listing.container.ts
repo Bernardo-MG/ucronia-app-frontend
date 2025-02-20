@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Book } from '@app/models/library/book';
 import { BlockUiDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
 import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 

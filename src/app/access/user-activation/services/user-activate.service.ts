@@ -2,9 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
+import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 

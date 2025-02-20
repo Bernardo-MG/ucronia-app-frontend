@@ -1,5 +1,4 @@
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
+import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
 import { Observable, throwError } from 'rxjs';
 
 export abstract class CreateComponent<Data> {

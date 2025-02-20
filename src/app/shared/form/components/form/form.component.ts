@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FieldFailures } from '@app/core/api/models/field-failures';
+import { FieldFailures } from '@bernardo-mg/request';
 
 @Component({
     selector: 'app-form',

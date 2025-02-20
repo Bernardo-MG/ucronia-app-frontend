@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { UserToken } from '@app/core/authentication/models/user-token';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { Failure, FieldFailures } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-user-token-info',

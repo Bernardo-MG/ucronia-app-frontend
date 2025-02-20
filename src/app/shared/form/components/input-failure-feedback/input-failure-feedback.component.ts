@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
+import { Failure } from '@bernardo-mg/request';
 
 @Component({
     selector: 'app-input-failure-feedback',

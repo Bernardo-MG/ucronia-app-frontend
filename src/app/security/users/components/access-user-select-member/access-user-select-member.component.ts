@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-user-select-member',

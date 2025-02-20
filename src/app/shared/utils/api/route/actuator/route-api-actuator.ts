@@ -1,8 +1,7 @@
 import { Router } from "@angular/router";
 import { RouteParametersActuator } from "@app/shared/utils/route/actuator/route-parameters-actuator";
 import { UrlParamsExtractor } from "@app/shared/utils/route/actuator/url-parameters-extractor";
-import { Pagination } from "../../../../../core/api/models/pagination";
-import { SortProperty } from "../../../../../core/api/models/sort-field";
+import { Pagination, SortProperty } from "@bernardo-mg/request";
 import { UrlParamsProcessor } from "./url-params-processor";
 
 export class RouteApiActuator {

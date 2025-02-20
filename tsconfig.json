@@ -12,6 +12,9 @@
       ],
       "@bernardo-mg/layout": [
         "./dist/bernardo-mg/layout"
+      ],
+      "@bernardo-mg/request": [
+        "./dist/bernardo-mg/request"
       ]
     },
     "outDir": "./dist/out-tsc",

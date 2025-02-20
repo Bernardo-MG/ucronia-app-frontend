@@ -1,7 +1,6 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
-import { SortProperty } from "../../../../../../core/api/models/sort-field";
-import { SortDirection } from "@app/core/api/models/sort-direction";
+import { SortDirection, SortProperty } from "@bernardo-mg/request";
 
 /**
  * Parses a {@link SortProperty} from the route parameters.

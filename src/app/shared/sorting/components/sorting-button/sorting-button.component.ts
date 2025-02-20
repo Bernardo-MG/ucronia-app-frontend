@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SortProperty } from '@app/core/api/models/sort-field';
+import { SortDirection, SortProperty } from '@bernardo-mg/request';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { SortDirection } from '../../../../core/api/models/sort-direction';
 
 /**
  * Loops through unsorted -> ascending -> descending -> unsorted

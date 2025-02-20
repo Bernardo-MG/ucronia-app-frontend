@@ -1,4 +1,4 @@
-import { ParamLoader } from "../client/param-loader";
+import { ParamLoader } from "./param-loader";
 import { SortDirection } from "../models/sort-direction";
 import { SortProperty } from "../models/sort-field";
 

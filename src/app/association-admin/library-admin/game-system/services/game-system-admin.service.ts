@@ -1,14 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { PaginationParams } from '@app/core/api/client/pagination-params';
-import { SortingParams } from '@app/core/api/client/sorting-params';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { GameSystem } from '@app/models/library/game-system';
+import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 

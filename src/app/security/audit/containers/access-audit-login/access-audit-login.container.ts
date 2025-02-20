@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
 import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
 import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';

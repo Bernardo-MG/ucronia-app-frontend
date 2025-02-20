@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
 import { CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
+import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';

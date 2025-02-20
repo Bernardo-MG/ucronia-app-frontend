@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Author } from '@app/models/library/author';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { BlockUiDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({

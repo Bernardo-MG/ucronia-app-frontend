@@ -222,6 +222,48 @@
           }
         }
       }
+    },
+    "@bernardo-mg/request": {
+      "projectType": "library",
+      "root": "projects/bernardo-mg/request",
+      "sourceRoot": "projects/bernardo-mg/request/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/bernardo-mg/request/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bernardo-mg/request/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/bernardo-mg/request/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/bernardo-mg/request/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/bernardo-mg/request/**/*.ts",
+              "projects/bernardo-mg/request/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

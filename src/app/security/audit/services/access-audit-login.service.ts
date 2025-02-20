@@ -1,13 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { PaginationParams } from '@app/core/api/client/pagination-params';
-import { SortingParams } from '@app/core/api/client/sorting-params';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortProperty } from '@app/core/api/models/sort-field';
+import { AngularClient, Client, PaginatedResponse, PaginationParams, Sort, SortDirection, SortingParams, SortProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { LoginRegister } from '../models/login-register';

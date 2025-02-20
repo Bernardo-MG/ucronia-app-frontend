@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
+import { SortDirection } from '@bernardo-mg/request';
 import { SortParametersParser } from './sort-parameters-parser';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 
 describe('SortParametersParser', () => {
   let reader: SortParametersParser;

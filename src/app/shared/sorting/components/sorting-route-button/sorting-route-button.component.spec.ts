@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SortDirection } from '@app/core/api/models/sort-direction';
+import { SortDirection } from '@bernardo-mg/request';
 import { BehaviorSubject } from 'rxjs';
 import { SortingRouteButtonComponent } from './sorting-route-button.component';
 
