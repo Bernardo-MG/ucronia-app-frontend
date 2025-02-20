@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { ParamLoader } from './param-loader';
+import { ParamLoader } from '../params/param-loader';
 
 /**
  * Sets up and executes requests.
