@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { throwError } from "rxjs";
-import { FailureResponse } from "../models/failure-response";
+import { FailureResponse } from "../../public-api";
 
 /**
  * Request interceptor which returns an error response on error.

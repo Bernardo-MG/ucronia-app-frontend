@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { AngularErrorRequestInterceptor } from '../interceptor/angular-error-request-interceptor';
+import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
 import { Client } from './client';
 import { ParamLoader } from '../params/param-loader';
 
