@@ -25,14 +25,14 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   private pageSize = 10;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['permissions']) {
-      this.data = this.buildPage(0);
+  ngOnChanges({ permissions }: SimpleChanges): void {
+    if (permissions) {
+      this.data = this.buildPage(1);
     }
   }
 
   public onGoToPage(page: number) {
-    this.data = this.buildPage(page - 1);
+    this.data = this.buildPage(page);
   }
 
   public onRemove(permission: ResourcePermission): void {

@@ -29,12 +29,12 @@ export class AccessUserRolesComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
-      this.data = this.buildPage(0);
+      this.data = this.buildPage(1);
     }
   }
 
   public onGoToPage(page: number) {
-    this.data = this.buildPage(page - 1);
+    this.data = this.buildPage(page);
   }
 
   public onRemove(role: Role): void {
