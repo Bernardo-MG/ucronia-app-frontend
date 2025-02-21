@@ -38,6 +38,21 @@ describe("SortingParams", () => {
     );
   });
 
+  it('should use default sort when no property is received', () => {
+    const sortingParams = new SortingParams(
+      [],
+      [
+        new SortProperty('age')
+      ]
+    );
+
+    expect(sortingParams.getFinalProperties()).toEqual(
+      [
+        new SortProperty('age', SortDirection.Ascending)
+      ]
+    );
+  });
+
   it('should return an empty list when no property is received', () => {
     const sortingParams = new SortingParams([]);
 
@@ -115,6 +130,23 @@ describe("SortingParams", () => {
 
   it('should not change properties order', () => {
     const sortingParams = new SortingParams(
+      [
+        new SortProperty('zname', SortDirection.Ascending),
+        new SortProperty('aname', SortDirection.Descending)
+      ]
+    );
+
+    expect(sortingParams.getFinalProperties()).toEqual(
+      [
+        new SortProperty('zname', SortDirection.Ascending),
+        new SortProperty('aname', SortDirection.Descending)
+      ]
+    );
+  });
+
+  it('should not change default properties order', () => {
+    const sortingParams = new SortingParams(
+      [],
       [
         new SortProperty('zname', SortDirection.Ascending),
         new SortProperty('aname', SortDirection.Descending)
