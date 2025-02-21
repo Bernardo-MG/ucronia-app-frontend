@@ -1,5 +1,5 @@
-import { Failure } from "./failure";
-import { FieldFailures } from "./field-failures";
+import { Failure } from "../models/failure";
+import { FieldFailures } from "../models/field-failures";
 
 export class FailureResponse {
   failures = new FieldFailures();

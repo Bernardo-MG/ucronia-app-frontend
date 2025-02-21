@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AngularClient } from './angular-client';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
+import { AngularClient } from './angular-client';
 
 describe('AngularClient', () => {
   let client: AngularClient;

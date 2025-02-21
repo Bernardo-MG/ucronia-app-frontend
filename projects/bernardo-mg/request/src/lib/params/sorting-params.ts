@@ -1,6 +1,6 @@
-import { ParamLoader } from "./param-loader";
 import { SortDirection } from "../models/sort-direction";
 import { SortProperty } from "../models/sort-field";
+import { ParamLoader } from "./param-loader";
 
 export class SortingParams implements ParamLoader {
 
