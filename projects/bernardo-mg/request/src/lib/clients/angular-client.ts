@@ -10,7 +10,7 @@ import { Client } from './client';
 export class AngularClient implements Client {
 
   /**
-   * Route for the request.
+   * Route for the request. Will be built by the client.
    */
   private route = '';
 
@@ -20,7 +20,7 @@ export class AngularClient implements Client {
   private errorInterceptor = new AngularErrorRequestInterceptor();
 
   /**
-   * Request options.
+   * Request options. Used to store the params.
    */
   protected options: {
     params?: HttpParams
@@ -85,7 +85,7 @@ export class AngularClient implements Client {
 
       params = params.append(name, value);
 
-      this.options = { params: params };
+      this.options = { ...this.options, params: params };
     }
 
     return this;
