@@ -4,6 +4,25 @@ import { SortingParams } from "./sorting-params";
 
 describe("SortingParams", () => {
 
+  /** LOAD METHOD */
+
+  it('should load parameters correctly', () => {
+    const sortingParams = new SortingParams([
+      new SortProperty('name', SortDirection.Ascending),
+      new SortProperty('age', SortDirection.Descending)
+    ]);
+
+    const params: Record<string, string[]> = {};
+    sortingParams.load((name, value) => {
+      if (!params[name]) {
+        params[name] = [];
+      }
+      params[name].push(value);
+    });
+
+    expect(params["sort"]).toEqual(["name,asc", "age,desc"]);
+  });
+
   /** PROPERTY LISTS */
 
   it('should return sorting properties when they are the only ones set', () => {
