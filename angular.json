@@ -246,6 +246,13 @@
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
           "options": {
             "tsConfig": "projects/bernardo-mg/request/tsconfig.spec.json",
             "polyfills": [
