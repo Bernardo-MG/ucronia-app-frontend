@@ -17,7 +17,7 @@ export class MemberListingContainer implements OnInit {
 
   public data = new PaginatedResponse<Member>();
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   /**
    * Loading flag.

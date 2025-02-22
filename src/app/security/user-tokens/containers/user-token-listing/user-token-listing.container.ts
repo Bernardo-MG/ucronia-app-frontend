@@ -15,7 +15,7 @@ export class UserTokenListingContainer implements OnInit {
 
   public data = new PaginatedResponse<UserToken>();
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   /**
    * Loading flag.

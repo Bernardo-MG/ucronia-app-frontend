@@ -5,9 +5,9 @@ import { SortingProperty } from "./sorting-property";
  */
 export class Sorting {
 
-  properties: SortingProperty[] = [];
+  properties: SortingProperty[];
 
-  constructor(properties: SortingProperty[]) {
+  constructor(properties: SortingProperty[] = []) {
     this.properties = properties;
   }
 

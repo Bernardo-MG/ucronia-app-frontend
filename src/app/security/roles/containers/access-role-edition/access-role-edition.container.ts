@@ -27,7 +27,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   public view: string = 'details';
 
-  private permissionsSort = new Sorting([]);
+  private permissionsSort = new Sorting();
 
   private role = '';
 

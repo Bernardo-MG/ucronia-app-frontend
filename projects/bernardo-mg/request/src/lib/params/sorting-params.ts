@@ -7,11 +7,11 @@ import { ParamLoader } from "./param-loader";
  */
 export class SortingParams implements ParamLoader {
 
-  private defaultProperties: SortingProperty[] = [];
+  private defaultProperties: SortingProperty[];
 
   constructor(
     private properties: SortingProperty[],
-    defaultProperties?: SortingProperty[]
+    defaultProperties: SortingProperty[] = []
   ) {
     if (defaultProperties) {
       this.defaultProperties = defaultProperties;

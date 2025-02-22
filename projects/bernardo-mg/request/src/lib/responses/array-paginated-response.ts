@@ -12,7 +12,6 @@ export class ArrayPaginatedResponse<T> extends SimpleResponse<T[]> {
   first = false;
   last = false;
 
-
   constructor(cont: T[], page: number, size: number) {
     super(cont.slice(size * (page - 1), size * page));
 

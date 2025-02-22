@@ -6,14 +6,11 @@ import { SortingDirection } from "./sorting-direction";
 export class SortingProperty {
 
   property: string;
-  direction = SortingDirection.Ascending;
+  direction: SortingDirection;
 
-  constructor(prop: string, dir?: SortingDirection) {
+  constructor(prop: string, dir: SortingDirection = SortingDirection.Ascending) {
     this.property = prop;
-
-    if (dir) {
-      this.direction = dir;
-    }
+    this.direction = dir;
   }
 
 }

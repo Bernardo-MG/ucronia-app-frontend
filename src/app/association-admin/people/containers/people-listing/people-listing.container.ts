@@ -23,7 +23,7 @@ export class PeopleListingContainer implements OnInit {
 
   public data = new PaginatedResponse<Person>();
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   /**
    * Loading flag.

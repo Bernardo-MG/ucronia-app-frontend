@@ -32,7 +32,7 @@ export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
 
   public createPermission = false;
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   constructor(
     private authContainer: AuthContainer,

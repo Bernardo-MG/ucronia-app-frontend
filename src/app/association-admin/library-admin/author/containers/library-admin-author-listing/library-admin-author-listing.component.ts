@@ -30,7 +30,7 @@ export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   public createPermission = false;
 

@@ -20,7 +20,7 @@ export class AccessAuditLoginContainer implements OnInit {
    */
   public reading = false;
 
-  private sort = new Sorting([]);
+  private sort = new Sorting();
 
   constructor(
     private service: AccessAuditLoginService
