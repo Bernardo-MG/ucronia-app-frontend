@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
-import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';
@@ -30,7 +30,7 @@ export class PasswordResetRequestContainer {
   /**
    * Failures when reseting the password.
    */
-  public failures = new FieldFailures();
+  public failures = new FailureStore();
 
   constructor(
     private service: PasswordResetService

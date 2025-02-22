@@ -4,7 +4,7 @@ import { Role } from '@app/core/authentication/models/role';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective } from '@bernardo-mg/layout';
-import { ListPaginatedResponse } from '@bernardo-mg/request';
+import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-user-roles',
@@ -23,7 +23,7 @@ export class AccessUserRolesComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<Role>();
 
-  public data = new ListPaginatedResponse<Role>([], 0, 0);
+  public data = new ArrayPaginatedResponse<Role>([], 0, 0);
 
   private pageSize = 10;
 
@@ -42,7 +42,7 @@ export class AccessUserRolesComponent implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ListPaginatedResponse<Role>(this.roles, page, this.pageSize);
+    return new ArrayPaginatedResponse<Role>(this.roles, page, this.pageSize);
   }
 
 }

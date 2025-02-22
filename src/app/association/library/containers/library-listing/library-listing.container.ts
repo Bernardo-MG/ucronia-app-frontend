@@ -4,7 +4,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
@@ -24,7 +24,7 @@ export class LibraryListingContainer implements OnInit {
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   constructor(
     private service: BookService,
@@ -38,7 +38,7 @@ export class LibraryListingContainer implements OnInit {
     this.load(0)
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);

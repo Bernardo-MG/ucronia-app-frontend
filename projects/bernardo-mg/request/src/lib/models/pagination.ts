@@ -1,4 +1,7 @@
 
+/**
+ * Pagination to be used in the requests.
+ */
 export class Pagination {
   page?: number;
   size?: number;

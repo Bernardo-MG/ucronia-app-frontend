@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Setting } from '@app/settings/models/setting';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -21,8 +21,8 @@ export class ActivityCalendarService {
       .pipe(map(r => r.content.value));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/settings');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/settings');
   }
 
 }

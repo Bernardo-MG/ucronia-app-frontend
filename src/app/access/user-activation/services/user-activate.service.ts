@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -29,8 +29,8 @@ export class AccessUserActivateService {
       .read();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/security/user/activate');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user/activate');
   }
 
 }

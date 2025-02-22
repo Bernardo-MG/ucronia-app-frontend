@@ -5,7 +5,7 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
-import { PaginatedResponse, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-role-add-permission',
@@ -20,7 +20,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
 
   @Output() public goTo = new EventEmitter<number>();
 
-  @Output() public changeDirection = new EventEmitter<SortProperty>();
+  @Output() public changeDirection = new EventEmitter<SortingProperty>();
 
   public data = new ResourcePermission();
 
@@ -38,7 +38,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     this.goTo.emit(page);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.changeDirection.emit(field);
   }
 

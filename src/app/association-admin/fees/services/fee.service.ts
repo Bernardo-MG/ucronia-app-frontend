@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Fee } from '../../../models/fees/fee';
@@ -54,7 +54,7 @@ export class FeeService {
   public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person[]>> {
     return this.getPersonClient()
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Person[]>>();
   }
@@ -66,12 +66,12 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/fee');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/fee');
   }
 
-  private getPersonClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/person');
+  private getPersonClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/person');
   }
 
 }

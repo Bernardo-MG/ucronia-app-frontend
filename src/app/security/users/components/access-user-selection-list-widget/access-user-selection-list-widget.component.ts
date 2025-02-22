@@ -5,7 +5,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
@@ -25,7 +25,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   constructor(
     private authContainer: AuthContainer,
@@ -39,7 +39,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);

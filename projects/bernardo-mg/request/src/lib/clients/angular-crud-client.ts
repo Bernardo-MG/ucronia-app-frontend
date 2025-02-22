@@ -1,26 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
-import { AngularErrorRequestInterceptor } from './angular-error-request-interceptor';
-import { Client } from './client';
-import { ParamLoader } from './param-loader';
+import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
+import { ParamLoader } from '../params/param-loader';
+import { CrudClient } from './crud-client';
 
 /**
- * Request implementation for Angular.
+ * Client implementation for Angular.
  */
-export class AngularClient implements Client {
+export class AngularCrudClient implements CrudClient {
 
   /**
-   * Route for the request.
+   * Route for the request. Will be built by the client.
    */
   private route = '';
 
   /**
-   * Interceptor for errors in the request. Will generate an error response.
+   * Interceptor for error responses. Will generate an object which such response.
    */
   private errorInterceptor = new AngularErrorRequestInterceptor();
 
   /**
-   * Request options.
+   * Request options. Used to store the params.
    */
   protected options: {
     params?: HttpParams
@@ -71,13 +71,13 @@ export class AngularClient implements Client {
       );
   }
 
-  public appendRoute(route: string): AngularClient {
+  public appendRoute(route: string): AngularCrudClient {
     this.route = `${this.route}${route}`;
 
     return this;
   }
 
-  public parameter(name: string, value: any): AngularClient {
+  public parameter(name: string, value: any): AngularCrudClient {
     let params: HttpParams;
 
     if (value) {
@@ -85,13 +85,13 @@ export class AngularClient implements Client {
 
       params = params.append(name, value);
 
-      this.options = { params: params };
+      this.options = { ...this.options, params: params };
     }
 
     return this;
   }
 
-  public loadParameters(parameters: ParamLoader): AngularClient {
+  public loadParameters(parameters: ParamLoader): AngularCrudClient {
     parameters.load(this.parameter.bind(this));
 
     return this;

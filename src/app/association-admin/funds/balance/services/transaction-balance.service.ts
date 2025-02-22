@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '../../../../models/transactions/transaction-current-balance';
@@ -29,12 +29,12 @@ export class TransactionBalanceService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/funds/balance');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/balance');
   }
 
-  private getMonthlyClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/funds/balance/monthly');
+  private getMonthlyClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/balance/monthly');
   }
 
 }

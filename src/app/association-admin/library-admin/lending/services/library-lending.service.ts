@@ -4,7 +4,7 @@ import { Active } from '@app/association/members/model/active';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -30,17 +30,17 @@ export class LibraryLendingService {
   public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member[]>> {
     return this.getMemberClient()
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
       .read<PaginatedResponse<Member[]>>();
   }
 
-  private getLendClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/lending');
+  private getLendClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/library/lending');
   }
 
-  private getMemberClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/member');
+  private getMemberClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/member');
   }
 
 }

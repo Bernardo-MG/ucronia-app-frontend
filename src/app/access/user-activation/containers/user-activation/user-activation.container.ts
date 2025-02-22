@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
-import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 import { UserActivate } from '../../models/user-activate';
@@ -48,7 +48,7 @@ export class UserActivationContainer implements OnInit {
   /**
    * Failures when activating the user.
    */
-  public failures = new FieldFailures();
+  public failures = new FailureStore();
 
   constructor(
     private route: ActivatedRoute,

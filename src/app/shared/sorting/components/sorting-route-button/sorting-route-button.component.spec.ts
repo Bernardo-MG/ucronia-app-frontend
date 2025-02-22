@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { SortDirection } from '@bernardo-mg/request';
+import { SortingDirection } from '@bernardo-mg/request';
 import { BehaviorSubject } from 'rxjs';
 import { SortingRouteButtonComponent } from './sorting-route-button.component';
 
@@ -49,7 +49,7 @@ describe('SortingRouteButtonComponent', () => {
     activatedRouteQueryParams.next(convertToParamMap({}));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(SortDirection.Unsorted);
+    expect(component.direction).toBe(SortingDirection.Unsorted);
   });
 
   it('should set disabled direction when an empty property is received', () => {
@@ -58,7 +58,7 @@ describe('SortingRouteButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(SortDirection.Unsorted);
+    expect(component.direction).toBe(SortingDirection.Unsorted);
   });
 
   it('should set ascending icon when receiving an ascending property', () => {
@@ -67,7 +67,7 @@ describe('SortingRouteButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(SortDirection.Ascending);
+    expect(component.direction).toBe(SortingDirection.Ascending);
   });
 
   it('should set descending icon when receiving a descending property', () => {
@@ -76,7 +76,7 @@ describe('SortingRouteButtonComponent', () => {
     }));
     fixture.detectChanges();
 
-    expect(component.direction).toBe(SortDirection.Descending);
+    expect(component.direction).toBe(SortingDirection.Descending);
   });
 
 });

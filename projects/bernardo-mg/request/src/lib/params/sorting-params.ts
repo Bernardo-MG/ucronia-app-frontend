@@ -1,14 +1,17 @@
+import { SortingDirection } from "../models/sorting-direction";
+import { SortingProperty } from "../models/sorting-property";
 import { ParamLoader } from "./param-loader";
-import { SortDirection } from "../models/sort-direction";
-import { SortProperty } from "../models/sort-field";
 
+/**
+ * Loads field sorting parameters.
+ */
 export class SortingParams implements ParamLoader {
 
-  private defaultProperties: SortProperty[] = [];
+  private defaultProperties: SortingProperty[] = [];
 
   constructor(
-    private properties: SortProperty[],
-    defaultProperties?: SortProperty[]
+    private properties: SortingProperty[],
+    defaultProperties?: SortingProperty[]
   ) {
     if (defaultProperties) {
       this.defaultProperties = defaultProperties;
@@ -21,11 +24,11 @@ export class SortingParams implements ParamLoader {
     this.getFinalProperties().forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));
   }
 
-  public getFinalProperties(): SortProperty[] {
+  public getFinalProperties(): SortingProperty[] {
     let sortFields;
 
     // Remove unsorted fields
-    const validSortings = this.properties.filter(f => f.direction != SortDirection.Unsorted);
+    const validSortings = this.properties.filter(f => f.direction != SortingDirection.Unsorted);
     if (validSortings.length === 0) {
       // Use default sorts if no sorting was received
       sortFields = this.defaultProperties;
@@ -35,7 +38,7 @@ export class SortingParams implements ParamLoader {
       // Apply default sortings to those fields which are not sorted
       const sortedProperties = validSortings.map(f => f.property);
       const defaultSortFields = this.defaultProperties.filter(f =>
-        (f.direction == SortDirection.Unsorted) || (!sortedProperties.includes(f.property))
+        (f.direction == SortingDirection.Unsorted) || (!sortedProperties.includes(f.property))
       );
 
       sortFields = validSortings.concat(defaultSortFields);

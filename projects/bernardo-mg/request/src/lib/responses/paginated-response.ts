@@ -1,5 +1,8 @@
 import { SimpleResponse } from "./simple-response";
 
+/**
+ * Paginated response.
+ */
 export class PaginatedResponse<T> extends SimpleResponse<T> {
   page = 0;
   size = 0;

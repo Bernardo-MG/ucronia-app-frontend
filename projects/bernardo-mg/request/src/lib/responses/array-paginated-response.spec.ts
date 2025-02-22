@@ -1,31 +1,31 @@
-import { ListPaginatedResponse } from "./list-paginated-response";
+import { ArrayPaginatedResponse } from "./array-paginated-response";
 
-describe('ListPaginatedResponse', () => {
+describe('ArrayPaginatedResponse', () => {
 
   it('should set the content when loading the initial page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 1, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 2);
 
     expect(response.content).toEqual(['a', 'b']);
   });
 
   it('should set the content when loading the middle page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 2, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 2, 2);
 
     expect(response.content).toEqual(['c', 'd']);
   });
 
   it('should set the content when loading the last page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 3, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 3, 2);
 
     expect(response.content).toEqual(['e']);
   });
 
   it('should set the page data when loading the initial page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 1, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 2);
 
     expect(response.page).toEqual(1);
     expect(response.size).toEqual(2);
@@ -36,7 +36,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should set the page data when loading the middle page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 2, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 2, 2);
 
     expect(response.page).toEqual(2);
     expect(response.size).toEqual(2);
@@ -47,7 +47,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should set the page data when loading the last page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 3, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 3, 2);
 
     expect(response.page).toEqual(3);
     expect(response.size).toEqual(2);
@@ -58,7 +58,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should mark the response as the first when loading the initial page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 1, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 2);
 
     expect(response.first).toEqual(true);
     expect(response.last).toEqual(false);
@@ -66,7 +66,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should not mark the response as the first or last when loading the middle page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 2, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 2, 2);
 
     expect(response.first).toEqual(false);
     expect(response.last).toEqual(false);
@@ -74,7 +74,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should mark the response as the last when loading the last page', () => {
     const data = ['a', 'b', 'c', 'd', 'e'];
-    const response = new ListPaginatedResponse<string>(data, 3, 2);
+    const response = new ArrayPaginatedResponse<string>(data, 3, 2);
 
     expect(response.first).toEqual(false);
     expect(response.last).toEqual(true);
@@ -84,14 +84,14 @@ describe('ListPaginatedResponse', () => {
   
   it('should set the content when loading empty data', () => {
     const data: string[] = [];
-    const response = new ListPaginatedResponse<string>(data, 1, 0);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 0);
 
     expect(response.content).toEqual([]);
   });
 
   it('should set the page data when loading empty data', () => {
     const data: string[] = [];
-    const response = new ListPaginatedResponse<string>(data, 1, 0);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 0);
 
     expect(response.page).toEqual(1);
     expect(response.size).toEqual(0);
@@ -102,7 +102,7 @@ describe('ListPaginatedResponse', () => {
 
   it('should mark the response as the first and last when loading empty data', () => {
     const data: string[] = [];
-    const response = new ListPaginatedResponse<string>(data, 1, 0);
+    const response = new ArrayPaginatedResponse<string>(data, 1, 0);
 
     expect(response.first).toEqual(true);
     expect(response.last).toEqual(true);

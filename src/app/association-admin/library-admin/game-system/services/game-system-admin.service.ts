@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GameSystem } from '@app/models/library/game-system';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -41,10 +41,10 @@ export class GameSystemAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<GameSystem[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameSystem[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name'), new SortProperty('number')]
+      [new SortingProperty('name'), new SortingProperty('number')]
     );
 
     return this.getClient()
@@ -53,8 +53,8 @@ export class GameSystemAdminService {
       .read();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/gameSystem');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/library/gameSystem');
   }
 
 }

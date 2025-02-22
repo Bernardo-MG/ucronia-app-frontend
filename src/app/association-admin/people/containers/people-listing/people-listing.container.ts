@@ -6,7 +6,7 @@ import { Person } from '@app/models/person/person';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
@@ -23,7 +23,7 @@ export class PeopleListingContainer implements OnInit {
 
   public data = new PaginatedResponse<Person[]>([]);
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   /**
    * Loading flag.
@@ -47,10 +47,10 @@ export class PeopleListingContainer implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     if (field.property === 'fullName') {
-      this.sort.addField(new SortProperty('firstName', field.direction));
-      this.sort.addField(new SortProperty('lastName', field.direction));
+      this.sort.addField(new SortingProperty('firstName', field.direction));
+      this.sort.addField(new SortingProperty('lastName', field.direction));
     } else {
       this.sort.addField(field);
     }
