@@ -80,7 +80,7 @@ export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
   }
 
   public routeLinkAdapter(data: Book): string {
-    return `book/${data.number}`;
+    return `${data.number}`;
   }
 
 }

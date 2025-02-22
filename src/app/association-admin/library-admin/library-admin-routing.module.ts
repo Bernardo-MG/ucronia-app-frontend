@@ -40,9 +40,39 @@ const routes: Routes = [
       },
       {
         path: 'books',
-        component: LibraryAdminBookListingContainer,
-        canActivate: [ResourceGuard("library_book", "view")],
-        data: { breadcrumb: 'Libros' }
+        data: { breadcrumb: 'Libros' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminBookListingContainer,
+            canActivate: [ResourceGuard("library_book", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: 'add',
+            component: LibraryAdminBookCreationContainer,
+            canActivate: [ResourceGuard("library_book", "create")],
+            data: { breadcrumb: 'Registrar libro' }
+          },
+          {
+            path: ':number',
+            component: LibraryAdminBookInfoEditorContainer,
+            canActivate: [ResourceGuard("library_book", "read")],
+            data: { breadcrumb: 'Editar libro' }
+          },
+          {
+            path: ':number/lend',
+            component: BookLendingLendContainer,
+            canActivate: [ResourceGuard("library_lending", "update")],
+            data: { breadcrumb: 'Préstamo' }
+          },
+          {
+            path: ':number/return',
+            component: BookLendingReturnContainer,
+            canActivate: [ResourceGuard("library_lending", "update")],
+            data: { breadcrumb: 'Devolución' }
+          }
+        ]
       },
       {
         path: 'publishers',
@@ -61,30 +91,6 @@ const routes: Routes = [
         component: LibraryAdminGameSystemListingContainer,
         canActivate: [ResourceGuard("library_game_system", "view")],
         data: { breadcrumb: 'Sistemas' }
-      },
-      {
-        path: 'book/add',
-        component: LibraryAdminBookCreationContainer,
-        canActivate: [ResourceGuard("library_book", "create")],
-        data: { breadcrumb: 'Registrar libro' }
-      },
-      {
-        path: 'book/:number',
-        component: LibraryAdminBookInfoEditorContainer,
-        canActivate: [ResourceGuard("library_book", "read")],
-        data: { breadcrumb: 'Editar libro' }
-      },
-      {
-        path: 'book/:number/lend',
-        component: BookLendingLendContainer,
-        canActivate: [ResourceGuard("library_lending", "update")],
-        data: { breadcrumb: 'Préstamo' }
-      },
-      {
-        path: 'book/:number/return',
-        component: BookLendingReturnContainer,
-        canActivate: [ResourceGuard("library_lending", "update")],
-        data: { breadcrumb: 'Devolución' }
       },
       {
         path: 'author/add',
