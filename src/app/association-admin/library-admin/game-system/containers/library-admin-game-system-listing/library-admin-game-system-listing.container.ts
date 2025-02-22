@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@bernardo-mg/request';
-import { Sorting } from '@bernardo-mg/request';
-import { SortingProperty } from '@bernardo-mg/request';
 import { GameSystem } from '@app/models/library/game-system';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { BlockUiDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
