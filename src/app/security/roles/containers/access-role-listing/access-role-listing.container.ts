@@ -18,7 +18,7 @@ export class AccessRoleListingContainer implements OnInit {
 
   public createPermission = false;
 
-  public data = new PaginatedResponse<Role[]>([]);
+  public data = new PaginatedResponse<Role>();
 
   /**
    * Loading flag.

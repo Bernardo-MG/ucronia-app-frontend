@@ -51,12 +51,12 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person[]>> {
+  public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person>> {
     return this.getPersonClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Person[]>>();
+      .read<PaginatedResponse<Person>>();
   }
 
   public getOnePerson(id: number): Observable<Person> {

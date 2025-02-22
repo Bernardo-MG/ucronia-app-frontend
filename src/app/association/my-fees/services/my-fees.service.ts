@@ -14,11 +14,11 @@ export class MyFeesService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number): Observable<PaginatedResponse<Fee[]>> {
+  public getAll(page: number): Observable<PaginatedResponse<Fee>> {
     return this.getClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('date', SortingDirection.Descending)]))
-      .read<PaginatedResponse<Fee[]>>();
+      .read<PaginatedResponse<Fee>>();
   }
 
   private getClient(): CrudClient {

@@ -38,15 +38,15 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public readingDonors = false;
 
-  public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
+  public bookTypesSelection = new PaginatedResponse<BookType>();
 
-  public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
+  public gameSystemsSelection = new PaginatedResponse<GameSystem>();
 
-  public authorsSelection = new PaginatedResponse<Author[]>([]);
+  public authorsSelection = new PaginatedResponse<Author>();
 
-  public publishersSelection = new PaginatedResponse<Publisher[]>([]);
+  public publishersSelection = new PaginatedResponse<Publisher>();
 
-  public donorPage = new PaginatedResponse<Person[]>([]);
+  public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
 

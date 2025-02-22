@@ -37,11 +37,11 @@ export class AccessUserInfoComponent {
 
   @Input() public readingMember = false;
 
-  @Input() public membersSelection = new PaginatedResponse<Member[]>([]);
+  @Input() public membersSelection = new PaginatedResponse<Member>();
 
   @Input() public readingRoleSelection = false;
 
-  @Input() public rolesSelection = new PaginatedResponse<Role[]>([]);
+  @Input() public rolesSelection = new PaginatedResponse<Role>();
 
   @Output() public delete = new EventEmitter<void>();
 

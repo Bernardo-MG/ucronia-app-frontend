@@ -21,7 +21,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
-  @Input() public donors = new PaginatedResponse<Person[]>([]);
+  @Input() public donors = new PaginatedResponse<Person>();
 
   @Output() public goToDonorPage = new EventEmitter<number>();
   

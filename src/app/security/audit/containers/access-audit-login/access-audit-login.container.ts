@@ -13,7 +13,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
 })
 export class AccessAuditLoginContainer implements OnInit {
 
-  public data = new PaginatedResponse<LoginRegister[]>([]);
+  public data = new PaginatedResponse<LoginRegister>();
 
   /**
    * Loading flag.

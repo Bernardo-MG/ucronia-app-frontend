@@ -34,7 +34,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
 
   public createPermission = false;
 
-  public members = new PaginatedResponse<Member[]>([]);
+  public members = new PaginatedResponse<Member>();
 
   public member = new Member();
 

@@ -3,7 +3,7 @@ import { SimpleResponse } from "./simple-response";
 /**
  * Paginated response.
  */
-export class PaginatedResponse<T> extends SimpleResponse<T> {
+export class PaginatedResponse<T> extends SimpleResponse<T[]> {
   page = 0;
   size = 0;
   elementsInPage = 0;
@@ -11,4 +11,9 @@ export class PaginatedResponse<T> extends SimpleResponse<T> {
   totalPages = 0;
   first = false;
   last = false;
+
+  constructor(cont: T[] = []) {
+    super(cont);
+  }
+
 }

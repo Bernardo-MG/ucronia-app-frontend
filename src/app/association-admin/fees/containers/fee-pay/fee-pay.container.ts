@@ -30,7 +30,7 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
 
   public createPermission = false;
 
-  public personPage = new PaginatedResponse<Person[]>([]);
+  public personPage = new PaginatedResponse<Person>();
 
   public person = new Person();
 

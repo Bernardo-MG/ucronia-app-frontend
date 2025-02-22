@@ -14,7 +14,7 @@ export class AccessAuditLoginService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<LoginRegister[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<LoginRegister>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('date', SortingDirection.Descending)]

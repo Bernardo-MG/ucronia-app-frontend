@@ -15,7 +15,7 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
 })
 export class MemberListingContainer implements OnInit {
 
-  public data = new PaginatedResponse<Member[]>([]);
+  public data = new PaginatedResponse<Member>();
 
   private sort = new Sorting([]);
 

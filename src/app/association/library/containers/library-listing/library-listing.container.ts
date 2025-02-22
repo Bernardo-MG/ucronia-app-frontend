@@ -17,7 +17,7 @@ export class LibraryListingContainer implements OnInit {
 
   public adminPermission = false;
 
-  public data = new PaginatedResponse<Book[]>([]);
+  public data = new PaginatedResponse<Book>();
 
   /**
    * Loading flag.

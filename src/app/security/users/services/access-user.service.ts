@@ -17,7 +17,7 @@ export class AccessUserService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name')]
@@ -58,12 +58,12 @@ export class AccessUserService {
 
   // ROLES
 
-  public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
+  public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role>> {
     return this.getClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('name')]))
       .appendRoute(`/${username}/role/available`)
-      .read<PaginatedResponse<Role[]>>();
+      .read<PaginatedResponse<Role>>();
   }
 
   // Members
@@ -82,12 +82,12 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member[]>> {
+  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member>> {
     return this.getClient()
       .appendRoute(`/${username}/person/available`)
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .read<PaginatedResponse<Member[]>>();
+      .read<PaginatedResponse<Member>>();
   }
 
   private getClient(): CrudClient {

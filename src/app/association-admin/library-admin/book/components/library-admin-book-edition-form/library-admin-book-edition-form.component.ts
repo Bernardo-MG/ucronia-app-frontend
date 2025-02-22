@@ -27,13 +27,13 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
-  @Input() public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
+  @Input() public bookTypesSelection = new PaginatedResponse<BookType>();
 
-  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
+  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem>();
 
-  @Input() public authorsSelection = new PaginatedResponse<Author[]>([]);
+  @Input() public authorsSelection = new PaginatedResponse<Author>();
 
-  @Input() public publishersSelection = new PaginatedResponse<Publisher[]>([]);
+  @Input() public publishersSelection = new PaginatedResponse<Publisher>();
 
   @Input() public languages: Language[] = [];
 

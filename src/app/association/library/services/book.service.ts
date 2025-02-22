@@ -22,7 +22,7 @@ export class BookService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title')]

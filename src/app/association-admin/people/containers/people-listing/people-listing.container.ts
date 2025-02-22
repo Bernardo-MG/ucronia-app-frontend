@@ -21,7 +21,7 @@ export class PeopleListingContainer implements OnInit {
 
   public createPermission = false;
 
-  public data = new PaginatedResponse<Person[]>([]);
+  public data = new PaginatedResponse<Person>();
 
   private sort = new Sorting([]);
 

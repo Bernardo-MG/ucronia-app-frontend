@@ -47,7 +47,7 @@ export class BookAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
@@ -63,7 +63,7 @@ export class BookAdminService {
     return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
   }
 
-  public getBookTypes(page: number): Observable<PaginatedResponse<BookType[]>> {
+  public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -74,7 +74,7 @@ export class BookAdminService {
       .read();
   }
 
-  public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem[]>> {
+  public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -85,7 +85,7 @@ export class BookAdminService {
       .read();
   }
 
-  public getAuthors(page: number): Observable<PaginatedResponse<Author[]>> {
+  public getAuthors(page: number): Observable<PaginatedResponse<Author>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -96,7 +96,7 @@ export class BookAdminService {
       .read();
   }
 
-  public getPublishers(page: number): Observable<PaginatedResponse<Publisher[]>> {
+  public getPublishers(page: number): Observable<PaginatedResponse<Publisher>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -107,7 +107,7 @@ export class BookAdminService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Person>> {
     return this.getDonorClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

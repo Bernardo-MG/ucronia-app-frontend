@@ -13,7 +13,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class AccessUserSelectMemberComponent implements OnInit {
 
-  @Input() public members = new PaginatedResponse<Member[]>([]);
+  @Input() public members = new PaginatedResponse<Member>();
 
   @Input() public waiting = false;
 

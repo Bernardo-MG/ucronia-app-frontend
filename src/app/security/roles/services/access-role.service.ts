@@ -15,7 +15,7 @@ export class AccessRoleService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name')]
@@ -24,10 +24,10 @@ export class AccessRoleService {
     return this.getClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .read<PaginatedResponse<Role[]>>();
+      .read<PaginatedResponse<Role>>();
   }
 
-  public getAvailablePermissions(role: string, page: number, sort: Sorting): Observable<PaginatedResponse<ResourcePermission[]>> {
+  public getAvailablePermissions(role: string, page: number, sort: Sorting): Observable<PaginatedResponse<ResourcePermission>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('resource'), new SortingProperty('action')]
@@ -37,7 +37,7 @@ export class AccessRoleService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .appendRoute(`/${role}/permission/available`)
-      .read<PaginatedResponse<ResourcePermission[]>>();
+      .read<PaginatedResponse<ResourcePermission>>();
   }
 
   public create(data: Role): Observable<Role> {

@@ -21,7 +21,7 @@ export class AccessUserMemberEditorComponent {
 
   @Input() waitingMembersSelection = false;
 
-  @Input() public membersSelection = new PaginatedResponse<Member[]>([]);
+  @Input() public membersSelection = new PaginatedResponse<Member>();
 
   @Output() public goToSelectionPage = new EventEmitter<number>();
 

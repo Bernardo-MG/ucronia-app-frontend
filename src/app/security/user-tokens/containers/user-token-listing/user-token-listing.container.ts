@@ -13,7 +13,7 @@ import { UserTokenSelectionListComponent } from '../../components/user-token-sel
 })
 export class UserTokenListingContainer implements OnInit {
 
-  public data = new PaginatedResponse<UserToken[]>([]);
+  public data = new PaginatedResponse<UserToken>();
 
   private sort = new Sorting([]);
 

@@ -23,7 +23,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
 
-  public permissions = new PaginatedResponse<ResourcePermission[]>([]);
+  public permissions = new PaginatedResponse<ResourcePermission>();
 
   public view: string = 'details';
 

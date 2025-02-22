@@ -14,7 +14,7 @@ import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
 
-  @Input() public permissions = new PaginatedResponse<ResourcePermission[]>([]);
+  @Input() public permissions = new PaginatedResponse<ResourcePermission>();
 
   @Output() public addPermission = new EventEmitter<ResourcePermission>();
 

@@ -15,7 +15,7 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
@@ -25,7 +25,7 @@ export class MemberService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', Active.Active.toString().toUpperCase())
-      .read<PaginatedResponse<Member[]>>();
+      .read<PaginatedResponse<Member>>();
   }
 
   public getOne(number: number): Observable<Member> {

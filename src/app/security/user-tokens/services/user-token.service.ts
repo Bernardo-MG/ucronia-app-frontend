@@ -14,7 +14,7 @@ export class UserTokenService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('creationDate', SortingDirection.Descending), new SortingProperty('username')]
@@ -23,7 +23,7 @@ export class UserTokenService {
     return this.getClient()
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .read<PaginatedResponse<UserToken[]>>();
+      .read<PaginatedResponse<UserToken>>();
   }
 
   public getOne(token: string): Observable<UserToken> {

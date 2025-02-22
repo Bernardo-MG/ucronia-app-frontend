@@ -14,7 +14,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class FeePaySelectMemberComponent {
 
-  @Input() public data = new PaginatedResponse<Member[]>([]);
+  @Input() public data = new PaginatedResponse<Member>();
 
   @Input() public waiting = false;
   

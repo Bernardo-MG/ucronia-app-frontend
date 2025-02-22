@@ -21,9 +21,9 @@ export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges
 
   @Output() public wait = new EventEmitter<boolean>();
 
-  @Output() public changePage = new EventEmitter<PaginatedResponse<any[]>>();
+  @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
 
-  public data = new PaginatedResponse<GameSystem[]>([]);
+  public data = new PaginatedResponse<GameSystem>();
 
   /**
    * Loading flag.

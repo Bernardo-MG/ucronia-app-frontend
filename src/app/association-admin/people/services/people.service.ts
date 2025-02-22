@@ -15,7 +15,7 @@ export class PeopleService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person[]>> {
+  public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
@@ -25,7 +25,7 @@ export class PeopleService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Person[]>>();
+      .read<PaginatedResponse<Person>>();
   }
 
   public create(data: Person): Observable<Person> {

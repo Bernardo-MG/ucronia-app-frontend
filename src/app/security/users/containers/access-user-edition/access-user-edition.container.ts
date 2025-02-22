@@ -29,9 +29,9 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
 
   public changingActive = false;
 
-  public rolesSelection = new PaginatedResponse<Role[]>([]);
+  public rolesSelection = new PaginatedResponse<Role>();
 
-  public membersSelection = new PaginatedResponse<Member[]>([]);
+  public membersSelection = new PaginatedResponse<Member>();
 
   public member = new Member();
 

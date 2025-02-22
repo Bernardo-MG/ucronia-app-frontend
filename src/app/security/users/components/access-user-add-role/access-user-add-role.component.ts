@@ -13,7 +13,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class AccessUserAddRoleComponent implements OnInit {
 
-  @Input() public roles = new PaginatedResponse<Role[]>([]);
+  @Input() public roles = new PaginatedResponse<Role>();
 
   @Input() public waiting = false;
 

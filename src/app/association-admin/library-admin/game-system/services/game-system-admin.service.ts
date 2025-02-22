@@ -41,7 +41,7 @@ export class GameSystemAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameSystem[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameSystem>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name'), new SortingProperty('number')]

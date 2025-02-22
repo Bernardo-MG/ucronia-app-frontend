@@ -18,7 +18,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
 
   public createPermission = false;
 
-  public data = new PaginatedResponse<User[]>([]);
+  public data = new PaginatedResponse<User>();
 
   /**
    * Loading flag.

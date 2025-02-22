@@ -25,7 +25,7 @@ export class AccessUserRolesEditorComponent {
 
   @Input() roles: Role[] = [];
 
-  @Input() rolesSelection = new PaginatedResponse<Role[]>([]);
+  @Input() rolesSelection = new PaginatedResponse<Role>();
 
   @Output() public remove = new EventEmitter<Role>();
 

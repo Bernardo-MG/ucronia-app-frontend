@@ -13,7 +13,7 @@ import { MyFeesService } from '../../services/my-fees.service';
 })
 export class MyFeesFrontpageContainer implements OnInit {
 
-  public data = new PaginatedResponse<Fee[]>([]);
+  public data = new PaginatedResponse<Fee>();
 
   /**
    * Loading flag.

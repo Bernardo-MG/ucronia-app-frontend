@@ -41,7 +41,7 @@ export class BookTypeAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<BookType[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<BookType>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name'), new SortingProperty('number')]
