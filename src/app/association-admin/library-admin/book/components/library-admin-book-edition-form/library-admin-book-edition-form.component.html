@@ -168,7 +168,7 @@
         </div>
       </div>
       <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-        [cancellable]="cancellable" (save)="onSave()" (reject)="onCancel()"></app-save-controls>
+        [cancellable]="cancellable" (reject)="onCancel()"></app-save-controls>
     </form>
   </ng-container>
   <ng-container *ngSwitchCase="'book_type'">

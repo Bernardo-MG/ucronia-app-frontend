@@ -17,8 +17,6 @@ export class SaveControlsComponent {
 
   @Input() public cancellable = false;
 
-  @Output() public save = new EventEmitter<void>();
-
   @Output() public reject = new EventEmitter<void>();
 
 }

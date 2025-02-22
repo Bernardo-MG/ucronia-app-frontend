@@ -1,7 +1,6 @@
 <div layoutJustifyBetween>
   <!-- Save button -->
-  <layout-waiting-button [waiting]="waiting" [disabled]="saveDisabled" type="submit" name="Save"
-    (action)="save.emit()">Guardar</layout-waiting-button>
+  <layout-waiting-button [waiting]="waiting" [disabled]="saveDisabled" type="submit" name="Save">Guardar</layout-waiting-button>
   <!-- Cancel button -->
   <ng-template [ngIf]="cancellable">
     <button class="btn btn-warning" [disabled]="cancelDisabled" name="Cancel" (click)="reject.emit()">Cancelar</button>
