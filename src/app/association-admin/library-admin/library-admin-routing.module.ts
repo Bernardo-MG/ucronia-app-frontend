@@ -3,17 +3,22 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
 import { LibraryAdminAuthorCreateContainer } from './author/containers/library-admin-author-creation/library-admin-author-creation.container';
 import { LibraryAdminAuthorInfoEditorContainer } from './author/containers/library-admin-author-edition/library-admin-author-edition.container';
+import { LibraryAdminAuthorListingContainer } from './author/containers/library-admin-author-listing/library-admin-author-listing.component';
+import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/library-admin-book-type-creation/library-admin-book-type-creation.container';
+import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
+import { LibraryAdminBookTypeListingContainer } from './book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
+import { LibraryAdminBookListingContainer } from './book/containers/library-admin-book-listing/library-admin-book-listing.container';
 import { LibraryAdminListingContainer } from './frontpage/containers/library-admin-listing/library-admin-listing.component';
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
+import { LibraryAdminGameSystemListingContainer } from './game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
 import { BookLendingLendContainer } from './lending/containers/book-lending-lending/book-lending-lending.container';
 import { BookLendingReturnContainer } from './lending/containers/book-lending-returning/book-lending-returning.component';
 import { LibraryAdminPublisherCreateContainer } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container';
 import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container';
-import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/library-admin-book-type-creation/library-admin-book-type-creation.container';
-import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
+import { LibraryAdminPublisherListingContainer } from './publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
 
 
 const routes: Routes = [
@@ -26,6 +31,36 @@ const routes: Routes = [
         component: LibraryAdminListingContainer,
         canActivate: [ResourceGuard("library_admin", "view")],
         data: { breadcrumb: '' }
+      },
+      {
+        path: 'authors',
+        component: LibraryAdminAuthorListingContainer,
+        canActivate: [ResourceGuard("library_author", "view")],
+        data: { breadcrumb: 'Autores' }
+      },
+      {
+        path: 'books',
+        component: LibraryAdminBookListingContainer,
+        canActivate: [ResourceGuard("library_book", "view")],
+        data: { breadcrumb: 'Libros' }
+      },
+      {
+        path: 'publishers',
+        component: LibraryAdminPublisherListingContainer,
+        canActivate: [ResourceGuard("library_publisher", "view")],
+        data: { breadcrumb: 'Editores' }
+      },
+      {
+        path: 'types',
+        component: LibraryAdminBookTypeListingContainer,
+        canActivate: [ResourceGuard("library_book_type", "view")],
+        data: { breadcrumb: 'Tipos' }
+      },
+      {
+        path: 'systems',
+        component: LibraryAdminGameSystemListingContainer,
+        canActivate: [ResourceGuard("library_game_system", "view")],
+        data: { breadcrumb: 'Sistemas' }
       },
       {
         path: 'book/add',
