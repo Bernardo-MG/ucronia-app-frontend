@@ -1,4 +1,7 @@
-export class Failure {
+/**
+ * Field failure.
+ */
+export class FieldFailure {
   code?= '';
   field?= '';
   message = '';

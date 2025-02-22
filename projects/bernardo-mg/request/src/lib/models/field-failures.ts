@@ -1,9 +1,9 @@
-import { Failure } from "./failure";
+import { FieldFailure } from "./field-failure";
 
 export class FieldFailures {
-  propertyFailures: { [key: string]: Failure[] } = {};
+  propertyFailures: { [key: string]: FieldFailure[] } = {};
 
-  constructor(failures?: { [key: string]: Failure[] }) {
+  constructor(failures?: { [key: string]: FieldFailure[] }) {
     if (failures) {
       this.propertyFailures = failures;
     }
@@ -22,12 +22,12 @@ export class FieldFailures {
    * @param property property to search for failures
    * @returns failures for the property
    */
-  public getFailures(property: string): Failure[] {
-    let failures: Failure[];
+  public getFailures(property: string): FieldFailure[] {
+    let failures: FieldFailure[];
 
     if (this.hasFailures(property)) {
       const found = this.propertyFailures[property];
-      failures = (found as Failure[]);
+      failures = (found as FieldFailure[]);
     } else {
       failures = [];
     }
