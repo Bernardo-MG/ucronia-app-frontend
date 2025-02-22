@@ -3,7 +3,7 @@ import { AccountChangePasswordFormComponent } from '@app/account/components/pass
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
 import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
-import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 
 @Component({
@@ -15,7 +15,7 @@ export class AccountPasswordChangeContainer {
 
   public saving = false;
 
-  public failures = new FieldFailures();
+  public failures = new FailureStore();
 
   constructor(
     private service: AccountService

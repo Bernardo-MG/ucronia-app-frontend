@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { SortProperty } from '@bernardo-mg/request';
+import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-role-selection-list',
@@ -16,6 +16,6 @@ export class AccessRoleSelectionListComponent {
 
   @Input() public routeLinkAdapter: (data: Role) => string = (data) => '';
 
-  @Output() public changeDirection = new EventEmitter<SortProperty>();
+  @Output() public changeDirection = new EventEmitter<SortingProperty>();
 
 }

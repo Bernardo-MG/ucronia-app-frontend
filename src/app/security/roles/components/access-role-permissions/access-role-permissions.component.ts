@@ -4,7 +4,7 @@ import { ResourcePermission } from '@app/core/authentication/models/resource-per
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
-import { ListPaginatedResponse } from '@bernardo-mg/request';
+import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-role-permissions',
@@ -21,7 +21,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<ResourcePermission>();
 
-  public data = new ListPaginatedResponse<ResourcePermission>([], 0, 0);
+  public data = new ArrayPaginatedResponse<ResourcePermission>([], 0, 0);
 
   private pageSize = 10;
 
@@ -40,7 +40,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ListPaginatedResponse<ResourcePermission>(this.permissions, page, this.pageSize);
+    return new ArrayPaginatedResponse<ResourcePermission>(this.permissions, page, this.pageSize);
   }
 
 }

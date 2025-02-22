@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -22,10 +22,10 @@ export class BookService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Book[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('title')]
+      [new SortingProperty('title')]
     );
 
     return this.getClient()

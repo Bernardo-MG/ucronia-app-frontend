@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -15,10 +15,10 @@ export class AccessRoleService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Role[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getClient()
@@ -27,10 +27,10 @@ export class AccessRoleService {
       .read<PaginatedResponse<Role[]>>();
   }
 
-  public getAvailablePermissions(role: string, page: number, sort: Sort): Observable<PaginatedResponse<ResourcePermission[]>> {
+  public getAvailablePermissions(role: string, page: number, sort: Sorting): Observable<PaginatedResponse<ResourcePermission[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('resource'), new SortProperty('action')]
+      [new SortingProperty('resource'), new SortingProperty('action')]
     );
 
     return this.getClient()

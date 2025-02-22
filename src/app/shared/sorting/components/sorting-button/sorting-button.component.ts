@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SortDirection, SortProperty } from '@bernardo-mg/request';
+import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,11 +15,11 @@ export class SortingButtonComponent implements OnChanges {
 
   @Input() public property = '';
 
-  @Input() public direction = SortDirection.Unsorted;
+  @Input() public direction = SortingDirection.Unsorted;
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<SortProperty>();
+  @Output() public directionChange = new EventEmitter<SortingProperty>();
 
   /**
    * Ascending order icon.
@@ -49,32 +49,32 @@ export class SortingButtonComponent implements OnChanges {
 
   public onChangeDirection() {
     switch (this.direction) {
-      case SortDirection.Ascending:
+      case SortingDirection.Ascending:
         // Ascending -> descending
-        this.direction = SortDirection.Descending;
+        this.direction = SortingDirection.Descending;
         break;
-      case SortDirection.Descending:
+      case SortingDirection.Descending:
         // Descending -> unsorted
-        this.direction = SortDirection.Unsorted;
+        this.direction = SortingDirection.Unsorted;
         break;
       default:
         // Unsorted -> ascending
-        this.direction = SortDirection.Ascending;
+        this.direction = SortingDirection.Ascending;
         break;
     }
 
     this.updateDirection();
 
-    const sort = new SortProperty(this.property, this.direction);
+    const sort = new SortingProperty(this.property, this.direction);
     this.directionChange.emit(sort);
   }
 
   private updateDirection() {
     switch (this.direction) {
-      case SortDirection.Ascending:
+      case SortingDirection.Ascending:
         this.directionIcon = this.ascendingIcon;
         break;
-      case SortDirection.Descending:
+      case SortingDirection.Descending:
         this.directionIcon = this.descendingIcon;
         break;
       default:

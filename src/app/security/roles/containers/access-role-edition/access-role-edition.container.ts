@@ -9,7 +9,7 @@ import { ControlButtonsComponent } from '@app/shared/form/components/control-but
 import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
@@ -27,7 +27,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   public view: string = 'details';
 
-  private permissionsSort = new Sort([]);
+  private permissionsSort = new Sorting([]);
 
   private role = '';
 
@@ -87,7 +87,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
     });
   }
 
-  public onChangePermissionsDirection(field: SortProperty) {
+  public onChangePermissionsDirection(field: SortingProperty) {
     this.permissionsSort.addField(field);
     this.onLoadPermissions(0);
   }

@@ -1,6 +1,9 @@
 import { FieldFailure } from "./field-failure";
 
-export class FieldFailures {
+/**
+ * Keeps a list of field failures, and allows searching by field.
+ */
+export class FailureStore {
   fieldFailures: { [key: string]: FieldFailure[] } = {};
 
   constructor(failures?: { [key: string]: FieldFailure[] }) {

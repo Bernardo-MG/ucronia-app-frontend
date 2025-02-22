@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { Book } from '@app/models/library/book';
-import { SortDirection } from '@bernardo-mg/request';
+import { SortingDirection } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from './library-book-list.component';
 
 describe('LibraryBookListComponent', () => {
@@ -89,9 +89,9 @@ describe('LibraryBookListComponent', () => {
     fixture.detectChanges();
 
     const sortingButtons = debugElement.queryAll(By.css('sorting-button'));
-    const firstSort = { property: 'title', direction: SortDirection.Ascending };
+    const firstSort = { property: 'title', direction: SortingDirection.Ascending };
     sortingButtons[0].triggerEventHandler('directionChange', firstSort);
-    const secondSort = { property: 'lent', direction: SortDirection.Descending };
+    const secondSort = { property: 'lent', direction: SortingDirection.Descending };
     sortingButtons[1].triggerEventHandler('directionChange', secondSort);
 
     expect(spy).toHaveBeenCalledTimes(2);

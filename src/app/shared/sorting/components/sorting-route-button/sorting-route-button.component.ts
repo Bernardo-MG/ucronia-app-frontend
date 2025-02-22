@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
-import { SortDirection, SortProperty } from '@bernardo-mg/request';
+import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SortingButtonComponent } from '../sorting-button/sorting-button.component';
 
 @Component({
@@ -16,7 +16,7 @@ export class SortingRouteButtonComponent implements OnInit {
 
   @Input() public disabled = false;
 
-  public direction = SortDirection.Unsorted;
+  public direction = SortingDirection.Unsorted;
 
   private routeActuator: RouteApiActuator;
 
@@ -35,18 +35,18 @@ export class SortingRouteButtonComponent implements OnInit {
       if (p) {
         const propertySort = p.find(s => s.property === this.property);
         if (propertySort) {
-          this.direction = propertySort.direction as SortDirection;
+          this.direction = propertySort.direction as SortingDirection;
         } else {
-          this.direction = SortDirection.Unsorted;
+          this.direction = SortingDirection.Unsorted;
         }
       } else {
-        this.direction = SortDirection.Unsorted;
+        this.direction = SortingDirection.Unsorted;
       }
     });
   }
 
-  public onChangeDirection(sort: SortProperty) {
-    if (sort.direction === SortDirection.Unsorted) {
+  public onChangeDirection(sort: SortingProperty) {
+    if (sort.direction === SortingDirection.Unsorted) {
       this.routeActuator.removeOrder(this.property);
     } else {
       this.routeActuator.setOrder(sort);

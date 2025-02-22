@@ -7,7 +7,7 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -47,10 +47,10 @@ export class BookAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Book[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('title'), new SortProperty('supertitle'), new SortProperty('subtitle'), new SortProperty('number')]
+      [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
     );
 
     return this.getClient()
@@ -65,7 +65,7 @@ export class BookAdminService {
 
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType[]>> {
     const sorting = new SortingParams(
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getBookTypeClient()
@@ -76,7 +76,7 @@ export class BookAdminService {
 
   public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem[]>> {
     const sorting = new SortingParams(
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getGameSystemClient()
@@ -87,7 +87,7 @@ export class BookAdminService {
 
   public getAuthors(page: number): Observable<PaginatedResponse<Author[]>> {
     const sorting = new SortingParams(
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getAuthorClient()
@@ -98,7 +98,7 @@ export class BookAdminService {
 
   public getPublishers(page: number): Observable<PaginatedResponse<Publisher[]>> {
     const sorting = new SortingParams(
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getPublisherClient()
@@ -110,7 +110,7 @@ export class BookAdminService {
   public getDonors(page: number): Observable<PaginatedResponse<Person[]>> {
     return this.getDonorClient()
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .read();
   }
 

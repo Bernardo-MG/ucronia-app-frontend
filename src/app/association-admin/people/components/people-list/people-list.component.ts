@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SortProperty } from '@bernardo-mg/request';
+import { SortingProperty } from '@bernardo-mg/request';
 import { Person } from '@app/models/person/person';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
@@ -17,6 +17,6 @@ export class PeopleListComponent {
 
   @Input() public routeLinkAdapter: (data: Person) => string = (data) => '';
 
-  @Output() public changeDirection = new EventEmitter<SortProperty>();
+  @Output() public changeDirection = new EventEmitter<SortingProperty>();
 
 }

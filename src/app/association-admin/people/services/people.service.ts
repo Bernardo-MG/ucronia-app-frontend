@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { Person } from '@app/models/person/person';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -15,10 +15,10 @@ export class PeopleService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort, active: Active): Observable<PaginatedResponse<Person[]>> {
+  public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]
+      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
     return this.getClient()

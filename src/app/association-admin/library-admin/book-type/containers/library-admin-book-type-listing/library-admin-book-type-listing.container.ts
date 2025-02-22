@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { BlockUiDirective } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   constructor(
     private service: BookTypeAdminService
@@ -44,7 +44,7 @@ export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
     }
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.pageNumber);

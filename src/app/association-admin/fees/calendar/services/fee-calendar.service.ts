@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { AngularCrudClient, CrudClient, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class FeeCalendarService {
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
     return this.getClient()
-      .loadParameters(new SortingParams([new SortProperty("firstName"), new SortProperty("lastName")]))
+      .loadParameters(new SortingParams([new SortingProperty("firstName"), new SortingProperty("lastName")]))
       .parameter('status', active.toString().toUpperCase())
       .appendRoute(`/${year}`)
       .read<SimpleResponse<FeeCalendar[]>>()

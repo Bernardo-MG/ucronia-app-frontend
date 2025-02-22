@@ -1,5 +1,5 @@
-import { SortDirection } from "../models/sort-direction";
-import { SortProperty } from "../models/sort-field";
+import { SortingDirection } from "../models/sorting-direction";
+import { SortingProperty } from "../models/sorting-property";
 import { SortingParams } from "./sorting-params";
 
 describe("SortingParams", () => {
@@ -8,8 +8,8 @@ describe("SortingParams", () => {
 
   it('should load parameters correctly', () => {
     const sortingParams = new SortingParams([
-      new SortProperty('name', SortDirection.Ascending),
-      new SortProperty('age', SortDirection.Descending)
+      new SortingProperty('name', SortingDirection.Ascending),
+      new SortingProperty('age', SortingDirection.Descending)
     ]);
 
     const params: Record<string, string[]> = {};
@@ -28,13 +28,13 @@ describe("SortingParams", () => {
   it('should return sorting properties when they are the only ones set', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name')
+        new SortingProperty('name')
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('name')
+        new SortingProperty('name')
       ]
     );
   });
@@ -42,17 +42,17 @@ describe("SortingParams", () => {
   it('should use default sort when the property is missing from the properties list', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name')
+        new SortingProperty('name')
       ],
       [
-        new SortProperty('age')
+        new SortingProperty('age')
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('name', SortDirection.Ascending),
-        new SortProperty('age', SortDirection.Ascending)
+        new SortingProperty('name', SortingDirection.Ascending),
+        new SortingProperty('age', SortingDirection.Ascending)
       ]
     );
   });
@@ -61,13 +61,13 @@ describe("SortingParams", () => {
     const sortingParams = new SortingParams(
       [],
       [
-        new SortProperty('age')
+        new SortingProperty('age')
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('age', SortDirection.Ascending)
+        new SortingProperty('age', SortingDirection.Ascending)
       ]
     );
   });
@@ -83,14 +83,14 @@ describe("SortingParams", () => {
   it('shouldn\'t return duplicated properties', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name'),
-        new SortProperty('name')
+        new SortingProperty('name'),
+        new SortingProperty('name')
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('name')
+        new SortingProperty('name')
       ]
     );
   });
@@ -98,7 +98,7 @@ describe("SortingParams", () => {
   it('should remove unsorted properties', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name', SortDirection.Unsorted)
+        new SortingProperty('name', SortingDirection.Unsorted)
       ]
     );
 
@@ -110,18 +110,18 @@ describe("SortingParams", () => {
   it('should override default sort when the property is received', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name'),
-        new SortProperty('age', SortDirection.Descending)
+        new SortingProperty('name'),
+        new SortingProperty('age', SortingDirection.Descending)
       ],
       [
-        new SortProperty('age', SortDirection.Ascending)
+        new SortingProperty('age', SortingDirection.Ascending)
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('name', SortDirection.Ascending),
-        new SortProperty('age', SortDirection.Descending)
+        new SortingProperty('name', SortingDirection.Ascending),
+        new SortingProperty('age', SortingDirection.Descending)
       ]
     );
   });
@@ -129,18 +129,18 @@ describe("SortingParams", () => {
   it('should use default sort when unsorted', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('name'),
-        new SortProperty('age', SortDirection.Unsorted)
+        new SortingProperty('name'),
+        new SortingProperty('age', SortingDirection.Unsorted)
       ],
       [
-        new SortProperty('age', SortDirection.Ascending)
+        new SortingProperty('age', SortingDirection.Ascending)
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('name', SortDirection.Ascending),
-        new SortProperty('age', SortDirection.Ascending)
+        new SortingProperty('name', SortingDirection.Ascending),
+        new SortingProperty('age', SortingDirection.Ascending)
       ]
     );
   });
@@ -150,15 +150,15 @@ describe("SortingParams", () => {
   it('should not change properties order', () => {
     const sortingParams = new SortingParams(
       [
-        new SortProperty('zname', SortDirection.Ascending),
-        new SortProperty('aname', SortDirection.Descending)
+        new SortingProperty('zname', SortingDirection.Ascending),
+        new SortingProperty('aname', SortingDirection.Descending)
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('zname', SortDirection.Ascending),
-        new SortProperty('aname', SortDirection.Descending)
+        new SortingProperty('zname', SortingDirection.Ascending),
+        new SortingProperty('aname', SortingDirection.Descending)
       ]
     );
   });
@@ -167,15 +167,15 @@ describe("SortingParams", () => {
     const sortingParams = new SortingParams(
       [],
       [
-        new SortProperty('zname', SortDirection.Ascending),
-        new SortProperty('aname', SortDirection.Descending)
+        new SortingProperty('zname', SortingDirection.Ascending),
+        new SortingProperty('aname', SortingDirection.Descending)
       ]
     );
 
     expect(sortingParams.getFinalProperties()).toEqual(
       [
-        new SortProperty('zname', SortDirection.Ascending),
-        new SortProperty('aname', SortDirection.Descending)
+        new SortingProperty('zname', SortingDirection.Ascending),
+        new SortingProperty('aname', SortingDirection.Descending)
       ]
     );
   });

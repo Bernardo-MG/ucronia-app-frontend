@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { RouterModule } from '@angular/router';
 import { Book } from '@app/models/library/book';
 import { BlockUiDirective } from '@bernardo-mg/layout';
-import { PaginatedResponse, Sort, SortProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
@@ -27,7 +27,7 @@ export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   constructor(
     private service: BookAdminService
@@ -44,7 +44,7 @@ export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
     }
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.pageNumber);

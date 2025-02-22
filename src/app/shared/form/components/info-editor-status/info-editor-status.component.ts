@@ -1,4 +1,4 @@
-import { FailureResponse, FieldFailures } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Observable, throwError } from 'rxjs';
 
 export abstract class InfoEditorStatusComponent<Data> {
@@ -31,7 +31,7 @@ export abstract class InfoEditorStatusComponent<Data> {
   /**
    * Failures after saving.
    */
-  protected failures = new FieldFailures();
+  protected failures = new FailureStore();
 
   /**
    * Edit button active flag.

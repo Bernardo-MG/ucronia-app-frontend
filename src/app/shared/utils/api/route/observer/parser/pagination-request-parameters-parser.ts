@@ -9,7 +9,7 @@ import { SortParametersParser } from "./sort-parameters-parser";
  * The parameters used to parse are:
  * - page, containing the page number. Optional.
  * - size, containing the page size. Optional.
- * - sort, delegated to {@link SortParametersParser}. Optional.
+ * - Sorting, delegated to {@link SortParametersParser}. Optional.
  */
 export class PaginationRequestParametersParser implements ParametersParser<Pagination> {
 
