@@ -19,7 +19,7 @@
         </thead>
         <tbody class="table-group-divider">
           <tr *ngFor="let bookType of data.content; let rowIndex = index" role="button"
-            routerLink="bookType/{{bookType.number}}">
+            routerLink="{{bookType.number}}">
             <!-- Cells -->
             <td>
               {{bookType.name}}
