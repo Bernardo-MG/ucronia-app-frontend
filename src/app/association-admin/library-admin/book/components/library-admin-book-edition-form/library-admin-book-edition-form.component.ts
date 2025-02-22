@@ -15,16 +15,15 @@ import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
 import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective, ModalComponent } from '@bernardo-mg/layout';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
-    templateUrl: './library-admin-book-edition-form.component.html'
+  selector: 'assoc-library-admin-book-edition-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
@@ -45,6 +44,8 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   @Output() public goToAuthorPage = new EventEmitter<number>();
 
   @Output() public goToPublisherPage = new EventEmitter<number>();
+
+  public view = 'form';
 
   public get authors(): Author[] {
     return this.form.get('authors')?.value;
@@ -78,10 +79,6 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
     this.form.get('gameSystem').setValue(data);
   }
 
-  public selector = '';
-
-  private modalHandler = new ModalHandler();
-
   constructor(
     fb: FormBuilder
   ) {
@@ -110,47 +107,43 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-    this.modalHandler.openModal('book_type');
+    this.view = 'book_type';
   }
 
   public onShowGameSystemSelection() {
-    this.modalHandler.openModal('game_system');
+    this.view = 'game_system';
   }
 
   public onShowAuthorSelection() {
-    this.modalHandler.openModal('author');
+    this.view = 'author';
   }
 
   public onShowPublisherSelection() {
-    this.modalHandler.openModal('publisher');
+    this.view = 'publisher';
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType;
-    this.selector = ''
-    this.modalHandler.closeModal('book_type');
+    this.view = 'form';
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem;
-    this.selector = '';
-    this.modalHandler.closeModal('game_system');
+    this.view = 'form';
   }
 
   public onSelectAuthor(author: Author) {
     if (!this.authors.find(a => a.name === author.name)) {
       this.authors = this.authors.concat([author]);
     }
-    this.selector = '';
-    this.modalHandler.closeModal('author');
+    this.view = 'form';
   }
 
   public onSelectPublisher(publisher: Publisher) {
     if (!this.publishers.find(p => p.name === publisher.name)) {
       this.publishers = this.publishers.concat([publisher]);
     }
-    this.selector = '';
-    this.modalHandler.closeModal('publisher');
+    this.view = 'form';
   }
 
   public onRemoveAuthor(author: Author) {

@@ -2,16 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { ModalHandler } from '@app/shared/layout/utils/modal-handler';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
 import { PeopleEditionMembershipButtonsComponent } from '../people-edition-membership-buttons/people-edition-membership-buttons.component';
 import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-details.component';
 
 @Component({
-    selector: 'assoc-people-info',
-    imports: [CommonModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
-    templateUrl: './people-info.component.html'
+  selector: 'assoc-people-info',
+  imports: [CommonModule, PeopleInfoDetailsComponent, PeopleEditionMembershipButtonsComponent, PlaceholderDirective, IconSuccessOrFailureComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
+  templateUrl: './people-info.component.html'
 })
 export class PeopleInfoComponent {
 
@@ -49,30 +48,8 @@ export class PeopleInfoComponent {
 
   public tabs = [new CardTab('details', 'Detalles'), new CardTab('membership', 'Socio')];
 
-  private modalHandler = new ModalHandler();
-
   public onChangeView(newView: string) {
     this.view = newView;
-  }
-
-  public onShowActivate() {
-    this.modalHandler.openModal('activateModal');
-  }
-
-  public onShowDeactivate() {
-    this.modalHandler.openModal('deactivateModal');
-  }
-
-  public onShowEnableRenew() {
-    this.modalHandler.openModal('enableRenewModal');
-  }
-
-  public onShowDisableRenew() {
-    this.modalHandler.openModal('disableRenewModal');
-  }
-
-  public onShowConvertToMember() {
-    this.modalHandler.openModal('convertToMemberModal');
   }
 
 }
