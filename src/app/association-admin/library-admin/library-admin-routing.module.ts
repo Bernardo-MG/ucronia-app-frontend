@@ -10,7 +10,6 @@ import { LibraryAdminBookTypeListingContainer } from './book-type/containers/lib
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
 import { LibraryAdminBookListingContainer } from './book/containers/library-admin-book-listing/library-admin-book-listing.container';
-import { LibraryAdminListingContainer } from './frontpage/containers/library-admin-listing/library-admin-listing.component';
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
 import { LibraryAdminGameSystemListingContainer } from './game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
@@ -28,9 +27,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: LibraryAdminListingContainer,
-        canActivate: [ResourceGuard("library_admin", "view")],
-        data: { breadcrumb: '' }
+        redirectTo: 'books',
+        pathMatch: 'full'
       },
       {
         path: 'authors',
