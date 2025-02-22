@@ -5,7 +5,6 @@ import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/lib
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -19,6 +18,7 @@ import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-library-admin-book-edition-form',

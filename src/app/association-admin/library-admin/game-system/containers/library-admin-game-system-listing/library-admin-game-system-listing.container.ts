@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
+import { PaginatedResponse } from '@bernardo-mg/request';
+import { Sorting } from '@bernardo-mg/request';
+import { SortingProperty } from '@bernardo-mg/request';
 import { GameSystem } from '@app/models/library/game-system';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { BlockUiDirective } from '@bernardo-mg/layout';
@@ -29,7 +29,7 @@ export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   constructor(
     private service: GameSystemAdminService
@@ -46,7 +46,7 @@ export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges
     }
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.pageNumber);

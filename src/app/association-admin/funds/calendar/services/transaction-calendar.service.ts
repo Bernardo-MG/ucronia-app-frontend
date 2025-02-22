@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
 import { Month } from '@app/shared/calendar/models/month';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../../../../models/transactions/transaction';
@@ -67,12 +65,12 @@ export class TransactionCalendarService {
     .read<SimpleResponse<TransactionCalendarMonth>>();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/funds/calendar');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/calendar');
   }
 
-  private getRangeClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/funds/calendar/range');
+  private getRangeClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/calendar/range');
   }
 
 }

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Book } from '@app/models/library/book';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
@@ -13,6 +12,7 @@ import { SaveControlsComponent } from '@app/shared/form/components/save-controls
 import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
+import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',

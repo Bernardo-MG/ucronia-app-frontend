@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-add-role.component';
 import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles.component';
 

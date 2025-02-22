@@ -1,6 +1,9 @@
 import { SimpleResponse } from "./simple-response";
 
-export class ListPaginatedResponse<T> extends SimpleResponse<T[]> {
+/**
+ * Paginated response created from an array.
+ */
+export class ArrayPaginatedResponse<T> extends SimpleResponse<T[]> {
   page = 0;
   size = 0;
   elementsInPage = 0;

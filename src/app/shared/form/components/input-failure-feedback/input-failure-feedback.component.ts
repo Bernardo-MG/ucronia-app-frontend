@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
+import { FieldFailure } from '@bernardo-mg/request';
 
 @Component({
     selector: 'app-input-failure-feedback',
@@ -9,7 +9,7 @@ import { Failure } from '@app/core/api/models/failure';
 })
 export class InputFailureFeedbackComponent implements AfterViewInit {
 
-  @Input() failures: Failure[] = [];
+  @Input() failures: FieldFailure[] = [];
 
   constructor(private el: ElementRef) { }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FieldFailures } from '@app/core/api/models/field-failures';
+import { FailureStore } from '@bernardo-mg/request';
 
 @Component({
     selector: 'app-form',
@@ -40,7 +40,7 @@ export class FormComponent<Data> {
     return this._waiting;
   }
 
-  @Input() public failures = new FieldFailures();
+  @Input() public failures = new FailureStore();
 
   @Input() public set data(value: Data) {
     this.loadData(value);

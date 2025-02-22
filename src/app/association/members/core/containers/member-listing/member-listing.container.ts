@@ -3,12 +3,10 @@ import { RouterModule } from '@angular/router';
 import { MemberBalanceChartWidgetContainer } from '@app/association/members/balance/containers/member-balance-chart-widget/member-balance-chart-widget.container';
 import { MemberListComponent } from '@app/association/members/core/components/member-list/member-list.component';
 import { MemberService } from '@app/association/members/core/services/member.service';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Member } from '@app/models/members/member';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 
 @Component({
     selector: 'assoc-member-listing',
@@ -19,7 +17,7 @@ export class MemberListingContainer implements OnInit {
 
   public data = new PaginatedResponse<Member[]>([]);
 
-  private sort = new Sort([]);
+  private sort = new Sorting([]);
 
   /**
    * Loading flag.
@@ -34,7 +32,7 @@ export class MemberListingContainer implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);

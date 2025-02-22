@@ -1,5 +1,8 @@
 import { ParamLoader } from "./param-loader";
 
+/**
+ * Loads pagination parameters (page and size).
+ */
 export class PaginationParams implements ParamLoader {
 
   constructor(private page?: number, private size?: number) { }

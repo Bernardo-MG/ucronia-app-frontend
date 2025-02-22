@@ -1,15 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { PaginationParams } from '@app/core/api/client/pagination-params';
-import { SortingParams } from '@app/core/api/client/sorting-params';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortDirection } from '@app/core/api/models/sort-direction';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { UserToken } from '@app/core/authentication/models/user-token';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingDirection, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -22,10 +14,10 @@ export class UserTokenService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<UserToken[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('creationDate', SortDirection.Descending), new SortProperty('username')]
+      [new SortingProperty('creationDate', SortingDirection.Descending), new SortingProperty('username')]
     );
 
     return this.getClient()
@@ -62,8 +54,8 @@ export class UserTokenService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/security/user/token');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user/token');
   }
 
 }

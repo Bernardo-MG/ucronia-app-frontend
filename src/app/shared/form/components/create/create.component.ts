@@ -1,5 +1,4 @@
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Observable, throwError } from 'rxjs';
 
 export abstract class CreateComponent<Data> {
@@ -9,7 +8,7 @@ export abstract class CreateComponent<Data> {
    */
   public saving = false;
 
-  public failures = new FieldFailures();
+  public failures = new FailureStore();
 
   constructor() { }
 

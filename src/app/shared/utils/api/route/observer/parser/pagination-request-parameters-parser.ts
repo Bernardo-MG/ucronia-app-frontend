@@ -1,6 +1,6 @@
 import { ParamMap } from "@angular/router";
 import { ParametersParser } from "@app/shared/utils/route/observer/parameters-parser";
-import { Pagination } from "../../../../../../core/api/models/pagination";
+import { Pagination } from "@bernardo-mg/request";
 import { SortParametersParser } from "./sort-parameters-parser";
 
 /**
@@ -9,7 +9,7 @@ import { SortParametersParser } from "./sort-parameters-parser";
  * The parameters used to parse are:
  * - page, containing the page number. Optional.
  * - size, containing the page size. Optional.
- * - sort, delegated to {@link SortParametersParser}. Optional.
+ * - Sorting, delegated to {@link SortParametersParser}. Optional.
  */
 export class PaginationRequestParametersParser implements ParametersParser<Pagination> {
 

@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { Role } from '@app/core/authentication/models/role';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective } from '@bernardo-mg/layout';
+import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-user-roles',
@@ -23,18 +23,18 @@ export class AccessUserRolesComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<Role>();
 
-  public data = new ListPaginatedResponse<Role>([], 0, 0);
+  public data = new ArrayPaginatedResponse<Role>([], 0, 0);
 
   private pageSize = 10;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
-      this.data = this.buildPage(0);
+      this.data = this.buildPage(1);
     }
   }
 
   public onGoToPage(page: number) {
-    this.data = this.buildPage(page - 1);
+    this.data = this.buildPage(page);
   }
 
   public onRemove(role: Role): void {
@@ -42,7 +42,7 @@ export class AccessUserRolesComponent implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ListPaginatedResponse<Role>(this.roles, page, this.pageSize);
+    return new ArrayPaginatedResponse<Role>(this.roles, page, this.pageSize);
   }
 
 }

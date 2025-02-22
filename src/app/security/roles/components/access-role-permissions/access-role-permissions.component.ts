@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ListPaginatedResponse } from '@app/core/api/models/list-paginated-response';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-role-permissions',
@@ -21,18 +21,18 @@ export class AccessRolePermissionsComponent implements OnChanges {
 
   @Output() public remove = new EventEmitter<ResourcePermission>();
 
-  public data = new ListPaginatedResponse<ResourcePermission>([], 0, 0);
+  public data = new ArrayPaginatedResponse<ResourcePermission>([], 0, 0);
 
   private pageSize = 10;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['permissions']) {
-      this.data = this.buildPage(0);
+  ngOnChanges({ permissions }: SimpleChanges): void {
+    if (permissions) {
+      this.data = this.buildPage(1);
     }
   }
 
   public onGoToPage(page: number) {
-    this.data = this.buildPage(page - 1);
+    this.data = this.buildPage(page);
   }
 
   public onRemove(permission: ResourcePermission): void {
@@ -40,7 +40,7 @@ export class AccessRolePermissionsComponent implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ListPaginatedResponse<ResourcePermission>(this.permissions, page, this.pageSize);
+    return new ArrayPaginatedResponse<ResourcePermission>(this.permissions, page, this.pageSize);
   }
 
 }

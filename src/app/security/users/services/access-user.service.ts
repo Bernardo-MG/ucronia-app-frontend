@@ -1,16 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { PaginationParams } from '@app/core/api/client/pagination-params';
-import { SortingParams } from '@app/core/api/client/sorting-params';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Role } from '@app/core/authentication/models/role';
 import { User } from '@app/core/authentication/models/user';
 import { Member } from '@app/models/members/member';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
@@ -24,10 +17,10 @@ export class AccessUserService {
     private http: HttpClient
   ) { }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<User[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User[]>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name')]
+      [new SortingProperty('name')]
     );
 
     return this.getClient()
@@ -68,7 +61,7 @@ export class AccessUserService {
   public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role[]>> {
     return this.getClient()
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortProperty('name')]))
+      .loadParameters(new SortingParams([new SortingProperty('name')]))
       .appendRoute(`/${username}/role/available`)
       .read<PaginatedResponse<Role[]>>();
   }
@@ -93,12 +86,12 @@ export class AccessUserService {
     return this.getClient()
       .appendRoute(`/${username}/person/available`)
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortProperty('firstName'), new SortProperty('lastName'), new SortProperty('number')]))
+      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .read<PaginatedResponse<Member[]>>();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/security/user');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user');
   }
 
 }

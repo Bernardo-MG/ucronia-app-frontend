@@ -1,11 +1,10 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { SortDirection } from '../../../../core/api/models/sort-direction';
 import { SortingButtonComponent } from './sorting-button.component';
-import { SortProperty } from '@app/core/api/models/sort-field';
 
 describe('SortingButtonComponent', () => {
   let component: SortingButtonComponent;
@@ -48,8 +47,8 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(1);
-    const sort = new SortProperty('property');
-    sort.direction = SortDirection.Ascending;
+    const sort = new SortingProperty('property');
+    sort.direction = SortingDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -63,8 +62,8 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(2);
-    const sort = new SortProperty('property');
-    sort.direction = SortDirection.Descending;
+    const sort = new SortingProperty('property');
+    sort.direction = SortingDirection.Descending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -79,8 +78,8 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(3);
-    const sort = new SortProperty('property');
-    sort.direction = SortDirection.Unsorted;
+    const sort = new SortingProperty('property');
+    sort.direction = SortingDirection.Unsorted;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -96,8 +95,8 @@ describe('SortingButtonComponent', () => {
     button.triggerEventHandler('click');
 
     expect(component.directionChange.emit).toHaveBeenCalledTimes(4);
-    const sort = new SortProperty('property');
-    sort.direction = SortDirection.Ascending;
+    const sort = new SortingProperty('property');
+    sort.direction = SortingDirection.Ascending;
     expect(component.directionChange.emit).toHaveBeenCalledWith(sort);
   });
 
@@ -138,7 +137,7 @@ describe('SortingButtonComponent', () => {
   // **************************************************************************
 
   it('should change to unsorted icon when receiving the unsorted direction', () => {
-    component.direction = SortDirection.Unsorted;
+    component.direction = SortingDirection.Unsorted;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });
@@ -148,7 +147,7 @@ describe('SortingButtonComponent', () => {
   });
 
   it('should change to sort up icon when receiving the ascending direction', () => {
-    component.direction = SortDirection.Ascending;
+    component.direction = SortingDirection.Ascending;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });
@@ -158,7 +157,7 @@ describe('SortingButtonComponent', () => {
   });
 
   it('should change to sort down icon when receiving the descending direction', () => {
-    component.direction = SortDirection.Descending;
+    component.direction = SortingDirection.Descending;
     component.ngOnChanges({
       direction: new SimpleChange(null, component.direction, true)
     });
