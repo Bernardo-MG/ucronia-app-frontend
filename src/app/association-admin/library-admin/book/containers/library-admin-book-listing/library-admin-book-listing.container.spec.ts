@@ -11,7 +11,9 @@ describe('LibraryAdminBookListingContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryAdminBookListingContainer],
+      imports: [
+        LibraryAdminBookListingContainer
+      ],
       providers: [
         BookAdminService,
         provideHttpClient(withInterceptorsFromDi()),
