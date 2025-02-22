@@ -3,9 +3,10 @@ import { throwError } from "rxjs";
 import { FailureResponse } from "../../public-api";
 
 /**
- * Request interceptor which returns an error response on error.
+ * Request interceptor which returns an error response object, when the HTTP response contains an error.
  * 
- * If there is a list of failures, then the response will be a failure response.
+ * It is prepared for the backend validation, which may send a list of failures. In that case, it returns
+ * a failure response.
  */
 export class AngularErrorRequestInterceptor {
 
