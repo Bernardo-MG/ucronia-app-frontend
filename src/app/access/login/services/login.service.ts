@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LoginStatus } from '@app/core/authentication/models/login-status';
 import { SecurityDetails } from '@app/core/authentication/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserLogin } from '../models/user-login';
@@ -41,8 +41,8 @@ export class LoginService {
       }));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/login');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/login');
   }
 
 }

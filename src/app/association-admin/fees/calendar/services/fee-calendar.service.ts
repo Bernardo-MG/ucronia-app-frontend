@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { AngularClient, Client, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -32,8 +32,8 @@ export class FeeCalendarService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/fee/calendar');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/fee/calendar');
   }
 
 }

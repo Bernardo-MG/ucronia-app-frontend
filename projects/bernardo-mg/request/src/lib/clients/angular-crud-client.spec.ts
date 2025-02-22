@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ParamLoader } from '../../public-api';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
-import { AngularClient } from './angular-client';
+import { AngularCrudClient } from './angular-crud-client';
 
-describe('AngularClient', () => {
-  let client: AngularClient;
+describe('AngularCrudClient', () => {
+  let client: AngularCrudClient;
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
   let errorInterceptor: AngularErrorRequestInterceptor;
@@ -29,7 +28,7 @@ describe('AngularClient', () => {
     httpClient = TestBed.inject(HttpClient);
     errorInterceptor = TestBed.inject(AngularErrorRequestInterceptor);
 
-    client = new AngularClient(httpClient, rootUrl);
+    client = new AngularCrudClient(httpClient, rootUrl);
   });
 
   afterEach(() => {

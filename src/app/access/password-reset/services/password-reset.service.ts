@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { PasswordReset } from '../models/password-reset';
@@ -36,8 +36,8 @@ export class PasswordResetService {
       .read<SimpleResponse<UserTokenStatus>>();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/password/reset');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/password/reset');
   }
 
 }

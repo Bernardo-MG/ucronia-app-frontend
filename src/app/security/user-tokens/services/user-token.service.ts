@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserToken } from '@app/core/authentication/models/user-token';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortDirection, SortProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortDirection, SortProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -54,8 +54,8 @@ export class UserTokenService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/security/user/token');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user/token');
   }
 
 }

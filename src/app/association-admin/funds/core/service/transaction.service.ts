@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Transaction } from '../../../../models/transactions/transaction';
@@ -41,8 +41,8 @@ export class TransactionService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/funds/transaction');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/transaction');
   }
 
 }

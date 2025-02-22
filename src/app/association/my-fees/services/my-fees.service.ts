@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SortDirection, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SortDirection, SortingParams, SortProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -21,8 +21,8 @@ export class MyFeesService {
       .read<PaginatedResponse<Fee[]>>();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/user/fee');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/user/fee');
   }
 
 }

@@ -4,7 +4,7 @@ import { Active } from '@app/association/members/model/active';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -35,12 +35,12 @@ export class LibraryLendingService {
       .read<PaginatedResponse<Member[]>>();
   }
 
-  private getLendClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/lending');
+  private getLendClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/library/lending');
   }
 
-  private getMemberClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/member');
+  private getMemberClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/member');
   }
 
 }

@@ -2,9 +2,9 @@ import { Observable } from 'rxjs';
 import { ParamLoader } from '../params/param-loader';
 
 /**
- * Sets up and executes requests.
+ * Client for CRUD requests.
  */
-export interface Client {
+export interface CrudClient {
 
   /**
    * Execute a create request.
@@ -45,25 +45,25 @@ export interface Client {
   patch<T>(body: any): Observable<T>;
 
   /**
-   * Appends the route and returns an updated Client.
+   * Appends the route and returns an updated client.
    * 
    * @param route route to append
    */
-  appendRoute(route: string): Client;
+  appendRoute(route: string): CrudClient;
 
   /**
-   * Adds a request parameter and returns an updated Client.
+   * Adds a request parameter and returns an updated client.
    * 
    * @param name parameter name
    * @param value parameter value
    */
-  parameter(name: string, value: any): Client;
+  parameter(name: string, value: any): CrudClient;
 
   /**
-   * Adds parameters through a loader and returns an updated Client.
+   * Adds parameters through a loader and returns an updated client.
    * 
    * @param loader parameter loader
    */
-  loadParameters(loader: ParamLoader): Client;
+  loadParameters(loader: ParamLoader): CrudClient;
 
 }

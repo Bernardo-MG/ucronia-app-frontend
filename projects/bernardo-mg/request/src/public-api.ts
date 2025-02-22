@@ -2,8 +2,8 @@
  * Public API Surface of request
  */
 
-export * from './lib/clients/angular-client';
-export * from './lib/clients/client';
+export * from './lib/clients/angular-crud-client';
+export * from './lib/clients/crud-client';
 export * from './lib/interceptors/angular-error-request-interceptor';
 export * from './lib/params/pagination-params';
 export * from './lib/params/param-loader';

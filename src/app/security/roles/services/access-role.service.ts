@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { Role } from '@app/core/authentication/models/role';
-import { AngularClient, Client, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortingParams, SortProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sort, SortingParams, SortProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -67,8 +67,8 @@ export class AccessRoleService {
       .pipe(map(r => r.content));
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/security/role');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/security/role');
   }
 
 }

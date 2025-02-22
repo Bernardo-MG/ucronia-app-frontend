@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient, Client, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PublicSettings } from '../../settings/models/public-settings';
@@ -34,8 +34,8 @@ export class FrontpageService {
     return "mailto:contacto@arucronia.com";
   }
 
-  private getConfigClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/settings/public');
+  private getConfigClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/settings/public');
   }
 
 }
