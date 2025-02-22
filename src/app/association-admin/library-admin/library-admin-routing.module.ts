@@ -41,7 +41,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'add',
+            path: 'register',
             component: LibraryAdminAuthorCreateContainer,
             canActivate: [ResourceGuard("library_author", "create")],
             data: { breadcrumb: 'Registrar autor' }
@@ -65,7 +65,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'add',
+            path: 'register',
             component: LibraryAdminBookCreationContainer,
             canActivate: [ResourceGuard("library_book", "create")],
             data: { breadcrumb: 'Registrar libro' }
@@ -101,7 +101,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'add',
+            path: 'register',
             component: LibraryAdminPublisherCreateContainer,
             canActivate: [ResourceGuard("library_publisher", "create")],
             data: { breadcrumb: 'Registrar editor' }
@@ -125,7 +125,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'add',
+            path: 'register',
             component: LibraryAdminBookTypeCreateContainer,
             canActivate: [ResourceGuard("library_book_type", "create")],
             data: { breadcrumb: 'Registrar tipo' }
@@ -149,7 +149,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'add',
+            path: 'register',
             component: LibraryAdminGameSystemCreateContainer,
             canActivate: [ResourceGuard("library_game_system", "create")],
             data: { breadcrumb: 'Registrar sistema' }
