@@ -34,9 +34,27 @@ const routes: Routes = [
       },
       {
         path: 'authors',
-        component: LibraryAdminAuthorListingContainer,
-        canActivate: [ResourceGuard("library_author", "view")],
-        data: { breadcrumb: 'Autores' }
+        data: { breadcrumb: 'Autores' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminAuthorListingContainer,
+            canActivate: [ResourceGuard("library_author", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: 'add',
+            component: LibraryAdminAuthorCreateContainer,
+            canActivate: [ResourceGuard("library_author", "create")],
+            data: { breadcrumb: 'Registrar autor' }
+          },
+          {
+            path: ':number',
+            component: LibraryAdminAuthorInfoEditorContainer,
+            canActivate: [ResourceGuard("library_author", "read")],
+            data: { breadcrumb: 'Editar autor' }
+          }
+        ]
       },
       {
         path: 'books',
@@ -76,69 +94,75 @@ const routes: Routes = [
       },
       {
         path: 'publishers',
-        component: LibraryAdminPublisherListingContainer,
-        canActivate: [ResourceGuard("library_publisher", "view")],
-        data: { breadcrumb: 'Editores' }
+        data: { breadcrumb: 'Editores' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminPublisherListingContainer,
+            canActivate: [ResourceGuard("library_publisher", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: 'add',
+            component: LibraryAdminPublisherCreateContainer,
+            canActivate: [ResourceGuard("library_publisher", "create")],
+            data: { breadcrumb: 'Registrar editor' }
+          },
+          {
+            path: ':number',
+            component: LibraryAdminPublisherInfoEditorContainer,
+            canActivate: [ResourceGuard("library_publisher", "read")],
+            data: { breadcrumb: 'Editar editor' }
+          }
+        ]
       },
       {
         path: 'types',
-        component: LibraryAdminBookTypeListingContainer,
-        canActivate: [ResourceGuard("library_book_type", "view")],
-        data: { breadcrumb: 'Tipos' }
+        data: { breadcrumb: 'Tipos' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminBookTypeListingContainer,
+            canActivate: [ResourceGuard("library_book_type", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: 'add',
+            component: LibraryAdminBookTypeCreateContainer,
+            canActivate: [ResourceGuard("library_book_type", "create")],
+            data: { breadcrumb: 'Registrar tipo' }
+          },
+          {
+            path: ':number',
+            component: LibraryAdminBookTypeInfoEditorContainer,
+            canActivate: [ResourceGuard("library_book_type", "read")],
+            data: { breadcrumb: 'Editar tipo' }
+          }
+        ]
       },
       {
         path: 'systems',
-        component: LibraryAdminGameSystemListingContainer,
-        canActivate: [ResourceGuard("library_game_system", "view")],
-        data: { breadcrumb: 'Sistemas' }
-      },
-      {
-        path: 'author/add',
-        component: LibraryAdminAuthorCreateContainer,
-        canActivate: [ResourceGuard("library_author", "create")],
-        data: { breadcrumb: 'Registrar autor' }
-      },
-      {
-        path: 'author/:number',
-        component: LibraryAdminAuthorInfoEditorContainer,
-        canActivate: [ResourceGuard("library_author", "read")],
-        data: { breadcrumb: 'Editar autor' }
-      },
-      {
-        path: 'bookType/add',
-        component: LibraryAdminBookTypeCreateContainer,
-        canActivate: [ResourceGuard("library_book_type", "create")],
-        data: { breadcrumb: 'Registrar tipo' }
-      },
-      {
-        path: 'bookType/:number',
-        component: LibraryAdminBookTypeInfoEditorContainer,
-        canActivate: [ResourceGuard("library_book_type", "read")],
-        data: { breadcrumb: 'Editar tipo' }
-      },
-      {
-        path: 'gameSystem/add',
-        component: LibraryAdminGameSystemCreateContainer,
-        canActivate: [ResourceGuard("library_game_system", "create")],
-        data: { breadcrumb: 'Registrar sistema' }
-      },
-      {
-        path: 'gameSystem/:number',
-        component: LibraryAdminGameSystemInfoEditorContainer,
-        canActivate: [ResourceGuard("library_game_system", "read")],
-        data: { breadcrumb: 'Editar sistema' }
-      },
-      {
-        path: 'publisher/add',
-        component: LibraryAdminPublisherCreateContainer,
-        canActivate: [ResourceGuard("library_publisher", "create")],
-        data: { breadcrumb: 'Registrar editor' }
-      },
-      {
-        path: 'publisher/:number',
-        component: LibraryAdminPublisherInfoEditorContainer,
-        canActivate: [ResourceGuard("library_publisher", "read")],
-        data: { breadcrumb: 'Editar editor' }
+        data: { breadcrumb: 'Sistemas' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminGameSystemListingContainer,
+            canActivate: [ResourceGuard("library_game_system", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: 'add',
+            component: LibraryAdminGameSystemCreateContainer,
+            canActivate: [ResourceGuard("library_game_system", "create")],
+            data: { breadcrumb: 'Registrar sistema' }
+          },
+          {
+            path: ':number',
+            component: LibraryAdminGameSystemInfoEditorContainer,
+            canActivate: [ResourceGuard("library_game_system", "read")],
+            data: { breadcrumb: 'Editar sistema' }
+          }
+        ]
       }
     ]
   }
