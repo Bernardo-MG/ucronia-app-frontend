@@ -11,7 +11,7 @@ import { SortingDirection, SortingProperty } from "@bernardo-mg/request";
 export class SortParametersParser implements ParametersParser<SortingProperty[]> {
 
   public parse(params: ParamMap): SortingProperty[] | undefined {
-    let pagesort: SortingProperty | undefined;
+    let pageSort: SortingProperty | undefined;
     let pageSorts: SortingProperty[] | undefined;
     let pageSortValues: string[] | null;
 
