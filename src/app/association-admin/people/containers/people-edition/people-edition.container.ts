@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';

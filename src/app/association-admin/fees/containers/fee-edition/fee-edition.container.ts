@@ -5,7 +5,7 @@ import { FeeEditionFormComponent } from '@app/association-admin/fees/components/
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';

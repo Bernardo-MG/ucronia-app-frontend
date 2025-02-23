@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Author } from '@app/models/library/author';
-import { PagedSelectorComponent } from '@app/shared/form/components/paged-selector/paged-selector.component';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
+import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/layout';
 
 @Component({

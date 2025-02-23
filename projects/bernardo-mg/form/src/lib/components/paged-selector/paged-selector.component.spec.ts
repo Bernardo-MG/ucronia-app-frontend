@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormComponent } from './form.component';
+import { PagedSelectorComponent } from '@bernardo-mg/form';
 
-describe('FormComponent', () => {
-  let component: FormComponent<any>;
-  let fixture: ComponentFixture<FormComponent<any>>;
+describe('PagedSelectorComponent', () => {
+  let component: PagedSelectorComponent<any>;
+  let fixture: ComponentFixture<PagedSelectorComponent<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FormComponent
+        PagedSelectorComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FormComponent);
+    fixture = TestBed.createComponent(PagedSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

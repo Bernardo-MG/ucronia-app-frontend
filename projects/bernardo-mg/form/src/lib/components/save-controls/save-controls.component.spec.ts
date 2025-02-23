@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SaveControlsComponent } from './save-controls.component';
+import { SaveControlsComponent } from '@bernardo-mg/form';
 
 describe('SaveControlsComponent', () => {
   let component: SaveControlsComponent;

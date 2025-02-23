@@ -7,7 +7,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';

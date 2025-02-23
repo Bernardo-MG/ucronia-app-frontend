@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InputFailureFeedbackComponent } from './input-failure-feedback.component';
+import { FormComponent } from '@bernardo-mg/form';
 
-describe('InputFailureFeedbackComponent', () => {
-  let component: InputFailureFeedbackComponent;
-  let fixture: ComponentFixture<InputFailureFeedbackComponent>;
+describe('FormComponent', () => {
+  let component: FormComponent<any>;
+  let fixture: ComponentFixture<FormComponent<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        InputFailureFeedbackComponent
+        FormComponent
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(InputFailureFeedbackComponent);
+    fixture = TestBed.createComponent(FormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
