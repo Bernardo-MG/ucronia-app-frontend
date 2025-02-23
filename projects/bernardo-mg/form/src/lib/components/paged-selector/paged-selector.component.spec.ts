@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { PagedSelectorComponent } from './paged-selector.component';
 
 @Component({
-  selector: 'test-paged-selector',
+  selector: 'form-test-paged-selector',
   template: '',
   standalone: true
 })
