@@ -18,7 +18,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
-    "build-libs": "ng build @bernardo-mg/icons && ng build @bernardo-mg/layout && ng build @bernardo-mg/request && ng build @bernardo-mg/form",
+    "build-libs": "ng build @bernardo-mg/authentication && ng build @bernardo-mg/icons && ng build @bernardo-mg/layout && ng build @bernardo-mg/request && ng build @bernardo-mg/form",
     "build": "ng build",
     "build-production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
@@ -35,6 +35,7 @@
     "@angular/platform-browser-dynamic": "~19.1.2",
     "@angular/router": "~19.1.2",
     "@auth0/angular-jwt": "^5.2.0",
+    "@bernardo-mg/authentication": "file:dist/bernardo-mg/authentication",
     "@bernardo-mg/form": "0.0.1",
     "@bernardo-mg/icons": "0.0.1",
     "@bernardo-mg/layout": "0.0.1",
