@@ -1,7 +1,6 @@
 import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { environment } from 'environments/environment';
 import { AuthContainer } from '../services/auth.service';
 import { jwtAuthenticationInterceptor } from './jwt-authentication.interceptor';
 
@@ -9,10 +8,12 @@ describe('jwtAuthenticationInterceptor', () => {
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
   let authContainer: jasmine.SpyObj<AuthContainer>;
+  const apiUrl = "apiUrl";
+  let builtInterceptor = jwtAuthenticationInterceptor(apiUrl);
 
   beforeEach(() => {
     const interceptor: HttpInterceptorFn = (req, next) =>
-      TestBed.runInInjectionContext(() => jwtAuthenticationInterceptor(req, next));
+      TestBed.runInInjectionContext(() => builtInterceptor(req, next));
     const authContainerSpy = jasmine.createSpyObj('AuthContainer', ['isLogged', 'getToken']);
 
     TestBed.configureTestingModule({
@@ -37,9 +38,9 @@ describe('jwtAuthenticationInterceptor', () => {
     authContainer.isLogged.and.returnValue(true);
     authContainer.getToken.and.returnValue('test-token');
 
-    httpClient.get(`${environment.apiUrl}/test`).subscribe();
+    httpClient.get(`${apiUrl}/test`).subscribe();
 
-    const httpRequest = httpMock.expectOne(`${environment.apiUrl}/test`);
+    const httpRequest = httpMock.expectOne(`${apiUrl}/test`);
     expect(httpRequest.request.headers.has('Authorization')).toBeTrue();
     expect(httpRequest.request.headers.get('Authorization')).toBe('Bearer test-token');
   });
@@ -48,9 +49,9 @@ describe('jwtAuthenticationInterceptor', () => {
     authContainer.isLogged.and.returnValue(false);
     authContainer.getToken.and.returnValue(undefined);
 
-    httpClient.get(`${environment.apiUrl}/test`).subscribe();
+    httpClient.get(`${apiUrl}/test`).subscribe();
 
-    const httpRequest = httpMock.expectOne(`${environment.apiUrl}/test`);
+    const httpRequest = httpMock.expectOne(`${apiUrl}/test`);
     expect(httpRequest.request.headers.has('Authorization')).toBeFalse();
   });
 
