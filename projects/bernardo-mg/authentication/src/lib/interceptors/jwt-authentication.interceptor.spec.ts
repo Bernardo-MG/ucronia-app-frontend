@@ -9,7 +9,7 @@ describe('jwtAuthenticationInterceptor', () => {
   let httpClient: HttpClient;
   let authContainer: jasmine.SpyObj<AuthContainer>;
   const apiUrl = "apiUrl";
-  let builtInterceptor = jwtAuthenticationInterceptor(apiUrl);
+  const builtInterceptor = jwtAuthenticationInterceptor(apiUrl);
 
   beforeEach(() => {
     const interceptor: HttpInterceptorFn = (req, next) =>

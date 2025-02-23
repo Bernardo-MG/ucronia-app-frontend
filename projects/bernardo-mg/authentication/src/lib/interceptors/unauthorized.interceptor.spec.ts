@@ -6,7 +6,7 @@ import { unauthorizedInterceptor } from './unauthorized.interceptor';
 
 describe('unauthorizedInterceptor', () => {
   const apiUrl = "apiUrl";
-  let builtInterceptor = unauthorizedInterceptor(apiUrl);
+  const builtInterceptor = unauthorizedInterceptor(apiUrl);
 
   const interceptor: HttpInterceptorFn = (req, next) =>
     TestBed.runInInjectionContext(() => builtInterceptor(req, next));
