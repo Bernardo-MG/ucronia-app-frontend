@@ -6,7 +6,7 @@
       <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
         aria-describedby="firstNameLabel" maxlength="50">
-      <app-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Last name -->
@@ -16,7 +16,7 @@
       <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
         aria-describedby="lastNameLabel" maxlength="50">
-      <app-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Membership -->

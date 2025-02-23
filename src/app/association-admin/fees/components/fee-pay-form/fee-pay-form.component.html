@@ -14,7 +14,7 @@
       <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
         formInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
         aria-describedby="paymentDateLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('payment.date')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('payment.date')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Fees -->
@@ -26,7 +26,7 @@
         <div class="col-md-6 mb-2">
           <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
             formInvalidField="feeMonths[]" [backendFailure]="failures.hasFailures('feeMonths[]')">
-          <app-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></app-input-failure-feedback>
+          <form-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></form-input-failure-feedback>
         </div>
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"

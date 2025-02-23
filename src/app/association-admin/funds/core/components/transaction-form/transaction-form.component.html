@@ -13,7 +13,7 @@
     <div class="col-sm-10">
       <input type="text" id="descriptionInput" formControlName="description" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
-      <app-input-failure-feedback [failures]="failures.getFailures('description')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('description')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Date -->
@@ -22,7 +22,7 @@
     <div class="col-sm-10">
       <input type="date" id="dateInput" formControlName="date" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('date')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Amount -->
@@ -31,7 +31,7 @@
     <div class="col-sm-10">
       <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('amount')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('amount')"></form-input-failure-feedback>
     </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
