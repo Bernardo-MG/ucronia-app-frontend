@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FailureStore } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'app-form',
+    selector: 'form-form',
     templateUrl: './form.component.html'
 })
 export abstract class FormComponent<Data> {
