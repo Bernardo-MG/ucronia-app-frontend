@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '../../../projects/bernardo-mg/authentication/src/lib/guards/resource.guard';
 import { AssociationAdminFeesLayoutContainer } from '@app/core/layout/containers/association-admin-fees-layout/association-admin-fees-layout.container';
 import { AssociationAdminLibraryLayoutContainer } from '@app/core/layout/containers/association-admin-library-layout/association-admin-library-layout.container';
 import { SimpleLayoutContainer } from '@app/core/layout/containers/simple-layout/simple-layout.container';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 
 const fundsModule = () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule);
 const feesModule = () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule);

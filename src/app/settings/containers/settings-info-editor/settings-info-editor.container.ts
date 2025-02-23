@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Setting } from '@app/settings/models/setting';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
 import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
 import { AssociationSettingsService } from '../../service/association-settings.service';

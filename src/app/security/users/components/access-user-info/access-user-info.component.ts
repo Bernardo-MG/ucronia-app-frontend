@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
-import { User } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user';
 import { Member } from '@app/models/members/member';
+import { Role, User } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingButtonComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';

@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoggedInGuard } from '../../projects/bernardo-mg/authentication/src/lib/guards/logged-in.guard';
-import { LoggedOutGuard } from '../../projects/bernardo-mg/authentication/src/lib/guards/logged-out.guard';
-import { ResourceGuard } from '../../projects/bernardo-mg/authentication/src/lib/guards/resource.guard';
+import { LoggedInGuard, LoggedOutGuard, ResourceGuard } from '@bernardo-mg/authentication';
 import { SimpleLayoutContainer } from './core/layout/containers/simple-layout/simple-layout.container';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);

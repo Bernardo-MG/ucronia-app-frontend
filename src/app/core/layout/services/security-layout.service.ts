@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, MenuLoader } from '@bernardo-mg/layout';
 import { SECURITY_MENU_OPTIONS } from '../menus/security-menu-options';
 import { ViewNodeFilter } from './view-node-filter';

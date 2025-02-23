@@ -5,7 +5,7 @@ import { LoginStatus } from '../models/login-status';
 import { SecurityDetails } from '../models/security-details';
 import { AuthContainer } from './auth.service';
 
-describe('AuhtContainer', () => {
+describe('AuthContainer', () => {
   let service: AuthContainer;
 
   beforeEach(() => {

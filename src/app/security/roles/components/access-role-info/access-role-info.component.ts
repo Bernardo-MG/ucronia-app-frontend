@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
+import { Role } from '@bernardo-mg/authentication';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
