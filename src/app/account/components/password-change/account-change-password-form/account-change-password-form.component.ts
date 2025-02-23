@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, Validat
 import { PasswordChange } from '@app/account/models/password-change';
 import { FormComponent } from '@app/shared/form/components/form/form.component';
 import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
-import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
+import { InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
