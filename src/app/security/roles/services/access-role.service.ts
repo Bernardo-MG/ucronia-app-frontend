@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
-import { Role } from '@app/core/authentication/models/role';
+import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';

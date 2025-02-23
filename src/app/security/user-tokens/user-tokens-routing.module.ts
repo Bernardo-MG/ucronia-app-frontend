@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
-import { UserTokenListingContainer } from './containers/user-token-listing/user-token-listing.container';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { UserTokenEditionContainer } from './containers/user-token-edition/user-token-edition.container';
+import { UserTokenListingContainer } from './containers/user-token-listing/user-token-listing.container';
 
 const routes: Routes = [
   {

@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginStatus } from '@app/core/authentication/models/login-status';
-import { SecurityDetails } from '@app/core/authentication/models/security-details';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
 import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';

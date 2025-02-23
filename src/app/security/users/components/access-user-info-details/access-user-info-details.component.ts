@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { User } from '@app/core/authentication/models/user';
+import { User } from '@bernardo-mg/authentication';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({

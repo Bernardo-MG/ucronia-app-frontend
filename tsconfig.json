@@ -7,6 +7,9 @@
       "@app/*": [
         "app/*"
       ],
+      "@bernardo-mg/authentication": [
+        "./dist/bernardo-mg/authentication"
+      ],
       "@bernardo-mg/form": [
         "./dist/bernardo-mg/form"
       ],

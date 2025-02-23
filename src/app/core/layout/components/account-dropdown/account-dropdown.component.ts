@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
 

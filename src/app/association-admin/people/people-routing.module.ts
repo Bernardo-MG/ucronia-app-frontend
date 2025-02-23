@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { PeopleCreationContainer } from './containers/people-creation/people-creation.container';
 import { PeopleInfoEditionContainer } from './containers/people-edition/people-edition.container';
 import { PeopleListingContainer } from './containers/people-listing/people-listing.container';

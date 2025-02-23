@@ -1,5 +1,5 @@
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuLink } from '@bernardo-mg/layout';
 
 export class ViewNodeFilter {

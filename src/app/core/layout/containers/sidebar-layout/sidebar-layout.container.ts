@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 
 @Component({

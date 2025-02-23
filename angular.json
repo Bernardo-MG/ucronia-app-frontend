@@ -320,6 +320,55 @@
           }
         }
       }
+    },
+    "@bernardo-mg/authentication": {
+      "projectType": "library",
+      "root": "projects/bernardo-mg/authentication",
+      "sourceRoot": "projects/bernardo-mg/authentication/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "options": {
+            "project": "projects/bernardo-mg/authentication/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bernardo-mg/authentication/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/bernardo-mg/authentication/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
+          "options": {
+            "tsConfig": "projects/bernardo-mg/authentication/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/bernardo-mg/authentication/**/*.ts",
+              "projects/bernardo-mg/authentication/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
