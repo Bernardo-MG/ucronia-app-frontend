@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
-import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
+import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
