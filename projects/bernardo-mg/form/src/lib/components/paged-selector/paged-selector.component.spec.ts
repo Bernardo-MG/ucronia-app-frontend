@@ -1,19 +1,26 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
 import { PagedSelectorComponent } from './paged-selector.component';
 
+@Component({
+  selector: 'test-paged-selector',
+  template: '',
+  standalone: true
+})
+class TestPagedSelectorComponent extends PagedSelectorComponent<any> { }
+
 describe('PagedSelectorComponent', () => {
-  let component: PagedSelectorComponent<any>;
-  let fixture: ComponentFixture<PagedSelectorComponent<any>>;
+  let component: TestPagedSelectorComponent;
+  let fixture: ComponentFixture<TestPagedSelectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PagedSelectorComponent
+        TestPagedSelectorComponent
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(PagedSelectorComponent);
+    fixture = TestBed.createComponent(TestPagedSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
