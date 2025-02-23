@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
+import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
+import { User } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user';
 import { Member } from '@app/models/members/member';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingButtonComponent } from '@bernardo-mg/layout';

@@ -1,9 +1,8 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { jwtAuthenticationInterceptor, unauthorizedInterceptor } from '@bernardo-mg/authentication';
 import { routes } from './app.routes';
-import { jwtAuthenticationInterceptor } from './core/authentication/interceptors/jwt-authentication.interceptor';
-import { unauthorizedInterceptor } from './core/authentication/interceptors/unauthorized.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
+import { ResourcePermission } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/resource-permission';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { IconAddComponent } from '@bernardo-mg/icons';

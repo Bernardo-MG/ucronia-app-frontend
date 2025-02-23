@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { UserToken } from '@app/core/authentication/models/user-token';
+import { UserToken } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user-token';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 import { FieldFailure, FailureStore } from '@bernardo-mg/request';
 

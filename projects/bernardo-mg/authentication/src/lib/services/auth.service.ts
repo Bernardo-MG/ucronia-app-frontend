@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
-import { SecurityDetails } from '../models/security-details';
 import { LoginStatus } from '../models/login-status';
+import { SecurityDetails } from '../models/security-details';
 import { TokenData } from '../models/token-data';
 
 /**

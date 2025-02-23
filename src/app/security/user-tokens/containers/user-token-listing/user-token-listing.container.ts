@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserToken } from '@app/core/authentication/models/user-token';
+import { UserToken } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user-token';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';

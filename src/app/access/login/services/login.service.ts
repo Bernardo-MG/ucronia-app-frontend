@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginStatus } from '@app/core/authentication/models/login-status';
-import { SecurityDetails } from '@app/core/authentication/models/security-details';
+import { LoginStatus } from '../../../../../projects/bernardo-mg/authentication/src/lib/models/login-status';
+import { SecurityDetails } from '../../../../../projects/bernardo-mg/authentication/src/lib/models/security-details';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';

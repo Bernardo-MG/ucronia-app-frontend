@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '../../../projects/bernardo-mg/authentication/src/lib/guards/resource.guard';
 import { AssociationLayoutContainer } from '../core/layout/containers/association-layout/association-layout.container';
 
 const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);

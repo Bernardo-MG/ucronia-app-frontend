@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { Role } from '@app/core/authentication/models/role';
+import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective } from '@bernardo-mg/layout';

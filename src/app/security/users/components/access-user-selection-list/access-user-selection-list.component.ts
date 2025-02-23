@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { User } from '@app/core/authentication/models/user';
+import { User } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { SortingProperty } from '@bernardo-mg/request';
 

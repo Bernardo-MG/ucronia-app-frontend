@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
+import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
+import { User } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/user';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';

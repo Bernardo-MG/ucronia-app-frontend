@@ -1,9 +1,9 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { LoginStatus } from '../models/login-status';
 import { SecurityDetails } from '../models/security-details';
 import { AuthContainer } from './auth.service';
-import { LoginStatus } from '../models/login-status';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AuhtContainer', () => {
   let service: AuthContainer;

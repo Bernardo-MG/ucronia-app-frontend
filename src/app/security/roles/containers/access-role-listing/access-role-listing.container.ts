@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Role } from '@app/core/authentication/models/role';
+import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
 import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { IconAddComponent } from '@bernardo-mg/icons';

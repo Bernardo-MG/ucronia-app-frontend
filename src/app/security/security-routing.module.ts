@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '../../../projects/bernardo-mg/authentication/src/lib/guards/resource.guard';
 import { SecurityLayoutContainer } from '@app/core/layout/containers/security-layout/security-layout.container';
 
 const userModule = () => import('@app/security/users/users.module').then(m => m.UsersModule);

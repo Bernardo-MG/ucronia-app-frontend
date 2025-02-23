@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { AccessUserCreationContainer } from './containers/access-user-creation/access-user-creation.container';
 import { AccessUserEditionContainer } from './containers/access-user-edition/access-user-edition.container';
 import { AccessListingContainer } from './containers/access-user-listing/access-user-listing.container';

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Role } from '@app/core/authentication/models/role';
+import { Role } from '../../../../../../projects/bernardo-mg/authentication/src/lib/models/role';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({

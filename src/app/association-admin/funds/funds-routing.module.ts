@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { FundsListingComponent } from './core/containers/funds-listing/funds-listing.container';
 import { TransactionCreationComponent } from './core/containers/transaction-creation/transaction-creation.container';
 import { TransactionEditionComponent } from './core/containers/transaction-edition/transaction-edition.component';
