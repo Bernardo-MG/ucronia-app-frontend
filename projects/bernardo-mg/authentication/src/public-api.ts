@@ -8,7 +8,6 @@ export * from './lib/guards/resource.guard';
 export * from './lib/models/id';
 export * from './lib/models/login-status';
 export * from './lib/models/permission-list';
-export * from './lib/models/permissions.set';
 export * from './lib/models/resource-permission';
 export * from './lib/models/role';
 export * from './lib/models/security-details';
