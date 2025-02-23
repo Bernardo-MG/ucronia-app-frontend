@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SaveControlsComponent } from '@bernardo-mg/form';
+import { SaveControlsComponent } from './save-controls.component';
 
 describe('SaveControlsComponent', () => {
   let component: SaveControlsComponent;
@@ -10,8 +9,8 @@ describe('SaveControlsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SaveControlsComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(SaveControlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

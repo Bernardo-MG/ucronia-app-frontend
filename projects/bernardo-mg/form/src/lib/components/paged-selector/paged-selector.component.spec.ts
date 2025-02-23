@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PagedSelectorComponent } from '@bernardo-mg/form';
+import { PagedSelectorComponent } from './paged-selector.component';
 
 describe('PagedSelectorComponent', () => {
   let component: PagedSelectorComponent<any>;

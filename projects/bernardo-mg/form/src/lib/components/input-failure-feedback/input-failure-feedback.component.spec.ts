@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InputFailureFeedbackComponent } from '@bernardo-mg/form';
+import { InputFailureFeedbackComponent } from './input-failure-feedback.component';
 
 describe('InputFailureFeedbackComponent', () => {
   let component: InputFailureFeedbackComponent;
