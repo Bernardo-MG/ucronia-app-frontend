@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="lendingDateInput" id="lendingDateLabel" class="col-sm-2 col-form-label">Date</label>
     <div class="col-sm-10">
-      <input type="date" id="lendingDateInput" formControlName="lendingDate" class="form-control" appInvalidField
+      <input type="date" id="lendingDateInput" formControlName="lendingDate" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('lendingDate')" aria-describedby="lendingDateLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('lendingDate')"></app-input-failure-feedback>
     </div>

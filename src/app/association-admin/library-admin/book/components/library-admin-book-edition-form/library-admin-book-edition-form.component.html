@@ -13,7 +13,7 @@
       <div class="row mb-2">
         <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
         <div class="col-sm-10">
-          <input type="text" id="isbnInput" formControlName="isbn" class="form-control" appInvalidField
+          <input type="text" id="isbnInput" formControlName="isbn" class="form-control" formInvalidField
             [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
           <app-input-failure-feedback [failures]="failures.getFailures('isbn')"></app-input-failure-feedback>
         </div>
@@ -23,20 +23,20 @@
         <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Título</label>
         <div formGroupName="title" class="col-sm-3">
           <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
-            appInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
+            formInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
             aria-describedby="supertitleLabel" maxlength="100" placeholder="Supertítulo">
           <app-input-failure-feedback
             [failures]="failures.getFailures('title.supertitle')"></app-input-failure-feedback>
         </div>
         <div formGroupName="title" class="col-sm-3">
-          <input type="text" id="titleInput" formControlName="title" class="form-control" appInvalidField="title.title"
+          <input type="text" id="titleInput" formControlName="title" class="form-control" formInvalidField="title.title"
             [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
             placeholder="Título">
           <app-input-failure-feedback [failures]="failures.getFailures('title.title')"></app-input-failure-feedback>
         </div>
         <div formGroupName="title" class="col-sm-3">
           <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
-            appInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
+            formInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
             aria-describedby="titleLabel" maxlength="100" placeholder="Subtítulo">
           <app-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></app-input-failure-feedback>
         </div>
@@ -45,7 +45,7 @@
       <div class="row mb-2">
         <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
         <div class="col-sm-10">
-          <select class="form-select" aria-label="Select year" formControlName="language" appInvalidField
+          <select class="form-select" aria-label="Select year" formControlName="language" formInvalidField
             [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
             <option *ngFor="let selectionLanguage of languages" [value]="selectionLanguage.code">
               {{selectionLanguage.name}}</option>
@@ -58,7 +58,7 @@
         <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
         <div class="col-sm-10">
           <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
-            appInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
+            formInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
             aria-describedby="publishDateLabel" maxlength="100">
           <app-input-failure-feedback [failures]="failures.getFailures('publishDate')"></app-input-failure-feedback>
         </div>
@@ -167,8 +167,8 @@
           </button>
         </div>
       </div>
-      <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-        [cancellable]="cancellable" (reject)="onCancel()"></app-save-controls>
+      <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+        [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
     </form>
   </ng-container>
   <ng-container *ngSwitchCase="'book_type'">

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { JustifyBetweenDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'app-save-controls',
+    selector: 'form-save-controls',
     imports: [CommonModule, WaitingButtonComponent, JustifyBetweenDirective],
     templateUrl: './save-controls.component.html'
 })

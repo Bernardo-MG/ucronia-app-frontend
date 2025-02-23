@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-paged-selector',
+    selector: 'form-paged-selector',
     templateUrl: './paged-selector.component.html'
 })
-export class PagedSelectorComponent<Data> {
+export abstract class PagedSelectorComponent<Data> {
 
   @Input() public waiting = false;
 

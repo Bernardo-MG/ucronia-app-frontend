@@ -3,11 +3,11 @@ import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive({
-    selector: '[appInvalidField]'
+    selector: '[formInvalidField]'
 })
 export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 
-  @Input() appInvalidField: string | FormControl | null = null;
+  @Input() formInvalidField: string | FormControl | null = null;
 
   @Input() backendFailure: boolean = false;
 
@@ -31,7 +31,7 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['appInvalidField'] || changes['backendFailure']) {
+    if (changes['formInvalidField'] || changes['backendFailure']) {
       this.updateFieldClass();
     }
   }
@@ -58,17 +58,17 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
   getFormControl(): FormControl | null {
     let formControl;
 
-    if (typeof this.appInvalidField === 'string') {
-      formControl = this.formGroupDirective.form.get(this.appInvalidField) as FormControl;
-    } else if (this.appInvalidField instanceof FormControl) {
-      formControl = this.appInvalidField;
+    if (typeof this.formInvalidField === 'string') {
+      formControl = this.formGroupDirective.form.get(this.formInvalidField) as FormControl;
+    } else if (this.formInvalidField instanceof FormControl) {
+      formControl = this.formInvalidField;
     } else if (this.controlDir && this.controlDir.control) {
       formControl = this.controlDir.control as FormControl;
     } else {
       formControl = null;
     }
 
-    // Fall back to using formControlName if appInvalidField is not provided
+    // Fall back to using formControlName if formInvalidField is not provided
     if (!formControl && this.controlDir) {
       const formControlName = this.controlDir.name as string | readonly (string | number)[];
       if ((formControlName) && (this.formGroupDirective.form.contains(formControlName as string))) {

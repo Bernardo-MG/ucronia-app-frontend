@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Descripción</label>
     <div class="col-sm-10">
-      <input type="text" id="descriptionInput" formControlName="description" class="form-control" appInvalidField
+      <input type="text" id="descriptionInput" formControlName="description" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
       <app-input-failure-feedback [failures]="failures.getFailures('description')"></app-input-failure-feedback>
     </div>
@@ -20,7 +20,7 @@
   <div class="row mb-2">
     <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Fecha</label>
     <div class="col-sm-10">
-      <input type="date" id="dateInput" formControlName="date" class="form-control" appInvalidField
+      <input type="date" id="dateInput" formControlName="date" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('date')"></app-input-failure-feedback>
     </div>
@@ -29,11 +29,11 @@
   <div class="row mb-2">
     <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Importe</label>
     <div class="col-sm-10">
-      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" appInvalidField
+      <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
       <app-input-failure-feedback [failures]="failures.getFailures('amount')"></app-input-failure-feedback>
     </div>
   </div>
-  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></app-save-controls>
+  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
 </form>

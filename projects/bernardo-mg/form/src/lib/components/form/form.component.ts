@@ -5,7 +5,7 @@ import { FailureStore } from '@bernardo-mg/request';
     selector: 'app-form',
     templateUrl: './form.component.html'
 })
-export class FormComponent<Data> {
+export abstract class FormComponent<Data> {
 
   /**
    * Allows cancelling flag.
