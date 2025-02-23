@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FailureStore } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'app-form',
+    selector: 'form-form',
     templateUrl: './form.component.html'
 })
-export class FormComponent<Data> {
+export abstract class FormComponent<Data> {
 
   /**
    * Allows cancelling flag.

@@ -60,7 +60,7 @@ describe('InvalidFieldDirective', () => {
     formControl.markAsTouched();
     formControl.setErrors({ required: true });
 
-    directive.appInvalidField = formControl;
+    directive.formInvalidField = formControl;
     directive.ngOnInit();
     directive.updateFieldClass();
 
@@ -71,15 +71,15 @@ describe('InvalidFieldDirective', () => {
     const formControl = new FormControl('', { updateOn: 'blur' });
     formControl.setErrors(null);
 
-    directive.appInvalidField = formControl;
+    directive.formInvalidField = formControl;
     directive.ngOnInit();
     directive.updateFieldClass();
 
     expect(rendererMock.removeClass).toHaveBeenCalledWith(elementRefMock.nativeElement, 'is-invalid');
   });
 
-  it('should use formControlName when appInvalidField is not provided', () => {
-    directive.appInvalidField = null; // Not providing appInvalidField
+  it('should use formControlName when formInvalidField is not provided', () => {
+    directive.formInvalidField = null; // Not providing formInvalidField
     directive.ngOnInit();
     directive.updateFieldClass();
 
@@ -98,7 +98,7 @@ describe('InvalidFieldDirective', () => {
     formControl.markAsDirty();
     formControl.markAsTouched();
 
-    directive.appInvalidField = formControl;
+    directive.formInvalidField = formControl;
     directive.ngOnInit();
 
     formControl.setErrors({ required: true });
@@ -112,8 +112,8 @@ describe('InvalidFieldDirective', () => {
     expect(rendererMock.removeClass).toHaveBeenCalledWith(elementRefMock.nativeElement, 'is-invalid');
   });
 
-  it('should retrieve the FormControl using the string passed to appInvalidField', () => {
-    directive.appInvalidField = 'name.firstName';
+  it('should retrieve the FormControl using the string passed to formInvalidField', () => {
+    directive.formInvalidField = 'name.firstName';
     directive.ngOnInit();
     const control = directive.getFormControl();
 
@@ -121,8 +121,8 @@ describe('InvalidFieldDirective', () => {
     expect(control).toBeInstanceOf(FormControl);
   });
 
-  it('should fall back to formControlName if appInvalidField is not provided', () => {
-    directive.appInvalidField = null; // Not providing appInvalidField
+  it('should fall back to formControlName if formInvalidField is not provided', () => {
+    directive.formInvalidField = null; // Not providing formInvalidField
     directive.ngOnInit();
     const control = directive.getFormControl();
 
@@ -130,9 +130,9 @@ describe('InvalidFieldDirective', () => {
     expect(control).toBeInstanceOf(FormControl);
   });
 
-  it('should handle when appInvalidField is provided as a FormControl directly', () => {
+  it('should handle when formInvalidField is provided as a FormControl directly', () => {
     const formControl = new FormControl('');
-    directive.appInvalidField = formControl;
+    directive.formInvalidField = formControl;
     directive.ngOnInit();
     const control = directive.getFormControl();
 
@@ -145,7 +145,7 @@ describe('InvalidFieldDirective', () => {
     formControl.markAsTouched();
     formControl.setErrors({ required: true });
 
-    directive.appInvalidField = formControl;
+    directive.formInvalidField = formControl;
     directive.ngOnInit();
 
     formControl.setErrors(null);

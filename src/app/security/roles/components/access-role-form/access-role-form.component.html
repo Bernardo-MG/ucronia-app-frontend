@@ -3,11 +3,11 @@
   <div class="row mb-2">
     <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
-      <input type="text" id="nameInput" formControlName="name" class="form-control" appInvalidField
+      <input type="text" id="nameInput" formControlName="name" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('name')" aria-describedby="nameLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('name')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name')"></form-input-failure-feedback>
     </div>
   </div>
-  <app-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></app-save-controls>
+  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
 </form>

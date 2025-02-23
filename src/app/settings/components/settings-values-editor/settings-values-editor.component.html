@@ -5,7 +5,7 @@
       class="col-sm-2 col-form-label">{{setting.code}}</label>
     <div class="col-sm-9">
       <input name="{{setting.code}}" type="{{setting.type}}" step="any"
-        id="{{setting.code + 'Input'}}" class="form-control" appInvalidField="setting.code"
+        id="{{setting.code + 'Input'}}" class="form-control" formInvalidField="setting.code"
         [value]="setting.value" attr.aria-describedby="{{setting.code + 'Label'}}"
         [disabled]="disabled || !isEditing(setting.code)">
     </div>

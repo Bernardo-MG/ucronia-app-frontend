@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
+import { InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 import { UserLogin } from '../../models/user-login';
 

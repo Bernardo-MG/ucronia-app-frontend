@@ -3,7 +3,7 @@ import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 import { FieldFailure } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'app-input-failure-feedback',
+    selector: 'form-input-failure-feedback',
     imports: [CommonModule],
     templateUrl: './input-failure-feedback.component.html'
 })

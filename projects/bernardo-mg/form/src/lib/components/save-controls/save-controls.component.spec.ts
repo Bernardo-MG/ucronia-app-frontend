@@ -1,19 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormComponent } from './form.component';
+import { SaveControlsComponent } from './save-controls.component';
 
-describe('FormComponent', () => {
-  let component: FormComponent<any>;
-  let fixture: ComponentFixture<FormComponent<any>>;
+describe('SaveControlsComponent', () => {
+  let component: SaveControlsComponent;
+  let fixture: ComponentFixture<SaveControlsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        FormComponent
-      ]
+      imports: [SaveControlsComponent]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FormComponent);
+    fixture = TestBed.createComponent(SaveControlsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

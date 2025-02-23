@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
+import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, PlaceholderDirective } from '@bernardo-mg/layout';
 import { CardTab } from '../../../../../../../projects/bernardo-mg/layout/src/lib/models/card-tab';

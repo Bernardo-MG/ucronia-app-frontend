@@ -8,7 +8,7 @@ import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';

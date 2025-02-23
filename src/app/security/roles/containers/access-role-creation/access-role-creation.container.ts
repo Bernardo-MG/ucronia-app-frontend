@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@app/core/authentication/models/role';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
+import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';

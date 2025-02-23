@@ -12,9 +12,9 @@
     <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
     <div formGroupName="payment" class="col-sm-10">
       <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-        appInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
+        formInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
         aria-describedby="paymentDateLabel">
-      <app-input-failure-feedback [failures]="failures.getFailures('payment.date')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('payment.date')"></form-input-failure-feedback>
     </div>
   </div>
   <!-- Fees -->
@@ -25,8 +25,8 @@
       <div *ngFor="let date of form.get('feeMonths').controls; let i = index" formGroupName="feeMonths" class="row">
         <div class="col-md-6 mb-2">
           <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
-            appInvalidField="feeMonths[]" [backendFailure]="failures.hasFailures('feeMonths[]')">
-          <app-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></app-input-failure-feedback>
+            formInvalidField="feeMonths[]" [backendFailure]="failures.hasFailures('feeMonths[]')">
+          <form-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></form-input-failure-feedback>
         </div>
         <div class="col-md-2 mb-2">
           <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
