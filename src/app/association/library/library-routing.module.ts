@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { LibraryBookInfoContainer } from './containers/library-book-info/library-book-info.container';
 import { LibraryListingContainer } from './containers/library-listing/library-listing.container';
 

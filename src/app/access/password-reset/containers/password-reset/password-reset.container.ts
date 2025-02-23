@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FailureResponse } from '@app/core/api/models/failure-response';
-import { FieldFailures } from '@app/core/api/models/field-failures';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { BlockUiDirective } from '@bernardo-mg/layout';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
+import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
 import { PasswordReset } from '../../models/password-reset';
 import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
 
 /**
  * Password reset. Changes the password for an existing user, identified by a token.
@@ -44,7 +43,7 @@ export class PasswordResetContainer implements OnInit {
   /**
    * Failures when reseting the password.
    */
-  public failures = new FieldFailures();
+  public failures = new FailureStore();
 
   constructor(
     private route: ActivatedRoute,

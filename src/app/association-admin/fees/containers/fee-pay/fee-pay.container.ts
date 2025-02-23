@@ -3,19 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { BreadcrumbLink } from '@app/core/layout/model/breadcrumb-link';
 import { Fee } from '@app/models/fees/fee';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { JustifyBetweenDirective } from '@app/shared/style/directives/justify-between.directive';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
+import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
 import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
@@ -35,7 +30,7 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
 
   public createPermission = false;
 
-  public personPage = new PaginatedResponse<Person[]>([]);
+  public personPage = new PaginatedResponse<Person>();
 
   public person = new Person();
 

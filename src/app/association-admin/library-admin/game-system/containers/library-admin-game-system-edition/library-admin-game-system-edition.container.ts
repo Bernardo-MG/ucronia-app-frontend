@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { GameSystem } from '@app/models/library/game-system';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminGameSystemFormComponent } from '../../components/library-admin-game-system-form/library-admin-game-system-form.component';
 import { LibraryAdminGameSystemInfoComponent } from '../../components/library-admin-game-system-info/library-admin-game-system-info.component';

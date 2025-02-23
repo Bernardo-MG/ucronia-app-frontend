@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
@@ -10,10 +8,10 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDetailsComponent } from '../../components/library-admin-book-details/library-admin-book-details.component';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
@@ -40,15 +38,15 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
 
   public readingDonors = false;
 
-  public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
+  public bookTypesSelection = new PaginatedResponse<BookType>();
 
-  public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
+  public gameSystemsSelection = new PaginatedResponse<GameSystem>();
 
-  public authorsSelection = new PaginatedResponse<Author[]>([]);
+  public authorsSelection = new PaginatedResponse<Author>();
 
-  public publishersSelection = new PaginatedResponse<Publisher[]>([]);
+  public publishersSelection = new PaginatedResponse<Publisher>();
 
-  public donorPage = new PaginatedResponse<Person[]>([]);
+  public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
 

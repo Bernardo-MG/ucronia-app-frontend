@@ -1,22 +1,22 @@
 <layout-article>
   <div class="row pb-2">
-    <div appJustifyCenter>
+    <div layoutJustifyCenter>
       <assoc-member-balance-chart-widget></assoc-member-balance-chart-widget>
     </div>
   </div>
   <div class="row">
     <!-- Member List -->
-    <app-card>
-      <app-card-body>
+    <layout-card>
+      <layout-card-body>
         <!-- List -->
         <assoc-member-list [members]="data.content" [routeLinkAdapter]="routeLinkAdapter"
           (changeDirection)="onChangeDirection($event)">
         </assoc-member-list>
-      </app-card-body>
-      <app-card-footer>
+      </layout-card-body>
+      <layout-card-footer>
         <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
           [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-      </app-card-footer>
-    </app-card>
+      </layout-card-footer>
+    </layout-card>
   </div>
 </layout-article>

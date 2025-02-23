@@ -5,37 +5,32 @@ import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/lib
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
-import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
-import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
-import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { IconDeleteComponent, IconAddComponent, IconSearchComponent } from '@bernardo-mg/icons';
+import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
+import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-library-admin-book-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
-    templateUrl: './library-admin-book-edition-form.component.html'
+  selector: 'assoc-library-admin-book-edition-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  templateUrl: './library-admin-book-edition-form.component.html'
 })
 export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
 
-  @Input() public bookTypesSelection = new PaginatedResponse<BookType[]>([]);
+  @Input() public bookTypesSelection = new PaginatedResponse<BookType>();
 
-  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem[]>([]);
+  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem>();
 
-  @Input() public authorsSelection = new PaginatedResponse<Author[]>([]);
+  @Input() public authorsSelection = new PaginatedResponse<Author>();
 
-  @Input() public publishersSelection = new PaginatedResponse<Publisher[]>([]);
+  @Input() public publishersSelection = new PaginatedResponse<Publisher>();
 
   @Input() public languages: Language[] = [];
 
@@ -46,6 +41,8 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   @Output() public goToAuthorPage = new EventEmitter<number>();
 
   @Output() public goToPublisherPage = new EventEmitter<number>();
+
+  public view = 'form';
 
   public get authors(): Author[] {
     return this.form.get('authors')?.value;
@@ -79,10 +76,6 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
     this.form.get('gameSystem').setValue(data);
   }
 
-  public selector = '';
-
-  private modalHandler = new ModalHandler();
-
   constructor(
     fb: FormBuilder
   ) {
@@ -111,47 +104,43 @@ export class LibraryAdminBookEditionFormComponent extends FormComponent<Book> {
   }
 
   public onShowBookTypeSelection() {
-    this.modalHandler.openModal('book_type');
+    this.view = 'book_type';
   }
 
   public onShowGameSystemSelection() {
-    this.modalHandler.openModal('game_system');
+    this.view = 'game_system';
   }
 
   public onShowAuthorSelection() {
-    this.modalHandler.openModal('author');
+    this.view = 'author';
   }
 
   public onShowPublisherSelection() {
-    this.modalHandler.openModal('publisher');
+    this.view = 'publisher';
   }
 
   public onSelectBookType(bookType: BookType) {
     this.bookType = bookType;
-    this.selector = ''
-    this.modalHandler.closeModal('book_type');
+    this.view = 'form';
   }
 
   public onSelectGameSystem(gameSystem: GameSystem) {
     this.gameSystem = gameSystem;
-    this.selector = '';
-    this.modalHandler.closeModal('game_system');
+    this.view = 'form';
   }
 
   public onSelectAuthor(author: Author) {
     if (!this.authors.find(a => a.name === author.name)) {
       this.authors = this.authors.concat([author]);
     }
-    this.selector = '';
-    this.modalHandler.closeModal('author');
+    this.view = 'form';
   }
 
   public onSelectPublisher(publisher: Publisher) {
     if (!this.publishers.find(p => p.name === publisher.name)) {
       this.publishers = this.publishers.concat([publisher]);
     }
-    this.selector = '';
-    this.modalHandler.closeModal('publisher');
+    this.view = 'form';
   }
 
   public onRemoveAuthor(author: Author) {

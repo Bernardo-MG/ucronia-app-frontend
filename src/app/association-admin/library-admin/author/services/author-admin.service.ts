@@ -1,16 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { PaginationParams } from '@app/core/api/client/pagination-params';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Author } from '@app/models/library/author';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { SortingParams } from '@app/core/api/client/sorting-params';
 
 @Injectable({
   providedIn: "root"
@@ -48,10 +41,10 @@ export class AuthorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sort): Observable<PaginatedResponse<Author[]>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Author>> {
     const sorting = new SortingParams(
       sort.properties,
-      [new SortProperty('name'), new SortProperty('number')]
+      [new SortingProperty('name'), new SortingProperty('number')]
     );
 
     return this.getClient()
@@ -60,8 +53,8 @@ export class AuthorAdminService {
       .read();
   }
 
-  private getClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + '/library/author');
+  private getClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + '/library/author');
   }
 
 }

@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
 import { Author } from '@app/models/library/author';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
+import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { IconAddComponent } from '@bernardo-mg/icons';
+import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-author-listing',
-    imports: [CommonModule, RouterModule, SortingButtonComponent, BlockUiDirective],
-    templateUrl: './library-admin-author-listing.component.html'
+  selector: 'assoc-library-admin-author-listing',
+  imports: [CommonModule, RouterModule, SortingButtonComponent, ArticleComponent, IconAddComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  templateUrl: './library-admin-author-listing.component.html'
 })
 export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
 
@@ -20,24 +21,29 @@ export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
 
   @Output() public wait = new EventEmitter<boolean>();
 
-  @Output() public changePage = new EventEmitter<PaginatedResponse<any[]>>();
+  @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
 
-  public data: Author[] = [];
+  public data = new PaginatedResponse<Author>();
 
   /**
    * Loading flag.
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting();
+
+  public createPermission = false;
 
   constructor(
+    private authContainer: AuthContainer,
     private service: AuthorAdminService
   ) { }
 
   public ngOnInit(): void {
     // Load books
     this.load(0)
+    // Check permissions
+    this.createPermission = this.authContainer.hasPermission("library_author", "create");
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -46,7 +52,7 @@ export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
     }
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.pageNumber);
@@ -58,7 +64,7 @@ export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
 
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
-        this.data = response.content;
+        this.data = response;
         this.changePage.emit(response);
 
         // Reactivate view

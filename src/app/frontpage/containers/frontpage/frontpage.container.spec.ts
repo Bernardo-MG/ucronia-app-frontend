@@ -1,8 +1,7 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { FrontpageComponent } from './frontpage.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FrontpageComponent', () => {
   let component: FrontpageComponent;
@@ -10,10 +9,11 @@ describe('FrontpageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [ArticleComponent,
-        FrontpageComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
+      imports: [
+        FrontpageComponent
+      ],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(FrontpageComponent);

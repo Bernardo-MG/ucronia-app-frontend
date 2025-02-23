@@ -1,20 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Person } from '@app/models/person/person';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { IconAddComponent } from '@bernardo-mg/icons';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
-import { IconAddComponent } from '@bernardo-mg/icons';
 
 @Component({
     selector: 'assoc-people-listing',
@@ -27,9 +21,9 @@ export class PeopleListingContainer implements OnInit {
 
   public createPermission = false;
 
-  public data = new PaginatedResponse<Person[]>([]);
+  public data = new PaginatedResponse<Person>();
 
-  private sort = new Sort([]);
+  private sort = new Sorting();
 
   /**
    * Loading flag.
@@ -53,10 +47,10 @@ export class PeopleListingContainer implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     if (field.property === 'fullName') {
-      this.sort.addField(new SortProperty('firstName', field.direction));
-      this.sort.addField(new SortProperty('lastName', field.direction));
+      this.sort.addField(new SortingProperty('firstName', field.direction));
+      this.sort.addField(new SortingProperty('lastName', field.direction));
     } else {
       this.sort.addField(field);
     }

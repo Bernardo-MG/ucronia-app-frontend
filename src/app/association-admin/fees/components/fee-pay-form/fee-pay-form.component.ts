@@ -3,12 +3,9 @@ import { Component, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
-import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
-import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
-import { IconDeleteComponent, IconAddComponent } from '@bernardo-mg/icons';
+import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
+import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'assoc-fee-pay-form',

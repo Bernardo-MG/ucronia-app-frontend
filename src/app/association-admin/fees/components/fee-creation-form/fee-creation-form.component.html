@@ -11,9 +11,9 @@
   <div class="row mb-2">
     <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Cuota</label>
     <div class="col-sm-10">
-      <input type="month" id="monthInput" formControlName="month" class="form-control" appInvalidField="month"
+      <input type="month" id="monthInput" formControlName="month" class="form-control" formInvalidField="month"
         [backendFailure]="failures.hasFailures('month')">
-      <app-input-failure-feedback [failures]="failures.getFailures('month')"></app-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('month')"></form-input-failure-feedback>
     </div>
   </div>
 

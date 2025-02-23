@@ -1,6 +1,6 @@
 <div>Escoge un tipo</div>
 <layout-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)"></layout-button-list>
-<div appJustifyCenter class="mt-1">
+<div layoutJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" *layoutBlockUi="waiting"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>

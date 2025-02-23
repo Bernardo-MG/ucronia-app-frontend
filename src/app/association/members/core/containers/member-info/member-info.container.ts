@@ -3,11 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberDetailsComponent } from '@app/association/members/core/components/member-details/member-details.component';
 import { MemberService } from '@app/association/members/core/services/member.service';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 
 @Component({

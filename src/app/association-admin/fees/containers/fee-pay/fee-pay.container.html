@@ -1,9 +1,9 @@
 <layout-article>
-  <div appResponsiveShortColumns>
-    <app-card>
-      <app-card-body>
+  <div layoutResponsiveShortColumns>
+    <layout-card>
+      <layout-card-body>
         <!-- Progress -->
-        <div appJustifyBetween>
+        <div layoutJustifyBetween>
           <button type="button" class="btn btn-link me-2" aria-label="Return" (click)="onReturnToMembers()"
             [disabled]="isReturnDisabled()"><icon-backward></icon-backward></button>
           <h2>{{currentStep}}/2</h2>
@@ -39,7 +39,7 @@
             </ng-container>
           </ng-container>
         </ng-container>
-      </app-card-body>
-    </app-card>
+      </layout-card-body>
+    </layout-card>
   </div>
 </layout-article>

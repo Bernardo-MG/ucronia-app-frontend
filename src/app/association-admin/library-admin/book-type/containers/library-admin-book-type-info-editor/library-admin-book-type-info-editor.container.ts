@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { BookType } from '@app/models/library/book-type';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../../components/library-admin-book-type-form/library-admin-book-type-form.component';
 import { LibraryAdminBookTypeInfoComponent } from '../../components/library-admin-book-type-info/library-admin-book-type-info.component';

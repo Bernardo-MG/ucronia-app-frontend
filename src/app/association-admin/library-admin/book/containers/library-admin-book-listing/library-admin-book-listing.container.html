@@ -1,2 +1,20 @@
-<assoc-library-admin-book-list *layoutBlockUi="reading" [books]="data" [routeLinkAdapter]="routeLinkAdapter"
-  (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
+<layout-article>
+  <layout-card>
+    <layout-card-header>
+      <!-- Add person -->
+      <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        <icon-add></icon-add>
+      </button>
+    </layout-card-header>
+    <layout-card-body>
+      <assoc-library-admin-book-list *layoutBlockUi="reading" [books]="data.content"
+        [routeLinkAdapter]="routeLinkAdapter"
+        (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
+    </layout-card-body>
+    <layout-card-footer>
+      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    </layout-card-footer>
+  </layout-card>
+</layout-article>

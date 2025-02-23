@@ -1,24 +1,22 @@
 <layout-article title="Gente">
-  <div class="row">
-    <!-- Member List -->
-    <app-card>
-      <app-card-header>
-        <!-- Add person -->
-        <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          <icon-add></icon-add>
-        </button>
-      </app-card-header>
-      <app-card-body>
-        <!-- List -->
-        <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-          (changeDirection)="onChangeDirection($event)">
-        </assoc-people-list>
-      </app-card-body>
-      <app-card-footer>
-        <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-          [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-      </app-card-footer>
-    </app-card>
-  </div>
+  <!-- Member List -->
+  <layout-card>
+    <layout-card-header>
+      <!-- Add person -->
+      <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+        <icon-add></icon-add>
+      </button>
+    </layout-card-header>
+    <layout-card-body>
+      <!-- List -->
+      <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+        (changeDirection)="onChangeDirection($event)">
+      </assoc-people-list>
+    </layout-card-body>
+    <layout-card-footer>
+      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    </layout-card-footer>
+  </layout-card>
 </layout-article>

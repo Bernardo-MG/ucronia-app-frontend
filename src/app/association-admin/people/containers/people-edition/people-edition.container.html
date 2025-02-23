@@ -1,15 +1,15 @@
 <layout-article>
-  <div appResponsiveShortColumns>
+  <div layoutResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <app-card>
-          <app-card-body>
+        <layout-card>
+          <layout-card-body>
             <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
               [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()">
             </assoc-people-edition-form>
-          </app-card-body>
-        </app-card>
+          </layout-card-body>
+        </layout-card>
       </ng-container>
       <!-- Info -->
       <ng-container *ngSwitchCase="false">

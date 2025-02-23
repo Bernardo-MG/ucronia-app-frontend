@@ -1,16 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
 import { Member } from '@app/models/members/member';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
+import { Role, User } from '@bernardo-mg/authentication';
+import { ControlButtonsComponent } from '@bernardo-mg/form';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingButtonComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
@@ -41,11 +36,11 @@ export class AccessUserInfoComponent {
 
   @Input() public readingMember = false;
 
-  @Input() public membersSelection = new PaginatedResponse<Member[]>([]);
+  @Input() public membersSelection = new PaginatedResponse<Member>();
 
   @Input() public readingRoleSelection = false;
 
-  @Input() public rolesSelection = new PaginatedResponse<Role[]>([]);
+  @Input() public rolesSelection = new PaginatedResponse<Role>();
 
   @Output() public delete = new EventEmitter<void>();
 

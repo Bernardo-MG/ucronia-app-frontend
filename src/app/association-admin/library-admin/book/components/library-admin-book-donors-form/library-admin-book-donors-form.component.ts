@@ -2,30 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Book } from '@app/models/library/book';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
 import { Person } from '@app/models/person/person';
-import { FormComponent } from '@app/shared/form/components/form/form.component';
-import { InputFailureFeedbackComponent } from '@app/shared/form/components/input-failure-feedback/input-failure-feedback.component';
-import { SaveControlsComponent } from '@app/shared/form/components/save-controls/save-controls.component';
-import { InvalidFieldDirective } from '@app/shared/form/directives/invalid-field.directive';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { IconDeleteComponent, IconAddComponent } from '@bernardo-mg/icons';
+import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
+import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
+import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-library-admin-book-donors-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ModalComponent, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './library-admin-book-donors-form.component.html'
+  selector: 'assoc-library-admin-book-donors-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
-  @Input() public donors = new PaginatedResponse<Person[]>([]);
+  @Input() public donors = new PaginatedResponse<Person>();
 
   @Output() public goToDonorPage = new EventEmitter<number>();
+  
+  public selectingDonor = false;
 
   public get donation(): Donation | undefined {
     return this.form.get('donation').value;
@@ -34,8 +31,6 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   public set donation(data: Donation) {
     this.form.get('donation')?.setValue(data);
   }
-
-  private modalHandler = new ModalHandler();
 
   constructor(
     fb: FormBuilder
@@ -64,8 +59,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     });
   }
 
-  public onShowDonorSelection() {
-    this.modalHandler.openModal('donor');
+  public onStartSelectingDonor() {
+    this.selectingDonor = true;
   }
 
   public onSelectDonor(donor: Person) {
@@ -76,7 +71,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     if (!this.donation.donors.find(d => d.number === donor.number)) {
       this.donation.donors.push(donor);
     }
-    this.modalHandler.closeModal('donor');
+    this.selectingDonor = false;
   }
 
   public onRemoveDonor(donor: Donor) {

@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { CreateComponent } from '@bernardo-mg/form';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { BookReturnFormComponent } from '../../components/book-return-form/book-return-form.component';
 import { LibraryLendingService } from '../../services/library-lending.service';

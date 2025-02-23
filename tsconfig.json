@@ -7,8 +7,20 @@
       "@app/*": [
         "app/*"
       ],
+      "@bernardo-mg/authentication": [
+        "./dist/bernardo-mg/authentication"
+      ],
+      "@bernardo-mg/form": [
+        "./dist/bernardo-mg/form"
+      ],
       "@bernardo-mg/icons": [
         "./dist/bernardo-mg/icons"
+      ],
+      "@bernardo-mg/layout": [
+        "./dist/bernardo-mg/layout"
+      ],
+      "@bernardo-mg/request": [
+        "./dist/bernardo-mg/request"
       ]
     },
     "outDir": "./dist/out-tsc",

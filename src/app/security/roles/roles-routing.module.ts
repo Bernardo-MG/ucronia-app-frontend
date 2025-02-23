@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ResourceGuard } from '@app/core/authentication/guards/resource.guard';
+import { ResourceGuard } from '@bernardo-mg/authentication';
 import { AccessRoleCreationContainer } from './containers/access-role-creation/access-role-creation.container';
-import { AccessRoleListingContainer } from './containers/access-role-listing/access-role-listing.container';
 import { AccessRoleInfoEditionContainer } from './containers/access-role-edition/access-role-edition.container';
+import { AccessRoleListingContainer } from './containers/access-role-listing/access-role-listing.container';
 
 const routes: Routes = [
   {

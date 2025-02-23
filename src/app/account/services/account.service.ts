@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularClient } from '@app/core/api/client/angular-client';
-import { Client } from '@app/core/api/client/client';
-import { SimpleResponse } from '@app/core/api/models/simple-response';
+import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Account } from '../models/account';
@@ -30,12 +28,12 @@ export class AccountService {
       .pipe(map(r => r.content));
   }
 
-  private getPasswordChangeClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + "/password/change");
+  private getPasswordChangeClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + "/password/change");
   }
 
-  private getAccountClient(): Client {
-    return new AngularClient(this.http, environment.apiUrl + "/account");
+  private getAccountClient(): CrudClient {
+    return new AngularCrudClient(this.http, environment.apiUrl + "/account");
   }
 
 }

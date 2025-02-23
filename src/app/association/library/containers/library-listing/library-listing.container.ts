@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
@@ -22,14 +17,14 @@ export class LibraryListingContainer implements OnInit {
 
   public adminPermission = false;
 
-  public data = new PaginatedResponse<Book[]>([]);
+  public data = new PaginatedResponse<Book>();
 
   /**
    * Loading flag.
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting();
 
   constructor(
     private service: BookService,
@@ -43,7 +38,7 @@ export class LibraryListingContainer implements OnInit {
     this.load(0)
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);

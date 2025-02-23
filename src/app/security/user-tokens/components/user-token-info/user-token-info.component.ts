@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Failure } from '@app/core/api/models/failure';
-import { FieldFailures } from '@app/core/api/models/field-failures';
-import { UserToken } from '@app/core/authentication/models/user-token';
-import { PlaceholderDirective } from '@app/shared/layout/directives/placeholder.directive';
+import { UserToken } from '@bernardo-mg/authentication';
+import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { FailureStore, FieldFailure } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-user-token-info',
@@ -14,7 +13,7 @@ export class UserTokenInfoComponent {
 
   @Input() public data = new UserToken();
 
-  @Input() public failures = new FieldFailures();
+  @Input() public failures = new FailureStore();
 
   @Input() public waiting = false;
 
@@ -22,7 +21,7 @@ export class UserTokenInfoComponent {
     return this.failures.hasFailures(property);
   }
 
-  public getFailures(property: string): Failure[] {
+  public getFailures(property: string): FieldFailure[] {
     return this.failures.getFailures(property);
   }
 

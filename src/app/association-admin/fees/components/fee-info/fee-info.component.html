@@ -1,5 +1,5 @@
-<app-card>
-  <app-card-header>
+<layout-card>
+  <layout-card-header>
     <h2 *layoutPlaceholder="waiting">{{data.month}} {{data.person.name.fullName}}</h2>
     <ng-container [ngSwitch]="data.paid">
       <ng-container *ngSwitchCase="true">
@@ -11,8 +11,8 @@
         <div class="text-danger" *layoutPlaceholder="waiting">No pagado</div>
       </ng-container>
     </ng-container>
-  </app-card-header>
-  <app-card-body>
+  </layout-card-header>
+  <layout-card-body>
     <!-- Payment date -->
     <div class="row">
       <div class="col-sm-3 text-primary">Fecha de pago</div>
@@ -26,11 +26,11 @@
         </button>
       </div>
     </div>
-  </app-card-body>
-  <app-card-footer>
+  </layout-card-body>
+  <layout-card-footer>
     <div>
       <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
         (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
     </div>
-  </app-card-footer>
-</app-card>
+  </layout-card-footer>
+</layout-card>

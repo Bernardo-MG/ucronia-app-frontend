@@ -4,16 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { Active } from '@app/association/members/model/active';
 import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
-import { CreateComponent } from '@app/shared/form/components/create/create.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
+import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
@@ -36,7 +34,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
 
   public createPermission = false;
 
-  public members = new PaginatedResponse<Member[]>([]);
+  public members = new PaginatedResponse<Member>();
 
   public member = new Member();
 

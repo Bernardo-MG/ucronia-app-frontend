@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
 import { Member } from '@app/models/members/member';
-import { BlockUiDirective } from '@app/shared/layout/directives/block-ui.directive';
 import { IconSearchComponent } from '@bernardo-mg/icons';
+import { BlockUiDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class AccessUserMemberEditorComponent {
 
   @Input() waitingMembersSelection = false;
 
-  @Input() public membersSelection = new PaginatedResponse<Member[]>([]);
+  @Input() public membersSelection = new PaginatedResponse<Member>();
 
   @Output() public goToSelectionPage = new EventEmitter<number>();
 

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { convertToParamMap } from '@angular/router';
+import { SortingDirection } from '@bernardo-mg/request';
 import { SortParametersParser } from './sort-parameters-parser';
-import { SortDirection } from '@app/core/api/models/sort-direction';
 
 describe('SortParametersParser', () => {
   let reader: SortParametersParser;
@@ -26,7 +26,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property');
-      expect(sort[0].direction).toEqual(SortDirection.Ascending);
+      expect(sort[0].direction).toEqual(SortingDirection.Ascending);
     }
   });
 
@@ -38,7 +38,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property');
-      expect(sort[0].direction).toEqual(SortDirection.Descending);
+      expect(sort[0].direction).toEqual(SortingDirection.Descending);
     }
   });
 
@@ -50,7 +50,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property');
-      expect(sort[0].direction).toEqual(SortDirection.Ascending);
+      expect(sort[0].direction).toEqual(SortingDirection.Ascending);
     }
   });
 
@@ -62,7 +62,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property');
-      expect(sort[0].direction).toEqual(SortDirection.Ascending);
+      expect(sort[0].direction).toEqual(SortingDirection.Ascending);
     }
   });
 
@@ -74,9 +74,9 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(2);
     if (sort) {
       expect(sort[0].property).toEqual('property1');
-      expect(sort[0].direction).toEqual(SortDirection.Ascending);
+      expect(sort[0].direction).toEqual(SortingDirection.Ascending);
       expect(sort[1].property).toEqual('property2');
-      expect(sort[1].direction).toEqual(SortDirection.Descending);
+      expect(sort[1].direction).toEqual(SortingDirection.Descending);
     }
   });
 
@@ -104,7 +104,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property2');
-      expect(sort[0].direction).toEqual(SortDirection.Descending);
+      expect(sort[0].direction).toEqual(SortingDirection.Descending);
     }
   });
 
@@ -116,7 +116,7 @@ describe('SortParametersParser', () => {
     expect(sort).toHaveSize(1);
     if (sort) {
       expect(sort[0].property).toEqual('property2');
-      expect(sort[0].direction).toEqual(SortDirection.Descending);
+      expect(sort[0].direction).toEqual(SortingDirection.Descending);
     }
   });
 

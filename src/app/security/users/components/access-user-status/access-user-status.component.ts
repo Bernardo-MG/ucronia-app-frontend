@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { User } from '@app/core/authentication/models/user';
+import { User } from '@bernardo-mg/authentication';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
 @Component({

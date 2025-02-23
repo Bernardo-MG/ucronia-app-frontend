@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { WaitingButtonComponent } from '@app/shared/layout/components/waiting-button/waiting-button.component';
-import { ModalHandler } from '@app/shared/layout/utils/ModalHandler';
+import { ModalComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-people-edition-membership-buttons',
-    imports: [CommonModule, WaitingButtonComponent, ModalComponent],
-    templateUrl: './people-edition-membership-buttons.component.html'
+  selector: 'assoc-people-edition-membership-buttons',
+  imports: [CommonModule, ModalComponent],
+  templateUrl: './people-edition-membership-buttons.component.html'
 })
 export class PeopleEditionMembershipButtonsComponent {
 
@@ -16,8 +14,6 @@ export class PeopleEditionMembershipButtonsComponent {
   @Input() public renew: boolean | undefined = undefined;
 
   @Input() public disabled = false;
-
-  @Input() public waiting = false;
 
   @Output() public activate = new EventEmitter<void>();
 
@@ -28,27 +24,5 @@ export class PeopleEditionMembershipButtonsComponent {
   @Output() public disableRenew = new EventEmitter<void>();
 
   @Output() public convertToMember = new EventEmitter<void>();
-
-  private modalHandler = new ModalHandler();
-
-  public onShowActivate() {
-    this.modalHandler.openModal('activate');
-  }
-
-  public onShowDeactivate() {
-    this.modalHandler.openModal('deactivate');
-  }
-
-  public onShowEnableRenew() {
-    this.modalHandler.openModal('enableRenew');
-  }
-
-  public onShowDisableRenew() {
-    this.modalHandler.openModal('disableRenew');
-  }
-
-  public onShowConvertToMember() {
-    this.modalHandler.openModal('convertToMember');
-  }
 
 }

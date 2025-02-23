@@ -1,17 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Role } from '@app/core/authentication/models/role';
-import { User } from '@app/core/authentication/models/user';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
 import { Member } from '@app/models/members/member';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ArticleComponent, CardBodyComponent, CardComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
@@ -33,9 +27,9 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
 
   public changingActive = false;
 
-  public rolesSelection = new PaginatedResponse<Role[]>([]);
+  public rolesSelection = new PaginatedResponse<Role>();
 
-  public membersSelection = new PaginatedResponse<Member[]>([]);
+  public membersSelection = new PaginatedResponse<Member>();
 
   public member = new Member();
 

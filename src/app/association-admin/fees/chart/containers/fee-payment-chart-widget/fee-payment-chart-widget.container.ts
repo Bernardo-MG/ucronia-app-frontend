@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
+import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
 import { FeeReportService } from '../../services/fee-report.service';
 

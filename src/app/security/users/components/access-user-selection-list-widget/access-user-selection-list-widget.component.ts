@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
-import { User } from '@app/core/authentication/models/user';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
@@ -23,14 +17,14 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
 
   public createPermission = false;
 
-  public data = new PaginatedResponse<User[]>([]);
+  public data = new PaginatedResponse<User>();
 
   /**
    * Loading flag.
    */
   public reading = false;
 
-  private sort = new Sort([]);
+  private sort = new Sorting();
 
   constructor(
     private authContainer: AuthContainer,
@@ -44,7 +38,7 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);

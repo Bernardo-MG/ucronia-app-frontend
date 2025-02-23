@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { SortProperty } from '@app/core/api/models/sort-field';
-import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 
 @Component({
     selector: 'access-role-add-permission',
@@ -15,13 +14,13 @@ import { IconAddComponent } from '@bernardo-mg/icons';
 })
 export class AccessRoleAddPermissionComponent implements OnChanges {
 
-  @Input() public permissions = new PaginatedResponse<ResourcePermission[]>([]);
+  @Input() public permissions = new PaginatedResponse<ResourcePermission>();
 
   @Output() public addPermission = new EventEmitter<ResourcePermission>();
 
   @Output() public goTo = new EventEmitter<number>();
 
-  @Output() public changeDirection = new EventEmitter<SortProperty>();
+  @Output() public changeDirection = new EventEmitter<SortingProperty>();
 
   public data = new ResourcePermission();
 
@@ -39,7 +38,7 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
     this.goTo.emit(page);
   }
 
-  public onChangeDirection(field: SortProperty) {
+  public onChangeDirection(field: SortingProperty) {
     this.changeDirection.emit(field);
   }
 

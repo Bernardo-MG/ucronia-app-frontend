@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { JustifyCenterDirective } from '@app/shared/style/directives/justify-center.directive';
+import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'pagination-info',

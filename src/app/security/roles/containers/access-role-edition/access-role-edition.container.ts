@@ -2,22 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaginatedResponse } from '@app/core/api/models/paginated-response';
-import { Sort } from '@app/core/api/models/sort';
-import { SortProperty } from '@app/core/api/models/sort-field';
-import { ResourcePermission } from '@app/core/authentication/models/resource-permission';
-import { Role } from '@app/core/authentication/models/role';
-import { AuthContainer } from '@app/core/authentication/services/auth.service';
-import { CardBodyComponent } from '@app/shared/card/components/card-body/card-body.component';
-import { CardFooterComponent } from '@app/shared/card/components/card-footer/card-footer.component';
-import { CardHeaderComponent } from '@app/shared/card/components/card-header/card-header.component';
-import { CardComponent } from '@app/shared/card/components/card/card.component';
-import { ControlButtonsComponent } from '@app/shared/form/components/control-buttons/control-buttons.component';
-import { InfoEditorStatusComponent } from '@app/shared/form/components/info-editor-status/info-editor-status.component';
-import { ArticleComponent } from '@app/shared/layout/components/article/article.component';
-import { ModalComponent } from '@app/shared/layout/components/modal/modal.component';
-import { ResponsiveShortColumnsDirective } from '@app/shared/style/directives/responsive-columns.directive';
+import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
@@ -31,11 +20,11 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
 
-  public permissions = new PaginatedResponse<ResourcePermission[]>([]);
+  public permissions = new PaginatedResponse<ResourcePermission>();
 
   public view: string = 'details';
 
-  private permissionsSort = new Sort([]);
+  private permissionsSort = new Sorting();
 
   private role = '';
 
@@ -95,7 +84,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
     });
   }
 
-  public onChangePermissionsDirection(field: SortProperty) {
+  public onChangePermissionsDirection(field: SortingProperty) {
     this.permissionsSort.addField(field);
     this.onLoadPermissions(0);
   }
