@@ -15,7 +15,7 @@ export class SecurityDetails {
   /**
    * Authentication token for the user.
    */
-  token?: string;
+  token = '';
   /**
    * User permissions.
    */

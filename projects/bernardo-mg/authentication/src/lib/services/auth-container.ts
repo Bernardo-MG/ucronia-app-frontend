@@ -46,7 +46,7 @@ export class AuthContainer {
    * 
    * @returns the current user security token
    */
-  public get token(): string | undefined {
+  public get token(): string {
     return this.details.token;
   }
 
