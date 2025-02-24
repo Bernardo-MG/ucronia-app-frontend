@@ -19,7 +19,7 @@ export class AccountDropdownComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authContainer.getDetails().subscribe(u => { this.username = u.username });
+    this.authContainer.securityDetails.subscribe(u => { this.username = u.username });
   }
 
   public onLogout() {

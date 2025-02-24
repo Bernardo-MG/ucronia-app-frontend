@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { Menu, MenuLink, MenuLoader } from '@bernardo-mg/layout';
+import { AuthMenuLink, Menu, MenuLink, ViewMenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS } from '../menus/association-admin-funds-menu-options';
 import { ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS } from '../menus/association-admin-library-menu-options';
 import { ASSOCIATION_ADMIN_MENU_LINKS } from '../menus/association-admin-menu-links';
 import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
-import { ViewNodeFilter } from './view-node-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +22,12 @@ export class AssociationAdminLayoutService {
   constructor(
     authContainer: AuthContainer
   ) {
-    const nodeFilter = new ViewNodeFilter(authContainer);
-    this.menus = new MenuLoader().load(ASSOCIATION_ADMIN_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
-    this.links = nodeFilter.filterNodes(ASSOCIATION_ADMIN_MENU_LINKS);
-    this.feeMenus = new MenuLoader().load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
-    this.libraryMenus = new MenuLoader().load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
+    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
+    const menuLoader = new ViewMenuLoader(authContainer);
+    this.menus = menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
+    this.links = nodeFilter(ASSOCIATION_ADMIN_MENU_LINKS);
+    this.feeMenus = menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
+    this.libraryMenus = menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
   }
 
   /**

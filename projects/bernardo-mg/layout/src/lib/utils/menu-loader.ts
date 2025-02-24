@@ -4,12 +4,18 @@ import { MenuOptions } from "../models/menu-options";
 
 export class MenuLoader {
 
-  public load(menuOptions: MenuOptions, filter: (links: MenuLink[]) => MenuLink[] = (links) => links): Menu[] {
+  private filter: (links: MenuLink[]) => MenuLink[];
+
+  constructor(filter = (links: MenuLink[]) => links) {
+    this.filter = filter;
+  }
+
+  public load(menuOptions: MenuOptions): Menu[] {
     const menus: Menu[] = [];
 
     for (const sectionKey of Object.keys(menuOptions)) {
       const section = menuOptions[sectionKey];
-      const filteredLinks = filter(section.links);
+      const filteredLinks = this.filter(section.links);
       // Only add the section if it has filtered links
       if (filteredLinks.length > 0) {
         menus.push(new Menu(filteredLinks, section.title));
