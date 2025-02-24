@@ -25,10 +25,12 @@ export class AssociationAdminLayoutService {
     authContainer: AuthContainer
   ) {
     const nodeFilter = new ViewNodeFilter(authContainer);
-    this.menus = new MenuLoader().load(ASSOCIATION_ADMIN_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
+    const menuFilter = (links: MenuLink[]) => nodeFilter.filterNodes(links as AuthMenuLink[]);
+    const menuLoader = new MenuLoader(menuFilter);
+    this.menus = menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
     this.links = nodeFilter.filterNodes(ASSOCIATION_ADMIN_MENU_LINKS);
-    this.feeMenus = new MenuLoader().load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
-    this.libraryMenus = new MenuLoader().load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS, (links) => nodeFilter.filterNodes(links as AuthMenuLink[]));
+    this.feeMenus = menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
+    this.libraryMenus = menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
   }
 
   /**
