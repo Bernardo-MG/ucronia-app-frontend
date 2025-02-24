@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoginStatus } from '../models/login-status';
 import { SecurityDetails } from '../models/security-details';
-import { AuthContainer } from './auth.service';
+import { AuthContainer } from './auth-container';
 
 describe('AuthContainer', () => {
   let service: AuthContainer;
@@ -27,7 +27,7 @@ describe('AuthContainer', () => {
 
   it('should initialize with default security details', () => {
     const defaultDetails = new SecurityDetails(false);
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details).toEqual(defaultDetails);
     });
   });
@@ -36,7 +36,7 @@ describe('AuthContainer', () => {
     spyOn(localStorage, 'removeItem');
     service.logout();
     expect(localStorage.removeItem).toHaveBeenCalledWith('securityDetails');
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details.logged).toBeFalse();
     });
   });
@@ -73,7 +73,7 @@ describe('AuthContainer', () => {
     };
 
     service.setDetails(loginStatus, false);
-    expect(service.isLogged()).toBeTrue();
+    expect(service.logged).toBeTrue();
   });
 
   it('should validate the user has an existing resource and action', () => {
@@ -112,7 +112,7 @@ describe('AuthContainer', () => {
     localStorage.setItem('securityDetails', JSON.stringify(storedUser));
 
     service['loadDetailsFromLocal']();
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details.logged).toBeTrue();
       expect(details.token).toBe('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs');
     });

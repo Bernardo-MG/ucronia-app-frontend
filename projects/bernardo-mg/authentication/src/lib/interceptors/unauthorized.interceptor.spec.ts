@@ -1,7 +1,7 @@
 import { HttpInterceptorFn, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AuthContainer } from '../services/auth.service';
+import { AuthContainer } from '../services/auth-container';
 import { unauthorizedInterceptor } from './unauthorized.interceptor';
 
 describe('unauthorizedInterceptor', () => {

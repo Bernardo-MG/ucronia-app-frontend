@@ -19,7 +19,7 @@ export class SecurityDetails {
   /**
    * User permissions.
    */
-  permissions?: PermissionList;
+  permissions = new PermissionList();
 
   constructor(logged: boolean) {
     this.logged = logged;

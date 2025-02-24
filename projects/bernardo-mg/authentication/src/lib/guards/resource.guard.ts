@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthContainer } from '../services/auth.service';
+import { AuthContainer } from '../services/auth-container';
 
 /**
  * Resource guard. Allows access only if the user has the received resource permission.

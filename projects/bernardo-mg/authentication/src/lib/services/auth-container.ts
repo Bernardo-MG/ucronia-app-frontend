@@ -6,7 +6,7 @@ import { SecurityDetails } from '../models/security-details';
 import { TokenData } from '../models/token-data';
 
 /**
- * Authentication and authorization details container.
+ * Contains the security details, to be watched or updated.
  */
 @Injectable({
   providedIn: 'root',
@@ -14,18 +14,50 @@ import { TokenData } from '../models/token-data';
 export class AuthContainer {
 
   /**
-   * User key for storing user status into the local storage.
+   * Security details key for storing security details into the local storage.
    */
   private detailsKey = 'securityDetails';
 
   /**
-   * Subject with the user status.
+   * Subject with the security details. Allows reacting to changes.
    */
   private detailsSubject = new ReplaySubject<SecurityDetails>(1);
 
   private jwtHelper = new JwtHelperService();
 
+  /**
+   * Replicates the security details to ease consulting.
+   * 
+   * Can't be acquired directly, to avoid modification.
+   */
   private details = new SecurityDetails(false);
+
+  /**
+   * Returns the security details for the user currently in session as an observable. This allows reacting to new logins or logouts.
+   *
+   * @returns the security details for the user currently in session as an observable
+   */
+  public get securityDetails(): Observable<SecurityDetails> {
+    return this.detailsSubject.asObservable();
+  }
+
+  /**
+   * Returns the security token for the user currently in session.
+   * 
+   * @returns the current user security token
+   */
+  public get token(): string | undefined {
+    return this.details.token;
+  }
+
+  /**
+   * Returns if the current user is logged in.
+   * 
+   * @returns if the current user is logged in
+   */
+  public get logged(): boolean {
+    return this.details.logged;
+  }
 
   constructor() {
     // Watch for changes in the status
@@ -40,39 +72,14 @@ export class AuthContainer {
   }
 
   /**
-   * Clears out the authentication status, logging out the user in session.
+   * Clears out the authentication status, logging out the security details in session.
    */
   public logout() {
-    // Replace local data with empty user status
+    // Replace local data with empty security details
     this.detailsSubject.next(new SecurityDetails(false));
 
     // Clear local storage
     localStorage.removeItem(this.detailsKey);
-  }
-
-  /**
-   * Returns the security token for the user currently in session.
-   * @returns the user security token
-   */
-  public getToken(): string | undefined {
-    return this.details.token;
-  }
-
-  /**
-   * Returns if the current user is logged in.
-   * @returns if the current user is logged in
-   */
-  public isLogged(): boolean {
-    return this.details.logged;
-  }
-
-  /**
-   * Returns the user status for the user currently in session as an observable. This allows reacting to new logins or logouts.
-   *
-   * @returns the user status for the user currently in session as an observable
-   */
-  public getDetails(): Observable<SecurityDetails> {
-    return this.detailsSubject.asObservable();
   }
 
   /**
@@ -83,35 +90,35 @@ export class AuthContainer {
    * @param store keep the details in the local storage
    */
   public setDetails(loginStatus: LoginStatus, store: boolean): SecurityDetails {
-    const user = new SecurityDetails(loginStatus.logged);
+    const newDetails = new SecurityDetails(loginStatus.logged);
 
     // Try to get permissions from token
     if (loginStatus.token) {
-      user.token = loginStatus.token;
+      newDetails.token = loginStatus.token;
       const tokenData: TokenData | null = this.jwtHelper.decodeToken(loginStatus.token);
       if (tokenData) {
         if (tokenData.sub) {
-          user.username = tokenData.sub;
+          newDetails.username = tokenData.sub;
         }
         if (tokenData.permissions) {
-          user.permissions = tokenData.permissions;
+          newDetails.permissions = tokenData.permissions;
         }
       }
     }
 
-    this.detailsSubject.next(user);
+    this.detailsSubject.next(newDetails);
 
     if (store) {
-      // Store user status in the local storage
+      // Store security details in the local storage
       // This allows getting them back on a page reload
-      localStorage.setItem(this.detailsKey, JSON.stringify(user));
+      localStorage.setItem(this.detailsKey, JSON.stringify(newDetails));
     } else {
       // Remember me disabled
       // Remove stored details
       localStorage.removeItem(this.detailsKey);
     }
 
-    return user;
+    return newDetails;
   }
 
   /**
@@ -124,7 +131,7 @@ export class AuthContainer {
   public hasPermission(resource: string, action: string): boolean {
     let hasPermission;
 
-    if (this.details?.permissions) {
+    if (this.details.permissions) {
       const key = resource;
       if (key in this.details.permissions) {
         hasPermission = this.details.permissions[key].includes(action);
@@ -141,19 +148,19 @@ export class AuthContainer {
   /**
    * Reads the security details from the local storage.
    *
-   * @returns the user stored in the local storage
+   * @returns the security details stored in the local storage
    */
   private loadDetailsFromLocal() {
-    // If the user was stored, load it
-    const localUser = localStorage.getItem(this.detailsKey);
+    // If the security details were stored, load them
+    const localDetails = localStorage.getItem(this.detailsKey);
 
-    if (localUser) {
-      // User found in local storage
-      const readUser = JSON.parse(localUser);
-      this.detailsSubject.next(readUser);
+    if (localDetails) {
+      // Security details found in local storage
+      const readDetails = JSON.parse(localDetails);
+      this.detailsSubject.next(readDetails);
     } else {
-      // User not found
-      // Use default user
+      // Security details not found
+      // Use default details
       this.detailsSubject.next(new SecurityDetails(false));
     }
   }
@@ -163,12 +170,9 @@ export class AuthContainer {
    * for the default ones.
    */
   private checkTokenExpired() {
-    // TODO: check before getting token
-    const token = this.getToken();
-
-    if ((token) && (this.jwtHelper.isTokenExpired(token))) {
+    if ((this.token) && (this.jwtHelper.isTokenExpired(this.token))) {
       // Token expired
-      // Use default user
+      // Use default security details
       this.detailsSubject.next(new SecurityDetails(false));
     }
   }
