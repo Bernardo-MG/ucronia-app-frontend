@@ -6,7 +6,6 @@ import { ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS } from '../menus/association-admin
 import { ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS } from '../menus/association-admin-library-menu-options';
 import { ASSOCIATION_ADMIN_MENU_LINKS } from '../menus/association-admin-menu-links';
 import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
-import { ViewNodeFilter } from './view-node-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +23,10 @@ export class AssociationAdminLayoutService {
   constructor(
     authContainer: AuthContainer
   ) {
-    const nodeFilter = new ViewNodeFilter(authContainer);
-    const menuFilter = (links: MenuLink[]) => nodeFilter.filterNodes(links as AuthMenuLink[]);
-    const menuLoader = new MenuLoader(menuFilter);
+    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
+    const menuLoader = new MenuLoader(nodeFilter);
     this.menus = menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
-    this.links = nodeFilter.filterNodes(ASSOCIATION_ADMIN_MENU_LINKS);
+    this.links = nodeFilter(ASSOCIATION_ADMIN_MENU_LINKS);
     this.feeMenus = menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
     this.libraryMenus = menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
   }

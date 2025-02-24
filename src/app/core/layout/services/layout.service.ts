@@ -4,7 +4,6 @@ import { MenuLink, MenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
 import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 import { AuthMenuLink } from '../model/auth-menu-link';
-import { ViewNodeFilter } from './view-node-filter';
 
 /**
  * Service responsible for managing layout-related functionality, such as retrieving menu options.
@@ -14,12 +13,13 @@ import { ViewNodeFilter } from './view-node-filter';
 })
 export class LayoutService {
 
-  private nodeFilter: ViewNodeFilter;
+  private menuLoader: MenuLoader;
 
   constructor(
     private authContainer: AuthContainer
   ) {
-    this.nodeFilter = new ViewNodeFilter(authContainer);
+    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
+    this.menuLoader = new MenuLoader(nodeFilter);
   }
 
   /**
@@ -40,13 +40,11 @@ export class LayoutService {
   }
 
   public showAssociationLink(): boolean {
-    const menuFilter = (links: MenuLink[]) => this.nodeFilter.filterNodes(links as AuthMenuLink[]);
-    return new MenuLoader(menuFilter).load(ASSOCIATION_MENU_OPTIONS).length > 0;
+    return this.menuLoader.load(ASSOCIATION_MENU_OPTIONS).length > 0;
   }
 
   public showAssociationAdminLink(): boolean {
-    const menuFilter = (links: MenuLink[]) => this.nodeFilter.filterNodes(links as AuthMenuLink[]);
-    return new MenuLoader(menuFilter).load(ASSOCIATION_ADMIN_MENU_OPTIONS).length > 0;
+    return this.menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS).length > 0;
   }
 
 }

@@ -3,7 +3,6 @@ import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, MenuLink, MenuLoader } from '@bernardo-mg/layout';
 import { SECURITY_MENU_OPTIONS } from '../menus/security-menu-options';
-import { ViewNodeFilter } from './view-node-filter';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +14,8 @@ export class SecurityLayoutService {
   constructor(
     authContainer: AuthContainer
   ) {
-    const nodeFilter = new ViewNodeFilter(authContainer);
-    const menuFilter = (links: MenuLink[]) => nodeFilter.filterNodes(links as AuthMenuLink[]);
-    this.menus = new MenuLoader(menuFilter).load(SECURITY_MENU_OPTIONS);
+    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
+    this.menus = new MenuLoader(nodeFilter).load(SECURITY_MENU_OPTIONS);
   }
 
   /**
