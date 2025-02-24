@@ -129,20 +129,7 @@ export class AuthContainer {
    * @returns true if the security details contains the permission, false otherwise
    */
   public hasPermission(resource: string, action: string): boolean {
-    let hasPermission;
-
-    if (this.details.permissions) {
-      const key = resource;
-      if (key in this.details.permissions) {
-        hasPermission = this.details.permissions[key].includes(action);
-      } else {
-        hasPermission = false;
-      }
-    } else {
-      hasPermission = false;
-    }
-
-    return hasPermission;
+    return this.details.containsPermission(resource, action);
   }
 
   /**
