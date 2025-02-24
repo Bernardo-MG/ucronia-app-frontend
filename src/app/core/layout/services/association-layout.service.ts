@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { Menu, MenuLink, MenuLoader } from '@bernardo-mg/layout';
+import { Menu, ViewMenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 
 @Injectable({
@@ -14,8 +13,7 @@ export class AssociationLayoutService {
   constructor(
     authContainer: AuthContainer
   ) {
-    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
-    this.menus = new MenuLoader(nodeFilter).load(ASSOCIATION_MENU_OPTIONS);
+    this.menus = new ViewMenuLoader(authContainer).load(ASSOCIATION_MENU_OPTIONS);
   }
 
   /**
