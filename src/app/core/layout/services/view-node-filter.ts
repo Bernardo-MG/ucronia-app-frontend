@@ -16,7 +16,7 @@ export class ViewNodeFilter {
    */
   public filterNodes(links: AuthMenuLink[]): MenuLink[] {
     return links
-      // Only include links the user has permissions for
+      // Only include links the user has view permissions
       .filter(link => this.authContainer.hasPermission(link.resource, 'view'));
   }
 
