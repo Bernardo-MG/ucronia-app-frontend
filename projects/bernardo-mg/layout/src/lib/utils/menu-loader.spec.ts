@@ -6,13 +6,13 @@ import { MenuOptions } from '../models/menu-options';
 describe('MenuLoader', () => {
 
   it('should create an instance', () => {
-    let menuLoader = new MenuLoader();
+    const menuLoader = new MenuLoader();
 
     expect(menuLoader).toBeTruthy();
   });
 
   it('should load menus correctly from MenuOptions', () => {
-    let menuLoader = new MenuLoader();
+    const menuLoader = new MenuLoader();
 
     const menuOptions: MenuOptions = {
       section1: { title: 'Dashboard', links: [new MenuLink('Home', '/home', 'home-icon')] },
@@ -33,7 +33,7 @@ describe('MenuLoader', () => {
 
   it('should filter menu links using the provided filter function', () => {
     const filterFn = (links: MenuLink[]) => links.filter(link => link.title !== 'Hidden Link');
-    let menuLoader = new MenuLoader(filterFn);
+    const menuLoader = new MenuLoader(filterFn);
 
     const menuOptions: MenuOptions = {
       section1: {
@@ -55,7 +55,7 @@ describe('MenuLoader', () => {
 
   it('should exclude sections with no remaining links after filtering', () => {
     const filterFn = (links: MenuLink[]) => links.filter(link => false); // Remove all links
-    let menuLoader = new MenuLoader(filterFn);
+    const menuLoader = new MenuLoader(filterFn);
 
     const menuOptions: MenuOptions = {
       section1: { title: 'Empty Section', links: [new MenuLink('Hidden', '/hidden')] }
@@ -69,7 +69,7 @@ describe('MenuLoader', () => {
   /** EMPTY DATA */
 
   it('should return an empty array if MenuOptions is empty', () => {
-    let menuLoader = new MenuLoader();
+    const menuLoader = new MenuLoader();
 
     const menuOptions: MenuOptions = {};
     const menus: Menu[] = menuLoader.load(menuOptions);
@@ -78,7 +78,7 @@ describe('MenuLoader', () => {
   });
 
   it('should return an empty array if all sections have empty links', () => {
-    let menuLoader = new MenuLoader();
+    const menuLoader = new MenuLoader();
 
     const menuOptions: MenuOptions = {
       section1: { title: 'No Links', links: [] },
