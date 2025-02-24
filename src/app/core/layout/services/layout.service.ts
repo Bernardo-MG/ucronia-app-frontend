@@ -12,7 +12,7 @@ import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 })
 export class LayoutService {
 
-  private menuLoader: MenuLoader;
+  private menuLoader: ViewMenuLoader;
 
   constructor(
     private authContainer: AuthContainer
