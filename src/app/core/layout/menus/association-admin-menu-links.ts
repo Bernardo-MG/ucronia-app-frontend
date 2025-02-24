@@ -1,5 +1,5 @@
-import { AuthMenuLink } from '@app/core/layout/model/auth-menu-link';
-import { IconBookComponent, IconCoinsComponent, IconPersonComponent, IconReceiptComponent } from '@bernardo-mg/icons';
+import { IconBookComponent, IconCoinsComponent, IconPersonComponent } from '@bernardo-mg/icons';
+import { AuthMenuLink } from '@bernardo-mg/layout';
 
 // Define menu options with titles for each section
 export const ASSOCIATION_ADMIN_MENU_LINKS = [

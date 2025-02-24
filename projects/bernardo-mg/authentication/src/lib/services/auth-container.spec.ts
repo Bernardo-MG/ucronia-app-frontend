@@ -3,10 +3,11 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoginStatus } from '../models/login-status';
 import { SecurityDetails } from '../models/security-details';
-import { AuthContainer } from './auth.service';
+import { AuthContainer } from './auth-container';
 
 describe('AuthContainer', () => {
   let service: AuthContainer;
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -27,7 +28,7 @@ describe('AuthContainer', () => {
 
   it('should initialize with default security details', () => {
     const defaultDetails = new SecurityDetails(false);
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details).toEqual(defaultDetails);
     });
   });
@@ -36,7 +37,7 @@ describe('AuthContainer', () => {
     spyOn(localStorage, 'removeItem');
     service.logout();
     expect(localStorage.removeItem).toHaveBeenCalledWith('securityDetails');
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details.logged).toBeFalse();
     });
   });
@@ -44,12 +45,12 @@ describe('AuthContainer', () => {
   it('should store security details and token when set to store', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
 
     const storedDetails = service.setDetails(loginStatus, true);
     expect(storedDetails.logged).toBeTrue();
-    expect(storedDetails.token).toBe('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs');
+    expect(storedDetails.token).toBe(token);
     expect(storedDetails.username).toBe('testUser');
     expect(storedDetails.permissions).toEqual({ 'resource': ['action'] });
     expect(localStorage.getItem('securityDetails')).toBe(JSON.stringify(storedDetails));
@@ -58,7 +59,7 @@ describe('AuthContainer', () => {
   it('should remove security details and token when set to not store', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
     spyOn(localStorage, 'removeItem');
 
@@ -69,17 +70,17 @@ describe('AuthContainer', () => {
   it('should return correct login status when logged in', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
 
     service.setDetails(loginStatus, false);
-    expect(service.isLogged()).toBeTrue();
+    expect(service.logged).toBeTrue();
   });
 
   it('should validate the user has an existing resource and action', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
 
     service.setDetails(loginStatus, false);
@@ -89,7 +90,7 @@ describe('AuthContainer', () => {
   it('should validate the user does not have an existing resource with a not existing action', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
 
     service.setDetails(loginStatus, false);
@@ -99,7 +100,7 @@ describe('AuthContainer', () => {
   it('should validate the user does not have an existing resource and action', () => {
     const loginStatus: LoginStatus = {
       logged: true,
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs'
+      token: token
     };
 
     service.setDetails(loginStatus, false);
@@ -108,13 +109,29 @@ describe('AuthContainer', () => {
 
   it('should load details from local storage', () => {
     const storedUser = new SecurityDetails(true);
-    storedUser.token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs';
+    storedUser.token = token
     localStorage.setItem('securityDetails', JSON.stringify(storedUser));
 
     service['loadDetailsFromLocal']();
-    service.getDetails().subscribe(details => {
+    service.securityDetails.subscribe(details => {
       expect(details.logged).toBeTrue();
-      expect(details.token).toBe('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs');
+      expect(details.token).toBe(token);
+    });
+  });
+
+  it('should clear security details if the token is expired', () => {
+    const expiredToken = token;
+    spyOn(service['jwtHelper'], 'isTokenExpired').and.returnValue(Promise.resolve(true));
+    spyOn(service.securityDetails, 'subscribe').and.callThrough();
+  
+    const loginStatus: LoginStatus = { logged: true, token: expiredToken };
+    service.setDetails(loginStatus, true);
+  
+    service['checkTokenExpired']();
+  
+    service.securityDetails.subscribe(details => {
+      expect(details.logged).toBeFalse();
+      expect(details.token).toBeUndefined();
     });
   });
 

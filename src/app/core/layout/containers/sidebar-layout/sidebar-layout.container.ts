@@ -26,7 +26,7 @@ export class SidebarLayoutContainer implements OnInit {
   public showAdmin = false;
 
   public get loggedIn() {
-    return this.authContainer.isLogged();
+    return this.authContainer.logged;
   }
 
   constructor(

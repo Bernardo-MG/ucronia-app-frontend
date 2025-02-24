@@ -1,6 +1,6 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthContainer } from '../services/auth.service';
+import { AuthContainer } from '../services/auth-container';
 
 const tokenHeaderKey = 'Authorization';
 const tokenHeaderIdentifier = 'Bearer';
@@ -20,8 +20,8 @@ export const jwtAuthenticationInterceptor = (apiUrl: string): HttpInterceptorFn 
       // It is a request to our API
 
       // Acquire the current user token
-      const logged = authContainer.isLogged();
-      const token = authContainer.getToken();
+      const logged = authContainer.logged;
+      const token = authContainer.token;
 
       if (logged && token) {
         // Has token
