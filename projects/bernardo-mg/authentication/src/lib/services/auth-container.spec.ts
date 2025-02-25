@@ -131,7 +131,7 @@ describe('AuthContainer', () => {
   
     service.securityDetails.subscribe(details => {
       expect(details.logged).toBeFalse();
-      expect(details.token).toBeUndefined();
+      expect(details.token).toBe('');
     });
   });
 
