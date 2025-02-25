@@ -11,23 +11,15 @@ import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-
 })
 export class AssociationAdminLayoutService {
 
-  private menus: Menu[] = [];
+  private nodeFilter;
 
-  private links: MenuLink[] = [];
-
-  private feeMenus: Menu[] = [];
-
-  private libraryMenus: Menu[] = [];
+  private menuLoader;
 
   constructor(
     authContainer: AuthContainer
   ) {
-    const nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
-    const menuLoader = new ViewMenuLoader(authContainer);
-    this.menus = menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
-    this.links = nodeFilter(ASSOCIATION_ADMIN_MENU_LINKS);
-    this.feeMenus = menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
-    this.libraryMenus = menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
+    this.nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
+    this.menuLoader = new ViewMenuLoader(authContainer);
   }
 
   /**
@@ -36,7 +28,7 @@ export class AssociationAdminLayoutService {
    * @returns An array of menu objects.
    */
   public getMenus(): Menu[] {
-    return this.menus;
+    return this.menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
   }
 
   /**
@@ -45,7 +37,7 @@ export class AssociationAdminLayoutService {
    * @returns An array of menu objects.
    */
   public getFundsMenus(): Menu[] {
-    return this.feeMenus;
+    return this.menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
   }
 
   /**
@@ -54,11 +46,11 @@ export class AssociationAdminLayoutService {
    * @returns An array of menu objects.
    */
   public getLibraryMenus(): Menu[] {
-    return this.libraryMenus;
+    return this.menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
   }
 
   public getLinks(): MenuLink[] {
-    return this.links;
+    return this.nodeFilter(ASSOCIATION_ADMIN_MENU_LINKS);
   }
 
 }

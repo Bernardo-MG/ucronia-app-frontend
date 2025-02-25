@@ -19,8 +19,6 @@ export class SimpleLayoutContainer implements OnInit {
 
   public showAssociation = false;
 
-  public showAdmin = false;
-
   public get loggedIn() {
     return this.authContainer.logged;
   }
@@ -38,7 +36,6 @@ export class SimpleLayoutContainer implements OnInit {
     this.showSettings = this.layoutService.showSettingsLink();
     this.showSecurity = this.layoutService.showSecurityLink();
     this.showAssociation = this.layoutService.showAssociationLink();
-    this.showAdmin = this.layoutService.showAssociationAdminLink();
   }
 
 }
