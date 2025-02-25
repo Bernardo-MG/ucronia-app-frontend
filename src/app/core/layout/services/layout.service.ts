@@ -41,8 +41,4 @@ export class LayoutService {
     return this.menuLoader.load(ASSOCIATION_MENU_OPTIONS).length > 0;
   }
 
-  public showAssociationAdminLink(): boolean {
-    return this.menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS).length > 0;
-  }
-
 }
