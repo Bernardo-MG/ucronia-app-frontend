@@ -8,12 +8,17 @@ import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 })
 export class AssociationLayoutService {
 
-  private menus: Menu[] = [];
+  private menuLoader;
+
+  private associationMenus: Menu[] = [];
 
   constructor(
     authContainer: AuthContainer
   ) {
-    this.menus = new ViewMenuLoader(authContainer).load(ASSOCIATION_MENU_OPTIONS);
+    this.menuLoader = new ViewMenuLoader(authContainer);
+    this.loadMenus();
+    // If the user changes, reload menus
+    authContainer.securityDetails.subscribe(u => { this.loadMenus() });
   }
 
   /**
@@ -22,7 +27,11 @@ export class AssociationLayoutService {
    * @returns An array of menu objects.
    */
   public getMenus(): Menu[] {
-    return this.menus;
+    return this.associationMenus;
+  }
+
+  private loadMenus() {
+    this.associationMenus = this.menuLoader.load(ASSOCIATION_MENU_OPTIONS);
   }
 
 }
