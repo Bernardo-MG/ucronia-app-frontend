@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuLoader, ViewMenuLoader } from '@bernardo-mg/layout';
-import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
+import { ViewMenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 
 /**
