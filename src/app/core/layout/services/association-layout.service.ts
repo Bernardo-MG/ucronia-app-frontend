@@ -16,6 +16,7 @@ export class AssociationLayoutService {
     authContainer: AuthContainer
   ) {
     this.menuLoader = new ViewMenuLoader(authContainer);
+
     this.loadMenus();
     // If the user changes, reload menus
     authContainer.securityDetails.subscribe(u => { this.loadMenus() });

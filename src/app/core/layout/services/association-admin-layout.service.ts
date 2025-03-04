@@ -23,11 +23,14 @@ export class AssociationAdminLayoutService {
 
   private libraryMenus: Menu[] = [];
 
+  private links: MenuLink[] = [];
+
   constructor(
     authContainer: AuthContainer
   ) {
     this.nodeFilter = (links: MenuLink[]) => links.filter(link => authContainer.hasPermission((link as AuthMenuLink).resource, 'view'));
     this.menuLoader = new ViewMenuLoader(authContainer);
+
     this.loadMenus();
     // If the user changes, reload menus
     authContainer.securityDetails.subscribe(u => { this.loadMenus() });
@@ -69,6 +72,7 @@ export class AssociationAdminLayoutService {
     this.adminMenus = this.menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
     this.fundsMenus = this.menuLoader.load(ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS);
     this.libraryMenus = this.menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
+    return this.links;
   }
 
 }

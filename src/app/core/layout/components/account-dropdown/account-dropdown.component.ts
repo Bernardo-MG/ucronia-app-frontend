@@ -24,6 +24,7 @@ export class AccountDropdownComponent implements OnInit {
 
   public onLogout() {
     this.authContainer.logout();
+    // TODO: maybe this should be done by a service
     if (this.router.url === '/') {
       window.location.reload();
     } else {
