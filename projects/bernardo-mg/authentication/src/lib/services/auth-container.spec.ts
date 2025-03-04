@@ -2,6 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoginStatus } from '../models/login-status';
+import { PermissionList } from '../models/permission-list';
 import { SecurityDetails } from '../models/security-details';
 import { AuthContainer } from './auth-container';
 
@@ -11,13 +12,13 @@ describe('AuthContainer', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         AuthContainer,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-});
+      ]
+    });
     service = TestBed.inject(AuthContainer);
     service.logout();
   });
@@ -52,7 +53,8 @@ describe('AuthContainer', () => {
     expect(storedDetails.logged).toBeTrue();
     expect(storedDetails.token).toBe(token);
     expect(storedDetails.username).toBe('testUser');
-    expect(storedDetails.permissions).toEqual({ 'resource': ['action'] });
+    expect(storedDetails.permissions).toBeInstanceOf(PermissionList);
+    expect(storedDetails.permissions['resource']).toEqual(['action']);
     expect(localStorage.getItem('securityDetails')).toBe(JSON.stringify(storedDetails));
   });
 
@@ -123,12 +125,12 @@ describe('AuthContainer', () => {
     const expiredToken = token;
     spyOn(service['jwtHelper'], 'isTokenExpired').and.returnValue(Promise.resolve(true));
     spyOn(service.securityDetails, 'subscribe').and.callThrough();
-  
+
     const loginStatus: LoginStatus = { logged: true, token: expiredToken };
     service.setDetails(loginStatus, true);
-  
-    service['checkTokenExpired']();
-  
+
+    (service as any).checkTokenExpiration();
+
     service.securityDetails.subscribe(details => {
       expect(details.logged).toBeFalse();
       expect(details.token).toBe('');
