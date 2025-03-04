@@ -86,15 +86,18 @@ export class AuthContainer {
     if (loginStatus.token) {
       newDetails.token = loginStatus.token;
       const tokenData: TokenData | null = this.jwtHelper.decodeToken(loginStatus.token);
-      
+
       if (tokenData) {
         newDetails.username = tokenData.sub || '';
-        newDetails.permissions = tokenData.permissions || new PermissionList();
+        newDetails.permissions = new PermissionList();
+        if (tokenData.permissions && typeof tokenData.permissions === 'object') {
+          Object.assign(newDetails.permissions, tokenData.permissions);
+        }
       }
     }
 
     this.detailsSubject.next(newDetails);
-    
+
     if (store) {
       localStorage.setItem(this.detailsKey, JSON.stringify(newDetails));
     } else {
@@ -119,9 +122,23 @@ export class AuthContainer {
    */
   private loadDetailsFromLocal(): void {
     const localDetails = localStorage.getItem(this.detailsKey);
-    
+
     if (localDetails) {
-      this.detailsSubject.next(JSON.parse(localDetails));
+      try {
+        const parsedDetails = JSON.parse(localDetails);
+        const securityDetails = new SecurityDetails(parsedDetails.logged);
+        securityDetails.token = parsedDetails.token || '';
+        securityDetails.username = parsedDetails.username || '';
+        securityDetails.permissions = new PermissionList();
+  
+        if (parsedDetails.permissions && typeof parsedDetails.permissions === 'object') {
+          Object.assign(securityDetails.permissions, parsedDetails.permissions);
+        }
+  
+        this.detailsSubject.next(securityDetails);
+      } catch {
+        this.detailsSubject.next(new SecurityDetails(false));
+      }
     } else {
       this.detailsSubject.next(new SecurityDetails(false));
     }
