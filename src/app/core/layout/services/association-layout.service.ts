@@ -10,10 +10,17 @@ export class AssociationLayoutService {
 
   private menus: Menu[] = [];
 
+  private menuLoader;
+
   constructor(
     authContainer: AuthContainer
   ) {
+    this.menuLoader = new ViewMenuLoader(authContainer);
     this.menus = new ViewMenuLoader(authContainer).load(ASSOCIATION_MENU_OPTIONS);
+
+    this.loadMenus();
+    // If the user changes, reload menus
+    authContainer.securityDetails.subscribe(u => { this.loadMenus() });
   }
 
   /**
@@ -23,6 +30,10 @@ export class AssociationLayoutService {
    */
   public getMenus(): Menu[] {
     return this.menus;
+  }
+
+  private loadMenus() {
+    this.menus = this.menuLoader.load(ASSOCIATION_MENU_OPTIONS);
   }
 
 }

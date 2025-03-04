@@ -4,35 +4,29 @@ import { ActivatedRoute } from '@angular/router';
 import { MemberDetailsComponent } from '@app/association/members/core/components/member-details/member-details.component';
 import { MemberService } from '@app/association/members/core/services/member.service';
 import { Member } from '@app/models/members/member';
-import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
-import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'assoc-member-info',
-    imports: [CommonModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './member-info.container.html'
+  selector: 'assoc-member-info',
+  imports: [CommonModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './member-info.container.html'
 })
-export class MemberInfoContainer extends InfoEditorStatusComponent<Member> implements OnInit {
+export class MemberInfoContainer implements OnInit {
+
+  public data = new Member();
 
   public view: string = 'details';
+
+  public reading = false;
 
   private number = -1;
 
   constructor(
     private route: ActivatedRoute,
-    private service: MemberService,
-    private authContainer: AuthContainer
-  ) {
-    super(new Member());
-  }
+    private service: MemberService
+  ) { }
 
   public ngOnInit(): void {
-    // Check permissions
-    this.editable = this.authContainer.hasPermission("member", "update");
-    this.deletable = this.authContainer.hasPermission("member", "delete");
-
     // Get id
     this.route.paramMap.subscribe(params => {
       const numParam = params.get('number');
@@ -47,16 +41,18 @@ export class MemberInfoContainer extends InfoEditorStatusComponent<Member> imple
     this.view = newView;
   }
 
-  protected override delete(): void {
-    throw new Error('Method not implemented.');
-  }
-
-  protected override read(): Observable<Member> {
-    return this.service.getOne(this.number);
-  }
-
-  protected override save(toSave: Member): Observable<Member> {
-    throw new Error('Method not implemented.');
+  private load(): void {
+    this.reading = true;
+    this.service.getOne(this.number)
+      .subscribe({
+        next: response => {
+          this.data = response;
+          this.reading = false;
+        },
+        error: error => {
+          this.reading = false;
+        }
+      });
   }
 
 }
