@@ -8,12 +8,17 @@ import { SECURITY_MENU_OPTIONS } from '../menus/security-menu-options';
 })
 export class SecurityLayoutService {
 
-  private menus: Menu[] = [];
+  private menuLoader;
+
+  private securityMenus: Menu[] = [];
 
   constructor(
     authContainer: AuthContainer
   ) {
-    this.menus = new ViewMenuLoader(authContainer).load(SECURITY_MENU_OPTIONS);
+    this.menuLoader = new ViewMenuLoader(authContainer);
+    this.loadMenus();
+    // If the user changes, reload menus
+    authContainer.securityDetails.subscribe(u => { this.loadMenus() });
   }
 
   /**
@@ -22,7 +27,11 @@ export class SecurityLayoutService {
    * @returns An array of menu objects.
    */
   public getMenus(): Menu[] {
-    return this.menus;
+    return this.securityMenus;
+  }
+
+  private loadMenus() {
+    this.securityMenus = this.menuLoader.load(SECURITY_MENU_OPTIONS);
   }
 
 }

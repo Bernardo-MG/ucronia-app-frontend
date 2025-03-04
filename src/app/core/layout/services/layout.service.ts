@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuLoader, ViewMenuLoader } from '@bernardo-mg/layout';
-import { ASSOCIATION_ADMIN_MENU_OPTIONS } from '../menus/association-admin-menu-options';
+import { ViewMenuLoader } from '@bernardo-mg/layout';
 import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
 
 /**
@@ -14,10 +13,19 @@ export class LayoutService {
 
   private menuLoader: ViewMenuLoader;
 
+  private showSettingsLinkFlag = false;
+
+  private showSecurityLinkFlag = false;
+
+  private showAssociationLinkFlag = false;
+
   constructor(
     private authContainer: AuthContainer
   ) {
     this.menuLoader = new ViewMenuLoader(authContainer);
+    this.loadPermissions();
+    // If the user changes, reload permissions
+    authContainer.securityDetails.subscribe(u => { this.loadPermissions() });
   }
 
   /**
@@ -30,15 +38,21 @@ export class LayoutService {
   }
 
   public showSettingsLink(): boolean {
-    return this.authContainer.hasPermission('association_settings', 'view');
+    return this.showSettingsLinkFlag;
   }
 
   public showSecurityLink(): boolean {
-    return this.authContainer.hasPermission('security', 'view');
+    return this.showSecurityLinkFlag;
   }
 
   public showAssociationLink(): boolean {
-    return this.menuLoader.load(ASSOCIATION_MENU_OPTIONS).length > 0;
+    return this.showAssociationLinkFlag;
+  }
+
+  private loadPermissions() {
+    this.showSettingsLinkFlag = this.authContainer.hasPermission('association_settings', 'view');
+    this.showSecurityLinkFlag = this.authContainer.hasPermission('security', 'view');
+    this.showAssociationLinkFlag = this.menuLoader.load(ASSOCIATION_MENU_OPTIONS).length > 0;
   }
 
 }
