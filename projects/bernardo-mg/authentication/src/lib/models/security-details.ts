@@ -8,16 +8,19 @@ export class SecurityDetails {
    * User username.
    */
   username = '';
-  /**
-   * Logged in flag. If it is true, then the user is logged in.
+  
+  /** 
+   * Logged-in flag. If true, the user is logged in. 
    */
-  logged: boolean;
-  /**
-   * Authentication token for the user.
+  readonly logged: boolean;
+  
+  /** 
+   * Authentication token for the user. 
    */
   token = '';
-  /**
-   * User permissions.
+  
+  /** 
+   * User permissions. 
    */
   permissions = new PermissionList();
 
@@ -26,22 +29,13 @@ export class SecurityDetails {
   }
 
   /**
-   * Checks if the current security details contains the received permission.
+   * Checks if the current security details contain the given permission.
    *
-   * @param resource permission resource
-   * @param action permission action
-   * @returns true if the security details contains the permission, false otherwise
+   * @param resource permission resource.
+   * @param action permission action.
+   * @returns `true` if the user has the permission, `false` otherwise.
    */
-  public containsPermission(resource: string, action: string) {
-    let hasPermission;
-
-    if (resource in this.permissions) {
-      hasPermission = this.permissions[resource].includes(action);
-    } else {
-      hasPermission = false;
-    }
-
-    return hasPermission;
+  public containsPermission(resource: string, action: string): boolean {
+    return this.permissions[resource]?.includes(action) ?? false;
   }
-
 }
