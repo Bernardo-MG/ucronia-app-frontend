@@ -127,7 +127,7 @@ describe('AuthContainer', () => {
     const loginStatus: LoginStatus = { logged: true, token: expiredToken };
     service.setDetails(loginStatus, true);
   
-    service['checkTokenExpired']();
+    (service as any).checkTokenExpiration();
   
     service.securityDetails.subscribe(details => {
       expect(details.logged).toBeFalse();
