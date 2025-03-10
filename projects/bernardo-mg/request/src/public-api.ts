@@ -2,6 +2,7 @@
  * Public API Surface of request
  */
 
+export * from './lib/clients/angular-crud-client-factory';
 export * from './lib/clients/angular-crud-client';
 export * from './lib/clients/crud-client';
 export * from './lib/interceptors/angular-error-request-interceptor';

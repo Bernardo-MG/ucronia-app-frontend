@@ -1,4 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { throwError } from "rxjs";
 import { FailureResponse } from "../../public-api";
 
@@ -8,6 +9,9 @@ import { FailureResponse } from "../../public-api";
  * It is prepared for the backend validation, which may send a list of failures. In that case, it returns
  * a failure response.
  */
+@Injectable({
+  providedIn: "root"
+})
 export class AngularErrorRequestInterceptor {
 
   public handle(error: HttpErrorResponse) {

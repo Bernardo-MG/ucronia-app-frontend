@@ -15,11 +15,6 @@ export class AngularCrudClient implements CrudClient {
   private route = '';
 
   /**
-   * Interceptor for error responses. Will generate an object which such response.
-   */
-  private errorInterceptor = new AngularErrorRequestInterceptor();
-
-  /**
    * Request options. Used to store the params.
    */
   protected options: {
@@ -28,7 +23,8 @@ export class AngularCrudClient implements CrudClient {
 
   constructor(
     private http: HttpClient,
-    private rootUrl: string
+    private rootUrl: string,
+    private errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
   ) { }
 
   public create<T>(body: any): Observable<T> {
