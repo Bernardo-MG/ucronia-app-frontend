@@ -7,18 +7,10 @@ import { ParamLoader } from "./param-loader";
  */
 export class SortingParams implements ParamLoader {
 
-  private defaultProperties: SortingProperty[];
-
   constructor(
-    private properties: SortingProperty[],
-    defaultProperties: SortingProperty[] = []
-  ) {
-    if (defaultProperties) {
-      this.defaultProperties = defaultProperties;
-    } else {
-      this.defaultProperties = [];
-    }
-  }
+    private readonly properties: SortingProperty[],
+    private readonly defaultProperties: SortingProperty[] = []
+  ) { }
 
   public load(setParameter: (name: string, value: any) => void): void {
     this.getFinalProperties().forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));

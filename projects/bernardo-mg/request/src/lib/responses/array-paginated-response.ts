@@ -4,18 +4,15 @@ import { SimpleResponse } from "./simple-response";
  * Paginated response created from an array.
  */
 export class ArrayPaginatedResponse<T> extends SimpleResponse<T[]> {
-  page = 0;
-  size = 0;
-  elementsInPage = 0;
-  totalElements = 0;
-  totalPages = 0;
-  first = false;
-  last = false;
+  public elementsInPage = 0;
+  public totalElements = 0;
+  public totalPages = 0;
+  public first = false;
+  public last = false;
 
-  constructor(cont: T[], page: number, size: number) {
+  constructor(cont: T[], public page: number, public size: number) {
     super(cont.slice(size * (page - 1), size * page));
 
-    this.page = page;
     this.size = size;
     this.totalElements = cont.length;
     if (size === 0) {
