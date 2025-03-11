@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PublicSettings } from '../../settings/models/public-settings';
@@ -10,18 +9,22 @@ import { PublicSettings } from '../../settings/models/public-settings';
 })
 export class FrontpageService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/settings/public');
+  }
 
   public getCalendarCode(): Observable<string> {
-    return this.getConfigClient()
+    return this.client
       .read<SimpleResponse<PublicSettings>>()
       .pipe(map(r => r.content.calendarCode));
   }
 
   public getMapCode(): Observable<string> {
-    return this.getConfigClient()
+    return this.client
       .read<SimpleResponse<PublicSettings>>()
       .pipe(map(r => r.content.mapCode));
   }
@@ -32,10 +35,6 @@ export class FrontpageService {
 
   public getEmailUrl(): string {
     return "mailto:contacto@arucronia.com";
-  }
-
-  private getConfigClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/settings/public');
   }
 
 }

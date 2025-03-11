@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Setting } from '@app/settings/models/setting';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -10,19 +9,19 @@ import { Observable, map } from 'rxjs';
 })
 export class ActivityCalendarService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/settings');
+  }
 
   public getCalendarCode(): Observable<string> {
-    return this.getClient()
+    return this.client
       .appendRoute('/social.teamup.id')
       .read<SimpleResponse<Setting>>()
       .pipe(map(r => r.content.value));
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/settings');
   }
 
 }

@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Setting } from '../models/setting';
@@ -10,25 +9,25 @@ import { Setting } from '../models/setting';
 })
 export class AssociationSettingsService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/settings');
+  }
 
   public getAll(): Observable<Setting[]> {
-    return this.getClient()
+    return this.client
       .read<SimpleResponse<Setting[]>>()
       .pipe(map(r => r.content));
   }
 
   public update(code: string, setting: Setting): Observable<Setting> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${code}`)
       .update<SimpleResponse<Setting>>(setting)
       .pipe(map(r => r.content));
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/settings');
   }
 
 }

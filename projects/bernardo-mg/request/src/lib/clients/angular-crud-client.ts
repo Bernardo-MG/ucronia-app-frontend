@@ -9,109 +9,78 @@ import { CrudClient } from './crud-client';
  */
 export class AngularCrudClient implements CrudClient {
 
-  /**
-   * Route for the request. Will be built by the client.
-   */
-  private route = '';
-
-  /**
-   * Interceptor for error responses. Will generate an object which such response.
-   */
-  private errorInterceptor = new AngularErrorRequestInterceptor();
-
-  /**
-   * Request options. Used to store the params.
-   */
-  protected options: {
-    params?: HttpParams
-  } = {};
-
   constructor(
-    private http: HttpClient,
-    private rootUrl: string
-  ) { }
+    private readonly http: HttpClient,
+    private readonly route: string,
+    private readonly errorInterceptor: AngularErrorRequestInterceptor,
+    private readonly options: { params?: HttpParams } = {}
+  ) {
+    this.errorInterceptor.handle = this.errorInterceptor.handle.bind(this.errorInterceptor);
+  }
 
   public create<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.post<T>(finalUrl, body, this.options)
+    return this.http.post<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.get<T>(finalUrl, this.options)
+    return this.http.get<T>(this.route, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public update<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.put<T>(finalUrl, body, this.options)
+    return this.http.put<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.delete<T>(finalUrl, this.options)
+    return this.http.delete<T>(this.route, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public patch<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.patch<T>(finalUrl, body, this.options)
+    return this.http.patch<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public appendRoute(route: string): AngularCrudClient {
-    this.route = `${this.route}${route}`;
-
-    return this;
+    return new AngularCrudClient(this.http, `${this.route}${route}`, this.errorInterceptor, { ...this.options });
   }
 
-  public parameter(name: string, value: any): AngularCrudClient {
-    let params: HttpParams;
+  public parameter(name: string, value: string | number | boolean | undefined): AngularCrudClient {
+    let params = this.getHttpParams();
 
-    if (value) {
-      params = this.getHttpParams();
-
+    if (value !== undefined && value !== null) {
       params = params.append(name, value);
-
-      this.options = { ...this.options, params: params };
     }
 
-    return this;
+    return new AngularCrudClient(this.http, this.route, this.errorInterceptor, { ...this.options, params: params });
   }
 
   public loadParameters(parameters: ParamLoader): AngularCrudClient {
-    parameters.load(this.parameter.bind(this));
+    let params = this.getHttpParams();
 
-    return this;
+    parameters.load((key, value) => {
+      if (value !== undefined && value !== null) {
+        params = params.append(key, value);
+      }
+    });
+
+    return new AngularCrudClient(this.http, this.route, this.errorInterceptor, { ...this.options, params: params });
   }
 
   private getHttpParams(): HttpParams {
-    let params: HttpParams;
-
-    if (this.options.params) {
-      params = this.options.params;
-    } else {
-      params = new HttpParams();
-      this.options = { params: params };
-    }
-
-    return params;
-  }
-
-  private getFinalUrl() {
-    return `${this.rootUrl}${this.route}`;
+    return this.options.params || new HttpParams();
   }
 
 }

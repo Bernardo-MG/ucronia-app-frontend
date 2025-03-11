@@ -2,8 +2,10 @@
  * Field failure.
  */
 export class FieldFailure {
-  code?= '';
-  field?= '';
-  message = '';
-  value?: any = '';
+
+  public code? = '';
+  public field? = '';
+  public message = '';
+  public value?: any = '';
+
 }

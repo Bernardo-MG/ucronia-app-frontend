@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -11,12 +10,16 @@ import { Observable, map } from 'rxjs';
 })
 export class BookService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/library/book');
+  }
 
   public getOne(number: number): Observable<Book> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Book>>()
       .pipe(map(r => r.content));
@@ -28,14 +31,10 @@ export class BookService {
       [new SortingProperty('title')]
     );
 
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/book');
   }
 
   public getLanguages(): Language[] {
