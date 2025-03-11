@@ -5,9 +5,9 @@ import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderCompon
 import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
-    selector: 'assoc-transaction-info',
-    imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-    templateUrl: './transaction-info.component.html'
+  selector: 'assoc-transaction-info',
+  imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  templateUrl: './transaction-info.component.html'
 })
 export class TransactionInfoComponent {
 

@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
 
 @Component({
-    selector: 'assoc-transaction-balance-chart-widget',
-    imports: [CommonModule, TransactionBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './transaction-balance-chart-widget.container.html'
+  selector: 'assoc-transaction-balance-chart-widget',
+  imports: [CommonModule, TransactionBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+  templateUrl: './transaction-balance-chart-widget.container.html'
 })
 export class TransactionBalanceChartWidgetContainer implements OnInit {
+
+  private balanceService = inject(TransactionBalanceService);
 
   public balance: TransactionMonthlyBalance[] = [];
 
@@ -28,7 +30,7 @@ export class TransactionBalanceChartWidgetContainer implements OnInit {
   }
 
   private _endMonth = '';
-  
+
   public get endMonth() {
     return this._endMonth;
   }
@@ -45,10 +47,6 @@ export class TransactionBalanceChartWidgetContainer implements OnInit {
   private readingBalance = false;
 
   private readingRange = false;
-
-  constructor(
-    private balanceService: TransactionBalanceService
-  ) { }
 
   ngOnInit(): void {
     // Read balance range

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
@@ -11,11 +11,19 @@ import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({
-    selector: 'assoc-transaction-calendar-widget',
-    imports: [CommonModule, RouterModule, CalendarsModule, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyCenterDirective],
-    templateUrl: './transaction-calendar-widget.container.html'
+  selector: 'assoc-transaction-calendar-widget',
+  imports: [CommonModule, RouterModule, CalendarsModule, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyCenterDirective],
+  templateUrl: './transaction-calendar-widget.container.html'
 })
 export class TransactionCalendarWidgetContainer implements OnInit {
+
+  private route = inject(ActivatedRoute);
+
+  private authContainer = inject(AuthContainer);
+
+  private calendarService = inject(TransactionCalendarService);
+
+  private router = inject(Router);
 
   public months: Month[] = [];
 
@@ -31,16 +39,12 @@ export class TransactionCalendarWidgetContainer implements OnInit {
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   constructor(
-    private route: ActivatedRoute,
-    private authContainer: AuthContainer,
-    private calendarService: TransactionCalendarService,
-    private router: Router
   ) { }
 
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("transaction", "create");
-    
+
     // Read range
     this.calendarService.getRange().subscribe(months => {
       // To show in the selection box we have to reverse the order

@@ -5,9 +5,9 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 import { Transaction } from '../../../../../models/transactions/transaction';
 
 @Component({
-    selector: 'assoc-transaction-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './transaction-form.component.html'
+  selector: 'assoc-transaction-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './transaction-form.component.html'
 })
 export class TransactionFormComponent extends FormComponent<Transaction> {
 
