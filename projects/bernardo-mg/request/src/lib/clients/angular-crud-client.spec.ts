@@ -125,6 +125,11 @@ describe('AngularCrudClient', () => {
     expect(newClient['options'].params?.toString()).toBe('key=value');
   });
 
+  it('should ignore undefined parameters', () => {
+    const newClient = client.parameter('key', undefined);
+    expect(newClient['options'].params?.toString()).toBe('');
+  });
+
   it('should apply a parameter loader correctly', () => {
     const paramLoader = {
       load: (callback: (key: string, value: any) => void) => {
@@ -136,4 +141,16 @@ describe('AngularCrudClient', () => {
     const newClient = client.loadParameters(paramLoader);
     expect(newClient['options'].params?.toString()).toBe('key1=value1&key2=value2');
   });
+
+  it('should ignore undefined parameters through the parameter loader', () => {
+    const paramLoader = {
+      load: (callback: (key: string, value: any) => void) => {
+        callback('key1', undefined);
+      },
+    };
+    
+    const newClient = client.loadParameters(paramLoader);
+    expect(newClient['options'].params?.toString()).toBe('');
+  });
+
 });

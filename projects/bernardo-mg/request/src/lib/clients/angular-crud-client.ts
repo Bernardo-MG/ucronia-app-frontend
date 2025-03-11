@@ -13,10 +13,10 @@ export class AngularCrudClient implements CrudClient {
     private readonly http: HttpClient,
     private readonly route: string,
     private readonly errorInterceptor: AngularErrorRequestInterceptor,
-    private options: {
-      params?: HttpParams
-    } = {}
-  ) { }
+    private readonly options: { params?: HttpParams } = {}
+  ) {
+    this.errorInterceptor.handle = this.errorInterceptor.handle.bind(this.errorInterceptor);
+  }
 
   public create<T>(body: any): Observable<T> {
     return this.http.post<T>(this.route, body, this.options)
@@ -57,10 +57,10 @@ export class AngularCrudClient implements CrudClient {
     return new AngularCrudClient(this.http, `${this.route}${route}`, this.errorInterceptor, { ...this.options });
   }
 
-  public parameter(name: string, value: any): AngularCrudClient {
+  public parameter(name: string, value: string | number | boolean | undefined): AngularCrudClient {
     let params = this.getHttpParams();
 
-    if (value) {
+    if (value !== undefined && value !== null) {
       params = params.append(name, value);
     }
 
@@ -71,23 +71,16 @@ export class AngularCrudClient implements CrudClient {
     let params = this.getHttpParams();
 
     parameters.load((key, value) => {
-      params = params.append(key, value);
+      if (value !== undefined && value !== null) {
+        params = params.append(key, value);
+      }
     });
 
     return new AngularCrudClient(this.http, this.route, this.errorInterceptor, { ...this.options, params: params });
   }
 
   private getHttpParams(): HttpParams {
-    let params: HttpParams;
-
-    if (this.options.params) {
-      params = this.options.params;
-    } else {
-      params = new HttpParams();
-      this.options = { params: params };
-    }
-
-    return params;
+    return this.options.params || new HttpParams();
   }
 
 }
