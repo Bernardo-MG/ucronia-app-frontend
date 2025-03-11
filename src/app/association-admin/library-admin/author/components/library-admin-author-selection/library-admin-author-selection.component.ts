@@ -11,8 +11,6 @@ import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/layout';
 })
 export class LibraryAdminAuthorSelectionComponent extends PagedSelectorComponent<Author> {
 
-  public nameRenderer(data: Author): string {
-    return data.name;
-  }
+  public nameRenderer = (data: Author): string => data.name;
 
 }

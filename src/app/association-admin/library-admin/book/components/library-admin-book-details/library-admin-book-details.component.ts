@@ -6,13 +6,12 @@ import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, PlaceholderDirective } from '@bernardo-mg/layout';
-import { CardTab } from '../../../../../../../projects/bernardo-mg/layout/src/lib/models/card-tab';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-book-details',
-    imports: [CommonModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
-    templateUrl: './library-admin-book-details.component.html'
+  selector: 'assoc-library-admin-book-details',
+  imports: [CommonModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
+  templateUrl: './library-admin-book-details.component.html'
 })
 export class LibraryAdminBookDetailsComponent {
 

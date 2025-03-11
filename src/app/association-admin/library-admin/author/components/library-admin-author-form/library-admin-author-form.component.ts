@@ -5,9 +5,9 @@ import { Author } from '@app/models/library/author';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-    selector: 'assoc-library-admin-author-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './library-admin-author-form.component.html'
+  selector: 'assoc-library-admin-author-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './library-admin-author-form.component.html'
 })
 export class LibraryAdminAuthorFormComponent extends FormComponent<Author> {
 

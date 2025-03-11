@@ -5,14 +5,12 @@ import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-game-system-selection',
-    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-    templateUrl: './library-admin-game-system-selection.component.html'
+  selector: 'assoc-library-admin-game-system-selection',
+  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+  templateUrl: './library-admin-game-system-selection.component.html'
 })
 export class LibraryAdminGameSystemSelectionComponent extends PagedSelectorComponent<GameSystem> {
 
-  public nameRenderer(data: GameSystem): string {
-    return data.name;
-  }
+  public nameRenderer = (data: GameSystem): string => data.name;
 
 }
