@@ -38,9 +38,6 @@ export class TransactionCalendarWidgetContainer implements OnInit {
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  constructor(
-  ) { }
-
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("transaction", "create");
