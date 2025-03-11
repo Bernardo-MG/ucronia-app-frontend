@@ -10,11 +10,6 @@ import { CrudClient } from './crud-client';
 export class AngularCrudClient implements CrudClient {
 
   /**
-   * Route for the request. Will be built by the client.
-   */
-  private route = '';
-
-  /**
    * Request options. Used to store the params.
    */
   protected options: {
@@ -23,45 +18,40 @@ export class AngularCrudClient implements CrudClient {
 
   constructor(
     private http: HttpClient,
-    private rootUrl: string,
+    private route: string,
     private errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
   ) { }
 
   public create<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.post<T>(finalUrl, body, this.options)
+    return this.http.post<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public read<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.get<T>(finalUrl, this.options)
+    return this.http.get<T>(this.route, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public update<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.put<T>(finalUrl, body, this.options)
+    return this.http.put<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public delete<T>(): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.delete<T>(finalUrl, this.options)
+    return this.http.delete<T>(this.route, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public patch<T>(body: any): Observable<T> {
-    const finalUrl = this.getFinalUrl();
-    return this.http.patch<T>(finalUrl, body, this.options)
+    return this.http.patch<T>(this.route, body, this.options)
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
@@ -104,10 +94,6 @@ export class AngularCrudClient implements CrudClient {
     }
 
     return params;
-  }
-
-  private getFinalUrl() {
-    return `${this.rootUrl}${this.route}`;
   }
 
 }
