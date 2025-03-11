@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { Observable, map } from 'rxjs';
 export class FeeReportService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getPaymentReport(): Observable<FeePaymentReport> {
@@ -21,7 +20,7 @@ export class FeeReportService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/fee/payment');
+    return this.clientProvider.url(environment.apiUrl + '/fee/payment');
   }
 
 }

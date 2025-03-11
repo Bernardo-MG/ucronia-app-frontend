@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserLogin } from '../models/user-login';
@@ -12,8 +11,8 @@ import { UserLogin } from '../models/user-login';
 export class LoginService {
 
   constructor(
-    private http: HttpClient,
-    private authContainer: AuthContainer
+    private authContainer: AuthContainer,
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   /**
@@ -40,7 +39,7 @@ export class LoginService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/login');
+    return this.clientProvider.url(environment.apiUrl + '/login');
   }
 
 }

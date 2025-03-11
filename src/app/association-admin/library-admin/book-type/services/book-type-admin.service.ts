@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { Observable, map } from 'rxjs';
 export class BookTypeAdminService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public create(data: BookType): Observable<BookType> {
@@ -54,7 +53,7 @@ export class BookTypeAdminService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/bookType');
+    return this.clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 
 }

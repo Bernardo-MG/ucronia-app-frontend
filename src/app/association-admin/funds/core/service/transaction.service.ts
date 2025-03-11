@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Transaction } from '../../../../models/transactions/transaction';
@@ -11,7 +10,7 @@ import { Transaction } from '../../../../models/transactions/transaction';
 export class TransactionService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public create(data: Transaction): Observable<Transaction> {
@@ -42,7 +41,7 @@ export class TransactionService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/funds/transaction');
+    return this.clientProvider.url(environment.apiUrl + '/funds/transaction');
   }
 
 }

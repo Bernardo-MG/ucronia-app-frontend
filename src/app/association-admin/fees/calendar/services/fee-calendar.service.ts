@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { AngularCrudClient, CrudClient, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -13,7 +12,7 @@ import { map, Observable } from 'rxjs';
 export class FeeCalendarService {
 
   constructor(
-    private http: HttpClient
+      private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
@@ -33,7 +32,7 @@ export class FeeCalendarService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/fee/calendar');
+    return this.clientProvider.url(environment.apiUrl + '/fee/calendar');
   }
 
 }

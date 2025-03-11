@@ -1,10 +1,9 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -14,7 +13,7 @@ import { map, Observable } from 'rxjs';
 export class LibraryLendingService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public lend(data: BookLent): Observable<BookLent> {
@@ -36,11 +35,11 @@ export class LibraryLendingService {
   }
 
   private getLendClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/lending');
+    return this.clientProvider.url(environment.apiUrl + '/library/lending');
   }
 
   private getMemberClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/member');
+    return this.clientProvider.url(environment.apiUrl + '/member');
   }
 
 }

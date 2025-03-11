@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { UserUpdate } from '../models/user-update';
@@ -13,7 +12,7 @@ import { UserUpdate } from '../models/user-update';
 export class AccessUserService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
@@ -90,7 +89,7 @@ export class AccessUserService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user');
+    return this.clientProvider.url(environment.apiUrl + '/security/user');
   }
 
 }

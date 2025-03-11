@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
 import { AngularCrudClient } from './angular-crud-client';
@@ -9,23 +9,11 @@ import { AngularCrudClient } from './angular-crud-client';
 @Injectable({
   providedIn: "root"
 })
-export class AngularCrudClientFactory {
-
-  /**
-   * Route for the request. Will be built by the client.
-   */
-  private route = '';
-
-  /**
-   * Request options. Used to store the params.
-   */
-  protected options: {
-    params?: HttpParams
-  } = {};
+export class AngularCrudClientProvider {
 
   constructor(
     private http: HttpClient,
-    private errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
+    private errorInterceptor: AngularErrorRequestInterceptor
   ) { }
 
   public url(url: string): AngularCrudClient {

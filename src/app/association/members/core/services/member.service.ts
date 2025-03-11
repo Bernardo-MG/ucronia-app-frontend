@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Active } from '@app/association/members/model/active';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams, AngularCrudClientProvider } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Member } from '../../../../models/members/member';
@@ -12,7 +12,7 @@ import { Member } from '../../../../models/members/member';
 export class MemberService {
 
   constructor(
-    private http: HttpClient
+      private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
@@ -36,7 +36,7 @@ export class MemberService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/member');
+    return this.clientProvider.url(environment.apiUrl + '/member');
   }
 
 }

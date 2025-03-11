@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Account } from '../models/account';
@@ -13,7 +12,7 @@ import { PasswordChangeStatus } from '../models/password-change-status';
 export class AccountService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getAccount(): Observable<Account> {
@@ -29,11 +28,11 @@ export class AccountService {
   }
 
   private getPasswordChangeClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + "/password/change");
+    return this.clientProvider.url(environment.apiUrl + "/password/change");
   }
 
   private getAccountClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + "/account");
+    return this.clientProvider.url(environment.apiUrl + "/account");
   }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingDirection, SortingParams, SortingProperty, AngularCrudClientProvider } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { Observable, map } from 'rxjs';
 export class UserTokenService {
 
   constructor(
-    private http: HttpClient
+      private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
@@ -55,7 +55,7 @@ export class UserTokenService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user/token');
+    return this.clientProvider.url(environment.apiUrl + '/security/user/token');
   }
 
 }

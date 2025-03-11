@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { map, Observable } from 'rxjs';
 export class AccessRoleService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role>> {
@@ -67,7 +66,7 @@ export class AccessRoleService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/security/role');
+    return this.clientProvider.url(environment.apiUrl + '/security/role');
   }
 
 }

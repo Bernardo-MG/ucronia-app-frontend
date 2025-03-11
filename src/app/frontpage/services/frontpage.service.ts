@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { PublicSettings } from '../../settings/models/public-settings';
@@ -11,7 +10,7 @@ import { PublicSettings } from '../../settings/models/public-settings';
 export class FrontpageService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getCalendarCode(): Observable<string> {
@@ -35,7 +34,7 @@ export class FrontpageService {
   }
 
   private getConfigClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/settings/public');
+    return this.clientProvider.url(environment.apiUrl + '/settings/public');
   }
 
 }

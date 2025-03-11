@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Setting } from '@app/settings/models/setting';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -11,7 +10,7 @@ import { Observable, map } from 'rxjs';
 export class ActivityCalendarService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public getCalendarCode(): Observable<string> {
@@ -22,7 +21,7 @@ export class ActivityCalendarService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/settings');
+    return this.clientProvider.url(environment.apiUrl + '/settings');
   }
 
 }

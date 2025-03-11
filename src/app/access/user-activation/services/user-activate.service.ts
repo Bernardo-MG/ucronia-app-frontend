@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -12,7 +11,7 @@ import { Observable } from 'rxjs';
 export class AccessUserActivateService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public activateUser(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
@@ -30,7 +29,7 @@ export class AccessUserActivateService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/security/user/activate');
+    return this.clientProvider.url(environment.apiUrl + '/security/user/activate');
   }
 
 }

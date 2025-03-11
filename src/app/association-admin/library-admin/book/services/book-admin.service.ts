@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
@@ -7,7 +6,7 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingProperty, SortingParams } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -17,7 +16,7 @@ import { Observable, map } from 'rxjs';
 export class BookAdminService {
 
   constructor(
-    private http: HttpClient
+    private clientProvider: AngularCrudClientProvider
   ) { }
 
   public create(data: Book): Observable<Book> {
@@ -115,27 +114,27 @@ export class BookAdminService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/book');
+    return this.clientProvider.url(environment.apiUrl + '/library/book');
   }
 
   private getAuthorClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/author');
+    return this.clientProvider.url(environment.apiUrl + '/library/author');
   }
 
   private getBookTypeClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/bookType');
+    return this.clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 
   private getDonorClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/person');
+    return this.clientProvider.url(environment.apiUrl + '/person');
   }
 
   private getGameSystemClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/gameSystem');
+    return this.clientProvider.url(environment.apiUrl + '/library/gameSystem');
   }
 
   private getPublisherClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/library/publisher');
+    return this.clientProvider.url(environment.apiUrl + '/library/publisher');
   }
 
 }

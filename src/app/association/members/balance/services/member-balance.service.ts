@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberBalance } from '../../../../models/members/member-balance';
@@ -11,7 +10,7 @@ import { MemberBalance } from '../../../../models/members/member-balance';
 export class MemberBalanceService {
 
   constructor(
-    private http: HttpClient
+      private clientProvider: AngularCrudClientProvider
   ) { }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
@@ -23,7 +22,7 @@ export class MemberBalanceService {
   }
 
   private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/member/monthly');
+    return this.clientProvider.url(environment.apiUrl + '/member/monthly');
   }
 
 }

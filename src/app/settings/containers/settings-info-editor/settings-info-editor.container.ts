@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -17,10 +17,9 @@ export class SettingsInfoEditorContainer implements OnInit {
 
   public editable = false;
 
-  constructor(
-    private service: AssociationSettingsService,
-    private authContainer: AuthContainer
-  ) { }
+  private service = inject(AssociationSettingsService);
+
+  private authContainer = inject(AuthContainer);
 
   ngOnInit(): void {
     // Check permissions
