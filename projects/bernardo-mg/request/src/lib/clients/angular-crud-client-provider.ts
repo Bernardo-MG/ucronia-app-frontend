@@ -12,8 +12,8 @@ import { AngularCrudClient } from './angular-crud-client';
 export class AngularCrudClientProvider {
 
   constructor(
-    private http: HttpClient,
-    private errorInterceptor: AngularErrorRequestInterceptor
+    private readonly http: HttpClient,
+    private readonly errorInterceptor: AngularErrorRequestInterceptor
   ) { }
 
   public url(url: string): AngularCrudClient {

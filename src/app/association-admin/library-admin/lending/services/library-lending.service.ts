@@ -12,15 +12,15 @@ import { map, Observable } from 'rxjs';
 })
 export class LibraryLendingService {
 
-  private lendingClient;
+  private readonly lendingClient;
 
-  private memberClient;
+  private readonly memberClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.lendingClient = this.clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = this.clientProvider.url(environment.apiUrl + '/member');
+    this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public lend(data: BookLent): Observable<BookLent> {

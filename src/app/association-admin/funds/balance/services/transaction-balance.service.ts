@@ -10,15 +10,15 @@ import { TransactionMonthlyBalance } from '../../../../models/transactions/trans
 })
 export class TransactionBalanceService {
 
-  private balanceClient;
+  private readonly balanceClient;
 
-  private monthlyBalanceClient;
+  private readonly monthlyBalanceClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.balanceClient = this.clientProvider.url(environment.apiUrl + '/funds/balance');
-    this.monthlyBalanceClient = this.clientProvider.url(environment.apiUrl + '/funds/balance/monthly');
+    this.balanceClient = clientProvider.url(environment.apiUrl + '/funds/balance');
+    this.monthlyBalanceClient = clientProvider.url(environment.apiUrl + '/funds/balance/monthly');
   }
 
   public current(): Observable<TransactionCurrentBalance> {

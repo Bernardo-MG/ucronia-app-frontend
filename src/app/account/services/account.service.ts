@@ -16,10 +16,10 @@ export class AccountService {
   private passwordChangeClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.passwordChangeClient = this.clientProvider.url(environment.apiUrl + '/password/change');
-    this.accountClient = this.clientProvider.url(environment.apiUrl + '/account');
+    this.passwordChangeClient = clientProvider.url(environment.apiUrl + '/password/change');
+    this.accountClient = clientProvider.url(environment.apiUrl + '/account');
   }
 
   public getAccount(): Observable<Account> {

@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
 })
 export class AccessUserActivateService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/security/user/activate');
+    this.client = clientProvider.url(environment.apiUrl + '/security/user/activate');
   }
 
   public activateUser(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {

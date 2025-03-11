@@ -9,12 +9,12 @@ import { Observable, map } from 'rxjs';
 })
 export class BookTypeAdminService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) { 
-    this.client = this.clientProvider.url(environment.apiUrl + '/library/bookType');
+    this.client = clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 
   public create(data: BookType): Observable<BookType> {

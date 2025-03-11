@@ -9,12 +9,12 @@ import { Transaction } from '../../../../models/transactions/transaction';
 })
 export class TransactionService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/funds/transaction');
+    this.client = clientProvider.url(environment.apiUrl + '/funds/transaction');
   }
 
   public create(data: Transaction): Observable<Transaction> {

@@ -12,15 +12,15 @@ import { TransactionCalendarMonthsRange } from '../../../../models/transactions/
 })
 export class TransactionCalendarService {
 
-  private calendarClient;
+  private readonly calendarClient;
 
-  private calendarRangeClient;
+  private readonly calendarRangeClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.calendarClient = this.clientProvider.url(environment.apiUrl + '/funds/calendar');
-    this.calendarRangeClient = this.clientProvider.url(environment.apiUrl + '/funds/calendar/range');
+    this.calendarClient = clientProvider.url(environment.apiUrl + '/funds/calendar');
+    this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/funds/calendar/range');
   }
 
   public getCalendar(year: number, month: number): Observable<Transaction[]> {

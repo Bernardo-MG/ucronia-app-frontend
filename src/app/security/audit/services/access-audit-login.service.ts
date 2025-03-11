@@ -9,12 +9,12 @@ import { LoginRegister } from '../models/login-register';
 })
 export class AccessAuditLoginService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/security/login/register');
+    this.client = clientProvider.url(environment.apiUrl + '/security/login/register');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<LoginRegister>> {

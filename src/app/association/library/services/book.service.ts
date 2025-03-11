@@ -10,12 +10,12 @@ import { Observable, map } from 'rxjs';
 })
 export class BookService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/library/book');
+    this.client = clientProvider.url(environment.apiUrl + '/library/book');
   }
 
   public getOne(number: number): Observable<Book> {

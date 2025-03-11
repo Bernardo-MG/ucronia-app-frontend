@@ -11,12 +11,12 @@ import { PasswordResetRequest } from '../models/password-reset-request';
 })
 export class PasswordResetService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/password/reset');
+    this.client = clientProvider.url(environment.apiUrl + '/password/reset');
   }
 
   public requestResetPassword(request: PasswordResetRequest): Observable<SimpleResponse<void>> {

@@ -9,12 +9,12 @@ import { Observable, map } from 'rxjs';
 })
 export class FeeReportService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/fee/payment');
+    this.client = clientProvider.url(environment.apiUrl + '/fee/payment');
   }
 
   public getPaymentReport(): Observable<FeePaymentReport> {

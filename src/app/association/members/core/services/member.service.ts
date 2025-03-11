@@ -10,12 +10,12 @@ import { Member } from '../../../../models/members/member';
 })
 export class MemberService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/member');
+    this.client = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {

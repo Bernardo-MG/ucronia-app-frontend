@@ -15,27 +15,27 @@ import { Observable, map } from 'rxjs';
 })
 export class BookAdminService {
 
-  private bookClient;
+  private readonly bookClient;
 
-  private authorClient;
+  private readonly authorClient;
 
-  private bookTypeClient;
+  private readonly bookTypeClient;
 
-  private donorClient;
+  private readonly donorClient;
 
-  private gameSystemClient;
+  private readonly gameSystemClient;
 
-  private publisherClient;
+  private readonly publisherClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.bookClient = this.clientProvider.url(environment.apiUrl + '/library/book');
-    this.authorClient = this.clientProvider.url(environment.apiUrl + '/library/author');
-    this.bookTypeClient = this.clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = this.clientProvider.url(environment.apiUrl + '/person');
-    this.gameSystemClient = this.clientProvider.url(environment.apiUrl + '/library/gameSystem');
-    this.publisherClient = this.clientProvider.url(environment.apiUrl + '/library/publisher');
+    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book');
+    this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
+    this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/person');
+    this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
+    this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
   }
 
   public create(data: Book): Observable<Book> {

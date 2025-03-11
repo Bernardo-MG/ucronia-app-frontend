@@ -9,12 +9,12 @@ import { MemberBalance } from '../../../../models/members/member-balance';
 })
 export class MemberBalanceService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/member/monthly');
+    this.client = clientProvider.url(environment.apiUrl + '/member/monthly');
   }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {

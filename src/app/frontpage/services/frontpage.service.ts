@@ -9,12 +9,12 @@ import { PublicSettings } from '../../settings/models/public-settings';
 })
 export class FrontpageService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/settings/public');
+    this.client = clientProvider.url(environment.apiUrl + '/settings/public');
   }
 
   public getCalendarCode(): Observable<string> {

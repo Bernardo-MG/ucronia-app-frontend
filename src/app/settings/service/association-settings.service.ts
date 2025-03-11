@@ -9,12 +9,12 @@ import { Setting } from '../models/setting';
 })
 export class AssociationSettingsService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/settings');
+    this.client = clientProvider.url(environment.apiUrl + '/settings');
   }
 
   public getAll(): Observable<Setting[]> {

@@ -10,13 +10,13 @@ import { UserLogin } from '../models/user-login';
 })
 export class LoginService {
 
-  private client;
+  private readonly client;
 
   constructor(
     private authContainer: AuthContainer,
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/login');
+    this.client = clientProvider.url(environment.apiUrl + '/login');
   }
 
   /**

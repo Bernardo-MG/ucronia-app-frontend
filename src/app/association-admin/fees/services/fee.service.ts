@@ -12,15 +12,15 @@ import { Fee } from '../../../models/fees/fee';
 })
 export class FeeService {
 
-  private feeClient;
+  private readonly feeClient;
 
-  private personClient;
+  private readonly personClient;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.feeClient = this.clientProvider.url(environment.apiUrl + '/fee');
-    this.personClient = this.clientProvider.url(environment.apiUrl + '/person');
+    this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
+    this.personClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
   public create(data: Fee): Observable<FeePayment> {

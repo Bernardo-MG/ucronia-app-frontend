@@ -9,12 +9,12 @@ import { Observable, map } from 'rxjs';
 })
 export class UserTokenService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/security/user/token');
+    this.client = clientProvider.url(environment.apiUrl + '/security/user/token');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken>> {

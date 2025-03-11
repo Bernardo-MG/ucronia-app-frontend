@@ -9,12 +9,12 @@ import { Observable, map } from 'rxjs';
 })
 export class ActivityCalendarService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/settings');
+    this.client = clientProvider.url(environment.apiUrl + '/settings');
   }
 
   public getCalendarCode(): Observable<string> {

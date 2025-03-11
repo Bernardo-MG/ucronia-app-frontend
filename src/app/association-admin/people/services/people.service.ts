@@ -10,12 +10,12 @@ import { Observable, map } from 'rxjs';
 })
 export class PeopleService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) { 
-    this.client = this.clientProvider.url(environment.apiUrl + '/person');
+    this.client = clientProvider.url(environment.apiUrl + '/person');
   }
 
   public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person>> {

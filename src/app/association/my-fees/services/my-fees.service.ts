@@ -9,12 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class MyFeesService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/user/fee');
+    this.client = clientProvider.url(environment.apiUrl + '/user/fee');
   }
 
   public getAll(page: number): Observable<PaginatedResponse<Fee>> {

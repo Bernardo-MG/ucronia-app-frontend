@@ -9,12 +9,12 @@ import { map, Observable } from 'rxjs';
 })
 export class AccessRoleService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/security/role');
+    this.client = clientProvider.url(environment.apiUrl + '/security/role');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role>> {

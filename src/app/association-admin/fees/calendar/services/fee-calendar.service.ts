@@ -11,12 +11,12 @@ import { map, Observable } from 'rxjs';
 })
 export class FeeCalendarService {
 
-  private client;
+  private readonly client;
 
   constructor(
-    private clientProvider: AngularCrudClientProvider
+    clientProvider: AngularCrudClientProvider
   ) {
-    this.client = this.clientProvider.url(environment.apiUrl + '/fee/calendar');
+    this.client = clientProvider.url(environment.apiUrl + '/fee/calendar');
   }
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {

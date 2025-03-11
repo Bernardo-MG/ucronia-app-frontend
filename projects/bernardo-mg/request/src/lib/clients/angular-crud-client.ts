@@ -12,14 +12,14 @@ export class AngularCrudClient implements CrudClient {
   /**
    * Request options. Used to store the params.
    */
-  protected options: {
+  private options: {
     params?: HttpParams
   } = {};
 
   constructor(
     private readonly http: HttpClient,
     private readonly route: string,
-    private readonly errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
+    private readonly errorInterceptor: AngularErrorRequestInterceptor
   ) { }
 
   public create<T>(body: any): Observable<T> {
