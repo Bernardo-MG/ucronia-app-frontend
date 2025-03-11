@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
 import { AngularCrudClient } from './angular-crud-client';
+import { CrudClient } from './crud-client';
 
 /**
  * Client implementation for Angular.
@@ -16,7 +17,7 @@ export class AngularCrudClientProvider {
     private readonly errorInterceptor: AngularErrorRequestInterceptor
   ) { }
 
-  public url(url: string): AngularCrudClient {
+  public url(url: string): CrudClient {
     return new AngularCrudClient(this.http, url, this.errorInterceptor);
   }
 
