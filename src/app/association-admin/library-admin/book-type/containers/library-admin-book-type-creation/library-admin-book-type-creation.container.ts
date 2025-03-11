@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { CreateComponent } from '@bernardo-mg/form';
@@ -8,19 +8,17 @@ import { LibraryAdminBookTypeFormComponent } from '../../components/library-admi
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-book-type-creation',
-    imports: [LibraryAdminBookTypeFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-book-type-creation.container.html'
+  selector: 'assoc-library-admin-book-type-creation',
+  imports: [LibraryAdminBookTypeFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-type-creation.container.html'
 })
 export class LibraryAdminBookTypeCreateContainer extends CreateComponent<BookType> {
 
-  constructor(
-    private service: BookTypeAdminService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  private service = inject(BookTypeAdminService);
+
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
 
   protected override save(toSave: BookType): Observable<BookType> {
     return this.service.create(toSave);

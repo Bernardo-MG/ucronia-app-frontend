@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -11,20 +11,23 @@ import { LibraryAdminBookTypeInfoComponent } from '../../components/library-admi
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-book-type-info-editor',
-    imports: [CommonModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-book-type-info-editor.container.html'
+  selector: 'assoc-library-admin-book-type-info-editor',
+  imports: [CommonModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-type-info-editor.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(BookTypeAdminService);
+
+  private authContainer = inject(AuthContainer);
+
   private number = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: BookTypeAdminService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new BookType());
   }
 

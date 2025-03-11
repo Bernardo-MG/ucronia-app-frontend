@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { Book } from '@app/models/library/book';
@@ -19,11 +19,19 @@ import { LibraryAdminBookEditionFormComponent } from '../../components/library-a
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-book-edition',
-    imports: [CommonModule, RouterModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-book-edition.container.html'
+  selector: 'assoc-library-admin-book-edition',
+  imports: [CommonModule, RouterModule, LibraryAdminBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-edition.container.html'
 })
 export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
+
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(BookAdminService);
+
+  private authContainer = inject(AuthContainer);
 
   private index = -1;
 
@@ -51,19 +59,14 @@ export class LibraryAdminBookInfoEditorContainer extends InfoEditorStatusCompone
   public languages: Language[] = [];
 
   public lendPermission = false;
-  
+
   public get lendDisabled() {
     return this.waiting || !this.lendPermission;
   }
 
   public view: string = '';
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: BookAdminService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Book());
   }
 

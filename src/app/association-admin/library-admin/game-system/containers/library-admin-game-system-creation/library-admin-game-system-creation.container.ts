@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { CreateComponent } from '@bernardo-mg/form';
@@ -8,19 +8,17 @@ import { LibraryAdminGameSystemFormComponent } from '../../components/library-ad
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-game-system-creation',
-    imports: [LibraryAdminGameSystemFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-game-system-creation.container.html'
+  selector: 'assoc-library-admin-game-system-creation',
+  imports: [LibraryAdminGameSystemFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-game-system-creation.container.html'
 })
 export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {
 
-  constructor(
-    private service: GameSystemAdminService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  private service = inject(GameSystemAdminService);
+
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
 
   protected override save(toSave: GameSystem): Observable<GameSystem> {
     return this.service.create(toSave);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -11,20 +11,23 @@ import { LibraryAdminPublisherInfoComponent } from '../../components/library-adm
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-publisher-edition',
-    imports: [CommonModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-publisher-edition.container.html'
+  selector: 'assoc-library-admin-publisher-edition',
+  imports: [CommonModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-publisher-edition.container.html'
 })
 export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(PublisherAdminService);
+
+  private authContainer = inject(AuthContainer);
+
   private number = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: PublisherAdminService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Publisher());
   }
 

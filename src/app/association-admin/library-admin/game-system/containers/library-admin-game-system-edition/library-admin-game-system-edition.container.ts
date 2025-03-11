@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -11,20 +11,23 @@ import { LibraryAdminGameSystemInfoComponent } from '../../components/library-ad
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-game-system-edition',
-    imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-game-system-edition.container.html'
+  selector: 'assoc-library-admin-game-system-edition',
+  imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-game-system-edition.container.html'
 })
 export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(GameSystemAdminService);
+
+  private authContainer = inject(AuthContainer);
+
   private number = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: GameSystemAdminService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new GameSystem());
   }
 
