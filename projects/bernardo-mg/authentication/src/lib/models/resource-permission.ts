@@ -1,5 +1,5 @@
 export class ResourcePermission {
-  name = '';
-  resource = '';
-  action = '';
+  public name = '';
+  public resource = '';
+  public action = '';
 }
