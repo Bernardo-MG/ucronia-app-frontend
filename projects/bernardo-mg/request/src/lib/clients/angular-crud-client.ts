@@ -9,17 +9,13 @@ import { CrudClient } from './crud-client';
  */
 export class AngularCrudClient implements CrudClient {
 
-  /**
-   * Request options. Used to store the params.
-   */
-  private options: {
-    params?: HttpParams
-  } = {};
-
   constructor(
     private readonly http: HttpClient,
     private readonly route: string,
-    private readonly errorInterceptor: AngularErrorRequestInterceptor
+    private readonly errorInterceptor: AngularErrorRequestInterceptor,
+    private options: {
+      params?: HttpParams
+    } = {}
   ) { }
 
   public create<T>(body: any): Observable<T> {
@@ -58,34 +54,27 @@ export class AngularCrudClient implements CrudClient {
   }
 
   public appendRoute(route: string): AngularCrudClient {
-    return new AngularCrudClient(this.http, `${this.route}${route}`, this.errorInterceptor);
+    return new AngularCrudClient(this.http, `${this.route}${route}`, this.errorInterceptor, { ...this.options });
   }
 
   public parameter(name: string, value: any): AngularCrudClient {
-    const newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
-    let params: HttpParams;
+    let params = this.getHttpParams();
 
     if (value) {
-      newClient.options = { ...this.options };
-
-      params = newClient.getHttpParams();
-
       params = params.append(name, value);
-
-      newClient.options = { ...newClient.options, params: params };
     }
 
-    return newClient;
+    return new AngularCrudClient(this.http, this.route, this.errorInterceptor, { ...this.options, params: params });
   }
 
   public loadParameters(parameters: ParamLoader): AngularCrudClient {
-    let newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
+    let params = this.getHttpParams();
 
     parameters.load((key, value) => {
-      newClient = newClient.parameter(key, value);
+      params = params.append(key, value);
     });
 
-    return newClient;
+    return new AngularCrudClient(this.http, this.route, this.errorInterceptor, { ...this.options, params: params });
   }
 
   private getHttpParams(): HttpParams {
