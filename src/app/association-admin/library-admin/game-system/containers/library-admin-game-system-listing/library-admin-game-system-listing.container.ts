@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -16,6 +16,10 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   templateUrl: './library-admin-game-system-listing.container.html'
 })
 export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges {
+
+  private authContainer = inject(AuthContainer);
+
+  private service = inject(GameSystemAdminService);
 
   @Input() public pageNumber = 0;
 
@@ -35,8 +39,6 @@ export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges
   private sort = new Sorting();
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: GameSystemAdminService
   ) { }
 
   public ngOnInit(): void {

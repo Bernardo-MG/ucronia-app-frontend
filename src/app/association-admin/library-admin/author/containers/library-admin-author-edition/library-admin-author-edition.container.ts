@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
 import { Author } from '@app/models/library/author';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
@@ -11,20 +11,23 @@ import { LibraryAdminAuthorInfoComponent } from '../../components/library-admin-
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-author-edition',
-    imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
-    templateUrl: './library-admin-author-edition.container.html'
+  selector: 'assoc-library-admin-author-edition',
+  imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+  templateUrl: './library-admin-author-edition.container.html'
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(AuthorAdminService);
+
+  private authContainer = inject(AuthContainer);
+
   private number = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: AuthorAdminService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Author());
   }
 
@@ -45,7 +48,7 @@ export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusCompo
 
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['../..'], { relativeTo: this.route });
+      this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
 

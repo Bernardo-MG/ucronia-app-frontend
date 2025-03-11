@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
@@ -10,21 +10,19 @@ import { LibraryAdminBookCreationFormComponent } from '../../components/library-
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
-    selector: 'assoc-library-admin-book-creation',
-    imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './library-admin-book-creation.container.html'
+  selector: 'assoc-library-admin-book-creation',
+  imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-creation.container.html'
 })
 export class LibraryAdminBookCreationContainer extends CreateComponent<Book> implements OnInit {
 
-  public languages: Language[] = [];
+  private service = inject(BookAdminService);
 
-  constructor(
-    private service: BookAdminService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
+
+  public languages: Language[] = [];
 
   public ngOnInit(): void {
     this.languages = this.service.getLanguages();
@@ -36,7 +34,7 @@ export class LibraryAdminBookCreationContainer extends CreateComponent<Book> imp
 
   protected override handleSaveSuccess(saved: Book) {
     super.handleSaveSuccess(saved);
-    this.router.navigate(['../..'], { relativeTo: this.route });
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }

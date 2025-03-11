@@ -5,14 +5,12 @@ import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-book-type-selection',
-    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-    templateUrl: './library-admin-book-type-selection.component.html'
+  selector: 'assoc-library-admin-book-type-selection',
+  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+  templateUrl: './library-admin-book-type-selection.component.html'
 })
 export class LibraryAdminBookTypeSelectionComponent extends PagedSelectorComponent<BookType> {
 
-  public nameRenderer(data: BookType): string {
-    return data.name;
-  }
+  public nameRenderer = (data: BookType): string => data.name;
 
 }

@@ -7,9 +7,9 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } f
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-book-return-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './book-return-form.component.html'
+  selector: 'assoc-book-return-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './book-return-form.component.html'
 })
 export class BookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
 

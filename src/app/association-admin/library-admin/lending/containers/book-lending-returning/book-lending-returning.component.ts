@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { Book } from '@app/models/library/book';
@@ -12,11 +12,21 @@ import { BookReturnFormComponent } from '../../components/book-return-form/book-
 import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
-    selector: 'assoc-book-lending-returning',
-    imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './book-lending-returning.component.html'
+  selector: 'assoc-book-lending-returning',
+  imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './book-lending-returning.component.html'
 })
 export class BookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private bookService = inject(BookAdminService);
+
+  private service = inject(LibraryLendingService);
+
+  private authContainer = inject(AuthContainer);
 
   public book = new Book();
 
@@ -25,16 +35,6 @@ export class BookLendingReturnContainer extends CreateComponent<BookReturned> im
   public createPermission = false;
 
   public borrower = new Borrower();
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private bookService: BookAdminService,
-    private service: LibraryLendingService,
-    private authContainer: AuthContainer
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     // Get id

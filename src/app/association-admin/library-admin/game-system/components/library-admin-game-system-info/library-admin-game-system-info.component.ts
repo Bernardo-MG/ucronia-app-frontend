@@ -5,9 +5,9 @@ import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-game-system-info',
-    imports: [CommonModule, CardComponent, CardBodyComponent, PlaceholderDirective, ControlButtonsComponent, CardHeaderComponent, CardFooterComponent],
-    templateUrl: './library-admin-game-system-info.component.html'
+  selector: 'assoc-library-admin-game-system-info',
+  imports: [CommonModule, CardComponent, CardBodyComponent, PlaceholderDirective, ControlButtonsComponent, CardHeaderComponent, CardFooterComponent],
+  templateUrl: './library-admin-game-system-info.component.html'
 })
 export class LibraryAdminGameSystemInfoComponent {
 

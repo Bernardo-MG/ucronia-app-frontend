@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { Active } from '@app/association/members/model/active';
@@ -18,11 +18,21 @@ import { BookLendingMemberSelectionComponent } from '../../components/book-lendi
 import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
-    selector: 'assoc-book-lending-lending',
-    imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-    templateUrl: './book-lending-lending.container.html'
+  selector: 'assoc-book-lending-lending',
+  imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  templateUrl: './book-lending-lending.container.html'
 })
 export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private bookService = inject(BookAdminService);
+
+  private service = inject(LibraryLendingService);
+
+  private authContainer = inject(AuthContainer);
 
   public book = new Book();
 
@@ -41,16 +51,6 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
   public activeFilter = Active.Active;
 
   private index = -1;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private bookService: BookAdminService,
-    private service: LibraryLendingService,
-    private authContainer: AuthContainer
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     // Get id

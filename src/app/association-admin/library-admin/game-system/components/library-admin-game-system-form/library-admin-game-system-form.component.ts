@@ -5,9 +5,9 @@ import { GameSystem } from '@app/models/library/game-system';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-    selector: 'assoc-library-admin-game-system-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './library-admin-game-system-form.component.html'
+  selector: 'assoc-library-admin-game-system-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './library-admin-game-system-form.component.html'
 })
 export class LibraryAdminGameSystemFormComponent extends FormComponent<GameSystem> {
 
