@@ -24,8 +24,6 @@ export class FeePaySelectMemberComponent {
 
   @Output() public changeFilter = new EventEmitter<Active>();
 
-  public nameRenderer(person: Person) {
-    return person.name.fullName;
-  }
+  public nameRenderer = (data: Person): string => data.name.fullName;
 
 }
