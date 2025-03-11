@@ -66,20 +66,24 @@ export class AngularCrudClient implements CrudClient {
     let params: HttpParams;
 
     if (value) {
+      newClient.options = { ...this.options };
+
       params = newClient.getHttpParams();
 
       params = params.append(name, value);
 
-      newClient.options = { ...this.options, params: params };
+      newClient.options = { ...newClient.options, params: params };
     }
 
     return newClient;
   }
 
   public loadParameters(parameters: ParamLoader): AngularCrudClient {
-    const newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
+    let newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
 
-    parameters.load(newClient.parameter.bind(this));
+    parameters.load((key, value) => {
+      newClient = newClient.parameter(key, value);
+    });
 
     return newClient;
   }
