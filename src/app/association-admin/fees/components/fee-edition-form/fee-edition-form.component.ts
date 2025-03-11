@@ -6,9 +6,9 @@ import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-    selector: 'assoc-fee-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, IconSuccessOrFailureComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './fee-edition-form.component.html'
+  selector: 'assoc-fee-edition-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, IconSuccessOrFailureComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './fee-edition-form.component.html'
 })
 export class FeeEditionFormComponent extends FormComponent<Fee> {
 

@@ -7,10 +7,10 @@ import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureCompon
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-fee-calendar',
-    imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
-    templateUrl: './fee-calendar.component.html',
-    styleUrl: './fee-calendar.component.sass'
+  selector: 'assoc-fee-calendar',
+  imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
+  templateUrl: './fee-calendar.component.html',
+  styleUrl: './fee-calendar.component.sass'
 })
 export class FeeCalendarComponent implements OnChanges {
 

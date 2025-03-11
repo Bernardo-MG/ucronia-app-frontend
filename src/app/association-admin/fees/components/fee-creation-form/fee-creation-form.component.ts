@@ -7,9 +7,9 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } f
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-fee-creation-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './fee-creation-form.component.html'
+  selector: 'assoc-fee-creation-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {
 

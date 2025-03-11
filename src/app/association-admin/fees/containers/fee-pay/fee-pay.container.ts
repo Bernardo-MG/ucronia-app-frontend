@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
@@ -18,11 +18,19 @@ import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-mem
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-    selector: 'assoc-fee-create',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
-    templateUrl: './fee-pay.container.html'
+  selector: 'assoc-fee-create',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
+
+  private service = inject(FeeService);
+
+  private authContainer = inject(AuthContainer);
+
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
 
   public readingMembers = false;
 
@@ -41,15 +49,6 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
   public pay = true;
 
   public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
-
-  constructor(
-    private service: FeeService,
-    private authContainer: AuthContainer,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
 
   public ngOnInit(): void {
     // Check permissions

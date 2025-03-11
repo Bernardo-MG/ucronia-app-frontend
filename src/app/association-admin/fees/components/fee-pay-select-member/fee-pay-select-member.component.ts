@@ -8,20 +8,20 @@ import { BlockUiDirective, ButtonListComponent, JustifyBetweenDirective } from '
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'app-fee-pay-select-member',
-    imports: [ButtonListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyBetweenDirective, BlockUiDirective],
-    templateUrl: './fee-pay-select-member.component.html'
+  selector: 'app-fee-pay-select-member',
+  imports: [ButtonListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyBetweenDirective, BlockUiDirective],
+  templateUrl: './fee-pay-select-member.component.html'
 })
 export class FeePaySelectMemberComponent {
 
   @Input() public data = new PaginatedResponse<Member>();
 
   @Input() public waiting = false;
-  
+
   @Output() public selectPerson = new EventEmitter<Person>();
-  
+
   @Output() public goToPage = new EventEmitter<number>();
-  
+
   @Output() public changeFilter = new EventEmitter<Active>();
 
   public nameRenderer(person: Person) {

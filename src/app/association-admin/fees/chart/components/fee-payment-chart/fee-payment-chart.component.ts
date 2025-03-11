@@ -3,9 +3,9 @@ import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
 
 @Component({
-    selector: 'assoc-fee-payment-chart',
-    imports: [],
-    templateUrl: './fee-payment-chart.component.html'
+  selector: 'assoc-fee-payment-chart',
+  imports: [],
+  templateUrl: './fee-payment-chart.component.html'
 })
 export class FeePaymentChartComponent implements OnChanges, OnDestroy {
 
