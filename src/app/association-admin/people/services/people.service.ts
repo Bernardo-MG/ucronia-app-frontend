@@ -10,9 +10,13 @@ import { Observable, map } from 'rxjs';
 })
 export class PeopleService {
 
+  private client;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) { 
+    this.client = this.clientProvider.url(environment.apiUrl + '/person');
+  }
 
   public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person>> {
     const sorting = new SortingParams(
@@ -20,7 +24,7 @@ export class PeopleService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', active.toString().toUpperCase())
@@ -28,34 +32,30 @@ export class PeopleService {
   }
 
   public create(data: Person): Observable<Person> {
-    return this.getClient()
+    return this.client
       .create<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }
 
   public patch(number: number, data: Person): Observable<Person> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .patch<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }
 
   public delete(number: number): Observable<boolean> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
   public getOne(number: number): Observable<Person> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Person>>()
       .pipe(map(r => r.content));
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/person');
   }
 
 }

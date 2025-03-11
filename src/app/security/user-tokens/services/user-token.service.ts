@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingDirection, SortingParams, SortingProperty, AngularCrudClientProvider } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -10,9 +9,13 @@ import { Observable, map } from 'rxjs';
 })
 export class UserTokenService {
 
+  private client;
+
   constructor(
-      private clientProvider: AngularCrudClientProvider
-  ) { }
+    private clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = this.clientProvider.url(environment.apiUrl + '/security/user/token');
+  }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
     const sorting = new SortingParams(
@@ -20,42 +23,38 @@ export class UserTokenService {
       [new SortingProperty('creationDate', SortingDirection.Descending), new SortingProperty('username')]
     );
 
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read<PaginatedResponse<UserToken>>();
   }
 
   public getOne(token: string): Observable<UserToken> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${token}`)
       .read<SimpleResponse<UserToken>>()
       .pipe(map(r => r.content));
   }
 
   public patch(token: string, data: UserToken): Observable<UserToken> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${token}`)
       .patch<SimpleResponse<UserToken>>(data)
       .pipe(map(r => r.content));
   }
 
   public revoke(token: string): Observable<UserToken> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${token}`)
       .patch<SimpleResponse<UserToken>>({ revoked: true })
       .pipe(map(r => r.content));
   }
 
   public extend(token: string, date: string): Observable<UserToken> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${token}`)
       .patch<SimpleResponse<UserToken>>({ expirationDate: date })
       .pipe(map(r => r.content));
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/security/user/token');
   }
 
 }

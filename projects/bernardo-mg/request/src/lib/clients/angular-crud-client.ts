@@ -17,9 +17,9 @@ export class AngularCrudClient implements CrudClient {
   } = {};
 
   constructor(
-    private http: HttpClient,
-    private route: string,
-    private errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
+    private readonly http: HttpClient,
+    private readonly route: string,
+    private readonly errorInterceptor: AngularErrorRequestInterceptor = new AngularErrorRequestInterceptor()
   ) { }
 
   public create<T>(body: any): Observable<T> {
@@ -58,29 +58,30 @@ export class AngularCrudClient implements CrudClient {
   }
 
   public appendRoute(route: string): AngularCrudClient {
-    this.route = `${this.route}${route}`;
-
-    return this;
+    return new AngularCrudClient(this.http, `${this.route}${route}`, this.errorInterceptor);
   }
 
   public parameter(name: string, value: any): AngularCrudClient {
+    const newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
     let params: HttpParams;
 
     if (value) {
-      params = this.getHttpParams();
+      params = newClient.getHttpParams();
 
       params = params.append(name, value);
 
-      this.options = { ...this.options, params: params };
+      newClient.options = { ...this.options, params: params };
     }
 
-    return this;
+    return newClient;
   }
 
   public loadParameters(parameters: ParamLoader): AngularCrudClient {
-    parameters.load(this.parameter.bind(this));
+    const newClient = new AngularCrudClient(this.http, this.route, this.errorInterceptor);
 
-    return this;
+    parameters.load(newClient.parameter.bind(this));
+
+    return newClient;
   }
 
   private getHttpParams(): HttpParams {

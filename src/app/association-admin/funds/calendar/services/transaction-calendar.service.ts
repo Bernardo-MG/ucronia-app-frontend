@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Month } from '@app/shared/calendar/models/month';
-import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 import { Transaction } from '../../../../models/transactions/transaction';
@@ -12,9 +12,16 @@ import { TransactionCalendarMonthsRange } from '../../../../models/transactions/
 })
 export class TransactionCalendarService {
 
+  private calendarClient;
+
+  private calendarRangeClient;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) {
+    this.calendarClient = this.clientProvider.url(environment.apiUrl + '/funds/calendar');
+    this.calendarRangeClient = this.clientProvider.url(environment.apiUrl + '/funds/calendar/range');
+  }
 
   public getCalendar(year: number, month: number): Observable<Transaction[]> {
     let previousYear;
@@ -47,7 +54,7 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.getRangeClient()
+    return this.calendarRangeClient
       .read<SimpleResponse<TransactionCalendarMonthsRange>>()
       .pipe(map(r => r.content))
       .pipe(map(r => r.months.map(m => {
@@ -59,17 +66,9 @@ export class TransactionCalendarService {
   }
 
   private readCalendarMonth(year: number, month: number): Observable<SimpleResponse<TransactionCalendarMonth>> {
-    return this.getClient()
+    return this.calendarClient
       .appendRoute(`/${year}/${month}`)
       .read<SimpleResponse<TransactionCalendarMonth>>();
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/funds/calendar');
-  }
-
-  private getRangeClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/funds/calendar/range');
   }
 
 }

@@ -10,26 +10,26 @@ import { Observable } from 'rxjs';
 })
 export class AccessUserActivateService {
 
+  private client;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) {
+    this.client = this.clientProvider.url(environment.apiUrl + '/security/user/activate');
+  }
 
   public activateUser(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
-    return this.getClient()
+    return this.client
       // Validate token request
       .appendRoute(`/${token}`)
       .create(reset);
   }
 
   public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
-    return this.getClient()
+    return this.client
       // Validate token request
       .appendRoute(`/${token}`)
       .read();
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/security/user/activate');
   }
 
 }

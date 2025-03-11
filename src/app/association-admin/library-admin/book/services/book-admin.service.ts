@@ -6,7 +6,7 @@ import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
-import { AngularCrudClientProvider, CrudClient, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -15,32 +15,51 @@ import { Observable, map } from 'rxjs';
 })
 export class BookAdminService {
 
+  private bookClient;
+
+  private authorClient;
+
+  private bookTypeClient;
+
+  private donorClient;
+
+  private gameSystemClient;
+
+  private publisherClient;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) {
+    this.bookClient = this.clientProvider.url(environment.apiUrl + '/library/book');
+    this.authorClient = this.clientProvider.url(environment.apiUrl + '/library/author');
+    this.bookTypeClient = this.clientProvider.url(environment.apiUrl + '/library/bookType');
+    this.donorClient = this.clientProvider.url(environment.apiUrl + '/person');
+    this.gameSystemClient = this.clientProvider.url(environment.apiUrl + '/library/gameSystem');
+    this.publisherClient = this.clientProvider.url(environment.apiUrl + '/library/publisher');
+  }
 
   public create(data: Book): Observable<Book> {
-    return this.getClient()
+    return this.bookClient
       .create<SimpleResponse<Book>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(number: number, data: Book): Observable<Book> {
-    return this.getClient()
+    return this.bookClient
       .appendRoute(`/${number}`)
       .update<SimpleResponse<Book>>(data)
       .pipe(map(r => r.content));
   }
 
   public getOne(number: number): Observable<Book> {
-    return this.getClient()
+    return this.bookClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Book>>()
       .pipe(map(r => r.content));
   }
 
   public delete(number: number): Observable<boolean> {
-    return this.getClient()
+    return this.bookClient
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
@@ -52,7 +71,7 @@ export class BookAdminService {
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
     );
 
-    return this.getClient()
+    return this.bookClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
@@ -67,7 +86,7 @@ export class BookAdminService {
       [new SortingProperty('name')]
     );
 
-    return this.getBookTypeClient()
+    return this.bookTypeClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
@@ -78,7 +97,7 @@ export class BookAdminService {
       [new SortingProperty('name')]
     );
 
-    return this.getGameSystemClient()
+    return this.gameSystemClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
@@ -89,7 +108,7 @@ export class BookAdminService {
       [new SortingProperty('name')]
     );
 
-    return this.getAuthorClient()
+    return this.authorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
@@ -100,41 +119,17 @@ export class BookAdminService {
       [new SortingProperty('name')]
     );
 
-    return this.getPublisherClient()
+    return this.publisherClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
   }
 
   public getDonors(page: number): Observable<PaginatedResponse<Person>> {
-    return this.getDonorClient()
+    return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .read();
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/book');
-  }
-
-  private getAuthorClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/author');
-  }
-
-  private getBookTypeClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/bookType');
-  }
-
-  private getDonorClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/person');
-  }
-
-  private getGameSystemClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/gameSystem');
-  }
-
-  private getPublisherClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/publisher');
   }
 
 }

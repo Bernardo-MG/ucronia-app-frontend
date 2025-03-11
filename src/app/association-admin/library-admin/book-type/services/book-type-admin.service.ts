@@ -9,32 +9,36 @@ import { Observable, map } from 'rxjs';
 })
 export class BookTypeAdminService {
 
+  private client;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) { 
+    this.client = this.clientProvider.url(environment.apiUrl + '/library/bookType');
+  }
 
   public create(data: BookType): Observable<BookType> {
-    return this.getClient()
+    return this.client
       .create<SimpleResponse<BookType>>(data)
       .pipe(map(r => r.content));
   }
 
   public update(number: number, data: BookType): Observable<BookType> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .update<SimpleResponse<BookType>>(data)
       .pipe(map(r => r.content));
   }
 
   public getOne(number: number): Observable<BookType> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<BookType>>()
       .pipe(map(r => r.content));
   }
 
   public delete(number: number): Observable<boolean> {
-    return this.getClient()
+    return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
@@ -46,14 +50,10 @@ export class BookTypeAdminService {
       [new SortingProperty('name'), new SortingProperty('number')]
     );
 
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 
 }

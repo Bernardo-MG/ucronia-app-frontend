@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberBalance } from '../../../../models/members/member-balance';
@@ -9,20 +9,20 @@ import { MemberBalance } from '../../../../models/members/member-balance';
 })
 export class MemberBalanceService {
 
+  private client;
+
   constructor(
-      private clientProvider: AngularCrudClientProvider
-  ) { }
+    private clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = this.clientProvider.url(environment.apiUrl + '/member/monthly');
+  }
 
   public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
-    return this.getClient()
+    return this.client
       .parameter('startDate', startDate)
       .parameter('endDate', endDate)
       .read<SimpleResponse<MemberBalance[]>>()
       .pipe(map(r => r.content));
-  }
-
-  private getClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + '/member/monthly');
   }
 
 }

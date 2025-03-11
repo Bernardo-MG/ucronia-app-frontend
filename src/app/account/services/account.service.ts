@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularCrudClientProvider, CrudClient, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Account } from '../models/account';
@@ -11,28 +11,27 @@ import { PasswordChangeStatus } from '../models/password-change-status';
 })
 export class AccountService {
 
+  private accountClient;
+
+  private passwordChangeClient;
+
   constructor(
     private clientProvider: AngularCrudClientProvider
-  ) { }
+  ) {
+    this.passwordChangeClient = this.clientProvider.url(environment.apiUrl + '/password/change');
+    this.accountClient = this.clientProvider.url(environment.apiUrl + '/account');
+  }
 
   public getAccount(): Observable<Account> {
-    return this.getAccountClient()
+    return this.accountClient
       .read<SimpleResponse<Account>>()
       .pipe(map(r => r.content));
   }
 
   public changePassword(data: PasswordChange): Observable<PasswordChangeStatus> {
-    return this.getPasswordChangeClient()
+    return this.passwordChangeClient
       .update<SimpleResponse<PasswordChangeStatus>>(data)
       .pipe(map(r => r.content));
-  }
-
-  private getPasswordChangeClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + "/password/change");
-  }
-
-  private getAccountClient(): CrudClient {
-    return this.clientProvider.url(environment.apiUrl + "/account");
   }
 
 }
