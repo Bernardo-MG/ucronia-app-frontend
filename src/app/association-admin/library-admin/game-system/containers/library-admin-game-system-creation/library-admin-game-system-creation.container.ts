@@ -26,7 +26,7 @@ export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameS
 
   protected override handleSaveSuccess(saved: GameSystem) {
     super.handleSaveSuccess(saved);
-    this.router.navigate(['../..'], { relativeTo: this.route });
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }

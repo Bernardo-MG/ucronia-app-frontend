@@ -26,7 +26,7 @@ export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publis
 
   protected override handleSaveSuccess(saved: Publisher) {
     super.handleSaveSuccess(saved);
-    this.router.navigate(['../..'], { relativeTo: this.route });
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }

@@ -26,7 +26,7 @@ export class LibraryAdminBookTypeCreateContainer extends CreateComponent<BookTyp
 
   protected override handleSaveSuccess(saved: BookType) {
     super.handleSaveSuccess(saved);
-    this.router.navigate(['../..'], { relativeTo: this.route });
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }

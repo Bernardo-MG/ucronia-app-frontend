@@ -48,7 +48,7 @@ export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusCom
 
   protected override delete(): void {
     this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['../..'], { relativeTo: this.route });
+      this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
 
