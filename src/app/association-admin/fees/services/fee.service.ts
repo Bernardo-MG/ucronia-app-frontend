@@ -14,13 +14,13 @@ export class FeeService {
 
   private readonly feeClient;
 
-  private readonly personClient;
+  private readonly memberClient;
 
   constructor(
     clientProvider: AngularCrudClientProvider
   ) {
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
-    this.personClient = clientProvider.url(environment.apiUrl + '/person');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public create(data: Fee): Observable<FeePayment> {
@@ -58,7 +58,7 @@ export class FeeService {
   }
 
   public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person>> {
-    return this.personClient
+    return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
@@ -66,7 +66,7 @@ export class FeeService {
   }
 
   public getOnePerson(id: number): Observable<Person> {
-    return this.personClient
+    return this.memberClient
       .appendRoute(`/${id}`)
       .read<SimpleResponse<Person>>()
       .pipe(map(r => r.content));

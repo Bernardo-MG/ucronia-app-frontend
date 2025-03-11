@@ -36,8 +36,6 @@ export class BookLendingMemberSelectionComponent {
     this.goToPage.emit(page);
   }
 
-  public nameRenderer(member: Member) {
-    return member.name.fullName;
-  }
+  public nameRenderer = (data: Member): string => data.name.fullName;
 
 }
