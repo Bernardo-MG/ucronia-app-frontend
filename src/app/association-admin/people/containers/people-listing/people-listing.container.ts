@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/association/members/model/active';
+import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
 import { Person } from '@app/models/person/person';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -12,7 +13,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
     selector: 'assoc-people-listing',
-    imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+    imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent],
     templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
