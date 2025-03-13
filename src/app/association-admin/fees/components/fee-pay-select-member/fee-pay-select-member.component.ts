@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Active } from '@app/association/members/model/active';
 import { Member } from '@app/models/members/member';
+import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';

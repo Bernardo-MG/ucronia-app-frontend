@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association/members/model/active';
 import { FeePayment } from '@app/models/fees/fee-payment';
+import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';

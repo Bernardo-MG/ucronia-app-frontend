@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association/members/model/active';
+import { Member } from '@app/models/members/member';
+import { Active } from '@app/models/person/active';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Member } from '../../../../models/members/member';
 
 @Injectable({
   providedIn: 'root'
