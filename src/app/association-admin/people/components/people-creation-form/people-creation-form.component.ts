@@ -16,6 +16,10 @@ export class PeopleCreationFormComponent extends FormComponent<Person> {
     return !!((this.data) && (this.data.membership));
   }
 
+  public set membership(data: Membership | undefined) {
+    this.form.get('membership')?.setValue(data);
+  }
+
   constructor(
     fb: FormBuilder
   ) {
@@ -44,6 +48,7 @@ export class PeopleCreationFormComponent extends FormComponent<Person> {
         this.data.membership.renew = true;
       } else if (this.data) {
         this.data.membership = undefined;
+        this.membership = undefined;
       }
     }
   }
