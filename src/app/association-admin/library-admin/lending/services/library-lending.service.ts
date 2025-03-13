@@ -20,7 +20,7 @@ export class LibraryLendingService {
     clientProvider: AngularCrudClientProvider
   ) {
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
   public lend(data: BookLent): Observable<BookLent> {
