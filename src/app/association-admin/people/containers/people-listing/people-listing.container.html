@@ -2,11 +2,19 @@
   <!-- Member List -->
   <layout-card>
     <layout-card-header>
-      <!-- Add person -->
-      <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-        <icon-add></icon-add>
-      </button>
+      <div class="row">
+        <div class="col-sm-3">
+          <!-- Add person -->
+          <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            <icon-add></icon-add>
+          </button>
+        </div>
+        <div class="offset-md-7 col-sm-2">
+          <assoc-member-status-select [disabled]="reading"
+            (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+        </div>
+      </div>
     </layout-card-header>
     <layout-card-body>
       <!-- List -->

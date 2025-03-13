@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association/members/model/active';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
+import { Active } from '@app/models/person/active';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export class LibraryLendingService {
     clientProvider: AngularCrudClientProvider
   ) {
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
   public lend(data: BookLent): Observable<BookLent> {

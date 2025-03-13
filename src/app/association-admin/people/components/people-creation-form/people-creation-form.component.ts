@@ -6,14 +6,18 @@ import { Person } from '@app/models/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-    selector: 'assoc-people-creation-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './people-creation-form.component.html'
+  selector: 'assoc-people-creation-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './people-creation-form.component.html'
 })
 export class PeopleCreationFormComponent extends FormComponent<Person> {
 
   public get member() {
     return !!((this.data) && (this.data.membership));
+  }
+
+  public set membership(data: Membership | undefined) {
+    this.form.get('membership')?.setValue(data);
   }
 
   constructor(
@@ -35,13 +39,16 @@ export class PeopleCreationFormComponent extends FormComponent<Person> {
 
   onChangeMemberStatus(event: Event) {
     const checkbox = event.target as HTMLInputElement;
-    if ((this.data) && (this.data.membership)) {
+    if (this.data) {
       if (checkbox.checked) {
+        if (!this.data.membership) {
+          this.data.membership = new Membership();
+        }
         this.data.membership.active = true;
         this.data.membership.renew = true;
       } else if (this.data) {
-        this.data.membership.active = false;
-        this.data.membership.renew = false;
+        this.data.membership = undefined;
+        this.membership = undefined;
       }
     }
   }
