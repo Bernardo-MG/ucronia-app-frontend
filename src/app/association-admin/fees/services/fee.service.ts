@@ -20,7 +20,7 @@ export class FeeService {
     clientProvider: AngularCrudClientProvider
   ) {
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
   public create(data: Fee): Observable<FeePayment> {
