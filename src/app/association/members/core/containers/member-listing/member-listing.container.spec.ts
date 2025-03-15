@@ -1,9 +1,8 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberBalanceService } from '@app/association/members/balance/services/member-balance.service';
 import { MemberService } from '@app/association/members/core/services/member.service';
 import { MemberListingContainer } from './member-listing.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MemberListingContainer', () => {
   let component: MemberListingContainer;
@@ -16,7 +15,6 @@ describe('MemberListingContainer', () => {
       ],
       providers: [
         MemberService,
-        MemberBalanceService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]

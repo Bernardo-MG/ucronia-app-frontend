@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PeopleEditionMembershipButtonsComponent } from './people-edition-membership-buttons.component';
 
 describe('PeopleEditionMembershipButtonsComponent', () => {
@@ -10,8 +9,8 @@ describe('PeopleEditionMembershipButtonsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PeopleEditionMembershipButtonsComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PeopleEditionMembershipButtonsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

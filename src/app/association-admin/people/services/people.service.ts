@@ -14,7 +14,7 @@ export class PeopleService {
 
   constructor(
     clientProvider: AngularCrudClientProvider
-  ) { 
+  ) {
     this.client = clientProvider.url(environment.apiUrl + '/person');
   }
 
