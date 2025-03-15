@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberBalanceChartWidgetContainer } from '@app/association-admin/member-balance/containers/member-balance-chart-widget/member-balance-chart-widget.container';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
+import { MemberBalanceChartWidgetContainer } from '@app/widget/member-balance/containers/member-balance-chart-widget/member-balance-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
@@ -13,9 +13,9 @@ import { PeopleListComponent } from '../../components/people-list/people-list.co
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-    selector: 'assoc-people-listing',
-    imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent, MemberBalanceChartWidgetContainer, JustifyCenterDirective],
-    templateUrl: './people-listing.container.html'
+  selector: 'assoc-people-listing',
+  imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent, MemberBalanceChartWidgetContainer, JustifyCenterDirective],
+  templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
 
