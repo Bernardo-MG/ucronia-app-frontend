@@ -12,9 +12,9 @@ import { PeopleInfoComponent } from '../../components/people-info/people-info.co
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-    selector: 'assoc-people-edition',
-    imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './people-edition.container.html'
+  selector: 'assoc-people-edition',
+  imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 

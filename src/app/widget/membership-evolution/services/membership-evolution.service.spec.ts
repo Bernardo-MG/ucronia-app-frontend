@@ -1,21 +1,21 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MemberBalanceService } from './member-balance.service';
+import { MembershipEvolutionService } from './membership-evolution.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('MemberBalanceService', () => {
-  let service: MemberBalanceService;
+describe('MembershipEvolutionService', () => {
+  let service: MembershipEvolutionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [],
     providers: [
-        MemberBalanceService,
+        MembershipEvolutionService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
     ]
 });
-    service = TestBed.inject(MemberBalanceService);
+    service = TestBed.inject(MembershipEvolutionService);
   });
 
   it('should be created', () => {

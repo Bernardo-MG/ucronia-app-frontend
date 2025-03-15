@@ -14,11 +14,11 @@ export class PeopleService {
 
   constructor(
     clientProvider: AngularCrudClientProvider
-  ) { 
+  ) {
     this.client = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public getAll(page: number, sort: Sorting, active: Active): Observable<PaginatedResponse<Person>> {
+  public getAll(page: number, sort: Sorting, active: Active, name: string): Observable<PaginatedResponse<Person>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
@@ -28,6 +28,7 @@ export class PeopleService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', active.toString().toUpperCase())
+      .parameter('name', name)
       .read<PaginatedResponse<Person>>();
   }
 

@@ -1,30 +1,48 @@
 <layout-article title="Gente">
-  <!-- Member List -->
-  <layout-card>
-    <layout-card-header>
-      <div class="row">
-        <div class="col-sm-3">
-          <!-- Add person -->
-          <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-            <icon-add></icon-add>
-          </button>
+  <div class="row pb-2">
+    <!-- Membership evolution -->
+    <div layoutJustifyCenter>
+      <widget-membership-evolution-chart></widget-membership-evolution-chart>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Member List -->
+    <layout-card>
+      <layout-card-header>
+        <div class="row">
+          <div class="col-sm-3">
+            <!-- Add person -->
+            <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+              [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+              <icon-add></icon-add>
+            </button>
+          </div>
+          <div class="offset-md-7 col-sm-2">
+            <!-- Filter by membership -->
+            <assoc-member-status-select [disabled]="reading"
+              (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+          </div>
         </div>
-        <div class="offset-md-7 col-sm-2">
-          <assoc-member-status-select [disabled]="reading"
-            (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+        <div class="row">
+          <!-- Filter by name -->
+          <div class="col-sm-5">
+            <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+            <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter"
+              (input)="nameFilterSubject.next(nameFilter)" aria-describedby="nameFilterLabel" maxlength="50">
+          </div>
         </div>
-      </div>
-    </layout-card-header>
-    <layout-card-body>
-      <!-- List -->
-      <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-        (changeDirection)="onChangeDirection($event)">
-      </assoc-people-list>
-    </layout-card-body>
-    <layout-card-footer>
-      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
+      </layout-card-header>
+      <layout-card-body>
+        <!-- List -->
+        <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+          (changeDirection)="onChangeDirection($event)">
+        </assoc-people-list>
+      </layout-card-body>
+      <layout-card-footer>
+        <!-- Pagination -->
+        <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+          [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+      </layout-card-footer>
+    </layout-card>
+  </div>
 </layout-article>

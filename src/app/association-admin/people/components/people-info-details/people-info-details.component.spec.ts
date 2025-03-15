@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PeopleInfoDetailsComponent } from './people-info-details.component';
 
 describe('PeopleInfoDetailsComponent', () => {
@@ -10,8 +9,8 @@ describe('PeopleInfoDetailsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PeopleInfoDetailsComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PeopleInfoDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
