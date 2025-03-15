@@ -4,12 +4,12 @@ import { FeePaymentChartWidgetContainer } from '@app/association-admin/fees/char
 import { ArticleComponent, BreadcrumbLink, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-fee-listing',
-    imports: [FeeCalendarWidgetContainer, ArticleComponent, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
-    templateUrl: './fee-listing.container.html'
+  selector: 'assoc-fee-listing',
+  imports: [FeeCalendarWidgetContainer, ArticleComponent, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
+  templateUrl: './fee-listing.container.html'
 })
 export class FeeListingContainer {
 
-  public levels = [new BreadcrumbLink('Cuotas', '')];
+  public readonly levels = [new BreadcrumbLink('Cuotas', '')];
 
 }

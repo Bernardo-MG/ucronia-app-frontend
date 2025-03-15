@@ -1,6 +1,6 @@
 import { ResourcePermission } from "./resource-permission";
 
 export class Role {
-  name = '';
-  permissions: ResourcePermission[] = [];
+  public name = '';
+  public permissions: ResourcePermission[] = [];
 }

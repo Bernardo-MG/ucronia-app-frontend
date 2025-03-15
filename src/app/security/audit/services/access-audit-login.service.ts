@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, Sorting, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { LoginRegister } from '../models/login-register';
@@ -10,9 +9,13 @@ import { LoginRegister } from '../models/login-register';
 })
 export class AccessAuditLoginService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/security/login/register');
+  }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<LoginRegister>> {
     const sorting = new SortingParams(
@@ -20,14 +23,10 @@ export class AccessAuditLoginService {
       [new SortingProperty('date', SortingDirection.Descending)]
     );
 
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/security/login/register');
   }
 
 }

@@ -4,9 +4,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-book-lending-member-selection',
-    imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-    templateUrl: './book-lending-member-selection.component.html'
+  selector: 'assoc-book-lending-member-selection',
+  imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
+  templateUrl: './book-lending-member-selection.component.html'
 })
 export class BookLendingMemberSelectionComponent {
 
@@ -36,8 +36,6 @@ export class BookLendingMemberSelectionComponent {
     this.goToPage.emit(page);
   }
 
-  public nameRenderer(member: Member) {
-    return member.name.fullName;
-  }
+  public nameRenderer = (data: Member): string => data.name.fullName;
 
 }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { Transaction } from '@app/models/transactions/transaction';
@@ -11,20 +11,23 @@ import { TransactionFormComponent } from '../../components/transaction-form/tran
 import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';
 
 @Component({
-    selector: 'assoc-transaction-edition',
-    imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './transaction-edition.component.html'
+  selector: 'assoc-transaction-edition',
+  imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(TransactionService);
+
+  private authContainer = inject(AuthContainer);
+
   private index = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: TransactionService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Transaction());
   }
 

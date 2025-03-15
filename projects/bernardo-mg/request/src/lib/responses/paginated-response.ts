@@ -4,15 +4,15 @@ import { SimpleResponse } from "./simple-response";
  * Paginated response.
  */
 export class PaginatedResponse<T> extends SimpleResponse<T[]> {
-  page = 0;
-  size = 0;
-  elementsInPage = 0;
-  totalElements = 0;
-  totalPages = 0;
-  first = false;
-  last = false;
+  public page = 0;
+  public size = 0;
+  public elementsInPage = 0;
+  public totalElements = 0;
+  public totalPages = 0;
+  public first = false;
+  public last = false;
 
-  constructor(cont: T[] = []) {
+  constructor(private cont: T[] = []) {
     super(cont);
   }
 

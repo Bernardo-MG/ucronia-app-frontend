@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Active } from '@app/association/members/model/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { AngularCrudClient, CrudClient, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { Active } from '@app/models/person/active';
+import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -12,12 +11,16 @@ import { map, Observable } from 'rxjs';
 })
 export class FeeCalendarService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/fee/calendar');
+  }
 
   public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
-    return this.getClient()
+    return this.client
       .loadParameters(new SortingParams([new SortingProperty("firstName"), new SortingProperty("lastName")]))
       .parameter('status', active.toString().toUpperCase())
       .appendRoute(`/${year}`)
@@ -26,14 +29,10 @@ export class FeeCalendarService {
   }
 
   public getRange(): Observable<FeeCalendarYearsRange> {
-    return this.getClient()
+    return this.client
       .appendRoute("/range")
       .read<SimpleResponse<FeeCalendarYearsRange>>()
       .pipe(map(r => r.content));
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/fee/calendar');
   }
 
 }

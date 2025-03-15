@@ -1,10 +1,10 @@
 export class UserToken {
-  creationDate = '';
-  expirationDate = '';
-  scope = '';
-  token = '';
-  name = '';
-  username = '';
-  consumed = false;
-  revoked = false;
+  public creationDate = '';
+  public expirationDate = '';
+  public scope = '';
+  public token = '';
+  public name = '';
+  public username = '';
+  public consumed = false;
+  public revoked = false;
 }

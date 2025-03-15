@@ -8,9 +8,9 @@ import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-fee-pay-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './fee-pay-form.component.html'
+  selector: 'assoc-fee-pay-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
 

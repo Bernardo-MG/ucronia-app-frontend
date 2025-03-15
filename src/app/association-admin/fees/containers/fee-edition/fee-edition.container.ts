@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
 import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
@@ -11,25 +11,29 @@ import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
-    selector: 'assoc-fee-edition',
-    imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './fee-edition.container.html'
+  selector: 'assoc-fee-edition',
+  imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements OnInit, AfterContentInit {
+
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(FeeService);
+
+  private cdRef = inject(ChangeDetectorRef);
+
+  private authContainer = inject(AuthContainer);
 
   private date: string = "";
 
   private memberNumber = -1;
 
-  public levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
+  public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: FeeService,
-    private cdRef: ChangeDetectorRef,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Fee());
   }
 
@@ -46,13 +50,13 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
     // Get id
     this.route.paramMap.subscribe(params => {
       const dateParam = params.get('date');
-      if(dateParam){
+      if (dateParam) {
         this.date = dateParam;
       } else {
         this.date = '';
       }
       const memberNumberParam = params.get('memberNumber');
-      if(memberNumberParam){
+      if (memberNumberParam) {
         this.memberNumber = Number(memberNumberParam);
       }
       this.load();

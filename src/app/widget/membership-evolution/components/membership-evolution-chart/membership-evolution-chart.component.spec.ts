@@ -1,18 +1,18 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberBalanceChartComponent } from './member-balance-chart.component';
+import { MembershipEvolutionChartComponent } from './membership-evolution-chart.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('MemberBalanceChartComponent', () => {
-  let component: MemberBalanceChartComponent;
-  let fixture: ComponentFixture<MemberBalanceChartComponent>;
+describe('MembershipEvolutionChartComponent', () => {
+  let component: MembershipEvolutionChartComponent;
+  let fixture: ComponentFixture<MembershipEvolutionChartComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [MemberBalanceChartComponent],
+    imports: [MembershipEvolutionChartComponent],
     providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 });
-    fixture = TestBed.createComponent(MemberBalanceChartComponent);
+    fixture = TestBed.createComponent(MembershipEvolutionChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,9 +6,9 @@ import { FundsCurrentBalanceWidgetContainer } from '../../../balance/containers/
 import { TransactionCalendarWidgetContainer } from '../../../calendar/containers/transaction-calendar-widget/transaction-calendar-widget.container';
 
 @Component({
-    selector: 'app-transaction-listing',
-    imports: [TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionCalendarWidgetContainer, ArticleComponent, TransactionReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './funds-listing.container.html'
+  selector: 'app-transaction-listing',
+  imports: [TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionCalendarWidgetContainer, ArticleComponent, TransactionReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent],
+  templateUrl: './funds-listing.container.html'
 })
 export class FundsListingComponent {
 

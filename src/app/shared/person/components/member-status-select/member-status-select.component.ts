@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Active } from '../../../model/active';
+import { Active } from '@app/models/person/active';
 
 @Component({
-    selector: 'assoc-member-status-select',
-    imports: [],
-    templateUrl: './member-status-select.component.html'
+  selector: 'assoc-member-status-select',
+  imports: [],
+  templateUrl: './member-status-select.component.html'
 })
 export class MemberStatusSelectComponent {
 

@@ -5,9 +5,9 @@ import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-admin-book-type-info',
-    imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
-    templateUrl: './library-admin-book-type-info.component.html'
+  selector: 'assoc-library-admin-book-type-info',
+  imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+  templateUrl: './library-admin-book-type-info.component.html'
 })
 export class LibraryAdminBookTypeInfoComponent {
 

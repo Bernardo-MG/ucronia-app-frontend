@@ -22,9 +22,9 @@ export class AuthContainer {
   /**
    * Subject to track security details changes.
    */
-  private detailsSubject = new ReplaySubject<SecurityDetails>(1);
+  private readonly detailsSubject = new ReplaySubject<SecurityDetails>(1);
 
-  private jwtHelper = new JwtHelperService();
+  private readonly jwtHelper = new JwtHelperService();
 
   /**
    * Replicates the security details to ease consulting.

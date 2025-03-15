@@ -1,3 +1,3 @@
 export class Id {
-  id = -1;
+  public id = -1;
 }

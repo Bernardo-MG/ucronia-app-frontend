@@ -57,7 +57,7 @@ export interface CrudClient {
    * @param name parameter name
    * @param value parameter value
    */
-  parameter(name: string, value: any): CrudClient;
+  parameter(name: string, value: string | number | boolean | undefined): CrudClient;
 
   /**
    * Adds parameters through a loader and returns an updated client.

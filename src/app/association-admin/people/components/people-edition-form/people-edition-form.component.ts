@@ -6,9 +6,9 @@ import { Person } from '@app/models/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-    selector: 'assoc-people-edition-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './people-edition-form.component.html'
+  selector: 'assoc-people-edition-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './people-edition-form.component.html'
 })
 export class PeopleEditionFormComponent extends FormComponent<Person> {
 

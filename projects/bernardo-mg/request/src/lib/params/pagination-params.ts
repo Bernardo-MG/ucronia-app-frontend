@@ -5,7 +5,7 @@ import { ParamLoader } from "./param-loader";
  */
 export class PaginationParams implements ParamLoader {
 
-  constructor(private page?: number, private size?: number) { }
+  constructor(private readonly page?: number, private readonly size?: number) { }
 
   public load(setParameter: (name: string, value: any) => void): void {
     if (this.page) {

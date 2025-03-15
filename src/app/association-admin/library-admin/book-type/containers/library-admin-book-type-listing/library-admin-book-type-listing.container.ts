@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -17,6 +17,10 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 })
 export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
 
+  private authContainer = inject(AuthContainer);
+
+  private service = inject(BookTypeAdminService);
+
   @Input() public pageNumber = 0;
 
   @Output() public wait = new EventEmitter<boolean>();
@@ -33,11 +37,6 @@ export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
   public createPermission = false;
 
   private sort = new Sorting();
-
-  constructor(
-    private authContainer: AuthContainer,
-    private service: BookTypeAdminService
-  ) { }
 
   public ngOnInit(): void {
     // Load books

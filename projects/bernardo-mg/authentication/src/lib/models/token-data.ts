@@ -4,12 +4,15 @@ import { PermissionList } from "./permission-list";
  * Data parsed from a token.
  */
 export class TokenData {
+
   /**
    * Subscriber.
    */
-  sub?: string;
+  public sub?: string;
+
   /**
    * Permissions.
    */
-  permissions?: PermissionList;
+  public permissions?: PermissionList;
+
 }

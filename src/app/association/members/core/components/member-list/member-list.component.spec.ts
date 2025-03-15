@@ -1,8 +1,8 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberService } from '../../services/member.service';
 import { MemberListComponent } from './member-list.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('PublicMemberListComponent', () => {
   let component: MemberListComponent;
@@ -10,13 +10,13 @@ describe('PublicMemberListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [MemberListComponent],
-    providers: [
+      imports: [MemberListComponent],
+      providers: [
         MemberService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(MemberListComponent);

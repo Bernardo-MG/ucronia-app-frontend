@@ -6,9 +6,9 @@ import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderCompon
 import { Fee } from '../../../../models/fees/fee';
 
 @Component({
-    selector: 'assoc-fee-info',
-    imports: [CommonModule, IconSearchComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-    templateUrl: './fee-info.component.html'
+  selector: 'assoc-fee-info',
+  imports: [CommonModule, IconSearchComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {
 

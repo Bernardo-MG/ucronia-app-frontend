@@ -7,22 +7,22 @@ export class SecurityDetails {
   /**
    * User username.
    */
-  username = '';
+  public username = '';
   
   /** 
    * Logged-in flag. If true, the user is logged in. 
    */
-  readonly logged: boolean;
+  public readonly logged: boolean;
   
   /** 
    * Authentication token for the user. 
    */
-  token = '';
+  public token = '';
   
   /** 
    * User permissions. 
    */
-  permissions = new PermissionList();
+  public permissions = new PermissionList();
 
   constructor(logged: boolean) {
     this.logged = logged;

@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
-import { AngularCrudClient, CrudClient, PaginatedResponse, PaginationParams, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -10,19 +9,19 @@ import { Observable } from 'rxjs';
 })
 export class MyFeesService {
 
+  private readonly client;
+
   constructor(
-    private http: HttpClient
-  ) { }
+    clientProvider: AngularCrudClientProvider
+  ) {
+    this.client = clientProvider.url(environment.apiUrl + '/user/fee');
+  }
 
   public getAll(page: number): Observable<PaginatedResponse<Fee>> {
-    return this.getClient()
+    return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('date', SortingDirection.Descending)]))
       .read<PaginatedResponse<Fee>>();
-  }
-
-  private getClient(): CrudClient {
-    return new AngularCrudClient(this.http, environment.apiUrl + '/user/fee');
   }
 
 }

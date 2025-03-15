@@ -3,9 +3,9 @@ import { Person } from '@app/models/person/person';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-people-info-details',
-    imports: [PlaceholderDirective],
-    templateUrl: './people-info-details.component.html'
+  selector: 'assoc-people-info-details',
+  imports: [PlaceholderDirective],
+  templateUrl: './people-info-details.component.html'
 })
 export class PeopleInfoDetailsComponent {
 

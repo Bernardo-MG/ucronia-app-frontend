@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Active } from '@app/association/members/model/active';
-import { MemberStatusSelectComponent } from '@app/association/members/shared/components/member-status-select/member-status-select.component';
+import { Active } from '@app/models/person/active';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
+import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyEndDirective } from '@bernardo-mg/layout';
@@ -11,11 +11,15 @@ import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
-    selector: 'assoc-fee-calendar-widget',
-    imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyEndDirective],
-    templateUrl: './fee-calendar-widget.container.html'
+  selector: 'assoc-fee-calendar-widget',
+  imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyEndDirective],
+  templateUrl: './fee-calendar-widget.container.html'
 })
 export class FeeCalendarWidgetContainer implements OnInit {
+
+  private authContainer = inject(AuthContainer);
+
+  private service = inject(FeeCalendarService);
 
   public createPermission = false;
 
@@ -31,11 +35,6 @@ export class FeeCalendarWidgetContainer implements OnInit {
   public readingCalendar = false;
 
   public feeCalendar: FeeCalendar[] = [];
-
-  constructor(
-    private authContainer: AuthContainer,
-    private service: FeeCalendarService
-  ) { }
 
   public ngOnInit(): void {
     // Check permissions

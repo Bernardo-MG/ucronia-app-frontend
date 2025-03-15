@@ -7,9 +7,9 @@ import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-library-admin-book-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
-    templateUrl: './library-admin-book-list.component.html'
+  selector: 'assoc-library-admin-book-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
+  templateUrl: './library-admin-book-list.component.html'
 })
 export class LibraryAdminBookListComponent {
 
