@@ -10,6 +10,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { debounceTime, Subject } from 'rxjs';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
@@ -26,7 +27,9 @@ export class PeopleListingContainer implements OnInit {
 
   public data = new PaginatedResponse<Person>();
 
-  public nameFilter: string = '';
+  public nameFilter = '';
+
+  public nameFilterSubject = new Subject<string>();
 
   private sort = new Sorting();
 
@@ -43,6 +46,12 @@ export class PeopleListingContainer implements OnInit {
   public ngOnInit(): void {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("person", "create");
+
+    this.nameFilterSubject.pipe(
+      debounceTime(300)
+    ).subscribe(() => {
+      this.load(0);
+    });
 
     this.load(0);
   }
