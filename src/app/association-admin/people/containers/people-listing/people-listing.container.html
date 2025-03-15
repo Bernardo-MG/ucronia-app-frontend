@@ -23,6 +23,13 @@
               (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-5">
+            <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+            <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="onNameFilterChange()"
+              aria-describedby="nameFilterLabel" maxlength="50">
+          </div>
+        </div>
       </layout-card-header>
       <layout-card-body>
         <!-- List -->

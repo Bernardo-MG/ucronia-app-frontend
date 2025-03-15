@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
@@ -14,7 +15,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
-  imports: [RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {
@@ -24,6 +25,8 @@ export class PeopleListingContainer implements OnInit {
   public createPermission = false;
 
   public data = new PaginatedResponse<Person>();
+
+  public nameFilter: string = '';
 
   private sort = new Sorting();
 
@@ -60,18 +63,19 @@ export class PeopleListingContainer implements OnInit {
     this.load(this.data.page);
   }
 
+  public onNameFilterChange(): void {
+    this.load(0);
+  }
+
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter).subscribe({
+    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter).subscribe({
       next: response => {
         this.data = response;
-
-        // Reactivate view
         this.reading = false;
       },
       error: error => {
-        // Reactivate view
         this.reading = false;
       }
     });
