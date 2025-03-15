@@ -7,7 +7,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class MemberBalanceService {
+export class MembershipEvolutionService {
 
   private readonly client;
 

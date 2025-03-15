@@ -36,7 +36,8 @@
               "shared",
               "sorting",
               "form",
-              "frontpage"
+              "frontpage",
+              "widget"
             ],
             "style": "camelCase"
           }
@@ -61,7 +62,8 @@
               "shared",
               "sorting",
               "form",
-              "frontpage"
+              "frontpage",
+              "widget"
             ],
             "style": "kebab-case"
           }

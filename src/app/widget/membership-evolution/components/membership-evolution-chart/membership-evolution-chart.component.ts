@@ -4,11 +4,11 @@ import { MemberBalance } from '@app/models/members/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({
-    selector: 'assoc-member-balance-chart',
+    selector: 'assoc-membership-evolution-chart',
     imports: [CommonModule],
-    templateUrl: './member-balance-chart.component.html'
+    templateUrl: './membership-evolution-chart.component.html'
 })
-export class MemberBalanceChartComponent implements OnChanges, OnDestroy {
+export class MembershipEvolutionChartComponent implements OnChanges, OnDestroy {
 
   @Input() public waiting = false;
 

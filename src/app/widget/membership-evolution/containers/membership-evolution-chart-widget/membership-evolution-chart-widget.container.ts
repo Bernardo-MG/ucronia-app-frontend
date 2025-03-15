@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
-import { MemberBalanceChartComponent } from '../../components/member-balance-chart/member-balance-chart.component';
-import { MemberBalanceService } from '../../services/member-balance.service';
+import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
+import { MembershipEvolutionService } from '../../services/membership-evolution.service';
 
 @Component({
-    selector: 'assoc-member-balance-chart-widget',
-    imports: [CommonModule, MemberBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './member-balance-chart-widget.container.html'
+    selector: 'widget-membership-evolution-chart',
+    imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+    templateUrl: './membership-evolution-chart-widget.container.html'
 })
-export class MemberBalanceChartWidgetContainer implements OnInit {
+export class MembershipEvolutionChartWidgetContainer implements OnInit {
 
   public balance: MemberBalance[] = [];
 
@@ -47,7 +47,7 @@ export class MemberBalanceChartWidgetContainer implements OnInit {
   private readingRange = false;
 
   constructor(
-    private memberBalanceService: MemberBalanceService
+    private memberBalanceService: MembershipEvolutionService
   ) { }
 
   ngOnInit(): void {
