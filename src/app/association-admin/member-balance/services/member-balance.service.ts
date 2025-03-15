@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { MemberBalance } from '@app/models/members/member-balance';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { MemberBalance } from '../../../../models/members/member-balance';
 
 @Injectable({
   providedIn: "root"

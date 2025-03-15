@@ -1,22 +1,15 @@
 <layout-article>
-  <div class="row pb-2">
-    <div layoutJustifyCenter>
-      <assoc-member-balance-chart-widget></assoc-member-balance-chart-widget>
-    </div>
-  </div>
-  <div class="row">
-    <!-- Member List -->
-    <layout-card>
-      <layout-card-body>
-        <!-- List -->
-        <assoc-member-list [members]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-          (changeDirection)="onChangeDirection($event)">
-        </assoc-member-list>
-      </layout-card-body>
-      <layout-card-footer>
-        <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-          [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-      </layout-card-footer>
-    </layout-card>
-  </div>
+  <!-- Member List -->
+  <layout-card>
+    <layout-card-body>
+      <!-- List -->
+      <assoc-member-list [members]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+        (changeDirection)="onChangeDirection($event)">
+      </assoc-member-list>
+    </layout-card-body>
+    <layout-card-footer>
+      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    </layout-card-footer>
+  </layout-card>
 </layout-article>
