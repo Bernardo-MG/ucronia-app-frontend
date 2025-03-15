@@ -8,9 +8,9 @@ import { PeopleCreationFormComponent } from '../../components/people-creation-fo
 import { PeopleService } from '../../services/people.service';
 
 @Component({
-    selector: 'assoc-people-creation',
-    imports: [PeopleCreationFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './people-creation.container.html'
+  selector: 'assoc-people-creation',
+  imports: [PeopleCreationFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './people-creation.container.html'
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {
 
