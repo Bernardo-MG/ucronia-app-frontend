@@ -23,16 +23,13 @@ export class MemberInfoContainer implements OnInit {
 
   public reading = false;
 
-  private number = -1;
-
   public ngOnInit(): void {
     // Get id
     this.route.paramMap.subscribe(params => {
       const numParam = params.get('number');
       if (numParam) {
-        this.number = Number(numParam);
+        this.load(Number(numParam));
       }
-      this.load();
     });
   }
 
@@ -40,9 +37,9 @@ export class MemberInfoContainer implements OnInit {
     this.view = newView;
   }
 
-  private load(): void {
+  private load(id: number): void {
     this.reading = true;
-    this.service.getOne(this.number)
+    this.service.getOne(id)
       .subscribe({
         next: response => {
           this.data = response;
