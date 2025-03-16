@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@bernardo-mg/form';
@@ -14,13 +14,11 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {
 
-  constructor(
-    private service: PeopleService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  private service = inject(PeopleService);
+
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
 
   protected override save(toSave: Person): Observable<Person> {
     return this.service.create(toSave);

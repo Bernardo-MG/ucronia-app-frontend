@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Active } from '@app/models/person/active';
@@ -21,6 +21,10 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleListingContainer implements OnInit {
 
+  private authContainer = inject(AuthContainer);
+
+  private service = inject(PeopleService);
+
   public activeFilter = Active.Active;
 
   public createPermission = false;
@@ -37,11 +41,6 @@ export class PeopleListingContainer implements OnInit {
    * Loading flag.
    */
   public reading = false;
-
-  constructor(
-    private authContainer: AuthContainer,
-    private service: PeopleService
-  ) { }
 
   public ngOnInit(): void {
     // Check permissions
