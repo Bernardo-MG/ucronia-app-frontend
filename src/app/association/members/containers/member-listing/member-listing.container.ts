@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
@@ -14,6 +14,8 @@ import { MemberListComponent } from '../../components/member-list/member-list.co
 })
 export class MemberListingContainer implements OnInit {
 
+  private service = inject(MemberService);
+
   public data = new PaginatedResponse<Member>();
 
   private sort = new Sorting();
@@ -22,10 +24,6 @@ export class MemberListingContainer implements OnInit {
    * Loading flag.
    */
   public reading = false;
-
-  constructor(
-    private service: MemberService
-  ) { }
 
   public ngOnInit(): void {
     this.load(0);

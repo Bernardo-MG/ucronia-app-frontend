@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
@@ -13,6 +13,10 @@ import { MemberDetailsComponent } from '../../components/member-details/member-d
 })
 export class MemberInfoContainer implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private service = inject(MemberService);
+
   public data = new Member();
 
   public view: string = 'details';
@@ -20,11 +24,6 @@ export class MemberInfoContainer implements OnInit {
   public reading = false;
 
   private number = -1;
-
-  constructor(
-    private route: ActivatedRoute,
-    private service: MemberService
-  ) { }
 
   public ngOnInit(): void {
     // Get id
