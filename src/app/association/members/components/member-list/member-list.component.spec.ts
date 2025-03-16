@@ -1,18 +1,16 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberService } from '@app/association/members/core/services/member.service';
-import { MemberListingContainer } from './member-listing.container';
+import { MemberService } from '../../../services/member.service';
+import { MemberListComponent } from './member-list.component';
 
-describe('MemberListingContainer', () => {
-  let component: MemberListingContainer;
-  let fixture: ComponentFixture<MemberListingContainer>;
+describe('PublicMemberListComponent', () => {
+  let component: MemberListComponent;
+  let fixture: ComponentFixture<MemberListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MemberListingContainer
-      ],
+      imports: [MemberListComponent],
       providers: [
         MemberService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -21,7 +19,7 @@ describe('MemberListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberListingContainer);
+    fixture = TestBed.createComponent(MemberListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

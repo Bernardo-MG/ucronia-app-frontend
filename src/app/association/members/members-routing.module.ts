@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { MemberInfoContainer } from './core/containers/member-info/member-info.container';
-import { MemberListingContainer } from './core/containers/member-listing/member-listing.container';
+import { MemberInfoContainer } from './containers/member-info/member-info.container';
+import { MemberListingContainer } from './containers/member-listing/member-listing.container';
 
 
 const routes: Routes = [

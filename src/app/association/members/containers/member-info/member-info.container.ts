@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MemberDetailsComponent } from '@app/association/members/core/components/member-details/member-details.component';
-import { MemberService } from '@app/association/members/core/services/member.service';
+import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { MemberDetailsComponent } from '../../components/member-details/member-details.component';
 
 @Component({
   selector: 'assoc-member-info',
