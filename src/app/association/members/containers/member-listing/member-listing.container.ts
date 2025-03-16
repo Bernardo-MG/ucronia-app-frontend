@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberListComponent } from '@app/association/members/core/components/member-list/member-list.component';
-import { MemberService } from '@app/association/members/core/services/member.service';
+import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { MemberListComponent } from '../../components/member-list/member-list.component';
 
 @Component({
     selector: 'assoc-member-listing',
@@ -13,6 +13,8 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
     templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer implements OnInit {
+
+  private service = inject(MemberService);
 
   public data = new PaginatedResponse<Member>();
 
@@ -22,10 +24,6 @@ export class MemberListingContainer implements OnInit {
    * Loading flag.
    */
   public reading = false;
-
-  constructor(
-    private service: MemberService
-  ) { }
 
   public ngOnInit(): void {
     this.load(0);

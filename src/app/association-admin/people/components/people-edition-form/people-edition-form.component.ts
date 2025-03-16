@@ -37,7 +37,7 @@ export class PeopleEditionFormComponent extends FormComponent<Person> {
     });
   }
 
-  onChangeMemberStatus(event: Event) {
+  public onChangeMemberStatus(event: Event) {
     const checkbox = event.target as HTMLInputElement;
     if ((this.data) && (this.data.membership)) {
       if (checkbox.checked) {
