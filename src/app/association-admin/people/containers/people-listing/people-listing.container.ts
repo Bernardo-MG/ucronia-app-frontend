@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
+import { PersonStatusSelectComponent } from '@app/association-admin/people/components/person-status-select/person-status-select.component';
 import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -16,7 +16,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
-  imports: [FormsModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, MemberStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer implements OnInit {

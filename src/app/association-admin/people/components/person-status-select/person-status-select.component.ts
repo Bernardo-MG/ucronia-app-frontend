@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Active } from '@app/models/person/active';
 
 @Component({
-  selector: 'assoc-member-status-select',
+  selector: 'assoc-person-status-select',
   imports: [],
-  templateUrl: './member-status-select.component.html'
+  templateUrl: './person-status-select.component.html'
 })
-export class MemberStatusSelectComponent {
+export class PersonStatusSelectComponent {
 
   @Input() public disabled = false;
 
@@ -15,7 +15,7 @@ export class MemberStatusSelectComponent {
   public status = Active.Active;
 
   public onChangeStatus(event: any) {
-    const value = event.target.value as 'Active' | 'Inactive' | 'AllMember';
+    const value = event.target.value as 'Active' | 'Inactive' | 'AllMember' | 'All';
     this.status = (Active[value] as Active);
     this.changeStatus.emit(this.status);
   }

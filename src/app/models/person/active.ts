@@ -1,5 +1,6 @@
 export enum Active {
   Active = 'active',
   Inactive = 'inactive',
-  All = 'all'
+  All = 'all',
+  AllMember = "all_member"
 }
