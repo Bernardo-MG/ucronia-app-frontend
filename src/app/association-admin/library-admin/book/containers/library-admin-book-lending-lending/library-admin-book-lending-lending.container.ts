@@ -17,11 +17,11 @@ import { BookLendingFormComponent } from '../../components/book-lending-form/boo
 import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
 
 @Component({
-  selector: 'assoc-book-lending-lending',
+  selector: 'assoc-library-admin-book-lending-lending',
   imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-  templateUrl: './book-lending-lending.container.html'
+  templateUrl: './library-admin-book-lending-lending.container.html'
 })
-export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 
   private route = inject(ActivatedRoute);
 

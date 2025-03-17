@@ -7,10 +7,10 @@ import { LibraryAdminAuthorListingContainer } from './author/containers/library-
 import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/library-admin-book-type-creation/library-admin-book-type-creation.container';
 import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
 import { LibraryAdminBookTypeListingContainer } from './book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
-import { BookLendingLendContainer } from './book/containers/book-lending-lending/book-lending-lending.container';
-import { BookLendingReturnContainer } from './book/containers/book-lending-returning/book-lending-returning.component';
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
+import { LibraryAdminBookLendingLendContainer } from './book/containers/library-admin-book-lending-lending/library-admin-book-lending-lending.container';
+import { LibraryAdminBookLendingReturnContainer } from './book/containers/library-admin-book-lending-returning/library-admin-book-lending-returning.container';
 import { LibraryAdminBookListingContainer } from './book/containers/library-admin-book-listing/library-admin-book-listing.container';
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
@@ -78,13 +78,13 @@ const routes: Routes = [
           },
           {
             path: ':number/lend',
-            component: BookLendingLendContainer,
+            component: LibraryAdminBookLendingLendContainer,
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Préstamo' }
           },
           {
             path: ':number/return',
-            component: BookLendingReturnContainer,
+            component: LibraryAdminBookLendingReturnContainer,
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Devolución' }
           }

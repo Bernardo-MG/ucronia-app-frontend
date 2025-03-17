@@ -11,11 +11,11 @@ import { Observable } from 'rxjs';
 import { BookReturnFormComponent } from '../../components/book-return-form/book-return-form.component';
 
 @Component({
-  selector: 'assoc-book-lending-returning',
+  selector: 'assoc-library-admin-book-lending-returning',
   imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './book-lending-returning.component.html'
+  templateUrl: './library-admin-book-lending-returning.container.html'
 })
-export class BookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+export class LibraryAdminBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
