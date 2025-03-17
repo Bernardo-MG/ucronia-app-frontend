@@ -1,1 +1,13 @@
-<p>library-admin-lending-listing works!</p>
+<layout-article>
+  <layout-card>
+    <layout-card-body>
+      <assoc-library-admin-lending-list *layoutBlockUi="reading" [lendings]="data.content"
+        [routeLinkAdapter]="routeLinkAdapter"
+        (directionChange)="onChangeDirection($event)"></assoc-library-admin-lending-list>
+    </layout-card-body>
+    <layout-card-footer>
+      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    </layout-card-footer>
+  </layout-card>
+</layout-article>
