@@ -2,7 +2,6 @@
   <layout-card>
     <layout-card-body>
       <assoc-library-admin-lending-list *layoutBlockUi="reading" [lendings]="data.content"
-        [routeLinkAdapter]="routeLinkAdapter"
         (directionChange)="onChangeDirection($event)"></assoc-library-admin-lending-list>
     </layout-card-body>
     <layout-card-footer>

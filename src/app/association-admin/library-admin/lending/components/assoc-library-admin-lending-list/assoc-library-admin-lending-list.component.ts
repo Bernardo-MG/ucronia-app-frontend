@@ -14,8 +14,6 @@ export class AssocLibraryAdminLendingListComponent {
 
   @Input() public lendings: BookLending[] = [];
 
-  @Input() public routeLinkAdapter: (data: BookLending) => string = (data) => '';
-
   @Output() public directionChange = new EventEmitter<SortingProperty>();
 
 }

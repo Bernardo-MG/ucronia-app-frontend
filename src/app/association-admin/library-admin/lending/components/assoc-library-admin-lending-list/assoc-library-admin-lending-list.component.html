@@ -9,7 +9,8 @@
         Socio <sorting-button property="fullName" (directionChange)="directionChange.emit($event)"></sorting-button>
       </th>
       <th scope="col">
-        Fecha de préstamo <sorting-button property="lendingDate" (directionChange)="directionChange.emit($event)"></sorting-button>
+        Fecha de préstamo <sorting-button property="lendingDate"
+          (directionChange)="directionChange.emit($event)"></sorting-button>
       </th>
       <th scope="col">
         Días prestado <sorting-button property="days" (directionChange)="directionChange.emit($event)"></sorting-button>
@@ -17,7 +18,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let lending of lendings; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(lending)}}">
+    <tr *ngFor="let lending of lendings; let rowIndex = index">
       <!-- Cells -->
       <td>
         {{lending.borrower.name.fullName}}

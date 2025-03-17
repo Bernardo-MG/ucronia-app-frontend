@@ -77,8 +77,4 @@ export class LibraryAdminLendingListingComponent implements OnInit, OnChanges {
     });
   }
 
-  public routeLinkAdapter(data: BookLending): string {
-    return ``;
-  }
-
 }
