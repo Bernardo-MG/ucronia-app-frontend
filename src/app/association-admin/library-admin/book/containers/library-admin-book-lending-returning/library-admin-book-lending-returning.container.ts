@@ -8,11 +8,11 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
-import { BookReturnFormComponent } from '../../components/book-return-form/book-return-form.component';
+import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-returning',
-  imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
+  imports: [ArticleComponent, LibraryAdminBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-lending-returning.container.html'
 })
 export class LibraryAdminBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {

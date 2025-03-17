@@ -1,27 +1,26 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BookReturned } from '@app/models/library/book-returned';
-import { Borrower } from '@app/models/library/borrower';
+import { Book } from '@app/models/library/book';
+import { BookLent } from '@app/models/library/book-lent';
+import { Member } from '@app/models/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-  selector: 'assoc-book-return-form',
+  selector: 'assoc-library-admin-book-lending-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './book-return-form.component.html'
+  templateUrl: './library-admin-book-lending-form.component.html'
 })
-export class BookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
+export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {
 
-  @Input() public borrower = new Borrower();
+  @Input() public member = new Member();
 
-  @Input() public book = -1;
+  @Input() public book = new Book();
 
   @Output() public goToPersonPage = new EventEmitter<number>();
 
   @Output() public goToBookPage = new EventEmitter<number>();
-
-  public today = new Date().toISOString().split('T')[0];
 
   constructor(
     fb: FormBuilder
@@ -29,18 +28,18 @@ export class BookReturnFormComponent extends FormComponent<BookReturned> impleme
     super();
 
     this.form = fb.group({
-      returnDate: [null, Validators.required],
-      borrower: [-1, Validators.required],
+      lendingDate: [null, Validators.required],
+      person: [-1, Validators.required],
       book: [-1, Validators.required]
     });
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['borrower']) {
-      this.form.get('borrower')?.setValue(this.borrower.number);
+    if (changes['member']) {
+      this.form.get('person')?.setValue(this.member.number);
     }
     if (changes['book']) {
-      this.form.get('book')?.setValue(this.book);
+      this.form.get('book')?.setValue(this.book.number);
     }
   }
 

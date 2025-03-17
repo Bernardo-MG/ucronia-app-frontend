@@ -13,12 +13,12 @@ import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
-import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
+import { LibraryAdminBookLendingFormComponent } from '../../components/library-admin-book-lending-form/library-admin-book-lending-form.component';
+import { LibraryAdminBookLendingMemberSelectionComponent } from '../../components/library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
-  imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
 export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
