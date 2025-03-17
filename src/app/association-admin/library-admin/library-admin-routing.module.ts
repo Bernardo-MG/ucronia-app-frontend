@@ -15,6 +15,7 @@ import { LibraryAdminBookListingContainer } from './book/containers/library-admi
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
 import { LibraryAdminGameSystemListingContainer } from './game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
+import { LibraryAdminLendingListingComponent } from './lending/containers/library-admin-lending-listing/library-admin-lending-listing.container';
 import { LibraryAdminPublisherCreateContainer } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container';
 import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container';
 import { LibraryAdminPublisherListingContainer } from './publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
@@ -159,6 +160,18 @@ const routes: Routes = [
             component: LibraryAdminGameSystemInfoEditorContainer,
             canActivate: [ResourceGuard("library_game_system", "read")],
             data: { breadcrumb: 'Editar sistema' }
+          }
+        ]
+      },
+      {
+        path: 'lendings',
+        data: { breadcrumb: 'Préstamos' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminLendingListingComponent,
+            canActivate: [ResourceGuard("library_lending", "view")],
+            data: { breadcrumb: '' }
           }
         ]
       }
