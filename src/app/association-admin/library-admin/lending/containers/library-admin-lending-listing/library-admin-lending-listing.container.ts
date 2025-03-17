@@ -14,7 +14,7 @@ import { BookLendingService } from '../../services/book-lending.service';
   imports: [CommonModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-lending-listing.container.html'
 })
-export class LibraryAdminLendingListingComponent implements OnInit, OnChanges {
+export class LibraryAdminLendingListingContainer implements OnInit, OnChanges {
 
   private authContainer = inject(AuthContainer);
 
