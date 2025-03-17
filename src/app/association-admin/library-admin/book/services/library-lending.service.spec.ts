@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { LibraryLendingService } from './library-lending.service';
+import { LibraryLendingService } from '../../lending/services/library-lending.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('LibraryLendingService', () => {
