@@ -15,7 +15,6 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
 import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
-import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
   selector: 'assoc-book-lending-lending',
@@ -28,9 +27,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
 
   private router = inject(Router);
 
-  private bookService = inject(BookAdminService);
-
-  private service = inject(LibraryLendingService);
+  private service = inject(BookAdminService);
 
   private authContainer = inject(AuthContainer);
 
@@ -71,7 +68,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
   }
 
   private load() {
-    this.bookService.getOne(this.index).subscribe({
+    this.service.getOne(this.index).subscribe({
       next: response => {
         this.book = response;
       },

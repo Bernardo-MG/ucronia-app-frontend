@@ -9,7 +9,6 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { BookReturnFormComponent } from '../../components/book-return-form/book-return-form.component';
-import { LibraryLendingService } from '../../services/library-lending.service';
 
 @Component({
   selector: 'assoc-book-lending-returning',
@@ -22,9 +21,7 @@ export class BookLendingReturnContainer extends CreateComponent<BookReturned> im
 
   private router = inject(Router);
 
-  private bookService = inject(BookAdminService);
-
-  private service = inject(LibraryLendingService);
+  private service = inject(BookAdminService);
 
   private authContainer = inject(AuthContainer);
 
@@ -54,7 +51,7 @@ export class BookLendingReturnContainer extends CreateComponent<BookReturned> im
   }
 
   private load() {
-    this.bookService.getOne(this.index).subscribe({
+    this.service.getOne(this.index).subscribe({
       next: response => {
         this.book = response;
         this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
