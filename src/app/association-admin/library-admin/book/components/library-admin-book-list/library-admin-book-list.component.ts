@@ -13,7 +13,7 @@ import { SortingProperty } from '@bernardo-mg/request';
 })
 export class LibraryAdminBookListComponent {
 
-  @Input() books: Book[] = [];
+  @Input() public books: Book[] = [];
 
   @Input() public routeLinkAdapter: (data: Book) => string = (data) => '';
 

@@ -4,11 +4,11 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-  selector: 'assoc-book-lending-member-selection',
+  selector: 'assoc-library-admin-book-lending-member-selection',
   imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-  templateUrl: './book-lending-member-selection.component.html'
+  templateUrl: './library-admin-book-lending-member-selection.component.html'
 })
-export class BookLendingMemberSelectionComponent {
+export class LibraryAdminBookLendingMemberSelectionComponent {
 
   @Input() public waiting = false;
 

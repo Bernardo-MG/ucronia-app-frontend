@@ -9,12 +9,13 @@ import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/
 import { LibraryAdminBookTypeListingContainer } from './book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminBookCreationContainer } from './book/containers/library-admin-book-creation/library-admin-book-creation.container';
 import { LibraryAdminBookInfoEditorContainer } from './book/containers/library-admin-book-edition/library-admin-book-edition.container';
+import { LibraryAdminBookLendingLendContainer } from './book/containers/library-admin-book-lending-lending/library-admin-book-lending-lending.container';
+import { LibraryAdminBookLendingReturnContainer } from './book/containers/library-admin-book-lending-returning/library-admin-book-lending-returning.container';
 import { LibraryAdminBookListingContainer } from './book/containers/library-admin-book-listing/library-admin-book-listing.container';
 import { LibraryAdminGameSystemCreateContainer } from './game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container';
 import { LibraryAdminGameSystemInfoEditorContainer } from './game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container';
 import { LibraryAdminGameSystemListingContainer } from './game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container';
-import { BookLendingLendContainer } from './lending/containers/book-lending-lending/book-lending-lending.container';
-import { BookLendingReturnContainer } from './lending/containers/book-lending-returning/book-lending-returning.component';
+import { LibraryAdminLendingListingContainer } from './lending/containers/library-admin-lending-listing/library-admin-lending-listing.container';
 import { LibraryAdminPublisherCreateContainer } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container';
 import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container';
 import { LibraryAdminPublisherListingContainer } from './publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
@@ -78,13 +79,13 @@ const routes: Routes = [
           },
           {
             path: ':number/lend',
-            component: BookLendingLendContainer,
+            component: LibraryAdminBookLendingLendContainer,
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Préstamo' }
           },
           {
             path: ':number/return',
-            component: BookLendingReturnContainer,
+            component: LibraryAdminBookLendingReturnContainer,
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Devolución' }
           }
@@ -159,6 +160,18 @@ const routes: Routes = [
             component: LibraryAdminGameSystemInfoEditorContainer,
             canActivate: [ResourceGuard("library_game_system", "read")],
             data: { breadcrumb: 'Editar sistema' }
+          }
+        ]
+      },
+      {
+        path: 'lendings',
+        data: { breadcrumb: 'Préstamos' },
+        children: [
+          {
+            path: '',
+            component: LibraryAdminLendingListingContainer,
+            canActivate: [ResourceGuard("library_lending", "view")],
+            data: { breadcrumb: '' }
           }
         ]
       }

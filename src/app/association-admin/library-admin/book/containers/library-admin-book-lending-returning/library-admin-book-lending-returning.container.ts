@@ -8,23 +8,20 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
-import { BookReturnFormComponent } from '../../components/book-return-form/book-return-form.component';
-import { LibraryLendingService } from '../../services/library-lending.service';
+import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
 
 @Component({
-  selector: 'assoc-book-lending-returning',
-  imports: [ArticleComponent, BookReturnFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './book-lending-returning.component.html'
+  selector: 'assoc-library-admin-book-lending-returning',
+  imports: [ArticleComponent, LibraryAdminBookReturnFormComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-lending-returning.container.html'
 })
-export class BookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+export class LibraryAdminBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
   private router = inject(Router);
 
-  private bookService = inject(BookAdminService);
-
-  private service = inject(LibraryLendingService);
+  private service = inject(BookAdminService);
 
   private authContainer = inject(AuthContainer);
 
@@ -54,7 +51,7 @@ export class BookLendingReturnContainer extends CreateComponent<BookReturned> im
   }
 
   private load() {
-    this.bookService.getOne(this.index).subscribe({
+    this.service.getOne(this.index).subscribe({
       next: response => {
         this.book = response;
         this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;

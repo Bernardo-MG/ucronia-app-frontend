@@ -18,19 +18,19 @@
                 (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
             </div>
           </div>
-          <assoc-book-lending-member-selection *layoutBlockUi="readingMembers" [values]="members.content"
+          <assoc-library-admin-book-lending-member-selection *layoutBlockUi="readingMembers" [values]="members.content"
             [current]="members.page" [pages]="members.totalPages" (selectMember)="onSelectMember($event)"
             (goToPage)="onGoToMembersPage($event)">
-          </assoc-book-lending-member-selection>
+          </assoc-library-admin-book-lending-member-selection>
         </div>
       </ng-container>
       <ng-container *ngSwitchCase="true">
         <!-- Lend book form -->
         <button type="button" class="btn btn-link" aria-label="Return"
           (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
-        <assoc-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+        <assoc-library-admin-book-lending-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
           [member]="member" [book]="book" (save)="onSave($event)">
-        </assoc-book-lending-form>
+        </assoc-library-admin-book-lending-form>
       </ng-container>
     </ng-container>
   </div>

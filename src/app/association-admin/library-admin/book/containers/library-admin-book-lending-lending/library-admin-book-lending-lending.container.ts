@@ -13,24 +13,21 @@ import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { BookLendingFormComponent } from '../../components/book-lending-form/book-lending-form.component';
-import { BookLendingMemberSelectionComponent } from '../../components/book-lending-member-selection/book-lending-member-selection.component';
-import { LibraryLendingService } from '../../services/library-lending.service';
+import { LibraryAdminBookLendingFormComponent } from '../../components/library-admin-book-lending-form/library-admin-book-lending-form.component';
+import { LibraryAdminBookLendingMemberSelectionComponent } from '../../components/library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
 @Component({
-  selector: 'assoc-book-lending-lending',
-  imports: [CommonModule, BookLendingMemberSelectionComponent, MemberStatusSelectComponent, BookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-  templateUrl: './book-lending-lending.container.html'
+  selector: 'assoc-library-admin-book-lending-lending',
+  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  templateUrl: './library-admin-book-lending-lending.container.html'
 })
-export class BookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
   private router = inject(Router);
 
-  private bookService = inject(BookAdminService);
-
-  private service = inject(LibraryLendingService);
+  private service = inject(BookAdminService);
 
   private authContainer = inject(AuthContainer);
 
@@ -71,7 +68,7 @@ export class BookLendingLendContainer extends CreateComponent<BookLent> implemen
   }
 
   private load() {
-    this.bookService.getOne(this.index).subscribe({
+    this.service.getOne(this.index).subscribe({
       next: response => {
         this.book = response;
       },

@@ -2,18 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { BookLendingLendContainer } from './book-lending-lending.container';
+import { BookLendingService } from '../../services/book-lending.service';
+import { LibraryAdminLendingListingContainer } from './library-admin-lending-listing.container';
 
-describe('BookLendingLendContainer', () => {
-  let component: BookLendingLendContainer;
-  let fixture: ComponentFixture<BookLendingLendContainer>;
+describe('LibraryAdminLendingListingContainer', () => {
+  let component: LibraryAdminLendingListingContainer;
+  let fixture: ComponentFixture<LibraryAdminLendingListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BookLendingLendContainer
+        LibraryAdminLendingListingContainer
       ],
       providers: [
+        BookLendingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -21,7 +23,7 @@ describe('BookLendingLendContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(BookLendingLendContainer);
+    fixture = TestBed.createComponent(LibraryAdminLendingListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
