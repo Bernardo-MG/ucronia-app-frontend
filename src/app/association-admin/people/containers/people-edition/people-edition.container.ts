@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
@@ -18,16 +18,19 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
 
+  private route = inject(ActivatedRoute);
+
+  private router = inject(Router);
+
+  private service = inject(PeopleService);
+
+  private authContainer = inject(AuthContainer);
+
   public view: string = 'details';
 
   private number = -1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: PeopleService,
-    private authContainer: AuthContainer
-  ) {
+  constructor() {
     super(new Person());
   }
 

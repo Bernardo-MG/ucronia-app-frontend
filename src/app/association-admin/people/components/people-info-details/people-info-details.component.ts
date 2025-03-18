@@ -9,8 +9,8 @@ import { PlaceholderDirective } from '@bernardo-mg/layout';
 })
 export class PeopleInfoDetailsComponent {
 
-  @Input() data = new Person();
+  @Input() public data = new Person();
 
-  @Input() waiting = false;
+  @Input() public waiting = false;
 
 }
