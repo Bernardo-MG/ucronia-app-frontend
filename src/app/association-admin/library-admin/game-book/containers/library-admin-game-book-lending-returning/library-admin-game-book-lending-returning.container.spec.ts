@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { LibraryAdminBookLendingReturnContainer } from './library-admin-game-book-lending-returning.container';
+import { LibraryAdminGameBookLendingReturnContainer } from './library-admin-game-book-lending-returning.container';
 
 describe('LibraryAdminGameBookLendingReturnContainer', () => {
-  let component: LibraryAdminBookLendingReturnContainer;
-  let fixture: ComponentFixture<LibraryAdminBookLendingReturnContainer>;
+  let component: LibraryAdminGameBookLendingReturnContainer;
+  let fixture: ComponentFixture<LibraryAdminGameBookLendingReturnContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminBookLendingReturnContainer
+        LibraryAdminGameBookLendingReturnContainer
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
@@ -21,7 +21,7 @@ describe('LibraryAdminGameBookLendingReturnContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminBookLendingReturnContainer);
+    fixture = TestBed.createComponent(LibraryAdminGameBookLendingReturnContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

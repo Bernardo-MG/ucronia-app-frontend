@@ -21,7 +21,7 @@ import { LibraryAdminGameBookLendingMemberSelectionComponent } from '../../compo
   imports: [CommonModule, LibraryAdminGameBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminGameBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
-export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 
   private route = inject(ActivatedRoute);
 

@@ -14,7 +14,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, LibraryAdminGameBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-creation.container.html'
 })
-export class LibraryAdminBookCreationContainer extends CreateComponent<Book> implements OnInit {
+export class LibraryAdminGameBookCreationContainer extends CreateComponent<Book> implements OnInit {
 
   private service = inject(GameBookAdminService);
 

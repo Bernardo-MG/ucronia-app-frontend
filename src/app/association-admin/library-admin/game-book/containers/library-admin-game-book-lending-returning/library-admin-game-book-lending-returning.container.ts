@@ -15,7 +15,7 @@ import { LibraryAdminGameBookReturnFormComponent } from '../../components/librar
   imports: [ArticleComponent, LibraryAdminGameBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-lending-returning.container.html'
 })
-export class LibraryAdminBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 
   private route = inject(ActivatedRoute);
 

@@ -7,16 +7,16 @@ import { BookTypeAdminService } from '@app/association-admin/library-admin/book-
 import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
-import { LibraryAdminBookInfoEditorContainer } from './library-admin-game-book-edition.container';
+import { LibraryAdminGameBookInfoEditorContainer } from './library-admin-game-book-edition.container';
 
 describe('LibraryAdminGameBookInfoEditorContainer', () => {
-  let component: LibraryAdminBookInfoEditorContainer;
-  let fixture: ComponentFixture<LibraryAdminBookInfoEditorContainer>;
+  let component: LibraryAdminGameBookInfoEditorContainer;
+  let fixture: ComponentFixture<LibraryAdminGameBookInfoEditorContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminBookInfoEditorContainer
+        LibraryAdminGameBookInfoEditorContainer
       ],
       providers: [
         GameBookAdminService,
@@ -31,7 +31,7 @@ describe('LibraryAdminGameBookInfoEditorContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminBookInfoEditorContainer);
+    fixture = TestBed.createComponent(LibraryAdminGameBookInfoEditorContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -15,7 +15,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-book-listing.container.html'
 })
-export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
+export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
 
   private authContainer = inject(AuthContainer);
 
