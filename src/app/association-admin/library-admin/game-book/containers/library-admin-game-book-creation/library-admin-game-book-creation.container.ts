@@ -12,7 +12,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 @Component({
   selector: 'assoc-library-admin-game-book-creation',
   imports: [CommonModule, LibraryAdminGameBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-creation.container.html'
+  templateUrl: './library-admin-game-book-creation.container.html'
 })
 export class LibraryAdminGameBookCreationContainer extends CreateComponent<Book> implements OnInit {
 

@@ -13,7 +13,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 @Component({
   selector: 'assoc-library-admin-game-book-listing',
   imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
-  templateUrl: './library-admin-book-listing.container.html'
+  templateUrl: './library-admin-game-book-listing.container.html'
 })
 export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
 

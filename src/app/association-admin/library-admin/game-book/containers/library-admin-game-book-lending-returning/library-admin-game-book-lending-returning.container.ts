@@ -13,7 +13,7 @@ import { LibraryAdminGameBookReturnFormComponent } from '../../components/librar
 @Component({
   selector: 'assoc-library-admin-game-book-lending-returning',
   imports: [ArticleComponent, LibraryAdminGameBookReturnFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-lending-returning.container.html'
+  templateUrl: './library-admin-game-book-lending-returning.container.html'
 })
 export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
 

@@ -19,7 +19,7 @@ import { LibraryAdminGameBookLendingMemberSelectionComponent } from '../../compo
 @Component({
   selector: 'assoc-library-admin-game-book-lending-lending',
   imports: [CommonModule, LibraryAdminGameBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminGameBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
-  templateUrl: './library-admin-book-lending-lending.container.html'
+  templateUrl: './library-admin-game-book-lending-lending.container.html'
 })
 export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
 
