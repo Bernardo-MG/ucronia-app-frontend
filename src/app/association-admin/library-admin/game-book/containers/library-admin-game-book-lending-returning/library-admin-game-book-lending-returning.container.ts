@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { LibraryAdminGameBookReturnFormComponent } from '../../components/library-admin-game-book-return-form/library-admin-game-book-return-form.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-lending-returning',
+  selector: 'assoc-library-admin-game-book-lending-returning',
   imports: [ArticleComponent, LibraryAdminGameBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-lending-returning.container.html'
 })

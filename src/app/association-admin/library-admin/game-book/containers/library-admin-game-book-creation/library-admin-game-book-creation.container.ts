@@ -10,7 +10,7 @@ import { LibraryAdminGameBookCreationFormComponent } from '../../components/libr
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-creation',
+  selector: 'assoc-library-admin-game-book-creation',
   imports: [CommonModule, LibraryAdminGameBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-creation.container.html'
 })

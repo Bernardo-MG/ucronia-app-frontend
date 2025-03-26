@@ -17,7 +17,7 @@ import { LibraryAdminGameBookLendingFormComponent } from '../../components/libra
 import { LibraryAdminGameBookLendingMemberSelectionComponent } from '../../components/library-admin-game-book-lending-member-selection/library-admin-game-book-lending-member-selection.component';
 
 @Component({
-  selector: 'assoc-library-admin-book-lending-lending',
+  selector: 'assoc-library-admin-game-book-lending-lending',
   imports: [CommonModule, LibraryAdminGameBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminGameBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })

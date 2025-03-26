@@ -19,7 +19,7 @@ import { LibraryAdminGameBookEditionFormComponent } from '../../components/libra
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-edition',
+  selector: 'assoc-library-admin-game-book-edition',
   imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-edition.container.html'
 })
