@@ -11,7 +11,7 @@ import { LibraryAdminGameBookListComponent } from '../../components/library-admi
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-listing',
+  selector: 'assoc-library-admin-game-book-listing',
   imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-book-listing.container.html'
 })
