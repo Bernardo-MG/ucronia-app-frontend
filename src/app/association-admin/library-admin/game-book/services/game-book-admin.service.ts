@@ -38,7 +38,7 @@ export class GameBookAdminService {
   constructor(
     clientProvider: AngularCrudClientProvider
   ) {
-    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book');
+    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book/game');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
     this.donorClient = clientProvider.url(environment.apiUrl + '/person');
