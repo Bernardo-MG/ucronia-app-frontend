@@ -114,7 +114,7 @@ export class AuthContainer {
    * @param action permission action
    */
   public hasPermission(resource: string, action: string): boolean {
-    return this.details.containsPermission(resource, action);
+    return this.containsPermission(this.details, resource, action);
   }
 
   /**
@@ -152,4 +152,17 @@ export class AuthContainer {
       this.logout();
     }
   }
+  
+  /**
+   * Checks if the current security details contain the given permission.
+   *
+   * @param details security details.
+   * @param resource permission resource.
+   * @param action permission action.
+   * @returns `true` if the user has the permission, `false` otherwise.
+   */
+  private containsPermission(details: SecurityDetails, resource: string, action: string): boolean {
+    return details.permissions[resource]?.includes(action) ?? false;
+  }
+
 }
