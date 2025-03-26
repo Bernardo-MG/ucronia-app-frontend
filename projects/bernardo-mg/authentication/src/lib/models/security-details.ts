@@ -28,14 +28,4 @@ export class SecurityDetails {
     this.logged = logged;
   }
 
-  /**
-   * Checks if the current security details contain the given permission.
-   *
-   * @param resource permission resource.
-   * @param action permission action.
-   * @returns `true` if the user has the permission, `false` otherwise.
-   */
-  public containsPermission(resource: string, action: string): boolean {
-    return this.permissions[resource]?.includes(action) ?? false;
-  }
 }
