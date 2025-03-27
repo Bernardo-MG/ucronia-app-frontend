@@ -24,11 +24,9 @@ export class LibraryAdminBookLendingLendComponent {
   
   @Input() public failures = new FailureStore();
 
-  @Input()
-  public book = new Book();
+  @Input() public book = new Book();
 
-  @Input()
-  public members = new PaginatedResponse<Member>();
+  @Input() public members = new PaginatedResponse<Member>();
 
   @Output() public save = new EventEmitter<BookLent>();
 

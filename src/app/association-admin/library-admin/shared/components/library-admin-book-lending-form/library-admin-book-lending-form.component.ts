@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
@@ -12,17 +12,21 @@ import { WaitingButtonComponent } from '@bernardo-mg/layout';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-book-lending-form.component.html'
 })
-export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> implements OnChanges {
+export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {
 
-  @Input() public member = new Member();
+  @Input() public set member(value: Member) {
+    this.form.get('person')?.setValue(value.number);
+  }
 
-  @Input() public book = new Book();
+  @Input() public set book(value: Book) {
+    this.form.get('book')?.setValue(value.number);
+  }
 
   @Output() public goToPersonPage = new EventEmitter<number>();
 
   @Output() public goToBookPage = new EventEmitter<number>();
 
-  public today = new Date().toISOString().split('T')[0];;
+  public today = new Date().toISOString().split('T')[0];
 
   constructor(
     fb: FormBuilder
@@ -34,15 +38,6 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
       person: [-1, Validators.required],
       book: [-1, Validators.required]
     });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['member']) {
-      this.form.get('person')?.setValue(this.member.number);
-    }
-    if (changes['book']) {
-      this.form.get('book')?.setValue(this.book.number);
-    }
   }
 
   public onGoToBookPage(page: number) {
