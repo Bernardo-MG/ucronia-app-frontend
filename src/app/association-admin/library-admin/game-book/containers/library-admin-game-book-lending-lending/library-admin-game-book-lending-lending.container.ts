@@ -2,23 +2,20 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
+import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
-import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminBookLendingFormComponent } from '../../../shared/components/library-admin-book-lending-form/library-admin-book-lending-form.component';
-import { LibraryAdminBookLendingMemberSelectionComponent } from '../../../shared/components/library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-game-book-lending-lending',
-  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [CommonModule, ArticleComponent, LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-game-book-lending-lending.container.html'
 })
 export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
@@ -33,17 +30,11 @@ export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<Bo
 
   public book = new Book();
 
-  public filled_bar = 0;
-
   public readingMembers = false;
-
-  public selectedMember = false;
 
   public createPermission = false;
 
   public members = new PaginatedResponse<Member>();
-
-  public member = new Member();
 
   public activeFilter = Active.Active;
 
@@ -97,17 +88,6 @@ export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<Bo
         this.readingMembers = false;
       }
     });
-  }
-
-  public onReturnToMembers() {
-    this.selectedMember = false;
-    this.filled_bar = 0;
-  }
-
-  public onSelectMember(member: Member) {
-    this.member = member;
-    this.selectedMember = true;
-    this.filled_bar = 50;
   }
 
   protected override save(toSave: BookLent): Observable<BookLent> {
