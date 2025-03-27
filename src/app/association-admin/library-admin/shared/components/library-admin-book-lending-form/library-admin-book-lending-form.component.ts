@@ -14,7 +14,7 @@ import { WaitingButtonComponent } from '@bernardo-mg/layout';
 })
 export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {
 
-  @Input() public set member(value: Member) {
+  @Input() public set borrower(value: Member) {
     this.form.get('person')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }

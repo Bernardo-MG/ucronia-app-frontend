@@ -28,7 +28,7 @@
       <button type="button" class="btn btn-link" aria-label="Return"
         (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
       <assoc-library-admin-book-lending-form [waiting]="waiting" [failures]="failures" [readonly]="readonly"
-        [member]="member" [book]="book" (save)="save.emit($event)">
+        [borrower]="member" [book]="book" (save)="save.emit($event)">
       </assoc-library-admin-book-lending-form>
     </ng-container>
   </ng-container>
