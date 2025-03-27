@@ -8,11 +8,11 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
-import { LibraryAdminGameBookReturnFormComponent } from '../../components/library-admin-game-book-return-form/library-admin-game-book-return-form.component';
+import { LibraryAdminBookReturnFormComponent } from '../../../shared/components/library-admin-book-return-form/library-admin-book-return-form.component';
 
 @Component({
   selector: 'assoc-library-admin-game-book-lending-returning',
-  imports: [ArticleComponent, LibraryAdminGameBookReturnFormComponent, ResponsiveShortColumnsDirective],
+  imports: [ArticleComponent, LibraryAdminBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-lending-returning.container.html'
 })
 export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {

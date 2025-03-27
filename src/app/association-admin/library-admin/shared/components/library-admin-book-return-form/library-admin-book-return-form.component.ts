@@ -7,11 +7,11 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } f
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
 
 @Component({
-  selector: 'assoc-library-admin-game-book-return-form',
+  selector: 'assoc-library-admin-book-return-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './library-admin-game-book-return-form.component.html'
+  templateUrl: './library-admin-book-return-form.component.html'
 })
-export class LibraryAdminGameBookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
+export class LibraryAdminBookReturnFormComponent extends FormComponent<BookReturned> implements OnChanges {
 
   @Input() public borrower = new Borrower();
 
