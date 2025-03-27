@@ -16,6 +16,7 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
 
   @Input() public set member(value: Member) {
     this.form.get('person')?.setValue(value.number);
+    this.memberName = value.name.fullName;
   }
 
   @Input() public set book(value: Book) {
@@ -27,6 +28,8 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
   @Output() public goToBookPage = new EventEmitter<number>();
 
   public today = new Date().toISOString().split('T')[0];
+
+  public memberName = '';
 
   constructor(
     fb: FormBuilder
