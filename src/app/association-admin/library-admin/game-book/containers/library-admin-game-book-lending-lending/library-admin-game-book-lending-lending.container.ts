@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
 import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
@@ -12,6 +11,7 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
+import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-lending-lending',
@@ -24,7 +24,7 @@ export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<Bo
 
   private router = inject(Router);
 
-  private service = inject(BookAdminService);
+  private service = inject(GameBookAdminService);
 
   private authContainer = inject(AuthContainer);
 
