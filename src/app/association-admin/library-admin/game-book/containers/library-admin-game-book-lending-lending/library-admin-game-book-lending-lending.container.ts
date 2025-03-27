@@ -13,12 +13,12 @@ import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminGameBookLendingFormComponent } from '../../components/library-admin-game-book-lending-form/library-admin-game-book-lending-form.component';
-import { LibraryAdminGameBookLendingMemberSelectionComponent } from '../../components/library-admin-game-book-lending-member-selection/library-admin-game-book-lending-member-selection.component';
+import { LibraryAdminBookLendingFormComponent } from '../../../shared/components/library-admin-book-lending-form/library-admin-book-lending-form.component';
+import { LibraryAdminBookLendingMemberSelectionComponent } from '../../../shared/components/library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-game-book-lending-lending',
-  imports: [CommonModule, LibraryAdminGameBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminGameBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './library-admin-game-book-lending-lending.container.html'
 })
 export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
