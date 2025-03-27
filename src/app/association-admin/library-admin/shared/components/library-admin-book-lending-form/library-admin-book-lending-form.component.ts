@@ -22,6 +22,8 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
 
   @Output() public goToBookPage = new EventEmitter<number>();
 
+  public today = new Date().toISOString().split('T')[0];;
+
   constructor(
     fb: FormBuilder
   ) {

@@ -38,7 +38,8 @@
           <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
             formInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
             aria-describedby="titleLabel" maxlength="100" placeholder="Subtítulo">
-          <form-input-failure-feedback [failures]="failures.getFailures('title.subtitle')"></form-input-failure-feedback>
+          <form-input-failure-feedback
+            [failures]="failures.getFailures('title.subtitle')"></form-input-failure-feedback>
         </div>
       </div>
       <!-- Language -->
@@ -59,7 +60,7 @@
         <div class="col-sm-10">
           <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
             formInvalidField="publishDate" [backendFailure]="failures.hasFailures('publishDate')"
-            aria-describedby="publishDateLabel" maxlength="100">
+            aria-describedby="publishDateLabel">
           <form-input-failure-feedback [failures]="failures.getFailures('publishDate')"></form-input-failure-feedback>
         </div>
       </div>
