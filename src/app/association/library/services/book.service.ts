@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book } from '@app/models/library/book';
+import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -18,14 +18,14 @@ export class BookService {
     this.client = clientProvider.url(environment.apiUrl + '/library/book');
   }
 
-  public getOne(number: number): Observable<Book> {
+  public getOne(number: number): Observable<GameBook> {
     return this.client
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Book>>()
+      .read<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title')]

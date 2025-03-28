@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
@@ -8,9 +7,9 @@ import { MemberStatusSelectComponent } from '@app/shared/person/components/membe
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
+import { BookInfo } from '../../../../../models/library/book-info';
 import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';
 import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
-import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-lending',

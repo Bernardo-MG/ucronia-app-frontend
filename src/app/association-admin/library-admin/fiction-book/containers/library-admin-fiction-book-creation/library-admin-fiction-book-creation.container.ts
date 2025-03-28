@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Book } from '@app/models/library/book';
 import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
@@ -10,6 +9,7 @@ import { LibraryAdminBookCreationFormComponent } from '../../../shared/component
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { BookInfo } from '@app/models/library/book-info';
+import { GameBook } from '@app/models/library/game-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-creation',
@@ -34,7 +34,7 @@ export class LibraryAdminFictionBookCreationContainer extends CreateComponent<Bo
     return this.service.create(toSave);
   }
 
-  protected override handleSaveSuccess(saved: Book) {
+  protected override handleSaveSuccess(saved: GameBook) {
     super.handleSaveSuccess(saved);
     this.router.navigate(['..'], { relativeTo: this.route });
   }

@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
+import { GameBookAdminService } from '@app/association-admin/library-admin/game-book/services/game-book-admin.service';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookReturnFormComponent } from '../../../shared/components/library-admin-book-return-form/library-admin-book-return-form.component';
-import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-lending-returning',
@@ -21,7 +21,7 @@ export class LibraryAdminFictionBookLendingReturnContainer extends CreateCompone
 
   private router = inject(Router);
 
-  private service = inject(BookAdminService);
+  private service = inject(GameBookAdminService);
 
   private authContainer = inject(AuthContainer);
 

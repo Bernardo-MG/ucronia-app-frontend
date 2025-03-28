@@ -6,7 +6,6 @@ export const ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS: MenuOptions = {
   books: {
     title: 'Libros',
     links: [
-      new AuthMenuLink('Libros', '/association/admin/library/books', 'library_book', IconBookComponent),
       new AuthMenuLink('Juegos', '/association/admin/library/books/game', 'library_book', IconBookComponent),
       new AuthMenuLink('Ficción', '/association/admin/library/books/fiction', 'library_book', IconBookComponent)
     ]

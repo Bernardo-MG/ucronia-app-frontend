@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Book } from '@app/models/library/book';
+import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
@@ -24,7 +24,7 @@ export class LibraryBookInfoContainer implements OnInit {
 
   private index = -1;
 
-  public data = new Book();
+  public data = new GameBook();
 
   constructor(
     private route: ActivatedRoute,
