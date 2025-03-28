@@ -10,6 +10,7 @@ import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
 import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';
 import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
+import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
@@ -24,7 +25,7 @@ export class LibraryAdminBookLendingLendComponent {
 
   @Input() public failures = new FailureStore();
 
-  @Input() public book = new Book();
+  @Input() public book = new BookInfo();
 
   @Input() public members = new PaginatedResponse<Member>();
 

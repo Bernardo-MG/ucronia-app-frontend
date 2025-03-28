@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { Book } from '@app/models/library/book';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { Person } from '@app/models/person/person';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -12,11 +12,11 @@ import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-  selector: 'assoc-library-admin-book-donors-form',
+  selector: 'assoc-library-admin-fiction-book-donors-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './library-admin-book-donors-form.component.html'
+  templateUrl: './library-admin-fiction-book-donors-form.component.html'
 })
-export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
+export class LibraryAdminFictionBookDonorsFormComponent extends FormComponent<FictionBook> {
 
   @Input() public donors = new PaginatedResponse<Person>();
 

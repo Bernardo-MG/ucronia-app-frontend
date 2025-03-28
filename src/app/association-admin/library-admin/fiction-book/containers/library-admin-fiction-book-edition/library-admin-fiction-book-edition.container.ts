@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
-import { BookType } from '@app/models/library/book-type';
-import { GameSystem } from '@app/models/library/game-system';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
@@ -13,14 +12,13 @@ import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } fro
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { LibraryAdminFictionBookDetailsComponent } from '../../components/library-admin-fiction-book-details/library-admin-fiction-book-details.component';
-import { LibraryAdminBookDonorsFormComponent } from '../../../shared/components/library-admin-book-donors-form/library-admin-book-donors-form.component';
+import { LibraryAdminFictionBookDonorsFormComponent } from '../../components/library-admin-fiction-book-donors-form/library-admin-fiction-book-donors-form.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
-import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminFictionBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
 export class LibraryAdminFictionBookInfoEditorContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {

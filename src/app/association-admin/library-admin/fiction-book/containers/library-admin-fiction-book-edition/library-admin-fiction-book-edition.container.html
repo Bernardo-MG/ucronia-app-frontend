@@ -10,8 +10,7 @@
                 <assoc-library-admin-fiction-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
                   [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
-                  (save)="onSave($event)" (reject)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
-                  (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
+                  (save)="onSave($event)" (reject)="onCancel()" (goToAuthorPage)="onGoToAuthorPage($event)"
                   (goToPublisherPage)="onGoToPublisherPage($event)">
                 </assoc-library-admin-fiction-book-edition-form>
               </layout-card-body>
@@ -20,10 +19,10 @@
           <ng-container *ngSwitchCase="'donors'">
             <layout-card>
               <layout-card-body>
-                <assoc-library-admin-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
+                <assoc-library-admin-fiction-book-donors-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSave($event)"
                   (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
-                </assoc-library-admin-book-donors-form>
+                </assoc-library-admin-fiction-book-donors-form>
               </layout-card-body>
             </layout-card>
           </ng-container>

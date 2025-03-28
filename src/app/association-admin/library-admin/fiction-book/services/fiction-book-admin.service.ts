@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Author } from '@app/models/library/author';
+import { BookInfo } from '@app/models/library/book-info';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { BookType } from '@app/models/library/book-type';
@@ -42,7 +43,7 @@ export class FictionBookAdminService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: FictionBook): Observable<FictionBook> {
+  public create(data: BookInfo): Observable<FictionBook> {
     return this.bookClient
       .create<SimpleResponse<FictionBook>>(data)
       .pipe(map(r => r.content));

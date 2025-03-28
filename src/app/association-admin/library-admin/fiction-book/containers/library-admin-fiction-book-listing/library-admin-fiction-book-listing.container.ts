@@ -10,6 +10,7 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
 import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 import { FictionBook } from '@app/models/library/fiction-book';
+import { BookInfo } from '@app/models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-listing',
@@ -79,7 +80,7 @@ export class LibraryAdminFictionBookListingContainer implements OnInit, OnChange
     });
   }
 
-  public routeLinkAdapter(data: FictionBook): string {
+  public routeLinkAdapter(data: BookInfo): string {
     return `${data.number}`;
   }
 

@@ -9,13 +9,14 @@ import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 import { FictionBook } from '@app/models/library/fiction-book';
+import { BookInfo } from '@app/models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-creation',
   imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-creation.container.html'
 })
-export class LibraryAdminFictionBookCreationContainer extends CreateComponent<FictionBook> implements OnInit {
+export class LibraryAdminFictionBookCreationContainer extends CreateComponent<BookInfo> implements OnInit {
 
   private service = inject(FictionBookAdminService);
 
@@ -29,7 +30,7 @@ export class LibraryAdminFictionBookCreationContainer extends CreateComponent<Fi
     this.languages = this.service.getLanguages();
   }
 
-  protected override save(toSave: FictionBook): Observable<FictionBook> {
+  protected override save(toSave: BookInfo): Observable<FictionBook> {
     return this.service.create(toSave);
   }
 

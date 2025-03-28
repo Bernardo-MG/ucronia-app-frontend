@@ -10,6 +10,7 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
 import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 import { GameBook } from '@app/models/library/game-book';
+import { BookInfo } from '@app/models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-game-book-listing',
@@ -79,7 +80,7 @@ export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
     });
   }
 
-  public routeLinkAdapter(data: GameBook): string {
+  public routeLinkAdapter(data: BookInfo): string {
     return `${data.number}`;
   }
 

@@ -58,20 +58,6 @@
             {{publishers}}
           </div>
         </div>
-        <!-- Book type -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Tipo</div>
-          <div class="col-sm-9" *layoutPlaceholder="waiting">
-            {{data.bookType?.name}}
-          </div>
-        </div>
-        <!-- Game system -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Sistema</div>
-          <div class="col-sm-9" *layoutPlaceholder="waiting">
-            {{data.gameSystem?.name}}
-          </div>
-        </div>
       </layout-card-body>
     </ng-container>
     <ng-container *ngSwitchCase="'donors'">

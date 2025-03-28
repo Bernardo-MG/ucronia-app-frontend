@@ -13,6 +13,7 @@ import { Person } from '@app/models/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
+import { BookInfo } from '../../../../models/library/book-info';
 
 @Injectable({
   providedIn: "root"
@@ -48,9 +49,9 @@ export class GameBookAdminService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: GameBook): Observable<GameBook> {
+  public create(data: BookInfo): Observable<BookInfo> {
     return this.bookClient
-      .create<SimpleResponse<GameBook>>(data)
+      .create<SimpleResponse<BookInfo>>(data)
       .pipe(map(r => r.content));
   }
 

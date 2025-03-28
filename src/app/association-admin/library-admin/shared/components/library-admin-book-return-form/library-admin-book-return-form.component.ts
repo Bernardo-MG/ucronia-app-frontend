@@ -6,6 +6,7 @@ import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingButtonComponent } from '@bernardo-mg/layout';
+import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-return-form',
@@ -19,7 +20,7 @@ export class LibraryAdminBookReturnFormComponent extends FormComponent<BookRetur
     this.memberName = value.name.fullName;
   }
 
-  @Input() public set book(value: Book) {
+  @Input() public set book(value: BookInfo) {
     this.form.get('book')?.setValue(value.number);
   }
 

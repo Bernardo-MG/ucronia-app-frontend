@@ -8,13 +8,14 @@ import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 import { GameBook } from '@app/models/library/game-book';
+import { BookInfo } from '@app/models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-game-book-creation',
   imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-creation.container.html'
 })
-export class LibraryAdminGameBookCreationContainer extends CreateComponent<GameBook> implements OnInit {
+export class LibraryAdminGameBookCreationContainer extends CreateComponent<BookInfo> implements OnInit {
 
   private service = inject(GameBookAdminService);
 
@@ -28,11 +29,11 @@ export class LibraryAdminGameBookCreationContainer extends CreateComponent<GameB
     this.languages = this.service.getLanguages();
   }
 
-  protected override save(toSave: GameBook): Observable<GameBook> {
+  protected override save(toSave: BookInfo): Observable<BookInfo> {
     return this.service.create(toSave);
   }
 
-  protected override handleSaveSuccess(saved: GameBook) {
+  protected override handleSaveSuccess(saved: BookInfo) {
     super.handleSaveSuccess(saved);
     this.router.navigate(['..'], { relativeTo: this.route });
   }
