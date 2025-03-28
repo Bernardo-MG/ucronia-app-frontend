@@ -5,11 +5,11 @@ import { Language } from '@app/models/library/language';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-book-details',
+    selector: 'assoc-library-game-book-details',
     imports: [CommonModule, PlaceholderDirective],
-    templateUrl: './library-book-details.component.html'
+    templateUrl: './library-game-book-details.component.html'
 })
-export class LibraryBookDetailsComponent {
+export class LibraryGameBookDetailsComponent {
 
   @Input() data = new GameBook();
 

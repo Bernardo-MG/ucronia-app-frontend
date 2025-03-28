@@ -4,16 +4,16 @@ import { ActivatedRoute } from '@angular/router';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
-import { LibraryBookDetailsComponent } from '../../components/library-book-details/library-book-details.component';
+import { LibraryGameBookDetailsComponent } from '../../components/library-game-book-details/library-game-book-details.component';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
-    selector: 'assoc-library-book-info',
-    imports: [CommonModule, LibraryBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './library-book-info.container.html'
+    selector: 'assoc-library-game-book-info',
+    imports: [CommonModule, LibraryGameBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
+    templateUrl: './library-game-book-info.container.html'
 })
-export class LibraryBookInfoContainer implements OnInit {
+export class LibraryBookGameInfoContainer implements OnInit {
 
   public languages: Language[] = [];
 

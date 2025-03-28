@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { LibraryBookInfoContainer } from './containers/library-book-info/library-book-info.container';
-import { LibraryListingContainer } from './containers/library-listing/library-listing.container';
+import { LibraryBookGameInfoContainer } from './containers/library-game-book-info/library-game-book-info.container';
+import { LibraryGameListingContainer } from './containers/library-game-listing/library-game-listing.container';
 
 
 const routes: Routes = [
@@ -12,13 +12,13 @@ const routes: Routes = [
     children: [
           {
             path: '',
-            component: LibraryListingContainer,
+            component: LibraryGameListingContainer,
             canActivate: [ResourceGuard("library", "view")],
             data: { breadcrumb: '' }
           },
           {
             path: ':index',
-            component: LibraryBookInfoContainer,
+            component: LibraryBookGameInfoContainer,
             canActivate: [ResourceGuard("library_book", "read")],
             data: { breadcrumb: 'Libro' }
           }

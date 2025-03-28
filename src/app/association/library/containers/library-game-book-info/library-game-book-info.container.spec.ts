@@ -1,16 +1,16 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookService } from '../../services/book.service';
-import { LibraryBookInfoContainer } from './library-book-info.container';
+import { LibraryBookGameInfoContainer } from './library-game-book-info.container';
 import { By } from '@angular/platform-browser';
-import { Book } from '@app/models/library/book';
 import { of, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { GameBook } from '@app/models/library/game-book';
 
 describe('LibraryBookInfoContainer', () => {
-  let component: LibraryBookInfoContainer;
-  let fixture: ComponentFixture<LibraryBookInfoContainer>;
+  let component: LibraryBookGameInfoContainer;
+  let fixture: ComponentFixture<LibraryBookGameInfoContainer>;
   let mockService: jasmine.SpyObj<BookService>;
   const languages = [{ code: 'eng', name: 'English' }, { code: 'esp', name: 'Spanish' }];
 
@@ -19,7 +19,7 @@ describe('LibraryBookInfoContainer', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        LibraryBookInfoContainer
+        LibraryBookGameInfoContainer
       ],
       providers: [
         { provide: BookService, useValue: mockService },
@@ -35,7 +35,7 @@ describe('LibraryBookInfoContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookInfoContainer);
+    fixture = TestBed.createComponent(LibraryBookGameInfoContainer);
     component = fixture.componentInstance;
   });
 
@@ -44,7 +44,7 @@ describe('LibraryBookInfoContainer', () => {
   });
 
   it('should initialize with correct data', () => {
-    const mockBook: Book =
+    const mockBook: GameBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },
@@ -78,11 +78,11 @@ describe('LibraryBookInfoContainer', () => {
     fixture.detectChanges();
 
     expect(component["waiting"]).toBeFalse();
-    expect(component.data).toEqual(new Book());
+    expect(component.data).toEqual(new GameBook());
   });
 
   it('should call load when index param changes', () => {
-    const mockBook: Book =
+    const mockBook: GameBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },
@@ -108,7 +108,7 @@ describe('LibraryBookInfoContainer', () => {
   });
 
   it('should render child components with correct inputs', () => {
-    const mockBook: Book =
+    const mockBook: GameBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },

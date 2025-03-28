@@ -8,11 +8,11 @@ import { LibraryBookListComponent } from '../../components/library-book-list/lib
 import { BookService } from '../../services/book.service';
 
 @Component({
-    selector: 'assoc-library-listing',
+    selector: 'assoc-library-game-listing',
     imports: [RouterModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent, CardComponent, CardBodyComponent, CardFooterComponent],
-    templateUrl: './library-listing.container.html'
+    templateUrl: './library-game-listing.container.html'
 })
-export class LibraryListingContainer implements OnInit {
+export class LibraryGameListingContainer implements OnInit {
 
   public data = new PaginatedResponse<GameBook>();
 
