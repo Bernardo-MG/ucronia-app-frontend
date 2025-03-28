@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BookInfo } from '@app/models/library/book-info';
 import { GameBook } from '@app/models/library/game-book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
@@ -55,7 +56,7 @@ export class LibraryGameListingContainer implements OnInit {
     });
   }
 
-  public routeLinkAdapter(data: GameBook): string {
+  public routeLinkAdapter(data: BookInfo): string {
     return `${data.number}`;
   }
 
