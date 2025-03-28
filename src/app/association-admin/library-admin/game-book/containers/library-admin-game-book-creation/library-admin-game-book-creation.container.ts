@@ -6,12 +6,12 @@ import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
-import { LibraryAdminGameBookCreationFormComponent } from '../../components/library-admin-game-book-creation-form/library-admin-game-book-creation-form.component';
+import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-creation',
-  imports: [CommonModule, LibraryAdminGameBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-creation.container.html'
 })
 export class LibraryAdminGameBookCreationContainer extends CreateComponent<Book> implements OnInit {

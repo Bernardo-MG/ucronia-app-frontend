@@ -7,11 +7,11 @@ import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-  selector: 'assoc-library-admin-game-book-creation-form',
+  selector: 'assoc-library-admin-book-creation-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './library-admin-game-book-creation-form.component.html'
+  templateUrl: './library-admin-book-creation-form.component.html'
 })
-export class LibraryAdminGameBookCreationFormComponent extends FormComponent<Book> {
+export class LibraryAdminBookCreationFormComponent extends FormComponent<Book> {
 
   @Input() public languages: Language[] = [];
 
