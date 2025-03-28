@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
-import { Book } from '@app/models/library/book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -10,6 +9,7 @@ import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, C
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
+import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-listing',
@@ -28,7 +28,7 @@ export class LibraryAdminFictionBookListingContainer implements OnInit, OnChange
 
   @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
 
-  public data = new PaginatedResponse<Book>();
+  public data = new PaginatedResponse<FictionBook>();
 
   /**
    * Loading flag.
@@ -79,7 +79,7 @@ export class LibraryAdminFictionBookListingContainer implements OnInit, OnChange
     });
   }
 
-  public routeLinkAdapter(data: Book): string {
+  public routeLinkAdapter(data: FictionBook): string {
     return `${data.number}`;
   }
 

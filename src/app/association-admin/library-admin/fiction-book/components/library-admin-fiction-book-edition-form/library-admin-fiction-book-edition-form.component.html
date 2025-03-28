@@ -64,34 +64,6 @@
           <form-input-failure-feedback [failures]="failures.getFailures('publishDate')"></form-input-failure-feedback>
         </div>
       </div>
-      <!-- Book type -->
-      <div class="row mb-2">
-        <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
-        <div class="col-sm-9">
-          <input type="text" [value]="bookType?.name" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
-            class="form-control" aria-describedby="bookTypeLabel">
-        </div>
-        <div class="col-sm-1">
-          <button (click)="onShowBookTypeSelection()" [disabled]="!formEnabled" type="button"
-            class="btn btn-link link-dark" role="button" aria-label="Pick book type">
-            <icon-search></icon-search>
-          </button>
-        </div>
-      </div>
-      <!-- Game system -->
-      <div class="row mb-2">
-        <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
-        <div class="col-sm-9">
-          <input type="text" [value]="gameSystem?.name" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
-            class="form-control" aria-describedby="gameSystemLabel">
-        </div>
-        <div class="col-sm-1">
-          <button (click)="onShowGameSystemSelection()" [disabled]="!formEnabled" type="button"
-            class="btn btn-link link-dark" role="button" aria-label="Pick game system">
-            <icon-search></icon-search>
-          </button>
-        </div>
-      </div>
       <!-- Publishers -->
       <div class="row mb-2">
         <div class="col-sm-12">
@@ -171,17 +143,6 @@
       <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
         [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
     </form>
-  </ng-container>
-  <ng-container *ngSwitchCase="'book_type'">
-    <assoc-library-admin-book-type-selection [values]="bookTypesSelection.content" [current]="bookTypesSelection.page"
-      [pages]="bookTypesSelection.totalPages" (choose)="onSelectBookType($event)"
-      (goToPage)="this.goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
-  </ng-container>
-  <ng-container *ngSwitchCase="'game_system'">
-    <assoc-library-admin-game-system-selection [values]="gameSystemsSelection.content"
-      [current]="gameSystemsSelection.page" [pages]="gameSystemsSelection.totalPages"
-      (choose)="onSelectGameSystem($event)"
-      (goToPage)="this.goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
   </ng-container>
   <ng-container *ngSwitchCase="'author'">
     <assoc-library-admin-author-selection [values]="authorsSelection.content" [current]="authorsSelection.page"

@@ -8,13 +8,14 @@ import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } fro
 import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
+import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-creation',
   imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-creation.container.html'
 })
-export class LibraryAdminFictionBookCreationContainer extends CreateComponent<Book> implements OnInit {
+export class LibraryAdminFictionBookCreationContainer extends CreateComponent<FictionBook> implements OnInit {
 
   private service = inject(FictionBookAdminService);
 
@@ -28,7 +29,7 @@ export class LibraryAdminFictionBookCreationContainer extends CreateComponent<Bo
     this.languages = this.service.getLanguages();
   }
 
-  protected override save(toSave: Book): Observable<Book> {
+  protected override save(toSave: FictionBook): Observable<FictionBook> {
     return this.service.create(toSave);
   }
 

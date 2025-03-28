@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { BookType } from '@app/models/library/book-type';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
@@ -23,11 +23,7 @@ export class FictionBookAdminService {
 
   private readonly authorClient;
 
-  private readonly bookTypeClient;
-
   private readonly donorClient;
-
-  private readonly gameSystemClient;
 
   private readonly publisherClient;
 
@@ -38,33 +34,31 @@ export class FictionBookAdminService {
   constructor(
     clientProvider: AngularCrudClientProvider
   ) {
-    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book/game');
+    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
-    this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
     this.donorClient = clientProvider.url(environment.apiUrl + '/person');
-    this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: Book): Observable<Book> {
+  public create(data: FictionBook): Observable<FictionBook> {
     return this.bookClient
-      .create<SimpleResponse<Book>>(data)
+      .create<SimpleResponse<FictionBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Book): Observable<Book> {
+  public update(number: number, data: FictionBook): Observable<FictionBook> {
     return this.bookClient
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Book>>(data)
+      .update<SimpleResponse<FictionBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(number: number): Observable<Book> {
+  public getOne(number: number): Observable<FictionBook> {
     return this.bookClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Book>>()
+      .read<SimpleResponse<FictionBook>>()
       .pipe(map(r => r.content));
   }
 
@@ -75,7 +69,7 @@ export class FictionBookAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
@@ -89,28 +83,6 @@ export class FictionBookAdminService {
 
   public getLanguages(): Language[] {
     return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
-  }
-
-  public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-
-    return this.bookTypeClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
-  }
-
-  public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem>> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-
-    return this.gameSystemClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
   }
 
   public getAuthors(page: number): Observable<PaginatedResponse<Author>> {

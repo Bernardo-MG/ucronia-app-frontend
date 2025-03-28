@@ -2,31 +2,23 @@ import { CommonModule, } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
-import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
-import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
-import { BookType } from '@app/models/library/book-type';
-import { GameSystem } from '@app/models/library/game-system';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
-import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
+import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
   templateUrl: './library-admin-fiction-book-edition-form.component.html'
 })
-export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<Book> {
-
-  @Input() public bookTypesSelection = new PaginatedResponse<BookType>();
-
-  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem>();
+export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<FictionBook> {
 
   @Input() public authorsSelection = new PaginatedResponse<Author>();
 
@@ -60,22 +52,6 @@ export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<B
     this.form.get('publishers')?.setValue(data);
   }
 
-  public get bookType(): BookType | undefined {
-    return this.form.get('bookType').value;
-  }
-
-  public set bookType(data: BookType | undefined) {
-    this.form.get('bookType').setValue(data);
-  }
-
-  public get gameSystem(): GameSystem | undefined {
-    return this.form.get('gameSystem').value;
-  }
-
-  public set gameSystem(data: GameSystem | undefined) {
-    this.form.get('gameSystem').setValue(data);
-  }
-
   constructor(
     fb: FormBuilder
   ) {
@@ -103,30 +79,12 @@ export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<B
     });
   }
 
-  public onShowBookTypeSelection() {
-    this.view = 'book_type';
-  }
-
-  public onShowGameSystemSelection() {
-    this.view = 'game_system';
-  }
-
   public onShowAuthorSelection() {
     this.view = 'author';
   }
 
   public onShowPublisherSelection() {
     this.view = 'publisher';
-  }
-
-  public onSelectBookType(bookType: BookType) {
-    this.bookType = bookType;
-    this.view = 'form';
-  }
-
-  public onSelectGameSystem(gameSystem: GameSystem) {
-    this.gameSystem = gameSystem;
-    this.view = 'form';
   }
 
   public onSelectAuthor(author: Author) {

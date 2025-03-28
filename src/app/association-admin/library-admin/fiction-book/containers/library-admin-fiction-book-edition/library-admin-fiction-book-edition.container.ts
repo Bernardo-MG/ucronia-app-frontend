@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
@@ -17,13 +16,14 @@ import { LibraryAdminFictionBookDetailsComponent } from '../../components/librar
 import { LibraryAdminBookDonorsFormComponent } from '../../../shared/components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
+import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
   imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
-export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
+export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
@@ -46,10 +46,6 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
 
   public readingDonors = false;
 
-  public bookTypesSelection = new PaginatedResponse<BookType>();
-
-  public gameSystemsSelection = new PaginatedResponse<GameSystem>();
-
   public authorsSelection = new PaginatedResponse<Author>();
 
   public publishersSelection = new PaginatedResponse<Publisher>();
@@ -67,7 +63,7 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
   public view: string = '';
 
   constructor() {
-    super(new Book());
+    super(new FictionBook());
   }
 
   public ngOnInit(): void {
@@ -87,8 +83,6 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
     });
 
     // Load initial data
-    this.onGoToBookTypePage(0);
-    this.onGoToGameSystemPage(0);
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
@@ -100,38 +94,6 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
   public onStartEditingView(view: string): void {
     this.view = view;
     super.onStartEditing();
-  }
-
-  public onGoToBookTypePage(page: number) {
-    this.readingBookTypes = true;
-    this.service.getBookTypes(page).subscribe({
-      next: response => {
-        this.bookTypesSelection = response;
-
-        // Reactivate view
-        this.readingBookTypes = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingBookTypes = false;
-      }
-    });
-  }
-
-  public onGoToGameSystemPage(page: number) {
-    this.readingGameSystems = true;
-    this.service.getGameSystems(page).subscribe({
-      next: response => {
-        this.gameSystemsSelection = response;
-
-        // Reactivate view
-        this.readingGameSystems = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingGameSystems = false;
-      }
-    });
   }
 
   public onGoToAuthorPage(page: number) {
@@ -190,11 +152,11 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
     });
   }
 
-  protected override read(): Observable<Book> {
+  protected override read(): Observable<FictionBook> {
     return this.service.getOne(this.index);
   }
 
-  protected override save(toSave: Book): Observable<Book> {
+  protected override save(toSave: FictionBook): Observable<FictionBook> {
     return this.service.update(this.data.number, toSave);
   }
 
