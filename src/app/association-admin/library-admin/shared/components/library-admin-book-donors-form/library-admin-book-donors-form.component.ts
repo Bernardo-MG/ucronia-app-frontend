@@ -12,11 +12,11 @@ import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-  selector: 'assoc-library-admin-game-book-donors-form',
+  selector: 'assoc-library-admin-book-donors-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './library-admin-game-book-donors-form.component.html'
+  templateUrl: './library-admin-book-donors-form.component.html'
 })
-export class LibraryAdminGameBookDonorsFormComponent extends FormComponent<Book> {
+export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
 
   @Input() public donors = new PaginatedResponse<Person>();
 

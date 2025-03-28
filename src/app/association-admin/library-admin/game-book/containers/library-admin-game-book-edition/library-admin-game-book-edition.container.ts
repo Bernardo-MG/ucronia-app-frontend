@@ -14,13 +14,13 @@ import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } fro
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
-import { LibraryAdminGameBookDonorsFormComponent } from '../../components/library-admin-game-book-donors-form/library-admin-game-book-donors-form.component';
+import { LibraryAdminBookDonorsFormComponent } from '../../../shared/components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
