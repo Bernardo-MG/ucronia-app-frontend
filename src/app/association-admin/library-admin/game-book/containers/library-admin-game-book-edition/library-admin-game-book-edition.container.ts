@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
@@ -17,13 +16,14 @@ import { LibraryAdminGameBookDetailsComponent } from '../../components/library-a
 import { LibraryAdminBookDonorsFormComponent } from '../../../shared/components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
+import { GameBook } from '@app/models/library/game-book';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
   imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
-export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<Book> implements OnInit {
+export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<GameBook> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
@@ -67,7 +67,7 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
   public view: string = '';
 
   constructor() {
-    super(new Book());
+    super(new GameBook());
   }
 
   public ngOnInit(): void {
@@ -190,11 +190,11 @@ export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusCom
     });
   }
 
-  protected override read(): Observable<Book> {
+  protected override read(): Observable<GameBook> {
     return this.service.getOne(this.index);
   }
 
-  protected override save(toSave: Book): Observable<Book> {
+  protected override save(toSave: GameBook): Observable<GameBook> {
     return this.service.update(this.data.number, toSave);
   }
 

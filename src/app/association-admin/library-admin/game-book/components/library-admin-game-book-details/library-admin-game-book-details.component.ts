@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
-import { Book } from '@app/models/library/book';
+import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
@@ -15,7 +15,7 @@ import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderCompon
 })
 export class LibraryAdminGameBookDetailsComponent {
 
-  @Input() public data = new Book();
+  @Input() public data = new GameBook();
 
   @Input() public showMenu = false;
 

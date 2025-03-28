@@ -6,8 +6,8 @@ import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/l
 import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookType } from '@app/models/library/book-type';
+import { GameBook } from '@app/models/library/game-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
@@ -22,7 +22,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
   templateUrl: './library-admin-game-book-edition-form.component.html'
 })
-export class LibraryAdminGameBookEditionFormComponent extends FormComponent<Book> {
+export class LibraryAdminGameBookEditionFormComponent extends FormComponent<GameBook> {
 
   @Input() public bookTypesSelection = new PaginatedResponse<BookType>();
 

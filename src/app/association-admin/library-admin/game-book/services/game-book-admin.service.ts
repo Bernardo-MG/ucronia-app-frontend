@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { BookType } from '@app/models/library/book-type';
+import { GameBook } from '@app/models/library/game-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
@@ -48,23 +48,23 @@ export class GameBookAdminService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: Book): Observable<Book> {
+  public create(data: GameBook): Observable<GameBook> {
     return this.bookClient
-      .create<SimpleResponse<Book>>(data)
+      .create<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Book): Observable<Book> {
+  public update(number: number, data: GameBook): Observable<GameBook> {
     return this.bookClient
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Book>>(data)
+      .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(number: number): Observable<Book> {
+  public getOne(number: number): Observable<GameBook> {
     return this.bookClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Book>>()
+      .read<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
   }
 
@@ -75,7 +75,7 @@ export class GameBookAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
