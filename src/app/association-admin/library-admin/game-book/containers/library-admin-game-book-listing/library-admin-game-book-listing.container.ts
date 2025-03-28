@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
 import { Book } from '@app/models/library/book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -12,7 +13,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-listing',
-  imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-game-book-listing.container.html'
 })
 export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
