@@ -24,6 +24,11 @@ import { LibraryAdminLendingListingContainer } from './lending/containers/librar
 import { LibraryAdminPublisherCreateContainer } from './publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container';
 import { LibraryAdminPublisherInfoEditorContainer } from './publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container';
 import { LibraryAdminPublisherListingContainer } from './publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container';
+import { LibraryAdminFictionBookCreationContainer } from './fiction-book/containers/library-admin-fiction-book-creation/library-admin-fiction-book-creation.container';
+import { LibraryAdminFictionBookLendingLendContainer } from './fiction-book/containers/library-admin-fiction-book-lending-lending/library-admin-fiction-book-lending-lending.container';
+import { LibraryAdminFictionBookLendingReturnContainer } from './fiction-book/containers/library-admin-fiction-book-lending-returning/library-admin-fiction-book-lending-returning.container';
+import { LibraryAdminFictionBookListingContainer } from './fiction-book/containers/library-admin-fiction-book-listing/library-admin-fiction-book-listing.container';
+import { LibraryAdminFictionBookInfoEditorContainer } from './fiction-book/containers/library-admin-fiction-book-edition/library-admin-fiction-book-edition.container';
 
 
 const routes: Routes = [
@@ -101,6 +106,42 @@ const routes: Routes = [
               {
                 path: ':number/return',
                 component: LibraryAdminGameBookLendingReturnContainer,
+                canActivate: [ResourceGuard("library_lending", "update")],
+                data: { breadcrumb: 'Devolución' }
+              }
+            ]
+          },
+          {
+            path: 'fiction',
+            data: { breadcrumb: 'Ficción' },
+            children: [
+              {
+                path: '',
+                component: LibraryAdminFictionBookListingContainer,
+                canActivate: [ResourceGuard("library_book", "view")],
+                data: { breadcrumb: '' }
+              },
+              {
+                path: 'register',
+                component: LibraryAdminFictionBookCreationContainer,
+                canActivate: [ResourceGuard("library_book", "create")],
+                data: { breadcrumb: 'Registrar libro' }
+              },
+              {
+                path: ':number',
+                component: LibraryAdminFictionBookInfoEditorContainer,
+                canActivate: [ResourceGuard("library_book", "read")],
+                data: { breadcrumb: 'Editar libro' }
+              },
+              {
+                path: ':number/lend',
+                component: LibraryAdminFictionBookLendingLendContainer,
+                canActivate: [ResourceGuard("library_lending", "update")],
+                data: { breadcrumb: 'Préstamo' }
+              },
+              {
+                path: ':number/return',
+                component: LibraryAdminFictionBookLendingReturnContainer,
                 canActivate: [ResourceGuard("library_lending", "update")],
                 data: { breadcrumb: 'Devolución' }
               }

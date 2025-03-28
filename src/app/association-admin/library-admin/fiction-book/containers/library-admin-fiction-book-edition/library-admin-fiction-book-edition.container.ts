@@ -23,7 +23,7 @@ import { FictionBook } from '@app/models/library/fiction-book';
   imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
-export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {
+export class LibraryAdminFictionBookInfoEditorContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
