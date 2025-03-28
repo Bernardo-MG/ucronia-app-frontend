@@ -8,12 +8,12 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { LibraryAdminGameBookListComponent } from '../../components/library-admin-game-book-list/library-admin-game-book-list.component';
+import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
 import { GameBookAdminService } from '../../services/game-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-listing',
-  imports: [CommonModule, RouterModule, LibraryAdminGameBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-game-book-listing.container.html'
 })
 export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
