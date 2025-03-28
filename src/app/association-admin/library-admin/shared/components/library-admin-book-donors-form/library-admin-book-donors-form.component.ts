@@ -21,7 +21,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   @Input() public donors = new PaginatedResponse<Person>();
 
   @Output() public goToDonorPage = new EventEmitter<number>();
-  
+
   public selectingDonor = false;
 
   public get donation(): Donation | undefined {

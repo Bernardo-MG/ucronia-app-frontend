@@ -21,7 +21,7 @@ export class LibraryAdminBookLendingLendComponent {
   @Input() public readonly = false;
 
   @Input() public waiting = false;
-  
+
   @Input() public failures = new FailureStore();
 
   @Input() public book = new Book();

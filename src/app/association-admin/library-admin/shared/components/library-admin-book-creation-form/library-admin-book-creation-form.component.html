@@ -19,7 +19,8 @@
     </div>
     <div formGroupName="title" class="col-sm-3">
       <input type="text" id="titleInput" formControlName="title" class="form-control" formInvalidField="title.title"
-        [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100" placeholder="Título">
+        [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
+        placeholder="Título">
       <form-input-failure-feedback [failures]="failures.getFailures('title.title')"></form-input-failure-feedback>
     </div>
     <div formGroupName="title" class="col-sm-3">
