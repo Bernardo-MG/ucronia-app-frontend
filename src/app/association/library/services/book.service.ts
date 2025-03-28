@@ -42,7 +42,7 @@ export class BookService {
   }
 
   public getOneFictionBook(number: number): Observable<FictionBook> {
-    return this.gameClient
+    return this.fictionClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
@@ -54,7 +54,7 @@ export class BookService {
       [new SortingProperty('title')]
     );
 
-    return this.gameClient
+    return this.fictionClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
