@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { LibraryBookGameInfoContainer } from './containers/library-game-book-info/library-game-book-info.container';
+import { LibraryBookGameInfoContainer } from './containers/library-fiction-book-info/library-fiction-book-info.container';
 import { LibraryGameListingContainer } from './containers/library-game-listing/library-game-listing.container';
 
 

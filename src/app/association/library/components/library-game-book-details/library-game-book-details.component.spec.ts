@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryGameBookDetailsComponent } from './library-game-book-details.component';
 
-describe('LibraryBookDetailsComponent', () => {
+describe('LibraryGameBookDetailsComponent', () => {
   let component: LibraryGameBookDetailsComponent;
   let fixture: ComponentFixture<LibraryGameBookDetailsComponent>;
 
