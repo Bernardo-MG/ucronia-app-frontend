@@ -1,0 +1,127 @@
+<layout-card>
+  <layout-card-header>
+    <h2 *layoutPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</h2>
+    <!-- Tabs -->
+    <layout-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></layout-card-navigation>
+  </layout-card-header>
+  <ng-container [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'details'">
+      <!-- Member details -->
+      <layout-card-body>
+        <!-- Number -->
+        <div class="row">
+          <div class="col-3" *layoutPlaceholder="waiting">
+            # {{data.number}}
+          </div>
+        </div>
+        <!-- First name -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">ISBN</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.isbn}}
+          </div>
+        </div>
+        <!-- Title -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Título</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            <sup>{{data.title.supertitle}}</sup>
+            {{data.title.title}}
+            <sub>{{data.title.subtitle}}</sub>
+          </div>
+        </div>
+        <!-- Language -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Idioma</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{language}}
+          </div>
+        </div>
+        <!-- Publish date -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Fecha de publicación</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.publishDate}}
+          </div>
+        </div>
+        <!-- Authors -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Autor</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{authors}}
+          </div>
+        </div>
+        <!-- Publishers -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Editor</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{publishers}}
+          </div>
+        </div>
+        <!-- Book type -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Tipo</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.bookType?.name}}
+          </div>
+        </div>
+        <!-- Game system -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Sistema</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.gameSystem?.name}}
+          </div>
+        </div>
+      </layout-card-body>
+    </ng-container>
+    <ng-container *ngSwitchCase="'donors'">
+      <!-- Donors -->
+      <layout-card-body>
+        <!-- Donation date -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Fecha de donación</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{data.donation?.date}}
+          </div>
+        </div>
+        <!-- Donors -->
+        <div class="row">
+          <div class="col-sm-3 text-primary">Donante</div>
+          <div class="col-sm-9" *layoutPlaceholder="waiting">
+            {{donors}}
+          </div>
+        </div>
+      </layout-card-body>
+    </ng-container>
+    <ng-container *ngSwitchCase="'lendings'">
+      <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
+    </ng-container>
+  </ng-container>
+  <layout-card-footer *ngIf="showMenu">
+    <ng-container [ngSwitch]="view">
+      <ng-container *ngSwitchCase="'lendings'">
+        <!-- Lend button -->
+        <ng-container [ngSwitch]="data.lent">
+          <ng-container *ngSwitchCase="true">
+            <!-- Return button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <icon-take-in></icon-take-in>Devolver
+            </button>
+          </ng-container>
+          <ng-container *ngSwitchCase="false">
+            <!-- Lend button -->
+            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
+              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              <icon-take-out></icon-take-out>Prestar
+            </button>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
+      </ng-container>
+    </ng-container>
+  </layout-card-footer>
+</layout-card>
