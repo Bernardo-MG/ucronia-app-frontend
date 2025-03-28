@@ -48,7 +48,7 @@ export class LibraryBookGameInfoContainer implements OnInit {
 
   private load(): void {
     this.waiting = true;
-    this.service.getOne(this.index)
+    this.service.getOneFictionBook(this.index)
       .subscribe({
         next: response => {
           this.data = response;
