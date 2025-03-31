@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BookInfo } from '@app/models/library/book-info';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { SortingProperty } from '@bernardo-mg/request';
+import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
-    selector: 'assoc-library-book-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
-    templateUrl: './library-book-list.component.html'
+  selector: 'assoc-library-admin-book-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
+  templateUrl: './library-admin-book-list.component.html'
 })
-export class LibraryBookListComponent {
+export class LibraryAdminBookListComponent {
 
-  @Input() books: BookInfo[] = [];
+  @Input() public books: BookInfo[] = [];
 
   @Input() public routeLinkAdapter: (data: BookInfo) => string = (data) => '';
 

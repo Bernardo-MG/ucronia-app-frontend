@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Return date -->
+  <div class="row mb-2">
+    <label for="returnDateInput" id="returnDateLabel" class="col-sm-2 col-form-label">Fecha</label>
+    <div class="col-sm-10">
+      <input type="date" id="returnDateInput" formControlName="returnDate" class="form-control" [max]="today"
+        formInvalidField [backendFailure]="failures.hasFailures('returnDate')" aria-describedby="returnDateLabel">
+      <form-input-failure-feedback [failures]="failures.getFailures('returnDate')"></form-input-failure-feedback>
+    </div>
+  </div>
+  <!-- Member -->
+  <div class="row mb-2">
+    <label for="memberNameInput" class="col-sm-2 col-form-label">Socio</label>
+    <div class="col-sm-10">
+      <input type="text" id="memberNameInput" [value]="memberName" readonly="true" class="form-control"
+        aria-describedby="memberNameLabel">
+    </div>
+  </div>
+
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <layout-waiting-button [waiting]="waiting" [disabled]="!saveEnabled" name="Save"
+        (action)="onSave()">Guardar</layout-waiting-button>
+    </div>
+  </div>
+</form>

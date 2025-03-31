@@ -9,7 +9,8 @@ export const ASSOCIATION_MENU_OPTIONS: MenuOptions = {
       new AuthMenuLink('Calendario', '/association/calendar', 'activity_calendar', IconCalendarComponent),
       new AuthMenuLink('Socios', '/association/members', 'member', IconPersonComponent),
       new AuthMenuLink('Mis cuotas', '/association/myFees', 'my_fees', IconReceiptComponent),
-      new AuthMenuLink('Biblioteca', '/association/library', 'library', IconBookComponent)
+      new AuthMenuLink('Juegos', '/association/library/games', 'library', IconBookComponent),
+      new AuthMenuLink('Ficción', '/association/library/fiction', 'library', IconBookComponent)
     ]
   }
 };
