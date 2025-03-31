@@ -129,7 +129,7 @@ describe('LibraryGameBookInfoContainer', () => {
     component.ngOnInit();
     fixture.detectChanges();
 
-    const bookDetails = fixture.debugElement.query(By.css('assoc-library-book-details'));
+    const bookDetails = fixture.debugElement.query(By.css('assoc-library-game-book-details'));
     const bookLendings = fixture.debugElement.query(By.css('assoc-library-book-lendings'));
 
     expect(bookDetails.componentInstance.data).toEqual(mockBook);
