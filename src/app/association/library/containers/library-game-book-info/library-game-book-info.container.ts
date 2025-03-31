@@ -13,7 +13,7 @@ import { BookService } from '../../services/book.service';
     imports: [CommonModule, LibraryGameBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
     templateUrl: './library-game-book-info.container.html'
 })
-export class LibraryBookGameInfoContainer implements OnInit {
+export class LibraryGameBookInfoContainer implements OnInit {
 
   public languages: Language[] = [];
 
@@ -48,7 +48,7 @@ export class LibraryBookGameInfoContainer implements OnInit {
 
   private load(): void {
     this.waiting = true;
-    this.service.getOne(this.index)
+    this.service.getOneGameBook(this.index)
       .subscribe({
         next: response => {
           this.data = response;

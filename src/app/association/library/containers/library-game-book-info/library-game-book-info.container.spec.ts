@@ -1,7 +1,7 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookService } from '../../services/book.service';
-import { LibraryBookGameInfoContainer } from './library-game-book-info.container';
+import { LibraryGameBookInfoContainer } from './library-game-book-info.container';
 import { By } from '@angular/platform-browser';
 import { of, throwError } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -9,8 +9,8 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { GameBook } from '@app/models/library/game-book';
 
 describe('LibraryBookInfoContainer', () => {
-  let component: LibraryBookGameInfoContainer;
-  let fixture: ComponentFixture<LibraryBookGameInfoContainer>;
+  let component: LibraryGameBookInfoContainer;
+  let fixture: ComponentFixture<LibraryGameBookInfoContainer>;
   let mockService: jasmine.SpyObj<BookService>;
   const languages = [{ code: 'eng', name: 'English' }, { code: 'esp', name: 'Spanish' }];
 
@@ -19,7 +19,7 @@ describe('LibraryBookInfoContainer', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        LibraryBookGameInfoContainer
+        LibraryGameBookInfoContainer
       ],
       providers: [
         { provide: BookService, useValue: mockService },
@@ -35,7 +35,7 @@ describe('LibraryBookInfoContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookGameInfoContainer);
+    fixture = TestBed.createComponent(LibraryGameBookInfoContainer);
     component = fixture.componentInstance;
   });
 

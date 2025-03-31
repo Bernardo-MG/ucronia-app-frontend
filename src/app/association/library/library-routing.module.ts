@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { LibraryBookGameInfoContainer } from './containers/library-fiction-book-info/library-fiction-book-info.container';
+import { LibraryFictionBookInfoContainer } from './containers/library-fiction-book-info/library-fiction-book-info.container';
 import { LibraryGameListingContainer } from './containers/library-game-listing/library-game-listing.container';
+import { LibraryFictionListingContainer } from './containers/library-fiction-listing/library-fiction-listing.container';
+import { LibraryGameBookInfoContainer } from './containers/library-game-book-info/library-game-book-info.container';
 
 
 const routes: Routes = [
@@ -11,16 +13,28 @@ const routes: Routes = [
     data: { breadcrumb: 'Biblioteca' },
     children: [
           {
-            path: '',
+            path: 'game',
             component: LibraryGameListingContainer,
             canActivate: [ResourceGuard("library", "view")],
-            data: { breadcrumb: '' }
+            data: { breadcrumb: 'Juegos' }
           },
           {
-            path: ':index',
-            component: LibraryBookGameInfoContainer,
+            path: 'game/:index',
+            component: LibraryGameBookInfoContainer,
             canActivate: [ResourceGuard("library_book", "read")],
-            data: { breadcrumb: 'Libro' }
+            data: { breadcrumb: 'Juego' }
+          },
+          {
+            path: 'fiction',
+            component: LibraryFictionListingContainer,
+            canActivate: [ResourceGuard("library", "view")],
+            data: { breadcrumb: 'Ficción' }
+          },
+          {
+            path: 'fiction/:index',
+            component: LibraryFictionBookInfoContainer,
+            canActivate: [ResourceGuard("library_book", "read")],
+            data: { breadcrumb: 'Ficción' }
           }
     ]
   }

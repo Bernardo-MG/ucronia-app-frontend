@@ -13,7 +13,7 @@ import { BookService } from '../../services/book.service';
     imports: [CommonModule, LibraryFictionBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
     templateUrl: './library-fiction-book-info.container.html'
 })
-export class LibraryBookGameInfoContainer implements OnInit {
+export class LibraryFictionBookInfoContainer implements OnInit {
 
   public languages: Language[] = [];
 
