@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
-import { FictionBook } from '@app/models/library/fiction-book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
@@ -15,7 +14,7 @@ import { BookService } from '../../services/book.service';
 })
 export class LibraryGameListingContainer implements OnInit {
 
-  public data = new PaginatedResponse<FictionBook>();
+  public data = new PaginatedResponse<BookInfo>();
 
   /**
    * Loading flag.
@@ -42,7 +41,7 @@ export class LibraryGameListingContainer implements OnInit {
   public load(page: number) {
     this.reading = true;
 
-    this.service.getAllFictionBooks(page, this.sort).subscribe({
+    this.service.getAllGameBooks(page, this.sort).subscribe({
       next: response => {
         this.data = response;
 

@@ -13,13 +13,13 @@ const routes: Routes = [
     data: { breadcrumb: 'Biblioteca' },
     children: [
           {
-            path: 'game',
+            path: 'games',
             component: LibraryGameListingContainer,
             canActivate: [ResourceGuard("library", "view")],
             data: { breadcrumb: 'Juegos' }
           },
           {
-            path: 'game/:index',
+            path: 'games/:index',
             component: LibraryGameBookInfoContainer,
             canActivate: [ResourceGuard("library_book", "read")],
             data: { breadcrumb: 'Juego' }
