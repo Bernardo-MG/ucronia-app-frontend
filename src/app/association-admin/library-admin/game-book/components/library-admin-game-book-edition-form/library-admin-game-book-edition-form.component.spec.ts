@@ -9,8 +9,8 @@ describe('LibraryAdminGameBookEditionFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LibraryAdminGameBookEditionFormComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminGameBookEditionFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

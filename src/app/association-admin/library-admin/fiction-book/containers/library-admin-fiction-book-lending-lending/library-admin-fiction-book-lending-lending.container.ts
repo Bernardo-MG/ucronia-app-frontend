@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
 import { BookLent } from '@app/models/library/book-lent';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -11,7 +12,6 @@ import { ArticleComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
-import { FictionBook } from '@app/models/library/fiction-book';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-lending-lending',

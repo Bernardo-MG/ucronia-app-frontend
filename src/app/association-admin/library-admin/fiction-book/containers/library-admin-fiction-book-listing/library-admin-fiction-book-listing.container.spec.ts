@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 import { LibraryAdminFictionBookListingContainer } from './library-admin-fiction-book-listing.container';
 
-describe('LibraryAdminGameBookListingContainer', () => {
+describe('LibraryAdminFictionBookListingContainer', () => {
   let component: LibraryAdminFictionBookListingContainer;
   let fixture: ComponentFixture<LibraryAdminFictionBookListingContainer>;
 

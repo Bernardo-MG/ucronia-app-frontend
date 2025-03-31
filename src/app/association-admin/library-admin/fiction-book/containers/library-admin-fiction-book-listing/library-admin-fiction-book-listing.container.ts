@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
+import { BookInfo } from '@app/models/library/book-info';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -9,8 +11,6 @@ import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, C
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { BookInfo } from '@app/models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-listing',

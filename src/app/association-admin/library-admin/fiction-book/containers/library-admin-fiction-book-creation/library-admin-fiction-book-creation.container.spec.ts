@@ -9,7 +9,7 @@ import { PublisherAdminService } from '@app/association-admin/library-admin/publ
 import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 import { LibraryAdminFictionBookCreationContainer } from './library-admin-fiction-book-creation.container';
 
-describe('LibraryAdminGameBookCreationContainer', () => {
+describe('LibraryAdminFictionBookCreationContainer', () => {
   let component: LibraryAdminFictionBookCreationContainer;
   let fixture: ComponentFixture<LibraryAdminFictionBookCreationContainer>;
 

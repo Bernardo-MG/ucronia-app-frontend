@@ -4,7 +4,7 @@ import { BookService } from '../../services/book.service';
 import { LibraryFictionListingContainer } from './library-fiction-listing.container';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('LibraryGameListingContainer', () => {
+describe('LibraryFictionListingContainer', () => {
   let component: LibraryFictionListingContainer;
   let fixture: ComponentFixture<LibraryFictionListingContainer>;
 

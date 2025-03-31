@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { LibraryAdminFictionBookLendingReturnContainer } from './library-admin-fiction-book-lending-returning.container';
 
-describe('LibraryAdminGameBookLendingReturnContainer', () => {
+describe('LibraryAdminFictionBookLendingReturnContainer', () => {
   let component: LibraryAdminFictionBookLendingReturnContainer;
   let fixture: ComponentFixture<LibraryAdminFictionBookLendingReturnContainer>;
 

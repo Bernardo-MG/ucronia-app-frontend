@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { GameBook } from '@app/models/library/game-book';
 
-describe('LibraryBookInfoContainer', () => {
+describe('LibraryGameBookInfoContainer', () => {
   let component: LibraryGameBookInfoContainer;
   let fixture: ComponentFixture<LibraryGameBookInfoContainer>;
   let mockService: jasmine.SpyObj<BookService>;
@@ -59,7 +59,7 @@ describe('LibraryBookInfoContainer', () => {
       bookType: undefined,
       gameSystem: undefined
     };
-    mockService.getOne.and.returnValue(of(mockBook));
+    mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
     component.ngOnInit();
@@ -71,7 +71,7 @@ describe('LibraryBookInfoContainer', () => {
   });
 
   it('should handle errors during data load', () => {
-    mockService.getOne.and.returnValue(throwError(() => new Error('Failed to load')));
+    mockService.getOneGameBook.and.returnValue(throwError(() => new Error('Failed to load')));
     mockService.getLanguages.and.returnValue(languages);
 
     component.ngOnInit();
@@ -97,13 +97,13 @@ describe('LibraryBookInfoContainer', () => {
       bookType: undefined,
       gameSystem: undefined
     };
-    mockService.getOne.and.returnValue(of(mockBook));
+    mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
     component.ngOnInit();
     fixture.detectChanges();
 
-    expect(mockService.getOne).toHaveBeenCalledWith(1);
+    expect(mockService.getOneGameBook).toHaveBeenCalledWith(1);
     expect(component.data).toEqual(mockBook);
   });
 
@@ -123,7 +123,7 @@ describe('LibraryBookInfoContainer', () => {
       bookType: undefined,
       gameSystem: undefined
     };
-    mockService.getOne.and.returnValue(of(mockBook));
+    mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
     component.ngOnInit();
