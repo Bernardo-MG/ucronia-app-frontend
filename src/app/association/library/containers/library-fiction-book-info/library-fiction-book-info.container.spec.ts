@@ -1,12 +1,12 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { FictionBook } from '@app/models/library/fiction-book';
+import { of, throwError } from 'rxjs';
 import { BookService } from '../../services/book.service';
 import { LibraryFictionBookInfoContainer } from './library-fiction-book-info.container';
-import { By } from '@angular/platform-browser';
-import { of, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { GameBook } from '@app/models/library/game-book';
 
 describe('LibraryFictionBookInfoContainer', () => {
   let component: LibraryFictionBookInfoContainer;
@@ -15,7 +15,7 @@ describe('LibraryFictionBookInfoContainer', () => {
   const languages = [{ code: 'eng', name: 'English' }, { code: 'esp', name: 'Spanish' }];
 
   beforeEach(async () => {
-    mockService = jasmine.createSpyObj('BookService', ['getOne', 'getLanguages']);
+    mockService = jasmine.createSpyObj('BookService', ['getOneFictionBook', 'getLanguages']);
 
     await TestBed.configureTestingModule({
       imports: [
@@ -44,7 +44,7 @@ describe('LibraryFictionBookInfoContainer', () => {
   });
 
   it('should initialize with correct data', () => {
-    const mockBook: GameBook =
+    const mockBook: FictionBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },
@@ -55,9 +55,7 @@ describe('LibraryFictionBookInfoContainer', () => {
       authors: [],
       lendings: [],
       publishers: [],
-      donation: undefined,
-      bookType: undefined,
-      gameSystem: undefined
+      donation: undefined
     };
     mockService.getOneFictionBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
@@ -78,11 +76,11 @@ describe('LibraryFictionBookInfoContainer', () => {
     fixture.detectChanges();
 
     expect(component["waiting"]).toBeFalse();
-    expect(component.data).toEqual(new GameBook());
+    expect(component.data).toEqual(new FictionBook());
   });
 
   it('should call load when index param changes', () => {
-    const mockBook: GameBook =
+    const mockBook: FictionBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },
@@ -93,9 +91,7 @@ describe('LibraryFictionBookInfoContainer', () => {
       authors: [],
       lendings: [],
       publishers: [],
-      donation: undefined,
-      bookType: undefined,
-      gameSystem: undefined
+      donation: undefined
     };
     mockService.getOneFictionBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
@@ -108,7 +104,7 @@ describe('LibraryFictionBookInfoContainer', () => {
   });
 
   it('should render child components with correct inputs', () => {
-    const mockBook: GameBook =
+    const mockBook: FictionBook =
     {
       number: 1,
       title: { supertitle: '', title: '', subtitle: '', fullTitle: 'Test Book' },
@@ -119,9 +115,7 @@ describe('LibraryFictionBookInfoContainer', () => {
       authors: [],
       lendings: [],
       publishers: [],
-      donation: undefined,
-      bookType: undefined,
-      gameSystem: undefined
+      donation: undefined
     };
     mockService.getOneFictionBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);

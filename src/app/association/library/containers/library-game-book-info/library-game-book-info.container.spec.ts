@@ -15,7 +15,7 @@ describe('LibraryGameBookInfoContainer', () => {
   const languages = [{ code: 'eng', name: 'English' }, { code: 'esp', name: 'Spanish' }];
 
   beforeEach(async () => {
-    mockService = jasmine.createSpyObj('BookService', ['getOne', 'getLanguages']);
+    mockService = jasmine.createSpyObj('BookService', ['getOneGameBook', 'getLanguages']);
 
     await TestBed.configureTestingModule({
       imports: [
