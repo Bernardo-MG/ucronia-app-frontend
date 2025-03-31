@@ -23,7 +23,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
-export class LibraryAdminGameBookInfoEditorContainer extends InfoEditorStatusComponent<GameBook> implements OnInit {
+export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> implements OnInit {
 
   private route = inject(ActivatedRoute);
 

@@ -8,12 +8,12 @@ import { LibraryAdminBookTypeCreateContainer } from './book-type/containers/libr
 import { LibraryAdminBookTypeInfoEditorContainer } from './book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container';
 import { LibraryAdminBookTypeListingContainer } from './book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container';
 import { LibraryAdminFictionBookCreationContainer } from './fiction-book/containers/library-admin-fiction-book-creation/library-admin-fiction-book-creation.container';
-import { LibraryAdminFictionBookInfoEditorContainer } from './fiction-book/containers/library-admin-fiction-book-edition/library-admin-fiction-book-edition.container';
+import { LibraryAdminFictionBookEditionContainer } from './fiction-book/containers/library-admin-fiction-book-edition/library-admin-fiction-book-edition.container';
 import { LibraryAdminFictionBookLendingLendContainer } from './fiction-book/containers/library-admin-fiction-book-lending-lending/library-admin-fiction-book-lending-lending.container';
 import { LibraryAdminFictionBookLendingReturnContainer } from './fiction-book/containers/library-admin-fiction-book-lending-returning/library-admin-fiction-book-lending-returning.container';
 import { LibraryAdminFictionBookListingContainer } from './fiction-book/containers/library-admin-fiction-book-listing/library-admin-fiction-book-listing.container';
 import { LibraryAdminGameBookCreationContainer } from './game-book/containers/library-admin-game-book-creation/library-admin-game-book-creation.container';
-import { LibraryAdminGameBookInfoEditorContainer } from './game-book/containers/library-admin-game-book-edition/library-admin-game-book-edition.container';
+import { LibraryAdminGameBookEditionContainer } from './game-book/containers/library-admin-game-book-edition/library-admin-game-book-edition.container';
 import { LibraryAdminGameBookLendingLendContainer } from './game-book/containers/library-admin-game-book-lending-lending/library-admin-game-book-lending-lending.container';
 import { LibraryAdminGameBookLendingReturnContainer } from './game-book/containers/library-admin-game-book-lending-returning/library-admin-game-book-lending-returning.container';
 import { LibraryAdminGameBookListingContainer } from './game-book/containers/library-admin-game-book-listing/library-admin-game-book-listing.container';
@@ -82,7 +82,7 @@ const routes: Routes = [
               },
               {
                 path: ':number',
-                component: LibraryAdminGameBookInfoEditorContainer,
+                component: LibraryAdminGameBookEditionContainer,
                 canActivate: [ResourceGuard("library_book", "read")],
                 data: { breadcrumb: 'Editar libro' }
               },
@@ -118,7 +118,7 @@ const routes: Routes = [
               },
               {
                 path: ':number',
-                component: LibraryAdminFictionBookInfoEditorContainer,
+                component: LibraryAdminFictionBookEditionContainer,
                 canActivate: [ResourceGuard("library_book", "read")],
                 data: { breadcrumb: 'Editar libro' }
               },

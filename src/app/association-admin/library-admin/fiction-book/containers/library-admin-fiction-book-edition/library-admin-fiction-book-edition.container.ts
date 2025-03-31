@@ -21,7 +21,7 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
   imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminFictionBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
-export class LibraryAdminFictionBookInfoEditorContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {
+export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> implements OnInit {
 
   private route = inject(ActivatedRoute);
 
