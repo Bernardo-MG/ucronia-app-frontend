@@ -2,11 +2,15 @@
   <!-- Books list -->
   <layout-card>
     <layout-card-header>
-      <select [disabled]="reading" class="form-select form-select-sm" aria-label="Filter person status"
-        (change)="onChangeSource($event)">
-        <option [selected]="source === 'games'" value="games">Juegos</option>
-        <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
-      </select>
+      <div class="row">
+        <div class="col-sm-3">
+          <select [disabled]="reading" class="form-select form-select-sm" aria-label="Filter person status"
+            (change)="onChangeSource($event)">
+            <option [selected]="source === 'games'" value="games">Juegos</option>
+            <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
+          </select>
+        </div>
+      </div>
     </layout-card-header>
     <layout-card-body>
       <assoc-library-book-list [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
