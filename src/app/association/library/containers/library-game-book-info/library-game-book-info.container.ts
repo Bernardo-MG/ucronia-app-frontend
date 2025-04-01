@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
-import { LibraryGameBookDetailsComponent } from '../../components/library-game-book-details/library-game-book-details.component';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
+import { LibraryGameBookDetailsComponent } from '../../components/library-game-book-details/library-game-book-details.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class LibraryGameBookInfoContainer implements OnInit {
   /**
    * Reading flag. Active while the data is being read.
    */
-  protected waiting = false;
+  public waiting = false;
 
   private index = -1;
 

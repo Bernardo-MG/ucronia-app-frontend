@@ -7,13 +7,13 @@ import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-library-book-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
-    templateUrl: './library-book-list.component.html'
+  selector: 'assoc-library-book-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
+  templateUrl: './library-book-list.component.html'
 })
 export class LibraryBookListComponent {
 
-  @Input() books: BookInfo[] = [];
+  @Input() public books: BookInfo[] = [];
 
   @Input() public routeLinkAdapter: (data: BookInfo) => string = (data) => '';
 
