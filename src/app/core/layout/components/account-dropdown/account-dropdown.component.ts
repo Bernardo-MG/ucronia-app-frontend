@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from '@bernardo-mg/icons';
@@ -11,12 +11,11 @@ import { JustifyCenterDirective } from '@bernardo-mg/layout';
 })
 export class AccountDropdownComponent implements OnInit {
 
-  public username = '';
+  private router = inject(Router);
 
-  constructor(
-    private authContainer: AuthContainer,
-    private router: Router
-  ) { }
+  private authContainer = inject(AuthContainer);
+
+  public username = '';
 
   public ngOnInit(): void {
     this.authContainer.securityDetails.subscribe(u => { this.username = u.username });

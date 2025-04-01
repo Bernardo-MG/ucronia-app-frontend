@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
@@ -11,7 +11,9 @@ import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
   imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
   templateUrl: './sidebar-layout.container.html'
 })
-export class SidebarLayoutContainer implements OnInit {
+export class SidebarLayoutContainer {
+
+  private authContainer = inject(AuthContainer);
 
   @Input() public menus: Menu[] = [];
 
@@ -28,18 +30,15 @@ export class SidebarLayoutContainer implements OnInit {
   }
 
   constructor(
-    private layoutService: LayoutService,
-    private authContainer: AuthContainer
-  ) { }
-
-  public ngOnInit(): void {
+    layoutService: LayoutService
+  ) {
     // App title
-    this.title = this.layoutService.getTitle();
+    this.title = layoutService.getTitle();
 
     // Show links
-    this.showSettings = this.layoutService.showSettingsLink();
-    this.showSecurity = this.layoutService.showSecurityLink();
-    this.showAssociation = this.layoutService.showAssociationLink();
+    this.showSettings = layoutService.showSettingsLink();
+    this.showSecurity = layoutService.showSecurityLink();
+    this.showAssociation = layoutService.showAssociationLink();
   }
 
 }
