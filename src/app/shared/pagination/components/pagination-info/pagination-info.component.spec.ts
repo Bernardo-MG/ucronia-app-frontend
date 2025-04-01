@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { PaginationInfoComponent } from './pagination-info.component';
 
 describe('PaginationInfoWrapperComponent', () => {
@@ -10,8 +9,8 @@ describe('PaginationInfoWrapperComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PaginationInfoComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(PaginationInfoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
