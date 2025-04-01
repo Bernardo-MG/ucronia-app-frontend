@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
 import { MembershipEvolutionService } from '../../services/membership-evolution.service';
 
 @Component({
-    selector: 'widget-membership-evolution-chart',
-    imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './membership-evolution-chart-widget.container.html'
+  selector: 'widget-membership-evolution-chart',
+  imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+  templateUrl: './membership-evolution-chart-widget.container.html'
 })
 export class MembershipEvolutionChartWidgetContainer implements OnInit {
+
+  private memberBalanceService = inject(MembershipEvolutionService);
 
   public balance: MemberBalance[] = [];
 
@@ -46,11 +48,7 @@ export class MembershipEvolutionChartWidgetContainer implements OnInit {
 
   private readingRange = false;
 
-  constructor(
-    private memberBalanceService: MembershipEvolutionService
-  ) { }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Read balance range
     this.readingRange = true;
     this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
