@@ -1,4 +1,5 @@
-<select [disabled]="disabled" class="form-select form-select-sm" aria-label="Filter member status" (change)="onChangeStatus($event)">
+<select [disabled]="disabled" class="form-select form-select-sm" aria-label="Filter member status"
+  (change)="onChangeStatus($event)">
   <option [selected]="status === 'active'" value="Active">Activo</option>
   <option [selected]="status === 'inactive'" value="Inactive">Inactivo</option>
   <option [selected]="status === 'all_member'" value="AllMember">Todos</option>

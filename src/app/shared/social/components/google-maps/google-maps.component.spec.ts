@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GoogleMapsComponent } from './google-maps.component';
 
 describe('GoogleMapsComponent', () => {
@@ -10,8 +9,8 @@ describe('GoogleMapsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [GoogleMapsComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(GoogleMapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
