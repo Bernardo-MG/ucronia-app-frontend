@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'assoc-library-listing',
-  imports: [RouterModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  imports: [RouterModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent, CardComponent, CardHeaderComponent, CardBodyComponent, CardFooterComponent],
   templateUrl: './library-listing.container.html'
 })
 export class LibraryListingContainer implements OnInit {
@@ -21,9 +21,9 @@ export class LibraryListingContainer implements OnInit {
    */
   public reading = false;
 
-  private sort = new Sorting();
+  public source: 'games' | 'fiction' = 'games';
 
-  private source: 'games' | 'fiction' = 'games';
+  private sort = new Sorting();
 
   constructor(
     private service: BookService
@@ -31,13 +31,18 @@ export class LibraryListingContainer implements OnInit {
 
   public ngOnInit(): void {
     // Load books
-    this.load(0)
+    this.load(0);
   }
 
   public onChangeDirection(field: SortingProperty) {
     this.sort.addField(field);
 
     this.load(this.data.page);
+  }
+
+  public onChangeSource(event: any) {
+    this.source = event.target.value as 'games' | 'fiction';
+    this.load(0);
   }
 
   public load(page: number) {
