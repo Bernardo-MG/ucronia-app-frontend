@@ -5,9 +5,9 @@ import { SecurityLayoutService } from '@app/core/layout/services/security-layout
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-security-layout',
-    imports: [RouterModule, SidebarLayoutContainer],
-    templateUrl: './security-layout.container.html'
+  selector: 'layout-security-layout',
+  imports: [RouterModule, SidebarLayoutContainer],
+  templateUrl: './security-layout.container.html'
 })
 export class SecurityLayoutContainer implements OnInit {
 
@@ -17,7 +17,7 @@ export class SecurityLayoutContainer implements OnInit {
     private securityLayoutService: SecurityLayoutService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Load menus
     this.menus = this.securityLayoutService.getMenus();
   }

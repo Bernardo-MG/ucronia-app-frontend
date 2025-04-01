@@ -7,9 +7,9 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-sidebar-layout',
-    imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
-    templateUrl: './sidebar-layout.container.html'
+  selector: 'layout-sidebar-layout',
+  imports: [RouterModule, SideMenuComponent, NavbarComponent, RouterBreadcrumbComponent],
+  templateUrl: './sidebar-layout.container.html'
 })
 export class SidebarLayoutContainer implements OnInit {
 
@@ -32,7 +32,7 @@ export class SidebarLayoutContainer implements OnInit {
     private authContainer: AuthContainer
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // App title
     this.title = this.layoutService.getTitle();
 

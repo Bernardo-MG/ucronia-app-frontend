@@ -5,9 +5,9 @@ import { LayoutService } from '@app/core/layout/services/layout.service';
 import { AuthContainer } from '@bernardo-mg/authentication';
 
 @Component({
-    selector: 'layout-simple-layout-layout',
-    imports: [RouterModule, NavbarComponent],
-    templateUrl: './simple-layout.container.html'
+  selector: 'layout-simple-layout-layout',
+  imports: [RouterModule, NavbarComponent],
+  templateUrl: './simple-layout.container.html'
 })
 export class SimpleLayoutContainer implements OnInit {
 
@@ -28,7 +28,7 @@ export class SimpleLayoutContainer implements OnInit {
     private authContainer: AuthContainer
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // App title
     this.title = this.layoutService.getTitle();
 

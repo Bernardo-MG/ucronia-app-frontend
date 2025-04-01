@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit {
     return !this.loggedIn;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Load menus
     this.adminLinks = this.associationAdminLayoutService.getLinks();
   }

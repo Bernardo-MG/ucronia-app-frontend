@@ -5,9 +5,9 @@ import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-account-dropdown',
-    imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
-    templateUrl: './account-dropdown.component.html'
+  selector: 'layout-account-dropdown',
+  imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
+  templateUrl: './account-dropdown.component.html'
 })
 export class AccountDropdownComponent implements OnInit {
 
@@ -18,7 +18,7 @@ export class AccountDropdownComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.authContainer.securityDetails.subscribe(u => { this.username = u.username });
   }
 

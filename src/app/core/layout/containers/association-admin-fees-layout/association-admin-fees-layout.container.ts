@@ -5,9 +5,9 @@ import { AssociationAdminLayoutService } from '@app/core/layout/services/associa
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-association-admin-fees-layout',
-    imports: [RouterModule, SidebarLayoutContainer],
-    templateUrl: './association-admin-fees-layout.container.html'
+  selector: 'layout-association-admin-fees-layout',
+  imports: [RouterModule, SidebarLayoutContainer],
+  templateUrl: './association-admin-fees-layout.container.html'
 })
 export class AssociationAdminFeesLayoutContainer implements OnInit {
 
@@ -17,7 +17,7 @@ export class AssociationAdminFeesLayoutContainer implements OnInit {
     private associationAdminLayoutService: AssociationAdminLayoutService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Load menus
     this.menus = this.associationAdminLayoutService.getFundsMenus();
   }

@@ -17,7 +17,7 @@ export class AssociationAdminLibraryLayoutContainer implements OnInit {
     private associationAdminLayoutService: AssociationAdminLayoutService
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Load menus
     this.menus = this.associationAdminLayoutService.getLibraryMenus();
   }
