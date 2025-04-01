@@ -11,7 +11,7 @@ export const ASSOCIATION_MENU_OPTIONS: MenuOptions = {
       new AuthMenuLink('Mis cuotas', '/association/myFees', 'my_fees', IconReceiptComponent),
       new AuthMenuLink('Juegos', '/association/library/games', 'library', IconBookComponent),
       new AuthMenuLink('Ficción', '/association/library/fiction', 'library', IconBookComponent),
-      new AuthMenuLink('Libros', '/association/library/books', 'library', IconBookComponent)
+      new AuthMenuLink('Libros', '/association/library', 'library', IconBookComponent)
     ]
   }
 };

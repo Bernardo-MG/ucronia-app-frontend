@@ -53,6 +53,6 @@
   <ng-container *ngSwitchCase="true">
     <assoc-library-admin-donor-selection [values]="donors.content" [current]="donors.page" [pages]="donors.totalPages"
       (choose)="onSelectDonor($event)"
-      (goToPage)="this.goToDonorPage.emit($event)"></assoc-library-admin-donor-selection>
+      (goToPage)="goToDonorPage.emit($event)"></assoc-library-admin-donor-selection>
   </ng-container>
 </ng-container>

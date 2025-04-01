@@ -77,8 +77,8 @@ export class LibraryListingContainer implements OnInit {
     }
   }
 
-  public routeLinkAdapter(data: BookInfo): string {
-    return `${data.number}`;
-  }
+  public routeLinkAdapter = (data: BookInfo): string => {
+    return `${this.source}/${data.number}`;
+  };
 
 }

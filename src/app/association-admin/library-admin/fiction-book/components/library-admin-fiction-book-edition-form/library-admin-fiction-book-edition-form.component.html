@@ -147,11 +147,11 @@
   <ng-container *ngSwitchCase="'author'">
     <assoc-library-admin-author-selection [values]="authorsSelection.content" [current]="authorsSelection.page"
       [pages]="authorsSelection.totalPages" (choose)="onSelectAuthor($event)"
-      (goToPage)="this.goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
+      (goToPage)="goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
   </ng-container>
   <ng-container *ngSwitchCase="'publisher'">
     <assoc-library-admin-publisher-selection [values]="publishersSelection.content" [current]="publishersSelection.page"
       [pages]="publishersSelection.totalPages" (choose)="onSelectPublisher($event)"
-      (goToPage)="this.goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
+      (goToPage)="goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
   </ng-container>
 </ng-container>
