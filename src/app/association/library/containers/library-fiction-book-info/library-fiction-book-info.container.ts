@@ -9,9 +9,9 @@ import { LibraryFictionBookDetailsComponent } from '../../components/library-fic
 import { BookService } from '../../services/book.service';
 
 @Component({
-    selector: 'assoc-library-fiction-book-info',
-    imports: [CommonModule, LibraryFictionBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './library-fiction-book-info.container.html'
+  selector: 'assoc-library-fiction-book-info',
+  imports: [CommonModule, LibraryFictionBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
+  templateUrl: './library-fiction-book-info.container.html'
 })
 export class LibraryFictionBookInfoContainer implements OnInit {
 
@@ -20,7 +20,7 @@ export class LibraryFictionBookInfoContainer implements OnInit {
   /**
    * Reading flag. Active while the data is being read.
    */
-  protected waiting = false;
+  public waiting = false;
 
   private index = -1;
 

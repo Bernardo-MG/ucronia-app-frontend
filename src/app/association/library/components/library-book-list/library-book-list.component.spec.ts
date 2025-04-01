@@ -2,9 +2,9 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
+import { BookInfo } from '@app/models/library/book-info';
 import { SortingDirection } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from './library-book-list.component';
-import { BookInfo } from '@app/models/library/book-info';
 
 describe('LibraryBookListComponent', () => {
   let component: LibraryBookListComponent;

@@ -9,8 +9,8 @@ describe('LibraryFictionBookDetailsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LibraryFictionBookDetailsComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryFictionBookDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,17 +1,17 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookService } from '../../services/book.service';
-import { LibraryGameListingContainer } from './library-game-listing.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { LibraryListingContainer } from './library-listing.container';
 
 describe('LibraryGameListingContainer', () => {
-  let component: LibraryGameListingContainer;
-  let fixture: ComponentFixture<LibraryGameListingContainer>;
+  let component: LibraryListingContainer;
+  let fixture: ComponentFixture<LibraryListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryGameListingContainer
+        LibraryListingContainer
       ],
       providers: [
         BookService,
@@ -21,7 +21,7 @@ describe('LibraryGameListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryGameListingContainer);
+    fixture = TestBed.createComponent(LibraryListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

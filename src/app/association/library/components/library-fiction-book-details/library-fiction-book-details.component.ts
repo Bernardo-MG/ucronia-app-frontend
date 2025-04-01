@@ -5,15 +5,15 @@ import { Language } from '@app/models/library/language';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'assoc-library-fiction-book-details',
-    imports: [CommonModule, PlaceholderDirective],
-    templateUrl: './library-fiction-book-details.component.html'
+  selector: 'assoc-library-fiction-book-details',
+  imports: [CommonModule, PlaceholderDirective],
+  templateUrl: './library-fiction-book-details.component.html'
 })
 export class LibraryFictionBookDetailsComponent {
 
-  @Input() data = new FictionBook();
+  @Input() public data = new FictionBook();
 
-  @Input() waiting = false;
+  @Input() public waiting = false;
 
   @Input() public languages: Language[] = [];
 

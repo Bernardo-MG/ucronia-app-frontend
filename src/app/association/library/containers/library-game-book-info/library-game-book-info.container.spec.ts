@@ -1,12 +1,12 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { GameBook } from '@app/models/library/game-book';
+import { of, throwError } from 'rxjs';
 import { BookService } from '../../services/book.service';
 import { LibraryGameBookInfoContainer } from './library-game-book-info.container';
-import { By } from '@angular/platform-browser';
-import { of, throwError } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { GameBook } from '@app/models/library/game-book';
 
 describe('LibraryGameBookInfoContainer', () => {
   let component: LibraryGameBookInfoContainer;

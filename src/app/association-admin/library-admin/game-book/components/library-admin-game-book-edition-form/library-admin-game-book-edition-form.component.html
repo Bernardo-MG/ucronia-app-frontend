@@ -175,22 +175,22 @@
   <ng-container *ngSwitchCase="'book_type'">
     <assoc-library-admin-book-type-selection [values]="bookTypesSelection.content" [current]="bookTypesSelection.page"
       [pages]="bookTypesSelection.totalPages" (choose)="onSelectBookType($event)"
-      (goToPage)="this.goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
+      (goToPage)="goToBookTypePage.emit($event)"></assoc-library-admin-book-type-selection>
   </ng-container>
   <ng-container *ngSwitchCase="'game_system'">
     <assoc-library-admin-game-system-selection [values]="gameSystemsSelection.content"
       [current]="gameSystemsSelection.page" [pages]="gameSystemsSelection.totalPages"
       (choose)="onSelectGameSystem($event)"
-      (goToPage)="this.goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
+      (goToPage)="goToGameSystemPage.emit($event)"></assoc-library-admin-game-system-selection>
   </ng-container>
   <ng-container *ngSwitchCase="'author'">
     <assoc-library-admin-author-selection [values]="authorsSelection.content" [current]="authorsSelection.page"
       [pages]="authorsSelection.totalPages" (choose)="onSelectAuthor($event)"
-      (goToPage)="this.goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
+      (goToPage)="goToAuthorPage.emit($event)"></assoc-library-admin-author-selection>
   </ng-container>
   <ng-container *ngSwitchCase="'publisher'">
     <assoc-library-admin-publisher-selection [values]="publishersSelection.content" [current]="publishersSelection.page"
       [pages]="publishersSelection.totalPages" (choose)="onSelectPublisher($event)"
-      (goToPage)="this.goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
+      (goToPage)="goToPublisherPage.emit($event)"></assoc-library-admin-publisher-selection>
   </ng-container>
 </ng-container>
