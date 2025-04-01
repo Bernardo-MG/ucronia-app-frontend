@@ -18,7 +18,7 @@ export class PaginationRouteNavigationComponent {
 
   public page = 0;
 
-  private routeActuator: RouteApiActuator;
+  private readonly routeActuator: RouteApiActuator;
 
   constructor(
     router: Router,

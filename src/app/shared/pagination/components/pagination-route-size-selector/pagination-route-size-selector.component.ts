@@ -17,7 +17,7 @@ export class PaginationSizeSelectorComponent {
 
   @Input() public disabled = false;
 
-  private routeActuator: RouteApiActuator;
+  private readonly routeActuator: RouteApiActuator;
 
   constructor(
     router: Router,

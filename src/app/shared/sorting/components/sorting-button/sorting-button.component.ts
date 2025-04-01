@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
@@ -7,15 +7,24 @@ import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons'
  * Loops through unsorted -> ascending -> descending -> unsorted
  */
 @Component({
-    selector: 'sorting-button',
-    imports: [FontAwesomeModule],
-    templateUrl: './sorting-button.component.html'
+  selector: 'sorting-button',
+  imports: [FontAwesomeModule],
+  templateUrl: './sorting-button.component.html'
 })
-export class SortingButtonComponent implements OnChanges {
+export class SortingButtonComponent {
 
   @Input() public property = '';
 
-  @Input() public direction = SortingDirection.Unsorted;
+  private _direction = SortingDirection.Unsorted;
+
+  @Input() public set direction(value: SortingDirection) {
+    this._direction = value;
+    this.updateDirection();
+  }
+
+  public get direction(): SortingDirection {
+    return this._direction;
+  }
 
   @Input() public disabled = false;
 
@@ -40,12 +49,6 @@ export class SortingButtonComponent implements OnChanges {
    * Current order icon.
    */
   public directionIcon = this.defaultIcon;
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['direction']) {
-      this.updateDirection();
-    }
-  }
 
   public onChangeDirection() {
     switch (this.direction) {
