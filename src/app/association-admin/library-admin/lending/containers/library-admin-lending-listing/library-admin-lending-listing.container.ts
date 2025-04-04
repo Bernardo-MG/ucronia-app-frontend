@@ -16,9 +16,7 @@ import { BookLendingService } from '../../services/book-lending.service';
 })
 export class LibraryAdminLendingListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(BookLendingService);
+  private readonly service = inject(BookLendingService);
 
   private _pageNumber = 0;
 
@@ -46,11 +44,13 @@ export class LibraryAdminLendingListingContainer {
 
   private sort = new Sorting();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
+    this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

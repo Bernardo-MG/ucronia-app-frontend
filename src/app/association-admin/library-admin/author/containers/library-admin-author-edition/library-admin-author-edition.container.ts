@@ -17,21 +17,21 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(AuthorAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(AuthorAdminService);
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Author());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_author", "update");
-    this.deletable = this.authContainer.hasPermission("library_author", "delete");
+    this.editable = authContainer.hasPermission("library_author", "update");
+    this.deletable = authContainer.hasPermission("library_author", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

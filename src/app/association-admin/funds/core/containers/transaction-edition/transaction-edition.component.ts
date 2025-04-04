@@ -17,21 +17,21 @@ import { TransactionInfoComponent } from '../../components/transaction-info/tran
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(TransactionService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(TransactionService);
 
   private index = -1;
 
-  constructor(route: ActivatedRoute) {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Transaction());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("transaction", "update");
-    this.deletable = this.authContainer.hasPermission("transaction", "delete");
+    this.editable = authContainer.hasPermission("transaction", "update");
+    this.deletable = authContainer.hasPermission("transaction", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

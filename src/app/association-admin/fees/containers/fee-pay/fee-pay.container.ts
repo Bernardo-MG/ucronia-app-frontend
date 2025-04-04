@@ -24,19 +24,17 @@ import { FeeService } from '../../services/fee.service';
 })
 export class FeePayContainer extends CreateComponent<FeePayment> {
 
-  private service = inject(FeeService);
+  private readonly service = inject(FeeService);
 
-  private authContainer = inject(AuthContainer);
+  private readonly router = inject(Router);
 
-  private router = inject(Router);
-
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   public readingMembers = false;
 
   public selectedMember = false;
 
-  public createPermission = false;
+  public readonly createPermission = false;
 
   public personPage = new PaginatedResponse<Person>();
 
@@ -50,10 +48,12 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
 
   public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super();
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("fee", "create");
+    this.createPermission = authContainer.hasPermission("fee", "create");
 
     // Load members
     this.onGoToMembersPage(0);

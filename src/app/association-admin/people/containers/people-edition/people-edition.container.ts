@@ -18,23 +18,23 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(PeopleService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(PeopleService);
 
   public view: string = 'details';
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Person());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("person", "update");
-    this.deletable = this.authContainer.hasPermission("person", "delete");
+    this.editable = authContainer.hasPermission("person", "update");
+    this.deletable = authContainer.hasPermission("person", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

@@ -11,9 +11,9 @@ import { JustifyCenterDirective } from '@bernardo-mg/layout';
 })
 export class AccountDropdownComponent {
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private authContainer = inject(AuthContainer);
+  private readonly authContainer = inject(AuthContainer);
 
   public username = '';
 

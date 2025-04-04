@@ -24,8 +24,6 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   private readonly service = inject(AccessRoleService);
 
-  private readonly authContainer = inject(AuthContainer);
-
   public permissions = new PaginatedResponse<ResourcePermission>();
 
   public view: string = 'details';
@@ -37,12 +35,13 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   @ViewChild('pickCloseButton') private pickCloseButton: any;
 
   constructor(
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    authContainer: AuthContainer
   ) {
     super(new Role());
     // Check permissions
     this.editable = false;
-    this.deletable = this.authContainer.hasPermission("user", "delete");
+    this.deletable = authContainer.hasPermission("user", "delete");
 
     // Get id
     route.paramMap.subscribe(params => {

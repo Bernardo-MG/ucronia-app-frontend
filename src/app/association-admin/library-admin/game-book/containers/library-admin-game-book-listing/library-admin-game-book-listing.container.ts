@@ -19,9 +19,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 })
 export class LibraryAdminGameBookListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(GameBookAdminService);
+  private readonly service = inject(GameBookAdminService);
 
   private _pageNumber = 0;
 
@@ -49,11 +47,13 @@ export class LibraryAdminGameBookListingContainer {
 
   private sort = new Sorting();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
+    this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

@@ -17,9 +17,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 })
 export class LibraryAdminAuthorListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(AuthorAdminService);
+  private readonly service = inject(AuthorAdminService);
 
   private _pageNumber = 0;
 
@@ -47,11 +45,13 @@ export class LibraryAdminAuthorListingContainer {
 
   public readonly createPermission;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_author", "create");
+    this.createPermission = authContainer.hasPermission("library_author", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

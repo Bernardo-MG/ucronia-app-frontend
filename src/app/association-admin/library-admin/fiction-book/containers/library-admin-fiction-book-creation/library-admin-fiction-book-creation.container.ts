@@ -18,11 +18,11 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
 })
 export class LibraryAdminFictionBookCreationContainer extends CreateComponent<BookInfo> {
 
-  private service = inject(FictionBookAdminService);
+  private readonly service = inject(FictionBookAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   public readonly languages: Language[];
 

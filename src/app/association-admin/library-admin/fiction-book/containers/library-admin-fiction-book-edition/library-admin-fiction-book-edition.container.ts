@@ -23,13 +23,11 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
 })
 export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(FictionBookAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(FictionBookAdminService);
 
   private index = -1;
 
@@ -60,13 +58,15 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
   public view: string = '';
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new FictionBook());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_book", "update");
-    this.deletable = this.authContainer.hasPermission("library_book", "delete");
+    this.editable = authContainer.hasPermission("library_book", "update");
+    this.deletable = authContainer.hasPermission("library_book", "delete");
     // Check permissions
-    this.lendPermission = this.authContainer.hasPermission("library_lending", "update");
+    this.lendPermission = authContainer.hasPermission("library_lending", "update");
 
     // Get id
     this.route.paramMap.subscribe(params => {

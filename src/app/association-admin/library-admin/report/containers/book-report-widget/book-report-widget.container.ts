@@ -13,11 +13,11 @@ export class BookReportWidgetContainer {
 
   public waiting = false;
 
-  private reportService = inject(BookReportService);
+  private readonly service = inject(BookReportService);
 
   public downloadExcel() {
     this.waiting = true;
-    this.reportService.downloadExcelReport()
+    this.service.downloadExcelReport()
       .subscribe({
         next: response => {
           this.waiting = false;

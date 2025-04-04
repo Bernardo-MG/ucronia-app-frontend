@@ -17,9 +17,7 @@ import { FeeCalendarService } from '../../services/fee-calendar.service';
 })
 export class FeeCalendarWidgetContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(FeeCalendarService);
+  private readonly service = inject(FeeCalendarService);
 
   public readonly createPermission;
 
@@ -36,9 +34,11 @@ export class FeeCalendarWidgetContainer {
 
   public feeCalendar: FeeCalendar[] = [];
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("fee", "create");
+    this.createPermission = authContainer.hasPermission("fee", "create");
 
     // Load range
     this.service.getRange().subscribe(d => {

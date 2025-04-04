@@ -17,9 +17,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 })
 export class LibraryAdminGameSystemListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(GameSystemAdminService);
+  private readonly service = inject(GameSystemAdminService);
 
   private _pageNumber = 0;
 
@@ -48,11 +46,12 @@ export class LibraryAdminGameSystemListingContainer {
   private sort = new Sorting();
 
   constructor(
+    authContainer: AuthContainer
   ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_game_system", "create");
+    this.createPermission = authContainer.hasPermission("library_game_system", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

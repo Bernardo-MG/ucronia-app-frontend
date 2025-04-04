@@ -12,7 +12,7 @@ import { TransactionBalanceChartComponent } from '../../components/transaction-b
 })
 export class TransactionBalanceChartWidgetContainer {
 
-  private balanceService = inject(TransactionBalanceService);
+  private readonly balanceService = inject(TransactionBalanceService);
 
   public balance: TransactionMonthlyBalance[] = [];
 

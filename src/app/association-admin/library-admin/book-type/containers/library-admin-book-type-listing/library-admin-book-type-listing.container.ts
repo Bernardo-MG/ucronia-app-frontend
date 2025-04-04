@@ -17,9 +17,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 })
 export class LibraryAdminBookTypeListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(BookTypeAdminService);
+  private readonly service = inject(BookTypeAdminService);
 
   private _pageNumber = 0;
 
@@ -47,11 +45,13 @@ export class LibraryAdminBookTypeListingContainer {
 
   private sort = new Sorting();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book_type", "create");
+    this.createPermission = authContainer.hasPermission("library_book_type", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

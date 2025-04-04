@@ -17,13 +17,11 @@ import { TransactionCalendarService } from '../../services/transaction-calendar.
 })
 export class TransactionCalendarWidgetContainer {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(TransactionCalendarService);
 
-  private service = inject(TransactionCalendarService);
-
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
   public months: Month[] = [];
 
@@ -38,9 +36,11 @@ export class TransactionCalendarWidgetContainer {
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("transaction", "create");
+    this.createPermission = authContainer.hasPermission("transaction", "create");
 
     // Read range
     this.service.getRange().subscribe(months => {

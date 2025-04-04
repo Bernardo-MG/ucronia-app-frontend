@@ -21,9 +21,7 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(PeopleService);
+  private readonly service = inject(PeopleService);
 
   public activeFilter = Active.Active;
 
@@ -42,9 +40,11 @@ export class PeopleListingContainer {
    */
   public reading = false;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("person", "create");
+    this.createPermission = authContainer.hasPermission("person", "create");
 
     this.nameFilterSubject.pipe(
       debounceTime(300)

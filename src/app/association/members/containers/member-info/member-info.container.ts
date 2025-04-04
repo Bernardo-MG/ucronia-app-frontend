@@ -13,7 +13,7 @@ import { MemberDetailsComponent } from '../../components/member-details/member-d
 })
 export class MemberInfoContainer {
 
-  private service = inject(MemberService);
+  private readonly service = inject(MemberService);
 
   public data = new Member();
 

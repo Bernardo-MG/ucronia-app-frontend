@@ -19,9 +19,7 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
 })
 export class LibraryAdminFictionBookListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(FictionBookAdminService);
+  private readonly service = inject(FictionBookAdminService);
 
   private _pageNumber = 0;
 
@@ -49,11 +47,13 @@ export class LibraryAdminFictionBookListingContainer {
 
   private sort = new Sorting();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
+    this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

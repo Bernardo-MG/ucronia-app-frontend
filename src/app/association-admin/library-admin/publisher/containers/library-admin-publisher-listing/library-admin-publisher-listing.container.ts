@@ -17,9 +17,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 })
 export class LibraryAdminPublisherListingContainer {
 
-  private authContainer = inject(AuthContainer);
-
-  private service = inject(PublisherAdminService);
+  private readonly service = inject(PublisherAdminService);
 
   private _pageNumber = 0;
 
@@ -47,11 +45,13 @@ export class LibraryAdminPublisherListingContainer {
 
   private sort = new Sorting();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_publisher", "create");
+    this.createPermission = authContainer.hasPermission("library_publisher", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

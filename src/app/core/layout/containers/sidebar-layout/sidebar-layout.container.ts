@@ -13,7 +13,7 @@ import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
 })
 export class SidebarLayoutContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly authContainer = inject(AuthContainer);
 
   @Input() public menus: Menu[] = [];
 

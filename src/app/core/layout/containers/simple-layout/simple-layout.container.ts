@@ -11,7 +11,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 })
 export class SimpleLayoutContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly authContainer = inject(AuthContainer);
 
   public title = '';
 

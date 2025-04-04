@@ -11,7 +11,7 @@ import { TransactionReportService } from '../../services/transaction-report.serv
 })
 export class TransactionReportWidgetContainer {
 
-  private reportService = inject(TransactionReportService);
+  private readonly reportService = inject(TransactionReportService);
   
   public downloadExcel() {
     this.reportService.downloadExcelReport().subscribe();

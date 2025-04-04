@@ -12,7 +12,7 @@ import { MembershipEvolutionService } from '../../services/membership-evolution.
 })
 export class MembershipEvolutionChartWidgetContainer {
 
-  private service = inject(MembershipEvolutionService);
+  private readonly service = inject(MembershipEvolutionService);
 
   public balance: MemberBalance[] = [];
 

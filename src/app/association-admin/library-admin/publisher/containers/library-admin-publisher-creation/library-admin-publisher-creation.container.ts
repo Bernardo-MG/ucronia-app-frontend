@@ -14,11 +14,11 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 })
 export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publisher> {
 
-  private service = inject(PublisherAdminService);
+  private readonly service = inject(PublisherAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: Publisher): Observable<Publisher> {
     return this.service.create(toSave);

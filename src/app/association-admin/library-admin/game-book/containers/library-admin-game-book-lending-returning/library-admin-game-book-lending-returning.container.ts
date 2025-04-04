@@ -17,13 +17,11 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 })
 export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(GameBookAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(GameBookAdminService);
 
   public book = new GameBook();
 
@@ -33,7 +31,9 @@ export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<
 
   public borrower = new Borrower();
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super();
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -44,7 +44,7 @@ export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<
       this.load();
     });
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_lending", "create");
+    this.createPermission = authContainer.hasPermission("library_lending", "create");
   }
 
   public onSaved() {

@@ -17,21 +17,21 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 })
 export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(GameSystemAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(GameSystemAdminService);
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new GameSystem());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_game_system", "update");
-    this.deletable = this.authContainer.hasPermission("library_game_system", "delete");
+    this.editable = authContainer.hasPermission("library_game_system", "update");
+    this.deletable = authContainer.hasPermission("library_game_system", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

@@ -16,11 +16,11 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
 })
 export class LibraryAdminGameBookCreationContainer extends CreateComponent<BookInfo> {
 
-  private service = inject(GameBookAdminService);
+  private readonly service = inject(GameBookAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   public readonly languages: Language[] = [];
 

@@ -17,13 +17,13 @@ export class SettingsInfoEditorContainer {
 
   public readonly editable;
 
-  private service = inject(AssociationSettingsService);
+  private readonly service = inject(AssociationSettingsService);
 
-  private authContainer = inject(AuthContainer);
-
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("association_settings", "update");
+    this.editable = authContainer.hasPermission("association_settings", "update");
 
     this.service.getAll()
       .subscribe({

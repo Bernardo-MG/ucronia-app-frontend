@@ -17,15 +17,13 @@ import { FeeService } from '../../services/fee.service';
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements AfterContentInit {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(FeeService);
+  private readonly service = inject(FeeService);
 
-  private cdRef = inject(ChangeDetectorRef);
-
-  private authContainer = inject(AuthContainer);
+  private readonly cdRef = inject(ChangeDetectorRef);
 
   private date: string = "";
 
@@ -33,11 +31,13 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
 
   public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Fee());
     // Check permissions
-    this.editable = this.authContainer.hasPermission("fee", "update");
-    this.deletable = this.authContainer.hasPermission("fee", "delete");
+    this.editable = authContainer.hasPermission("fee", "update");
+    this.deletable = authContainer.hasPermission("fee", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

@@ -14,7 +14,7 @@ import { MemberListComponent } from '../../components/member-list/member-list.co
 })
 export class MemberListingContainer {
 
-  private service = inject(MemberService);
+  private readonly service = inject(MemberService);
 
   public data = new PaginatedResponse<Member>();
 
