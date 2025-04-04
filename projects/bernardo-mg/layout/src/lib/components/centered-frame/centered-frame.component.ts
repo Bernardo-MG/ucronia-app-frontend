@@ -10,4 +10,3 @@ import { ResponsiveShortColumnsDirective } from '../../directives/responsive-col
 export class CenteredFrameComponent {
 
 }
-S
