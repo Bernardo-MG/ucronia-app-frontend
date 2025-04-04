@@ -5,15 +5,15 @@ import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { AccessUserSelectionListComponent } from '../../components/access-user-selection-list/access-user-selection-list.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
   selector: 'access-user-selection-list-widget',
   imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-  templateUrl: './access-user-selection-list-widget.component.html'
+  templateUrl: './access-user-selection-list-widget.container.html'
 })
-export class AccessUserSelectionListWidgetComponent {
+export class AccessUserSelectionListWidgetContainer {
 
   private readonly service = inject(AccessUserService);
 
