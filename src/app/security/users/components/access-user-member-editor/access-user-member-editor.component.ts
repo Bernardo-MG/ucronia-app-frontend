@@ -7,9 +7,9 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 
 @Component({
-    selector: 'access-user-member-editor',
-    imports: [CommonModule, AccessUserSelectMemberComponent, IconSearchComponent, BlockUiDirective],
-    templateUrl: './access-user-member-editor.component.html'
+  selector: 'access-user-member-editor',
+  imports: [CommonModule, AccessUserSelectMemberComponent, IconSearchComponent, BlockUiDirective],
+  templateUrl: './access-user-member-editor.component.html'
 })
 export class AccessUserMemberEditorComponent {
 

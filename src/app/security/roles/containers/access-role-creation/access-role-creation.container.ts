@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
@@ -8,19 +8,17 @@ import { AccessRoleFormComponent } from '../../components/access-role-form/acces
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-    selector: 'access-role-creation',
-    imports: [AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
-    templateUrl: './access-role-creation.container.html'
+  selector: 'access-role-creation',
+  imports: [AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+  templateUrl: './access-role-creation.container.html'
 })
 export class AccessRoleCreationContainer extends CreateComponent<Role> {
 
-  constructor(
-    private service: AccessRoleService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  private service = inject(AccessRoleService);
+
+  private router = inject(Router);
+
+  private route = inject(ActivatedRoute);
 
   protected override save(toSave: Role): Observable<Role> {
     return this.service.create(toSave);

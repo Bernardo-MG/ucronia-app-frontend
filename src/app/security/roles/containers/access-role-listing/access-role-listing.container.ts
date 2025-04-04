@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, Role } from '@bernardo-mg/authentication';
@@ -9,13 +9,15 @@ import { AccessRoleSelectionListComponent } from '../../components/access-role-s
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-    selector: 'access-role-listing',
-    imports: [RouterModule, AccessRoleSelectionListComponent, PaginationInfoComponent, IconAddComponent, ArticleComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
-    templateUrl: './access-role-listing.container.html'
+  selector: 'access-role-listing',
+  imports: [RouterModule, AccessRoleSelectionListComponent, PaginationInfoComponent, IconAddComponent, ArticleComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+  templateUrl: './access-role-listing.container.html'
 })
-export class AccessRoleListingContainer implements OnInit {
+export class AccessRoleListingContainer {
 
-  public createPermission = false;
+  private service = inject(AccessRoleService);
+
+  public readonly createPermission;
 
   public data = new PaginatedResponse<Role>();
 
@@ -27,13 +29,10 @@ export class AccessRoleListingContainer implements OnInit {
   private sort = new Sorting();
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: AccessRoleService
-  ) { }
-
-  ngOnInit(): void {
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("role", "create");
+    this.createPermission = authContainer.hasPermission("role", "create");
 
     this.load(0);
   }

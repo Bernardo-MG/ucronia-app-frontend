@@ -14,9 +14,9 @@ import { PasswordResetService } from '../../services/password-reset.service';
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-    selector: 'login-password-reset',
-    imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
-    templateUrl: './password-reset.container.html'
+  selector: 'login-password-reset',
+  imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
+  templateUrl: './password-reset.container.html'
 })
 export class PasswordResetContainer implements OnInit {
 

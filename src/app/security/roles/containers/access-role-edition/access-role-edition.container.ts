@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
@@ -14,11 +14,17 @@ import { AccessRolePermissionsComponent } from '../../components/access-role-per
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-    selector: 'access-role-edition',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-    templateUrl: './access-role-edition.container.html'
+  selector: 'access-role-edition',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  templateUrl: './access-role-edition.container.html'
 })
-export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> implements OnInit {
+export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> {
+
+  private router = inject(Router);
+
+  private service = inject(AccessRoleService);
+
+  private authContainer = inject(AuthContainer);
 
   public permissions = new PaginatedResponse<ResourcePermission>();
 
@@ -31,21 +37,15 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   @ViewChild('pickCloseButton') private pickCloseButton: any;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: AccessRoleService,
-    private authContainer: AuthContainer
+    route: ActivatedRoute
   ) {
     super(new Role());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = false;
     this.deletable = this.authContainer.hasPermission("user", "delete");
 
     // Get id
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const roleParam = params.get('role');
       if (roleParam) {
         this.role = roleParam;
@@ -102,7 +102,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   protected override save(toSave: Role): Observable<Role> {
     return this.service.update(toSave.name, toSave);
   }
-  
+
   protected override interceptSave(response: Role) {
     super.interceptSave(response);
     this.onLoadPermissions(0);

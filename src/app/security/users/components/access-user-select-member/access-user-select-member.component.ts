@@ -7,9 +7,9 @@ import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-select-member',
-    imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective, IconAddComponent],
-    templateUrl: './access-user-select-member.component.html'
+  selector: 'access-user-select-member',
+  imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective, IconAddComponent],
+  templateUrl: './access-user-select-member.component.html'
 })
 export class AccessUserSelectMemberComponent implements OnInit {
 

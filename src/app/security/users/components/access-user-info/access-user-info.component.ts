@@ -12,9 +12,9 @@ import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/acce
 import { AccessUserStatusComponent } from '../access-user-status/access-user-status.component';
 
 @Component({
-    selector: 'access-user-info',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
-    templateUrl: './access-user-info.component.html'
+  selector: 'access-user-info',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, WaitingButtonComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+  templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {
 

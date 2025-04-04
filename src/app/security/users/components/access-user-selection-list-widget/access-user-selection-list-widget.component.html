@@ -11,6 +11,7 @@
       (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
   </layout-card-body>
   <layout-card-footer>
-    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages" [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+      [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
   </layout-card-footer>
 </layout-card>

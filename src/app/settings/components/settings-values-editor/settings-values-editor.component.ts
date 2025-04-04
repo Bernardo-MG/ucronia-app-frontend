@@ -5,9 +5,9 @@ import { Setting } from '@app/settings/models/setting';
 import { IconEditComponent } from '@bernardo-mg/icons';
 
 @Component({
-    selector: 'assoc-settings-values-editor',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, IconEditComponent],
-    templateUrl: './settings-values-editor.component.html'
+  selector: 'assoc-settings-values-editor',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconEditComponent],
+  templateUrl: './settings-values-editor.component.html'
 })
 export class SettingValuesEditorComponent {
 

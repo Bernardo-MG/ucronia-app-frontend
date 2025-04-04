@@ -13,9 +13,9 @@ import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-    selector: 'access-user-edition',
-    imports: [CommonModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
-    templateUrl: './access-user-edition.container.html'
+  selector: 'access-user-edition',
+  imports: [CommonModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+  templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> implements OnInit {
 
@@ -61,7 +61,7 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
     // Load member
     this.service.getMember(this.username).subscribe({
       next: response => {
-        if(response){
+        if (response) {
           this.member = response;
         } else {
           this.member = new Member();

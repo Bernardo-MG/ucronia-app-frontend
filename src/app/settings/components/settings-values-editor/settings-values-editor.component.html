@@ -1,13 +1,11 @@
-<form class="needs-validation" (ngSubmit)="onSave(setting, $event)" novalidate
-  *ngFor="let setting of settings">
+<form class="needs-validation" (ngSubmit)="onSave(setting, $event)" novalidate *ngFor="let setting of settings">
   <div class="row mb-2">
     <label for="{{setting.code + 'Input'}}" id="{{setting.code + 'Label'}}"
       class="col-sm-2 col-form-label">{{setting.code}}</label>
     <div class="col-sm-9">
-      <input name="{{setting.code}}" type="{{setting.type}}" step="any"
-        id="{{setting.code + 'Input'}}" class="form-control" formInvalidField="setting.code"
-        [value]="setting.value" attr.aria-describedby="{{setting.code + 'Label'}}"
-        [disabled]="disabled || !isEditing(setting.code)">
+      <input name="{{setting.code}}" type="{{setting.type}}" step="any" id="{{setting.code + 'Input'}}"
+        class="form-control" formInvalidField="setting.code" [value]="setting.value"
+        attr.aria-describedby="{{setting.code + 'Label'}}" [disabled]="disabled || !isEditing(setting.code)">
     </div>
     <div class="col-sm-1">
       <div class="btn-group me-2" role="group">

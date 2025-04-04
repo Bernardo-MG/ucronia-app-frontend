@@ -5,9 +5,9 @@ import { Month } from '../../models/month';
 
 
 @Component({
-    selector: 'shared-calendar-month',
-    templateUrl: './calendar-month.component.html',
-    standalone: false
+  selector: 'shared-calendar-month',
+  templateUrl: './calendar-month.component.html',
+  standalone: false
 })
 export class CalendarMonthComponent implements OnChanges {
 
@@ -39,7 +39,7 @@ export class CalendarMonthComponent implements OnChanges {
     if (changes['month']) {
       this.currentMonth = this.month;
       this.viewDate = new Date(`${this.currentMonth.year}-${this.currentMonth.month}`);
-  
+
       this.activeDayIsOpen = false;
     }
 

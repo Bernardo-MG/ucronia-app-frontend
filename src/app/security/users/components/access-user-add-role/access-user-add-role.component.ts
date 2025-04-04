@@ -7,9 +7,9 @@ import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-add-role',
-    imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
-    templateUrl: './access-user-add-role.component.html'
+  selector: 'access-user-add-role',
+  imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
+  templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent implements OnInit {
 

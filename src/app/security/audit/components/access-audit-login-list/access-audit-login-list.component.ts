@@ -7,9 +7,9 @@ import { SortingProperty } from '@bernardo-mg/request';
 import { LoginRegister } from '../../models/login-register';
 
 @Component({
-    selector: 'access-audit-login-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
-    templateUrl: './access-audit-login-list.component.html'
+  selector: 'access-audit-login-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
+  templateUrl: './access-audit-login-list.component.html'
 })
 export class AccessAuditLoginListComponent {
 

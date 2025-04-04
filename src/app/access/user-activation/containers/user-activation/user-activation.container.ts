@@ -14,9 +14,9 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-    selector: 'access-user-activation',
-    imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
-    templateUrl: './user-activation.container.html'
+  selector: 'access-user-activation',
+  imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
+  templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer implements OnInit {
 

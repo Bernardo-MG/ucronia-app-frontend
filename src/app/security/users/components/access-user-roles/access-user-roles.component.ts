@@ -7,9 +7,9 @@ import { BlockUiDirective } from '@bernardo-mg/layout';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-roles',
-    imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, IconDeleteComponent],
-    templateUrl: './access-user-roles.component.html'
+  selector: 'access-user-roles',
+  imports: [CommonModule, PaginationNavigationComponent, BlockUiDirective, IconDeleteComponent],
+  templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
 

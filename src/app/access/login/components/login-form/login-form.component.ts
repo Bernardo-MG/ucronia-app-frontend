@@ -11,9 +11,9 @@ import { UserLogin } from '../../models/user-login';
  * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
-    selector: 'login-login-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InvalidFieldDirective],
-    templateUrl: './login-form.component.html'
+  selector: 'login-login-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InvalidFieldDirective],
+  templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
 

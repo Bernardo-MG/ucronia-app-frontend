@@ -9,9 +9,9 @@ import { AccessUserService } from '../../services/access-user.service';
 import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
-    selector: 'access-user-selection-list-widget',
-    imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-    templateUrl: './access-user-selection-list-widget.component.html'
+  selector: 'access-user-selection-list-widget',
+  imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  templateUrl: './access-user-selection-list-widget.component.html'
 })
 export class AccessUserSelectionListWidgetComponent implements OnInit {
 
