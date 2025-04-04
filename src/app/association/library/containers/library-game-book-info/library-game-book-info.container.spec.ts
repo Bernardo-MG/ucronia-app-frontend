@@ -62,7 +62,6 @@ describe('LibraryGameBookInfoContainer', () => {
     mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
-    component.ngOnInit();
     fixture.detectChanges();
 
     expect(component.data).toEqual(mockBook);
@@ -74,7 +73,6 @@ describe('LibraryGameBookInfoContainer', () => {
     mockService.getOneGameBook.and.returnValue(throwError(() => new Error('Failed to load')));
     mockService.getLanguages.and.returnValue(languages);
 
-    component.ngOnInit();
     fixture.detectChanges();
 
     expect(component["waiting"]).toBeFalse();
@@ -100,7 +98,6 @@ describe('LibraryGameBookInfoContainer', () => {
     mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
-    component.ngOnInit();
     fixture.detectChanges();
 
     expect(mockService.getOneGameBook).toHaveBeenCalledWith(1);
@@ -126,7 +123,6 @@ describe('LibraryGameBookInfoContainer', () => {
     mockService.getOneGameBook.and.returnValue(of(mockBook));
     mockService.getLanguages.and.returnValue(languages);
 
-    component.ngOnInit();
     fixture.detectChanges();
 
     const bookDetails = fixture.debugElement.query(By.css('assoc-library-game-book-details'));
