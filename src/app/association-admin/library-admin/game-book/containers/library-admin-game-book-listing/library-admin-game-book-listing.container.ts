@@ -51,7 +51,7 @@ export class LibraryAdminGameBookListingContainer {
     authContainer: AuthContainer
   ) {
     // Load books
-    this.load(this.pageNumber);
+    this.load(0);
     // Check permissions
     this.createPermission = authContainer.hasPermission("library_book", "create");
   }
