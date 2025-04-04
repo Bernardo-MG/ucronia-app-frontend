@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlockUiDirective } from '@bernardo-mg/layout';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -14,11 +14,13 @@ import { PasswordResetService } from '../../services/password-reset.service';
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-    selector: 'login-password-reset',
-    imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
-    templateUrl: './password-reset.container.html'
+  selector: 'login-password-reset',
+  imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
+  templateUrl: './password-reset.container.html'
 })
-export class PasswordResetContainer implements OnInit {
+export class PasswordResetContainer {
+
+  private readonly service = inject(PasswordResetService);
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
@@ -46,13 +48,10 @@ export class PasswordResetContainer implements OnInit {
   public failures = new FailureStore();
 
   constructor(
-    private route: ActivatedRoute,
-    private service: PasswordResetService
-  ) { }
-
-  public ngOnInit(): void {
+    route: ActivatedRoute
+  ) {
     // Validate token from route
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const token = params.get('token');
       if (token) {
         this.validateToken(token);

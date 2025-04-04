@@ -1,8 +1,8 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccessRoleService } from '../../services/access-role.service';
 import { AccessRoleAddPermissionComponent } from './access-role-add-permission.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccessRoleAddPermissionComponent', () => {
   let component: AccessRoleAddPermissionComponent;
@@ -10,13 +10,13 @@ describe('AccessRoleAddPermissionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [AccessRoleAddPermissionComponent],
-    providers: [
+      imports: [AccessRoleAddPermissionComponent],
+      providers: [
         AccessRoleService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-})
+      ]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(AccessRoleAddPermissionComponent);

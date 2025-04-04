@@ -15,7 +15,7 @@ export class AccessUserService {
 
   constructor(
     clientProvider: AngularCrudClientProvider
-  ) { 
+  ) {
     this.client = clientProvider.url(environment.apiUrl + '/security/user');
   }
 

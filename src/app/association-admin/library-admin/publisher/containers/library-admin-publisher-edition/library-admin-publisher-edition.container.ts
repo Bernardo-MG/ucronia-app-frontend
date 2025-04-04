@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -15,26 +15,23 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   imports: [CommonModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-edition.container.html'
 })
-export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> implements OnInit {
+export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(PublisherAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(PublisherAdminService);
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Publisher());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_publisher", "update");
-    this.deletable = this.authContainer.hasPermission("library_publisher", "delete");
+    this.editable = authContainer.hasPermission("library_publisher", "update");
+    this.deletable = authContainer.hasPermission("library_publisher", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

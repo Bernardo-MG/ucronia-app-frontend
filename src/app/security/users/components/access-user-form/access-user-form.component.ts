@@ -5,9 +5,9 @@ import { User } from '@bernardo-mg/authentication';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({
-    selector: 'access-user-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './access-user-form.component.html'
+  selector: 'access-user-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './access-user-form.component.html'
 })
 export class AccessUserFormComponent extends FormComponent<User> {
 

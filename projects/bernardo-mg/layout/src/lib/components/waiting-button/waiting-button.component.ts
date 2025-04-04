@@ -3,9 +3,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconWaitingComponent } from '@bernardo-mg/icons';
 
 @Component({
-    selector: 'layout-waiting-button',
-    imports: [CommonModule, IconWaitingComponent],
-    templateUrl: './waiting-button.component.html'
+  selector: 'layout-waiting-button',
+  imports: [CommonModule, IconWaitingComponent],
+  templateUrl: './waiting-button.component.html'
 })
 export class WaitingButtonComponent {
 

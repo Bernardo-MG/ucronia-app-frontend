@@ -14,11 +14,11 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 })
 export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {
 
-  private service = inject(GameSystemAdminService);
+  private readonly service = inject(GameSystemAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: GameSystem): Observable<GameSystem> {
     return this.service.create(toSave);

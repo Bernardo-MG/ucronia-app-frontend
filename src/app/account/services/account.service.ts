@@ -11,9 +11,9 @@ import { PasswordChangeStatus } from '../models/password-change-status';
 })
 export class AccountService {
 
-  private accountClient;
+  private readonly accountClient;
 
-  private passwordChangeClient;
+  private readonly passwordChangeClient;
 
   constructor(
     clientProvider: AngularCrudClientProvider

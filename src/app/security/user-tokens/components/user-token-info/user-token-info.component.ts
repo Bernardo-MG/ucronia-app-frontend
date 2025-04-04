@@ -5,9 +5,9 @@ import { PlaceholderDirective } from '@bernardo-mg/layout';
 import { FailureStore, FieldFailure } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-token-info',
-    imports: [CommonModule, PlaceholderDirective],
-    templateUrl: './user-token-info.component.html'
+  selector: 'access-user-token-info',
+  imports: [CommonModule, PlaceholderDirective],
+  templateUrl: './user-token-info.component.html'
 })
 export class UserTokenInfoComponent {
 

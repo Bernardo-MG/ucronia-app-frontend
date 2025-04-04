@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
 import { BookInfo } from '@app/models/library/book-info';
@@ -17,13 +17,20 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
   imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-fiction-book-listing.container.html'
 })
-export class LibraryAdminFictionBookListingContainer implements OnInit, OnChanges {
+export class LibraryAdminFictionBookListingContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(FictionBookAdminService);
 
-  private service = inject(FictionBookAdminService);
+  private _pageNumber = 0;
 
-  @Input() public pageNumber = 0;
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -36,21 +43,17 @@ export class LibraryAdminFictionBookListingContainer implements OnInit, OnChange
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
+    this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

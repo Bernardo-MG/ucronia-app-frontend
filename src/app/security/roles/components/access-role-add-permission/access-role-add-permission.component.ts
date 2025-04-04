@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
@@ -8,11 +8,11 @@ import { JustifyCenterDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-role-add-permission',
-    imports: [CommonModule, SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
-    templateUrl: './access-role-add-permission.component.html'
+  selector: 'access-role-add-permission',
+  imports: [CommonModule, SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
+  templateUrl: './access-role-add-permission.component.html'
 })
-export class AccessRoleAddPermissionComponent implements OnChanges {
+export class AccessRoleAddPermissionComponent {
 
   @Input() public permissions = new PaginatedResponse<ResourcePermission>();
 
@@ -23,12 +23,6 @@ export class AccessRoleAddPermissionComponent implements OnChanges {
   @Output() public changeDirection = new EventEmitter<SortingProperty>();
 
   public data = new ResourcePermission();
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['role']) {
-      this.goTo.emit(0);
-    }
-  }
 
   public onAddPermission(permission: ResourcePermission): void {
     this.addPermission.emit(permission);

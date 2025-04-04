@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
 import { FictionBook } from '@app/models/library/fiction-book';
@@ -16,17 +16,18 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
   imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-creation.container.html'
 })
-export class LibraryAdminFictionBookCreationContainer extends CreateComponent<BookInfo> implements OnInit {
+export class LibraryAdminFictionBookCreationContainer extends CreateComponent<BookInfo> {
 
-  private service = inject(FictionBookAdminService);
+  private readonly service = inject(FictionBookAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  public languages: Language[] = [];
+  public readonly languages: Language[];
 
-  public ngOnInit(): void {
+  constructor() {
+    super();
     this.languages = this.service.getLanguages();
   }
 

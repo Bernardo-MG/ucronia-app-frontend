@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '@bernardo-mg/icons';
 import { MenuLink } from '@bernardo-mg/layout';
@@ -11,7 +11,7 @@ import { AccountDropdownComponent } from '../account-dropdown/account-dropdown.c
   imports: [CommonModule, RouterModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownComponent],
   templateUrl: './navbar.component.html'
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   @Input() public title = '';
 
@@ -27,19 +27,16 @@ export class NavbarComponent implements OnInit {
     return this.adminLinks.length > 0;
   }
 
-  public adminLinks: MenuLink[] = [];
+  public readonly adminLinks: MenuLink[];
 
   constructor(
-    private associationAdminLayoutService: AssociationAdminLayoutService
-  ) { }
+    associationAdminLayoutService: AssociationAdminLayoutService
+  ) {
+    this.adminLinks = associationAdminLayoutService.getLinks();
+  }
 
   public get loggedOut() {
     return !this.loggedIn;
-  }
-
-  ngOnInit(): void {
-    // Load menus
-    this.adminLinks = this.associationAdminLayoutService.getLinks();
   }
 
 }

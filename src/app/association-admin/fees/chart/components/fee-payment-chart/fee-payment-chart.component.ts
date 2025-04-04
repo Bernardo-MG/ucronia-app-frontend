@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
 
@@ -7,17 +7,13 @@ import Chart from 'chart.js/auto';
   imports: [],
   templateUrl: './fee-payment-chart.component.html'
 })
-export class FeePaymentChartComponent implements OnChanges, OnDestroy {
+export class FeePaymentChartComponent implements OnDestroy {
 
-  @Input() public report = new FeePaymentReport();
+  @Input() public set report(data: FeePaymentReport) {
+    this.loadChart(data);
+  }
 
   public chart: any;
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['report']) {
-      this.loadChart();
-    }
-  }
 
   public ngOnDestroy(): void {
     if (this.chart) {
@@ -25,13 +21,13 @@ export class FeePaymentChartComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private loadChart() {
+  private loadChart(report: FeePaymentReport) {
     if (this.chart) {
       this.chart.destroy();
     }
 
     const labels = ['Pagado', 'No pagado'];
-    const payments = [this.report.paid, this.report.unpaid];
+    const payments = [report.paid, report.unpaid];
 
     const data = {
       labels: labels,

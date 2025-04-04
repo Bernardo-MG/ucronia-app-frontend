@@ -1,24 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-account-dropdown',
-    imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
-    templateUrl: './account-dropdown.component.html'
+  selector: 'layout-account-dropdown',
+  imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
+  templateUrl: './account-dropdown.component.html'
 })
-export class AccountDropdownComponent implements OnInit {
+export class AccountDropdownComponent {
+
+  private readonly router = inject(Router);
+
+  private readonly authContainer = inject(AuthContainer);
 
   public username = '';
 
-  constructor(
-    private authContainer: AuthContainer,
-    private router: Router
-  ) { }
-
-  ngOnInit(): void {
+  constructor() {
     this.authContainer.securityDetails.subscribe(u => { this.username = u.username });
   }
 

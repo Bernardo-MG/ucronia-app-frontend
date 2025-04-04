@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CardHeaderComponent } from './card-header.component';
 
 describe('CardHeaderComponent', () => {
@@ -10,8 +9,8 @@ describe('CardHeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CardHeaderComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(CardHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccessUserStatusComponent } from './access-user-status.component';
 
 describe('AccessUserStatusComponent', () => {
@@ -10,8 +9,8 @@ describe('AccessUserStatusComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AccessUserStatusComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AccessUserStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

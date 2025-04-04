@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -15,26 +15,23 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-edition.container.html'
 })
-export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> implements OnInit {
+export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(GameSystemAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(GameSystemAdminService);
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new GameSystem());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("library_game_system", "update");
-    this.deletable = this.authContainer.hasPermission("library_game_system", "delete");
+    this.editable = authContainer.hasPermission("library_game_system", "update");
+    this.deletable = authContainer.hasPermission("library_game_system", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

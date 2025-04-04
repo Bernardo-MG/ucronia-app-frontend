@@ -4,15 +4,17 @@ import { MemberBalance } from '@app/models/members/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({
-    selector: 'assoc-membership-evolution-chart',
-    imports: [CommonModule],
-    templateUrl: './membership-evolution-chart.component.html'
+  selector: 'assoc-membership-evolution-chart',
+  imports: [CommonModule],
+  templateUrl: './membership-evolution-chart.component.html'
 })
-export class MembershipEvolutionChartComponent implements OnChanges, OnDestroy {
+export class MembershipEvolutionChartComponent implements OnDestroy {
 
   @Input() public waiting = false;
 
-  @Input() public balance: MemberBalance[] = [];
+  @Input() public set balance(data: MemberBalance[]) {
+    this.loadChart(data);
+  }
 
   @Input() public startMonth = '';
 
@@ -25,12 +27,6 @@ export class MembershipEvolutionChartComponent implements OnChanges, OnDestroy {
   @Output() public endMonthChange = new EventEmitter<string>();
 
   public chart: any;
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['balance']) {
-      this.loadChart();
-    }
-  }
 
   public ngOnDestroy(): void {
     if (this.chart) {
@@ -46,13 +42,13 @@ export class MembershipEvolutionChartComponent implements OnChanges, OnDestroy {
     this.endMonthChange.emit(event.target.value);
   }
 
-  private loadChart() {
+  private loadChart(balance: MemberBalance[]) {
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.date);
-    const totals = this.balance.map(b => b.total);
+    const labels = balance.map(b => b.date);
+    const totals = balance.map(b => b.total);
 
     const data = {
       labels: labels,

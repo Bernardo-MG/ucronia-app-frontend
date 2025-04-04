@@ -9,9 +9,9 @@ import { WaitingButtonComponent } from '@bernardo-mg/layout';
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-    selector: 'login-password-reset-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-    templateUrl: './password-reset-form.component.html'
+  selector: 'login-password-reset-form',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -15,13 +15,20 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [CommonModule, RouterModule, ArticleComponent, SortingButtonComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-game-system-listing.container.html'
 })
-export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges {
+export class LibraryAdminGameSystemListingContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(GameSystemAdminService);
 
-  private service = inject(GameSystemAdminService);
+  private _pageNumber = 0;
 
-  @Input() public pageNumber = 0;
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -34,24 +41,17 @@ export class LibraryAdminGameSystemListingContainer implements OnInit, OnChanges
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   private sort = new Sorting();
 
   constructor(
-  ) { }
-
-  public ngOnInit(): void {
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_game_system", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
+    this.createPermission = authContainer.hasPermission("library_game_system", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

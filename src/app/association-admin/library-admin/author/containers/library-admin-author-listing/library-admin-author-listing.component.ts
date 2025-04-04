@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -15,13 +15,20 @@ import { AuthorAdminService } from '../../services/author-admin.service';
   imports: [CommonModule, RouterModule, SortingButtonComponent, ArticleComponent, IconAddComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-author-listing.component.html'
 })
-export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
+export class LibraryAdminAuthorListingContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(AuthorAdminService);
 
-  private service = inject(AuthorAdminService);
+  private _pageNumber = 0;
 
-  @Input() public pageNumber = 0;
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -36,19 +43,15 @@ export class LibraryAdminAuthorListingContainer implements OnInit, OnChanges {
 
   private sort = new Sorting();
 
-  public createPermission = false;
+  public readonly createPermission;
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_author", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
+    this.createPermission = authContainer.hasPermission("library_author", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {

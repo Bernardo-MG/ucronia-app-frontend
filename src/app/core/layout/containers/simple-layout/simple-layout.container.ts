@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from '@app/core/layout/components/navbar/navbar.component';
 import { LayoutService } from '@app/core/layout/services/layout.service';
 import { AuthContainer } from '@bernardo-mg/authentication';
 
 @Component({
-    selector: 'layout-simple-layout-layout',
-    imports: [RouterModule, NavbarComponent],
-    templateUrl: './simple-layout.container.html'
+  selector: 'layout-simple-layout-layout',
+  imports: [RouterModule, NavbarComponent],
+  templateUrl: './simple-layout.container.html'
 })
-export class SimpleLayoutContainer implements OnInit {
+export class SimpleLayoutContainer {
+
+  private readonly authContainer = inject(AuthContainer);
 
   public title = '';
 
@@ -24,18 +26,15 @@ export class SimpleLayoutContainer implements OnInit {
   }
 
   constructor(
-    private layoutService: LayoutService,
-    private authContainer: AuthContainer
-  ) { }
-
-  ngOnInit(): void {
+    layoutService: LayoutService
+  ) {
     // App title
-    this.title = this.layoutService.getTitle();
+    this.title = layoutService.getTitle();
 
     // Show links
-    this.showSettings = this.layoutService.showSettingsLink();
-    this.showSecurity = this.layoutService.showSecurityLink();
-    this.showAssociation = this.layoutService.showAssociationLink();
+    this.showSettings = layoutService.showSettingsLink();
+    this.showSecurity = layoutService.showSecurityLink();
+    this.showAssociation = layoutService.showAssociationLink();
   }
 
 }

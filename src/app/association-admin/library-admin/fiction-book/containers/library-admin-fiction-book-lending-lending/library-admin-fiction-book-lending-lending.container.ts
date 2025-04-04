@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
 import { BookLent } from '@app/models/library/book-lent';
@@ -18,21 +18,19 @@ import { FictionBookAdminService } from '../../services/fiction-book-admin.servi
   imports: [CommonModule, ArticleComponent, LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-fiction-book-lending-lending.container.html'
 })
-export class LibraryAdminFictionBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminFictionBookLendingLendContainer extends CreateComponent<BookLent> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(FictionBookAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(FictionBookAdminService);
 
   public book = new FictionBook();
 
   public readingMembers = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public members = new PaginatedResponse<Member>();
 
@@ -40,7 +38,10 @@ export class LibraryAdminFictionBookLendingLendContainer extends CreateComponent
 
   private index = -1;
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
+    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');
@@ -50,7 +51,7 @@ export class LibraryAdminFictionBookLendingLendContainer extends CreateComponent
       this.load();
     });
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_lending", "create");
+    this.createPermission = authContainer.hasPermission("library_lending", "create");
     this.onGoToMembersPage(0);
   }
 

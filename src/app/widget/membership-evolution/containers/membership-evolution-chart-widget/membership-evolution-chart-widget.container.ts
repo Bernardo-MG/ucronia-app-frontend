@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
 import { MembershipEvolutionService } from '../../services/membership-evolution.service';
 
 @Component({
-    selector: 'widget-membership-evolution-chart',
-    imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
-    templateUrl: './membership-evolution-chart-widget.container.html'
+  selector: 'widget-membership-evolution-chart',
+  imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+  templateUrl: './membership-evolution-chart-widget.container.html'
 })
-export class MembershipEvolutionChartWidgetContainer implements OnInit {
+export class MembershipEvolutionChartWidgetContainer {
+
+  private readonly service = inject(MembershipEvolutionService);
 
   public balance: MemberBalance[] = [];
 
@@ -46,14 +48,10 @@ export class MembershipEvolutionChartWidgetContainer implements OnInit {
 
   private readingRange = false;
 
-  constructor(
-    private memberBalanceService: MembershipEvolutionService
-  ) { }
-
-  ngOnInit(): void {
+  constructor() {
     // Read balance range
     this.readingRange = true;
-    this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+    this.service.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.months = b.map(v => v.date);
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
@@ -64,7 +62,7 @@ export class MembershipEvolutionChartWidgetContainer implements OnInit {
 
   private loadBalance() {
     this.readingBalance = true;
-    this.memberBalanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
+    this.service.monthly(this.startMonth, this.endMonth).subscribe(b => {
       this.balance = b;
       this.readingBalance = false;
     });

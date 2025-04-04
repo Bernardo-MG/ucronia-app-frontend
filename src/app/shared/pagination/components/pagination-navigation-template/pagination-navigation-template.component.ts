@@ -11,9 +11,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  * this will show a list of pages like "1, 2, 3 ... 5, 6, 7 ... 9, 10, 11".
  */
 @Component({
-    selector: 'pagination-navigation-template',
-    imports: [CommonModule],
-    templateUrl: './pagination-navigation-template.component.html'
+  selector: 'pagination-navigation-template',
+  imports: [CommonModule],
+  templateUrl: './pagination-navigation-template.component.html'
 })
 export class PaginationNavigationTemplateComponent {
 

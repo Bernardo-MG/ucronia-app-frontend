@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameBookAdminService } from '@app/association-admin/library-admin/game-book/services/game-book-admin.service';
 import { BookReturned } from '@app/models/library/book-returned';
@@ -15,25 +15,26 @@ import { LibraryAdminBookReturnFormComponent } from '../../../shared/components/
   imports: [ArticleComponent, LibraryAdminBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-lending-returning.container.html'
 })
-export class LibraryAdminFictionBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+export class LibraryAdminFictionBookLendingReturnContainer extends CreateComponent<BookReturned> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(GameBookAdminService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(GameBookAdminService);
 
   public book = new FictionBook();
 
   private index = -1;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public borrower = new Borrower();
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
+    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');
@@ -43,7 +44,7 @@ export class LibraryAdminFictionBookLendingReturnContainer extends CreateCompone
       this.load();
     });
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_lending", "create");
+    this.createPermission = authContainer.hasPermission("library_lending", "create");
   }
 
   public onSaved() {

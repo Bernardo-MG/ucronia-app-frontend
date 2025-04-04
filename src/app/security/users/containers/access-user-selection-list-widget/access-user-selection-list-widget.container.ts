@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { AccessUserSelectionListComponent } from '../../components/access-user-selection-list/access-user-selection-list.component';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserSelectionListComponent } from '../access-user-selection-list/access-user-selection-list.component';
 
 @Component({
-    selector: 'access-user-selection-list-widget',
-    imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
-    templateUrl: './access-user-selection-list-widget.component.html'
+  selector: 'access-user-selection-list-widget',
+  imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  templateUrl: './access-user-selection-list-widget.container.html'
 })
-export class AccessUserSelectionListWidgetComponent implements OnInit {
+export class AccessUserSelectionListWidgetContainer {
 
-  public createPermission = false;
+  private readonly service = inject(AccessUserService);
+
+  public readonly createPermission;
 
   public data = new PaginatedResponse<User>();
 
@@ -27,13 +29,10 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   private sort = new Sorting();
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: AccessUserService
-  ) { }
-
-  ngOnInit(): void {
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("user", "create");
+    this.createPermission = authContainer.hasPermission("user", "create");
 
     this.load(0);
   }

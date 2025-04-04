@@ -1,9 +1,9 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { PasswordResetService } from '../../services/password-reset.service';
 import { PasswordResetContainer } from './password-reset.container';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
 
 describe('PasswordResetContainer', () => {
   let component: PasswordResetContainer;

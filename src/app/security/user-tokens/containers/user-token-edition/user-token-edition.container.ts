@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
@@ -11,13 +11,15 @@ import { UserTokenStatusComponent } from '../../components/user-token-status/use
 import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
-    selector: 'access-user-token-edition',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './user-token-edition.container.html'
+  selector: 'access-user-token-edition',
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, WaitingButtonComponent, ModalComponent, UserTokenStatusComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './user-token-edition.container.html'
 })
-export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> implements OnInit {
+export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> {
 
-  public extendExpirationForm;
+  private readonly service = inject(UserTokenService);
+
+  public readonly extendExpirationForm;
 
   private token = "";
 
@@ -25,25 +27,22 @@ export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserTok
 
   constructor(
     fb: FormBuilder,
-    private route: ActivatedRoute,
-    private service: UserTokenService,
-    private authContainer: AuthContainer
+    route: ActivatedRoute,
+    authContainer: AuthContainer
   ) {
     super(new UserToken());
 
     this.extendExpirationForm = fb.group({
       expirationDate: ['', Validators.required]
     });
-  }
 
-  public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("user_token", "update");
+    this.editable = authContainer.hasPermission("user_token", "update");
 
     // Get id
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const tokenParam = params.get('token');
-      if(tokenParam) {
+      if (tokenParam) {
         this.token = tokenParam;
       }
       this.load();

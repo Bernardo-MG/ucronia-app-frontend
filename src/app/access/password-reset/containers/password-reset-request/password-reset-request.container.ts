@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
@@ -11,11 +11,13 @@ import { PasswordResetService } from '../../services/password-reset.service';
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-    selector: 'login-password-reset-request',
-    imports: [CommonModule, PasswordResetRequestFormComponent, CardComponent, CardBodyComponent],
-    templateUrl: './password-reset-request.container.html'
+  selector: 'login-password-reset-request',
+  imports: [CommonModule, PasswordResetRequestFormComponent, CardComponent, CardBodyComponent],
+  templateUrl: './password-reset-request.container.html'
 })
 export class PasswordResetRequestContainer {
+
+  private readonly service = inject(PasswordResetService);
 
   /**
    * Finished flag. If set to true the component is finished and allows no furter operation.
@@ -31,10 +33,6 @@ export class PasswordResetRequestContainer {
    * Failures when reseting the password.
    */
   public failures = new FailureStore();
-
-  constructor(
-    private service: PasswordResetService
-  ) { }
 
   /**
    * Handles the password reset request.

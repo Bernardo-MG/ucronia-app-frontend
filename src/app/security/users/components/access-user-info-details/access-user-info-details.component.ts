@@ -4,9 +4,9 @@ import { User } from '@bernardo-mg/authentication';
 import { PlaceholderDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'access-user-info-details',
-    imports: [CommonModule, PlaceholderDirective],
-    templateUrl: './access-user-info-details.component.html'
+  selector: 'access-user-info-details',
+  imports: [CommonModule, PlaceholderDirective],
+  templateUrl: './access-user-info-details.component.html'
 })
 export class AccessUserInfoDetailsComponent {
 

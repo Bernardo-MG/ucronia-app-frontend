@@ -6,9 +6,9 @@ import { User } from '@bernardo-mg/authentication';
 import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-selection-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent],
-    templateUrl: './access-user-selection-list.component.html'
+  selector: 'access-user-selection-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  templateUrl: './access-user-selection-list.component.html'
 })
 export class AccessUserSelectionListComponent {
 

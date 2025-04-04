@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccessUserSelectMemberComponent } from './access-user-select-member.component';
 
 describe('AccessUserSelectMemberComponent', () => {
@@ -10,8 +9,8 @@ describe('AccessUserSelectMemberComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AccessUserSelectMemberComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AccessUserSelectMemberComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
