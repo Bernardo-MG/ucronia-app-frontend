@@ -34,7 +34,7 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
 
   public selectedMember = false;
 
-  public readonly createPermission = false;
+  public readonly createPermission;
 
   public personPage = new PaginatedResponse<Person>();
 
