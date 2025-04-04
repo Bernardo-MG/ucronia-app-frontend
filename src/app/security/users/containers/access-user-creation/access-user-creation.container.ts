@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
@@ -13,14 +13,12 @@ import { AccessUserService } from '../../services/access-user.service';
   templateUrl: './access-user-creation.container.html'
 })
 export class AccessUserCreationContainer extends CreateComponent<User> {
-
-  constructor(
-    private service: AccessUserService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    super();
-  }
+  
+  private readonly service = inject(AccessUserService);
+  
+  private readonly router = inject(Router);
+  
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: User): Observable<User> {
     return this.service.create(toSave);

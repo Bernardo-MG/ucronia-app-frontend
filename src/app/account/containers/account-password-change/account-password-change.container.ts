@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AccountChangePasswordFormComponent } from '@app/account/components/password-change/account-change-password-form/account-change-password-form.component';
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
@@ -13,13 +13,11 @@ import { throwError } from 'rxjs';
 })
 export class AccountPasswordChangeContainer {
 
+  private readonly service = inject(AccountService);
+
   public saving = false;
 
   public failures = new FailureStore();
-
-  constructor(
-    private service: AccountService
-  ) { }
 
   public onChangePassword(data: PasswordChange) {
     this.saving = true;

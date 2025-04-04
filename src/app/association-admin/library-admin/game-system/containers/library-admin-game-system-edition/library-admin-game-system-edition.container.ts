@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -15,7 +15,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-edition.container.html'
 })
-export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> implements OnInit {
+export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> {
 
   private route = inject(ActivatedRoute);
 
@@ -29,9 +29,6 @@ export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusC
 
   constructor() {
     super(new GameSystem());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_game_system", "update");
     this.deletable = this.authContainer.hasPermission("library_game_system", "delete");

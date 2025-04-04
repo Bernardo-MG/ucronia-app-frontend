@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -15,13 +15,22 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
   imports: [CommonModule, RouterModule, SortingButtonComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-book-type-listing.container.html'
 })
-export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
+export class LibraryAdminBookTypeListingContainer {
 
   private authContainer = inject(AuthContainer);
 
   private service = inject(BookTypeAdminService);
 
-  @Input() public pageNumber = 0;
+  private _pageNumber = 0;
+
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -34,21 +43,15 @@ export class LibraryAdminBookTypeListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor() {
     // Load books
     this.load(0)
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("library_book_type", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
   }
 
   public onChangeDirection(field: SortingProperty) {

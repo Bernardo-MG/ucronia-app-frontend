@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
@@ -11,7 +11,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
   imports: [AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
   templateUrl: './access-audit-login.container.html'
 })
-export class AccessAuditLoginContainer implements OnInit {
+export class AccessAuditLoginContainer {
 
   private readonly service = inject(AccessAuditLoginService);
 
@@ -24,7 +24,7 @@ export class AccessAuditLoginContainer implements OnInit {
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor() {
     this.load(0);
   }
 

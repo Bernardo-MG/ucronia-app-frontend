@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
@@ -16,7 +16,7 @@ import { PeopleService } from '../../services/people.service';
   imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-edition.container.html'
 })
-export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
+export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
 
   private route = inject(ActivatedRoute);
 
@@ -32,9 +32,6 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
 
   constructor() {
     super(new Person());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = this.authContainer.hasPermission("person", "update");
     this.deletable = this.authContainer.hasPermission("person", "delete");

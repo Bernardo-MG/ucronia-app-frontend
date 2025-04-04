@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -15,13 +15,22 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
   imports: [CommonModule, RouterModule, ArticleComponent, PaginationInfoComponent, IconAddComponent, SortingButtonComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-publisher-listing.container.html'
 })
-export class LibraryAdminPublisherListingContainer implements OnInit, OnChanges {
+export class LibraryAdminPublisherListingContainer {
 
   private authContainer = inject(AuthContainer);
 
   private service = inject(PublisherAdminService);
 
-  @Input() public pageNumber = 0;
+  private _pageNumber = 0;
+
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -38,17 +47,11 @@ export class LibraryAdminPublisherListingContainer implements OnInit, OnChanges 
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor() {
     // Load books
     this.load(0)
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("library_publisher", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
   }
 
   public onChangeDirection(field: SortingProperty) {

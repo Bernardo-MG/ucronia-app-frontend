@@ -13,7 +13,7 @@ import { UserTokenSelectionListComponent } from '../../components/user-token-sel
 })
 export class UserTokenListingContainer {
 
-  private service = inject(UserTokenService);
+  private readonly service = inject(UserTokenService);
 
   public data = new PaginatedResponse<UserToken>();
 

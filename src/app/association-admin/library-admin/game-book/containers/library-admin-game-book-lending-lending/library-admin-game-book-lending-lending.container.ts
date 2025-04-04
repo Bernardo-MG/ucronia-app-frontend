@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
 import { BookLent } from '@app/models/library/book-lent';
@@ -18,7 +18,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, ArticleComponent, LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-game-book-lending-lending.container.html'
 })
-export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<BookLent> {
 
   private route = inject(ActivatedRoute);
 
@@ -32,7 +32,7 @@ export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<Bo
 
   public readingMembers = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public members = new PaginatedResponse<Member>();
 
@@ -40,7 +40,8 @@ export class LibraryAdminGameBookLendingLendContainer extends CreateComponent<Bo
 
   private index = -1;
 
-  public ngOnInit(): void {
+  constructor() {
+    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');

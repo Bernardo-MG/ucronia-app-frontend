@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAccountComponent, IconLogoutComponent, IconSettingsComponent } from '@bernardo-mg/icons';
@@ -9,7 +9,7 @@ import { JustifyCenterDirective } from '@bernardo-mg/layout';
   imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
   templateUrl: './account-dropdown.component.html'
 })
-export class AccountDropdownComponent implements OnInit {
+export class AccountDropdownComponent {
 
   private router = inject(Router);
 
@@ -17,7 +17,7 @@ export class AccountDropdownComponent implements OnInit {
 
   public username = '';
 
-  public ngOnInit(): void {
+  constructor() {
     this.authContainer.securityDetails.subscribe(u => { this.username = u.username });
   }
 

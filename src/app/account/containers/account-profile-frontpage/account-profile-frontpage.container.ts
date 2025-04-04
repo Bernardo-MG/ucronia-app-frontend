@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
 import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
@@ -12,7 +12,7 @@ import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColu
     imports: [CommonModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
     templateUrl: './account-profile-frontpage.container.html'
 })
-export class AccountProfileFrontpageContainer implements OnInit {
+export class AccountProfileFrontpageContainer {
 
   public account = new Account();
 
@@ -23,12 +23,10 @@ export class AccountProfileFrontpageContainer implements OnInit {
   }
 
   constructor(
-    private accountService: AccountService
-  ) { }
-
-  ngOnInit(): void {
+    service: AccountService
+  ) {
     this.waiting = true;
-    this.accountService.getAccount().subscribe({
+    service.getAccount().subscribe({
       next: response => {
         this.account = response;
         this.waiting = false;

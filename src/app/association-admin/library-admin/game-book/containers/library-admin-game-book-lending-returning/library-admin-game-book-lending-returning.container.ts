@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
@@ -15,7 +15,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [ArticleComponent, LibraryAdminBookReturnFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-lending-returning.container.html'
 })
-export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> implements OnInit {
+export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<BookReturned> {
 
   private route = inject(ActivatedRoute);
 
@@ -29,11 +29,12 @@ export class LibraryAdminGameBookLendingReturnContainer extends CreateComponent<
 
   private index = -1;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public borrower = new Borrower();
 
-  public ngOnInit(): void {
+  constructor() {
+    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');

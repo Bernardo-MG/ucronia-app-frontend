@@ -15,7 +15,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleListingContainer {
 
-  private service = inject(AccessRoleService);
+  private readonly service = inject(AccessRoleService);
 
   public readonly createPermission;
 

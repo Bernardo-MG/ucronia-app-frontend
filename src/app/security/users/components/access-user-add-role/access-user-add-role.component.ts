@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -11,7 +11,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
   imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
   templateUrl: './access-user-add-role.component.html'
 })
-export class AccessUserAddRoleComponent implements OnInit {
+export class AccessUserAddRoleComponent {
 
   @Input() public roles = new PaginatedResponse<Role>();
 
@@ -21,7 +21,7 @@ export class AccessUserAddRoleComponent implements OnInit {
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  ngOnInit(): void {
+  constructor() {
     this.onGoToPage(0);
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -12,7 +12,9 @@ import { BookService } from '../../services/book.service';
   imports: [RouterModule, PaginationInfoComponent, LibraryBookListComponent, ArticleComponent, CardComponent, CardHeaderComponent, CardBodyComponent, CardFooterComponent],
   templateUrl: './library-listing.container.html'
 })
-export class LibraryListingContainer implements OnInit {
+export class LibraryListingContainer {
+
+  private readonly service = inject(BookService);
 
   public data = new PaginatedResponse<BookInfo>();
 
@@ -25,11 +27,7 @@ export class LibraryListingContainer implements OnInit {
 
   private sort = new Sorting();
 
-  constructor(
-    private service: BookService
-  ) { }
-
-  public ngOnInit(): void {
+  constructor() {
     // Load books
     this.load(0);
   }

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
 import { BookInfo } from '@app/models/library/book-info';
@@ -17,13 +17,22 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-game-book-listing.container.html'
 })
-export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
+export class LibraryAdminGameBookListingContainer {
 
   private authContainer = inject(AuthContainer);
 
   private service = inject(GameBookAdminService);
 
-  @Input() public pageNumber = 0;
+  private _pageNumber = 0;
+
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -36,21 +45,15 @@ export class LibraryAdminGameBookListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor() {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("library_book", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
   }
 
   public onChangeDirection(field: SortingProperty) {

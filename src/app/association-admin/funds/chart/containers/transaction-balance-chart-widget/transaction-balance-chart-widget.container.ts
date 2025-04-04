@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
@@ -10,7 +10,7 @@ import { TransactionBalanceChartComponent } from '../../components/transaction-b
   imports: [CommonModule, TransactionBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
   templateUrl: './transaction-balance-chart-widget.container.html'
 })
-export class TransactionBalanceChartWidgetContainer implements OnInit {
+export class TransactionBalanceChartWidgetContainer {
 
   private balanceService = inject(TransactionBalanceService);
 
@@ -48,7 +48,7 @@ export class TransactionBalanceChartWidgetContainer implements OnInit {
 
   private readingRange = false;
 
-  ngOnInit(): void {
+  constructor() {
     // Read balance range
     this.readingRange = true;
     this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {

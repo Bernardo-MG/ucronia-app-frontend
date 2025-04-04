@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
 import { Transaction } from '@app/models/transactions/transaction';
@@ -15,7 +15,7 @@ import { TransactionInfoComponent } from '../../components/transaction-info/tran
   imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './transaction-edition.component.html'
 })
-export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> implements OnInit {
+export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> {
 
   private route = inject(ActivatedRoute);
 
@@ -27,11 +27,8 @@ export class TransactionEditionComponent extends InfoEditorStatusComponent<Trans
 
   private index = -1;
 
-  constructor() {
+  constructor(route: ActivatedRoute) {
     super(new Transaction());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = this.authContainer.hasPermission("transaction", "update");
     this.deletable = this.authContainer.hasPermission("transaction", "delete");

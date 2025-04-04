@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -18,7 +18,9 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
   imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
   templateUrl: './user-activation.container.html'
 })
-export class UserActivationContainer implements OnInit {
+export class UserActivationContainer {
+
+  private readonly service = inject(AccessUserActivateService);
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
@@ -51,13 +53,10 @@ export class UserActivationContainer implements OnInit {
   public failures = new FailureStore();
 
   constructor(
-    private route: ActivatedRoute,
-    private service: AccessUserActivateService
-  ) { }
-
-  public ngOnInit(): void {
+    route: ActivatedRoute
+  ) {
     // Validate token from route
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const token = params.get('token');
       if (token) {
         this.validateToken(token);

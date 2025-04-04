@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
@@ -13,9 +13,11 @@ import { BookService } from '../../services/book.service';
   imports: [CommonModule, LibraryFictionBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
   templateUrl: './library-fiction-book-info.container.html'
 })
-export class LibraryFictionBookInfoContainer implements OnInit {
+export class LibraryFictionBookInfoContainer {
 
-  public languages: Language[] = [];
+  private readonly service = inject(BookService);
+
+  public readonly languages: Language[] = [];
 
   /**
    * Reading flag. Active while the data is being read.
@@ -27,14 +29,11 @@ export class LibraryFictionBookInfoContainer implements OnInit {
   public data = new FictionBook();
 
   constructor(
-    private route: ActivatedRoute,
-    private service: BookService
-  ) { }
-
-  public ngOnInit(): void {
+    route: ActivatedRoute
+  ) {
 
     // Get id
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const indexParam = params.get('index');
       if (indexParam) {
         this.index = Number(indexParam);

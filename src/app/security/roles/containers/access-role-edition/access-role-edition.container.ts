@@ -20,11 +20,11 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> {
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(AccessRoleService);
+  private readonly service = inject(AccessRoleService);
 
-  private authContainer = inject(AuthContainer);
+  private readonly authContainer = inject(AuthContainer);
 
   public permissions = new PaginatedResponse<ResourcePermission>();
 

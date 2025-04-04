@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/models/members/member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
@@ -17,7 +17,11 @@ import { AccessUserService } from '../../services/access-user.service';
   imports: [CommonModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
   templateUrl: './access-user-edition.container.html'
 })
-export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> implements OnInit {
+export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> {
+  
+  private readonly service = inject(AccessUserService);
+  
+  private readonly router = inject(Router);
 
   public readingRoleSelection = false;
 
@@ -36,21 +40,16 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
   private username = '';
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: AccessUserService,
-    private authContainer: AuthContainer
+    route: ActivatedRoute,
+    authContainer: AuthContainer
   ) {
     super(new User());
-  }
-
-  ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("user", "update");
-    this.deletable = this.authContainer.hasPermission("user", "delete");
+    this.editable = authContainer.hasPermission("user", "update");
+    this.deletable = authContainer.hasPermission("user", "delete");
 
     // Get id
-    this.route.paramMap.subscribe(params => {
+    route.paramMap.subscribe(params => {
       const usernameParam = params.get('user');
       if (usernameParam) {
         this.username = usernameParam;

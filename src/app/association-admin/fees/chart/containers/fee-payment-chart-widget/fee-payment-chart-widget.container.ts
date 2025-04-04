@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
@@ -9,14 +9,14 @@ import { FeeReportService } from '../../services/fee-report.service';
   imports: [FeePaymentChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
   templateUrl: './fee-payment-chart-widget.container.html'
 })
-export class FeePaymentChartWidgetContainer implements OnInit {
-
-  private feeReportService = inject(FeeReportService);
+export class FeePaymentChartWidgetContainer {
 
   public report = new FeePaymentReport();
 
-  public ngOnInit(): void {
-    this.feeReportService.getPaymentReport().subscribe({
+  constructor(
+    service: FeeReportService
+  ) {
+    service.getPaymentReport().subscribe({
       next: response => {
         this.report = response;
       },

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { BookType } from '@app/models/library/book-type';
@@ -23,7 +23,7 @@ import { GameBookAdminService } from '../../services/game-book-admin.service';
   imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
-export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> implements OnInit {
+export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
 
   private route = inject(ActivatedRoute);
 
@@ -58,7 +58,7 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   public languages: Language[] = [];
 
-  public lendPermission = false;
+  public readonly lendPermission;
 
   public get lendDisabled() {
     return this.waiting || !this.lendPermission;
@@ -68,9 +68,6 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   constructor() {
     super(new GameBook());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_book", "update");
     this.deletable = this.authContainer.hasPermission("library_book", "delete");

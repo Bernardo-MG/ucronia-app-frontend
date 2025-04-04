@@ -37,7 +37,7 @@ export class LibraryAdminFictionBookDetailsComponent {
 
   public view: string = 'details';
 
-  public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes'), new CardTab('lendings', 'Préstamos')];
+  public readonly tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes'), new CardTab('lendings', 'Préstamos')];
 
   public get authors(): string {
     return this.data.authors.map(e => e.name).join(", ");

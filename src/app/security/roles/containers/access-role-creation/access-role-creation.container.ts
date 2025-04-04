@@ -14,11 +14,11 @@ import { AccessRoleService } from '../../services/access-role.service';
 })
 export class AccessRoleCreationContainer extends CreateComponent<Role> {
 
-  private service = inject(AccessRoleService);
+  private readonly service = inject(AccessRoleService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: Role): Observable<Role> {
     return this.service.create(toSave);

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -14,13 +14,22 @@ import { BookLendingService } from '../../services/book-lending.service';
   imports: [CommonModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-lending-listing.container.html'
 })
-export class LibraryAdminLendingListingContainer implements OnInit, OnChanges {
+export class LibraryAdminLendingListingContainer {
 
   private authContainer = inject(AuthContainer);
 
   private service = inject(BookLendingService);
 
-  @Input() public pageNumber = 0;
+  private _pageNumber = 0;
+
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
@@ -33,21 +42,15 @@ export class LibraryAdminLendingListingContainer implements OnInit, OnChanges {
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor() {
     // Load books
     this.load(this.pageNumber);
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("library_book", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
   }
 
   public onChangeDirection(field: SortingProperty) {

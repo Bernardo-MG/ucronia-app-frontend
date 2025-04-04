@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
@@ -13,9 +13,11 @@ import { AccessUserSelectionListComponent } from '../access-user-selection-list/
   imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
   templateUrl: './access-user-selection-list-widget.component.html'
 })
-export class AccessUserSelectionListWidgetComponent implements OnInit {
+export class AccessUserSelectionListWidgetComponent {
 
-  public createPermission = false;
+  private readonly service = inject(AccessUserService);
+
+  public readonly createPermission;
 
   public data = new PaginatedResponse<User>();
 
@@ -27,13 +29,10 @@ export class AccessUserSelectionListWidgetComponent implements OnInit {
   private sort = new Sorting();
 
   constructor(
-    private authContainer: AuthContainer,
-    private service: AccessUserService
-  ) { }
-
-  ngOnInit(): void {
+    authContainer: AuthContainer
+  ) {
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("user", "create");
+    this.createPermission = authContainer.hasPermission("user", "create");
 
     this.load(0);
   }

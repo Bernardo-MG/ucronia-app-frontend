@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -11,7 +11,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
   imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective, IconAddComponent],
   templateUrl: './access-user-select-member.component.html'
 })
-export class AccessUserSelectMemberComponent implements OnInit {
+export class AccessUserSelectMemberComponent {
 
   @Input() public members = new PaginatedResponse<Member>();
 
@@ -21,7 +21,7 @@ export class AccessUserSelectMemberComponent implements OnInit {
 
   @Output() public goToPage = new EventEmitter<number>();
 
-  ngOnInit(): void {
+  constructor() {
     this.onGoToPage(0);
   }
 

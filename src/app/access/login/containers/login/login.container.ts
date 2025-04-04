@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { UserLogin } from '../../models/user-login';
@@ -25,7 +25,11 @@ import { LoginService } from '../../services/login.service';
   imports: [RouterModule, LoginFormComponent],
   templateUrl: './login.container.html'
 })
-export class LoginContainer implements OnInit {
+export class LoginContainer {
+
+  private readonly service = inject(LoginService);
+
+  private readonly router = inject(Router);
 
   /**
    * Failed login flag.
@@ -38,24 +42,20 @@ export class LoginContainer implements OnInit {
   public loading = false;
 
   /**
-   * Return route. Used to redirect after login.
-   */
-  private returnRoute = '';
-
-  /**
    * Remember me flag.
    */
   private rememberMe = false;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private loginService: LoginService
-  ) { }
+  /**
+   * Return route. Used to redirect after login.
+   */
+  private readonly returnRoute: string;
 
-  ngOnInit() {
+  constructor(
+    route: ActivatedRoute
+  ) {
     // get return url from route parameters or default to '/'
-    this.returnRoute = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnRoute = route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   /**
@@ -70,7 +70,7 @@ export class LoginContainer implements OnInit {
     this.loading = true;
     this.failedLogin = false;
 
-    this.loginService.login(login, this.rememberMe)
+    this.service.login(login, this.rememberMe)
       .subscribe({
         next: user => {
           // Succesful request

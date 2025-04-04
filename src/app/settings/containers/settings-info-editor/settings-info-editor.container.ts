@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -11,17 +11,17 @@ import { AssociationSettingsService } from '../../service/association-settings.s
   imports: [ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent, CardComponent, CardBodyComponent],
   templateUrl: './settings-info-editor.container.html'
 })
-export class SettingsInfoEditorContainer implements OnInit {
+export class SettingsInfoEditorContainer {
 
   public settings: Setting[] = [];
 
-  public editable = false;
+  public readonly editable;
 
   private service = inject(AssociationSettingsService);
 
   private authContainer = inject(AuthContainer);
 
-  ngOnInit(): void {
+  constructor() {
     // Check permissions
     this.editable = this.authContainer.hasPermission("association_settings", "update");
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -15,7 +15,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
   imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
   templateUrl: './library-admin-author-edition.container.html'
 })
-export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> implements OnInit {
+export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> {
 
   private route = inject(ActivatedRoute);
 
@@ -29,9 +29,6 @@ export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusCompo
 
   constructor() {
     super(new Author());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
     this.editable = this.authContainer.hasPermission("library_author", "update");
     this.deletable = this.authContainer.hasPermission("library_author", "delete");

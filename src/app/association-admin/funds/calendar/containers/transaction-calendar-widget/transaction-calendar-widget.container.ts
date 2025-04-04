@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
@@ -15,13 +15,13 @@ import { TransactionCalendarService } from '../../services/transaction-calendar.
   imports: [CommonModule, RouterModule, CalendarsModule, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyCenterDirective],
   templateUrl: './transaction-calendar-widget.container.html'
 })
-export class TransactionCalendarWidgetContainer implements OnInit {
+export class TransactionCalendarWidgetContainer {
 
   private route = inject(ActivatedRoute);
 
   private authContainer = inject(AuthContainer);
 
-  private calendarService = inject(TransactionCalendarService);
+  private service = inject(TransactionCalendarService);
 
   private router = inject(Router);
 
@@ -34,16 +34,16 @@ export class TransactionCalendarWidgetContainer implements OnInit {
    */
   public readingCalendar = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  public ngOnInit(): void {
+  constructor() {
     // Check permissions
     this.createPermission = this.authContainer.hasPermission("transaction", "create");
 
     // Read range
-    this.calendarService.getRange().subscribe(months => {
+    this.service.getRange().subscribe(months => {
       // To show in the selection box we have to reverse the order
       this.months = months;
       // TODO: What happens if this date is not in the range?
@@ -69,7 +69,7 @@ export class TransactionCalendarWidgetContainer implements OnInit {
 
   private load() {
     this.readingCalendar = true;
-    this.calendarService.getCalendar(this.month.year, this.month.month).subscribe({
+    this.service.getCalendar(this.month.year, this.month.month).subscribe({
       next: response => {
         this.events = response.map(t => {
           const date = new Date(t.date);

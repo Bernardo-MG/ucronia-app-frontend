@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
@@ -8,11 +8,11 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
 import { MemberListComponent } from '../../components/member-list/member-list.component';
 
 @Component({
-    selector: 'assoc-member-listing',
-    imports: [RouterModule, ArticleComponent, MemberListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
-    templateUrl: './member-listing.container.html'
+  selector: 'assoc-member-listing',
+  imports: [RouterModule, ArticleComponent, MemberListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  templateUrl: './member-listing.container.html'
 })
-export class MemberListingContainer implements OnInit {
+export class MemberListingContainer {
 
   private service = inject(MemberService);
 
@@ -25,7 +25,7 @@ export class MemberListingContainer implements OnInit {
    */
   public reading = false;
 
-  public ngOnInit(): void {
+  constructor() {
     this.load(0);
   }
 
