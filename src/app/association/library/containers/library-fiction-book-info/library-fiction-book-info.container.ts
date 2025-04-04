@@ -24,8 +24,6 @@ export class LibraryFictionBookInfoContainer {
    */
   public waiting = false;
 
-  private index = -1;
-
   public data = new FictionBook();
 
   constructor(
@@ -36,8 +34,8 @@ export class LibraryFictionBookInfoContainer {
     route.paramMap.subscribe(params => {
       const indexParam = params.get('index');
       if (indexParam) {
-        this.index = Number(indexParam);
-        this.load();
+        const index = Number(indexParam);
+        this.load(index);
       }
     });
 
@@ -45,9 +43,9 @@ export class LibraryFictionBookInfoContainer {
     this.languages = this.service.getLanguages();
   }
 
-  private load(): void {
+  private load(index: number): void {
     this.waiting = true;
-    this.service.getOneFictionBook(this.index)
+    this.service.getOneFictionBook(index)
       .subscribe({
         next: response => {
           this.data = response;
