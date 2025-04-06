@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { BookType } from '@app/models/library/book-type';
+import { Donation } from '@app/models/library/donation';
 import { GameBook } from '@app/models/library/game-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
@@ -17,7 +18,6 @@ import { LibraryAdminBookDonorsFormComponent } from '../../components/library-ad
 import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
 import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',

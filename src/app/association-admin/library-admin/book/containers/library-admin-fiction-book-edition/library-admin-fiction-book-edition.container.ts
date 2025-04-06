@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
+import { Donation } from '@app/models/library/donation';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
@@ -15,7 +16,6 @@ import { LibraryAdminBookDonorsFormComponent } from '../../components/library-ad
 import { LibraryAdminFictionBookDetailsComponent } from '../../components/library-admin-fiction-book-details/library-admin-fiction-book-details.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',

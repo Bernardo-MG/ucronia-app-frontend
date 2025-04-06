@@ -6,7 +6,6 @@ import { AuthorAdminService } from '@app/association-admin/library-admin/author/
 import { BookTypeAdminService } from '@app/association-admin/library-admin/book-type/services/book-type-admin.service';
 import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
-import { GameBookAdminService } from '../../../game-book/services/game-book-admin.service';
 import { LibraryAdminGameBookCreationContainer } from './library-admin-game-book-creation.container';
 
 describe('LibraryAdminGameBookCreationContainer', () => {
@@ -19,7 +18,7 @@ describe('LibraryAdminGameBookCreationContainer', () => {
         LibraryAdminGameBookCreationContainer
       ],
       providers: [
-        GameBookAdminService,
+        BookTypeAdminService,
         BookTypeAdminService,
         GameSystemAdminService,
         AuthorAdminService,

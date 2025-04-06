@@ -3,6 +3,7 @@ import { Author } from '@app/models/library/author';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { BookType } from '@app/models/library/book-type';
+import { FictionBook } from '@app/models/library/fiction-book';
 import { GameBook } from '@app/models/library/game-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
@@ -14,7 +15,6 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { BookInfo } from '../../../../models/library/book-info';
-import { FictionBook } from '@app/models/library/fiction-book';
 
 @Injectable({
   providedIn: "root"

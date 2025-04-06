@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
+import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/book/components/library-admin-book-lending/library-admin-book-lending.component';
 import { BookInfo } from '@app/models/library/book-info';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
