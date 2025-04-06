@@ -47,6 +47,10 @@ export class LibraryAdminBookListingContainer {
 
   public readonly createPermission;
 
+  public get routerLink(): string {
+    return `${this.source}/register`;
+  }
+
   private sort = new Sorting();
 
   constructor(
