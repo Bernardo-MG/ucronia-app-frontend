@@ -1,0 +1,58 @@
+<ng-container [ngSwitch]="selectingDonor">
+  <ng-container *ngSwitchCase="false">
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+      <!-- Date -->
+      <div class="row mb-2">
+        <label for="donationDateInput" id="donationDateLabel" class="col-sm-2 col-form-label">Fecha</label>
+        <div formGroupName="donation" class="col-sm-10">
+          <input type="date" id="donationDateInput" formControlName="date" class="form-control"
+            formInvalidField="donationDate" [backendFailure]="failures.hasFailures('donationDate')">
+          <form-input-failure-feedback [failures]="failures.getFailures('donationDate')"></form-input-failure-feedback>
+        </div>
+      </div>
+      <!-- Donors -->
+      <div class="row mb-2">
+        <div class="col-sm-12">
+          <h2>Donantes</h2>
+        </div>
+        <div class="col-sm-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">
+                </th>
+                <th scope="col">
+                  Nombre
+                </th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <ng-template ngFor let-donor let-i="index" [ngForOf]="donation?.donors">
+                <tr>
+                  <td>
+                    <button (click)="onRemoveDonor(donor)" [disabled]="!formEnabled" type="button"
+                      class="btn btn-link link-dark" role="button" aria-label="Remove donor">
+                      <icon-delete></icon-delete>
+                    </button>
+                  </td>
+                  <td>{{donor.name.fullName}}</td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </table>
+        </div>
+        <div layoutJustifyCenter>
+          <button (click)="onStartSelectingDonor()" type="button" class="btn btn-primary" [disabled]="!formEnabled"
+            aria-label="Add donor" data-bs-toggle="modal" data-bs-target="#donorModal"><icon-add></icon-add></button>
+        </div>
+      </div>
+      <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+        [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+    </form>
+  </ng-container>
+  <ng-container *ngSwitchCase="true">
+    <assoc-library-admin-donor-selection [values]="donors.content" [current]="donors.page" [pages]="donors.totalPages"
+      (choose)="onSelectDonor($event)"
+      (goToPage)="goToDonorPage.emit($event)"></assoc-library-admin-donor-selection>
+  </ng-container>
+</ng-container>

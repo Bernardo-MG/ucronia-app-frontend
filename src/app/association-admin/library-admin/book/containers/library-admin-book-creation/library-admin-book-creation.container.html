@@ -1,0 +1,12 @@
+<article class="p-4">
+  <div layoutResponsiveShortColumns>
+    <layout-card>
+      <layout-card-body>
+        <!-- Form -->
+        <assoc-library-admin-book-creation-form [waiting]="saving" [failures]="failures" [languages]="languages"
+          (save)="onSave($event)">
+        </assoc-library-admin-book-creation-form>
+      </layout-card-body>
+    </layout-card>
+  </div>
+</article>
