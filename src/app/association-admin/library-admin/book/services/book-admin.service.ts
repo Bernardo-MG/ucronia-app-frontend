@@ -52,27 +52,27 @@ export class GameAdminService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public createGame(data: BookInfo): Observable<BookInfo> {
+  public createGameBook(data: BookInfo): Observable<BookInfo> {
     return this.gameBookClient
       .create<SimpleResponse<BookInfo>>(data)
       .pipe(map(r => r.content));
   }
 
-  public updateGame(number: number, data: GameBook): Observable<GameBook> {
+  public updateGameBook(number: number, data: GameBook): Observable<GameBook> {
     return this.gameBookClient
       .appendRoute(`/${number}`)
       .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOneGame(number: number): Observable<GameBook> {
+  public getOneGameBook(number: number): Observable<GameBook> {
     return this.gameBookClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
   }
 
-  public deleteGame(number: number): Observable<boolean> {
+  public deleteGameBook(number: number): Observable<boolean> {
     return this.gameBookClient
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
@@ -89,6 +89,33 @@ export class GameAdminService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();
+  }
+
+  public createFictionBook(data: BookInfo): Observable<BookInfo> {
+    return this.fictionBookClient
+      .create<SimpleResponse<BookInfo>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public updateFictionBook(number: number, data: GameBook): Observable<GameBook> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .update<SimpleResponse<GameBook>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public getOneFictionBook(number: number): Observable<GameBook> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<GameBook>>()
+      .pipe(map(r => r.content));
+  }
+
+  public deleteFictionBook(number: number): Observable<boolean> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
   }
 
   public getAllFictionBooks(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {

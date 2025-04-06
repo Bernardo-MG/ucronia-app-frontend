@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/shared/components/library-admin-book-lending/library-admin-book-lending.component';
+import { BookInfo } from '@app/models/library/book-info';
 import { BookLent } from '@app/models/library/book-lent';
-import { GameBook } from '@app/models/library/game-book';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -26,7 +26,9 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
 
   private readonly service = inject(GameAdminService);
 
-  public book = new GameBook();
+  public source: 'games' | 'fiction' = 'games';
+
+  public book = new BookInfo();
 
   public readingMembers = false;
 
@@ -48,6 +50,11 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
       if (indexParam) {
         this.index = Number(indexParam);
       }
+
+      const urlSegments = this.route.snapshot.url;
+      const sourceSegment = urlSegments.length > 0 ? urlSegments[0].path : '';
+      this.source = sourceSegment as 'games' | 'fiction';
+
       this.load();
     });
     // Check permissions
@@ -60,13 +67,23 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
   }
 
   private load() {
-    this.service.getOne(this.index).subscribe({
-      next: response => {
-        this.book = response;
-      },
-      error: error => {
-      }
-    });
+    if (this.source === 'games') {
+      this.service.getOneGameBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+        },
+        error: error => {
+        }
+      });
+    } else {
+      this.service.getOneFictionBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+        },
+        error: error => {
+        }
+      });
+    }
   }
 
   public onChangeActiveFilter(active: Active) {

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BookInfo } from '@app/models/library/book-info';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Borrower } from '@app/models/library/borrower';
-import { GameBook } from '@app/models/library/game-book';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
@@ -23,7 +23,9 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
 
   private readonly service = inject(GameAdminService);
 
-  public book = new GameBook();
+  public source: 'games' | 'fiction' = 'games';
+
+  public book = new BookInfo();
 
   private index = -1;
 
@@ -41,6 +43,11 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
       if (indexParam) {
         this.index = Number(indexParam);
       }
+
+      const urlSegments = this.route.snapshot.url;
+      const sourceSegment = urlSegments.length > 0 ? urlSegments[0].path : '';
+      this.source = sourceSegment as 'games' | 'fiction';
+
       this.load();
     });
     // Check permissions
@@ -52,14 +59,25 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
   }
 
   private load() {
-    this.service.getOne(this.index).subscribe({
-      next: response => {
-        this.book = response;
-        this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
-      },
-      error: error => {
-      }
-    });
+    if (this.source === 'games') {
+      this.service.getOneGameBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+          this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
+        },
+        error: error => {
+        }
+      });
+    } else {
+      this.service.getOneFictionBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+          this.borrower = this.book.lendings[this.book.lendings.length - 1].borrower;
+        },
+        error: error => {
+        }
+      });
+    }
   }
 
   protected override save(toSave: BookReturned): Observable<BookReturned> {

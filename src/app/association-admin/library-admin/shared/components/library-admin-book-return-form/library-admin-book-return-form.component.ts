@@ -15,7 +15,7 @@ import { BookInfo } from '../../../../../models/library/book-info';
 export class LibraryAdminBookReturnFormComponent extends FormComponent<BookReturned> {
 
   @Input() public set borrower(value: Member) {
-    this.form.get('person')?.setValue(value.number);
+    this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }
 
