@@ -2,11 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { BookInfo } from '@app/models/library/book-info';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
 import { Person } from '@app/models/person/person';
-import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -24,13 +22,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation>
 
   public selectingDonor = false;
 
-  public get donation(): Donation | undefined {
-    return this.form.get('donation').value;
-  }
-
-  public set donation(data: Donation) {
-    this.form.get('donation')?.setValue(data);
-  }
+  public currentDonors: Donor[] = [];
 
   constructor(
     fb: FormBuilder
@@ -38,8 +30,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation>
     super();
 
     this.form = fb.group({
-      date: [''],
-      donors: [[]]
+      date: ["", Validators.required],
+      donors: [[], Validators.required]
     });
   }
 
@@ -48,22 +40,16 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation>
   }
 
   public onSelectDonor(donor: Person) {
-    if (!this.donation) {
-      this.donation = new Donation();
-    }
-
-    if (!this.donation.donors.find(d => d.number === donor.number)) {
-      this.donation.donors.push(donor);
+    if (!this.currentDonors.find(d => d.number === donor.number)) {
+      this.currentDonors = [...this.currentDonors, donor];
+      this.form.get('donors').setValue(this.currentDonors);
     }
     this.selectingDonor = false;
   }
 
   public onRemoveDonor(donor: Donor) {
-    if (!this.donation) {
-      this.donation = new Donation();
-    }
-
-    this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
+    this.currentDonors = this.currentDonors.filter(d => d.number !== donor.number);
+    this.form.get('donors').setValue(this.currentDonors);
   }
 
   public onGoToDonorPage(page: number) {

@@ -52,15 +52,11 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public languages: Language[] = [];
 
   public get donation(): Donation {
-    let donation;
-
-    if (this.data.donation) {
-      donation = this.data.donation;
-    } else {
-      donation = new Donation();
+    if (!this.data.donation) {
+      this.data.donation = new Donation();
     }
 
-    return donation;
+    return this.data.donation;
   }
 
   public readonly lendPermission;
@@ -155,7 +151,7 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
   public onSetDonation(donation: Donation) {
     this.data.donation = donation;
-    this.save(this.data);
+    super.onSave(this.data);
   }
 
   protected override delete(): void {
