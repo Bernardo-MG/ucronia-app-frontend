@@ -35,7 +35,7 @@ export class LibraryAdminGameBookCreationContainer extends CreateComponent<BookI
 
   protected override handleSaveSuccess(saved: BookInfo) {
     super.handleSaveSuccess(saved);
-    this.router.navigate(['..'], { relativeTo: this.route });
+    this.router.navigate(['../..'], { relativeTo: this.route });
   }
 
 }

@@ -183,7 +183,7 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
   protected override delete(): void {
     // TODO: shouldn't the delete return the observable, to keep consistency?
     this.service.delete(this.data.number).subscribe(r => {
-      this.router.navigate(['..'], { relativeTo: this.route });
+      this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 
