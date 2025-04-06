@@ -71,7 +71,7 @@ const routes: Routes = [
           },
           {
             path: 'games',
-            data: { breadcrumb: 'Juegos' },
+            data: { breadcrumb: '' },
             children: [
               {
                 path: 'register',
@@ -101,14 +101,8 @@ const routes: Routes = [
           },
           {
             path: 'fiction',
-            data: { breadcrumb: 'Ficción' },
+            data: { breadcrumb: '' },
             children: [
-              {
-                path: 'register',
-                component: LibraryAdminFictionBookCreationContainer,
-                canActivate: [ResourceGuard("library_book", "create")],
-                data: { breadcrumb: 'Registrar libro' }
-              },
               {
                 path: ':number',
                 component: LibraryAdminFictionBookEditionContainer,
