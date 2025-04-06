@@ -38,6 +38,8 @@ export class LibraryAdminBookListingContainer {
 
   public data = new PaginatedResponse<GameBook>();
 
+  public source: 'games' | 'fiction' = 'games';
+
   /**
    * Loading flag.
    */
@@ -60,6 +62,11 @@ export class LibraryAdminBookListingContainer {
     this.sort.addField(field);
 
     this.load(this.pageNumber);
+  }
+
+  public onChangeSource(event: any) {
+    this.source = event.target.value as 'games' | 'fiction';
+    this.load(0);
   }
 
   public load(page: number) {

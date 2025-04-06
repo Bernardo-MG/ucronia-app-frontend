@@ -2,11 +2,22 @@
   <assoc-book-report-widget></assoc-book-report-widget>
   <layout-card>
     <layout-card-header>
-      <!-- Add person -->
-      <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-        <icon-add></icon-add>
-      </button>
+      <div class="row">
+        <div class="col-sm-3">
+          <!-- Add person -->
+          <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            <icon-add></icon-add>
+          </button>
+        </div>
+        <div class="col-sm-3">
+          <select [disabled]="reading" class="form-select form-select-sm" aria-label="Filter person status"
+            (change)="onChangeSource($event)">
+            <option [selected]="source === 'games'" value="games">Juegos</option>
+            <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
+          </select>
+        </div>
+      </div>
     </layout-card-header>
     <layout-card-body>
       <assoc-library-admin-book-list *layoutBlockUi="reading" [books]="data.content"
