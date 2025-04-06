@@ -72,7 +72,7 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'game',
+            path: 'games',
             data: { breadcrumb: 'Juegos' },
             children: [
               {

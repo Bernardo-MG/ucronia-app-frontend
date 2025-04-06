@@ -73,25 +73,44 @@ export class LibraryAdminBookListingContainer {
     this.reading = true;
     this.wait.emit(this.reading);
 
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-        this.changePage.emit(response);
 
-        // Reactivate view
-        this.reading = false;
-        this.wait.emit(this.reading);
-      },
-      error: error => {
-        // Reactivate view
-        this.reading = false;
-        this.wait.emit(this.reading);
-      }
-    });
+    if (this.source === 'games') {
+      this.service.getAllGameBooks(page, this.sort).subscribe({
+        next: response => {
+          this.data = response;
+          this.changePage.emit(response);
+
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        },
+        error: error => {
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        }
+      });
+    } else {
+      this.service.getAllFictionBooks(page, this.sort).subscribe({
+        next: response => {
+          this.data = response;
+          this.changePage.emit(response);
+
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        },
+        error: error => {
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        }
+      });
+    }
   }
 
-  public routeLinkAdapter(data: BookInfo): string {
-    return `${data.number}`;
+  public routeLinkAdapter = (data: BookInfo): string => {
+    return `${this.source}/${data.number}`;
   }
 
 }
