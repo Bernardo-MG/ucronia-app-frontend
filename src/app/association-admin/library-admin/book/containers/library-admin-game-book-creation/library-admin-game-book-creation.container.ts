@@ -6,8 +6,8 @@ import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
-import { GameBookAdminService } from '../../../game-book/services/game-book-admin.service';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-creation',
@@ -16,7 +16,7 @@ import { LibraryAdminBookCreationFormComponent } from '../../../shared/component
 })
 export class LibraryAdminGameBookCreationContainer extends CreateComponent<BookInfo> {
 
-  private readonly service = inject(GameBookAdminService);
+  private readonly service = inject(BookAdminService);
 
   private readonly router = inject(Router);
 
@@ -30,7 +30,7 @@ export class LibraryAdminGameBookCreationContainer extends CreateComponent<BookI
   }
 
   protected override save(toSave: BookInfo): Observable<BookInfo> {
-    return this.service.create(toSave);
+    return this.service.createGameBook(toSave);
   }
 
   protected override handleSaveSuccess(saved: BookInfo) {

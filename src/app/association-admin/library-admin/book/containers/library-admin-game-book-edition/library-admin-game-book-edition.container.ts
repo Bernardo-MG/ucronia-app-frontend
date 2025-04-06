@@ -13,14 +13,15 @@ import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminGameBookDonorsFormComponent } from '../../../game-book/components/library-admin-game-book-donors-form/library-admin-game-book-donors-form.component';
-import { GameBookAdminService } from '../../../game-book/services/game-book-admin.service';
+import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
 import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
+import { BookAdminService } from '../../services/book-admin.service';
+import { Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
@@ -29,7 +30,7 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(GameBookAdminService);
+  private readonly service = inject(BookAdminService);
 
   private index = -1;
 
@@ -55,6 +56,14 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
   public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
+
+  public get donation(): Donation {
+    if (!this.data.donation) {
+      this.data.donation = new Donation();
+    }
+
+    return this.data.donation;
+  }
 
   public readonly lendPermission;
 
@@ -180,19 +189,24 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
     });
   }
 
+  public onSetDonation(donation: Donation) {
+    this.data.donation = donation;
+    super.onSave(this.data);
+  }
+
   protected override delete(): void {
     // TODO: shouldn't the delete return the observable, to keep consistency?
-    this.service.delete(this.data.number).subscribe(r => {
+    this.service.deleteGameBook(this.data.number).subscribe(r => {
       this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 
   protected override read(): Observable<GameBook> {
-    return this.service.getOne(this.index);
+    return this.service.getOneGameBook(this.index);
   }
 
   protected override save(toSave: GameBook): Observable<GameBook> {
-    return this.service.update(this.data.number, toSave);
+    return this.service.updateGameBook(this.data.number, toSave);
   }
 
 }
