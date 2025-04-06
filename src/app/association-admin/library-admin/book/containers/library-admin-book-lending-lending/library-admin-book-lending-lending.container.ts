@@ -11,7 +11,7 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { GameAdminService } from '../../services/book-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
@@ -24,7 +24,7 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(GameAdminService);
+  private readonly service = inject(BookAdminService);
 
   public source: 'games' | 'fiction' = 'games';
 

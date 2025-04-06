@@ -7,7 +7,7 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
-import { GameAdminService } from '../../services/book-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-creation',
@@ -16,7 +16,7 @@ import { GameAdminService } from '../../services/book-admin.service';
 })
 export class LibraryAdminBookCreationContainer extends CreateComponent<BookInfo> {
 
-  private readonly service = inject(GameAdminService);
+  private readonly service = inject(BookAdminService);
 
   private readonly router = inject(Router);
 

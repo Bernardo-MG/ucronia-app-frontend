@@ -11,14 +11,15 @@ import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminFictionBookDonorsFormComponent } from '../../../fiction-book/components/library-admin-fiction-book-donors-form/library-admin-fiction-book-donors-form.component';
-import { FictionBookAdminService } from '../../../fiction-book/services/fiction-book-admin.service';
+import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminFictionBookDetailsComponent } from '../../components/library-admin-fiction-book-details/library-admin-fiction-book-details.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
+import { BookAdminService } from '../../services/book-admin.service';
+import { Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminFictionBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
 export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
@@ -27,7 +28,7 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(FictionBookAdminService);
+  private readonly service = inject(BookAdminService);
 
   private index = -1;
 
@@ -49,6 +50,18 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
+
+  public get donation(): Donation {
+    let donation;
+
+    if (this.data.donation) {
+      donation = this.data.donation;
+    } else {
+      donation = new Donation();
+    }
+
+    return donation;
+  }
 
   public readonly lendPermission;
 
@@ -140,19 +153,24 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     });
   }
 
+  public onSetDonation(donation: Donation) {
+    this.data.donation = donation;
+    this.save(this.data);
+  }
+
   protected override delete(): void {
     // TODO: shouldn't the delete return the observable, to keep consistency?
-    this.service.delete(this.data.number).subscribe(r => {
+    this.service.deleteFictionBook(this.data.number).subscribe(r => {
       this.router.navigate(['../..'], { relativeTo: this.route });
     });
   }
 
   protected override read(): Observable<FictionBook> {
-    return this.service.getOne(this.index);
+    return this.service.getOneFictionBook(this.index);
   }
 
   protected override save(toSave: FictionBook): Observable<FictionBook> {
-    return this.service.update(this.data.number, toSave);
+    return this.service.updateFictionBook(this.data.number, toSave);
   }
 
 }

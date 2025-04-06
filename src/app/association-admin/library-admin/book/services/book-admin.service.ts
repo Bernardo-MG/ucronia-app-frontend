@@ -14,11 +14,12 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { BookInfo } from '../../../../models/library/book-info';
+import { FictionBook } from '@app/models/library/fiction-book';
 
 @Injectable({
   providedIn: "root"
 })
-export class GameAdminService {
+export class BookAdminService {
 
   private readonly gameBookClient;
 
@@ -91,20 +92,20 @@ export class GameAdminService {
       .read();
   }
 
-  public createFictionBook(data: BookInfo): Observable<BookInfo> {
+  public createFictionBook(data: FictionBook): Observable<FictionBook> {
     return this.fictionBookClient
-      .create<SimpleResponse<BookInfo>>(data)
+      .create<SimpleResponse<FictionBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public updateFictionBook(number: number, data: GameBook): Observable<GameBook> {
+  public updateFictionBook(number: number, data: FictionBook): Observable<FictionBook> {
     return this.fictionBookClient
       .appendRoute(`/${number}`)
       .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOneFictionBook(number: number): Observable<GameBook> {
+  public getOneFictionBook(number: number): Observable<FictionBook> {
     return this.fictionBookClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<GameBook>>()
@@ -118,7 +119,7 @@ export class GameAdminService {
       .pipe(map(r => r.content));
   }
 
-  public getAllFictionBooks(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
+  public getAllFictionBooks(page: number, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]

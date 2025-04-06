@@ -8,7 +8,7 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookReturnFormComponent } from '../../../shared/components/library-admin-book-return-form/library-admin-book-return-form.component';
-import { GameAdminService } from '../../services/book-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-returning',
@@ -21,7 +21,7 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(GameAdminService);
+  private readonly service = inject(BookAdminService);
 
   public source: 'games' | 'fiction' = 'games';
 

@@ -3,14 +3,13 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
 import { BookInfo } from '@app/models/library/book-info';
-import { GameBook } from '@app/models/library/game-book';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { LibraryAdminBookListComponent } from '../../../shared/components/library-admin-book-list/library-admin-book-list.component';
-import { GameAdminService } from '../../services/book-admin.service';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-listing',
@@ -19,7 +18,7 @@ import { GameAdminService } from '../../services/book-admin.service';
 })
 export class LibraryAdminBookListingContainer {
 
-  private readonly service = inject(GameAdminService);
+  private readonly service = inject(BookAdminService);
 
   private _pageNumber = 0;
 
@@ -36,7 +35,7 @@ export class LibraryAdminBookListingContainer {
 
   @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
 
-  public data = new PaginatedResponse<GameBook>();
+  public data = new PaginatedResponse<BookInfo>();
 
   public source: 'games' | 'fiction' = 'games';
 

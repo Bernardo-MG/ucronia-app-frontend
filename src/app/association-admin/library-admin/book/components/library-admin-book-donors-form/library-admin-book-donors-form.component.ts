@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
+import { BookInfo } from '@app/models/library/book-info';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
-import { GameBook } from '@app/models/library/game-book';
 import { Person } from '@app/models/person/person';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -16,7 +16,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-book-donors-form.component.html'
 })
-export class LibraryAdminBookDonorsFormComponent extends FormComponent<GameBook> {
+export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation> {
 
   @Input() public donors = new PaginatedResponse<Person>();
 
@@ -38,24 +38,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<GameBook>
     super();
 
     this.form = fb.group({
-      number: [undefined],
-      index: [-1],
-      isbn: ['', isbnValidator()],
-      title: fb.group({
-        supertitle: [''],
-        title: ['', Validators.required],
-        subtitle: ['']
-      }),
-      language: ['', Validators.required],
-      publishDate: [''],
-      authors: [[]],
-      donation: fb.group({
-        date: [''],
-        donors: [[]]
-      }),
-      bookType: [],
-      publishers: [[]],
-      gameSystem: []
+      date: [''],
+      donors: [[]]
     });
   }
 
