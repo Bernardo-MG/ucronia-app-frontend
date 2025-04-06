@@ -6,17 +6,17 @@ import { AuthorAdminService } from '@app/association-admin/library-admin/author/
 import { BookTypeAdminService } from '@app/association-admin/library-admin/book-type/services/book-type-admin.service';
 import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
 import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
-import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
-import { LibraryAdminFictionBookCreationContainer } from './library-admin-fiction-book-creation.container';
+import { FictionBookAdminService } from '../../../fiction-book/services/fiction-book-admin.service';
+import { LibraryAdminFictionBookEditionContainer } from './library-admin-fiction-book-edition.container';
 
-describe('LibraryAdminFictionBookCreationContainer', () => {
-  let component: LibraryAdminFictionBookCreationContainer;
-  let fixture: ComponentFixture<LibraryAdminFictionBookCreationContainer>;
+describe('LibraryAdminFictionBookEditionContainer', () => {
+  let component: LibraryAdminFictionBookEditionContainer;
+  let fixture: ComponentFixture<LibraryAdminFictionBookEditionContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminFictionBookCreationContainer
+        LibraryAdminFictionBookEditionContainer
       ],
       providers: [
         FictionBookAdminService,
@@ -31,7 +31,7 @@ describe('LibraryAdminFictionBookCreationContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminFictionBookCreationContainer);
+    fixture = TestBed.createComponent(LibraryAdminFictionBookEditionContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

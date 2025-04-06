@@ -8,8 +8,8 @@ import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { Observable } from 'rxjs';
+import { FictionBookAdminService } from '../../../fiction-book/services/fiction-book-admin.service';
 import { LibraryAdminBookCreationFormComponent } from '../../../shared/components/library-admin-book-creation-form/library-admin-book-creation-form.component';
-import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-creation',

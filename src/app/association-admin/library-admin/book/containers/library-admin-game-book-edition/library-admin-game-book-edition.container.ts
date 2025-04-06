@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
-import { FictionBook } from '@app/models/library/fiction-book';
+import { BookType } from '@app/models/library/book-type';
+import { GameBook } from '@app/models/library/game-book';
+import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
@@ -11,23 +13,23 @@ import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminFictionBookDetailsComponent } from '../../components/library-admin-fiction-book-details/library-admin-fiction-book-details.component';
-import { LibraryAdminFictionBookDonorsFormComponent } from '../../components/library-admin-fiction-book-donors-form/library-admin-fiction-book-donors-form.component';
-import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
-import { FictionBookAdminService } from '../../services/fiction-book-admin.service';
+import { LibraryAdminGameBookDonorsFormComponent } from '../../../game-book/components/library-admin-game-book-donors-form/library-admin-game-book-donors-form.component';
+import { GameBookAdminService } from '../../../game-book/services/game-book-admin.service';
+import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
+import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
 
 @Component({
-  selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminFictionBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-fiction-book-edition.container.html'
+  selector: 'assoc-library-admin-game-book-edition',
+  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminGameBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-game-book-edition.container.html'
 })
-export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
+export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
 
   private readonly route = inject(ActivatedRoute);
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(FictionBookAdminService);
+  private readonly service = inject(GameBookAdminService);
 
   private index = -1;
 
@@ -41,6 +43,10 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public readingPublishers = false;
 
   public readingDonors = false;
+
+  public bookTypesSelection = new PaginatedResponse<BookType>();
+
+  public gameSystemsSelection = new PaginatedResponse<GameSystem>();
 
   public authorsSelection = new PaginatedResponse<Author>();
 
@@ -61,7 +67,7 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   constructor(
     authContainer: AuthContainer
   ) {
-    super(new FictionBook());
+    super(new GameBook());
     // Check permissions
     this.editable = authContainer.hasPermission("library_book", "update");
     this.deletable = authContainer.hasPermission("library_book", "delete");
@@ -78,6 +84,8 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     });
 
     // Load initial data
+    this.onGoToBookTypePage(0);
+    this.onGoToGameSystemPage(0);
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
     this.onGoToDonorPage(0);
@@ -89,6 +97,38 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public onStartEditingView(view: string): void {
     this.view = view;
     super.onStartEditing();
+  }
+
+  public onGoToBookTypePage(page: number) {
+    this.readingBookTypes = true;
+    this.service.getBookTypes(page).subscribe({
+      next: response => {
+        this.bookTypesSelection = response;
+
+        // Reactivate view
+        this.readingBookTypes = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingBookTypes = false;
+      }
+    });
+  }
+
+  public onGoToGameSystemPage(page: number) {
+    this.readingGameSystems = true;
+    this.service.getGameSystems(page).subscribe({
+      next: response => {
+        this.gameSystemsSelection = response;
+
+        // Reactivate view
+        this.readingGameSystems = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.readingGameSystems = false;
+      }
+    });
   }
 
   public onGoToAuthorPage(page: number) {
@@ -147,11 +187,11 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     });
   }
 
-  protected override read(): Observable<FictionBook> {
+  protected override read(): Observable<GameBook> {
     return this.service.getOne(this.index);
   }
 
-  protected override save(toSave: FictionBook): Observable<FictionBook> {
+  protected override save(toSave: GameBook): Observable<GameBook> {
     return this.service.update(this.data.number, toSave);
   }
 
