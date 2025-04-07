@@ -34,14 +34,16 @@ describe('LibraryBookListComponent', () => {
       title: { supertitle: 'Supertitle A', title: 'Title A', subtitle: 'Subtitle A', fullTitle: '' },
       lent: false,
       isbn: '',
-      language: ''
+      language: '',
+      lendings: []
     },
     {
       number: 0,
       title: { supertitle: 'Supertitle B', title: 'Title B', subtitle: 'Subtitle B', fullTitle: '' },
       lent: true,
       isbn: '',
-      language: ''
+      language: '',
+      lendings: []
     }
   ];
 
