@@ -11,10 +11,21 @@ import { TransactionReportService } from '../../services/transaction-report.serv
 })
 export class TransactionReportWidgetContainer {
 
-  private readonly reportService = inject(TransactionReportService);
-  
+  public waiting = false;
+
+  private readonly service = inject(TransactionReportService);
+
   public downloadExcel() {
-    this.reportService.downloadExcelReport().subscribe();
+    this.waiting = true;
+    this.service.downloadExcelReport()
+      .subscribe({
+        next: response => {
+          this.waiting = false;
+        },
+        error: error => {
+          this.waiting = false;
+        }
+      });
   }
 
 }
