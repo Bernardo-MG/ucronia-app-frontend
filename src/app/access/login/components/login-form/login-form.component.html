@@ -23,7 +23,7 @@
   </div>
   <!-- Submit button -->
   <div class="d-grid gap-2">
-    <layout-waiting-button type="submit" name="Login" [waiting]="waiting"
-      [disabled]="!loginEnabled">Login</layout-waiting-button>
+    <button type="submit" name="Login" class="btn btn-primary" [layoutWaiting]="waiting" [disabled]="!loginEnabled"
+      [attr.aria-disabled]="!loginEnabled">Login</button>
   </div>
 </form>
