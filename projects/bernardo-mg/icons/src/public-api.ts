@@ -24,4 +24,3 @@ export * from './lib/icon-success/icon-success.component';
 export * from './lib/icon-success-or-failure/icon-success-or-failure.component';
 export * from './lib/icon-take-in/icon-take-in.component';
 export * from './lib/icon-take-out/icon-take-out.component';
-export * from './lib/icon-waiting/icon-waiting.component';
