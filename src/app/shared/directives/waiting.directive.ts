@@ -1,81 +1,58 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, Renderer2 } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[layoutWaiting]',
   standalone: true,
 })
-export class WaitingDirective implements OnChanges, AfterViewInit, OnDestroy {
+export class WaitingDirective implements AfterViewInit, OnChanges {
 
-  @Input() public layoutWaiting!: boolean;
+  @Input() layoutWaiting = false;
 
-  private waitingIcon: HTMLElement | null = null;
+  private spinner?: HTMLElement;
 
-  private originalContent: string | null = null;
+  private originalContent?: string;
 
   constructor(
-    private elementRef: ElementRef<HTMLElement>,
+    private el: ElementRef<HTMLButtonElement>,
     private renderer: Renderer2
   ) { }
 
-  public ngAfterViewInit() {
-    this.updateView();
+  ngAfterViewInit() {
+    this.update();
   }
 
-  public ngOnChanges() {
-    this.updateView();
+  ngOnChanges() {
+    this.update();
   }
 
-  public ngOnDestroy() {
-    this.waitingIcon = null;
-  }
-
-  private updateView() {
-    const button = this.elementRef.nativeElement;
-
+  private update() {
+    const button = this.el.nativeElement;
     if (!(button instanceof HTMLButtonElement)) {
-      console.warn('layoutWaiting should be used on a <button> element.');
+      console.warn('layoutWaiting should be used on a <button>.');
       return;
     }
 
     if (this.layoutWaiting) {
-      this.showWaiting(button);
+      if (!this.spinner) {
+        this.spinner = this.renderer.createElement('span');
+        ['spinner-border', 'spinner-border-sm'].forEach(c => this.renderer.addClass(this.spinner!, c));
+      }
+
+      if (!this.originalContent) {
+        this.originalContent = button.innerHTML;
+      }
+
+      button.innerHTML = '';
+      this.renderer.appendChild(button, this.spinner);
+      this.renderer.setAttribute(button, 'aria-busy', 'true');
     } else {
-      this.hideWaiting(button);
+      if (this.originalContent !== undefined) {
+        button.innerHTML = this.originalContent;
+        this.originalContent = undefined;
+      }
+
+      this.renderer.removeAttribute(button, 'aria-busy');
     }
-  }
-
-  private showWaiting(button: HTMLButtonElement) {
-    if (!this.waitingIcon) {
-      this.waitingIcon = this.renderer.createElement('span');
-      this.renderer.addClass(this.waitingIcon, 'spinner-border');
-      this.renderer.addClass(this.waitingIcon, 'spinner-border-sm');
-      this.renderer.addClass(this.waitingIcon, 'mr-1');
-    }
-
-    if (this.originalContent === null) {
-      this.originalContent = button.innerHTML; // Save original content
-    }
-
-    // Clear button content
-    button.innerHTML = '';
-
-    // Add spinner
-    this.renderer.appendChild(button, this.waitingIcon);
-
-    this.renderer.setAttribute(button, 'aria-busy', 'true');
-  }
-
-  private hideWaiting(button: HTMLButtonElement) {
-    if (this.waitingIcon && button.contains(this.waitingIcon)) {
-      this.renderer.removeChild(button, this.waitingIcon);
-    }
-
-    if (this.originalContent !== null) {
-      button.innerHTML = this.originalContent; // Restore original content
-      this.originalContent = null;
-    }
-
-    this.renderer.removeAttribute(button, 'aria-busy');
   }
 
 }
