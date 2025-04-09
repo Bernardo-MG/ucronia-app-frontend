@@ -3,14 +3,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingButtonComponent } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/layout';
 
 /**
  * User activation form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {

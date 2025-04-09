@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingButtonComponent } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/layout';
 
 @Component({
     selector: 'account-change-password-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
     templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {

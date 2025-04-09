@@ -24,9 +24,10 @@
             </layout-card-body>
             <layout-card-footer>
               <!-- Extend expiration button -->
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Extend expiration"
-                data-bs-toggle="modal" [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
-                expiración</layout-waiting-button>
+              <button type="submit" name="Extend expiration" class="btn btn-primary" [layoutWaiting]="waiting"
+                [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
+                expiración</button>
             </layout-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'status'">
@@ -35,8 +36,9 @@
             </layout-card-body>
             <layout-card-footer>
               <!-- Revoke button -->
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Revoke" data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</layout-waiting-button>
+              <button type="submit" name="Revoke" class="btn btn-primary" [layoutWaiting]="waiting"
+                [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</button>
             </layout-card-footer>
           </ng-container>
         </ng-container>
