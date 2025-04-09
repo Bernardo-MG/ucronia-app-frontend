@@ -20,6 +20,7 @@ export * from './lib/directives/justify-center.directive';
 export * from './lib/directives/justify-end.directive';
 export * from './lib/directives/placeholder.directive';
 export * from './lib/directives/responsive-columns.directive';
+export * from './lib/directives/waiting.directive';
 export * from './lib/models/auth-menu-link';
 export * from './lib/models/breadcrumb-link';
 export * from './lib/models/card-tab';
