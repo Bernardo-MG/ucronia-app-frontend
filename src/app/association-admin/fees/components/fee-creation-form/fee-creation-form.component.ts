@@ -4,11 +4,11 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingButtonComponent } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/layout';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { WaitingDirective } from '@bernardo-mg/layout';
 import { InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingButtonComponent } from '@bernardo-mg/layout';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -12,7 +12,7 @@ import { UserLogin } from '../../models/user-login';
  */
 @Component({
   selector: 'login-login-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingDirective, InvalidFieldDirective],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {

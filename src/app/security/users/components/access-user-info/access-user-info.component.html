@@ -44,15 +44,17 @@
           <ng-template [ngIf]="!data.enabled">
             <!-- Enable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Enable" data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</layout-waiting-button>
+              <button type="submit" name="Enable" class="btn btn-primary" [layoutWaiting]="waiting"
+                [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</button>
             </div>
           </ng-template>
           <ng-template [ngIf]="data.enabled">
             <!-- Disable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <layout-waiting-button [waiting]="waiting" [disabled]="!editEnabled" name="Disable" data-bs-toggle="modal"
-                [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</layout-waiting-button>
+              <button type="submit" name="Disable" class="btn btn-primary" [layoutWaiting]="waiting"
+                [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</button>
             </div>
           </ng-template>
         </div>
