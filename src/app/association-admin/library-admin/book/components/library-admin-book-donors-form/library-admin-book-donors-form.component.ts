@@ -2,11 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { Book } from '@app/models/library/book';
 import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
 import { Person } from '@app/models/person/person';
-import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -16,21 +14,15 @@ import { PaginatedResponse } from '@bernardo-mg/request';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-book-donors-form.component.html'
 })
-export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
+export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation> {
 
   @Input() public donors = new PaginatedResponse<Person>();
 
   @Output() public goToDonorPage = new EventEmitter<number>();
-  
+
   public selectingDonor = false;
 
-  public get donation(): Donation | undefined {
-    return this.form.get('donation').value;
-  }
-
-  public set donation(data: Donation) {
-    this.form.get('donation')?.setValue(data);
-  }
+  public currentDonors: Donor[] = [];
 
   constructor(
     fb: FormBuilder
@@ -38,24 +30,8 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
     super();
 
     this.form = fb.group({
-      number: [undefined],
-      index: [-1],
-      isbn: ['', isbnValidator()],
-      title: fb.group({
-        supertitle: [''],
-        title: ['', Validators.required],
-        subtitle: ['']
-      }),
-      language: ['', Validators.required],
-      publishDate: [''],
-      authors: [[]],
-      donation: fb.group({
-        date: [''],
-        donors: [[]]
-      }),
-      bookType: [],
-      publishers: [[]],
-      gameSystem: []
+      date: ["", Validators.required],
+      donors: [[], Validators.required]
     });
   }
 
@@ -64,22 +40,16 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Book> {
   }
 
   public onSelectDonor(donor: Person) {
-    if (!this.donation) {
-      this.donation = new Donation();
-    }
-
-    if (!this.donation.donors.find(d => d.number === donor.number)) {
-      this.donation.donors.push(donor);
+    if (!this.currentDonors.find(d => d.number === donor.number)) {
+      this.currentDonors = [...this.currentDonors, donor];
+      this.form.get('donors').setValue(this.currentDonors);
     }
     this.selectingDonor = false;
   }
 
   public onRemoveDonor(donor: Donor) {
-    if (!this.donation) {
-      this.donation = new Donation();
-    }
-
-    this.donation.donors = this.donation.donors.filter(d => d.number !== donor.number);
+    this.currentDonors = this.currentDonors.filter(d => d.number !== donor.number);
+    this.form.get('donors').setValue(this.currentDonors);
   }
 
   public onGoToDonorPage(page: number) {

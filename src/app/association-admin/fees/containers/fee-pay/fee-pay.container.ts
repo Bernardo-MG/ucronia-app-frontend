@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Fee } from '@app/models/fees/fee';
@@ -22,21 +22,19 @@ import { FeeService } from '../../services/fee.service';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.container.html'
 })
-export class FeePayContainer extends CreateComponent<FeePayment> implements OnInit {
+export class FeePayContainer extends CreateComponent<FeePayment> {
 
-  private service = inject(FeeService);
+  private readonly service = inject(FeeService);
 
-  private authContainer = inject(AuthContainer);
+  private readonly router = inject(Router);
 
-  private router = inject(Router);
-
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   public readingMembers = false;
 
   public selectedMember = false;
 
-  public createPermission = false;
+  public readonly createPermission;
 
   public personPage = new PaginatedResponse<Person>();
 
@@ -50,9 +48,12 @@ export class FeePayContainer extends CreateComponent<FeePayment> implements OnIn
 
   public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago', '')];
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
+    super();
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("fee", "create");
+    this.createPermission = authContainer.hasPermission("fee", "create");
 
     // Load members
     this.onGoToMembersPage(0);

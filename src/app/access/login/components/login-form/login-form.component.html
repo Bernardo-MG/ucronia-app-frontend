@@ -15,15 +15,15 @@
   <div class="row mb-2">
     <div JustifyCenterDirective>
       <div class="form-check form-switch mb-3 mb-md-0">
-        <input id="rememberMe" type="checkbox" role="switch" (change)="onRememberMe($event.target)" class="form-check-input"
-          [disabled]="!rememberMeEnabled" [attr.aria-disabled]="!rememberMeEnabled">
+        <input id="rememberMe" type="checkbox" role="switch" (change)="onRememberMe($event.target)"
+          class="form-check-input" [disabled]="!rememberMeEnabled" [attr.aria-disabled]="!rememberMeEnabled">
         <label for="rememberMe" class="form-check-label">Mantener sesión</label>
       </div>
     </div>
   </div>
   <!-- Submit button -->
   <div class="d-grid gap-2">
-    <layout-waiting-button type="submit" name="Login" [waiting]="waiting"
-      [disabled]="!loginEnabled">Login</layout-waiting-button>
+    <button type="submit" name="Login" class="btn btn-primary" [layoutWaiting]="waiting" [disabled]="!loginEnabled"
+      [attr.aria-disabled]="!loginEnabled">Login</button>
   </div>
 </form>

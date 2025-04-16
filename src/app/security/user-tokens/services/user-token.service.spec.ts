@@ -1,16 +1,16 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { UserTokenService } from './user-token.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('UserTokenService', () => {
   let service: UserTokenService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    });
     service = TestBed.inject(UserTokenService);
   });
 

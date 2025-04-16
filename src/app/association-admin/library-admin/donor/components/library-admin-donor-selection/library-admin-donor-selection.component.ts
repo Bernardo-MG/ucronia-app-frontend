@@ -11,6 +11,6 @@ import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@
 })
 export class LibraryAdminDonorSelectionComponent extends PagedSelectorComponent<Person> {
 
-  public nameRenderer = (data: Person): string => data.name.fullName;
+  public readonly nameRenderer = (data: Person): string => data.name.fullName;
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
@@ -10,7 +10,7 @@ import { PaginationNavigationComponent } from '../pagination-navigation/paginati
   imports: [PaginationNavigationComponent],
   templateUrl: './pagination-route-navigation.component.html'
 })
-export class PaginationRouteNavigationComponent implements OnInit {
+export class PaginationRouteNavigationComponent {
 
   @Input() public totalPages = 0;
 
@@ -18,20 +18,14 @@ export class PaginationRouteNavigationComponent implements OnInit {
 
   public page = 0;
 
-  private routeActuator: RouteApiActuator;
-
-  private routePaginationObserver: PaginationRouteObserver;
+  private readonly routeActuator: RouteApiActuator;
 
   constructor(
     router: Router,
     route: ActivatedRoute
   ) {
     this.routeActuator = new RouteApiActuator(router);
-    this.routePaginationObserver = new PaginationRouteObserver(route);
-  }
-
-  ngOnInit(): void {
-    this.routePaginationObserver.subject.subscribe(p => {
+    new PaginationRouteObserver(route).subject.subscribe(p => {
       if ((p) && (p.page)) {
         this.page = p.page;
       } else {

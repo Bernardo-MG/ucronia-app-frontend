@@ -24,7 +24,7 @@
     contraseñas no coinciden</div>
   <!-- Submit button -->
   <div class="d-grid gap-2">
-    <layout-waiting-button type="submit" name="Reset" [waiting]="waiting"
-      [disabled]="!saveEnabled">Cambiar</layout-waiting-button>
+    <button type="Activate" name="Login" class="btn btn-primary" [layoutWaiting]="waiting" [disabled]="!saveEnabled"
+      [attr.aria-disabled]="!saveEnabled">Activar</button>
   </div>
 </form>

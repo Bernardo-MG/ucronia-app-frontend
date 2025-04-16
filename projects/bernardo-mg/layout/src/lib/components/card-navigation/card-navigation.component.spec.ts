@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CardNavigationComponent } from './card-navigation.component';
 
 describe('CardNavigationComponent', () => {
@@ -10,8 +9,8 @@ describe('CardNavigationComponent', () => {
     await TestBed.configureTestingModule({
       imports: [CardNavigationComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(CardNavigationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

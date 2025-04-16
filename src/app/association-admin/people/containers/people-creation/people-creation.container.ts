@@ -14,11 +14,11 @@ import { PeopleService } from '../../services/people.service';
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {
 
-  private service = inject(PeopleService);
+  private readonly service = inject(PeopleService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: Person): Observable<Person> {
     return this.service.create(toSave);

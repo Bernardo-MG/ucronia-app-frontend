@@ -14,11 +14,11 @@ import { TransactionFormComponent } from '../../components/transaction-form/tran
 })
 export class TransactionCreationComponent extends CreateComponent<Transaction> {
 
-  private service = inject(TransactionService);
+  private readonly service = inject(TransactionService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: Transaction): Observable<Transaction> {
     return this.service.create(toSave);

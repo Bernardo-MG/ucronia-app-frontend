@@ -7,9 +7,9 @@ import { AccessUserAddRoleComponent } from '../access-user-add-role/access-user-
 import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles.component';
 
 @Component({
-    selector: 'access-user-roles-editor',
-    imports: [CommonModule, AccessUserAddRoleComponent, AccessUserRolesComponent, IconAddComponent],
-    templateUrl: './access-user-roles-editor.component.html'
+  selector: 'access-user-roles-editor',
+  imports: [CommonModule, AccessUserAddRoleComponent, AccessUserRolesComponent, IconAddComponent],
+  templateUrl: './access-user-roles-editor.component.html'
 })
 export class AccessUserRolesEditorComponent {
 

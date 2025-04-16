@@ -6,9 +6,9 @@ import { UserToken } from '@bernardo-mg/authentication';
 import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'access-user-token-selection-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent],
-    templateUrl: './user-token-selection-list.component.html'
+  selector: 'access-user-token-selection-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  templateUrl: './user-token-selection-list.component.html'
 })
 export class UserTokenSelectionListComponent {
 

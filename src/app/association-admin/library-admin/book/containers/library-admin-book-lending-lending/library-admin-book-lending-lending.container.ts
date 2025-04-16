@@ -1,65 +1,64 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookAdminService } from '@app/association-admin/library-admin/book/services/book-admin.service';
-import { Book } from '@app/models/library/book';
+import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/book/components/library-admin-book-lending/library-admin-book-lending.component';
+import { BookInfo } from '@app/models/library/book-info';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
-import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent } from '@bernardo-mg/layout';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
-import { LibraryAdminBookLendingFormComponent } from '../../components/library-admin-book-lending-form/library-admin-book-lending-form.component';
-import { LibraryAdminBookLendingMemberSelectionComponent } from '../../components/library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
-  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, ArticleComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [CommonModule, ArticleComponent, LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
-export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> implements OnInit {
+export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(BookAdminService);
+  private readonly service = inject(BookAdminService);
 
-  private authContainer = inject(AuthContainer);
+  public source: 'games' | 'fiction' = 'games';
 
-  public book = new Book();
-
-  public filled_bar = 0;
+  public book = new BookInfo();
 
   public readingMembers = false;
 
-  public selectedMember = false;
-
-  public createPermission = false;
+  public readonly createPermission;
 
   public members = new PaginatedResponse<Member>();
-
-  public member = new Member();
 
   public activeFilter = Active.Active;
 
   private index = -1;
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
+    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');
       if (indexParam) {
         this.index = Number(indexParam);
       }
+
+      const urlSegments = this.route.snapshot.url;
+      const sourceSegment = urlSegments.length > 0 ? urlSegments[0].path : '';
+      this.source = sourceSegment as 'games' | 'fiction';
+
       this.load();
     });
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_lending", "create");
+    this.createPermission = authContainer.hasPermission("library_lending", "create");
     this.onGoToMembersPage(0);
   }
 
@@ -68,13 +67,23 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
   }
 
   private load() {
-    this.service.getOne(this.index).subscribe({
-      next: response => {
-        this.book = response;
-      },
-      error: error => {
-      }
-    });
+    if (this.source === 'games') {
+      this.service.getOneGameBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+        },
+        error: error => {
+        }
+      });
+    } else {
+      this.service.getOneFictionBook(this.index).subscribe({
+        next: response => {
+          this.book = response;
+        },
+        error: error => {
+        }
+      });
+    }
   }
 
   public onChangeActiveFilter(active: Active) {
@@ -97,17 +106,6 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
         this.readingMembers = false;
       }
     });
-  }
-
-  public onReturnToMembers() {
-    this.selectedMember = false;
-    this.filled_bar = 0;
-  }
-
-  public onSelectMember(member: Member) {
-    this.member = member;
-    this.selectedMember = true;
-    this.filled_bar = 50;
   }
 
   protected override save(toSave: BookLent): Observable<BookLent> {

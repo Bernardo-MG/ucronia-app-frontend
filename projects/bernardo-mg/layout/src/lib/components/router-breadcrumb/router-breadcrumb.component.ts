@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { BreadcrumbLink } from '../../models/breadcrumb-link';
@@ -9,18 +9,20 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
   imports: [BreadcrumbComponent],
   templateUrl: './router-breadcrumb.component.html'
 })
-export class RouterBreadcrumbComponent implements OnInit {
+export class RouterBreadcrumbComponent {
 
-  breadcrumbs: BreadcrumbLink[] = [];
+  private readonly route = inject(ActivatedRoute);
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  public breadcrumbs: BreadcrumbLink[] = [];
 
-  public ngOnInit(): void {
+  constructor(
+    router: Router
+  ) {
     // Handle initial load
     this.breadcrumbs = this.buildBreadcrumbs();
 
     // Build breadcrumbs on initialization and on route change
-    this.router.events
+    router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.breadcrumbs = this.buildBreadcrumbs();
@@ -33,14 +35,16 @@ export class RouterBreadcrumbComponent implements OnInit {
     let url = '';
 
     while (currentRoute) {
-      // Process each level of the route tree
-      // Build the relative URL for the current route
-      const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
-      url += `/${routeURL}`;
+      if (currentRoute.snapshot) {
+        // Process each level of the route tree
+        // Build the relative URL for the current route
+        const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
+        url += `/${routeURL}`;
 
-      // Add breadcrumb if the route has 'breadcrumb' data
-      if (currentRoute.snapshot.data['breadcrumb']) {
-        breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
+        // Add breadcrumb if the route has 'breadcrumb' data
+        if (currentRoute.snapshot.data['breadcrumb']) {
+          breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
+        }
       }
 
       // Move to the first child route, if any

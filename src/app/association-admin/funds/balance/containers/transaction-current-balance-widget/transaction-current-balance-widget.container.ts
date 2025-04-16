@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { BlockUiDirective } from '@bernardo-mg/layout';
 import { TransactionCurrentBalance } from '../../../../../models/transactions/transaction-current-balance';
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
@@ -8,17 +8,15 @@ import { TransactionBalanceService } from '../../services/transaction-balance.se
   imports: [BlockUiDirective],
   templateUrl: './transaction-current-balance-widget.container.html'
 })
-export class FundsCurrentBalanceWidgetContainer implements OnInit {
-
-  private balanceService = inject(TransactionBalanceService);
+export class FundsCurrentBalanceWidgetContainer {
 
   public readingBalance = false;
 
   public balance = new TransactionCurrentBalance();
 
-  public ngOnInit(): void {
+  constructor(service: TransactionBalanceService) {
     this.readingBalance = true;
-    this.balanceService.current().subscribe(b => {
+    service.current().subscribe(b => {
       this.balance = b;
       this.readingBalance = false;
     });

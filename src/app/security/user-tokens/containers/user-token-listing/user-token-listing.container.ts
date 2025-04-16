@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { UserToken } from '@bernardo-mg/authentication';
@@ -7,11 +7,13 @@ import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/reques
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
-    selector: 'access-user-token-listing',
-    imports: [UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
-    templateUrl: './user-token-listing.container.html'
+  selector: 'access-user-token-listing',
+  imports: [UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  templateUrl: './user-token-listing.container.html'
 })
-export class UserTokenListingContainer implements OnInit {
+export class UserTokenListingContainer {
+
+  private readonly service = inject(UserTokenService);
 
   public data = new PaginatedResponse<UserToken>();
 
@@ -22,11 +24,7 @@ export class UserTokenListingContainer implements OnInit {
    */
   public reading = false;
 
-  constructor(
-    private service: UserTokenService
-  ) { }
-
-  public ngOnInit(): void {
+  constructor() {
     this.load(0);
   }
 

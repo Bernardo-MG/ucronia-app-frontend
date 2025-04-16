@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryAdminBookListComponent } from './library-admin-book-list.component';
 
-describe('LibraryAdminBookListComponent', () => {
+describe('LibraryAdminGameBookListComponent', () => {
   let component: LibraryAdminBookListComponent;
   let fixture: ComponentFixture<LibraryAdminBookListComponent>;
 
@@ -9,8 +9,8 @@ describe('LibraryAdminBookListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LibraryAdminBookListComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminBookListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

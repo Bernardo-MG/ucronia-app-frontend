@@ -14,11 +14,11 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 })
 export class LibraryAdminBookTypeCreateContainer extends CreateComponent<BookType> {
 
-  private service = inject(BookTypeAdminService);
+  private readonly service = inject(BookTypeAdminService);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
   protected override save(toSave: BookType): Observable<BookType> {
     return this.service.create(toSave);

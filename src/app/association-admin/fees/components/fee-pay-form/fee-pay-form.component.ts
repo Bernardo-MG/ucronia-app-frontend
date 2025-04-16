@@ -5,11 +5,11 @@ import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective, WaitingButtonComponent } from '@bernardo-mg/layout';
+import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/layout';
 
 @Component({
   selector: 'assoc-fee-pay-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingButtonComponent, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {

@@ -1,25 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
 import { SecurityLayoutService } from '@app/core/layout/services/security-layout.service';
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'layout-security-layout',
-    imports: [RouterModule, SidebarLayoutContainer],
-    templateUrl: './security-layout.container.html'
+  selector: 'layout-security-layout',
+  imports: [RouterModule, SidebarLayoutContainer],
+  templateUrl: './security-layout.container.html'
 })
-export class SecurityLayoutContainer implements OnInit {
+export class SecurityLayoutContainer {
 
-  public menus: Menu[] = [];
+  public readonly menus: Menu[] = [];
 
   constructor(
-    private securityLayoutService: SecurityLayoutService
-  ) { }
-
-  ngOnInit(): void {
-    // Load menus
-    this.menus = this.securityLayoutService.getMenus();
+    securityLayoutService: SecurityLayoutService
+  ) {
+    this.menus = securityLayoutService.getMenus();
   }
 
 }

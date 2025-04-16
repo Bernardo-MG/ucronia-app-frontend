@@ -23,13 +23,14 @@
             </a>
           </li>
           <li *ngIf="showAdmin" class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="adminMenuDropdown" data-bs-toggle="dropdown"
-              role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="nav-link dropdown-toggle" id="adminMenuDropdown" data-bs-toggle="dropdown" role="button"
+              aria-haspopup="true" aria-expanded="false">
               Administración
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenuDropdown">
               <li *ngFor="let link of adminLinks">
-                <a routerLink="{{link.path}}" class="dropdown-item" attr.aria-label="{{link.title}}" title="{{link.title}}">
+                <a routerLink="{{link.path}}" class="dropdown-item" attr.aria-label="{{link.title}}"
+                  title="{{link.title}}">
                   {{link.title}}
                 </a>
               </li>

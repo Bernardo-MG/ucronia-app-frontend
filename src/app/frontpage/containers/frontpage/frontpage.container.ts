@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
@@ -11,21 +11,19 @@ import { ArticleComponent } from '@bernardo-mg/layout';
     templateUrl: './frontpage.container.html',
     styleUrls: ['./frontpage.container.sass']
 })
-export class FrontpageComponent implements OnInit {
+export class FrontpageComponent {
 
   public calendarCode: string | undefined;
 
   public locationCode: string | undefined;
 
-  public instagramLink = "";
+  public readonly instagramLink;
 
-  public emailLink = "";
+  public readonly emailLink;
 
   constructor(
     private service: FrontpageService
-  ) { }
-
-  ngOnInit(): void {
+  ) { 
     // Read calendar code
     this.service.getCalendarCode().subscribe({
       next: response => {

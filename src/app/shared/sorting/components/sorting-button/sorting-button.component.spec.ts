@@ -138,9 +138,6 @@ describe('SortingButtonComponent', () => {
 
   it('should change to unsorted icon when receiving the unsorted direction', () => {
     component.direction = SortingDirection.Unsorted;
-    component.ngOnChanges({
-      direction: new SimpleChange(null, component.direction, true)
-    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSort);
@@ -148,9 +145,6 @@ describe('SortingButtonComponent', () => {
 
   it('should change to sort up icon when receiving the ascending direction', () => {
     component.direction = SortingDirection.Ascending;
-    component.ngOnChanges({
-      direction: new SimpleChange(null, component.direction, true)
-    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortUp);
@@ -158,9 +152,6 @@ describe('SortingButtonComponent', () => {
 
   it('should change to sort down icon when receiving the descending direction', () => {
     component.direction = SortingDirection.Descending;
-    component.ngOnChanges({
-      direction: new SimpleChange(null, component.direction, true)
-    });
     fixture.detectChanges();
 
     expect(component.directionIcon).toEqual(faSortDown);

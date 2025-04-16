@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Author } from '@app/models/library/author';
-import { Book } from '@app/models/library/book';
 import { BookLent } from '@app/models/library/book-lent';
 import { BookReturned } from '@app/models/library/book-returned';
 import { BookType } from '@app/models/library/book-type';
+import { FictionBook } from '@app/models/library/fiction-book';
+import { GameBook } from '@app/models/library/game-book';
 import { GameSystem } from '@app/models/library/game-system';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
@@ -13,13 +14,16 @@ import { Person } from '@app/models/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
+import { BookInfo } from '../../../../models/library/book-info';
 
 @Injectable({
   providedIn: "root"
 })
 export class BookAdminService {
 
-  private readonly bookClient;
+  private readonly gameBookClient;
+
+  private readonly fictionBookClient;
 
   private readonly authorClient;
 
@@ -38,7 +42,8 @@ export class BookAdminService {
   constructor(
     clientProvider: AngularCrudClientProvider
   ) {
-    this.bookClient = clientProvider.url(environment.apiUrl + '/library/book');
+    this.gameBookClient = clientProvider.url(environment.apiUrl + '/library/book/game');
+    this.fictionBookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
     this.donorClient = clientProvider.url(environment.apiUrl + '/person');
@@ -48,40 +53,79 @@ export class BookAdminService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: Book): Observable<Book> {
-    return this.bookClient
-      .create<SimpleResponse<Book>>(data)
+  public createGameBook(data: BookInfo): Observable<BookInfo> {
+    return this.gameBookClient
+      .create<SimpleResponse<BookInfo>>(data)
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Book): Observable<Book> {
-    return this.bookClient
+  public updateGameBook(number: number, data: GameBook): Observable<GameBook> {
+    return this.gameBookClient
       .appendRoute(`/${number}`)
-      .update<SimpleResponse<Book>>(data)
+      .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getOne(number: number): Observable<Book> {
-    return this.bookClient
+  public getOneGameBook(number: number): Observable<GameBook> {
+    return this.gameBookClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Book>>()
+      .read<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
   }
 
-  public delete(number: number): Observable<boolean> {
-    return this.bookClient
+  public deleteGameBook(number: number): Observable<boolean> {
+    return this.gameBookClient
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Book>> {
+  public getAllGameBooks(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
     );
 
-    return this.bookClient
+    return this.gameBookClient
+      .loadParameters(new PaginationParams(page))
+      .loadParameters(sorting)
+      .read();
+  }
+
+  public createFictionBook(data: FictionBook): Observable<FictionBook> {
+    return this.fictionBookClient
+      .create<SimpleResponse<FictionBook>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public updateFictionBook(number: number, data: FictionBook): Observable<FictionBook> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .update<SimpleResponse<GameBook>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public getOneFictionBook(number: number): Observable<FictionBook> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<GameBook>>()
+      .pipe(map(r => r.content));
+  }
+
+  public deleteFictionBook(number: number): Observable<boolean> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .delete<SimpleResponse<boolean>>()
+      .pipe(map(r => r.content));
+  }
+
+  public getAllFictionBooks(page: number, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
+    const sorting = new SortingParams(
+      sort.properties,
+      [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
+    );
+
+    return this.fictionBookClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .read();

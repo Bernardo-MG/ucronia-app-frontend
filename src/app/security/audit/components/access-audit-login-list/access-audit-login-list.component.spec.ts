@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccessAuditLoginListComponent } from './access-audit-login-list.component';
 
 describe('AccessAuditLoginListComponent', () => {
@@ -10,8 +9,8 @@ describe('AccessAuditLoginListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AccessAuditLoginListComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AccessAuditLoginListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

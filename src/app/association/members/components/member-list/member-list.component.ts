@@ -6,9 +6,9 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'assoc-member-list',
-    imports: [CommonModule, RouterModule, SortingButtonComponent],
-    templateUrl: './member-list.component.html'
+  selector: 'assoc-member-list',
+  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  templateUrl: './member-list.component.html'
 })
 export class MemberListComponent {
 

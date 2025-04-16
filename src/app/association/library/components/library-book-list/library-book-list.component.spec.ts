@@ -2,7 +2,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
-import { Book } from '@app/models/library/book';
+import { BookInfo } from '@app/models/library/book-info';
 import { SortingDirection } from '@bernardo-mg/request';
 import { LibraryBookListComponent } from './library-book-list.component';
 
@@ -28,20 +28,14 @@ describe('LibraryBookListComponent', () => {
     fixture.detectChanges();
   });
 
-  const books: Book[] = [
+  const books: BookInfo[] = [
     {
       number: 0,
       title: { supertitle: 'Supertitle A', title: 'Title A', subtitle: 'Subtitle A', fullTitle: '' },
       lent: false,
       isbn: '',
       language: '',
-      publishDate: '',
-      authors: [],
-      lendings: [],
-      publishers: [],
-      donation: undefined,
-      bookType: undefined,
-      gameSystem: undefined
+      lendings: []
     },
     {
       number: 0,
@@ -49,13 +43,7 @@ describe('LibraryBookListComponent', () => {
       lent: true,
       isbn: '',
       language: '',
-      publishDate: '',
-      authors: [],
-      lendings: [],
-      publishers: [],
-      donation: undefined,
-      bookType: undefined,
-      gameSystem: undefined
+      lendings: []
     }
   ];
 

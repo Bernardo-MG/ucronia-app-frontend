@@ -2,7 +2,8 @@
   <layout-card>
     <layout-card-body>
       <!-- List -->
-      <access-audit-login-list [data]="data.content" (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
+      <access-audit-login-list [data]="data.content"
+        (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
     </layout-card-body>
     <layout-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"

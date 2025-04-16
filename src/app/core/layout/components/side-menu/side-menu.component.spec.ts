@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SideMenuComponent } from './side-menu.component';
 
 describe('SideMenuComponent', () => {
@@ -10,8 +9,8 @@ describe('SideMenuComponent', () => {
     await TestBed.configureTestingModule({
       imports: [SideMenuComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(SideMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

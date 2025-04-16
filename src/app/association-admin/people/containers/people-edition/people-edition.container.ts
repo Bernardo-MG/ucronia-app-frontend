@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
@@ -16,28 +16,25 @@ import { PeopleService } from '../../services/people.service';
   imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-edition.container.html'
 })
-export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> implements OnInit {
+export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
 
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
 
-  private router = inject(Router);
+  private readonly router = inject(Router);
 
-  private service = inject(PeopleService);
-
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(PeopleService);
 
   public view: string = 'details';
 
   private number = -1;
 
-  constructor() {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     super(new Person());
-  }
-
-  public ngOnInit(): void {
     // Check permissions
-    this.editable = this.authContainer.hasPermission("person", "update");
-    this.deletable = this.authContainer.hasPermission("person", "delete");
+    this.editable = authContainer.hasPermission("person", "update");
+    this.deletable = authContainer.hasPermission("person", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {

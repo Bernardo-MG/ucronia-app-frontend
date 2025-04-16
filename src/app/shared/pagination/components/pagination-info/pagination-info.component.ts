@@ -3,9 +3,9 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { JustifyCenterDirective } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'pagination-info',
-    imports: [PaginationNavigationComponent, JustifyCenterDirective],
-    templateUrl: './pagination-info.component.html'
+  selector: 'pagination-info',
+  imports: [PaginationNavigationComponent, JustifyCenterDirective],
+  templateUrl: './pagination-info.component.html'
 })
 export class PaginationInfoComponent {
 

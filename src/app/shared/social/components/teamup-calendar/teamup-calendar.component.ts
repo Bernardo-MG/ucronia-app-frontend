@@ -1,14 +1,23 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Component, inject, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-teamup-calendar',
   standalone: true,
   templateUrl: './teamup-calendar.component.html'
 })
-export class TeamupCalendarComponent implements OnChanges {
+export class TeamupCalendarComponent {
 
-  @Input() public code: string | undefined;
+  private readonly sanitizer = inject(DomSanitizer);
+
+  @Input() public set code(value: string | undefined) {
+    if (value) {
+      const rawUrl = `https://teamup.com/${value}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+    } else {
+      this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+    }
+  }
 
   @Input() public showLogo = false;
 
@@ -31,21 +40,6 @@ export class TeamupCalendarComponent implements OnChanges {
   @Input() public showYearViewHeader = false;
 
   public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
-
-  constructor(
-    private sanitizer: DomSanitizer
-  ) { }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['code']) {
-      if (this.code) {
-        const rawUrl = `https://teamup.com/${this.code}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
-        this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
-      } else {
-        this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
-      }
-    }
-  }
 
   private parseBoolean(flag: boolean): string {
     let value;

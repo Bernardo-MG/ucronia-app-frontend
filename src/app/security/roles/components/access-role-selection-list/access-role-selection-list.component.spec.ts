@@ -1,7 +1,7 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccessRoleSelectionListComponent } from './access-role-selection-list.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccessRoleSelectionListComponent', () => {
   let component: AccessRoleSelectionListComponent;
@@ -9,9 +9,9 @@ describe('AccessRoleSelectionListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [AccessRoleSelectionListComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
+      imports: [AccessRoleSelectionListComponent],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+    })
       .compileComponents();
 
     fixture = TestBed.createComponent(AccessRoleSelectionListComponent);

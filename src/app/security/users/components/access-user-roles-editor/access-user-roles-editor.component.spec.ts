@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AccessUserRolesEditorComponent } from './access-user-roles-editor.component';
 
 describe('AccessUserRolesEditorComponent', () => {
@@ -10,8 +9,8 @@ describe('AccessUserRolesEditorComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AccessUserRolesEditorComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(AccessUserRolesEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

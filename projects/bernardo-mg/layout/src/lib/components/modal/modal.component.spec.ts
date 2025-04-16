@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ModalComponent } from './modal.component';
 
 describe('ModalComponent', () => {
@@ -10,8 +9,8 @@ describe('ModalComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ModalComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(ModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

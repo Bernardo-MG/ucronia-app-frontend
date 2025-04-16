@@ -7,7 +7,7 @@ import { MENU_OPTIONS } from './menu-options';
 })
 export class AccountLayoutService {
 
-  private menus: Menu[] = [];
+  private readonly menus: Menu[] = [];
 
   constructor() {
     this.menus = new MenuLoader().load(MENU_OPTIONS);

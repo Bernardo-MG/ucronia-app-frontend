@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Book } from '@app/models/library/book';
+import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
+import { BookInfo } from '@app/models/library/book-info';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -12,43 +13,52 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-listing',
-  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
   templateUrl: './library-admin-book-listing.container.html'
 })
-export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
+export class LibraryAdminBookListingContainer {
 
-  private authContainer = inject(AuthContainer);
+  private readonly service = inject(BookAdminService);
 
-  private service = inject(BookAdminService);
+  private _pageNumber = 0;
 
-  @Input() public pageNumber = 0;
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
 
   @Output() public wait = new EventEmitter<boolean>();
 
   @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
 
-  public data = new PaginatedResponse<Book>();
+  public data = new PaginatedResponse<BookInfo>();
+
+  public source: 'games' | 'fiction' = 'games';
 
   /**
    * Loading flag.
    */
   public reading = false;
 
-  public createPermission = false;
+  public readonly createPermission;
+
+  public get routerLink(): string {
+    return `${this.source}/register`;
+  }
 
   private sort = new Sorting();
 
-  public ngOnInit(): void {
+  constructor(
+    authContainer: AuthContainer
+  ) {
     // Load books
-    this.load(this.pageNumber);
+    this.load(0);
     // Check permissions
-    this.createPermission = this.authContainer.hasPermission("library_book", "create");
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['pageNumber']) {
-      this.load(this.pageNumber);
-    }
+    this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
   public onChangeDirection(field: SortingProperty) {
@@ -57,29 +67,53 @@ export class LibraryAdminBookListingContainer implements OnInit, OnChanges {
     this.load(this.pageNumber);
   }
 
+  public onChangeSource(event: any) {
+    this.source = event.target.value as 'games' | 'fiction';
+    this.load(0);
+  }
+
   public load(page: number) {
     this.reading = true;
     this.wait.emit(this.reading);
 
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-        this.changePage.emit(response);
 
-        // Reactivate view
-        this.reading = false;
-        this.wait.emit(this.reading);
-      },
-      error: error => {
-        // Reactivate view
-        this.reading = false;
-        this.wait.emit(this.reading);
-      }
-    });
+    if (this.source === 'games') {
+      this.service.getAllGameBooks(page, this.sort).subscribe({
+        next: response => {
+          this.data = response;
+          this.changePage.emit(response);
+
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        },
+        error: error => {
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        }
+      });
+    } else {
+      this.service.getAllFictionBooks(page, this.sort).subscribe({
+        next: response => {
+          this.data = response;
+          this.changePage.emit(response);
+
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        },
+        error: error => {
+          // Reactivate view
+          this.reading = false;
+          this.wait.emit(this.reading);
+        }
+      });
+    }
   }
 
-  public routeLinkAdapter(data: Book): string {
-    return `${data.number}`;
+  public routeLinkAdapter = (data: BookInfo): string => {
+    return `${this.source}/${data.number}`;
   }
 
 }

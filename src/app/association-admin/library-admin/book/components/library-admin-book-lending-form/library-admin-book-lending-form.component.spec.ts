@@ -9,8 +9,8 @@ describe('LibraryAdminBookLendingFormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [LibraryAdminBookLendingFormComponent]
     })
-    .compileComponents();
-    
+      .compileComponents();
+
     fixture = TestBed.createComponent(LibraryAdminBookLendingFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
