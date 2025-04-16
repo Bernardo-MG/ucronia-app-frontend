@@ -35,14 +35,16 @@ export class RouterBreadcrumbComponent {
     let url = '';
 
     while (currentRoute) {
-      // Process each level of the route tree
-      // Build the relative URL for the current route
-      const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
-      url += `/${routeURL}`;
+      if (currentRoute.snapshot) {
+        // Process each level of the route tree
+        // Build the relative URL for the current route
+        const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
+        url += `/${routeURL}`;
 
-      // Add breadcrumb if the route has 'breadcrumb' data
-      if (currentRoute.snapshot.data['breadcrumb']) {
-        breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
+        // Add breadcrumb if the route has 'breadcrumb' data
+        if (currentRoute.snapshot.data['breadcrumb']) {
+          breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
+        }
       }
 
       // Move to the first child route, if any
