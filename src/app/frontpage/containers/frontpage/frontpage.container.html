@@ -8,7 +8,10 @@
     </div>
     <!-- Activities -->
     <div class="row">
-      <layout-article title="Actividades">
+      <layout-article>
+        <header>
+          <h1 class="border-bottom">Actividades</h1>
+        </header>
         <app-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
           [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true"
           [disableSidePanel]="true"></app-teamup-calendar>
@@ -16,13 +19,19 @@
     </div>
     <!-- Location -->
     <div class="row">
-      <layout-article title="Dónde estamos">
+      <layout-article>
+        <header>
+          <h1 class="border-bottom">Dónde estamos</h1>
+        </header>
         <app-google-maps [code]="locationCode"></app-google-maps>
       </layout-article>
     </div>
     <!-- Contact -->
     <div class="row">
-      <layout-article title="Contacta con nosotros">
+      <layout-article>
+        <header>
+          <h1 class="border-bottom">Contacta con nosotros</h1>
+        </header>
         <div class="container text-center">
           <a [href]="instagramLink" class="me-3">
             <img src='img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
