@@ -29,7 +29,7 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
 
   private memberNumber = -1;
 
-  public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar', '')];
+  public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar')];
 
   constructor(
     authContainer: AuthContainer

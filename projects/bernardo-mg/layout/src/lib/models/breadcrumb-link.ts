@@ -1,10 +1,14 @@
 
 export class BreadcrumbLink {
-  name = '';
-  route = '';
+  name: string;
+  route: string | undefined;
 
-  constructor(name: string, route: string) {
+  constructor(name: string, route?: string) {
     this.name = name;
-    this.route = route;
+    if (route) {
+      this.route = route;
+    } else {
+      this.route = undefined;
+    }
   }
 }

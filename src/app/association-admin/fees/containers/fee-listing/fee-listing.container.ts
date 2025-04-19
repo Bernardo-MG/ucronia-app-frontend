@@ -10,6 +10,6 @@ import { ArticleComponent, BreadcrumbLink, ResponsiveShortColumnsDirective } fro
 })
 export class FeeListingContainer {
 
-  public readonly levels = [new BreadcrumbLink('Cuotas', '')];
+  public readonly levels = [new BreadcrumbLink('Cuotas')];
 
 }
