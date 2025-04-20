@@ -3,9 +3,9 @@ import { IconDeleteComponent, IconEditComponent } from '@bernardo-mg/icons';
 import { ModalComponent } from '@bernardo-mg/layout';
 
 @Component({
-    selector: 'form-control-buttons',
-    imports: [IconDeleteComponent, IconEditComponent, ModalComponent],
-    templateUrl: './control-buttons.component.html'
+  selector: 'form-control-buttons',
+  imports: [IconDeleteComponent, IconEditComponent, ModalComponent],
+  templateUrl: './control-buttons.component.html'
 })
 export class ControlButtonsComponent {
 
@@ -27,12 +27,10 @@ export class ControlButtonsComponent {
     return this.disabled || !this.deletable;
   }
 
-  public onStartEditing(): void {
-    this.startEditing.emit();
-  }
-
   public onDelete(): void {
-    this.delete.emit();
+    if (!this.deletableDisabled) {
+      this.delete.emit();
+    }
   }
 
 }
