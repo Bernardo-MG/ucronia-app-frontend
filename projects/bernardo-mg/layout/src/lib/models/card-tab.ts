@@ -1,12 +1,9 @@
-export class CardTab {
 
-  constructor(code: string, name: string) {
-    this.code = code;
-    this.name = name;
-  }
+export class BreadcrumbLink {
+  public disabled = false;
 
-  code: string;
-  name: string;
-  disabled = false;
-
+  constructor(
+    public code: string,
+    public name: string
+  ) { }
 }
