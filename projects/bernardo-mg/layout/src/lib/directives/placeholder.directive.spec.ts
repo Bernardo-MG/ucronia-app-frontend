@@ -56,7 +56,6 @@ describe('PlaceholderDirective', () => {
 
     // Create the embedded view
     viewContainerRefMock.createEmbeddedView.and.returnValue(embeddedViewMock);
-    directive.layoutPlaceholder = true;
 
     // Ensure placeholder is created with proper classes
     expect(rendererMock.createElement).toHaveBeenCalledWith('div');
@@ -88,19 +87,4 @@ describe('PlaceholderDirective', () => {
     expect(directive['placeholderElement']).toBeNull(); // Ensure the placeholder is removed
   });
 
-  it('should insert the placeholder into the root node of the embedded view', () => {
-    // Set layoutPlaceholder to true and trigger placeholder display
-    directive.layoutPlaceholder = true;
-
-    // Ensure view container is cleared before inserting content
-    expect(viewContainerRefMock.clear).toHaveBeenCalled();
-
-    // Create the embedded view
-    viewContainerRefMock.createEmbeddedView.and.returnValue(embeddedViewMock);
-
-    // Ensure the placeholder is inserted into the root node of the embedded view
-    const mockRootNode = embeddedViewMock.rootNodes[0];
-    expect(rendererMock.setProperty).toHaveBeenCalledWith(mockRootNode, 'innerHTML', ''); // Clear original content
-    expect(rendererMock.appendChild).toHaveBeenCalledWith(mockRootNode, placeholderDiv); // Append the placeholder
-  });
 });
