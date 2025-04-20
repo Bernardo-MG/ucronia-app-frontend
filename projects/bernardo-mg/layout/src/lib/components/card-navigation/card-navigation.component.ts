@@ -26,10 +26,11 @@ export class CardNavigationComponent {
 
   public active = '';
 
-  public onPickTab(code: string) {
-    this.pickTab.emit(code);
-
-    this.active = code;
+  public onPickTab(tab: CardTab) {
+    if (!tab.disabled) {
+      this.active = tab.code;
+      this.pickTab.emit(tab.code);
+    }
   }
 
 }
