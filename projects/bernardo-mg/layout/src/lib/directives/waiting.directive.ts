@@ -13,17 +13,17 @@ export class WaitingDirective {
 
   private readonly renderer = inject(Renderer2);
 
-  @Input() set layoutWaiting(value: boolean) {
-    this.update();
+  @Input() set layoutWaiting(waiting: boolean) {
+    this.update(waiting);
   }
 
   private spinner?: HTMLElement;
   private originalContent?: string;
 
-  private update() {
+  private update(waiting: boolean) {
     const element = this.el.nativeElement;
 
-    if (this.layoutWaiting) {
+    if (waiting) {
       // Only create spinner if it doesn't already exist
       if (!this.spinner) {
         this.spinner = this.renderer.createElement('span');
