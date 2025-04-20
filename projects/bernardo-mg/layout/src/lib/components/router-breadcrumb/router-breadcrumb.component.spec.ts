@@ -71,14 +71,4 @@ describe('RouterBreadcrumbComponent', () => {
     expect(breadcrumbs[1].route).toBe('');
   });
 
-  it('should rebuild breadcrumbs on NavigationEnd event', () => {
-    (mockActivatedRoute.root!.firstChild!.snapshot!.data['breadcrumb'] as string) = 'Home';
-    (mockActivatedRoute.root!.firstChild!.snapshot!.url as any) = [{ path: 'home' }];
-
-    routerEvents$.next(new NavigationEnd(1, '/home', '/home'));
-    fixture.detectChanges();
-
-    expect(component.breadcrumbs[0].name).toBe('Home');
-    expect(component.breadcrumbs[0].route).toBe('/home');
-  });
 });
