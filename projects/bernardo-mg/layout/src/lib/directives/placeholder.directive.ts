@@ -1,5 +1,8 @@
 import { Directive, Input, Renderer2, OnChanges, ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
 
+/**
+ * Directive to show a placeholder for an input. Used while waiting.
+ */
 @Directive({
   selector: '[layoutPlaceholder]',
   standalone: true

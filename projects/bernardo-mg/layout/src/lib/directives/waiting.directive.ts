@@ -1,5 +1,8 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
+/**
+ * Directive to show a waiting prompt. Used while waiting.
+ */
 @Directive({
   selector: '[layoutWaiting]',
   standalone: true,

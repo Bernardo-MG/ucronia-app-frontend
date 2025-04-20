@@ -1,5 +1,8 @@
 import { AfterViewInit, Directive, EmbeddedViewRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
+/**
+ * Directive to block the UI, to avoid interaction. Used while waiting.
+ */
 @Directive({
   selector: '[layoutBlockUi]',
   standalone: true
