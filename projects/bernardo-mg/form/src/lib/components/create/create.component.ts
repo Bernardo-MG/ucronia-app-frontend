@@ -10,8 +10,6 @@ export abstract class CreateComponent<Data> {
 
   public failures = new FailureStore();
 
-  constructor() { }
-
   public onSave(data: Data): void {
     this.saving = true;
     this.save(data).subscribe({
