@@ -12,50 +12,49 @@ export class WaitingDirective implements AfterViewInit, OnChanges {
   @Input() layoutWaiting = false;
 
   private spinner?: HTMLElement;
-
   private originalContent?: string;
 
   constructor(
-    private el: ElementRef<HTMLButtonElement>,
+    private el: ElementRef<HTMLElement>,
     private renderer: Renderer2
   ) { }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.update();
   }
 
-  ngOnChanges() {
+  public ngOnChanges() {
     this.update();
   }
 
   private update() {
-    const button = this.el.nativeElement;
-    if (!(button instanceof HTMLButtonElement)) {
-      console.warn('layoutWaiting should be used on a <button>.');
-      return;
-    }
+    const element = this.el.nativeElement;
 
     if (this.layoutWaiting) {
+      // Only create spinner if it doesn't already exist
       if (!this.spinner) {
         this.spinner = this.renderer.createElement('span');
         ['spinner-border', 'spinner-border-sm'].forEach(c => this.renderer.addClass(this.spinner!, c));
       }
 
+      // Save original content if not already done
       if (!this.originalContent) {
-        this.originalContent = button.innerHTML;
+        this.originalContent = element.innerHTML;
       }
 
-      button.innerHTML = '';
-      this.renderer.appendChild(button, this.spinner);
-      this.renderer.setAttribute(button, 'aria-busy', 'true');
+      // Clear content and show spinner
+      element.innerHTML = '';
+      this.renderer.appendChild(element, this.spinner);
+      this.renderer.setAttribute(element, 'aria-busy', 'true');
     } else {
+      // Restore original content when not in waiting state
       if (this.originalContent !== undefined) {
-        button.innerHTML = this.originalContent;
+        element.innerHTML = this.originalContent;
         this.originalContent = undefined;
       }
 
-      this.renderer.removeAttribute(button, 'aria-busy');
+      // Remove aria-busy attribute
+      this.renderer.removeAttribute(element, 'aria-busy');
     }
   }
-
 }

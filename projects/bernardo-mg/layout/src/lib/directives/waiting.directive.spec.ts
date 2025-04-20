@@ -3,11 +3,11 @@ import { WaitingDirective } from './waiting.directive';
 
 describe('WaitingDirective', () => {
   let directive: WaitingDirective;
-  let button: HTMLButtonElement;
+  let element: HTMLElement;
   let renderer: Renderer2;
 
   beforeEach(() => {
-    button = document.createElement('button');
+    element = document.createElement('div');  // Use a generic element, not just button
     // We use a real-ish Renderer2 fallback — won't spy anymore
     renderer = {
       createElement: (name: string) => document.createElement(name),
@@ -18,7 +18,7 @@ describe('WaitingDirective', () => {
       removeAttribute: (el: any, attr: string) => el.removeAttribute(attr),
     } as Renderer2;
 
-    directive = new WaitingDirective(new ElementRef(button), renderer);
+    directive = new WaitingDirective(new ElementRef(element), renderer);
   });
 
   it('should create an instance', () => {
@@ -26,27 +26,59 @@ describe('WaitingDirective', () => {
   });
 
   it('should add spinner and hide content when layoutWaiting is true', () => {
-    button.innerHTML = 'Text';
+    element.innerHTML = 'Some content';
     directive.layoutWaiting = true;
 
     directive.ngAfterViewInit();
 
-    expect(button.querySelector('span.spinner-border')).not.toBeNull();
-    // Only spinner inside
-    expect(button.textContent?.trim()).toBe('');
-    expect(button.getAttribute('aria-busy')).toBe('true');
+    // Check that spinner was added
+    expect(element.querySelector('span.spinner-border')).not.toBeNull();
+    // Check that the content is cleared
+    expect(element.textContent?.trim()).toBe('');
+    // Check that aria-busy attribute was set
+    expect(element.getAttribute('aria-busy')).toBe('true');
   });
 
   it('should restore original content when layoutWaiting becomes false', () => {
-    button.innerHTML = 'Text';
+    element.innerHTML = 'Some content';
     directive.layoutWaiting = true;
     directive.ngAfterViewInit();
 
+    // Change the state to false
     directive.layoutWaiting = false;
     directive.ngOnChanges();
 
-    expect(button.querySelector('span.spinner-border')).toBeNull();
-    expect(button.textContent?.trim()).toBe('Text');
-    expect(button.hasAttribute('aria-busy')).toBeFalse();
+    // Ensure the spinner is removed
+    expect(element.querySelector('span.spinner-border')).toBeNull();
+    // Ensure the original content is restored
+    expect(element.textContent?.trim()).toBe('Some content');
+    // Ensure aria-busy attribute is removed
+    expect(element.hasAttribute('aria-busy')).toBeFalse();
+  });
+
+  it('should work with any HTML element, not just button', () => {
+    // Test with a generic element
+    element = document.createElement('div');
+    directive = new WaitingDirective(new ElementRef(element), renderer);
+
+    element.innerHTML = 'Test content';
+    directive.layoutWaiting = true;
+
+    directive.ngAfterViewInit();
+
+    // Check spinner is added
+    expect(element.querySelector('span.spinner-border')).not.toBeNull();
+    // Ensure original content is cleared
+    expect(element.textContent?.trim()).toBe('');
+    expect(element.getAttribute('aria-busy')).toBe('true');
+
+    // Change state back
+    directive.layoutWaiting = false;
+    directive.ngOnChanges();
+
+    // Check spinner is removed and original content is restored
+    expect(element.querySelector('span.spinner-border')).toBeNull();
+    expect(element.textContent?.trim()).toBe('Test content');
+    expect(element.hasAttribute('aria-busy')).toBeFalse();
   });
 });
