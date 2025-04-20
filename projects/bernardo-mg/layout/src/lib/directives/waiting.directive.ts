@@ -1,58 +1,53 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
 
+/**
+ * Directive to show a waiting prompt. Used while waiting.
+ */
 @Directive({
   selector: '[layoutWaiting]',
   standalone: true,
 })
-export class WaitingDirective implements AfterViewInit, OnChanges {
+export class WaitingDirective {
 
-  @Input() layoutWaiting = false;
+  private readonly el = inject(ElementRef);
+
+  private readonly renderer = inject(Renderer2);
+
+  @Input() set layoutWaiting(waiting: boolean) {
+    this.update(waiting);
+  }
 
   private spinner?: HTMLElement;
-
   private originalContent?: string;
 
-  constructor(
-    private el: ElementRef<HTMLButtonElement>,
-    private renderer: Renderer2
-  ) { }
+  private update(waiting: boolean) {
+    const element = this.el.nativeElement;
 
-  ngAfterViewInit() {
-    this.update();
-  }
-
-  ngOnChanges() {
-    this.update();
-  }
-
-  private update() {
-    const button = this.el.nativeElement;
-    if (!(button instanceof HTMLButtonElement)) {
-      console.warn('layoutWaiting should be used on a <button>.');
-      return;
-    }
-
-    if (this.layoutWaiting) {
+    if (waiting) {
+      // Only create spinner if it doesn't already exist
       if (!this.spinner) {
         this.spinner = this.renderer.createElement('span');
         ['spinner-border', 'spinner-border-sm'].forEach(c => this.renderer.addClass(this.spinner!, c));
       }
 
+      // Save original content if not already done
       if (!this.originalContent) {
-        this.originalContent = button.innerHTML;
+        this.originalContent = element.innerHTML;
       }
 
-      button.innerHTML = '';
-      this.renderer.appendChild(button, this.spinner);
-      this.renderer.setAttribute(button, 'aria-busy', 'true');
+      // Clear content and show spinner
+      element.innerHTML = '';
+      this.renderer.appendChild(element, this.spinner);
+      this.renderer.setAttribute(element, 'aria-busy', 'true');
     } else {
+      // Restore original content when not in waiting state
       if (this.originalContent !== undefined) {
-        button.innerHTML = this.originalContent;
+        element.innerHTML = this.originalContent;
         this.originalContent = undefined;
       }
 
-      this.renderer.removeAttribute(button, 'aria-busy');
+      // Remove aria-busy attribute
+      this.renderer.removeAttribute(element, 'aria-busy');
     }
   }
-
 }

@@ -1,12 +1,9 @@
+
 export class CardTab {
+  public disabled = false;
 
-  constructor(code: string, name: string) {
-    this.code = code;
-    this.name = name;
-  }
-
-  code: string;
-  name: string;
-  disabled = false;
-
+  constructor(
+    public code: string,
+    public name: string
+  ) { }
 }

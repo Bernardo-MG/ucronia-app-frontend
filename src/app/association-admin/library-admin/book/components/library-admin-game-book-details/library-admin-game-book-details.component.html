@@ -2,7 +2,7 @@
   <layout-card-header>
     <h2 *layoutPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</h2>
     <!-- Tabs -->
-    <layout-card-navigation [tabs]="tabs" [active]="view" (pickTab)="onChangeView($event)"></layout-card-navigation>
+    <layout-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></layout-card-navigation>
   </layout-card-header>
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">

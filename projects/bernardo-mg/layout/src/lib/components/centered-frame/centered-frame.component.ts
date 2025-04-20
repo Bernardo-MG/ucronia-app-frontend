@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ResponsiveShortColumnsDirective } from '../../directives/responsive-columns.directive';
 
+/**
+ * Frame with the content centered.
+ */
 @Component({
   selector: 'layout-centered-frame',
   imports: [RouterModule, ResponsiveShortColumnsDirective],
