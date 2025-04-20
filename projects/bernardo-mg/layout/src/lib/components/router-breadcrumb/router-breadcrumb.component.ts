@@ -4,6 +4,9 @@ import { filter } from 'rxjs';
 import { BreadcrumbLink } from '../../models/breadcrumb-link';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
+/**
+ * Breadcrumb which takes info from the router.
+ */
 @Component({
   selector: 'layout-router-breadcrumb',
   imports: [BreadcrumbComponent],

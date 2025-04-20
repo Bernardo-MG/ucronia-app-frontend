@@ -1,5 +1,5 @@
 
-export class BreadcrumbLink {
+export class CardTab {
   public disabled = false;
 
   constructor(

@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+/**
+ * Modal component. To be shown should be activated outside.
+ */
 @Component({
   selector: 'layout-modal',
   imports: [CommonModule],

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+/**
+ * Card footer wrapper.
+ */
 @Component({
 	selector: 'layout-card-footer',
 	templateUrl: './card-footer.component.html'

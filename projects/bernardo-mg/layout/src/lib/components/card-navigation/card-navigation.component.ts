@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTab } from '../../models/card-tab';
 
+/**
+ * Card navigation, sets up tabs and handles status. This includes active tab, and disabled tabs.
+ */
 @Component({
   selector: 'layout-card-navigation',
   imports: [CommonModule],
