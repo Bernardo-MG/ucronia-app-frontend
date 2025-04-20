@@ -1,4 +1,5 @@
 import { EmbeddedViewRef, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { BlockUiDirective } from './block-ui.directive';
 
 describe('BlockUiDirective', () => {
@@ -10,12 +11,12 @@ describe('BlockUiDirective', () => {
   let embeddedViewRefMock: jasmine.SpyObj<EmbeddedViewRef<any>>;
 
   beforeEach(() => {
-    // Creating mocks
+    // Create mocks for the dependencies
     templateRefMock = jasmine.createSpyObj('TemplateRef', ['elementRef']);
     viewContainerRefMock = jasmine.createSpyObj('ViewContainerRef', ['createEmbeddedView', 'clear']);
     rendererMock = jasmine.createSpyObj('Renderer2', ['createElement', 'setStyle', 'appendChild', 'removeChild']);
 
-    // Create the DOM elements
+    // Create the DOM element to be used in the tests
     nativeElement = document.createElement('div');
 
     // Mock createElement to return a new div element
@@ -27,11 +28,18 @@ describe('BlockUiDirective', () => {
     // Mock the ViewContainerRef to return the EmbeddedViewRef mock
     viewContainerRefMock.createEmbeddedView.and.returnValue(embeddedViewRefMock);
 
-    // Initialize the directive with the mocked services
-    directive = new BlockUiDirective();
-    directive['templateRef'] = templateRefMock;
-    directive['viewContainer'] = viewContainerRefMock;
-    directive['renderer'] = rendererMock;
+    // Configure the TestBed to provide mocks via DI and declare the directive
+    TestBed.configureTestingModule({
+      providers: [
+        BlockUiDirective,
+        { provide: TemplateRef, useValue: templateRefMock },
+        { provide: ViewContainerRef, useValue: viewContainerRefMock },
+        { provide: Renderer2, useValue: rendererMock }
+      ]
+    });
+
+    // Initialize the directive and inject the mocks via DI
+    directive = TestBed.inject(BlockUiDirective);
   });
 
   it('should create an instance', () => {

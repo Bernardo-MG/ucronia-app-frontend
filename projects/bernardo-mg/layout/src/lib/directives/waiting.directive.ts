@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
 
 /**
  * Directive to show a waiting prompt. Used while waiting.
@@ -9,17 +9,16 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 })
 export class WaitingDirective {
 
+  private readonly el = inject(ElementRef);
+
+  private readonly renderer = inject(Renderer2);
+
   @Input() set layoutWaiting(value: boolean) {
     this.update();
   }
 
   private spinner?: HTMLElement;
   private originalContent?: string;
-
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2
-  ) { }
 
   private update() {
     const element = this.el.nativeElement;

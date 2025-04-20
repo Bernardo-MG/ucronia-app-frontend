@@ -1,5 +1,6 @@
 import { Renderer2, TemplateRef, ViewContainerRef, EmbeddedViewRef } from '@angular/core';
 import { PlaceholderDirective } from './placeholder.directive';
+import { TestBed } from '@angular/core/testing';
 
 describe('PlaceholderDirective', () => {
   let directive: PlaceholderDirective;
@@ -17,7 +18,7 @@ describe('PlaceholderDirective', () => {
 
     // Mock the EmbeddedViewRef to simulate rootNodes
     embeddedViewMock = jasmine.createSpyObj('EmbeddedViewRef', ['rootNodes']);
-    
+
     // Mock rootNodes as an array containing a div element
     const mockRootNode = document.createElement('div');
     Object.defineProperty(embeddedViewMock, 'rootNodes', {
@@ -28,8 +29,18 @@ describe('PlaceholderDirective', () => {
     placeholderDiv = document.createElement('div');
     rendererMock.createElement.and.returnValue(placeholderDiv);
 
-    // Set up the directive with mocked dependencies
-    directive = new PlaceholderDirective(rendererMock, viewContainerRefMock, templateRefMock);
+    // Configure the TestBed to provide mocks via DI and declare the directive
+    TestBed.configureTestingModule({
+      providers: [
+        PlaceholderDirective,
+        { provide: TemplateRef, useValue: templateRefMock },
+        { provide: ViewContainerRef, useValue: viewContainerRefMock },
+        { provide: Renderer2, useValue: rendererMock }
+      ]
+    });
+
+    // Initialize the directive and inject the mocks via DI
+    directive = TestBed.inject(PlaceholderDirective);
   });
 
   it('should create an instance', () => {

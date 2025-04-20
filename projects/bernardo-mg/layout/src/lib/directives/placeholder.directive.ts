@@ -1,4 +1,4 @@
-import { Directive, EmbeddedViewRef, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, EmbeddedViewRef, inject, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 /**
  * Directive to show a placeholder for an input. Used while waiting.
@@ -8,6 +8,12 @@ import { Directive, EmbeddedViewRef, Input, Renderer2, TemplateRef, ViewContaine
   standalone: true
 })
 export class PlaceholderDirective {
+
+  private readonly templateRef = inject(TemplateRef);
+
+  private readonly viewContainer = inject(ViewContainerRef);
+
+  private readonly renderer = inject(Renderer2);
 
   @Input() set layoutPlaceholder(value: boolean) {
     if (value) {
@@ -19,12 +25,6 @@ export class PlaceholderDirective {
 
   private placeholderElement: HTMLElement | null = null;
   private embeddedView: EmbeddedViewRef<any> | null = null;
-
-  constructor(
-    private renderer: Renderer2,
-    private viewContainer: ViewContainerRef,
-    private templateRef: TemplateRef<any>
-  ) { }
 
   private showPlaceholderInContent() {
     // Clear any previous content
