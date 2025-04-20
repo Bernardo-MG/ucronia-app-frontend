@@ -5,6 +5,6 @@ export class MenuLink {
   constructor(
     public title: string,
     public path: string,
-    public icon?: string
+    public icon?: any
   ) { }
 }
