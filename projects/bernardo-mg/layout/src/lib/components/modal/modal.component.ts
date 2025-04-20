@@ -14,6 +14,6 @@ export class ModalComponent {
 
   @Input() public name = 'modal';
 
-  @Output() public accept = new EventEmitter<void>();
+  @Output() public readonly accept = new EventEmitter<void>();
 
 }

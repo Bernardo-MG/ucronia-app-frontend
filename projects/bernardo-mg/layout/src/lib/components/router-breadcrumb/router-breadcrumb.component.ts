@@ -39,7 +39,9 @@ export class RouterBreadcrumbComponent {
         // Process each level of the route tree
         // Build the relative URL for the current route
         const routeURL = currentRoute.snapshot.url.map((segment) => segment.path).join('/');
-        url += `/${routeURL}`;
+        if (routeURL) {
+          url += `/${routeURL}`;
+        }
 
         // Add breadcrumb if the route has 'breadcrumb' data
         if (currentRoute.snapshot.data['breadcrumb']) {
