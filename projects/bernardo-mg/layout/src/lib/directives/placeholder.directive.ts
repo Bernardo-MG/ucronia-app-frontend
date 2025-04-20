@@ -1,4 +1,4 @@
-import { Directive, Input, Renderer2, OnChanges, ViewContainerRef, TemplateRef, EmbeddedViewRef } from '@angular/core';
+import { Directive, EmbeddedViewRef, Input, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 /**
  * Directive to show a placeholder for an input. Used while waiting.
@@ -7,9 +7,15 @@ import { Directive, Input, Renderer2, OnChanges, ViewContainerRef, TemplateRef, 
   selector: '[layoutPlaceholder]',
   standalone: true
 })
-export class PlaceholderDirective implements OnChanges {
+export class PlaceholderDirective {
 
-  @Input() layoutPlaceholder!: boolean;
+  @Input() set layoutPlaceholder(value: boolean) {
+    if (value) {
+      this.showPlaceholderInContent();
+    } else {
+      this.showContentWithoutPlaceholder();
+    }
+  }
 
   private placeholderElement: HTMLElement | null = null;
   private embeddedView: EmbeddedViewRef<any> | null = null;
@@ -19,14 +25,6 @@ export class PlaceholderDirective implements OnChanges {
     private viewContainer: ViewContainerRef,
     private templateRef: TemplateRef<any>
   ) { }
-
-  public ngOnChanges() {
-    if (this.layoutPlaceholder) {
-      this.showPlaceholderInContent();
-    } else {
-      this.showContentWithoutPlaceholder();
-    }
-  }
 
   private showPlaceholderInContent() {
     // Clear any previous content

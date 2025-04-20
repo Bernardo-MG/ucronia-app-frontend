@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 /**
  * Directive to show a waiting prompt. Used while waiting.
@@ -7,9 +7,11 @@ import { AfterViewInit, Directive, ElementRef, Input, OnChanges, Renderer2 } fro
   selector: '[layoutWaiting]',
   standalone: true,
 })
-export class WaitingDirective implements AfterViewInit, OnChanges {
+export class WaitingDirective {
 
-  @Input() layoutWaiting = false;
+  @Input() set layoutWaiting(value: boolean) {
+    this.update();
+  }
 
   private spinner?: HTMLElement;
   private originalContent?: string;
@@ -18,14 +20,6 @@ export class WaitingDirective implements AfterViewInit, OnChanges {
     private el: ElementRef<HTMLElement>,
     private renderer: Renderer2
   ) { }
-
-  public ngAfterViewInit() {
-    this.update();
-  }
-
-  public ngOnChanges() {
-    this.update();
-  }
 
   private update() {
     const element = this.el.nativeElement;

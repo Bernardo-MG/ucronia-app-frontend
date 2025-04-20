@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, EmbeddedViewRef, Input, OnChanges, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, EmbeddedViewRef, inject, Input, OnDestroy, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 
 /**
  * Directive to block the UI, to avoid interaction. Used while waiting.
@@ -7,29 +7,23 @@ import { AfterViewInit, Directive, EmbeddedViewRef, Input, OnChanges, OnDestroy,
   selector: '[layoutBlockUi]',
   standalone: true
 })
-export class BlockUiDirective implements OnChanges, AfterViewInit, OnDestroy {
+export class BlockUiDirective implements OnDestroy {
 
-  @Input() layoutBlockUi!: boolean;
+  private readonly templateRef = inject(TemplateRef);
+
+  private readonly viewContainer = inject(ViewContainerRef);
+
+  private readonly renderer = inject(Renderer2);
 
   private overlayElement: HTMLElement | null = null;
+
   private embeddedView: EmbeddedViewRef<any> | null = null;
 
-  constructor(
-    private templateRef: TemplateRef<any>,
-    private viewContainer: ViewContainerRef,
-    private renderer: Renderer2
-  ) { }
-
-  public ngAfterViewInit() {
+  @Input() set layoutBlockUi(value: boolean) {
+    // Initialize the view once when the input is set for the first time
     this.initView();
-    if (this.layoutBlockUi) {
-      this.showOverlay();
-    }
-  }
 
-  public ngOnChanges() {
-    this.initView();
-    if (this.layoutBlockUi) {
+    if (value) {
       this.showOverlay();
     } else {
       this.hideOverlay();
