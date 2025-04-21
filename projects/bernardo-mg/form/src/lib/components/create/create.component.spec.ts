@@ -37,11 +37,11 @@ describe('CreateComponent', () => {
 
   it('should set failures on FailureResponse error', () => {
     const failureStore = new FailureStore({
-      'field': [{ 'message': 'Something went wrong' }]
+      'field': [{ message: 'Something went wrong' }]
     });
 
     const error = new FailureResponse({
-      'field': [{ 'message': 'Something went wrong' }]
+      'field': [{ message: 'Something went wrong' }]
     });
     component = new TestComponent(() => throwError(() => error));
 
@@ -54,7 +54,7 @@ describe('CreateComponent', () => {
   it('should clear failures on unknown error', () => {
     const error = new Error('Unknown error');
     component.failures = new FailureStore({
-      'test': [{ 'message': 'Existing failure' }]
+      'test': [{ message: 'Existing failure' }]
     });
 
     component = new TestComponent(() => throwError(() => error));
