@@ -3,6 +3,6 @@
  */
 export interface ParamLoader {
 
-    load(setParameter: (name: string, value: string | number | boolean | undefined) => void): void;
+  load(setParameter: (name: string, value: string | number | boolean | undefined) => void): void;
 
 }

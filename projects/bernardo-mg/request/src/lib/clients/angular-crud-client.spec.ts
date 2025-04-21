@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
@@ -137,7 +137,7 @@ describe('AngularCrudClient', () => {
         callback('key2', 'value2');
       },
     };
-    
+
     const newClient = client.loadParameters(paramLoader);
     expect(newClient['options'].params?.toString()).toBe('key1=value1&key2=value2');
   });
@@ -148,7 +148,7 @@ describe('AngularCrudClient', () => {
         callback('key1', undefined);
       },
     };
-    
+
     const newClient = client.loadParameters(paramLoader);
     expect(newClient['options'].params?.toString()).toBe('');
   });

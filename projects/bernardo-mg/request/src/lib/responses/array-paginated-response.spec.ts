@@ -81,7 +81,7 @@ describe('ArrayPaginatedResponse', () => {
   });
 
   // Empty data
-  
+
   it('should set the content when loading empty data', () => {
     const data: string[] = [];
     const response = new ArrayPaginatedResponse<string>(data, 1, 0);
