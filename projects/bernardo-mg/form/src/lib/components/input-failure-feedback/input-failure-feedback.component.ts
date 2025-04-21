@@ -13,7 +13,7 @@ export class InputFailureFeedbackComponent implements AfterViewInit {
 
   constructor(private el: ElementRef) { }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     // get the element's parent node
     const parent = this.el.nativeElement.parentNode;
 
