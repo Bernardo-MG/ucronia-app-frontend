@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { SimpleLayoutContainer } from './simple-layout.container';
+import { SimpleLayoutComponent } from './simple-layout.component';
 
-describe('SimpleLayoutContainer', () => {
-  let component: SimpleLayoutContainer;
-  let fixture: ComponentFixture<SimpleLayoutContainer>;
+describe('SimpleLayoutComponent', () => {
+  let component: SimpleLayoutComponent;
+  let fixture: ComponentFixture<SimpleLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        SimpleLayoutContainer
+        SimpleLayoutComponent
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
@@ -21,7 +21,7 @@ describe('SimpleLayoutContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SimpleLayoutContainer);
+    fixture = TestBed.createComponent(SimpleLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

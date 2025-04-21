@@ -7,9 +7,9 @@ import { JustifyCenterDirective } from '@bernardo-mg/layout';
 @Component({
   selector: 'layout-account-dropdown',
   imports: [RouterModule, IconAccountComponent, IconSettingsComponent, IconLogoutComponent, JustifyCenterDirective],
-  templateUrl: './account-dropdown.component.html'
+  templateUrl: './account-dropdown.container.html'
 })
-export class AccountDropdownComponent {
+export class AccountDropdownContainer {
 
   private readonly router = inject(Router);
 

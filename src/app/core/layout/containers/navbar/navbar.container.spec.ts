@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { NavbarComponent } from './navbar.component';
+import { NavbarContainer } from './navbar.container';
 
-describe('NavbarComponent', () => {
-  let component: NavbarComponent;
-  let fixture: ComponentFixture<NavbarComponent>;
+describe('NavbarContainer', () => {
+  let component: NavbarContainer;
+  let fixture: ComponentFixture<NavbarContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        NavbarComponent
+        NavbarContainer
       ],
       providers: [
         provideRouter([])
@@ -18,7 +18,7 @@ describe('NavbarComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
+    fixture = TestBed.createComponent(NavbarContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

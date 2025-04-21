@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoggedInGuard, LoggedOutGuard, ResourceGuard } from '@bernardo-mg/authentication';
-import { SimpleLayoutContainer } from './core/layout/containers/simple-layout/simple-layout.container';
+import { SimpleLayoutComponent } from './core/layout/components/simple-layout/simple-layout.component';
 
 const frontpageModule = () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule);
 const associationModule = () => import('@app/association/association.module').then(m => m.AssociationModule);
@@ -21,27 +21,27 @@ export const routes: Routes = [
       {
         // Logged out
         path: '',
-        component: SimpleLayoutContainer,
+        component: SimpleLayoutComponent,
         loadChildren: frontpageModule
       },
       {
         // Log in form
         path: 'login',
-        component: SimpleLayoutContainer,
+        component: SimpleLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: loginModule
       },
       {
         // Password reset form
         path: 'password/reset',
-        component: SimpleLayoutContainer,
+        component: SimpleLayoutComponent,
         canActivate: [LoggedOutGuard],
         loadChildren: resetPasswordModule
       },
       {
         // Activate user form
         path: 'users/activate',
-        component: SimpleLayoutContainer,
+        component: SimpleLayoutComponent,
         loadChildren: activateUserModule,
         canActivate: [LoggedOutGuard]
       },

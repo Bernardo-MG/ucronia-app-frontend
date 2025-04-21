@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
+import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { AssociationLayoutService } from '@app/core/layout/services/association-layout.service';
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
   selector: 'layout-association-layout',
-  imports: [RouterModule, SidebarLayoutContainer],
+  imports: [RouterModule, SidebarLayoutComponent],
   templateUrl: './association-layout.container.html'
 })
 export class AssociationLayoutContainer {

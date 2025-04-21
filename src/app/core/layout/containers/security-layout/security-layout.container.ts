@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
+import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { SecurityLayoutService } from '@app/core/layout/services/security-layout.service';
 import { Menu } from '@bernardo-mg/layout';
 
 @Component({
   selector: 'layout-security-layout',
-  imports: [RouterModule, SidebarLayoutContainer],
+  imports: [RouterModule, SidebarLayoutComponent],
   templateUrl: './security-layout.container.html'
 })
 export class SecurityLayoutContainer {

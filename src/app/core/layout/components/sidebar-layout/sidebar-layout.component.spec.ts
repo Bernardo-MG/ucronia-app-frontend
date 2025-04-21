@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { SidebarLayoutContainer } from './sidebar-layout.container';
+import { SidebarLayoutComponent } from './sidebar-layout.component';
 
-describe('SidebarLayoutContainer', () => {
-  let component: SidebarLayoutContainer;
-  let fixture: ComponentFixture<SidebarLayoutContainer>;
+describe('SidebarLayoutComponent', () => {
+  let component: SidebarLayoutComponent;
+  let fixture: ComponentFixture<SidebarLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        SidebarLayoutContainer
+        SidebarLayoutComponent
       ],
       providers: [
         provideRouter([])
@@ -17,7 +17,7 @@ describe('SidebarLayoutContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SidebarLayoutContainer);
+    fixture = TestBed.createComponent(SidebarLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
