@@ -1,7 +1,7 @@
 <!-- Buttons -->
 <div layoutJustifyBetween>
   <div class="btn-group me-2" role="group">
-    <button type="button" (click)="onStartEditing()" class="btn btn-link link-dark" [disabled]="editableDisabled"
+    <button type="button" (click)="startEditing.emit()" class="btn btn-link link-dark" [disabled]="editableDisabled"
       aria-label="Edit">
       <icon-edit></icon-edit>
     </button>
