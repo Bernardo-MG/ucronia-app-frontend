@@ -1,3 +1,5 @@
 export class Id {
-  public id = -1;
+  constructor(
+    public id: number
+  ) {}
 }
