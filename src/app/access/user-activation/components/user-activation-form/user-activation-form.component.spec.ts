@@ -26,114 +26,114 @@ describe('UserActivationFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // **************************************************************************
-  // Submit button
-  // **************************************************************************
+  describe('submit button', () => {
 
-  it('should disable the submit button by default', () => {
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(true);
+    it('should disable the submit button by default', () => {
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(true);
+    });
+
+    it('should enable the login button when the passwords match', () => {
+      component.form.controls['password'].setValue('password');
+      component.form.controls['confirmPassword'].setValue('password');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(false);
+    });
+
+    it('should disable the login button when the passwords do not match', () => {
+      component.form.controls['password'].setValue('abc');
+      component.form.controls['confirmPassword'].setValue('password');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(true);
+    });
+
+    it('should disable the login button when the first password is empty', () => {
+      component.form.controls['password'].setValue('');
+      component.form.controls['confirmPassword'].setValue('password');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(true);
+    });
+
+    it('should disable the login button when the second password is empty', () => {
+      component.form.controls['password'].setValue('password');
+      component.form.controls['confirmPassword'].setValue('');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(true);
+    });
+
+    it('should disable the login button when both passwords are empty', () => {
+      component.form.controls['password'].setValue('');
+      component.form.controls['confirmPassword'].setValue('');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('form button');
+      expect(button.disabled).toEqual(true);
+    });
+
   });
 
-  it('should enable the login button when the passwords match', () => {
-    component.form.controls['password'].setValue('password');
-    component.form.controls['confirmPassword'].setValue('password');
-    fixture.detectChanges();
+  describe('password mismatch warning', () => {
 
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(false);
-  });
+    it('should hide the password mismatch warning by default', () => {
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-  it('should disable the login button when the passwords do not match', () => {
-    component.form.controls['password'].setValue('abc');
-    component.form.controls['confirmPassword'].setValue('password');
-    fixture.detectChanges();
+      expect(warning).toBeNull();
+    });
 
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(true);
-  });
+    it('should hide the password mismatch warning when the passwords match', () => {
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-  it('should disable the login button when the first password is empty', () => {
-    component.form.controls['password'].setValue('');
-    component.form.controls['confirmPassword'].setValue('password');
-    fixture.detectChanges();
+      expect(warning).toBeNull();
+    });
 
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(true);
-  });
+    it('should show the password mismatch warning when the passwords do not match', () => {
+      component.form.controls['password'].setValue('abc');
+      component.form.controls['confirmPassword'].setValue('password');
+      fixture.detectChanges();
 
-  it('should disable the login button when the second password is empty', () => {
-    component.form.controls['password'].setValue('password');
-    component.form.controls['confirmPassword'].setValue('');
-    fixture.detectChanges();
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(true);
-  });
+      expect(warning).not.toBeNull();
+    });
 
-  it('should disable the login button when both passwords are empty', () => {
-    component.form.controls['password'].setValue('');
-    component.form.controls['confirmPassword'].setValue('');
-    fixture.detectChanges();
+    it('should hide the password mismatch warning when the first password is empty', () => {
+      component.form.controls['password'].setValue('');
+      component.form.controls['confirmPassword'].setValue('password');
+      fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('form button');
-    expect(button.disabled).toEqual(true);
-  });
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-  // **************************************************************************
-  // Password mismatch warning
-  // **************************************************************************
+      expect(warning).toBeNull();
+    });
 
-  it('should hide the password mismatch warning by default', () => {
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
+    it('should hide the password mismatch warning when the second password is empty', () => {
+      component.form.controls['password'].setValue('password');
+      component.form.controls['confirmPassword'].setValue('');
+      fixture.detectChanges();
 
-    expect(warning).toBeNull();
-  });
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-  it('should hide the password mismatch warning when the passwords match', () => {
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
+      expect(warning).toBeNull();
+    });
 
-    expect(warning).toBeNull();
-  });
+    it('should hide the password mismatch warning when both passwords are empty', () => {
+      component.form.controls['password'].setValue('');
+      component.form.controls['confirmPassword'].setValue('');
+      fixture.detectChanges();
 
-  it('should show the password mismatch warning when the passwords do not match', () => {
-    component.form.controls['password'].setValue('abc');
-    component.form.controls['confirmPassword'].setValue('password');
-    fixture.detectChanges();
+      const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
 
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
+      expect(warning).toBeNull();
+    });
 
-    expect(warning).not.toBeNull();
-  });
-
-  it('should hide the password mismatch warning when the first password is empty', () => {
-    component.form.controls['password'].setValue('');
-    component.form.controls['confirmPassword'].setValue('password');
-    fixture.detectChanges();
-
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
-
-    expect(warning).toBeNull();
-  });
-
-  it('should hide the password mismatch warning when the second password is empty', () => {
-    component.form.controls['password'].setValue('password');
-    component.form.controls['confirmPassword'].setValue('');
-    fixture.detectChanges();
-
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
-
-    expect(warning).toBeNull();
-  });
-
-  it('should hide the password mismatch warning when both passwords are empty', () => {
-    component.form.controls['password'].setValue('');
-    component.form.controls['confirmPassword'].setValue('');
-    fixture.detectChanges();
-
-    const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
-
-    expect(warning).toBeNull();
   });
 
 });

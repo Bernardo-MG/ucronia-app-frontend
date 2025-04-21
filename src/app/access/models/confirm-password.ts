@@ -1,5 +1,7 @@
 
 export class ConfirmPassword {
-  password = '';
-  confirmPassword = '';
+  constructor(
+    public password = '',
+    public confirmPassword = ''
+  ) { }
 }
