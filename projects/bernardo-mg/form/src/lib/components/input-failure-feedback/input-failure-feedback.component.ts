@@ -3,9 +3,9 @@ import { AfterViewInit, Component, ElementRef, Input } from '@angular/core';
 import { FieldFailure } from '@bernardo-mg/request';
 
 @Component({
-    selector: 'form-input-failure-feedback',
-    imports: [CommonModule],
-    templateUrl: './input-failure-feedback.component.html'
+  selector: 'form-input-failure-feedback',
+  imports: [CommonModule],
+  templateUrl: './input-failure-feedback.component.html'
 })
 export class InputFailureFeedbackComponent implements AfterViewInit {
 
@@ -13,7 +13,7 @@ export class InputFailureFeedbackComponent implements AfterViewInit {
 
   constructor(private el: ElementRef) { }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     // get the element's parent node
     const parent = this.el.nativeElement.parentNode;
 

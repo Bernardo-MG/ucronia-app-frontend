@@ -3,7 +3,7 @@ import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Directive({
-    selector: '[formInvalidField]'
+  selector: '[formInvalidField]'
 })
 export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 
@@ -30,8 +30,8 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['formInvalidField'] || changes['backendFailure']) {
+  public ngOnChanges({ formInvalidField, backendFailure }: SimpleChanges): void {
+    if (formInvalidField || backendFailure) {
       this.updateFieldClass();
     }
   }
@@ -78,4 +78,5 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
 
     return formControl;
   }
+
 }
