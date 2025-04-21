@@ -1,6 +1,6 @@
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
-import { CreateComponent } from './create.component'; // Adjust the path if needed
+import { CreateComponent } from './create.component';
 
 class TestComponent extends CreateComponent<string> {
   public savedData: string | null = null;

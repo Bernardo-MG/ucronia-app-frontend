@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-    selector: 'form-paged-selector',
-    templateUrl: './paged-selector.component.html'
+  selector: 'form-paged-selector',
+  templateUrl: './paged-selector.component.html'
 })
 export abstract class PagedSelectorComponent<Data> {
 

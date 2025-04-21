@@ -1,5 +1,5 @@
-import { of, throwError } from 'rxjs';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { of, throwError } from 'rxjs';
 import { InfoEditorStatusComponent } from './info-editor-status.component';
 
 class TestInfoEditorStatusComponent extends InfoEditorStatusComponent<any> {
