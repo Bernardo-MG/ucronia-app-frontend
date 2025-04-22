@@ -8,7 +8,7 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
  * Breadcrumb which takes info from the router.
  */
 @Component({
-  selector: 'layout-router-breadcrumb',
+  selector: 'ui-router-breadcrumb',
   imports: [BreadcrumbComponent],
   templateUrl: './router-breadcrumb.component.html'
 })
