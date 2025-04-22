@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { ArticleComponent } from '@bernardo-mg/layout';
+import { ArticleComponent } from '@bernardo-mg/ui';
 
 @Component({
     selector: 'app-frontpage-frontpage',

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
 import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-fee-calendar',

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AccountLayoutService } from '@app/account/services/account-layout.service';
-import { SidebarLayoutContainer } from '@app/core/layout/containers/sidebar-layout/sidebar-layout.container';
-import { Menu } from '@bernardo-mg/layout';
+import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
+import { Menu } from '@bernardo-mg/ui';
 
 @Component({
     selector: 'account-layout',
-    imports: [RouterModule, SidebarLayoutContainer],
+    imports: [RouterModule, SidebarLayoutComponent],
     templateUrl: './account-layout.container.html'
 })
 export class AccountLayoutContainer {

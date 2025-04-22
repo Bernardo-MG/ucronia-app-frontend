@@ -1,13 +1,13 @@
-<layout-card>
-  <layout-card-header>
+<ui-card>
+  <ui-card-header>
     Descargas
-  </layout-card-header>
-  <layout-card-body>
-    <div class="mt-2" layoutJustifyCenter>
-      <button type="button" class="btn btn-link" [layoutWaiting]="waiting" aria-label="Download excel" (click)="downloadExcel()"
+  </ui-card-header>
+  <ui-card-body>
+    <div class="mt-2" uiJustifyCenter>
+      <button type="button" class="btn btn-link" [uiWaiting]="waiting" aria-label="Download excel" (click)="downloadExcel()"
         [disabled]="waiting">
         <icon-excel></icon-excel>
       </button>
     </div>
-  </layout-card-body>
-</layout-card>
+  </ui-card-body>
+</ui-card>

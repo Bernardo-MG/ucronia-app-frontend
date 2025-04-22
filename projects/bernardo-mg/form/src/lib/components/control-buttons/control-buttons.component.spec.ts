@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ModalComponent } from '@bernardo-mg/layout';
+import { ModalComponent } from '@bernardo-mg/ui';
 import { ControlButtonsComponent } from './control-buttons.component';
 
 describe('ControlButtonsComponent', () => {

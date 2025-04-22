@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-game-system-info',

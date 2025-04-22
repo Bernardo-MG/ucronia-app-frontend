@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconDeleteComponent, IconEditComponent } from '@bernardo-mg/icons';
-import { ModalComponent } from '@bernardo-mg/layout';
+import { ModalComponent } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'form-control-buttons',

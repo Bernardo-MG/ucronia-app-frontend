@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({

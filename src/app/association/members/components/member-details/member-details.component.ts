@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-member-details',

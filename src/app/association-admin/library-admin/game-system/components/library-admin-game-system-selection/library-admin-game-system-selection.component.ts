@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { GameSystem } from '@app/models/library/game-system';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
-import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-game-system-selection',

@@ -5,7 +5,7 @@ import { TransactionService } from '@app/association-admin/funds/core/service/tr
 import { Transaction } from '@app/models/transactions/transaction';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';

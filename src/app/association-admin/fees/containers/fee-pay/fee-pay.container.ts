@@ -9,7 +9,7 @@ import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';

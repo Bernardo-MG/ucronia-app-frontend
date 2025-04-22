@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({

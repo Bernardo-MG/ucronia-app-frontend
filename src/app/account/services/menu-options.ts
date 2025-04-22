@@ -1,4 +1,4 @@
-import { AuthMenuLink, MenuOptions } from '@bernardo-mg/layout';
+import { AuthMenuLink, MenuOptions } from '@bernardo-mg/ui';
 
 // Define menu options with titles for each section
 export const MENU_OPTIONS: MenuOptions = {

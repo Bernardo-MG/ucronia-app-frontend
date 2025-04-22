@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
 import { FeeReportService } from '../../services/fee-report.service';
 

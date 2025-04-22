@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { LibraryFictionBookDetailsComponent } from '../../components/library-fiction-book-details/library-fiction-book-details.component';
 import { BookService } from '../../services/book.service';

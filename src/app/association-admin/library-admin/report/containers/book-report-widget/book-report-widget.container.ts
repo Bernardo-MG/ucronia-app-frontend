@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IconExcelComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
 import { BookReportService } from '../../services/book-report.service';
 
 @Component({

@@ -1,7 +1,7 @@
-<layout-article>
+<ui-article>
   <assoc-book-report-widget></assoc-book-report-widget>
-  <layout-card>
-    <layout-card-header>
+  <ui-card>
+    <ui-card-header>
       <div class="row">
         <div class="col-sm-3">
           <!-- Add person -->
@@ -18,15 +18,15 @@
           </select>
         </div>
       </div>
-    </layout-card-header>
-    <layout-card-body>
-      <assoc-library-admin-book-list *layoutBlockUi="reading" [books]="data.content"
+    </ui-card-header>
+    <ui-card-body>
+      <assoc-library-admin-book-list *uiBlock="reading" [books]="data.content"
         [routeLinkAdapter]="routeLinkAdapter"
         (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

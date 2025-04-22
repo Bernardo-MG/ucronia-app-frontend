@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { MemberListComponent } from '../../components/member-list/member-list.component';
 

@@ -1,13 +1,13 @@
-<layout-article>
-  <layout-card>
-    <layout-card-body>
+<ui-article>
+  <ui-card>
+    <ui-card-body>
       <!-- List -->
       <access-audit-login-list [data]="data.content"
         (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

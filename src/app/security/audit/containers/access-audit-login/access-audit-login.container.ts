@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
 import { LoginRegister } from '../../models/login-register';

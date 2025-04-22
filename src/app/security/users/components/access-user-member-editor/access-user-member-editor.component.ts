@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { IconSearchComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserSelectMemberComponent } from '../access-user-select-member/access-user-select-member.component';
 

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { PeopleCreationFormComponent } from '../../components/people-creation-form/people-creation-form.component';
 import { PeopleService } from '../../services/people.service';

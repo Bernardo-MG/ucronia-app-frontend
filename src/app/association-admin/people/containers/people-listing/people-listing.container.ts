@@ -8,7 +8,7 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { debounceTime, Subject } from 'rxjs';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';

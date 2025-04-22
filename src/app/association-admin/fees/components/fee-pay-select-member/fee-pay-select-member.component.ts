@@ -4,7 +4,7 @@ import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
-import { BlockUiDirective, ButtonListComponent, JustifyBetweenDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, ButtonListComponent, JustifyBetweenDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({

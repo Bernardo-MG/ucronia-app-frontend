@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';

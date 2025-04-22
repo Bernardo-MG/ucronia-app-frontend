@@ -5,7 +5,7 @@
     "@angular/common": "^19.1.0",
     "@angular/core": "^19.1.0",
     "@bernardo-mg/icons": "0.0.1",
-    "@bernardo-mg/layout": "0.0.1"
+    "@bernardo-mg/ui": "0.0.1"
   },
   "dependencies": {
     "tslib": "^2.3.0"

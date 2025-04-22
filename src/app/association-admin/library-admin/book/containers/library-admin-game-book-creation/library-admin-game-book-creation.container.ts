@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
 import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { BookAdminService } from '../../services/book-admin.service';

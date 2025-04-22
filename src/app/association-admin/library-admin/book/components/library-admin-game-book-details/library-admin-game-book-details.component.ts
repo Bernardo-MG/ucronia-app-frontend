@@ -6,7 +6,7 @@ import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-game-book-details',

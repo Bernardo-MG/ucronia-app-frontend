@@ -6,7 +6,7 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AuthorAdminService } from '../../services/author-admin.service';
 

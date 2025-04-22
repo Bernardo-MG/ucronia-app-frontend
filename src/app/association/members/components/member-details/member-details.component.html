@@ -1,22 +1,22 @@
-<layout-card>
-  <layout-card-header>
-    <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
-  </layout-card-header>
+<ui-card>
+  <ui-card-header>
+    <h2 *uiPlaceholder="waiting"># {{data.number}}</h2>
+  </ui-card-header>
   <!-- Member details -->
-  <layout-card-body>
+  <ui-card-body>
     <!-- First name -->
     <div class="row">
       <div class="col-sm-3 text-primary">Nombre</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
+      <div class="col-sm-9" *uiPlaceholder="waiting">
         {{data.name.firstName}}
       </div>
     </div>
     <!-- Last name -->
     <div class="row">
       <div class="col-sm-3 text-primary">Apellidos</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
+      <div class="col-sm-9" *uiPlaceholder="waiting">
         {{data.name.lastName}}
       </div>
     </div>
-  </layout-card-body>
-</layout-card>
+  </ui-card-body>
+</ui-card>

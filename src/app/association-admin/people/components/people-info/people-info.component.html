@@ -1,23 +1,23 @@
-<layout-card>
-  <layout-card-header>
-    <h2 *layoutPlaceholder="waiting"># {{data.number}} {{data.name.fullName}}</h2>
+<ui-card>
+  <ui-card-header>
+    <h2 *uiPlaceholder="waiting"># {{data.number}} {{data.name.fullName}}</h2>
     <!-- Tabs -->
-    <layout-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></layout-card-navigation>
-  </layout-card-header>
+    <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
+  </ui-card-header>
   <!-- View-->
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
-      <layout-card-body>
+      <ui-card-body>
         <assoc-people-info-details [data]="data" [waiting]="waiting"></assoc-people-info-details>
-      </layout-card-body>
-      <layout-card-footer *ngIf="showMenu">
+      </ui-card-body>
+      <ui-card-footer *ngIf="showMenu">
         <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
           (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
-      </layout-card-footer>
+      </ui-card-footer>
     </ng-container>
     <ng-container *ngSwitchCase="'membership'">
-      <layout-card-body>
+      <ui-card-body>
         <!-- Membership -->
         <ng-container [ngSwitch]="isMember">
           <ng-container *ngSwitchCase="true">
@@ -41,13 +41,13 @@
             <icon-success-or-failure [success]="data.membership?.renew"></icon-success-or-failure>
           </div>
         </div>
-      </layout-card-body>
-      <layout-card-footer>
+      </ui-card-body>
+      <ui-card-footer>
         <assoc-people-edition-membership-buttons [active]="data.membership?.active" [renew]="data.membership?.renew"
           [disabled]="!editEnabled" (activate)="activate.emit()" (deactivate)="deactivate.emit()"
           (enableRenew)="enableRenew.emit()" (disableRenew)="disableRenew.emit()"
           (convertToMember)="convertToMember.emit()"></assoc-people-edition-membership-buttons>
-      </layout-card-footer>
+      </ui-card-footer>
     </ng-container>
   </ng-container>
-</layout-card>
+</ui-card>

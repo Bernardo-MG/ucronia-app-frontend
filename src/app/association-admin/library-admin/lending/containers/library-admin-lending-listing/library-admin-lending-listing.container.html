@@ -1,12 +1,12 @@
-<layout-article>
-  <layout-card>
-    <layout-card-body>
-      <assoc-library-admin-lending-list *layoutBlockUi="reading" [lendings]="data.content"
+<ui-article>
+  <ui-card>
+    <ui-card-body>
+      <assoc-library-admin-lending-list *uiBlock="reading" [lendings]="data.content"
         (directionChange)="onChangeDirection($event)"></assoc-library-admin-lending-list>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

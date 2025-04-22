@@ -16,8 +16,8 @@
       "@bernardo-mg/icons": [
         "./dist/bernardo-mg/icons"
       ],
-      "@bernardo-mg/layout": [
-        "./dist/bernardo-mg/layout"
+      "@bernardo-mg/ui": [
+        "./dist/bernardo-mg/ui"
       ],
       "@bernardo-mg/request": [
         "./dist/bernardo-mg/request"

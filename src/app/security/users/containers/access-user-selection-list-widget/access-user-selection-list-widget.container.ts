@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AccessUserSelectionListComponent } from '../../components/access-user-selection-list/access-user-selection-list.component';
 import { AccessUserService } from '../../services/access-user.service';

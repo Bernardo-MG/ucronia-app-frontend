@@ -1,5 +1,5 @@
 <!-- Controls -->
-<div layoutJustifyCenter>
+<div uiJustifyCenter>
   <!-- Current month -->
   <div>
     <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
@@ -11,6 +11,6 @@
 </div>
 <!-- Table -->
 <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events" [activeDayIsOpen]="activeDayIsOpen"
-  *layoutBlockUi="waiting" (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="onSelectDay($event.day)"
+  *uiBlock="waiting" (beforeViewRender)="beforeMonthViewRender($event)" (dayClicked)="onSelectDay($event.day)"
   (eventClicked)="onSelectEvent($event)">
 </mwl-calendar-month-view>

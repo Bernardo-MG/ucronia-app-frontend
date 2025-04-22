@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/ui';
 import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({

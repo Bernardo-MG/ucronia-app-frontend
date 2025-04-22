@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
-import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'access-role-info',

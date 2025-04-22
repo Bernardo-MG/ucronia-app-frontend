@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Member } from '@app/models/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';

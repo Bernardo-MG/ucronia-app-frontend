@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/models/members/member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AccessRoleSelectionListComponent } from '../../components/access-role-selection-list/access-role-selection-list.component';
 import { AccessRoleService } from '../../services/access-role.service';

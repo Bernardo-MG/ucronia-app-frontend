@@ -1,18 +1,18 @@
-<layout-card>
-  <layout-card-header>
-    <h2 *layoutPlaceholder="waiting"># {{data.number}}</h2>
-  </layout-card-header>
-  <layout-card-body>
+<ui-card>
+  <ui-card-header>
+    <h2 *uiPlaceholder="waiting"># {{data.number}}</h2>
+  </ui-card-header>
+  <ui-card-body>
     <!-- Name -->
     <div class="row">
       <div class="col-sm-3 text-primary">Nombre</div>
-      <div class="col-sm-9" *layoutPlaceholder="waiting">
+      <div class="col-sm-9" *uiPlaceholder="waiting">
         {{data.name}}
       </div>
     </div>
-  </layout-card-body>
-  <layout-card-footer *ngIf="showMenu">
+  </ui-card-body>
+  <ui-card-footer *ngIf="showMenu">
     <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
       (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
-  </layout-card-footer>
-</layout-card>
+  </ui-card-footer>
+</ui-card>

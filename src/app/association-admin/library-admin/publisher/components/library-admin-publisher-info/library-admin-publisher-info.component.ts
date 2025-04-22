@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Publisher } from '@app/models/library/publisher';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-publisher-info',
