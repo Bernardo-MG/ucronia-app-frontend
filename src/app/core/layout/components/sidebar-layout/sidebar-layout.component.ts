@@ -11,8 +11,6 @@ import { NavbarContainer } from '../../containers/navbar/navbar.container';
 })
 export class SidebarLayoutComponent {
 
-  // TODO: the selector should be view- or similar
-
   @Input() public menus: Menu[] = [];
 
 }
