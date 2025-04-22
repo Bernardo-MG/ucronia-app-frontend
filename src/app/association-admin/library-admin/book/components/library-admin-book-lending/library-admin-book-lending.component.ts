@@ -5,7 +5,7 @@ import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
 import { BookInfo } from '../../../../../models/library/book-info';
 import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';

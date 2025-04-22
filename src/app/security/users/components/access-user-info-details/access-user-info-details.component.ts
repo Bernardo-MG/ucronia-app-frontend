@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { User } from '@bernardo-mg/authentication';
-import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'access-user-info-details',

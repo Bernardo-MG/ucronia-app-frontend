@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '@bernardo-mg/icons';
-import { MenuLink } from '@bernardo-mg/layout';
+import { MenuLink } from '@bernardo-mg/ui';
 import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
 import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 import { LayoutService } from '../../services/layout.service';

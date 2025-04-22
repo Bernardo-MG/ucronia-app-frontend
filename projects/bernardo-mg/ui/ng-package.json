@@ -1,6 +1,6 @@
 {
   "$schema": "../../../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../../../dist/bernardo-mg/layout",
+  "dest": "../../../dist/bernardo-mg/ui",
   "lib": {
     "entryFile": "src/public-api.ts"
   }

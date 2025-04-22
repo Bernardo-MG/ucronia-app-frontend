@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
 import { MembershipEvolutionService } from '../../services/membership-evolution.service';
 

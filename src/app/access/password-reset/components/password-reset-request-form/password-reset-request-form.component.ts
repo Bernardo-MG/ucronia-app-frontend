@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/ui';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 
 /**

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from '@bernardo-mg/layout';
+import { Menu } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'layout-side-menu',

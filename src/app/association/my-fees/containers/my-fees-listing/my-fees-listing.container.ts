@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
 import { MyFeesService } from '../../services/my-fees.service';

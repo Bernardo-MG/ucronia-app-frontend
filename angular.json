@@ -174,23 +174,23 @@
         }
       }
     },
-    "@bernardo-mg/layout": {
+    "@bernardo-mg/ui": {
       "projectType": "library",
-      "root": "projects/bernardo-mg/layout",
-      "sourceRoot": "projects/bernardo-mg/layout/src",
+      "root": "projects/bernardo-mg/ui",
+      "sourceRoot": "projects/bernardo-mg/ui/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular/build:ng-packagr",
           "options": {
-            "project": "projects/bernardo-mg/layout/ng-package.json"
+            "project": "projects/bernardo-mg/ui/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/bernardo-mg/layout/tsconfig.lib.prod.json"
+              "tsConfig": "projects/bernardo-mg/ui/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/layout/tsconfig.lib.json"
+              "tsConfig": "projects/bernardo-mg/ui/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -205,7 +205,7 @@
             }
           },
           "options": {
-            "tsConfig": "projects/bernardo-mg/layout/tsconfig.spec.json",
+            "tsConfig": "projects/bernardo-mg/ui/tsconfig.spec.json",
             "polyfills": [
               "zone.js",
               "zone.js/testing"
@@ -216,8 +216,8 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "lintFilePatterns": [
-              "projects/bernardo-mg/layout/**/*.ts",
-              "projects/bernardo-mg/layout/**/*.html"
+              "projects/bernardo-mg/ui/**/*.ts",
+              "projects/bernardo-mg/ui/**/*.html"
             ]
           }
         }

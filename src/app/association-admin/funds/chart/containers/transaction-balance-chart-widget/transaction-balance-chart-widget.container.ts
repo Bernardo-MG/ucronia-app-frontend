@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
 

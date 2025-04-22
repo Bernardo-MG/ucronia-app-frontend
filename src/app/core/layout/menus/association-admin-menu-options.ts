@@ -1,5 +1,5 @@
 import { IconBookComponent, IconCoinsComponent, IconPersonComponent, IconReceiptComponent } from '@bernardo-mg/icons';
-import { AuthMenuLink, MenuOptions } from '@bernardo-mg/layout';
+import { AuthMenuLink, MenuOptions } from '@bernardo-mg/ui';
 
 // Define menu options with titles for each section
 export const ASSOCIATION_ADMIN_MENU_OPTIONS: MenuOptions = {

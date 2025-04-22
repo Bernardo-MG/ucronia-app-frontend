@@ -6,7 +6,7 @@ import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 

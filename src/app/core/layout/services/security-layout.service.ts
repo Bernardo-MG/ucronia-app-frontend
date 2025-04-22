@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { Menu, ViewMenuLoader } from '@bernardo-mg/layout';
+import { Menu, ViewMenuLoader } from '@bernardo-mg/ui';
 import { SECURITY_MENU_OPTIONS } from '../menus/security-menu-options';
 
 @Injectable({

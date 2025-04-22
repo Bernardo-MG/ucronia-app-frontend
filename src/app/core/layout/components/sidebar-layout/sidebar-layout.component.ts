@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
-import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/layout';
+import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/ui';
 import { NavbarContainer } from '../../containers/navbar/navbar.container';
 
 @Component({

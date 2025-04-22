@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
-import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
 import { FailureStore, FieldFailure } from '@bernardo-mg/request';
 
 @Component({

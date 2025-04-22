@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({

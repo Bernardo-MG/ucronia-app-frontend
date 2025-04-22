@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/layout';
+import { WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-fee-creation-form',

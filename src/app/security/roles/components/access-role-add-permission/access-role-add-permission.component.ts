@@ -4,7 +4,7 @@ import { PaginationNavigationComponent } from '@app/shared/pagination/components
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 
 @Component({

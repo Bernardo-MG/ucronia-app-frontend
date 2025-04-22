@@ -5,7 +5,7 @@ import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
 import { PeopleInfoComponent } from '../../components/people-info/people-info.component';

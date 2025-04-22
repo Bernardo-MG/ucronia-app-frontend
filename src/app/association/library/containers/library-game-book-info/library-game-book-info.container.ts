@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
 import { LibraryGameBookDetailsComponent } from '../../components/library-game-book-details/library-game-book-details.component';
 import { BookService } from '../../services/book.service';

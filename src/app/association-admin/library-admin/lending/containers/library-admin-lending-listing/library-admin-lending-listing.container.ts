@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/layout';
+import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { AssocLibraryAdminLendingListComponent } from '../../components/assoc-library-admin-lending-list/assoc-library-admin-lending-list.component';
 import { BookLendingService } from '../../services/book-lending.service';

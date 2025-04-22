@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Author } from '@app/models/library/author';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
-import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/layout';
+import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/ui';
 
 @Component({
     selector: 'assoc-library-admin-author-selection',

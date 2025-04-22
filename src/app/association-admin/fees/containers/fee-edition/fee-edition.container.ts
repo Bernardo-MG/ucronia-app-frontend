@@ -6,7 +6,7 @@ import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-inf
 import { Fee } from '@app/models/fees/fee';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/layout';
+import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 

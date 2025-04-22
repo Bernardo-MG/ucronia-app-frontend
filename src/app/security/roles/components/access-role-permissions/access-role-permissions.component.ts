@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/layout';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({

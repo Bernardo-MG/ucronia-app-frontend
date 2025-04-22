@@ -1,5 +1,5 @@
 {
-  "name": "@bernardo-mg/layout",
+  "name": "@bernardo-mg/ui",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^19.1.0",

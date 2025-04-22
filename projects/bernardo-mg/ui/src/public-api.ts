@@ -1,5 +1,5 @@
 /*
- * Public API Surface of layout
+ * Public API Surface of ui
  */
 
 export * from './lib/components/article/article.component';

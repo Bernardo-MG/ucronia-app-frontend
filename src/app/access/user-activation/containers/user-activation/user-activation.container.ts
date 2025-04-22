@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/layout';
+import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { throwError } from 'rxjs';
 import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';

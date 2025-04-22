@@ -10,7 +10,7 @@ import { Publisher } from '@app/models/library/publisher';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective } from '@bernardo-mg/layout';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({

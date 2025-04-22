@@ -5,7 +5,7 @@ import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/layout';
+import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-fee-pay-form',

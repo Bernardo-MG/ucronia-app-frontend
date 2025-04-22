@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CenteredFrameComponent } from '@bernardo-mg/layout';
+import { CenteredFrameComponent } from '@bernardo-mg/ui';
 import { UserActivationContainer } from './containers/user-activation/user-activation.container';
 
 const routes: Routes = [

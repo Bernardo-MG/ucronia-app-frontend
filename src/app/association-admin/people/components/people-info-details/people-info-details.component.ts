@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Person } from '@app/models/person/person';
-import { PlaceholderDirective } from '@bernardo-mg/layout';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-people-info-details',

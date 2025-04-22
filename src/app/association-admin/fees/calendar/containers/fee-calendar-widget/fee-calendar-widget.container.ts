@@ -6,7 +6,7 @@ import { Active } from '@app/models/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyEndDirective } from '@bernardo-mg/layout';
+import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyEndDirective } from '@bernardo-mg/ui';
 import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 

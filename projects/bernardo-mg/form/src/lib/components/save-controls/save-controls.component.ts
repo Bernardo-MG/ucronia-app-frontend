@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/layout';
+import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'form-save-controls',
