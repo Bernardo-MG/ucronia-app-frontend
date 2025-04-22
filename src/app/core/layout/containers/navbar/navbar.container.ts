@@ -5,7 +5,6 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '@bernardo-mg/icons';
 import { MenuLink } from '@bernardo-mg/ui';
 import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
-import { AssociationAdminLayoutService } from '../../services/association-admin-layout.service';
 import { LayoutService } from '../../services/layout.service';
 
 @Component({
@@ -40,8 +39,7 @@ export class NavbarContainer {
   public readonly adminLinks: MenuLink[];
 
   constructor(
-    layoutService: LayoutService,
-    associationAdminLayoutService: AssociationAdminLayoutService
+    layoutService: LayoutService
   ) {
     // App title
     this.title = layoutService.getTitle();
@@ -52,7 +50,7 @@ export class NavbarContainer {
     this.showAssociation = layoutService.showAssociationLink();
 
     // Links
-    this.adminLinks = associationAdminLayoutService.getLinks();
+    this.adminLinks = layoutService.getLinks();
   }
 
 }

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, ViewMenuLoader } from '@bernardo-mg/ui';
-import { ASSOCIATION_MENU_OPTIONS } from '../menus/association-menu-options';
+import { ASSOCIATION_ADMIN_MENU_OPTIONS } from './association-admin-menu-options';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AssociationLayoutService {
+export class AssociationAdminLayoutService {
 
   private menuLoader;
 
-  private associationMenus: Menu[] = [];
+  private adminMenus: Menu[] = [];
 
   constructor(
     authContainer: AuthContainer
@@ -28,11 +28,11 @@ export class AssociationLayoutService {
    * @returns An array of menu objects.
    */
   public getMenus(): Menu[] {
-    return this.associationMenus;
+    return this.adminMenus;
   }
 
   private loadMenus() {
-    this.associationMenus = this.menuLoader.load(ASSOCIATION_MENU_OPTIONS);
+    this.adminMenus = this.menuLoader.load(ASSOCIATION_ADMIN_MENU_OPTIONS);
   }
 
 }

@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, ViewMenuLoader } from '@bernardo-mg/ui';
-import { SECURITY_MENU_OPTIONS } from '../menus/security-menu-options';
+import { ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS } from './association-admin-library-menu-options';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SecurityLayoutService {
+export class AssociationAdminLibraryLayoutService {
 
   private menuLoader;
 
-  private securityMenus: Menu[] = [];
+  private libraryMenus: Menu[] = [];
 
   constructor(
     authContainer: AuthContainer
   ) {
     this.menuLoader = new ViewMenuLoader(authContainer);
+
     this.loadMenus();
     // If the user changes, reload menus
     authContainer.securityDetails.subscribe(u => { this.loadMenus() });
   }
 
   /**
-   * Get the menus options.
+   * Get the library menus options.
    * 
    * @returns An array of menu objects.
    */
-  public getMenus(): Menu[] {
-    return this.securityMenus;
+  public getLibraryMenus(): Menu[] {
+    return this.libraryMenus;
   }
 
   private loadMenus() {
-    this.securityMenus = this.menuLoader.load(SECURITY_MENU_OPTIONS);
+    this.libraryMenus = this.menuLoader.load(ASSOCIATION_LIBRARY_ADMIN_MENU_OPTIONS);
   }
 
 }

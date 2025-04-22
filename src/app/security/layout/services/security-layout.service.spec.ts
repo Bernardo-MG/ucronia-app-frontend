@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { SecurityLayoutService } from './security-layout.service';
 
 describe('SecurityLayoutService', () => {

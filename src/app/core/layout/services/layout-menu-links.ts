@@ -2,7 +2,7 @@ import { IconBookComponent, IconCoinsComponent, IconPersonComponent } from '@ber
 import { AuthMenuLink } from '@bernardo-mg/ui';
 
 // Define menu options with titles for each section
-export const ASSOCIATION_ADMIN_MENU_LINKS = [
+export const LAYOUT_MENU_LINKS = [
   new AuthMenuLink('Gente', '/association/admin/people', 'person', IconPersonComponent),
   new AuthMenuLink('Fondos', '/association/admin/money', 'funds', IconCoinsComponent),
   new AuthMenuLink('Biblioteca', '/association/admin/library', 'library', IconBookComponent)

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssociationAdminFeesLayoutContainer } from '@app/core/layout/containers/association-admin-fees-layout/association-admin-fees-layout.container';
-import { AssociationAdminLibraryLayoutContainer } from '@app/core/layout/containers/association-admin-library-layout/association-admin-library-layout.container';
+import { AssociationAdminFeesLayoutContainer } from '@app/association-admin/fees/layout/containers/association-admin-fees-layout/association-admin-fees-layout.container';
+import { AssociationAdminLibraryLayoutContainer } from '@app/association-admin/library-admin/layout/containers/association-admin-library-layout/association-admin-library-layout.container';
 import { SimpleLayoutComponent } from '@app/core/layout/components/simple-layout/simple-layout.component';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 

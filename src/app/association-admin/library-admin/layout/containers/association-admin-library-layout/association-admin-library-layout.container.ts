@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
-import { AssociationAdminLayoutService } from '@app/core/layout/services/association-admin-layout.service';
 import { Menu } from '@bernardo-mg/ui';
+import { AssociationAdminLibraryLayoutService } from '../../services/association-admin-library-layout.service';
 
 @Component({
     selector: 'layout-association-admin-library-layout',
@@ -14,9 +14,9 @@ export class AssociationAdminLibraryLayoutContainer {
   public readonly menus: Menu[] = [];
 
   constructor(
-    associationAdminLayoutService: AssociationAdminLayoutService
+    service: AssociationAdminLibraryLayoutService
   ) {
-    this.menus = associationAdminLayoutService.getLibraryMenus();
+    this.menus = service.getLibraryMenus();
   }
 
 }

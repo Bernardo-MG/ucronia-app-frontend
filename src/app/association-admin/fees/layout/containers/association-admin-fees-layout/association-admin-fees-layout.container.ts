@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
-import { AssociationAdminLayoutService } from '@app/core/layout/services/association-admin-layout.service';
 import { Menu } from '@bernardo-mg/ui';
+import { AssociationAdminFeesLayoutService } from '../../services/association-admin-fees-layout.service';
 
 @Component({
   selector: 'layout-association-admin-fees-layout',
@@ -14,9 +14,9 @@ export class AssociationAdminFeesLayoutContainer {
   public readonly menus: Menu[];
 
   constructor(
-    associationAdminLayoutService: AssociationAdminLayoutService
+    service: AssociationAdminFeesLayoutService
   ) {
-    this.menus = associationAdminLayoutService.getFundsMenus();
+    this.menus = service.getFundsMenus();
   }
 
 }
