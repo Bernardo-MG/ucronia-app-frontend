@@ -4,7 +4,7 @@ import { Directive, EmbeddedViewRef, inject, Input, OnDestroy, Renderer2, Templa
  * Directive to block the UI, to avoid interaction. Used while waiting.
  */
 @Directive({
-  selector: '[layoutBlockUi]',
+  selector: '[uiBlock]',
   standalone: true
 })
 export class BlockUiDirective implements OnDestroy {
@@ -19,7 +19,7 @@ export class BlockUiDirective implements OnDestroy {
 
   private embeddedView: EmbeddedViewRef<any> | null = null;
 
-  @Input() set layoutBlockUi(value: boolean) {
+  @Input() set uiBlock(value: boolean) {
     // Initialize the view once when the input is set for the first time
     this.initView();
 

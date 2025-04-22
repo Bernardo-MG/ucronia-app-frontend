@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
  * Article component. Contains a heading and a body. Additionally it handles a waiting cue, to show it is loading the body content.
  */
 @Component({
-  selector: 'layout-article',
+  selector: 'ui-article',
   imports: [CommonModule],
   templateUrl: './article.component.html'
 })

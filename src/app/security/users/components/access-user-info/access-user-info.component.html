@@ -1,5 +1,5 @@
-<layout-card>
-  <layout-card-header>
+<ui-card>
+  <ui-card-header>
     <ul class="nav nav-tabs card-header-tabs">
       <li class="nav-item">
         <a class="nav-link" [class.active]="view === 'user'" aria-current="page" role="button"
@@ -18,33 +18,33 @@
           (click)="onChangeView('member')">Socio</a>
       </li>
     </ul>
-  </layout-card-header>
+  </ui-card-header>
   <ng-container [ngSwitch]="view">
     <!-- User -->
     <ng-container *ngSwitchCase="'user'">
-      <layout-card-body>
+      <ui-card-body>
         <access-user-info-details [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
           [waiting]="waiting" (delete)="delete.emit()" (startEditing)="startEditing.emit()"></access-user-info-details>
-      </layout-card-body>
-      <layout-card-footer *ngIf="showMenu">
+      </ui-card-body>
+      <ui-card-footer *ngIf="showMenu">
         <div>
           <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
             (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
         </div>
-      </layout-card-footer>
+      </ui-card-footer>
     </ng-container>
     <!-- Status -->
     <ng-container *ngSwitchCase="'status'">
       <!-- Enable/disable button -->
-      <layout-card-body>
+      <ui-card-body>
         <access-user-status [data]="data"></access-user-status>
-      </layout-card-body>
-      <layout-card-footer>
+      </ui-card-body>
+      <ui-card-footer>
         <div class="row">
           <ng-template [ngIf]="!data.enabled">
             <!-- Enable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <button type="submit" name="Enable" class="btn btn-primary" [layoutWaiting]="waiting"
+              <button type="submit" name="Enable" class="btn btn-primary" [uiWaiting]="waiting"
                 [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
                 [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</button>
             </div>
@@ -52,33 +52,33 @@
           <ng-template [ngIf]="data.enabled">
             <!-- Disable button -->
             <div class="col-sm-2 d-grid gap-2">
-              <button type="submit" name="Disable" class="btn btn-primary" [layoutWaiting]="waiting"
+              <button type="submit" name="Disable" class="btn btn-primary" [uiWaiting]="waiting"
                 [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
                 [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</button>
             </div>
           </ng-template>
         </div>
-      </layout-card-footer>
+      </ui-card-footer>
     </ng-container>
     <!-- Roles -->
     <ng-container *ngSwitchCase="'roles'">
       <!-- Roles -->
-      <layout-card-body>
+      <ui-card-body>
         <access-user-roles-editor [editable]="editEnabled" [deletable]="deletable" [username]="data.username"
           [waiting]="waiting" [waitingRolesSelection]="readingRoleSelection" [roles]="data.roles"
           [rolesSelection]="rolesSelection" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
           (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
-      </layout-card-body>
+      </ui-card-body>
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
       <!-- Member -->
-      <layout-card-body>
+      <ui-card-body>
         <access-user-member-editor [member]="member.name.fullName" [editable]="editable" [waiting]="readingMember"
           [waitingMembersSelection]="readingMemberSelection" [membersSelection]="membersSelection"
           (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
           (selectMember)="selectMember.emit($event)"></access-user-member-editor>
-      </layout-card-body>
+      </ui-card-body>
     </ng-container>
   </ng-container>
-</layout-card>
+</ui-card>

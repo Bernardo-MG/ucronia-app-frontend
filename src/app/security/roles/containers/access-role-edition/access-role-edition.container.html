@@ -1,9 +1,9 @@
-<layout-article>
-  <div layoutResponsiveShortColumns>
+<ui-article>
+  <div uiResponsiveShortColumns>
     <!-- Role -->
     <div class="mb-1">
-      <layout-card>
-        <layout-card-header>
+      <ui-card>
+        <ui-card-header>
           <!-- Tabs -->
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -15,25 +15,25 @@
                 (click)="onChangeView('permissions')">Permisos</a>
             </li>
           </ul>
-        </layout-card-header>
+        </ui-card-header>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <layout-card-body>
+            <ui-card-body>
               <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
-            </layout-card-body>
-            <layout-card-footer *ngIf="showMenu">
+            </ui-card-body>
+            <ui-card-footer *ngIf="showMenu">
               <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
                 (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
-            </layout-card-footer>
+            </ui-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'permissions'">
             <!-- Permissions -->
-            <layout-card-body>
+            <ui-card-body>
               <!-- Permissions list -->
               <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
                 (remove)="onRemovePermission($event)"></access-role-permissions>
-            </layout-card-body>
-            <layout-card-footer>
+            </ui-card-body>
+            <ui-card-footer>
               <div class="d-grid">
                 <!-- Add button -->
                 <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
@@ -41,17 +41,17 @@
                   <icon-add></icon-add>
                 </button>
               </div>
-            </layout-card-footer>
+            </ui-card-footer>
           </ng-container>
         </ng-container>
-      </layout-card>
+      </ui-card>
     </div>
   </div>
-</layout-article>
+</ui-article>
 
 <!-- Modal for picking permissions -->
-<layout-modal name="pickPermissionModal" title="Elige un permiso" acceptText="">
+<ui-modal name="pickPermissionModal" title="Elige un permiso" acceptText="">
   <access-role-add-permission [permissions]="permissions" (goTo)="onLoadPermissions($event)"
     (changeDirection)="onChangePermissionsDirection($event)"
     (addPermission)="onAddPermission($event)"></access-role-add-permission>
-</layout-modal>
+</ui-modal>

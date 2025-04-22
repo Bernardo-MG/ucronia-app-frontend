@@ -1,7 +1,7 @@
-<layout-article>
+<ui-article>
   <!-- Books list -->
-  <layout-card>
-    <layout-card-header>
+  <ui-card>
+    <ui-card-header>
       <div class="row">
         <div class="col-sm-3">
           <select [disabled]="reading" class="form-select form-select-sm" aria-label="Filter person status"
@@ -11,14 +11,14 @@
           </select>
         </div>
       </div>
-    </layout-card-header>
-    <layout-card-body>
+    </ui-card-header>
+    <ui-card-body>
       <assoc-library-book-list [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
         (directionChange)="onChangeDirection($event)"></assoc-library-book-list>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

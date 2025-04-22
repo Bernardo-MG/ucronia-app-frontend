@@ -4,7 +4,7 @@ import { Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
  * Directive to show a waiting prompt. Used while waiting.
  */
 @Directive({
-  selector: '[layoutWaiting]',
+  selector: '[uiWaiting]',
   standalone: true,
 })
 export class WaitingDirective {
@@ -13,7 +13,7 @@ export class WaitingDirective {
 
   private readonly renderer = inject(Renderer2);
 
-  @Input() set layoutWaiting(waiting: boolean) {
+  @Input() set uiWaiting(waiting: boolean) {
     this.update(waiting);
   }
 

@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[layoutJustifyBetween]',
+  selector: '[uiJustifyBetween]',
   standalone: true
 })
 export class JustifyBetweenDirective {

@@ -1,4 +1,4 @@
-<div layoutResponsiveShortColumns>
+<div uiResponsiveShortColumns>
   <div class="progress mb-2">
     <div class="progress-bar" role="progressbar" aria-label="Book lending step" [style]="'width: ' + filled_bar + '%'"
       [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -17,7 +17,7 @@
               (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
           </div>
         </div>
-        <assoc-library-admin-book-lending-member-selection *layoutBlockUi="waiting" [values]="members.content"
+        <assoc-library-admin-book-lending-member-selection *uiBlock="waiting" [values]="members.content"
           [current]="members.page" [pages]="members.totalPages" (selectMember)="onSelectMember($event)"
           (goToPage)="goToMembersPage.emit($event)">
         </assoc-library-admin-book-lending-member-selection>

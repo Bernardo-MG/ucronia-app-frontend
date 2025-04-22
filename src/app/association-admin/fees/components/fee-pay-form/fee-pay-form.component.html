@@ -37,7 +37,7 @@
       </div>
       <!-- Add fee button -->
       <div class="row">
-        <div layoutJustifyCenter>
+        <div uiJustifyCenter>
           <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled"
             (click)="addDate()">
             <icon-add></icon-add>
@@ -51,7 +51,7 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
-      <button type="submit" name="Login" class="btn btn-primary" [layoutWaiting]="waiting" [disabled]="!saveEnabled"
+      <button type="submit" name="Login" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
         [attr.aria-disabled]="!saveEnabled" (click)="onSave()">Guardar</button>
     </div>
   </div>

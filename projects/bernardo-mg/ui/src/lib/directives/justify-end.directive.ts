@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[layoutJustifyEnd]',
+  selector: '[uiJustifyEnd]',
   standalone: true
 })
 export class JustifyEndDirective {

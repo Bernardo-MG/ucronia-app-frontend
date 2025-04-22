@@ -1,4 +1,4 @@
-<div *layoutBlockUi="waiting">
+<div *uiBlock="waiting">
   <table class="table">
     <thead>
       <tr>
@@ -28,7 +28,7 @@
   </table>
 </div>
 <!-- Page navigation -->
-<div layoutJustifyCenter class="mt-1">
+<div uiJustifyCenter class="mt-1">
   <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>

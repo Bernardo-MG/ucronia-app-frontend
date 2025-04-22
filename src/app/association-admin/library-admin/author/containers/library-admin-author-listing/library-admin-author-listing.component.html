@@ -1,15 +1,15 @@
-<layout-article>
-  <layout-card>
-    <layout-card-header>
+<ui-article>
+  <ui-card>
+    <ui-card-header>
       <!-- Add person -->
       <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
         <icon-add></icon-add>
       </button>
-    </layout-card-header>
-    <layout-card-body>
+    </ui-card-header>
+    <ui-card-body>
       <!-- List -->
-      <table *layoutBlockUi="reading" class="table table-hover">
+      <table *uiBlock="reading" class="table table-hover">
         <thead>
           <tr>
             <!-- Headers -->
@@ -28,10 +28,10 @@
           </tr>
         </tbody>
       </table>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

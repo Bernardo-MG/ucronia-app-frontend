@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  * List of links component. They will be shown in the same order as received.
  */
 @Component({
-  selector: 'layout-button-list',
+  selector: 'ui-button-list',
   imports: [CommonModule],
   templateUrl: './button-list.component.html'
 })

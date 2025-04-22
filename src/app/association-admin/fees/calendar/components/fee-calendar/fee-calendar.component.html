@@ -1,5 +1,5 @@
 <!-- Controls -->
-<div layoutJustifyCenter class="pb-2">
+<div uiJustifyCenter class="pb-2">
   <!-- To previous year button -->
   <button *ngIf="canGoPrevious" id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
     [disabled]="!canGoPrevious" [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year">
@@ -20,7 +20,7 @@
   </button>
 </div>
 <!-- Table -->
-<div class="table-responsive" *layoutBlockUi="waiting">
+<div class="table-responsive" *uiBlock="waiting">
   <table class="table table-sm table-hover">
     <thead class="thead-light">
       <tr>

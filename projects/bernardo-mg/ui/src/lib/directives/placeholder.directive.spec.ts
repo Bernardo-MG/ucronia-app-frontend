@@ -47,9 +47,9 @@ describe('PlaceholderDirective', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should show the placeholder when layoutPlaceholder is true', () => {
-    // Trigger layoutPlaceholder to true
-    directive.layoutPlaceholder = true;
+  it('should show the placeholder when uiPlaceholder is true', () => {
+    // Trigger uiPlaceholder to true
+    directive.uiPlaceholder = true;
 
     // Ensure the view container is cleared before inserting content
     expect(viewContainerRefMock.clear).toHaveBeenCalled();
@@ -67,9 +67,9 @@ describe('PlaceholderDirective', () => {
     expect(rendererMock.appendChild).toHaveBeenCalledWith(embeddedViewMock.rootNodes[0], placeholderDiv);
   });
 
-  it('should show the content when layoutPlaceholder is false', () => {
-    // Trigger layoutPlaceholder to false
-    directive.layoutPlaceholder = false;
+  it('should show the content when uiPlaceholder is false', () => {
+    // Trigger uiPlaceholder to false
+    directive.uiPlaceholder = false;
 
     // Ensure the view container is cleared and embedded view is recreated
     expect(viewContainerRefMock.clear).toHaveBeenCalled();
@@ -77,9 +77,9 @@ describe('PlaceholderDirective', () => {
   });
 
   it('should toggle between placeholder and content correctly', () => {
-    // Set layoutPlaceholder to true and trigger content change
-    directive.layoutPlaceholder = true;
-    directive.layoutPlaceholder = false;
+    // Set uiPlaceholder to true and trigger content change
+    directive.uiPlaceholder = true;
+    directive.uiPlaceholder = false;
 
     // Ensure the view is cleared twice (once for placeholder and once for content)
     expect(viewContainerRefMock.clear).toHaveBeenCalledTimes(2);

@@ -46,9 +46,9 @@ describe('BlockUiDirective', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should show the overlay when layoutBlockUi is set to true', () => {
-    // Trigger the setter by setting layoutBlockUi to true
-    directive.layoutBlockUi = true;
+  it('should show the overlay when uiBlock is set to true', () => {
+    // Trigger the setter by setting uiBlock to true
+    directive.uiBlock = true;
 
     expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledWith(templateRefMock);
     expect(rendererMock.createElement).toHaveBeenCalledWith('div');
@@ -56,13 +56,13 @@ describe('BlockUiDirective', () => {
     expect(directive['overlayElement']).toBeTruthy();
   });
 
-  it('should hide the overlay when layoutBlockUi is set to false', () => {
-    // First, show the overlay by setting layoutBlockUi to true
-    directive.layoutBlockUi = true;
+  it('should hide the overlay when uiBlock is set to false', () => {
+    // First, show the overlay by setting uiBlock to true
+    directive.uiBlock = true;
 
     // Now hide the overlay
     const currentOverlay = directive['overlayElement'];
-    directive.layoutBlockUi = false;
+    directive.uiBlock = false;
 
     expect(rendererMock.removeChild).toHaveBeenCalledWith(nativeElement, currentOverlay);
     expect(directive['overlayElement']).toBeNull();
@@ -70,7 +70,7 @@ describe('BlockUiDirective', () => {
 
   it('should clean up the overlay when the directive is destroyed', () => {
     // Show the overlay before destroying
-    directive.layoutBlockUi = true;
+    directive.uiBlock = true;
 
     const currentOverlay = directive['overlayElement'];
     directive.ngOnDestroy();
@@ -81,7 +81,7 @@ describe('BlockUiDirective', () => {
 
   it('should not attempt to remove the overlay if it does not exist', () => {
     // Try to remove the overlay without showing it
-    directive.layoutBlockUi = false;
+    directive.uiBlock = false;
     directive.ngOnDestroy();
 
     expect(rendererMock.removeChild).not.toHaveBeenCalled();
@@ -91,7 +91,7 @@ describe('BlockUiDirective', () => {
     // Simulate the condition where the position style is static
     spyOn(window, 'getComputedStyle').and.returnValue({ position: 'static' } as CSSStyleDeclaration);
 
-    directive.layoutBlockUi = true;
+    directive.uiBlock = true;
 
     // Position should be set to relative
     expect(rendererMock.setStyle).toHaveBeenCalledWith(nativeElement, 'position', 'relative');
@@ -101,18 +101,18 @@ describe('BlockUiDirective', () => {
     // Simulate the condition where the position style is already relative
     spyOn(window, 'getComputedStyle').and.returnValue({ position: 'relative' } as CSSStyleDeclaration);
 
-    directive.layoutBlockUi = true;
+    directive.uiBlock = true;
 
     // No need to set position since it is already relative
     expect(rendererMock.setStyle).not.toHaveBeenCalledWith(nativeElement, 'position', 'relative');
   });
 
   it('should not recreate the embedded view on subsequent changes', () => {
-    directive.layoutBlockUi = true;
+    directive.uiBlock = true;
 
     // Trigger the setter again with the same value
-    directive.layoutBlockUi = false;
-    directive.layoutBlockUi = true;
+    directive.uiBlock = false;
+    directive.uiBlock = true;
 
     // Create view should be called only once
     expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(1);

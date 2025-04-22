@@ -1,17 +1,17 @@
-<layout-article>
+<ui-article>
   <header>
     <h1 class="border-bottom">Gente</h1>
   </header>
   <div class="row pb-2">
     <!-- Membership evolution -->
-    <div layoutJustifyCenter>
+    <div uiJustifyCenter>
       <widget-membership-evolution-chart></widget-membership-evolution-chart>
     </div>
   </div>
   <div class="row">
     <!-- Member List -->
-    <layout-card>
-      <layout-card-header>
+    <ui-card>
+      <ui-card-header>
         <div class="row">
           <div class="col-sm-3">
             <!-- Add person -->
@@ -34,18 +34,18 @@
               (input)="nameFilterSubject.next(nameFilter)" aria-describedby="nameFilterLabel" maxlength="50">
           </div>
         </div>
-      </layout-card-header>
-      <layout-card-body>
+      </ui-card-header>
+      <ui-card-body>
         <!-- List -->
         <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
           (changeDirection)="onChangeDirection($event)">
         </assoc-people-list>
-      </layout-card-body>
-      <layout-card-footer>
+      </ui-card-body>
+      <ui-card-footer>
         <!-- Pagination -->
         <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
           [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-      </layout-card-footer>
-    </layout-card>
+      </ui-card-footer>
+    </ui-card>
   </div>
-</layout-article>
+</ui-article>

@@ -1,5 +1,5 @@
 <!-- Buttons -->
-<div layoutJustifyBetween>
+<div uiJustifyBetween>
   <div class="btn-group me-2" role="group">
     <button type="button" (click)="startEditing.emit()" class="btn btn-link link-dark" [disabled]="editableDisabled"
       aria-label="Edit">
@@ -15,7 +15,7 @@
 </div>
 
 <!-- Modal confirmation for delete -->
-<layout-modal name="deleteModal" title="Borrar" acceptText="Borrar" (accept)="onDelete()">
+<ui-modal name="deleteModal" title="Borrar" acceptText="Borrar" (accept)="onDelete()">
   <p>¿Estás seguro de que quieres borrar los datos?</p>
   <p class="text-warning"><small>Esta acción no se puede revertir.</small></p>
-</layout-modal>
+</ui-modal>

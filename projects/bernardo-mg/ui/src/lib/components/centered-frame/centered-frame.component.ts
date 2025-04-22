@@ -6,7 +6,7 @@ import { ResponsiveShortColumnsDirective } from '../../directives/responsive-col
  * Frame with the content centered.
  */
 @Component({
-  selector: 'layout-centered-frame',
+  selector: 'ui-centered-frame',
   imports: [RouterModule, ResponsiveShortColumnsDirective],
   templateUrl: './centered-frame.component.html'
 })

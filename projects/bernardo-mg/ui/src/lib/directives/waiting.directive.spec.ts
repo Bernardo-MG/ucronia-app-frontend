@@ -50,9 +50,9 @@ describe('WaitingDirective', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should add spinner and hide content when layoutWaiting is true', () => {
+  it('should add spinner and hide content when uiWaiting is true', () => {
     element.innerHTML = 'Some content';
-    directive.layoutWaiting = true;  // Trigger the setter to update the state
+    directive.uiWaiting = true;  // Trigger the setter to update the state
 
     // Check if the spinner is added
     const spinner = element.querySelector('span.spinner-border');
@@ -65,12 +65,12 @@ describe('WaitingDirective', () => {
     expect(element.getAttribute('aria-busy')).toBe('true');
   });
 
-  it('should restore original content when layoutWaiting becomes false', () => {
+  it('should restore original content when uiWaiting becomes false', () => {
     element.innerHTML = 'Some content';
-    directive.layoutWaiting = true;  // Trigger the setter to show spinner
+    directive.uiWaiting = true;  // Trigger the setter to show spinner
 
     // Change the state to false
-    directive.layoutWaiting = false;
+    directive.uiWaiting = false;
 
     // Ensure the spinner is removed
     const spinner = element.querySelector('span.spinner-border');

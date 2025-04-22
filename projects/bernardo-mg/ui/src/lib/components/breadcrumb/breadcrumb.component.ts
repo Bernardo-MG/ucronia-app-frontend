@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BreadcrumbLink } from '../../models/breadcrumb-link';
 
 @Component({
-  selector: 'layout-breadcrumb',
+  selector: 'ui-breadcrumb',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './breadcrumb.component.html'

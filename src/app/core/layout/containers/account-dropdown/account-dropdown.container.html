@@ -5,13 +5,13 @@
   </a>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountMenuDropdown">
     <li>
-      <div layoutJustifyCenter>{{username}}</div>
+      <div uiJustifyCenter>{{username}}</div>
     </li>
     <li>
       <hr class="dropdown-divider">
     </li>
     <li>
-      <div layoutJustifyCenter>
+      <div uiJustifyCenter>
         <a routerLink="/account" type="button" class="dropdown-item" title="Account">
           <icon-settings></icon-settings>
           Datos de cuenta
@@ -22,7 +22,7 @@
       <hr class="dropdown-divider">
     </li>
     <li>
-      <div layoutJustifyCenter>
+      <div uiJustifyCenter>
         <button (click)="onLogout()" type="button" class="dropdown-item" aria-label="Logout" role="button">
           <icon-logout></icon-logout>
           Desconectar

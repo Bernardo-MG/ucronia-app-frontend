@@ -1,15 +1,15 @@
-<layout-article>
-  <div layoutResponsiveShortColumns>
+<ui-article>
+  <div uiResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <layout-card>
-          <layout-card-body>
+        <ui-card>
+          <ui-card-body>
             <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
               [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
             </access-user-form>
-          </layout-card-body>
-        </layout-card>
+          </ui-card-body>
+        </ui-card>
       </ng-container>
       <ng-container *ngSwitchCase="false">
         <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
@@ -23,14 +23,14 @@
       </ng-container>
     </ng-container>
   </div>
-</layout-article>
+</ui-article>
 
 <!-- Modal confirmation for disabling -->
-<layout-modal name="disableModal" title="Desactivar usuario" acceptText="Desactivar" (accept)="onDisable()">
+<ui-modal name="disableModal" title="Desactivar usuario" acceptText="Desactivar" (accept)="onDisable()">
   <p>¿Está seguro de que quieres desactivar el usuario?</p>
-</layout-modal>
+</ui-modal>
 
 <!-- Modal confirmation for enabling -->
-<layout-modal name="enableModal" title="Activar usuario" acceptText="Activar" (accept)="onEnable()">
+<ui-modal name="enableModal" title="Activar usuario" acceptText="Activar" (accept)="onEnable()">
   <p>¿Está seguro de que quieres activar el usuario?</p>
-</layout-modal>
+</ui-modal>

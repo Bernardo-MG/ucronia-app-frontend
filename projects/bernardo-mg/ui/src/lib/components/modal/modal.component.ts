@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  * Modal component. To be shown should be activated outside.
  */
 @Component({
-  selector: 'layout-modal',
+  selector: 'ui-modal',
   imports: [CommonModule],
   templateUrl: './modal.component.html'
 })

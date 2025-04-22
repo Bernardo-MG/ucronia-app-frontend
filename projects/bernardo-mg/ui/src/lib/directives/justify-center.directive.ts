@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[layoutJustifyCenter]',
+  selector: '[uiJustifyCenter]',
   standalone: true
 })
 export class JustifyCenterDirective {

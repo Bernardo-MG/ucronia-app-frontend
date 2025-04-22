@@ -1,5 +1,5 @@
 <!-- Roles -->
-<table class="table" *layoutBlockUi="waiting">
+<table class="table" *uiBlock="waiting">
   <thead>
     <tr>
       <th scope="col"></th>
@@ -23,7 +23,7 @@
   </tbody>
 </table>
 <!-- Page navigation -->
-<div layoutJustifyCenter class="mt-1">
+<div uiJustifyCenter class="mt-1">
   <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>

@@ -1,11 +1,11 @@
-<layout-article>
+<ui-article>
   <header>
     <h1 class="border-bottom">Configuración</h1>
   </header>
-  <layout-card>
-    <layout-card-body>
+  <ui-card>
+    <ui-card-body>
       <assoc-settings-values-editor [disabled]="!editable" [settings]="settings"
         (save)="onSaveConfig($event)"></assoc-settings-values-editor>
-    </layout-card-body>
-  </layout-card>
-</layout-article>
+    </ui-card-body>
+  </ui-card>
+</ui-article>

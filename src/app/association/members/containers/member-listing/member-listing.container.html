@@ -1,15 +1,15 @@
-<layout-article>
+<ui-article>
   <!-- Member List -->
-  <layout-card>
-    <layout-card-body>
+  <ui-card>
+    <ui-card-body>
       <!-- List -->
       <assoc-member-list [members]="data.content" [routeLinkAdapter]="routeLinkAdapter"
         (changeDirection)="onChangeDirection($event)">
       </assoc-member-list>
-    </layout-card-body>
-    <layout-card-footer>
+    </ui-card-body>
+    <ui-card-footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </layout-card-footer>
-  </layout-card>
-</layout-article>
+    </ui-card-footer>
+  </ui-card>
+</ui-article>

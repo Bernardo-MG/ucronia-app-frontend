@@ -4,7 +4,7 @@ import { Directive, EmbeddedViewRef, inject, Input, Renderer2, TemplateRef, View
  * Directive to show a placeholder for an input. Used while waiting.
  */
 @Directive({
-  selector: '[layoutPlaceholder]',
+  selector: '[uiPlaceholder]',
   standalone: true
 })
 export class PlaceholderDirective {
@@ -15,7 +15,7 @@ export class PlaceholderDirective {
 
   private readonly renderer = inject(Renderer2);
 
-  @Input() set layoutPlaceholder(value: boolean) {
+  @Input() set uiPlaceholder(value: boolean) {
     if (value) {
       this.showPlaceholderInContent();
     } else {

@@ -1,19 +1,19 @@
-<layout-article>
-  <div layoutResponsiveShortColumns>
-    <layout-card>
-      <layout-card-body>
+<ui-article>
+  <div uiResponsiveShortColumns>
+    <ui-card>
+      <ui-card-body>
         <account-profile-info [account]="account" [waiting]="waiting"></account-profile-info>
-      </layout-card-body>
-    </layout-card>
+      </ui-card-body>
+    </ui-card>
     <article *ngIf="account.person" class="p-4">
       <header>
         <h2 class="border-bottom">Socio</h2>
       </header>
-      <layout-card>
-        <layout-card-body>
+      <ui-card>
+        <ui-card-body>
           <account-profile-person [data]="person"></account-profile-person>
-        </layout-card-body>
-      </layout-card>
+        </ui-card-body>
+      </ui-card>
     </article>
   </div>
-</layout-article>
+</ui-article>

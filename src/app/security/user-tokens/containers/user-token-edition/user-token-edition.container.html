@@ -1,10 +1,10 @@
-<layout-article>
-  <div layoutResponsiveShortColumns>
+<ui-article>
+  <div uiResponsiveShortColumns>
     <!-- Role -->
     <div class="mb-1">
       <!-- Info -->
-      <layout-card>
-        <layout-card-header>
+      <ui-card>
+        <ui-card-header>
           <!-- Tabs -->
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -16,48 +16,48 @@
                 (click)="onChangeView('status')">Estado</a>
             </li>
           </ul>
-        </layout-card-header>
+        </ui-card-header>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <layout-card-body>
+            <ui-card-body>
               <access-user-token-info [failures]="failures" [data]="data" [waiting]="waiting"></access-user-token-info>
-            </layout-card-body>
-            <layout-card-footer>
+            </ui-card-body>
+            <ui-card-footer>
               <!-- Extend expiration button -->
-              <button type="submit" name="Extend expiration" class="btn btn-primary" [layoutWaiting]="waiting"
+              <button type="submit" name="Extend expiration" class="btn btn-primary" [uiWaiting]="waiting"
                 [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
                 [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
                 expiración</button>
-            </layout-card-footer>
+            </ui-card-footer>
           </ng-container>
           <ng-container *ngSwitchCase="'status'">
-            <layout-card-body>
+            <ui-card-body>
               <access-user-token-status [data]="data"></access-user-token-status>
-            </layout-card-body>
-            <layout-card-footer>
+            </ui-card-body>
+            <ui-card-footer>
               <!-- Revoke button -->
-              <button type="submit" name="Revoke" class="btn btn-primary" [layoutWaiting]="waiting"
+              <button type="submit" name="Revoke" class="btn btn-primary" [uiWaiting]="waiting"
                 [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
                 [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</button>
-            </layout-card-footer>
+            </ui-card-footer>
           </ng-container>
         </ng-container>
-      </layout-card>
+      </ui-card>
     </div>
   </div>
-</layout-article>
+</ui-article>
 
 <!-- Modal for extending expiration -->
-<layout-modal name="extendExpirationModal" title="Extender expiración" acceptText="Extender"
+<ui-modal name="extendExpirationModal" title="Extender expiración" acceptText="Extender"
   (accept)="onExtendExpiration()">
   <p>Elige una nueva fecha</p>
   <form [formGroup]="extendExpirationForm" (ngSubmit)="onExtendExpiration()" class="needs-validation" novalidate>
     <input type="datetime-local" id="extendExpirationInput" class="form-control" formControlName="expirationDate">
   </form>
-</layout-modal>
+</ui-modal>
 
 <!-- Modal confirmation for revoking -->
-<layout-modal name="revokeModal" title="Revocar token" acceptText="Revocar" (accept)="onRevoke()">
+<ui-modal name="revokeModal" title="Revocar token" acceptText="Revocar" (accept)="onRevoke()">
   <p>¿Estás seguro de que quieres revocar el token?</p>
   <p class="text-warning"><small>Esta acción no se puede deshacer.</small></p>
-</layout-modal>
+</ui-modal>

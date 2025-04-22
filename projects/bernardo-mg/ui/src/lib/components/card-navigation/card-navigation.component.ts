@@ -6,7 +6,7 @@ import { CardTab } from '../../models/card-tab';
  * Card navigation, sets up tabs and handles status. This includes active tab, and disabled tabs.
  */
 @Component({
-  selector: 'layout-card-navigation',
+  selector: 'ui-card-navigation',
   imports: [CommonModule],
   templateUrl: './card-navigation.component.html'
 })

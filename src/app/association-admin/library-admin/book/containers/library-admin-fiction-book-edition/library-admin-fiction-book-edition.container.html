@@ -1,30 +1,30 @@
 <article class="p-4">
-  <div layoutResponsiveShortColumns>
+  <div uiResponsiveShortColumns>
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <layout-card>
-              <layout-card-body>
+            <ui-card>
+              <ui-card-body>
                 <assoc-library-admin-fiction-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
                   [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
                   (save)="onSave($event)" (reject)="onCancel()" (goToAuthorPage)="onGoToAuthorPage($event)"
                   (goToPublisherPage)="onGoToPublisherPage($event)">
                 </assoc-library-admin-fiction-book-edition-form>
-              </layout-card-body>
-            </layout-card>
+              </ui-card-body>
+            </ui-card>
           </ng-container>
           <ng-container *ngSwitchCase="'donors'">
-            <layout-card>
-              <layout-card-body>
+            <ui-card>
+              <ui-card-body>
                 <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
                   [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
                   (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
                 </assoc-library-admin-book-donors-form>
-              </layout-card-body>
-            </layout-card>
+              </ui-card-body>
+            </ui-card>
           </ng-container>
         </ng-container>
       </ng-container>
