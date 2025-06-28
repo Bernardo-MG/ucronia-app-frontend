@@ -8,7 +8,29 @@ Frontend app for the Ucronía association.
 
 ### Building the project
 
-This builds the development version:
+First build the libraries:
+
+```
+ng build @bernardo-mg/authentication --configuration development
+```
+
+```
+ng build @bernardo-mg/icons --configuration development
+```
+
+```
+ng build @bernardo-mg/request --configuration development
+```
+
+```
+ng build @bernardo-mg/ui --configuration development
+```
+
+```
+ng build @bernardo-mg/form --configuration development
+```
+
+Then build the development version:
 
 ```
 npm run build
@@ -22,7 +44,7 @@ To run the unit tests:
 npm test
 ```
 
-## Deploying locally
+### Deploying locally
 
 The project can be deployed locally for testing:
 

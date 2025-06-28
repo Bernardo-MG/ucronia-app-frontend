@@ -2,8 +2,9 @@
   "name": "@bernardo-mg/form",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^19.1.0",
-    "@angular/core": "^19.1.0",
+    "@angular/common": "^19.2.0",
+    "@angular/core": "^19.2.0",
+    "@bernardo-mg/authentication": "0.0.1",
     "@bernardo-mg/icons": "0.0.1",
     "@bernardo-mg/ui": "0.0.1"
   },
