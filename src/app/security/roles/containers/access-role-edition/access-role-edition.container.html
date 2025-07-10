@@ -2,8 +2,8 @@
   <div uiResponsiveShortColumns>
     <!-- Role -->
     <div class="mb-1">
-      <ui-card>
-        <ui-card-header>
+      <p-card>
+        <ng-template #header>
           <!-- Tabs -->
           <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -15,25 +15,21 @@
                 (click)="onChangeView('permissions')">Permisos</a>
             </li>
           </ul>
-        </ui-card-header>
+        </ng-template>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <ui-card-body>
-              <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
-            </ui-card-body>
-            <ui-card-footer *ngIf="showMenu">
+            <access-role-info [data]="data" [waiting]="waiting"></access-role-info>
+            <ng-template #footer *ngIf="showMenu">
               <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
                 (startEditing)="onStartEditing()" (delete)="onDelete()"></form-control-buttons>
-            </ui-card-footer>
+            </ng-template>
           </ng-container>
           <ng-container *ngSwitchCase="'permissions'">
             <!-- Permissions -->
-            <ui-card-body>
-              <!-- Permissions list -->
-              <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-                (remove)="onRemovePermission($event)"></access-role-permissions>
-            </ui-card-body>
-            <ui-card-footer>
+            <!-- Permissions list -->
+            <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+              (remove)="onRemovePermission($event)"></access-role-permissions>
+            <ng-template #footer>
               <div class="d-grid">
                 <!-- Add button -->
                 <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
@@ -41,10 +37,10 @@
                   <icon-add></icon-add>
                 </button>
               </div>
-            </ui-card-footer>
+            </ng-template>
           </ng-container>
         </ng-container>
-      </ui-card>
+      </p-card>
     </div>
   </div>
 </ui-article>

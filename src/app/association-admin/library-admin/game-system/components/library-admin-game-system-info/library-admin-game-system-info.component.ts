@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-game-system-info',
-  imports: [CommonModule, CardComponent, CardBodyComponent, PlaceholderDirective, ControlButtonsComponent, CardHeaderComponent, CardFooterComponent],
+  imports: [CommonModule, CardModule, ControlButtonsComponent, PlaceholderDirective],
   templateUrl: './library-admin-game-system-info.component.html'
 })
 export class LibraryAdminGameSystemInfoComponent {

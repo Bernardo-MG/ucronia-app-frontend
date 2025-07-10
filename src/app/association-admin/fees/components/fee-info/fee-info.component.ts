@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Fee } from '@app/models/fees/fee';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSearchComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
-import { Fee } from '../../../../models/fees/fee';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-fee-info',
-  imports: [CommonModule, IconSearchComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, IconSearchComponent, PlaceholderDirective, ControlButtonsComponent],
   templateUrl: './fee-info.component.html'
 })
 export class FeeInfoComponent {

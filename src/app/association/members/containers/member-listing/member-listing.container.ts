@@ -3,13 +3,14 @@ import { RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { MemberListComponent } from '../../components/member-list/member-list.component';
 
 @Component({
   selector: 'assoc-member-listing',
-  imports: [RouterModule, ArticleComponent, MemberListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  imports: [RouterModule, CardModule, ArticleComponent, MemberListComponent, PaginationInfoComponent],
   templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer {

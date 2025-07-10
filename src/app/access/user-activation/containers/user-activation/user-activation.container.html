@@ -1,12 +1,10 @@
 <ng-container [ngSwitch]="status">
   <ng-container *ngSwitchCase="'valid_token'">
-    <ui-card>
-      <ui-card-body>
-        <h5 class="card-title">Activación de usuario {{username}}</h5>
-        <access-user-activation-form [failures]="failures" [waiting]="activating"
-          (save)="onActivateUser($event.password)" *uiBlock="validating"></access-user-activation-form>
-      </ui-card-body>
-    </ui-card>
+    <p-card>
+      <h5 class="card-title">Activación de usuario {{username}}</h5>
+      <access-user-activation-form [failures]="failures" [waiting]="activating" (save)="onActivateUser($event.password)"
+        *uiBlock="validating"></access-user-activation-form>
+    </p-card>
   </ng-container>
   <ng-container *ngSwitchCase="'invalid_token'">
     Token inválido

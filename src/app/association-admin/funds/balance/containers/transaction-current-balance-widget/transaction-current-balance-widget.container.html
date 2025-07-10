@@ -1,4 +1,9 @@
-<div *uiBlock="readingBalance">
-  <p>Saldo actual: {{balance.total}}</p>
-  <p>Resultados del mes: {{balance.results}}</p>
-</div>
+<p-card>
+  <ng-template #title>
+    Saldo
+  </ng-template>
+  <div *uiBlock="readingBalance">
+    <p>Saldo actual: {{balance.total}}</p>
+    <p>Resultados del mes: {{balance.results}}</p>
+  </div>
+</p-card>

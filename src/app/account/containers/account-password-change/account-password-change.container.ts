@@ -2,13 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AccountChangePasswordFormComponent } from '@app/account/components/password-change/account-change-password-form/account-change-password-form.component';
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 
 @Component({
     selector: 'account-password-change',
-    imports: [ArticleComponent, AccountChangePasswordFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+    imports: [ArticleComponent, CardModule, AccountChangePasswordFormComponent, ResponsiveShortColumnsDirective],
     templateUrl: './account-password-change.container.html'
 })
 export class AccountPasswordChangeContainer {

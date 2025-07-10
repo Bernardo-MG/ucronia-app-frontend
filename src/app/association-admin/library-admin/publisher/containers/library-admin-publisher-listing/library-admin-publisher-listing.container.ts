@@ -6,13 +6,14 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-listing',
-  imports: [CommonModule, RouterModule, ArticleComponent, PaginationInfoComponent, IconAddComponent, SortingButtonComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, RouterModule, ArticleComponent, PaginationInfoComponent, IconAddComponent, SortingButtonComponent, BlockUiDirective],
   templateUrl: './library-admin-publisher-listing.container.html'
 })
 export class LibraryAdminPublisherListingContainer {

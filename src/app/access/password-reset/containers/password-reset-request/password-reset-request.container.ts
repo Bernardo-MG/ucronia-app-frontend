@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
 import { PasswordResetRequest } from '../../models/password-reset-request';
@@ -12,7 +12,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset-request',
-  imports: [CommonModule, PasswordResetRequestFormComponent, CardComponent, CardBodyComponent],
+  imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
   templateUrl: './password-reset-request.container.html'
 })
 export class PasswordResetRequestContainer {

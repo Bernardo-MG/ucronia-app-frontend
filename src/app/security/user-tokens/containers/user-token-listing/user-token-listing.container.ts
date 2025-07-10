@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { UserToken } from '@bernardo-mg/authentication';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
   selector: 'access-user-token-listing',
-  imports: [UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  imports: [CommonModule, CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './user-token-listing.container.html'
 })
 export class UserTokenListingContainer {

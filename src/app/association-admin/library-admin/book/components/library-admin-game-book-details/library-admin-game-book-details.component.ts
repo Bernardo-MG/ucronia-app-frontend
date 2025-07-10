@@ -6,11 +6,12 @@ import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-game-book-details',
-  imports: [CommonModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
+  imports: [CommonModule, CardModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardNavigationComponent],
   templateUrl: './library-admin-game-book-details.component.html'
 })
 export class LibraryAdminGameBookDetailsComponent {

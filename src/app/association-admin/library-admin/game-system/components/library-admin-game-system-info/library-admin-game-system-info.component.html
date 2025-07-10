@@ -1,8 +1,7 @@
-<ui-card>
-  <ui-card-header>
-    <h2 *uiPlaceholder="waiting"># {{data.number}}</h2>
-  </ui-card-header>
-  <ui-card-body>
+<p-card>
+  <ng-template #title>
+    <div *uiPlaceholder="waiting"># {{data.number}}</div>
+  </ng-template>
     <!-- Name -->
     <div class="row">
       <div class="col-sm-3 text-primary">Nombre</div>
@@ -10,9 +9,8 @@
         {{data.name}}
       </div>
     </div>
-  </ui-card-body>
-  <ui-card-footer *ngIf="showMenu">
+  <ng-template #footer *ngIf="showMenu">
     <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
       (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
-  </ui-card-footer>
-</ui-card>
+  </ng-template>
+</p-card>

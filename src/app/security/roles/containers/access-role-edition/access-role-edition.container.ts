@@ -5,8 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
 import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
@@ -15,7 +16,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-edition',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ArticleComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-edition.container.html'
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> {

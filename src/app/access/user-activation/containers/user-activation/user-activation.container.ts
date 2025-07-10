@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 import { UserActivate } from '../../models/user-activate';
@@ -15,7 +16,7 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  */
 @Component({
   selector: 'access-user-activation',
-  imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUiDirective],
   templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer {

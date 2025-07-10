@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
 import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
 
 @Component({
   selector: 'access-audit-login',
-  imports: [AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  imports: [CommonModule, CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer {

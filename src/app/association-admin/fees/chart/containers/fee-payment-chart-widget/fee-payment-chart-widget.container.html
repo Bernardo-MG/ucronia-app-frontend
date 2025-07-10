@@ -1,8 +1,6 @@
-<ui-card>
-  <ui-card-header>
+<p-card>
+  <ng-template #title>
     Pagos de cuotas
-  </ui-card-header>
-  <ui-card-body>
-    <assoc-fee-payment-chart [report]="report"></assoc-fee-payment-chart>
-  </ui-card-body>
-</ui-card>
+  </ng-template>
+  <assoc-fee-payment-chart [report]="report"></assoc-fee-payment-chart>
+</p-card>

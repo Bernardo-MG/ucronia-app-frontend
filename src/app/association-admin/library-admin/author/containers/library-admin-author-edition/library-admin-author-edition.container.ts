@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from '@app/models/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
 import { LibraryAdminAuthorInfoComponent } from '../../components/library-admin-author-info/library-admin-author-info.component';
@@ -12,7 +13,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-edition',
-  imports: [CommonModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, LibraryAdminAuthorInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-author-edition.container.html'
 })
 export class LibraryAdminAuthorInfoEditorContainer extends InfoEditorStatusComponent<Author> {

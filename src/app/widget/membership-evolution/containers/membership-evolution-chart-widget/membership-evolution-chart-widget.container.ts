@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
 import { MembershipEvolutionService } from '../../services/membership-evolution.service';
 
 @Component({
   selector: 'widget-membership-evolution-chart',
-  imports: [CommonModule, MembershipEvolutionChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, MembershipEvolutionChartComponent],
   templateUrl: './membership-evolution-chart-widget.container.html'
 })
 export class MembershipEvolutionChartWidgetContainer {

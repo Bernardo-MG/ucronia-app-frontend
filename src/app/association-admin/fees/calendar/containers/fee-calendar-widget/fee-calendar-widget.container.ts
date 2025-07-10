@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
@@ -6,13 +7,14 @@ import { Active } from '@app/models/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyEndDirective } from '@bernardo-mg/ui';
+import { JustifyEndDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
 import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar-widget',
-  imports: [RouterModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyEndDirective],
+  imports: [CommonModule, RouterModule, CardModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
   templateUrl: './fee-calendar-widget.container.html'
 })
 export class FeeCalendarWidgetContainer {

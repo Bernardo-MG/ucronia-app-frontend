@@ -6,13 +6,14 @@ import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-inf
 import { Fee } from '@app/models/fees/fee';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, BreadcrumbLink, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edition',
-  imports: [CommonModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements AfterContentInit {

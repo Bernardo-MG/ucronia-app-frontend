@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Transaction } from '@app/models/transactions/transaction';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
-import { Transaction } from '../../../../../models/transactions/transaction';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-transaction-info',
-  imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
   templateUrl: './transaction-info.component.html'
 })
 export class TransactionInfoComponent {

@@ -1,7 +1,7 @@
 <ui-article>
   <assoc-book-report-widget></assoc-book-report-widget>
-  <ui-card>
-    <ui-card-header>
+  <p-card>
+    <ng-template #header>
       <div class="row">
         <div class="col-sm-3">
           <!-- Add person -->
@@ -18,15 +18,12 @@
           </select>
         </div>
       </div>
-    </ui-card-header>
-    <ui-card-body>
-      <assoc-library-admin-book-list *uiBlock="reading" [books]="data.content"
-        [routeLinkAdapter]="routeLinkAdapter"
-        (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
-    </ui-card-body>
-    <ui-card-footer>
+    </ng-template>
+    <assoc-library-admin-book-list *uiBlock="reading" [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+      (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
+    <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </ui-card-footer>
-  </ui-card>
+    </ng-template>
+  </p-card>
 </ui-article>

@@ -1,53 +1,51 @@
-<ui-card>
-  <ui-card-header>
-    <h2 *uiPlaceholder="waiting"># {{data.number}} {{data.name.fullName}}</h2>
+<p-card>
+  <ng-template #header>
     <!-- Tabs -->
     <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
-  </ui-card-header>
+  </ng-template>
+  <ng-template #title>
+    <div *uiPlaceholder="waiting"># {{data.number}} {{data.name.fullName}}</div>
+  </ng-template>
   <!-- View-->
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
-      <ui-card-body>
-        <assoc-people-info-details [data]="data" [waiting]="waiting"></assoc-people-info-details>
-      </ui-card-body>
-      <ui-card-footer *ngIf="showMenu">
+      <assoc-people-info-details [data]="data" [waiting]="waiting"></assoc-people-info-details>
+      <ng-template #footer *ngIf="showMenu">
         <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
           (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
-      </ui-card-footer>
+      </ng-template>
     </ng-container>
     <ng-container *ngSwitchCase="'membership'">
-      <ui-card-body>
-        <!-- Membership -->
-        <ng-container [ngSwitch]="isMember">
-          <ng-container *ngSwitchCase="true">
-            <!-- It is a member -->
-            <div class="row">
-              <div class="col-sm-2 text-primary">Activo</div>
-              <div class="col-sm-10">
-                <icon-success-or-failure [success]="data.membership?.active"></icon-success-or-failure>
-              </div>
+      <!-- Membership -->
+      <ng-container [ngSwitch]="isMember">
+        <ng-container *ngSwitchCase="true">
+          <!-- It is a member -->
+          <div class="row">
+            <div class="col-sm-2 text-primary">Activo</div>
+            <div class="col-sm-10">
+              <icon-success-or-failure [success]="data.membership?.active"></icon-success-or-failure>
             </div>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- It isn't a member -->
-            No es socio
-          </ng-container>
-        </ng-container>
-        <!-- Renewal -->
-        <div class="row">
-          <div class="col-sm-2 text-primary">Renovación</div>
-          <div class="col-sm-10">
-            <icon-success-or-failure [success]="data.membership?.renew"></icon-success-or-failure>
           </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="false">
+          <!-- It isn't a member -->
+          No es socio
+        </ng-container>
+      </ng-container>
+      <!-- Renewal -->
+      <div class="row">
+        <div class="col-sm-2 text-primary">Renovación</div>
+        <div class="col-sm-10">
+          <icon-success-or-failure [success]="data.membership?.renew"></icon-success-or-failure>
         </div>
-      </ui-card-body>
-      <ui-card-footer>
+      </div>
+      <ng-template #footer>
         <assoc-people-edition-membership-buttons [active]="data.membership?.active" [renew]="data.membership?.renew"
           [disabled]="!editEnabled" (activate)="activate.emit()" (deactivate)="deactivate.emit()"
           (enableRenew)="enableRenew.emit()" (disableRenew)="disableRenew.emit()"
           (convertToMember)="convertToMember.emit()"></assoc-people-edition-membership-buttons>
-      </ui-card-footer>
+      </ng-template>
     </ng-container>
   </ng-container>
-</ui-card>
+</p-card>

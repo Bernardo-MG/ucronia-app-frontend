@@ -6,13 +6,13 @@ import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
+import { CardModule } from 'primeng/card';
 import { TransactionCalendarService } from '../../services/transaction-calendar.service';
 
 @Component({
   selector: 'assoc-transaction-calendar-widget',
-  imports: [CommonModule, RouterModule, CalendarsModule, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, JustifyCenterDirective],
+  imports: [CommonModule, RouterModule, CardModule, CalendarsModule, IconAddComponent],
   templateUrl: './transaction-calendar-widget.container.html'
 })
 export class TransactionCalendarWidgetContainer {

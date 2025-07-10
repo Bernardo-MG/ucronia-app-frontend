@@ -4,8 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Member } from '@app/models/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, WaitingDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { WaitingDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
@@ -13,7 +14,7 @@ import { AccessUserStatusComponent } from '../access-user-status/access-user-sta
 
 @Component({
   selector: 'access-user-info',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, WaitingDirective],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, ControlButtonsComponent, WaitingDirective],
   templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {

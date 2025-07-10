@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookTypeFormComponent } from '../../components/library-admin-book-type-form/library-admin-book-type-form.component';
 import { LibraryAdminBookTypeInfoComponent } from '../../components/library-admin-book-type-info/library-admin-book-type-info.component';
@@ -12,7 +13,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
-  imports: [CommonModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-info-editor.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> {

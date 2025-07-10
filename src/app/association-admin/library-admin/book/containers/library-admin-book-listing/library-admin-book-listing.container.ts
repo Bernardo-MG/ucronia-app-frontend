@@ -6,14 +6,15 @@ import { BookInfo } from '@app/models/library/book-info';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { LibraryAdminBookListComponent } from '../../components/library-admin-book-list/library-admin-book-list.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-listing',
-  imports: [CommonModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, RouterModule, LibraryAdminBookListComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BookReportWidgetContainer,BlockUiDirective],
   templateUrl: './library-admin-book-listing.container.html'
 })
 export class LibraryAdminBookListingContainer {

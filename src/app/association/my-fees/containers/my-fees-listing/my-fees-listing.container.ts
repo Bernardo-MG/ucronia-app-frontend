@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
 import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
   selector: 'app-my-fees-listing',
-  imports: [ArticleComponent, MyFeesListComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent],
+  imports: [CommonModule, CardModule, ArticleComponent, MyFeesListComponent, PaginationInfoComponent],
   templateUrl: './my-fees-listing.container.html'
 })
 export class MyFeesFrontpageContainer {

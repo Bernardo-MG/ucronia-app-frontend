@@ -1,17 +1,15 @@
-<ui-card>
-  <ui-card-header>
+<p-card>
+  <ng-template #header>
     <!-- Add user -->
     <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/users/add"
       [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
       <icon-add></icon-add>
     </button>
-  </ui-card-header>
-  <ui-card-body>
-    <access-user-selection-list [users]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-      (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
-  </ui-card-body>
-  <ui-card-footer>
+  </ng-template>
+  <access-user-selection-list [users]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+    (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
+  <ng-template #footer>
     <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
       [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-  </ui-card-footer>
-</ui-card>
+  </ng-template>
+</p-card>

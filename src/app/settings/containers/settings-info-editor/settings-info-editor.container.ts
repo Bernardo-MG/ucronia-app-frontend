@@ -1,14 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
 import { AssociationSettingsService } from '../../service/association-settings.service';
 
 @Component({
   selector: 'assoc-settings-info-editor',
-  imports: [ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent, CardComponent, CardBodyComponent],
+  imports: [CommonModule, CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
   templateUrl: './settings-info-editor.container.html'
 })
 export class SettingsInfoEditorContainer {
