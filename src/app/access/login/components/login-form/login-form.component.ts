@@ -3,6 +3,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -12,7 +17,7 @@ import { UserLogin } from '../../models/user-login';
  */
 @Component({
   selector: 'login-login-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, PasswordModule, ButtonModule, WaitingDirective, InvalidFieldDirective],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
