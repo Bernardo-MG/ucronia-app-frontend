@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
 import { PasswordReset } from '../../models/password-reset';
@@ -15,7 +16,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset',
-  imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, PasswordResetFormComponent, BlockUiDirective],
   templateUrl: './password-reset.container.html'
 })
 export class PasswordResetContainer {

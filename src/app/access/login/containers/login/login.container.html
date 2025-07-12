@@ -1,9 +1,7 @@
-<div class="card">
-  <div class="card-body">
-    <login-login-form [waiting]="loading" [failedLogin]="failedLogin" (login)="onLogin($event)"
-      (rememberMe)="onRememberMe($event)"></login-login-form>
-  </div>
-  <div class="card-footer text-muted">
+<p-card>
+  <login-login-form [waiting]="loading" [failedLogin]="failedLogin" (login)="onLogin($event)"
+    (rememberMe)="onRememberMe($event)"></login-login-form>
+  <ng-template #footer class="text-muted">
     <a routerLink="/password/reset">¿Perdiste la clave?</a>
-  </div>
-</div>
+  </ng-template>
+</p-card>
