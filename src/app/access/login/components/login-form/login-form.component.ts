@@ -17,7 +17,7 @@ import { UserLogin } from '../../models/user-login';
  */
 @Component({
   selector: 'login-login-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, PasswordModule, ButtonModule, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, PasswordModule, ButtonModule, WaitingDirective],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
