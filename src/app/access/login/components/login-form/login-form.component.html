@@ -21,18 +21,18 @@
     <div class="col-md-4">
       <div class="p-field-checkbox mb-3 text-center">
         <div class="row">
-    <div class="col-md-2">
-          <p-toggleswitch inputId="rememberMe" [disabled]="!rememberMeEnabled"
-            (onChange)="onRememberMe($event)"></p-toggleswitch>
-        </div>
-    <div class="col-md-10">
-          Mantener sesión
-        </div>
+          <div class="col-md-2">
+            <p-toggleswitch inputId="rememberMe" [disabled]="!rememberMeEnabled"
+              (onChange)="onRememberMe($event)"></p-toggleswitch>
+          </div>
+          <div class="col-md-10">
+            Mantener sesión
+          </div>
         </div>
       </div>
     </div>
     <div class="col-md-4 offset-md-4">
-      <a routerLink="/password/reset">¿Perdiste la clave?</a>
+      <p-button label="¿Perdiste la clave?" link (click)="lostPassword.emit()" />
     </div>
   </div>
 

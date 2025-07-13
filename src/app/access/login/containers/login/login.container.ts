@@ -109,4 +109,11 @@ export class LoginContainer {
     this.rememberMe = remember;
   }
 
+  /**
+   * Handler for the lost password event, fired by the form.
+   */
+  public onLostPassword() {
+    this.router.navigate(['/password/reset']);
+  }
+
 }

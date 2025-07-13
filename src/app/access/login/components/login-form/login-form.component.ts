@@ -56,6 +56,11 @@ export class LoginFormComponent {
   @Output() public rememberMe = new EventEmitter<boolean>();
 
   /**
+   * Lost password event. Sent when the user clicks on the lost password option.
+   */
+  @Output() public lostPassword = new EventEmitter<void>();
+
+  /**
    * Login enabled flag.
    */
   public get loginEnabled(): boolean {
