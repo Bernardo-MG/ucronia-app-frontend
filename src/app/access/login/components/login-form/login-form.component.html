@@ -38,7 +38,7 @@
 
   <!-- Submit button -->
   <div class="d-flex">
-    <button pButton severity="secondary" type="submit" label="Login" [uiWaiting]="waiting" [disabled]="!loginEnabled"
-      class="w-100"></button>
+    <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
+      [attr.aria-disabled]="!loginEnabled" class="w-100"></p-button>
   </div>
 </form>
