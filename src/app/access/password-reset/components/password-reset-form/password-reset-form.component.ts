@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { FormComponent } from '@bernardo-mg/form';
+import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 
@@ -12,7 +12,7 @@ import { InputTextModule } from 'primeng/inputtext';
  */
 @Component({
   selector: 'login-password-reset-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule],
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
