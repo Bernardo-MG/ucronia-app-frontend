@@ -137,6 +137,19 @@ describe('LoginFormComponent', () => {
       expect(component.login.emit).toHaveBeenCalledTimes(1);
     });
 
+    it('should send a lost password event when clicking the lost password button', () => {
+      spyOn(component.lostPassword, 'emit');
+
+      component.form.controls['username'].setValue('username');
+      component.form.controls['password'].setValue('password');
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#lostPassword');
+      button.click();
+
+      expect(component.lostPassword.emit).toHaveBeenCalledTimes(1);
+    });
+
     it('should send a remember me event when changing the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
