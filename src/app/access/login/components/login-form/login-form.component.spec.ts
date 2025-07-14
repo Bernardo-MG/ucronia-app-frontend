@@ -196,10 +196,6 @@ describe('LoginFormComponent', () => {
   });
 
   describe('failed login warning', () => {
-    // **************************************************************************
-    // Failed login warning
-    // **************************************************************************
-
     it('should hide the login failure warning by default', () => {
       const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
 
