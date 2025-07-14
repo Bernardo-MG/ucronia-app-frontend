@@ -28,7 +28,7 @@ describe('LoginFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('login button', () => {
+  describe('enabled status', () => {
 
     it('should disable the login button by default', () => {
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -59,6 +59,10 @@ describe('LoginFormComponent', () => {
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
       expect(button.hasAttribute('disabled')).toBeTrue();
     });
+
+  });
+
+  describe('enabled status on loading', () => {
 
     it('should disable the login button when the form is valid but it is loading', () => {
       component.form.controls['username'].setValue('username');

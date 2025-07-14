@@ -28,12 +28,38 @@ describe('PasswordResetFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('submit button', () => {
+  describe('enabled status', () => {
 
     it('should disable the submit button by default', () => {
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(true);
     });
+
+  });
+
+  describe('enabled status on waiting', () => {
+
+    it('should disable the login button when the form is valid but it is waiting', () => {
+      component.form.controls['password'].setValue('password');
+      component.form.controls['confirmPassword'].setValue('password');
+      component.waiting = true;
+      fixture.detectChanges();
+
+      const button = fixture.debugElement.nativeElement.querySelector('form button');
+      expect(button.hasAttribute('disabled')).toBeTrue();
+    });
+
+    it('should disable the login button when the form is waiting', () => {
+      component.waiting = true;
+      fixture.detectChanges();
+
+      const button = fixture.debugElement.nativeElement.querySelector('form button');
+      expect(button.hasAttribute('disabled')).toBeTrue();
+    });
+
+  });
+
+  describe('enabled status on password match', () => {
 
     it('should enable the login button when the passwords match', () => {
       component.form.controls['password'].setValue('password');
