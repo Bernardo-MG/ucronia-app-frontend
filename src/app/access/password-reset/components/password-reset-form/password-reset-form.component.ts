@@ -4,13 +4,15 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'login-password-reset-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
