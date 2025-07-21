@@ -4,6 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 
 /**
@@ -11,7 +12,7 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
  */
 @Component({
   selector: 'login-password-reset-request-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
   templateUrl: './password-reset-request-form.component.html'
 })
 export class PasswordResetRequestFormComponent extends FormComponent<PasswordResetRequest> {
