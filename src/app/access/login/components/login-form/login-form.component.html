@@ -1,8 +1,4 @@
 ﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
-  <!-- Login failed warning -->
-  <div *ngIf="failedLogin" id="loginFailedWarning" class="p-error p-text-center">
-    Usuario inválido
-  </div>
 
   <!-- Username -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
@@ -40,5 +36,10 @@
   <div class="d-flex">
     <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="loading" [disabled]="!loginEnabled"
       [attr.aria-disabled]="!loginEnabled" class="w-100"></p-button>
+  </div>
+
+  <!-- Login failed warning -->
+  <div *ngIf="failedLogin" class="mt-1">
+    <p-message id="loginFailedWarning" severity="warn">Usuario inválido</p-message>
   </div>
 </form>

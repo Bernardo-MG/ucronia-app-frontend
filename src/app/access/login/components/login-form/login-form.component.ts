@@ -4,6 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { UserLogin } from '../../models/user-login';
 
@@ -14,7 +15,7 @@ import { UserLogin } from '../../models/user-login';
  */
 @Component({
   selector: 'login-login-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
