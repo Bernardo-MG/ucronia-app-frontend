@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,16 +14,28 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
   templateUrl: './password-reset-request-form.component.html'
 })
-export class PasswordResetRequestFormComponent extends FormComponent<PasswordResetRequest> {
+export class PasswordResetRequestFormComponent {
+
+  @Output() public save = new EventEmitter<PasswordResetRequest>();
+
+  public form: any;
 
   constructor(
-    private formBuilder: FormBuilder
+    formBuilder: FormBuilder
   ) {
-    super();
-
-    this.form = this.formBuilder.nonNullable.group({
+    this.form = formBuilder.nonNullable.group({
       email: ['', [Validators.required, Validators.email]]
     });
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
   }
 
 }
