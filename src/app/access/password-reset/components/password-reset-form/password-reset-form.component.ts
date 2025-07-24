@@ -6,13 +6,14 @@ import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'login-password-reset-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
