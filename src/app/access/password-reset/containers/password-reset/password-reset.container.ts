@@ -48,9 +48,9 @@ export class PasswordResetContainer {
    */
   public failures = new FailureStore();
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // Validate token from route
     route.paramMap.subscribe(params => {
       const token = params.get('token');

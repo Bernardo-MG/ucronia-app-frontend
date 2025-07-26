@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { Menu } from '@bernardo-mg/ui';
@@ -13,9 +13,9 @@ export class AssociationAdminLayoutContainer {
 
   public readonly menus: Menu[];
 
-  constructor(
-    associationAdminLayoutService: AssociationAdminLayoutService
-  ) {
+  constructor() {
+    const associationAdminLayoutService = inject(AssociationAdminLayoutService);
+
     this.menus = associationAdminLayoutService.getMenus();
   }
 

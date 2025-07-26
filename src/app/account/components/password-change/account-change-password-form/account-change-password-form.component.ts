@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
@@ -11,6 +11,8 @@ import { WaitingDirective } from '@bernardo-mg/ui';
     templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {
+  private fb = inject(FormBuilder);
+
 
   private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const pass = group.get('newPassword')?.value;
@@ -18,9 +20,7 @@ export class AccountChangePasswordFormComponent extends FormComponent<PasswordCh
     return pass === confirmPass ? null : { notSame: true }
   }
 
-  constructor(
-    private fb: FormBuilder
-  ) {
+  constructor() {
     super();
 
     this.form = this.fb.group({

@@ -26,9 +26,9 @@ export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusC
 
   private number = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new GameSystem());
     // Check permissions
     this.editable = authContainer.hasPermission("library_game_system", "update");

@@ -36,9 +36,9 @@ export class FeeCalendarWidgetContainer {
 
   public feeCalendar: FeeCalendar[] = [];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("fee", "create");
 

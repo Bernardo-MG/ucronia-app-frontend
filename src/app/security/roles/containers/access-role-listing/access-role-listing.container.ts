@@ -29,9 +29,9 @@ export class AccessRoleListingContainer {
 
   private sort = new Sorting();
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("role", "create");
 

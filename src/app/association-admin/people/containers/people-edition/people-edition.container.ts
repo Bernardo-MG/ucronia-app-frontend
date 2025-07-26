@@ -29,9 +29,9 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
 
   private number = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Person());
     // Check permissions
     this.editable = authContainer.hasPermission("person", "update");

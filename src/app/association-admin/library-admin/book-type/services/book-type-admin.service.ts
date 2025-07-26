@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -11,9 +11,9 @@ export class BookTypeAdminService {
 
   private readonly client;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) { 
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+ 
     this.client = clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 

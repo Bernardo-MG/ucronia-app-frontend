@@ -53,9 +53,9 @@ export class LoginContainer {
    */
   private readonly returnRoute: string;
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // get return url from route parameters or default to '/'
     this.returnRoute = route.snapshot.queryParams['returnUrl'] || '/';
   }

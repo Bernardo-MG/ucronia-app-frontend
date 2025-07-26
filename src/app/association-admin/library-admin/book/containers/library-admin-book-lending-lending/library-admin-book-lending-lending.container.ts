@@ -40,9 +40,9 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
 
   private index = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super();
     // Get id
     this.route.paramMap.subscribe(params => {

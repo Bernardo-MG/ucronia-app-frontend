@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { TransactionCurrentBalance } from '../../../../../models/transactions/transaction-current-balance';
@@ -16,7 +16,9 @@ export class FundsCurrentBalanceWidgetContainer {
 
   public balance = new TransactionCurrentBalance();
 
-  constructor(service: TransactionBalanceService) {
+  constructor() {
+    const service = inject(TransactionBalanceService);
+
     this.readingBalance = true;
     service.current().subscribe(b => {
       this.balance = b;

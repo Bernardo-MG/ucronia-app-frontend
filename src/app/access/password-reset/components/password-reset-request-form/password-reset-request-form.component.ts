@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -20,9 +20,9 @@ export class PasswordResetRequestFormComponent {
 
   public form: any;
 
-  constructor(
-    formBuilder: FormBuilder
-  ) {
+  constructor() {
+    const formBuilder = inject(FormBuilder);
+
     this.form = formBuilder.nonNullable.group({
       email: ['', [Validators.required, Validators.email]]
     });

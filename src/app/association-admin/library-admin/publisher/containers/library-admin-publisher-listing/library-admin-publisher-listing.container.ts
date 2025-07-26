@@ -46,9 +46,9 @@ export class LibraryAdminPublisherListingContainer {
 
   private sort = new Sorting();
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Load books
     this.load(0)
     // Check permissions

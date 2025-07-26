@@ -21,9 +21,9 @@ export class SettingsInfoEditorContainer {
 
   private readonly service = inject(AssociationSettingsService);
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.editable = authContainer.hasPermission("association_settings", "update");
 

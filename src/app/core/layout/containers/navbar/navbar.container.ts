@@ -38,9 +38,9 @@ export class NavbarContainer {
 
   public readonly adminLinks: MenuLink[];
 
-  constructor(
-    layoutService: LayoutService
-  ) {
+  constructor() {
+    const layoutService = inject(LayoutService);
+
     // App title
     this.title = layoutService.getTitle();
 

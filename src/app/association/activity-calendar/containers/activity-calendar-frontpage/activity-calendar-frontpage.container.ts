@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { ArticleComponent } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
@@ -16,9 +16,9 @@ export class ActivityCalendarFrontpageContainer {
 
   public calendarCode: string | undefined;
 
-  constructor(
-    service: ActivityCalendarService
-  ) {
+  constructor() {
+    const service = inject(ActivityCalendarService);
+
     service.getCalendarCode().subscribe({
       next: response => {
         this.calendarCode = response;

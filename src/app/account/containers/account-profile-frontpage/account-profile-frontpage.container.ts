@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
 import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
@@ -23,9 +23,9 @@ export class AccountProfileFrontpageContainer {
     return this.account.person as Person;
   }
 
-  constructor(
-    service: AccountService
-  ) {
+  constructor() {
+    const service = inject(AccountService);
+
     this.waiting = true;
     service.getAccount().subscribe({
       next: response => {

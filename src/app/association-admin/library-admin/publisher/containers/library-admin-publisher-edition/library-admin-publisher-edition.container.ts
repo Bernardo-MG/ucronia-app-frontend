@@ -26,9 +26,9 @@ export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusCo
 
   private number = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Publisher());
     // Check permissions
     this.editable = authContainer.hasPermission("library_publisher", "update");

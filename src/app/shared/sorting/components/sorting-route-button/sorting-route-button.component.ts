@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
@@ -20,10 +20,10 @@ export class SortingRouteButtonComponent {
 
   private readonly routeActuator: RouteApiActuator;
 
-  constructor(
-    router: Router,
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const route = inject(ActivatedRoute);
+
     this.routeActuator = new RouteApiActuator(router);
     new SortRouteObserver(route).subject.subscribe(p => {
       if (p) {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@bernardo-mg/form';
@@ -17,10 +17,10 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
+  private formBuilder = inject(FormBuilder);
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
+
+  constructor() {
     super();
 
     this.form = this.formBuilder.nonNullable.group({

@@ -26,11 +26,11 @@ export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserTok
 
   public view: string = 'details';
 
-  constructor(
-    fb: FormBuilder,
-    route: ActivatedRoute,
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+    const route = inject(ActivatedRoute);
+    const authContainer = inject(AuthContainer);
+
     super(new UserToken());
 
     this.extendExpirationForm = fb.group({

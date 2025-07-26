@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import { CardModule } from 'primeng/card';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
@@ -14,9 +14,9 @@ export class FeePaymentChartWidgetContainer {
 
   public report = new FeePaymentReport();
 
-  constructor(
-    service: FeeReportService
-  ) {
+  constructor() {
+    const service = inject(FeeReportService);
+
     service.getPaymentReport().subscribe({
       next: response => {
         this.report = response;

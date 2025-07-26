@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
@@ -14,10 +14,10 @@ import { WaitingDirective } from '@bernardo-mg/ui';
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
+  private formBuilder = inject(FormBuilder);
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
+
+  constructor() {
     super();
 
     this.form = this.formBuilder.nonNullable.group({

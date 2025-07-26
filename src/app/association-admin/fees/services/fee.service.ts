@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
@@ -16,9 +16,9 @@ export class FeeService {
 
   private readonly memberClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }

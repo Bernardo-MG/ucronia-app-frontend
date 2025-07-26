@@ -26,9 +26,9 @@ export class TransactionEditionComponent extends InfoEditorStatusComponent<Trans
 
   private index = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Transaction());
     // Check permissions
     this.editable = authContainer.hasPermission("transaction", "update");

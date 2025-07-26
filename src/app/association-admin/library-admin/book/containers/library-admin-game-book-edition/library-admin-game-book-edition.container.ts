@@ -74,9 +74,9 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   public view: string = '';
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new GameBook());
     // Check permissions
     this.editable = authContainer.hasPermission("library_book", "update");

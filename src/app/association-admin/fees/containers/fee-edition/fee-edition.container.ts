@@ -32,9 +32,9 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
 
   public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar')];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Fee());
     // Check permissions
     this.editable = authContainer.hasPermission("fee", "update");

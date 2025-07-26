@@ -1,5 +1,5 @@
 import { CommonModule, } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Language } from '@app/models/library/language';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
@@ -15,9 +15,9 @@ export class LibraryAdminBookCreationFormComponent extends FormComponent<BookInf
 
   @Input() public languages: Language[] = [];
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

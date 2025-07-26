@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FailureStore } from '@bernardo-mg/request';
@@ -11,7 +11,9 @@ import { FormComponent } from './form.component';
   imports: [ReactiveFormsModule]
 })
 class TestFormComponent extends FormComponent<any> {
-  constructor(private fb: FormBuilder) {
+  private fb = inject(FormBuilder);
+
+  constructor() {
     super();
 
     this.form = this.fb.group({

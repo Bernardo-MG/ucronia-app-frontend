@@ -40,10 +40,10 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
 
   private username = '';
 
-  constructor(
-    route: ActivatedRoute,
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const authContainer = inject(AuthContainer);
+
     super(new User());
     // Check permissions
     this.editable = authContainer.hasPermission("user", "update");

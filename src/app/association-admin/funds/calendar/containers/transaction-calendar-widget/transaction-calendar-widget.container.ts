@@ -36,9 +36,9 @@ export class TransactionCalendarWidgetContainer {
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("transaction", "create");
 

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Fee } from '@app/models/fees/fee';
 import { Member } from '@app/models/members/member';
@@ -20,9 +20,9 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
 
   public fullname = "";
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

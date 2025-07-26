@@ -41,9 +41,9 @@ export class PeopleListingContainer {
    */
   public reading = false;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("person", "create");
 

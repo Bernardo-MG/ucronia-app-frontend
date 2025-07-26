@@ -18,9 +18,9 @@ export class RouterBreadcrumbComponent {
 
   public breadcrumbs: BreadcrumbLink[] = [];
 
-  constructor(
-    router: Router
-  ) {
+  constructor() {
+    const router = inject(Router);
+
     // Handle initial load
     this.breadcrumbs = this.buildBreadcrumbs();
 

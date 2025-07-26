@@ -29,9 +29,9 @@ export class LibraryGameBookInfoContainer {
 
   public data = new GameBook();
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
 
     // Get id
     route.paramMap.subscribe(params => {

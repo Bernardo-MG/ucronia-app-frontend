@@ -27,9 +27,9 @@ export class LibraryFictionBookInfoContainer {
 
   public data = new FictionBook();
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
 
     // Get id
     route.paramMap.subscribe(params => {

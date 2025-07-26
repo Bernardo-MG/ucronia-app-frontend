@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
@@ -15,9 +15,9 @@ export class BookService {
 
   private readonly fictionClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.gameClient = clientProvider.url(environment.apiUrl + '/library/book/game');
     this.fictionClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
   }

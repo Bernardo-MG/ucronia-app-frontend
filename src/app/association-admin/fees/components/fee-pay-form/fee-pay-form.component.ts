@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
 import { Person } from '@app/models/person/person';
@@ -13,6 +13,8 @@ import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
+  private fb = inject(FormBuilder);
+
 
   @Input() public set person(value: Person) {
     this.form.get('person')?.get('number')?.setValue(value.number);
@@ -21,10 +23,10 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
 
   public fullname = "";
 
-  constructor(
-    private fb: FormBuilder
-  ) {
+  constructor() {
     super();
+    const fb = this.fb;
+
 
     this.form = fb.group({
       payment: fb.group({

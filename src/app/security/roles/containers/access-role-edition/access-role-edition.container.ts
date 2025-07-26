@@ -35,10 +35,10 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   @ViewChild('pickCloseButton') private pickCloseButton: any;
 
-  constructor(
-    route: ActivatedRoute,
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const authContainer = inject(AuthContainer);
+
     super(new Role());
     // Check permissions
     this.editable = false;

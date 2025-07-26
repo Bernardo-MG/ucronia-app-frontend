@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -77,9 +77,9 @@ export class LoginFormComponent {
    */
   public form;
 
-  constructor(
-    formBuilder: FormBuilder
-  ) {
+  constructor() {
+    const formBuilder = inject(FormBuilder);
+
     this.form = formBuilder.nonNullable.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
