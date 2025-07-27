@@ -29,9 +29,9 @@ export class UserActivationContainer {
   public validating = false;
 
   /**
-   * User activation flag. If set to true the component is waiting for the user actiation request to finish.
+   * Waiting flag. If set to true the component is waiting for the user actiation request to finish.
    */
-  public activating = false;
+  public waiting = false;
 
   /**
    * View status.
@@ -71,7 +71,7 @@ export class UserActivationContainer {
    * @param password new password for the user
    */
   public onActivateUser(password: string): void {
-    this.validating = true;
+    this.waiting = true;
 
     this.failures.clear();
 
@@ -80,7 +80,7 @@ export class UserActivationContainer {
     this.service.activateUser(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';
-        this.validating = false;
+        this.waiting = false;
       },
       error: error => {
         if (error instanceof FailureResponse) {
@@ -89,7 +89,7 @@ export class UserActivationContainer {
           this.failures.clear();
         }
         // Reactivate view
-        this.validating = false;
+        this.waiting = false;
 
         return throwError(() => error);
       }

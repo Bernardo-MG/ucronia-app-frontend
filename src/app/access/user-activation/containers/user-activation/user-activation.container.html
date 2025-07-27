@@ -9,7 +9,7 @@
       <ng-template #title>
         Activar usuario {{username}}
       </ng-template>
-      <access-user-activation-form [failures]="failures" [waiting]="activating"
+      <access-user-activation-form [failures]="failures" [waiting]="waiting"
         (save)="onActivateUser($event.password)"></access-user-activation-form>
     </p-card>
   </ng-container>
