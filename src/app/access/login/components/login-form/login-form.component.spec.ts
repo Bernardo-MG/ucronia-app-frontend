@@ -9,7 +9,8 @@ describe('LoginFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule, LoginFormComponent
+        BrowserAnimationsModule,
+        LoginFormComponent
       ]
     })
       .compileComponents();
