@@ -17,8 +17,8 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './password-reset-form.component.html'
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
-  private formBuilder = inject(FormBuilder);
 
+  private formBuilder = inject(FormBuilder);
 
   constructor() {
     super();
@@ -53,7 +53,7 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
   }
 
   /**
-   * Indicates if the passwords match.
+   * Indicates if the passwords match. If both are empty they are considered to not be matching.
    * 
    * @returns true if the passwords match, false otherwise
    */
@@ -61,7 +61,7 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
     const password = this.form.get('password').getRawValue();
     const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password === confirmPassword) && (password.length > 0);
+    return (password.length > 0) && (password === confirmPassword);
   }
 
 }

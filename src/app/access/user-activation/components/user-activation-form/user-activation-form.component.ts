@@ -2,20 +2,23 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { FormComponent } from '@bernardo-mg/form';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 /**
  * User activation form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
-  private formBuilder = inject(FormBuilder);
 
+  private formBuilder = inject(FormBuilder);
 
   constructor() {
     super();
@@ -58,7 +61,7 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
     const password = this.form.get('password').getRawValue();
     const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password === confirmPassword) && (password.length > 0);
+    return (password.length > 0) && (password === confirmPassword);
   }
 
 }
