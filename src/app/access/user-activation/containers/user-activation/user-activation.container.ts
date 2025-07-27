@@ -75,9 +75,9 @@ export class UserActivationContainer {
 
     this.failures.clear();
 
-    const reset = new UserActivate();
-    reset.password = password;
-    this.service.activateUser(this.token, reset).subscribe({
+    const activate = new UserActivate();
+    activate.password = password;
+    this.service.activateUser(this.token, activate).subscribe({
       next: response => {
         this.status = 'finished';
         this.waiting = false;
@@ -88,7 +88,6 @@ export class UserActivationContainer {
         } else {
           this.failures.clear();
         }
-        // Reactivate view
         this.waiting = false;
 
         return throwError(() => error);
