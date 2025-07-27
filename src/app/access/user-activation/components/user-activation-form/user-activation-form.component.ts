@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
@@ -20,13 +20,29 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
 
   private formBuilder = inject(FormBuilder);
 
+  private passwordsMatchValidator: ValidatorFn = (form: AbstractControl): ValidationErrors | null => {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    if (!password || !confirmPassword) {
+      return null; // skip until both fields are filled
+    }
+
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  };
+
   constructor() {
     super();
 
-    this.form = this.formBuilder.nonNullable.group({
-      password: ['', Validators.required],
-      confirmPassword: ['', [Validators.required]]
-    });
+    this.form = this.formBuilder.nonNullable.group(
+      {
+        password: ['', Validators.required],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validators: this.passwordsMatchValidator
+      }
+    );
   }
 
   public override get saveEnabled() {
