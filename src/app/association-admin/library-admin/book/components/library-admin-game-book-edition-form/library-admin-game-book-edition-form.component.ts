@@ -1,5 +1,5 @@
 import { CommonModule, } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
@@ -76,9 +76,9 @@ export class LibraryAdminGameBookEditionFormComponent extends FormComponent<Game
     this.form.get('gameSystem').setValue(data);
   }
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

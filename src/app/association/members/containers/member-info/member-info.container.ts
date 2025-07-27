@@ -21,7 +21,9 @@ export class MemberInfoContainer {
 
   public reading = false;
 
-  constructor(route: ActivatedRoute) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // Get id
     route.paramMap.subscribe(params => {
       const numParam = params.get('number');

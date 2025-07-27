@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BookLending } from '@app/models/library/book-lending';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -11,9 +11,9 @@ export class BookLendingService {
 
   private readonly lendingClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
   }
 

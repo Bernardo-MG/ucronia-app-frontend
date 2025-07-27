@@ -5,14 +5,15 @@ import { TransactionService } from '@app/association-admin/funds/core/service/tr
 import { Transaction } from '@app/models/transactions/transaction';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
 import { TransactionInfoComponent } from '../../components/transaction-info/transaction-info.component';
 
 @Component({
   selector: 'assoc-transaction-edition',
-  imports: [CommonModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> {
@@ -25,9 +26,9 @@ export class TransactionEditionComponent extends InfoEditorStatusComponent<Trans
 
   private index = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Transaction());
     // Check permissions
     this.editable = authContainer.hasPermission("transaction", "update");

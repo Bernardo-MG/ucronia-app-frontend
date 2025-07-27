@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { BlockUIModule } from 'primeng/blockui';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
 import { UserActivate } from '../../models/user-activate';
@@ -15,7 +16,7 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  */
 @Component({
   selector: 'access-user-activation',
-  imports: [CommonModule, UserActivationFormComponent, CardComponent, CardBodyComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUIModule],
   templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer {
@@ -28,9 +29,9 @@ export class UserActivationContainer {
   public validating = false;
 
   /**
-   * User activation flag. If set to true the component is waiting for the user actiation request to finish.
+   * Waiting flag. If set to true the component is waiting for the user actiation request to finish.
    */
-  public activating = false;
+  public waiting = false;
 
   /**
    * View status.
@@ -52,9 +53,9 @@ export class UserActivationContainer {
    */
   public failures = new FailureStore();
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // Validate token from route
     route.paramMap.subscribe(params => {
       const token = params.get('token');
@@ -70,16 +71,16 @@ export class UserActivationContainer {
    * @param password new password for the user
    */
   public onActivateUser(password: string): void {
-    this.validating = true;
+    this.waiting = true;
 
     this.failures.clear();
 
-    const reset = new UserActivate();
-    reset.password = password;
-    this.service.activateUser(this.token, reset).subscribe({
+    const activate = new UserActivate();
+    activate.password = password;
+    this.service.activateUser(this.token, activate).subscribe({
       next: response => {
         this.status = 'finished';
-        this.validating = false;
+        this.waiting = false;
       },
       error: error => {
         if (error instanceof FailureResponse) {
@@ -87,8 +88,7 @@ export class UserActivationContainer {
         } else {
           this.failures.clear();
         }
-        // Reactivate view
-        this.validating = false;
+        this.waiting = false;
 
         return throwError(() => error);
       }

@@ -4,8 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Member } from '@app/models/members/member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
@@ -14,13 +15,13 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-edition',
-  imports: [CommonModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+  imports: [CommonModule, CardModule, AccessUserFormComponent, ArticleComponent, ModalComponent, AccessUserInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> {
-  
+
   private readonly service = inject(AccessUserService);
-  
+
   private readonly router = inject(Router);
 
   public readingRoleSelection = false;
@@ -39,10 +40,10 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
 
   private username = '';
 
-  constructor(
-    route: ActivatedRoute,
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+    const authContainer = inject(AuthContainer);
+
     super(new User());
     // Check permissions
     this.editable = authContainer.hasPermission("user", "update");

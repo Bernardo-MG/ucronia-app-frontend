@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@bernardo-mg/authentication';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -13,9 +13,9 @@ export class AccessUserFormComponent extends FormComponent<User> {
 
   @Input() public create = true;
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

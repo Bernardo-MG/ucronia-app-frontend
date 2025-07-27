@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
 import { Donation } from '@app/models/library/donation';
@@ -24,9 +24,9 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation>
 
   public currentDonors: Donor[] = [];
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

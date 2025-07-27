@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
@@ -19,10 +19,10 @@ export class PaginationSizeSelectorComponent {
 
   private readonly routeActuator: RouteApiActuator;
 
-  constructor(
-    router: Router,
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const router = inject(Router);
+    const route = inject(ActivatedRoute);
+
     this.routeActuator = new RouteApiActuator(router);
     new PaginationRouteObserver(route).subject.subscribe(p => {
       if ((p) && (p.size)) {

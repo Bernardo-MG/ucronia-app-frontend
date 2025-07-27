@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { Transaction } from '../../../../../models/transactions/transaction';
@@ -11,9 +11,9 @@ import { Transaction } from '../../../../../models/transactions/transaction';
 })
 export class TransactionFormComponent extends FormComponent<Transaction> {
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

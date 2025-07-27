@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -13,9 +13,9 @@ export class PasswordResetService {
 
   private readonly client;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.client = clientProvider.url(environment.apiUrl + '/password/reset');
   }
 

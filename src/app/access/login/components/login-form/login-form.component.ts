@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { UserLogin } from '../../models/user-login';
 
 /**
@@ -12,27 +15,27 @@ import { UserLogin } from '../../models/user-login';
  */
 @Component({
   selector: 'login-login-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
   templateUrl: './login-form.component.html'
 })
 export class LoginFormComponent {
 
   /**
-   * Waiting flag. Shows the waiting visual cue and disables the form.
+   * loading flag. Shows the loading visual cue and disables the form.
    */
-  private _waiting = false;
+  private _loading = false;
 
-  @Input() public set waiting(flag: boolean) {
-    this._waiting = flag;
-    if (this._waiting) {
+  @Input() public set loading(flag: boolean) {
+    this._loading = flag;
+    if (this._loading) {
       this.form.disable();
     } else {
       this.form.enable();
     }
   }
 
-  public get waiting() {
-    return this._waiting;
+  public get loading() {
+    return this._loading;
   }
 
   /**
@@ -51,17 +54,22 @@ export class LoginFormComponent {
   @Output() public rememberMe = new EventEmitter<boolean>();
 
   /**
+   * Lost password event. Sent when the user clicks on the lost password option.
+   */
+  @Output() public lostPassword = new EventEmitter<void>();
+
+  /**
    * Login enabled flag.
    */
   public get loginEnabled(): boolean {
-    return ((this.form.valid) && (!this.waiting));
+    return ((this.form.valid) && (!this.loading));
   }
 
   /**
    * Remember me enabled flag.
    */
   public get rememberMeEnabled(): boolean {
-    return (!this.waiting);
+    return (!this.loading);
   }
 
   /**
@@ -69,9 +77,9 @@ export class LoginFormComponent {
    */
   public form;
 
-  constructor(
-    formBuilder: FormBuilder
-  ) {
+  constructor() {
+    const formBuilder = inject(FormBuilder);
+
     this.form = formBuilder.nonNullable.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -96,37 +104,6 @@ export class LoginFormComponent {
    */
   public onRememberMe(event: any) {
     this.rememberMe.emit(event.checked);
-  }
-
-  /**
-   * Checks if the form field is invalid.
-   * 
-   * @param property property to check
-   * @returns true if the form is invalid, false otherwise
-   */
-  public isFieldInvalid(property: string): boolean {
-    let invalid: boolean;
-
-    if (this.form.invalid) {
-      // Form invalid
-      // So this field may be invalid
-
-      const formField = this.form.get(property);
-      if (formField) {
-        // Check the field status
-        invalid = (formField?.dirty || formField?.touched) && (formField?.errors != null);
-      } else {
-        // Invalid property
-        // Can't be invalid
-        invalid = false;
-      }
-    } else {
-      // Form valid
-      // No field is invalid
-      invalid = false;
-    }
-
-    return invalid;
   }
 
 }

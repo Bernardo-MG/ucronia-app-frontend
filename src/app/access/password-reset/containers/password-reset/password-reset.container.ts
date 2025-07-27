@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BlockUiDirective } from '@bernardo-mg/ui';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { BlockUIModule } from 'primeng/blockui';
+import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
 import { PasswordReset } from '../../models/password-reset';
@@ -15,7 +16,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset',
-  imports: [CommonModule, PasswordResetFormComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, BlockUIModule, PasswordResetFormComponent],
   templateUrl: './password-reset.container.html'
 })
 export class PasswordResetContainer {
@@ -28,9 +29,9 @@ export class PasswordResetContainer {
   public validating = false;
 
   /**
-   * Password reset flag. If set to true the component is waiting for the password change request to finish.
+   * Waiting flag. If set to true the component is waiting for the password change request to finish.
    */
-  public reseting = false;
+  public waiting = false;
 
   /**
    * View status.
@@ -47,9 +48,9 @@ export class PasswordResetContainer {
    */
   public failures = new FailureStore();
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // Validate token from route
     route.paramMap.subscribe(params => {
       const token = params.get('token');
@@ -65,7 +66,7 @@ export class PasswordResetContainer {
    * @param password new password for the user
    */
   public onPasswordReset(password: string): void {
-    this.reseting = true;
+    this.waiting = true;
 
     this.failures.clear();
 
@@ -74,7 +75,7 @@ export class PasswordResetContainer {
     this.service.resetPassword(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';
-        this.reseting = false;
+        this.waiting = false;
       },
       error: error => {
         if (error instanceof FailureResponse) {
@@ -82,7 +83,7 @@ export class PasswordResetContainer {
         } else {
           this.failures.clear();
         }
-        this.reseting = false;
+        this.waiting = false;
 
         return throwError(() => error);
       }

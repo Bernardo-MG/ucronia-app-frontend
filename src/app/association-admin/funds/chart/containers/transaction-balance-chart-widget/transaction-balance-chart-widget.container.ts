@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
-import { CardBodyComponent, CardComponent, CardHeaderComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-widget',
-  imports: [CommonModule, TransactionBalanceChartComponent, CardComponent, CardBodyComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, TransactionBalanceChartComponent],
   templateUrl: './transaction-balance-chart-widget.container.html'
 })
 export class TransactionBalanceChartWidgetContainer {

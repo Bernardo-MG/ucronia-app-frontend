@@ -1,15 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
 import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
     selector: 'account-profile-frontpage',
-    imports: [CommonModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective, CardComponent, CardBodyComponent],
+    imports: [CommonModule, CardModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
     templateUrl: './account-profile-frontpage.container.html'
 })
 export class AccountProfileFrontpageContainer {
@@ -22,9 +23,9 @@ export class AccountProfileFrontpageContainer {
     return this.account.person as Person;
   }
 
-  constructor(
-    service: AccountService
-  ) {
+  constructor() {
+    const service = inject(AccountService);
+
     this.waiting = true;
     service.getAccount().subscribe({
       next: response => {

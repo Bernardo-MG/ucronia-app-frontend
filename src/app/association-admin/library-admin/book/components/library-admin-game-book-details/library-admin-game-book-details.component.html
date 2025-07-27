@@ -1,103 +1,101 @@
-<ui-card>
-  <ui-card-header>
-    <h2 *uiPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</h2>
+<p-card>
+  <ng-template #header>
     <!-- Tabs -->
     <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
-  </ui-card-header>
+  </ng-template>
+  <ng-template #title>
+    <div *uiPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</div>
+  </ng-template>
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
-      <ui-card-body>
-        <!-- Number -->
-        <div class="row">
-          <div class="col-3" *uiPlaceholder="waiting">
-            # {{data.number}}
-          </div>
+      <!-- Number -->
+      <div class="row">
+        <div class="col-3" *uiPlaceholder="waiting">
+          # {{data.number}}
         </div>
-        <!-- First name -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">ISBN</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{data.isbn}}
-          </div>
+      </div>
+      <!-- First name -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">ISBN</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{data.isbn}}
         </div>
-        <!-- Title -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Título</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            <sup>{{data.title.supertitle}}</sup>
-            {{data.title.title}}
-            <sub>{{data.title.subtitle}}</sub>
-          </div>
+      </div>
+      <!-- Title -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Título</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          <sup>{{data.title.supertitle}}</sup>
+          {{data.title.title}}
+          <sub>{{data.title.subtitle}}</sub>
         </div>
-        <!-- Language -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Idioma</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{language}}
-          </div>
+      </div>
+      <!-- Language -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Idioma</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{language}}
         </div>
-        <!-- Publish date -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Fecha de publicación</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{data.publishDate}}
-          </div>
+      </div>
+      <!-- Publish date -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Fecha de publicación</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{data.publishDate}}
         </div>
-        <!-- Authors -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Autor</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{authors}}
-          </div>
+      </div>
+      <!-- Authors -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Autor</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{authors}}
         </div>
-        <!-- Publishers -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Editor</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{publishers}}
-          </div>
+      </div>
+      <!-- Publishers -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Editor</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{publishers}}
         </div>
-        <!-- Book type -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Tipo</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{data.bookType?.name}}
-          </div>
+      </div>
+      <!-- Book type -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Tipo</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{data.bookType?.name}}
         </div>
-        <!-- Game system -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Sistema</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{data.gameSystem?.name}}
-          </div>
+      </div>
+      <!-- Game system -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Sistema</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{data.gameSystem?.name}}
         </div>
-      </ui-card-body>
+      </div>
     </ng-container>
     <ng-container *ngSwitchCase="'donors'">
       <!-- Donors -->
-      <ui-card-body>
-        <!-- Donation date -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Fecha de donación</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{data.donation?.date}}
-          </div>
+      <!-- Donation date -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Fecha de donación</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{data.donation?.date}}
         </div>
-        <!-- Donors -->
-        <div class="row">
-          <div class="col-sm-3 text-primary">Donante</div>
-          <div class="col-sm-9" *uiPlaceholder="waiting">
-            {{donors}}
-          </div>
+      </div>
+      <!-- Donors -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Donante</div>
+        <div class="col-sm-9" *uiPlaceholder="waiting">
+          {{donors}}
         </div>
-      </ui-card-body>
+      </div>
     </ng-container>
     <ng-container *ngSwitchCase="'lendings'">
       <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
     </ng-container>
   </ng-container>
-  <ui-card-footer *ngIf="showMenu">
+  <ng-template #footer>
     <ng-container [ngSwitch]="view">
       <ng-container *ngSwitchCase="'lendings'">
         <!-- Lend button -->
@@ -123,5 +121,5 @@
           (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
       </ng-container>
     </ng-container>
-  </ui-card-footer>
-</ui-card>
+  </ng-template>
+</p-card>

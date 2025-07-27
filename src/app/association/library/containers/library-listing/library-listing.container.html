@@ -1,7 +1,7 @@
 <ui-article>
   <!-- Books list -->
-  <ui-card>
-    <ui-card-header>
+  <p-card>
+    <ng-template #title>
       <div class="row">
         <div class="col-sm-3">
           <select [disabled]="reading" class="form-select form-select-sm" aria-label="Filter person status"
@@ -11,14 +11,12 @@
           </select>
         </div>
       </div>
-    </ui-card-header>
-    <ui-card-body>
-      <assoc-library-book-list [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-        (directionChange)="onChangeDirection($event)"></assoc-library-book-list>
-    </ui-card-body>
-    <ui-card-footer>
+    </ng-template>
+    <assoc-library-book-list [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+      (directionChange)="onChangeDirection($event)"></assoc-library-book-list>
+    <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </ui-card-footer>
-  </ui-card>
+    </ng-template>
+  </p-card>
 </ui-article>

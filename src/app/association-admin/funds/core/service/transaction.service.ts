@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -11,9 +11,9 @@ export class TransactionService {
 
   private readonly client;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.client = clientProvider.url(environment.apiUrl + '/funds/transaction');
   }
 

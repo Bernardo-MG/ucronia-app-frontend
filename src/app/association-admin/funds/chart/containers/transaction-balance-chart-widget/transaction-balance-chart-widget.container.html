@@ -1,9 +1,7 @@
-<ui-card>
-  <ui-card-header>
+<p-card>
+  <ng-template #title>
     Evolución
-  </ui-card-header>
-  <ui-card-body>
-    <assoc-transaction-balance-chart [waiting]="waiting" [balance]="balance" [(startMonth)]="startMonth"
-      [(endMonth)]="endMonth" [months]="months"></assoc-transaction-balance-chart>
-  </ui-card-body>
-</ui-card>
+  </ng-template>
+  <assoc-transaction-balance-chart [waiting]="waiting" [balance]="balance" [(startMonth)]="startMonth"
+    [(endMonth)]="endMonth" [months]="months"></assoc-transaction-balance-chart>
+</p-card>

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, ViewMenuLoader } from '@bernardo-mg/ui';
 import { ASSOCIATION_ADMIN_FUNDS_MENU_OPTIONS } from './association-admin-funds-menu-options';
@@ -12,9 +12,9 @@ export class AssociationAdminFeesLayoutService {
 
   private fundsMenus: Menu[] = [];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     this.menuLoader = new ViewMenuLoader(authContainer);
 
     this.loadMenus();

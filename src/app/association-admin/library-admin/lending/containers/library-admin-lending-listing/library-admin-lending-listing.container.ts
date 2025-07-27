@@ -4,14 +4,15 @@ import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { AssocLibraryAdminLendingListComponent } from '../../components/assoc-library-admin-lending-list/assoc-library-admin-lending-list.component';
 import { BookLendingService } from '../../services/book-lending.service';
 
 @Component({
   selector: 'app-library-admin-lending-listing',
-  imports: [CommonModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, BlockUiDirective],
   templateUrl: './library-admin-lending-listing.container.html'
 })
 export class LibraryAdminLendingListingContainer {
@@ -44,9 +45,9 @@ export class LibraryAdminLendingListingContainer {
 
   private sort = new Sorting();
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Load books
     this.load(0);
     // Check permissions

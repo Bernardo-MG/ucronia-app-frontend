@@ -1,21 +1,19 @@
 <ui-article>
   <!-- List -->
-  <ui-card>
-    <ui-card-header>
+  <p-card>
+    <ng-template #header>
       <!-- Add role -->
       <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/roles/add"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
         <icon-add></icon-add>
       </button>
-    </ui-card-header>
-    <ui-card-body>
-      <!-- List -->
-      <access-role-selection-list [roles]="data.content" (changeDirection)="onChangeDirection($event)"
-        [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
-    </ui-card-body>
-    <ui-card-footer>
+    </ng-template>
+    <!-- List -->
+    <access-role-selection-list [roles]="data.content" (changeDirection)="onChangeDirection($event)"
+      [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
+    <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </ui-card-footer>
-  </ui-card>
+    </ng-template>
+  </p-card>
 </ui-article>

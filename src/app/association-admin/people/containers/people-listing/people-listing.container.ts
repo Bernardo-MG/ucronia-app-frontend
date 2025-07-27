@@ -8,15 +8,16 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { debounceTime, Subject } from 'rxjs';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
-  imports: [FormsModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, CardModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer {
@@ -40,9 +41,9 @@ export class PeopleListingContainer {
    */
   public reading = false;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("person", "create");
 

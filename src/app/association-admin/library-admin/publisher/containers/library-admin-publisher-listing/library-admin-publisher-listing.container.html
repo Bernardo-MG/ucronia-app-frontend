@@ -1,36 +1,34 @@
 <ui-article>
-  <ui-card>
-    <ui-card-header>
+  <p-card>
+    <ng-template #header>
       <!-- Add person -->
       <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
         <icon-add></icon-add>
       </button>
-    </ui-card-header>
-    <ui-card-body>
-      <table *uiBlock="reading" class="table table-hover">
-        <thead>
-          <tr>
-            <!-- Headers -->
-            <th scope="col">
-              Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
-            </th>
-          </tr>
-        </thead>
-        <tbody class="table-group-divider">
-          <tr *ngFor="let publisher of data.content; let rowIndex = index" role="button"
-            routerLink="{{publisher.number}}">
-            <!-- Cells -->
-            <td>
-              {{publisher.name}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </ui-card-body>
-    <ui-card-footer>
+    </ng-template>
+    <table *uiBlock="reading" class="table table-hover">
+      <thead>
+        <tr>
+          <!-- Headers -->
+          <th scope="col">
+            Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)"></sorting-button>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let publisher of data.content; let rowIndex = index" role="button"
+          routerLink="{{publisher.number}}">
+          <!-- Cells -->
+          <td>
+            {{publisher.name}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </ui-card-footer>
-  </ui-card>
+    </ng-template>
+  </p-card>
 </ui-article>

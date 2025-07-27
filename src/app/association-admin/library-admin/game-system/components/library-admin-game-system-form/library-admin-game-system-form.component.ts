@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GameSystem } from '@app/models/library/game-system';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -11,9 +11,9 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 })
 export class LibraryAdminGameSystemFormComponent extends FormComponent<GameSystem> {
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

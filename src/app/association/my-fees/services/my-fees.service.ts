@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -11,9 +11,9 @@ export class MyFeesService {
 
   private readonly client;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.client = clientProvider.url(environment.apiUrl + '/user/fee');
   }
 

@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 import { PasswordResetRequest } from '../../models/password-reset-request';
 
 /**
@@ -10,19 +11,31 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
  */
 @Component({
   selector: 'login-password-reset-request-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
   templateUrl: './password-reset-request-form.component.html'
 })
-export class PasswordResetRequestFormComponent extends FormComponent<PasswordResetRequest> {
+export class PasswordResetRequestFormComponent {
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
-    super();
+  @Output() public save = new EventEmitter<PasswordResetRequest>();
 
-    this.form = this.formBuilder.nonNullable.group({
+  public form: any;
+
+  constructor() {
+    const formBuilder = inject(FormBuilder);
+
+    this.form = formBuilder.nonNullable.group({
       email: ['', [Validators.required, Validators.email]]
     });
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
   }
 
 }

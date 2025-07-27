@@ -1,11 +1,9 @@
 <ui-article>
   <div uiResponsiveShortColumns>
-    <ui-card>
-      <ui-card-body>
-        <!-- Form -->
-        <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
-        </access-role-form>
-      </ui-card-body>
-    </ui-card>
+    <p-card>
+      <!-- Form -->
+      <access-role-form [waiting]="saving" [failures]="failures" (save)="onSave($event)">
+      </access-role-form>
+    </p-card>
   </div>
 </ui-article>

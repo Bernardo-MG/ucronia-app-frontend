@@ -1,29 +1,48 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { FormComponent } from '@bernardo-mg/form';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 /**
  * User activation form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
+  private formBuilder = inject(FormBuilder);
+
+  private passwordsMatchValidator: ValidatorFn = (form: AbstractControl): ValidationErrors | null => {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+
+    if (!password || !confirmPassword) {
+      return null; // skip until both fields are filled
+    }
+
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  };
+
+  constructor() {
     super();
 
-    this.form = this.formBuilder.nonNullable.group({
-      password: ['', Validators.required],
-      confirmPassword: ['', [Validators.required]]
-    });
+    this.form = this.formBuilder.nonNullable.group(
+      {
+        password: ['', Validators.required],
+        confirmPassword: ['', [Validators.required]]
+      },
+      {
+        validators: this.passwordsMatchValidator
+      }
+    );
   }
 
   public override get saveEnabled() {
@@ -58,7 +77,7 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
     const password = this.form.get('password').getRawValue();
     const confirmPassword = this.form.get('confirmPassword').getRawValue();
 
-    return (password === confirmPassword) && (password.length > 0);
+    return (password.length > 0) && (password === confirmPassword);
   }
 
 }

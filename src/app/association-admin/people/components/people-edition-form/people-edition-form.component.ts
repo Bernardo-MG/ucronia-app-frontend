@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
@@ -16,9 +16,9 @@ export class PeopleEditionFormComponent extends FormComponent<Person> {
     return !!((this.data) && (this.data.membership));
   }
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     const membership = new Membership();

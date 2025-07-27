@@ -10,8 +10,8 @@
   </div>
   <div class="row">
     <!-- Member List -->
-    <ui-card>
-      <ui-card-header>
+    <p-card>
+      <ng-template #header>
         <div class="row">
           <div class="col-sm-3">
             <!-- Add person -->
@@ -34,18 +34,16 @@
               (input)="nameFilterSubject.next(nameFilter)" aria-describedby="nameFilterLabel" maxlength="50">
           </div>
         </div>
-      </ui-card-header>
-      <ui-card-body>
-        <!-- List -->
-        <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-          (changeDirection)="onChangeDirection($event)">
-        </assoc-people-list>
-      </ui-card-body>
-      <ui-card-footer>
+      </ng-template>
+      <!-- List -->
+      <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
+        (changeDirection)="onChangeDirection($event)">
+      </assoc-people-list>
+      <ng-template #footer>
         <!-- Pagination -->
         <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
           [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-      </ui-card-footer>
-    </ui-card>
+      </ng-template>
+    </p-card>
   </div>
 </ui-article>

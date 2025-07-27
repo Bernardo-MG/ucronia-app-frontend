@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { ArticleComponent, CardBodyComponent, CardComponent } from '@bernardo-mg/ui';
+import { ArticleComponent } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
   selector: 'app-activity-calendar-frontpage',
-  imports: [ArticleComponent, TeamupCalendarComponent, CardComponent, CardBodyComponent],
+  imports: [CommonModule, CardModule, ArticleComponent, TeamupCalendarComponent],
   templateUrl: './activity-calendar-frontpage.container.html'
 })
 export class ActivityCalendarFrontpageContainer {
@@ -14,9 +16,9 @@ export class ActivityCalendarFrontpageContainer {
 
   public calendarCode: string | undefined;
 
-  constructor(
-    service: ActivityCalendarService
-  ) {
+  constructor() {
+    const service = inject(ActivityCalendarService);
+
     service.getCalendarCode().subscribe({
       next: response => {
         this.calendarCode = response;

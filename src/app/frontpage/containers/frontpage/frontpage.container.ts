@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
@@ -12,6 +12,8 @@ import { ArticleComponent } from '@bernardo-mg/ui';
     styleUrls: ['./frontpage.container.sass']
 })
 export class FrontpageComponent {
+  private service = inject(FrontpageService);
+
 
   public calendarCode: string | undefined;
 
@@ -21,9 +23,7 @@ export class FrontpageComponent {
 
   public readonly emailLink;
 
-  constructor(
-    private service: FrontpageService
-  ) { 
+  constructor() { 
     // Read calendar code
     this.service.getCalendarCode().subscribe({
       next: response => {

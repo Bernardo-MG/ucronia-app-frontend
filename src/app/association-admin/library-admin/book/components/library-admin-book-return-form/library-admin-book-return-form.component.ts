@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookReturned } from '@app/models/library/book-returned';
 import { Member } from '@app/models/members/member';
@@ -31,9 +31,9 @@ export class LibraryAdminBookReturnFormComponent extends FormComponent<BookRetur
 
   public memberName = '';
 
-  constructor(
-    fb: FormBuilder
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+
     super();
 
     this.form = fb.group({

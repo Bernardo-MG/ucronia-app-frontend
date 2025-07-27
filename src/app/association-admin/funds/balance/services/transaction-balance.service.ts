@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -14,9 +14,9 @@ export class TransactionBalanceService {
 
   private readonly monthlyBalanceClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.balanceClient = clientProvider.url(environment.apiUrl + '/funds/balance');
     this.monthlyBalanceClient = clientProvider.url(environment.apiUrl + '/funds/balance/monthly');
   }

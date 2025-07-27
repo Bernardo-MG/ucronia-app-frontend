@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FailureStore } from '@bernardo-mg/request';
@@ -11,7 +11,9 @@ import { FormComponent } from './form.component';
   imports: [ReactiveFormsModule]
 })
 class TestFormComponent extends FormComponent<any> {
-  constructor(private fb: FormBuilder) {
+  private fb = inject(FormBuilder);
+
+  constructor() {
     super();
 
     this.form = this.fb.group({
@@ -114,23 +116,6 @@ describe('FormComponent', () => {
     component.readonly = false;
     component.waiting = false;
     expect(component.cancelEnabled).toBeFalse();
-  });
-
-  it('a field with errors is invalid', () => {
-    const failures = new FailureStore();
-    component.failures = failures;
-    const control = component.form.get('name');
-    control?.setErrors({ required: true });
-    control?.markAsTouched();
-    fixture.detectChanges();
-    expect(component.isFieldInvalid('name')).toBeTrue();
-  });
-
-  it('a field with failures is invalid', () => {
-    const failures = new FailureStore();
-    spyOn(failures, 'hasFailures').and.returnValue(true);
-    component.failures = failures;
-    expect(component.isFieldInvalid('email')).toBeTrue();
   });
 
 });

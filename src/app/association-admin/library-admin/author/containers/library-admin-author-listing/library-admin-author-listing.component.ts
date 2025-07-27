@@ -6,13 +6,14 @@ import { PaginationInfoComponent } from '@app/shared/pagination/components/pagin
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BlockUiDirective, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-listing',
-  imports: [CommonModule, RouterModule, SortingButtonComponent, ArticleComponent, IconAddComponent, PaginationInfoComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent, BlockUiDirective],
+  imports: [CommonModule, CardModule, RouterModule, SortingButtonComponent, ArticleComponent, IconAddComponent, PaginationInfoComponent, BlockUiDirective],
   templateUrl: './library-admin-author-listing.component.html'
 })
 export class LibraryAdminAuthorListingContainer {
@@ -45,9 +46,9 @@ export class LibraryAdminAuthorListingContainer {
 
   public readonly createPermission;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Load books
     this.load(0)
     // Check permissions

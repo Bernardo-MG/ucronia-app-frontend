@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -15,9 +15,9 @@ export class AccountService {
 
   private readonly passwordChangeClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.passwordChangeClient = clientProvider.url(environment.apiUrl + '/password/change');
     this.accountClient = clientProvider.url(environment.apiUrl + '/account');
   }

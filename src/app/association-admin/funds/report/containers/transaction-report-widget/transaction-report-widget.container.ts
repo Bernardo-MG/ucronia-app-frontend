@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IconExcelComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { TransactionReportService } from '../../services/transaction-report.service';
 
 @Component({
   selector: 'assoc-transaction-report-widget',
-  imports: [CommonModule, IconExcelComponent, CardComponent, CardBodyComponent, CardHeaderComponent, WaitingDirective, JustifyCenterDirective],
+  imports: [CommonModule, CardModule, IconExcelComponent, WaitingDirective, JustifyCenterDirective],
   templateUrl: './transaction-report-widget.container.html'
 })
 export class TransactionReportWidgetContainer {

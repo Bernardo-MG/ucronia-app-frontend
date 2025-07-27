@@ -1,15 +1,11 @@
-<ui-card>
-  <ui-card-header>
+<p-card>
+  <ng-template #title>
     <!-- Add transaction -->
     <button type="button" class="btn btn-link" aria-label="register" routerLink="add" [disabled]="!createPermission"
       [attr.aria-disabled]="!createPermission">
       <icon-add></icon-add>
     </button>
-  </ui-card-header>
-  <ui-card-body>
+  </ng-template>
     <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
       (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)"></shared-calendar-month>
-    <div class="mt-2" uiJustifyCenter>
-    </div>
-  </ui-card-body>
-</ui-card>
+</p-card>

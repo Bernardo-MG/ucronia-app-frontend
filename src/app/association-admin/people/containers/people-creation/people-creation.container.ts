@@ -1,15 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@app/models/person/person';
 import { CreateComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { PeopleCreationFormComponent } from '../../components/people-creation-form/people-creation-form.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-creation',
-  imports: [PeopleCreationFormComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-creation.container.html'
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {

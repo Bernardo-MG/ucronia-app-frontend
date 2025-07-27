@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Publisher } from '@app/models/library/publisher';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, PlaceholderDirective } from '@bernardo-mg/ui';
+import { PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-publisher-info',
-  imports: [CommonModule, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardHeaderComponent, CardFooterComponent],
+  imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
   templateUrl: './library-admin-publisher-info.component.html'
 })
 export class LibraryAdminPublisherInfoComponent {

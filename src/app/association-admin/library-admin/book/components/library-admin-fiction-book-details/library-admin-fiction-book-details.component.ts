@@ -6,11 +6,12 @@ import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconTakeInComponent, IconTakeOutComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardNavigationComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-details',
-  imports: [CommonModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, CardNavigationComponent],
+  imports: [CommonModule, CardModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardNavigationComponent],
   templateUrl: './library-admin-fiction-book-details.component.html'
 })
 export class LibraryAdminFictionBookDetailsComponent {

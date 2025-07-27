@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { CardModule } from 'primeng/card';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';
 import { UserLogin } from '../../models/user-login';
 import { LoginService } from '../../services/login.service';
@@ -22,7 +24,7 @@ import { LoginService } from '../../services/login.service';
  */
 @Component({
   selector: 'login-card',
-  imports: [RouterModule, LoginFormComponent],
+  imports: [CommonModule, RouterModule, CardModule, LoginFormComponent],
   templateUrl: './login.container.html'
 })
 export class LoginContainer {
@@ -51,9 +53,9 @@ export class LoginContainer {
    */
   private readonly returnRoute: string;
 
-  constructor(
-    route: ActivatedRoute
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute);
+
     // get return url from route parameters or default to '/'
     this.returnRoute = route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -105,6 +107,13 @@ export class LoginContainer {
    */
   public onRememberMe(remember: boolean) {
     this.rememberMe = remember;
+  }
+
+  /**
+   * Handler for the lost password event, fired by the form.
+   */
+  public onLostPassword() {
+    this.router.navigate(['/password/reset']);
   }
 
 }

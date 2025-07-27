@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Month } from '@app/shared/calendar/models/month';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -16,9 +16,9 @@ export class TransactionCalendarService {
 
   private readonly calendarRangeClient;
 
-  constructor(
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.calendarClient = clientProvider.url(environment.apiUrl + '/funds/calendar');
     this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/funds/calendar/range');
   }

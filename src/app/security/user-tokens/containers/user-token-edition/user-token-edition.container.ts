@@ -4,7 +4,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent, ModalComponent, ResponsiveShortColumnsDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { UserTokenInfoComponent } from '../../components/user-token-info/user-token-info.component';
 import { UserTokenStatusComponent } from '../../components/user-token-status/user-token-status.component';
@@ -12,7 +13,7 @@ import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
   selector: 'access-user-token-edition',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, ModalComponent, UserTokenStatusComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent, WaitingDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, ModalComponent, UserTokenStatusComponent, WaitingDirective, ResponsiveShortColumnsDirective],
   templateUrl: './user-token-edition.container.html'
 })
 export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> {
@@ -25,11 +26,11 @@ export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserTok
 
   public view: string = 'details';
 
-  constructor(
-    fb: FormBuilder,
-    route: ActivatedRoute,
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const fb = inject(FormBuilder);
+    const route = inject(ActivatedRoute);
+    const authContainer = inject(AuthContainer);
+
     super(new UserToken());
 
     this.extendExpirationForm = fb.group({

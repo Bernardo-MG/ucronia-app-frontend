@@ -6,14 +6,15 @@ import { FictionBook } from '@app/models/library/fiction-book';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-creation',
-  imports: [CommonModule, LibraryAdminBookCreationFormComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminBookCreationFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-creation.container.html'
 })
 export class LibraryAdminFictionBookCreationContainer extends CreateComponent<FictionBook> {

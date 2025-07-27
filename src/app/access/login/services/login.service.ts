@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -9,13 +9,14 @@ import { UserLogin } from '../models/user-login';
   providedIn: "root"
 })
 export class LoginService {
+  private authContainer = inject(AuthContainer);
+
 
   private readonly client;
 
-  constructor(
-    private authContainer: AuthContainer,
-    clientProvider: AngularCrudClientProvider
-  ) {
+  constructor() {
+    const clientProvider = inject(AngularCrudClientProvider);
+
     this.client = clientProvider.url(environment.apiUrl + '/login');
   }
 

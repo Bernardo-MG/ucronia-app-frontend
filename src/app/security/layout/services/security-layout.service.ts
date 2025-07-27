@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { Menu, ViewMenuLoader } from '@bernardo-mg/ui';
 import { SECURITY_MENU_OPTIONS } from './security-menu-options';
@@ -12,9 +12,9 @@ export class SecurityLayoutService {
 
   private securityMenus: Menu[] = [];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     this.menuLoader = new ViewMenuLoader(authContainer);
     this.loadMenus();
     // If the user changes, reload menus

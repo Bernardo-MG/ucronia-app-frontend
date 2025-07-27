@@ -3,13 +3,11 @@
     <ng-container [ngSwitch]="editing">
       <!-- Form -->
       <ng-container *ngSwitchCase="true">
-        <ui-card>
-          <ui-card-body>
-            <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-              [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
-            </access-user-form>
-          </ui-card-body>
-        </ui-card>
+        <p-card>
+          <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
+            [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
+          </access-user-form>
+        </p-card>
       </ng-container>
       <ng-container *ngSwitchCase="false">
         <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"

@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { LibraryAdminGameSystemFormComponent } from '../../components/library-admin-game-system-form/library-admin-game-system-form.component';
 import { LibraryAdminGameSystemInfoComponent } from '../../components/library-admin-game-system-info/library-admin-game-system-info.component';
@@ -12,7 +13,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 
 @Component({
   selector: 'assoc-library-admin-game-system-edition',
-  imports: [CommonModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, LibraryAdminGameSystemInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-edition.container.html'
 })
 export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusComponent<GameSystem> {
@@ -25,9 +26,9 @@ export class LibraryAdminGameSystemInfoEditorContainer extends InfoEditorStatusC
 
   private number = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new GameSystem());
     // Check permissions
     this.editable = authContainer.hasPermission("library_game_system", "update");

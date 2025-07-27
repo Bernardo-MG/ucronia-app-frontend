@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
-import { CardBodyComponent, CardComponent, CardHeaderComponent, CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-member-details',
-  imports: [CommonModule, PlaceholderDirective, CardComponent, CardBodyComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, PlaceholderDirective],
   templateUrl: './member-details.component.html'
 })
 export class MemberDetailsComponent {

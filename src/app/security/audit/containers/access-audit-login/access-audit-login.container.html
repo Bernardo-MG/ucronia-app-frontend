@@ -1,13 +1,11 @@
 <ui-article>
-  <ui-card>
-    <ui-card-body>
-      <!-- List -->
-      <access-audit-login-list [data]="data.content"
-        (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
-    </ui-card-body>
-    <ui-card-footer>
+  <p-card>
+    <!-- List -->
+    <access-audit-login-list [data]="data.content"
+      (changeDirection)="onChangeDirection($event)"></access-audit-login-list>
+    <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
         [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
-    </ui-card-footer>
-  </ui-card>
+    </ng-template>
+  </p-card>
 </ui-article>

@@ -1,11 +1,9 @@
 <ui-article>
   <div uiResponsiveShortColumns>
-    <ui-card>
-      <ui-card-body>
-        <!-- Form -->
-        <assoc-library-admin-game-system-form [waiting]="saving" [failures]="failures"
-          (save)="onSave($event)"></assoc-library-admin-game-system-form>
-      </ui-card-body>
-    </ui-card>
+    <p-card>
+      <!-- Form -->
+      <assoc-library-admin-game-system-form [waiting]="saving" [failures]="failures"
+        (save)="onSave($event)"></assoc-library-admin-game-system-form>
+    </p-card>
   </div>
 </ui-article>

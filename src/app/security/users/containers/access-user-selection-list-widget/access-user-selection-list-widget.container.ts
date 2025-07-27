@@ -1,16 +1,17 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { CardBodyComponent, CardComponent, CardFooterComponent, CardHeaderComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { CardModule } from 'primeng/card';
 import { AccessUserSelectionListComponent } from '../../components/access-user-selection-list/access-user-selection-list.component';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-selection-list-widget',
-  imports: [RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent, CardComponent, CardBodyComponent, CardFooterComponent, CardHeaderComponent],
+  imports: [CommonModule, CardModule, RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent],
   templateUrl: './access-user-selection-list-widget.container.html'
 })
 export class AccessUserSelectionListWidgetContainer {
@@ -28,9 +29,9 @@ export class AccessUserSelectionListWidgetContainer {
 
   private sort = new Sorting();
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("user", "create");
 

@@ -33,9 +33,9 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
 
   public borrower = new Borrower();
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super();
     // Get id
     this.route.paramMap.subscribe(params => {

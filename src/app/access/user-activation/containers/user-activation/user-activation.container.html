@@ -1,17 +1,26 @@
 <ng-container [ngSwitch]="status">
   <ng-container *ngSwitchCase="'valid_token'">
-    <ui-card>
-      <ui-card-body>
-        <h5 class="card-title">Activación de usuario {{username}}</h5>
-        <access-user-activation-form [failures]="failures" [waiting]="activating"
-          (save)="onActivateUser($event.password)" *uiBlock="validating"></access-user-activation-form>
-      </ui-card-body>
-    </ui-card>
+    <p-blockui [target]="userActivation" [blocked]="validating">
+      <div>
+        <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+      </div>
+    </p-blockui>
+    <p-card #userActivation>
+      <ng-template #title>
+        Activar usuario {{username}}
+      </ng-template>
+      <access-user-activation-form [failures]="failures" [waiting]="waiting"
+        (save)="onActivateUser($event.password)"></access-user-activation-form>
+    </p-card>
   </ng-container>
   <ng-container *ngSwitchCase="'invalid_token'">
-    Token inválido
+    <p-card>
+      Token inválido
+    </p-card>
   </ng-container>
   <ng-container *ngSwitchCase="'finished'">
-    Usuario activado
+    <p-card>
+      Usuario activado
+    </p-card>
   </ng-container>
 </ng-container>

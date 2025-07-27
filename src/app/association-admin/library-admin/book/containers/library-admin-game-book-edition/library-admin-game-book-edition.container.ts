@@ -11,8 +11,9 @@ import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
@@ -21,7 +22,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CommonModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
@@ -73,9 +74,9 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   public view: string = '';
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new GameBook());
     // Check permissions
     this.editable = authContainer.hasPermission("library_book", "update");

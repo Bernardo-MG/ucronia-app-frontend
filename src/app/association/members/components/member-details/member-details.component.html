@@ -1,22 +1,20 @@
-<ui-card>
-  <ui-card-header>
+<p-card>
+  <ng-template #header>
     <h2 *uiPlaceholder="waiting"># {{data.number}}</h2>
-  </ui-card-header>
+  </ng-template>
   <!-- Member details -->
-  <ui-card-body>
-    <!-- First name -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Nombre</div>
-      <div class="col-sm-9" *uiPlaceholder="waiting">
-        {{data.name.firstName}}
-      </div>
+  <!-- First name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9" *uiPlaceholder="waiting">
+      {{data.name.firstName}}
     </div>
-    <!-- Last name -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Apellidos</div>
-      <div class="col-sm-9" *uiPlaceholder="waiting">
-        {{data.name.lastName}}
-      </div>
+  </div>
+  <!-- Last name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Apellidos</div>
+    <div class="col-sm-9" *uiPlaceholder="waiting">
+      {{data.name.lastName}}
     </div>
-  </ui-card-body>
-</ui-card>
+  </div>
+</p-card>

@@ -5,7 +5,8 @@ import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, CardBodyComponent, CardComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
 import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
@@ -13,7 +14,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-edition',
-  imports: [CommonModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, CardComponent, CardBodyComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
@@ -28,9 +29,9 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
 
   private number = -1;
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super(new Person());
     // Check permissions
     this.editable = authContainer.hasPermission("person", "update");

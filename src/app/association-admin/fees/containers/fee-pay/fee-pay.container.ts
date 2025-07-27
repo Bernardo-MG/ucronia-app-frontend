@@ -9,8 +9,9 @@ import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { ArticleComponent, BreadcrumbLink, CardBodyComponent, CardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ArticleComponent, BreadcrumbLink, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
 import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
@@ -19,7 +20,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, CardComponent, CardBodyComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, FormsModule, CardModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> {
@@ -48,9 +49,9 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
 
   public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago')];
 
-  constructor(
-    authContainer: AuthContainer
-  ) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
     super();
     // Check permissions
     this.createPermission = authContainer.hasPermission("fee", "create");

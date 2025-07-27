@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges, inject } from '@angular/core';
 import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -6,19 +6,17 @@ import { Subscription } from 'rxjs';
   selector: '[formInvalidField]'
 })
 export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+  private controlDir = inject(NgControl);
+  private formGroupDirective = inject(FormGroupDirective);
+
 
   @Input() formInvalidField: string | FormControl | null = null;
 
   @Input() backendFailure: boolean = false;
 
   private statusChangeSubscription: Subscription | null = null;
-
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
-    private controlDir: NgControl,
-    private formGroupDirective: FormGroupDirective
-  ) { }
 
   public ngOnInit(): void {
     const control = this.getFormControl();
