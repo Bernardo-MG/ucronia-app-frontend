@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { confirmPasswordValidator } from '../../../shared/validators/confirm-password-validator';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
@@ -20,17 +21,6 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
 
   private formBuilder = inject(FormBuilder);
 
-  private passwordsMatchValidator: ValidatorFn = (form: AbstractControl): ValidationErrors | null => {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    if (!password || !confirmPassword) {
-      return null; // skip until both fields are filled
-    }
-
-    return password === confirmPassword ? null : { passwordsMismatch: true };
-  };
-
   constructor() {
     super();
 
@@ -40,7 +30,7 @@ export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
         confirmPassword: ['', [Validators.required]]
       },
       {
-        validators: this.passwordsMatchValidator
+        validators: confirmPasswordValidator
       });
   }
 
