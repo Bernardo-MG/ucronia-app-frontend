@@ -1,5 +1,3 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { PasswordReset } from '@app/access/password-reset/models/password-reset';
@@ -23,8 +21,7 @@ describe('AccessUserActivateService', () => {
       imports: [],
       providers: [
         AccessUserActivateService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: AngularCrudClientProvider, useValue: clientProvider }
       ]
     });
     service = TestBed.inject(AccessUserActivateService);
@@ -34,7 +31,7 @@ describe('AccessUserActivateService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('activateUser', () => {
+  describe('activate user', () => {
 
     it('should append token to route', () => {
       const token = 'token';
@@ -58,7 +55,7 @@ describe('AccessUserActivateService', () => {
 
   });
 
-  describe('validateToken', () => {
+  describe('validate token', () => {
 
     it('should append token to route', () => {
       const token = 'token';
