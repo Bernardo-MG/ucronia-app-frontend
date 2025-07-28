@@ -38,6 +38,15 @@ export class FailureStore {
   }
 
   /**
+   * Returns all the field failures.
+   * 
+   * @returns all the field failures
+   */
+  public getAllFailures(): { [key: string]: FieldFailure[] } {
+    return this.fieldFailures;
+  }
+
+  /**
    * Indicates if there are failures for the received field.
    * 
    * @param field field to check for failures

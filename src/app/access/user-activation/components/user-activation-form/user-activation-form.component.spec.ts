@@ -20,10 +20,6 @@ describe('UserActivationFormComponent', () => {
     fixture.detectChanges();
   });
 
-  // **************************************************************************
-  // General tests
-  // **************************************************************************
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -35,40 +31,40 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should have a valid form when the passwords match and are not empty', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       expect(component.form.valid).toBeTrue();
     });
 
     it('should have an invalid form when the passwords don\'t match', () => {
-      component.form.controls['password'].setValue('abc');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('abc');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       expect(component.form.valid).toBeFalse();
     });
 
     it('should have an invalid form when both passwords are empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       expect(component.form.valid).toBeFalse();
     });
 
     it('should have an invalid form when the first password is empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       expect(component.form.valid).toBeFalse();
     });
 
     it('should have an invalid form when the second password is empty', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       expect(component.form.valid).toBeFalse();
@@ -76,7 +72,7 @@ describe('UserActivationFormComponent', () => {
 
   });
 
-  describe('enabled button status', () => {
+  describe('enabled form button status', () => {
 
     it('should disable the submit button by default', () => {
       const button = fixture.nativeElement.querySelector('form button');
@@ -85,11 +81,11 @@ describe('UserActivationFormComponent', () => {
 
   });
 
-  describe('enabled button status on waiting', () => {
+  describe('enabled form button status on waiting', () => {
 
     it('should disable the form button when the form is valid but it is waiting', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('password');
       component.waiting = true;
       fixture.detectChanges();
 
@@ -98,8 +94,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should disable the form button when the form is invalid and waiting', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('');
       component.waiting = true;
       fixture.detectChanges();
 
@@ -109,11 +105,11 @@ describe('UserActivationFormComponent', () => {
 
   });
 
-  describe('enabled button status on password match', () => {
+  describe('enabled form button status on password match', () => {
 
     it('should enable the form button when the passwords match and are not empty', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -121,8 +117,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should disable the form button when the passwords don\'t match', () => {
-      component.form.controls['password'].setValue('abc');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('abc');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -130,8 +126,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should disable the form button when both passwords are empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -139,8 +135,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should disable the form button when the first password is empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -148,8 +144,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should disable the form button when the second password is empty', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -173,8 +169,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should show the password mismatch warning when the passwords do not match', () => {
-      component.form.controls['password'].setValue('abc');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('abc');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
@@ -183,8 +179,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should hide the password mismatch warning when the first password is empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('password');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('password');
       fixture.detectChanges();
 
       const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
@@ -193,8 +189,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should hide the password mismatch warning when the second password is empty', () => {
-      component.form.controls['password'].setValue('password');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('password');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
@@ -203,8 +199,8 @@ describe('UserActivationFormComponent', () => {
     });
 
     it('should hide the password mismatch warning when both passwords are empty', () => {
-      component.form.controls['password'].setValue('');
-      component.form.controls['confirmPassword'].setValue('');
+      component.form.get('password').setValue('');
+      component.form.get('confirmPassword').setValue('');
       fixture.detectChanges();
 
       const warning = fixture.debugElement.nativeElement.querySelector('#passwordMismatchWarning');
@@ -217,11 +213,11 @@ describe('UserActivationFormComponent', () => {
   describe('validation messages', () => {
 
     it('should show validation messages for password when invalid', () => {
-      spyOn(component['failures'], 'getFailures').and.returnValue([
+      spyOn(component.failures, 'getFailures').and.returnValue([
         { message: 'Password is required' }
       ]);
 
-      component.form.controls['password'].markAsTouched();
+      component.form.get('password').markAsTouched();
       fixture.detectChanges();
 
       const messages = fixture.nativeElement.querySelectorAll('p-message');

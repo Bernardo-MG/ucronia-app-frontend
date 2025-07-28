@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
+import { confirmPasswordValidator } from '@app/access/shared/validators/confirm-password-validator';
 import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -20,17 +21,6 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
 
   private formBuilder = inject(FormBuilder);
 
-  private passwordsMatchValidator: ValidatorFn = (form: AbstractControl): ValidationErrors | null => {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-
-    if (!password || !confirmPassword) {
-      return null; // skip until both fields are filled
-    }
-
-    return password === confirmPassword ? null : { passwordsMismatch: true };
-  };
-
   constructor() {
     super();
 
@@ -40,7 +30,7 @@ export class UserActivationFormComponent extends FormComponent<ConfirmPassword> 
         confirmPassword: ['', [Validators.required]]
       },
       {
-        validators: this.passwordsMatchValidator
+        validators: confirmPasswordValidator
       }
     );
   }

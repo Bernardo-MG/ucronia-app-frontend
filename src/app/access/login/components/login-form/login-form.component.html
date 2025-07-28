@@ -28,13 +28,14 @@
       </div>
     </div>
     <div class="col-md-4 offset-md-4">
-      <p-button label="¿Perdiste la clave?" link id="lostPassword" (click)="lostPassword.emit()" />
+      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="!lostPasswordEnabled"
+        (click)="onLostPasword()" />
     </div>
   </div>
 
   <!-- Submit button -->
   <div class="d-flex">
-    <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="loading" [disabled]="!loginEnabled"
+    <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
       [attr.aria-disabled]="!loginEnabled" class="w-100"></p-button>
   </div>
 

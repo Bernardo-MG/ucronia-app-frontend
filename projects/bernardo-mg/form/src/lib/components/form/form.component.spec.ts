@@ -58,14 +58,14 @@ describe('FormComponent', () => {
     expect(component.form.enabled).toBeTrue();
   });
 
-  it('should emit save when form is valid', () => {
+  it('should emit save when the form is valid', () => {
     spyOn(component.save, 'emit');
     component.form.setValue({ name: 'John', email: 'john@example.com' });
     component.onSave();
     expect(component.save.emit).toHaveBeenCalledWith({ name: 'John', email: 'john@example.com' });
   });
 
-  it('should not emit save when form is invalid', () => {
+  it('should not emit save when submitting an invalid form', () => {
     spyOn(component.save, 'emit');
     component.form.get('name')?.setValue('');
     component.form.get('email')?.setValue('');
