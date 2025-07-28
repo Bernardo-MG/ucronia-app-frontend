@@ -21,21 +21,21 @@ import { UserLogin } from '../../models/user-login';
 export class LoginFormComponent {
 
   /**
-   * loading flag. Shows the loading visual cue and disables the form.
+   * Waiting flag. Shows the waiting visual cue and disables the form.
    */
-  private _loading = false;
+  private _waiting = false;
 
-  @Input() public set loading(flag: boolean) {
-    this._loading = flag;
-    if (this._loading) {
+  @Input() public set waiting(flag: boolean) {
+    this._waiting = flag;
+    if (this._waiting) {
       this.form.disable();
     } else {
       this.form.enable();
     }
   }
 
-  public get loading() {
-    return this._loading;
+  public get waiting() {
+    return this._waiting;
   }
 
   /**
@@ -62,21 +62,21 @@ export class LoginFormComponent {
    * Login enabled flag.
    */
   public get loginEnabled(): boolean {
-    return ((this.form.valid) && (!this.loading));
+    return ((this.form.valid) && (!this.waiting));
   }
 
   /**
    * Remember me enabled flag.
    */
   public get rememberMeEnabled(): boolean {
-    return (!this.loading);
+    return (!this.waiting);
   }
 
   /**
    * Lost password enabled flag.
    */
   public get lostPasswordEnabled(): boolean {
-    return (!this.loading);
+    return (!this.waiting);
   }
 
   /**

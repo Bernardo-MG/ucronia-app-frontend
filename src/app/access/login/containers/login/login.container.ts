@@ -39,9 +39,9 @@ export class LoginContainer {
   public failedLogin = false;
 
   /**
-   * Loading flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
+   * Waiting flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
    */
-  public loading = false;
+  public waiting = false;
 
   /**
    * Remember me flag.
@@ -69,7 +69,7 @@ export class LoginContainer {
     // Login request
 
     // Mark the form as loading
-    this.loading = true;
+    this.waiting = true;
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
@@ -89,13 +89,13 @@ export class LoginContainer {
           }
 
           // Reactivate form
-          this.loading = false;
+          this.waiting = false;
         },
         error: error => {
           // Failed request
           this.failedLogin = true;
           // Reactivate form
-          this.loading = false;
+          this.waiting = false;
         }
       });
   }
