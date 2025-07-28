@@ -193,6 +193,18 @@ describe('LoginFormComponent', () => {
       expect(component.lostPassword.emit).toHaveBeenCalled();
     });
 
+    it('should not emit lost password when clicking the lost password button and it is disabled', () => {
+      spyOn(component.lostPassword, 'emit');
+
+      component.loading = true;
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#lostPassword');
+      button.click();
+
+      expect(component.lostPassword.emit).not.toHaveBeenCalled();
+    });
+
     it('should emit remember me when changing the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
@@ -230,6 +242,18 @@ describe('LoginFormComponent', () => {
 
       expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
       expect(component.rememberMe.emit).toHaveBeenCalledWith(false);
+    });
+
+    it('should not emit remember me when when changing the remember me checkbox and it is disabled', () => {
+      spyOn(component.rememberMe, 'emit');
+
+      component.loading = true;
+      fixture.detectChanges();
+
+      const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
+      checkbox.click();
+
+      expect(component.rememberMe.emit).not.toHaveBeenCalled();
     });
 
   });

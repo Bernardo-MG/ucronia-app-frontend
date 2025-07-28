@@ -73,6 +73,13 @@ export class LoginFormComponent {
   }
 
   /**
+   * Lost password enabled flag.
+   */
+  public get lostPasswordEnabled(): boolean {
+    return (!this.loading);
+  }
+
+  /**
    * Form structure.
    */
   public form;
@@ -103,7 +110,18 @@ export class LoginFormComponent {
    * @param event checkbox selection param
    */
   public onRememberMe(event: any) {
-    this.rememberMe.emit(event.checked);
+    if (this.rememberMeEnabled) {
+      this.rememberMe.emit(event.checked);
+    }
+  }
+
+  /**
+   * Handler for the lost password event.
+   */
+  public onLostPasword() {
+    if (this.lostPasswordEnabled) {
+      this.lostPassword.emit();
+    }
   }
 
 }
