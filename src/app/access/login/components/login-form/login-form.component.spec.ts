@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginFormComponent } from './login-form.component';
+import { UserLogin } from '../../models/user-login';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -22,10 +24,6 @@ describe('LoginFormComponent', () => {
     fixture.detectChanges();
   });
 
-  // **************************************************************************
-  // General tests
-  // **************************************************************************
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -38,8 +36,8 @@ describe('LoginFormComponent', () => {
     });
 
     it('should enable the login button when both username and password are set', () => {
-      component.form.controls['username'].setValue('username');
-      component.form.controls['password'].setValue('password');
+      component.form.get('username')?.setValue('username');
+      component.form.get('password')?.setValue('password');
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -47,7 +45,7 @@ describe('LoginFormComponent', () => {
     });
 
     it('should disable the login button when missing the username', () => {
-      component.form.controls['password'].setValue('password');
+      component.form.get('password')?.setValue('password');
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -55,7 +53,7 @@ describe('LoginFormComponent', () => {
     });
 
     it('should disable the login button when missing the password', () => {
-      component.form.controls['username'].setValue('username');
+      component.form.get('username')?.setValue('username');
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -67,8 +65,8 @@ describe('LoginFormComponent', () => {
   describe('enabled status on loading', () => {
 
     it('should disable the login button when the form is valid but it is loading', () => {
-      component.form.controls['username'].setValue('username');
-      component.form.controls['password'].setValue('password');
+      component.form.get('username')?.setValue('username');
+      component.form.get('password')?.setValue('password');
       component.loading = true;
       fixture.detectChanges();
 
@@ -128,35 +126,74 @@ describe('LoginFormComponent', () => {
 
   });
 
-  describe('events', () => {
+  describe('output', () => {
 
-    it('should send a login event when clicking the login button', () => {
+    it('should emit login when submitting a valid form', () => {
       spyOn(component.login, 'emit');
 
-      component.form.controls['username'].setValue('username');
-      component.form.controls['password'].setValue('password');
+      component.form.get('username')?.setValue('username');
+      component.form.get('password')?.setValue('password');
+      fixture.detectChanges();
+
+      const formEl = fixture.debugElement.query(By.css('form'));
+      formEl.triggerEventHandler('ngSubmit', {});
+
+      expect(component.login.emit).toHaveBeenCalledWith(new UserLogin('username', 'password'));
+    });
+
+    it('should not emit login when submitting an invalid form', () => {
+      spyOn(component.login, 'emit');
+
+      component.form.get('username')?.setValue('');
+      component.form.get('password')?.setValue('');
+      fixture.detectChanges();
+
+      const formEl = fixture.debugElement.query(By.css('form'));
+      formEl.triggerEventHandler('ngSubmit', {});
+
+      expect(component.login.emit).not.toHaveBeenCalled();
+    });
+
+    it('should emit login when clicking the login button', () => {
+      spyOn(component.login, 'emit');
+
+      component.form.get('username')?.setValue('username');
+      component.form.get('password')?.setValue('password');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('#login button');
       button.click();
 
-      expect(component.login.emit).toHaveBeenCalledTimes(1);
+      expect(component.login.emit).toHaveBeenCalledWith(new UserLogin('username', 'password'));
     });
 
-    it('should send a lost password event when clicking the lost password button', () => {
+    it('should not emit login when clicking the login button and the form is invalid', () => {
+      spyOn(component.login, 'emit');
+
+      component.form.get('username')?.setValue('');
+      component.form.get('password')?.setValue('');
+      fixture.detectChanges();
+
+      const formEl = fixture.debugElement.query(By.css('form'));
+      formEl.triggerEventHandler('ngSubmit', {});
+
+      expect(component.login.emit).not.toHaveBeenCalled();
+    });
+
+    it('should emit lost password when clicking the lost password button', () => {
       spyOn(component.lostPassword, 'emit');
 
-      component.form.controls['username'].setValue('username');
-      component.form.controls['password'].setValue('password');
+      component.form.get('username')?.setValue('username');
+      component.form.get('password')?.setValue('password');
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('#lostPassword');
       button.click();
 
-      expect(component.lostPassword.emit).toHaveBeenCalledTimes(1);
+      expect(component.lostPassword.emit).toHaveBeenCalled();
     });
 
-    it('should send a remember me event when changing the remember me checkbox', () => {
+    it('should emit remember me when changing the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
@@ -165,7 +202,7 @@ describe('LoginFormComponent', () => {
       expect(component.rememberMe.emit).toHaveBeenCalledTimes(1);
     });
 
-    it('should send a remember me event with active flag when changing the remember me checkbox', () => {
+    it('should emit remember me with active flag when changing the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
@@ -174,7 +211,7 @@ describe('LoginFormComponent', () => {
       expect(component.rememberMe.emit).toHaveBeenCalledWith(true);
     });
 
-    it('should send a remember me event when changing back the remember me checkbox', () => {
+    it('should emit remember me when changing back the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
@@ -184,7 +221,7 @@ describe('LoginFormComponent', () => {
       expect(component.rememberMe.emit).toHaveBeenCalledTimes(2);
     });
 
-    it('should send a remember me event with inactive flag when changing back the remember me checkbox', () => {
+    it('should emit remember me with inactive flag when changing back the remember me checkbox', () => {
       spyOn(component.rememberMe, 'emit');
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
