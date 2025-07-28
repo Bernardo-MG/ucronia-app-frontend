@@ -20,10 +20,6 @@ describe('UserActivationFormComponent', () => {
     fixture.detectChanges();
   });
 
-  // **************************************************************************
-  // General tests
-  // **************************************************************************
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
@@ -217,7 +213,7 @@ describe('UserActivationFormComponent', () => {
   describe('validation messages', () => {
 
     it('should show validation messages for password when invalid', () => {
-      spyOn(component['failures'], 'getFailures').and.returnValue([
+      spyOn(component.failures, 'getFailures').and.returnValue([
         { message: 'Password is required' }
       ]);
 

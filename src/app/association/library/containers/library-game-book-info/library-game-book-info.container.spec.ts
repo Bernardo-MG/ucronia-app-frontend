@@ -63,7 +63,7 @@ describe('LibraryGameBookInfoContainer', () => {
   it('should initialize with correct data', () => {
     expect(component.data).toEqual(mockBook);
     expect(component.languages).toEqual(languages);
-    expect(component["waiting"]).toBeFalse();
+    expect(component.waiting).toBeFalse();
   });
 
   it('should render child components with correct inputs', () => {

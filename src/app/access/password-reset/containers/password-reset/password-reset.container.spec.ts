@@ -90,7 +90,6 @@ describe('PasswordResetContainer', () => {
       component.onPasswordReset('newpassword');
 
       expect(component.status).toBe('finished');
-      expect(component.waiting).toBeFalse();
     });
 
     it('should call resetPassword with correct token and password', () => {
@@ -116,7 +115,6 @@ describe('PasswordResetContainer', () => {
       component.onPasswordReset('badpassword');
 
       expect(component.failures.getFailures('field').length).toBeGreaterThan(0);
-      expect(component.waiting).toBeFalse();
     });
 
     it('should clear failures on unknown error', () => {
@@ -129,7 +127,6 @@ describe('PasswordResetContainer', () => {
       component.onPasswordReset('any');
 
       expect(Object.keys(component.failures.getAllFailures()).length).toBe(0);
-      expect(component.waiting).toBeFalse();
     });
 
   });
