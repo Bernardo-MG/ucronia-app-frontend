@@ -70,8 +70,7 @@ export class PasswordResetContainer {
 
     this.failures.clear();
 
-    const reset = new PasswordReset();
-    reset.password = password;
+    const reset = new PasswordReset(password);
     this.service.resetPassword(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';
