@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
@@ -9,6 +9,6 @@ import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 })
 export class UserTokenStatusComponent {
 
-  @Input() public data = new UserToken();
+  public readonly data = input(new UserToken());
 
 }

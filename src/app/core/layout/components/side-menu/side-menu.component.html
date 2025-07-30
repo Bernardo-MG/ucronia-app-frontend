@@ -1,6 +1,6 @@
 <aside class="sidebar bg-secondary-subtle border ps-2">
   <!-- Iterate over menu options and display each section -->
-  @for (menu of menus; track menu) {
+  @for (menu of menus(); track menu) {
     <h3>{{ menu.title }}</h3>
     <!-- Iterate over links within each section and display them -->
     @for (link of menu.links; track link) {

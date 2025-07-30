@@ -9,7 +9,7 @@
   }
   <div class="w-25 px-3">
     <!-- Current year -->
-    <select class="form-select" aria-label="Select year" [disabled]="waiting" (change)="onGoTo($event)">
+    <select class="form-select" aria-label="Select year" [disabled]="waiting()" (change)="onGoTo($event)">
       @for (selectionYear of range.years.slice().reverse(); track selectionYear) {
         <option [selected]="selectionYear === year.toString()"
           [value]="selectionYear">
@@ -26,7 +26,7 @@
   }
 </div>
 <!-- Table -->
-<div class="table-responsive" *uiBlock="waiting">
+<div class="table-responsive" *uiBlock="waiting()">
   <table class="table table-sm table-hover">
     <thead class="thead-light">
       <tr>
@@ -37,7 +37,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      @for (memberFees of feeCalendar; track memberFees) {
+      @for (memberFees of feeCalendar(); track memberFees) {
         <tr [ngClass]="{ 'table-warning': !memberFees.person.membership.active}">
           <td>
             {{memberFees.person.name.fullName}}

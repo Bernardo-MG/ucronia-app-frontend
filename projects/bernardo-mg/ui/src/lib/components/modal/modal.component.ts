@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 
 /**
  * Modal component. To be shown should be activated outside.
@@ -11,11 +11,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ModalComponent {
 
-  @Input() public title = 'Modal';
+  public readonly title = input('Modal');
 
   @Input() public acceptText = 'Aceptar';
 
-  @Input() public name = 'modal';
+  public readonly name = input('modal');
 
   @Output() public readonly accept = new EventEmitter<void>();
 

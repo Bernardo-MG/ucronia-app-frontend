@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -12,15 +12,15 @@ import { CardModule } from 'primeng/card';
 })
 export class LibraryAdminGameSystemInfoComponent {
 
-  @Input() public data = new BookType();
+  public readonly data = input(new BookType());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
   @Output() public delete = new EventEmitter<void>();
 

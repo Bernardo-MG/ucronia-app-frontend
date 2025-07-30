@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { FailureStore } from '@bernardo-mg/request';
 
 @Component({
@@ -40,7 +40,7 @@ export abstract class FormComponent<Data> {
     return this._waiting;
   }
 
-  @Input() public failures = new FailureStore();
+  public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Data) {
     this.loadData(value);
@@ -107,7 +107,7 @@ export abstract class FormComponent<Data> {
    * @returns true if the form is invalid, false otherwise
    */
   public isFieldInvalid(property: string): boolean {
-    return this.isFormFieldInvalid(property) || (this.failures.hasFailures(property));
+    return this.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
   /**

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Menu } from '@bernardo-mg/ui';
 
@@ -11,6 +11,6 @@ import { Menu } from '@bernardo-mg/ui';
 })
 export class SideMenuComponent {
 
-  @Input() public menus: Menu[] = [];
+  public readonly menus = input<Menu[]>([]);
 
 }

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -12,32 +12,32 @@ export class TeamupCalendarComponent {
 
   @Input() public set code(value: string | undefined) {
     if (value) {
-      const rawUrl = `https://teamup.com/${value}?showLogo=${this.parseBoolean(this.showLogo)}&showSearch=${this.parseBoolean(this.showSearch)}&showProfileAndInfo=${this.parseBoolean(this.showProfile)}&showSidepanel=${this.parseBoolean(this.showSidePanel)}&disableSidepanel=${this.parseBoolean(this.disableSidePanel)}&showViewSelector=${this.parseBoolean(this.showViewSelector)}&showMenu=${this.parseBoolean(this.showMenu)}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader)}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails)}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader)}&showTitle=0&view=m`;
+      const rawUrl = `https://teamup.com/${value}?showLogo=${this.parseBoolean(this.showLogo())}&showSearch=${this.parseBoolean(this.showSearch())}&showProfileAndInfo=${this.parseBoolean(this.showProfile())}&showSidepanel=${this.parseBoolean(this.showSidePanel())}&disableSidepanel=${this.parseBoolean(this.disableSidePanel())}&showViewSelector=${this.parseBoolean(this.showViewSelector())}&showMenu=${this.parseBoolean(this.showMenu())}&showAgendaHeader=${this.parseBoolean(this.showAgendaHeader())}&showAgendaDetails=${this.parseBoolean(this.showAgendaDetails())}&showYearViewHeader=${this.parseBoolean(this.showYearViewHeader())}&showTitle=0&view=m`;
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
     } else {
       this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
     }
   }
 
-  @Input() public showLogo = false;
+  public readonly showLogo = input(false);
 
-  @Input() public showSearch = false;
+  public readonly showSearch = input(false);
 
-  @Input() public showProfile = false;
+  public readonly showProfile = input(false);
 
-  @Input() public showSidePanel = false;
+  public readonly showSidePanel = input(false);
 
-  @Input() public disableSidePanel = false;
+  public readonly disableSidePanel = input(false);
 
-  @Input() public showViewSelector = false;
+  public readonly showViewSelector = input(false);
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public showAgendaHeader = false;
+  public readonly showAgendaHeader = input(false);
 
-  @Input() public showAgendaDetails = false;
+  public readonly showAgendaDetails = input(false);
 
-  @Input() public showYearViewHeader = false;
+  public readonly showYearViewHeader = input(false);
 
   public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 

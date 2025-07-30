@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
@@ -9,13 +9,13 @@ import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
 })
 export class SaveControlsComponent {
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public saveDisabled = false;
+  public readonly saveDisabled = input(false);
 
-  @Input() public cancelDisabled = false;
+  public readonly cancelDisabled = input(false);
 
-  @Input() public cancellable = false;
+  public readonly cancellable = input(false);
 
   @Output() public reject = new EventEmitter<void>();
 

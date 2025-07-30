@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
 
@@ -9,8 +9,8 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 })
 export class PeopleInfoDetailsComponent {
 
-  @Input() public data = new Person();
+  public readonly data = input(new Person());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
 }

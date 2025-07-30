@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
@@ -15,17 +15,17 @@ import { PeopleInfoDetailsComponent } from '../people-info-details/people-info-d
 })
 export class PeopleInfoComponent {
 
-  @Input() public data = new Person();
+  public readonly data = input(new Person());
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public editEnabled = false;
+  public readonly editEnabled = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
   @Output() public delete = new EventEmitter<void>();
 
@@ -42,7 +42,7 @@ export class PeopleInfoComponent {
   @Output() public convertToMember = new EventEmitter<void>();
 
   public get isMember() {
-    return this.data.membership !== null;
+    return this.data().membership !== null;
   }
 
   public view: string = 'details';

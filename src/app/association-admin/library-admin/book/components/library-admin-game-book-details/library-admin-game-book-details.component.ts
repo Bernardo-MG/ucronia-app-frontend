@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { GameBook } from '@app/models/library/game-book';
@@ -16,21 +16,21 @@ import { CardModule } from 'primeng/card';
 })
 export class LibraryAdminGameBookDetailsComponent {
 
-  @Input() public data = new GameBook();
+  public readonly data = input(new GameBook());
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public editEnabled = false;
+  public readonly editEnabled = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
-  @Input() public lendDisabled = false;
+  public readonly lendDisabled = input(false);
 
-  @Input() public languages: Language[] = [];
+  public readonly languages = input<Language[]>([]);
 
   @Output() public delete = new EventEmitter<void>();
 
@@ -41,13 +41,14 @@ export class LibraryAdminGameBookDetailsComponent {
   public tabs = [new CardTab('details', 'Detalles'), new CardTab('donors', 'Donantes'), new CardTab('lendings', 'Préstamos')];
 
   public get authors(): string {
-    return this.data.authors.map(e => e.name).join(", ");
+    return this.data().authors.map(e => e.name).join(", ");
   }
 
   public get donors(): string {
     let donors;
-    if (this.data.donation) {
-      donors = this.data.donation.donors.map(e => e.name.fullName).join(", ");
+    const data = this.data();
+    if (data.donation) {
+      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
     } else {
       donors = '';
     }
@@ -56,12 +57,12 @@ export class LibraryAdminGameBookDetailsComponent {
   }
 
   public get publishers(): string {
-    return this.data.publishers.map(e => e.name).join(", ");
+    return this.data().publishers.map(e => e.name).join(", ");
   }
 
   public get language(): string {
-    const language = this.languages.find(lang => lang.code === this.data.language);
-    return language ? language.name : this.data.language;
+    const language = this.languages().find(lang => lang.code === this.data().language);
+    return language ? language.name : this.data().language;
   }
 
   public onChangeView(newView: string) {

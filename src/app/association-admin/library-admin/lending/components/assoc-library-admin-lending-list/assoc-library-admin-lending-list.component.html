@@ -18,7 +18,7 @@
   </tr>
 </thead>
 <tbody class="table-group-divider">
-  @for (lending of lendings; track lending; let rowIndex = $index) {
+  @for (lending of lendings(); track lending; let rowIndex = $index) {
     <tr>
       <!-- Cells -->
       <td>

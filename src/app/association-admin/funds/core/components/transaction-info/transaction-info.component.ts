@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Transaction } from '@app/models/transactions/transaction';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -12,15 +12,15 @@ import { CardModule } from 'primeng/card';
 })
 export class TransactionInfoComponent {
 
-  @Input() public data = new Transaction();
+  public readonly data = input(new Transaction());
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public delete = new EventEmitter<void>();
 

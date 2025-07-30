@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges, input } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
@@ -13,13 +13,13 @@ import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 })
 export class AccessUserRolesComponent implements OnChanges {
 
-  @Input() public roles: Role[] = [];
+  public readonly roles = input<Role[]>([]);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public remove = new EventEmitter<Role>();
 
@@ -42,7 +42,7 @@ export class AccessUserRolesComponent implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ArrayPaginatedResponse<Role>(this.roles, page, this.pageSize);
+    return new ArrayPaginatedResponse<Role>(this.roles(), page, this.pageSize);
   }
 
 }

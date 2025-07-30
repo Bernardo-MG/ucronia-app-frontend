@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Usuario</label>
     <div class="col-sm-10">
-      @if (create) {
+      @if (create()) {
         <input type="text" id="usernameInput" formControlName="username" class="form-control" formInvalidField
           [backendFailure]="failures.hasFailures('username')" aria-describedby="usernameLabel">
           <form-input-failure-feedback [failures]="failures.getFailures('username')"></form-input-failure-feedback>

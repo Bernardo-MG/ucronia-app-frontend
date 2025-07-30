@@ -1,5 +1,5 @@
 <!-- Add role -->
-<table class="table table-hover" *uiBlock="waiting">
+<table class="table table-hover" *uiBlock="waiting()">
   <thead>
     <tr>
       <th scope="col"></th>
@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (member of members.content; track member) {
+    @for (member of members().content; track member) {
       <tr>
         <td>
           <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
@@ -23,7 +23,7 @@
   </tbody>
 </table>
 <div uiJustifyCenter class="mt-1">
-  <pagination-navigation [disabled]="waiting" [current]="members.page" [pages]="members.totalPages"
+  <pagination-navigation [disabled]="waiting()" [current]="members().page" [pages]="members().totalPages"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

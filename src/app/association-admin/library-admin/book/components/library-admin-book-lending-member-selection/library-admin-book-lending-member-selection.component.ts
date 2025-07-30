@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -12,17 +12,17 @@ export class LibraryAdminBookLendingMemberSelectionComponent {
 
   @Input() public waiting = false;
 
-  @Input() public values: Member[] = [];
+  public readonly values = input<Member[]>([]);
 
   /**
    * Current page number. This is the pointer to move around the pagination.
    */
-  @Input() public current = 1;
+  public readonly current = input(1);
 
   /**
    * Total number of pages.
    */
-  @Input() public pages = 0;
+  public readonly pages = input(0);
 
   @Output() public selectMember = new EventEmitter<Member>();
 

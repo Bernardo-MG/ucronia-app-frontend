@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
@@ -24,15 +24,15 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class LibraryAdminGameBookEditionFormComponent extends FormComponent<GameBook> {
 
-  @Input() public bookTypesSelection = new PaginatedResponse<BookType>();
+  public readonly bookTypesSelection = input(new PaginatedResponse<BookType>());
 
-  @Input() public gameSystemsSelection = new PaginatedResponse<GameSystem>();
+  public readonly gameSystemsSelection = input(new PaginatedResponse<GameSystem>());
 
-  @Input() public authorsSelection = new PaginatedResponse<Author>();
+  public readonly authorsSelection = input(new PaginatedResponse<Author>());
 
-  @Input() public publishersSelection = new PaginatedResponse<Publisher>();
+  public readonly publishersSelection = input(new PaginatedResponse<Publisher>());
 
-  @Input() public languages: Language[] = [];
+  public readonly languages = input<Language[]>([]);
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
 

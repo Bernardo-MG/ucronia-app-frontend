@@ -1,5 +1,5 @@
 
-import { AfterViewInit, Component, ElementRef, Input, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, input } from '@angular/core';
 import { FieldFailure } from '@bernardo-mg/request';
 
 @Component({
@@ -7,10 +7,10 @@ import { FieldFailure } from '@bernardo-mg/request';
   templateUrl: './input-failure-feedback.component.html'
 })
 export class InputFailureFeedbackComponent implements AfterViewInit {
+
   private el = inject(ElementRef);
 
-
-  @Input() failures: FieldFailure[] = [];
+  readonly failures = input<FieldFailure[]>([]);
 
   public ngAfterViewInit() {
     // get the element's parent node

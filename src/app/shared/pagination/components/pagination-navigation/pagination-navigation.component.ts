@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, input } from '@angular/core';
 import { PaginationRanges } from '../../models/pagination-ranges';
 import { PaginationNavigationTemplateComponent } from '../pagination-navigation-template/pagination-navigation-template.component';
 
@@ -25,7 +25,7 @@ export class PaginationNavigationComponent implements OnChanges {
   /**
    * Disabled flag. To disable all the inner components.
    */
-  @Input() public disabled = false;
+  public readonly disabled = input(false);
 
   /**
    * "Go to page" event emitter. Repeats the wrapped component event.

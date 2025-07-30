@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
 
@@ -9,8 +9,8 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 })
 export class AccessRoleInfoComponent {
 
-  @Input() public data = new Role();
+  public readonly data = input(new Role());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
 }

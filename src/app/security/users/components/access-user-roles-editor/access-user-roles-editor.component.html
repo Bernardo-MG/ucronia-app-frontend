@@ -2,12 +2,12 @@
 @switch (view) {
   <!-- List -->
   @case ('list') {
-    <access-user-roles [roles]="roles" [editable]="editable" [deletable]="deletable" [waiting]="waiting"
+    <access-user-roles [roles]="roles()" [editable]="editable()" [deletable]="deletable()" [waiting]="waiting()"
       (remove)="onRemoveRole($event)">
     </access-user-roles>
     <div class="d-grid">
       <!-- Add button -->
-      <button type="button" class="btn btn-primary" aria-label="Add role" [disabled]="!editable"
+      <button type="button" class="btn btn-primary" aria-label="Add role" [disabled]="!editable()"
         (click)="onShowAddRole()">
         <icon-add></icon-add>
       </button>
@@ -15,7 +15,7 @@
   }
   <!-- Add -->
   @case ('add') {
-    <access-user-add-role [roles]="rolesSelection" [waiting]="waitingRolesSelection" (addRole)="onAddRole($event)"
+    <access-user-add-role [roles]="rolesSelection()" [waiting]="waitingRolesSelection()" (addRole)="onAddRole($event)"
     (goToPage)="onGoToSelectionPage($event)"></access-user-add-role>
     <div class="d-grid">
       <!-- Cancel button -->

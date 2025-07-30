@@ -1,5 +1,5 @@
 <!-- Roles -->
-<table class="table" *uiBlock="waiting">
+<table class="table" *uiBlock="waiting()">
   <thead>
     <tr>
       <th scope="col"></th>
@@ -12,7 +12,7 @@
     @for (role of data.content; track role) {
       <tr>
         <td>
-          <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
+          <button [disabled]="!deletable()" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
             role="button" aria-label="Remove role">
             <icon-delete></icon-delete>
           </button>
@@ -24,7 +24,7 @@
 </table>
 <!-- Page navigation -->
 <div uiJustifyCenter class="mt-1">
-  <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting"
+  <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting()"
     (goTo)="onGoToPage($event)">
   </pagination-navigation>
 </div>

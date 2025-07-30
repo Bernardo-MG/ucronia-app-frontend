@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
@@ -20,11 +20,11 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<FictionBook> {
 
-  @Input() public authorsSelection = new PaginatedResponse<Author>();
+  public readonly authorsSelection = input(new PaginatedResponse<Author>());
 
-  @Input() public publishersSelection = new PaginatedResponse<Publisher>();
+  public readonly publishersSelection = input(new PaginatedResponse<Publisher>());
 
-  @Input() public languages: Language[] = [];
+  public readonly languages = input<Language[]>([]);
 
   @Output() public goToBookTypePage = new EventEmitter<number>();
 

@@ -1,36 +1,36 @@
 <div class="container text-center">
   <div class="row">
     <div class="col-sm-6 pb-2">
-      @switch (active) {
+      @switch (active()) {
         @case (true) {
           <!-- Disable button -->
-          <button class="btn btn-primary" [disabled]="disabled" aria-label="Deactivate" data-bs-toggle="modal"
+          <button class="btn btn-primary" [disabled]="disabled()" aria-label="Deactivate" data-bs-toggle="modal"
           data-bs-target="#deactivateModal">Desactivar</button>
         }
         @case (false) {
           <!-- Enable button -->
-          <button class="btn btn-primary" [disabled]="disabled" aria-label="Activate" data-bs-toggle="modal"
+          <button class="btn btn-primary" [disabled]="disabled()" aria-label="Activate" data-bs-toggle="modal"
           data-bs-target="#activateModal">Activar</button>
         }
         @case (null) {
           <!-- Convert to member button -->
-          <button class="btn btn-primary" [disabled]="disabled" aria-label="Convert to member" data-bs-toggle="modal"
+          <button class="btn btn-primary" [disabled]="disabled()" aria-label="Convert to member" data-bs-toggle="modal"
             data-bs-target="#convertToMemberModal">Convertir en
           socio</button>
         }
       }
     </div>
     <div class="col-sm-6">
-      @switch (renew) {
+      @switch (renew()) {
         @case (true) {
           <!-- Disable button -->
-          <button class="btn btn-primary" [disabled]="disabled" aria-label="Disable renewal" data-bs-toggle="modal"
+          <button class="btn btn-primary" [disabled]="disabled()" aria-label="Disable renewal" data-bs-toggle="modal"
             data-bs-target="#disableRenewModal">Desactivar
           renovación</button>
         }
         @case (false) {
           <!-- Enable button -->
-          <button class="btn btn-primary" [disabled]="disabled" aria-label="Enable renewal" data-bs-toggle="modal"
+          <button class="btn btn-primary" [disabled]="disabled()" aria-label="Enable renewal" data-bs-toggle="modal"
             data-bs-target="#convertToMemberModal">Activar
           renovación</button>
         }

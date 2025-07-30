@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -13,9 +13,9 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class AccessUserSelectMemberComponent {
 
-  @Input() public members = new PaginatedResponse<Member>();
+  public readonly members = input(new PaginatedResponse<Member>());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public selectMember = new EventEmitter<Member>();
 

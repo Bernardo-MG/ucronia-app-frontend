@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
@@ -11,9 +11,9 @@ import { CardModule } from 'primeng/card';
 })
 export class MemberDetailsComponent {
 
-  @Input() public data = new Member();
+  public readonly data = input(new Member());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   public view: string = 'details';
 

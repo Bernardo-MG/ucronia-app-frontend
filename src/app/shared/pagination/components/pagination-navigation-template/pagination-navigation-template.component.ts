@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 
 /**
  * Pagination component template.
@@ -25,12 +25,12 @@ export class PaginationNavigationTemplateComponent {
   /**
    * First page number.
    */
-  @Input() public first = 1;
+  public readonly first = input(1);
 
   /**
    * Last page number.
    */
-  @Input() public last = 1;
+  public readonly last = input(1);
 
   /**
    * Disabled flag. To disable all the inner components.
@@ -107,7 +107,7 @@ export class PaginationNavigationTemplateComponent {
    * Sends a "go to page" event for the first page.
    */
   public onGoToFirst() {
-    this.goTo.emit(this.first);
+    this.goTo.emit(this.first());
   }
 
   /**
@@ -121,7 +121,7 @@ export class PaginationNavigationTemplateComponent {
    * Sends a "go to page" event for the last page.
    */
   public onGoToLast() {
-    this.goTo.emit(this.last);
+    this.goTo.emit(this.last());
   }
 
   /**

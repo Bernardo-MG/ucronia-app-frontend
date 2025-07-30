@@ -11,8 +11,8 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (book of books; track book; let rowIndex = $index) {
-      <tr role="button" routerLink="{{routeLinkAdapter(book)}}">
+    @for (book of books(); track book; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter()(book)}}">
         <!-- Cells -->
         <td>
           <sup>{{book.title.supertitle}}</sup>

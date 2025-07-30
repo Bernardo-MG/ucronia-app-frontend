@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { IconFailureComponent } from '@bernardo-mg/icons';
 
@@ -10,6 +10,6 @@ import { IconFailureComponent } from '@bernardo-mg/icons';
 })
 export class MyFeesListComponent {
 
-  @Input() public fees: Fee[] = [];
+  public readonly fees = input<Fee[]>([]);
 
 }

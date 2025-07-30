@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
 import { FailureStore } from '@bernardo-mg/request';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -11,10 +11,10 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 })
 export class UserTokenInfoComponent {
 
-  @Input() public data = new UserToken();
+  public readonly data = input(new UserToken());
 
-  @Input() public failures = new FailureStore();
+  public readonly failures = input(new FailureStore());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
 }

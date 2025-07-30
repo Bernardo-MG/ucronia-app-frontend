@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, input } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
@@ -20,9 +20,9 @@ export class AccessRolePermissionsComponent {
     this.data = this.buildPage(1);
   }
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public remove = new EventEmitter<ResourcePermission>();
 

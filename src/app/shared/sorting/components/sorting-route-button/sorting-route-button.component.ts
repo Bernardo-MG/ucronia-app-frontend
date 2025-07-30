@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { SortRouteObserver } from '@app/shared/utils/api/route/observer/sort-route-observer';
@@ -14,7 +14,7 @@ export class SortingRouteButtonComponent {
 
   @Input() public property = '';
 
-  @Input() public disabled = false;
+  public readonly disabled = input(false);
 
   public direction = SortingDirection.Unsorted;
 

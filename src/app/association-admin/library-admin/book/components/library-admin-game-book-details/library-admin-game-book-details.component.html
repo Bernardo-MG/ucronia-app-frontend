@@ -4,73 +4,73 @@
     <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
   </ng-template>
   <ng-template #title>
-    <div *uiPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</div>
+    <div *uiPlaceholder="waiting()"># {{data().number}} {{data().title.fullTitle}}</div>
   </ng-template>
   @switch (view) {
     @case ('details') {
       <!-- Member details -->
       <!-- Number -->
       <div class="row">
-        <div class="col-3" *uiPlaceholder="waiting">
-          # {{data.number}}
+        <div class="col-3" *uiPlaceholder="waiting()">
+          # {{data().number}}
         </div>
       </div>
       <!-- First name -->
       <div class="row">
         <div class="col-sm-3 text-primary">ISBN</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          {{data.isbn}}
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          {{data().isbn}}
         </div>
       </div>
       <!-- Title -->
       <div class="row">
         <div class="col-sm-3 text-primary">Título</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          <sup>{{data.title.supertitle}}</sup>
-          {{data.title.title}}
-          <sub>{{data.title.subtitle}}</sub>
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          <sup>{{data().title.supertitle}}</sup>
+          {{data().title.title}}
+          <sub>{{data().title.subtitle}}</sub>
         </div>
       </div>
       <!-- Language -->
       <div class="row">
         <div class="col-sm-3 text-primary">Idioma</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
           {{language}}
         </div>
       </div>
       <!-- Publish date -->
       <div class="row">
         <div class="col-sm-3 text-primary">Fecha de publicación</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          {{data.publishDate}}
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          {{data().publishDate}}
         </div>
       </div>
       <!-- Authors -->
       <div class="row">
         <div class="col-sm-3 text-primary">Autor</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
           {{authors}}
         </div>
       </div>
       <!-- Publishers -->
       <div class="row">
         <div class="col-sm-3 text-primary">Editor</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
           {{publishers}}
         </div>
       </div>
       <!-- Book type -->
       <div class="row">
         <div class="col-sm-3 text-primary">Tipo</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          {{data.bookType?.name}}
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          {{data().bookType?.name}}
         </div>
       </div>
       <!-- Game system -->
       <div class="row">
         <div class="col-sm-3 text-primary">Sistema</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          {{data.gameSystem?.name}}
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          {{data().gameSystem?.name}}
         </div>
       </div>
     }
@@ -79,45 +79,45 @@
       <!-- Donation date -->
       <div class="row">
         <div class="col-sm-3 text-primary">Fecha de donación</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
-          {{data.donation?.date}}
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
+          {{data().donation?.date}}
         </div>
       </div>
       <!-- Donors -->
       <div class="row">
         <div class="col-sm-3 text-primary">Donante</div>
-        <div class="col-sm-9" *uiPlaceholder="waiting">
+        <div class="col-sm-9" *uiPlaceholder="waiting()">
           {{donors}}
         </div>
       </div>
     }
     @case ('lendings') {
-      <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
+      <assoc-library-book-lendings [lendings]="data().lendings"></assoc-library-book-lendings>
     }
   }
   <ng-template #footer>
     @switch (view) {
       @case ('lendings') {
         <!-- Lend button -->
-        @switch (data.lent) {
+        @switch (data().lent) {
           @case (true) {
             <!-- Return button -->
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              [disabled]="lendDisabled()" [attr.aria-disabled]="lendDisabled()">
               <icon-take-in></icon-take-in>Devolver
             </button>
           }
           @case (false) {
             <!-- Lend button -->
             <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+              [disabled]="lendDisabled()" [attr.aria-disabled]="lendDisabled()">
               <icon-take-out></icon-take-out>Prestar
             </button>
           }
         }
       }
       @default {
-        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+        <form-control-buttons [editable]="editable()" [deletable]="deletable()" [disabled]="waiting()"
         (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
       }
     }

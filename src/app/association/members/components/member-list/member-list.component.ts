@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Member } from '@app/models/members/member';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
@@ -12,9 +12,9 @@ import { SortingProperty } from '@bernardo-mg/request';
 })
 export class MemberListComponent {
 
-  @Input() public members: Member[] = [];
+  public readonly members = input<Member[]>([]);
 
-  @Input() public routeLinkAdapter: (data: Member) => string = (data) => '';
+  public readonly routeLinkAdapter = input<(data: Member) => string>((data) => '');
 
   @Output() public changeDirection = new EventEmitter<SortingProperty>();
 

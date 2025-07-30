@@ -13,12 +13,12 @@
             <div class="me-2">
               Estado:
             </div>
-            <assoc-member-status-select [disabled]="waiting"
+            <assoc-member-status-select [disabled]="waiting()"
             (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
           </div>
         </div>
-        <assoc-library-admin-book-lending-member-selection *uiBlock="waiting" [values]="members.content"
-          [current]="members.page" [pages]="members.totalPages" (selectMember)="onSelectMember($event)"
+        <assoc-library-admin-book-lending-member-selection *uiBlock="waiting()" [values]="members().content"
+          [current]="members().page" [pages]="members().totalPages" (selectMember)="onSelectMember($event)"
           (goToPage)="goToMembersPage.emit($event)">
         </assoc-library-admin-book-lending-member-selection>
       </div>
@@ -27,8 +27,8 @@
       <!-- Lend book form -->
       <button type="button" class="btn btn-link" aria-label="Return"
         (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
-        <assoc-library-admin-book-lending-form [waiting]="waiting" [failures]="failures" [readonly]="readonly"
-          [borrower]="member" [book]="book" (save)="save.emit($event)">
+        <assoc-library-admin-book-lending-form [waiting]="waiting()" [failures]="failures()" [readonly]="readonly()"
+          [borrower]="member" [book]="book()" (save)="save.emit($event)">
         </assoc-library-admin-book-lending-form>
       }
     }

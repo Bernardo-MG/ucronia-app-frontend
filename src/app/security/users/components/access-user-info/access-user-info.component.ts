@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Member } from '@app/models/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
@@ -19,29 +19,29 @@ import { AccessUserStatusComponent } from '../access-user-status/access-user-sta
 })
 export class AccessUserInfoComponent {
 
-  @Input() public data = new User();
+  public readonly data = input(new User());
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
-  @Input() public editEnabled = false;
+  public readonly editEnabled = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public member = new Member();
+  public readonly member = input(new Member());
 
-  @Input() public readingMemberSelection = false;
+  public readonly readingMemberSelection = input(false);
 
-  @Input() public readingMember = false;
+  public readonly readingMember = input(false);
 
-  @Input() public membersSelection = new PaginatedResponse<Member>();
+  public readonly membersSelection = input(new PaginatedResponse<Member>());
 
-  @Input() public readingRoleSelection = false;
+  public readonly readingRoleSelection = input(false);
 
-  @Input() public rolesSelection = new PaginatedResponse<Role>();
+  public readonly rolesSelection = input(new PaginatedResponse<Role>());
 
   @Output() public delete = new EventEmitter<void>();
 

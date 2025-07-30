@@ -21,8 +21,8 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (token of userTokens; track token; let rowIndex = $index) {
-      <tr role="button" routerLink="{{routeLinkAdapter(token)}}">
+    @for (token of userTokens(); track token; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter()(token)}}">
         <!-- Cells -->
         <td>
           {{token.username}}

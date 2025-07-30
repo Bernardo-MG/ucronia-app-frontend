@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 @Component({
   selector: 'form-paged-selector',
@@ -6,19 +6,19 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export abstract class PagedSelectorComponent<Data> {
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public values: Data[] = [];
+  public readonly values = input<Data[]>([]);
 
   /**
    * Current page number. This is the pointer to move around the pagination.
    */
-  @Input() public current = 1;
+  public readonly current = input(1);
 
   /**
    * Total number of pages.
    */
-  @Input() public pages = 0;
+  public readonly pages = input(0);
 
   @Output() public choose = new EventEmitter<Data>();
 

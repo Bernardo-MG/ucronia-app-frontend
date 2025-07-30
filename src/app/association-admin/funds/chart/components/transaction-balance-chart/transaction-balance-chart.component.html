@@ -5,10 +5,10 @@
     Inicio
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting"
+    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting()"
       (change)="onSelectStartMonth($event)">
       @for (selectionMonth of months; track selectionMonth) {
-        <option [selected]="selectionMonth === startMonth" [value]="selectionMonth">
+        <option [selected]="selectionMonth === startMonth()" [value]="selectionMonth">
         {{selectionMonth}}</option>
       }
     </select>
@@ -17,10 +17,10 @@
     Fin
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting"
+    <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting()"
       (change)="onSelectEndMonth($event)">
       @for (selectionMonth of months; track selectionMonth) {
-        <option [selected]="selectionMonth === endMonth" [value]="selectionMonth">
+        <option [selected]="selectionMonth === endMonth()" [value]="selectionMonth">
         {{selectionMonth}}</option>
       }
     </select>

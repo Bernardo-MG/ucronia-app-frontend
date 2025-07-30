@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
@@ -12,7 +12,7 @@ import { SortingProperty } from '@bernardo-mg/request';
 })
 export class AssocLibraryAdminLendingListComponent {
 
-  @Input() public lendings: BookLending[] = [];
+  public readonly lendings = input<BookLending[]>([]);
 
   @Output() public directionChange = new EventEmitter<SortingProperty>();
 

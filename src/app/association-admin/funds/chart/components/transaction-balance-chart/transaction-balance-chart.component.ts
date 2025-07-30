@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, input } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 
@@ -10,13 +10,13 @@ import Chart from 'chart.js/auto';
 })
 export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public balance: TransactionMonthlyBalance[] = [];
+  public readonly balance = input<TransactionMonthlyBalance[]>([]);
 
-  @Input() public startMonth = '';
+  public readonly startMonth = input('');
 
-  @Input() public endMonth = '';
+  public readonly endMonth = input('');
 
   @Input() public months: string[] = [];
 
@@ -51,9 +51,9 @@ export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.date)
-    const totals = this.balance.map(b => b.total)
-    const results = this.balance.map(b => b.results)
+    const labels = this.balance().map(b => b.date)
+    const totals = this.balance().map(b => b.total)
+    const results = this.balance().map(b => b.results)
 
     const data = {
       labels: labels,

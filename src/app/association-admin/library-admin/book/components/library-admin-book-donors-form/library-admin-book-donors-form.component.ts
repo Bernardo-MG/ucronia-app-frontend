@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
 import { Donation } from '@app/models/library/donation';
@@ -16,7 +16,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation> {
 
-  @Input() public donors = new PaginatedResponse<Person>();
+  public readonly donors = input(new PaginatedResponse<Person>());
 
   @Output() public goToDonorPage = new EventEmitter<number>();
 

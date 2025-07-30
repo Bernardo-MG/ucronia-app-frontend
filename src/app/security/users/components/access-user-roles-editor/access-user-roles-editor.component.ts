@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -13,19 +13,19 @@ import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles
 })
 export class AccessUserRolesEditorComponent {
 
-  @Input() editable = false;
+  readonly editable = input(false);
 
-  @Input() deletable = false;
+  readonly deletable = input(false);
 
-  @Input() waiting = false;
+  readonly waiting = input(false);
 
-  @Input() waitingRolesSelection = false;
+  readonly waitingRolesSelection = input(false);
 
-  @Input() username = '';
+  readonly username = input('');
 
-  @Input() roles: Role[] = [];
+  readonly roles = input<Role[]>([]);
 
-  @Input() rolesSelection = new PaginatedResponse<Role>();
+  readonly rolesSelection = input(new PaginatedResponse<Role>());
 
   @Output() public remove = new EventEmitter<Role>();
 

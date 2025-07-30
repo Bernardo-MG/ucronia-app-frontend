@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <label for="numberInput" id="numberLabel" class="col-sm-2 col-form-label">Número</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.number" id="numberInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data().number" id="numberInput" [readonly]="true" class="form-control"
         aria-describedby="numberLabel">
     </div>
   </div>
@@ -11,7 +11,7 @@
   <div class="row mb-2">
     <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name.firstName" id="firstNameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data().name.firstName" id="firstNameInput" [readonly]="true" class="form-control"
         aria-describedby="firstNameLabel">
     </div>
   </div>
@@ -19,7 +19,7 @@
   <div class="row mb-2">
     <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.name.lastName" id="lastNameInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data().name.lastName" id="lastNameInput" [readonly]="true" class="form-control"
         aria-describedby="lastNameLabel">
     </div>
   </div>
@@ -27,7 +27,7 @@
   <div class="row mb-2">
     <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">DNI</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.identifier" id="identifierInput" [readonly]="true" class="form-control"
+      <input type="text" [value]="data().identifier" id="identifierInput" [readonly]="true" class="form-control"
         aria-describedby="identifierLabel">
     </div>
   </div>
@@ -35,7 +35,7 @@
   <div class="row mb-2">
     <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Teléfono</label>
     <div class="col-sm-10">
-      <input type="text" [value]="data.phone" id="phoneInput" class="form-control" [readonly]="true"
+      <input type="text" [value]="data().phone" id="phoneInput" class="form-control" [readonly]="true"
         aria-describedby="phoneLabel">
     </div>
   </div>

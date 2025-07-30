@@ -1,5 +1,5 @@
 
-import { Component, Input, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '@bernardo-mg/authentication';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -11,7 +11,7 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 })
 export class AccessUserFormComponent extends FormComponent<User> {
 
-  @Input() public create = true;
+  public readonly create = input(true);
 
   constructor() {
     const fb = inject(FormBuilder);

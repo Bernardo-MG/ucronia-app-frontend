@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSearchComponent } from '@bernardo-mg/icons';
@@ -13,15 +13,15 @@ import { CardModule } from 'primeng/card';
 })
 export class FeeInfoComponent {
 
-  @Input() public data = new Fee();
+  public readonly data = input(new Fee());
 
-  @Input() public showMenu = false;
+  public readonly showMenu = input(false);
 
-  @Input() public deletable = false;
+  public readonly deletable = input(false);
 
-  @Input() public editable = false;
+  public readonly editable = input(false);
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public delete = new EventEmitter<void>();
 
@@ -30,11 +30,11 @@ export class FeeInfoComponent {
   @Output() public goToTransaction = new EventEmitter<number>();
 
   public selectPayment() {
-    this.goToTransaction.emit(this.data.payment?.index);
+    this.goToTransaction.emit(this.data().payment?.index);
   }
 
   public isPaymentDisabled(): boolean {
-    return (this.waiting) || (this.data.payment === null);
+    return (this.waiting()) || (this.data().payment === null);
   }
 
 }

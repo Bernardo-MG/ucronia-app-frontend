@@ -9,8 +9,8 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (role of roles; track role; let rowIndex = $index) {
-      <tr role="button" routerLink="{{routeLinkAdapter(role)}}">
+    @for (role of roles(); track role; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter()(role)}}">
         <!-- Cells -->
         <td>
           {{role.name}}

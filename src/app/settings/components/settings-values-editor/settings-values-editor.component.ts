@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { IconEditComponent } from '@bernardo-mg/icons';
@@ -11,9 +11,9 @@ import { IconEditComponent } from '@bernardo-mg/icons';
 })
 export class SettingValuesEditorComponent {
 
-  @Input() public disabled = false;
+  public readonly disabled = input(false);
 
-  @Input() public settings: Setting[] = [];
+  public readonly settings = input<Setting[]>([]);
 
   @Output() public save = new EventEmitter<Setting>();
 

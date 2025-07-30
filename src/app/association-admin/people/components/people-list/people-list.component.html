@@ -12,10 +12,10 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (person of people; track person; let rowIndex = $index) {
+    @for (person of people(); track person; let rowIndex = $index) {
       <tr
         [ngClass]="{ 'table-secondary': !person.membership?.active }" role="button"
-        routerLink="{{routeLinkAdapter(person)}}">
+        routerLink="{{routeLinkAdapter()(person)}}">
         <!-- Cells -->
         <td>
           {{person.name.fullName}}

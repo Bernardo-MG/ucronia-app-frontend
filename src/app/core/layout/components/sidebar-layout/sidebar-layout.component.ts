@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
 import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/ui';
@@ -11,6 +11,6 @@ import { NavbarContainer } from '../../containers/navbar/navbar.container';
 })
 export class SidebarLayoutComponent {
 
-  @Input() public menus: Menu[] = [];
+  public readonly menus = input<Menu[]>([]);
 
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Account } from '@app/account/models/account';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
 
@@ -9,8 +9,8 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 })
 export class AccountProfileInfoComponent {
 
-  @Input() public account = new Account();
+  public readonly account = input(new Account());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
 }

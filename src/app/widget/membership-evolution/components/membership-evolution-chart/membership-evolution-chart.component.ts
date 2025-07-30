@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, input } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import Chart from 'chart.js/auto';
 
@@ -10,17 +10,17 @@ import Chart from 'chart.js/auto';
 })
 export class MembershipEvolutionChartComponent implements OnDestroy {
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Input() public set balance(data: MemberBalance[]) {
     this.loadChart(data);
   }
 
-  @Input() public startMonth = '';
+  public readonly startMonth = input('');
 
-  @Input() public endMonth = '';
+  public readonly endMonth = input('');
 
-  @Input() public months: string[] = [];
+  public readonly months = input<string[]>([]);
 
   @Output() public startMonthChange = new EventEmitter<string>();
 

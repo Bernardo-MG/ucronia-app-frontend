@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
@@ -14,9 +14,9 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 })
 export class FeePaySelectMemberComponent {
 
-  @Input() public data = new PaginatedResponse<Member>();
+  public readonly data = input(new PaginatedResponse<Member>());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
   @Output() public selectPerson = new EventEmitter<Person>();
 

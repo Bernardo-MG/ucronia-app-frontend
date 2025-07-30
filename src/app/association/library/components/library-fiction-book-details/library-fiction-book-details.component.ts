@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -11,25 +11,26 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 })
 export class LibraryFictionBookDetailsComponent {
 
-  @Input() public data = new FictionBook();
+  public readonly data = input(new FictionBook());
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public languages: Language[] = [];
+  public readonly languages = input<Language[]>([]);
 
   public get language(): string {
-    const language = this.languages.find(lang => lang.code === this.data.language);
-    return language ? language.name : this.data.language;
+    const language = this.languages().find(lang => lang.code === this.data().language);
+    return language ? language.name : this.data().language;
   }
 
   public get editors(): string {
-    return this.data.publishers.map(e => e.name).join(", ");
+    return this.data().publishers.map(e => e.name).join(", ");
   }
 
   public get donors(): string {
     let donors;
-    if (this.data.donation) {
-      donors = this.data.donation.donors.map(e => e.name.fullName).join(", ");
+    const data = this.data();
+    if (data.donation) {
+      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
     } else {
       donors = '';
     }
@@ -38,7 +39,7 @@ export class LibraryFictionBookDetailsComponent {
   }
 
   public get authors(): string {
-    return this.data.authors.map(e => e.name).join(", ");
+    return this.data().authors.map(e => e.name).join(", ");
   }
 
 }

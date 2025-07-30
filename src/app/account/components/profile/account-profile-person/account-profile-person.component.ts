@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Person } from '@app/models/person/person';
 
 @Component({
@@ -8,6 +8,6 @@ import { Person } from '@app/models/person/person';
 })
 export class AccountProfilePersonComponent {
 
-  @Input() data = new Person();
+  readonly data = input(new Person());
 
 }

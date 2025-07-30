@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, input } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Month } from '../../models/month';
@@ -11,13 +11,13 @@ import { Month } from '../../models/month';
 })
 export class CalendarMonthComponent implements OnChanges {
 
-  @Input() public waiting = false;
+  public readonly waiting = input(false);
 
-  @Input() public events: CalendarEvent<any>[] = [];
+  public readonly events = input<CalendarEvent<any>[]>([]);
 
   @Input() public months: Month[] = [];
 
-  @Input() public month = new Month(0, 0);
+  public readonly month = input(new Month(0, 0));
 
   @Output() public changeMonth = new EventEmitter<Month>();
 
@@ -37,7 +37,7 @@ export class CalendarMonthComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['month']) {
-      this.currentMonth = this.month;
+      this.currentMonth = this.month();
       this.viewDate = new Date(`${this.currentMonth.year}-${this.currentMonth.month}`);
 
       this.activeDayIsOpen = false;

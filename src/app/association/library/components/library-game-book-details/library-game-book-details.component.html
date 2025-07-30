@@ -1,71 +1,71 @@
 <!-- ISBN -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">ISBN</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    {{data.isbn}}
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    {{data().isbn}}
   </div>
 </div>
 <!-- Title -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Título</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    <sup>{{data.title.supertitle}}</sup>
-    {{data.title.title}}
-    <sub>{{data.title.subtitle}}</sub>
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    <sup>{{data().title.supertitle}}</sup>
+    {{data().title.title}}
+    <sub>{{data().title.subtitle}}</sub>
   </div>
 </div>
 <!-- Language -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Idioma</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
     {{language}}
   </div>
 </div>
 <!-- Publish date -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Fecha de publicación</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    {{data.publishDate}}
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    {{data().publishDate}}
   </div>
 </div>
 <!-- Book type -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Tipo</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    {{data.bookType?.name}}
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    {{data().bookType?.name}}
   </div>
 </div>
 <!-- Game system -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Sistema</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    {{data.gameSystem?.name}}
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    {{data().gameSystem?.name}}
   </div>
 </div>
 <!-- Authors -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Autores</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
     {{authors}}
   </div>
 </div>
 <!-- Publishers -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Editoriales</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
     {{editors}}
   </div>
 </div>
 <!-- Donation date -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Fecha de donación</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
-    {{data.donation?.date}}
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
+    {{data().donation?.date}}
   </div>
 <!-- Donors -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Donantes</div>
-  <div class="col-sm-10" *uiPlaceholder="waiting">
+  <div class="col-sm-10" *uiPlaceholder="waiting()">
     {{donors}}
   </div>
 </div>

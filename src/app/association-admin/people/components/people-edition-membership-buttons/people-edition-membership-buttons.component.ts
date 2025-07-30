@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { ModalComponent } from '@bernardo-mg/ui';
 
 @Component({
@@ -9,11 +9,11 @@ import { ModalComponent } from '@bernardo-mg/ui';
 })
 export class PeopleEditionMembershipButtonsComponent {
 
-  @Input() public active: boolean | undefined = undefined;
+  public readonly active = input<boolean>();
 
-  @Input() public renew: boolean | undefined = undefined;
+  public readonly renew = input<boolean>();
 
-  @Input() public disabled = false;
+  public readonly disabled = input(false);
 
   @Output() public activate = new EventEmitter<void>();
 

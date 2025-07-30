@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { User } from '@bernardo-mg/authentication';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 
@@ -9,6 +9,6 @@ import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 })
 export class AccessUserStatusComponent {
 
-  @Input() data = new User();
+  readonly data = input(new User());
 
 }

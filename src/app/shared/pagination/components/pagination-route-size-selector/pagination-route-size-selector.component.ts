@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouteApiActuator } from '@app/shared/utils/api/route/actuator/route-api-actuator';
 import { PaginationRouteObserver } from '@app/shared/utils/api/route/observer/pagination-route-observer';
@@ -11,11 +11,11 @@ import { PaginationSizeSelectorTemplateComponent } from '../pagination-size-sele
 })
 export class PaginationSizeSelectorComponent {
 
-  @Input() public sizes: number[] = [5, 10, 15, 20];
+  public readonly sizes = input<number[]>([5, 10, 15, 20]);
 
   @Input() public selected = 5;
 
-  @Input() public disabled = false;
+  public readonly disabled = input(false);
 
   private readonly routeActuator: RouteApiActuator;
 

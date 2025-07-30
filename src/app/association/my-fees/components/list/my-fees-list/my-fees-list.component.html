@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    @for (fee of fees; track fee; let rowIndex = $index) {
+    @for (fee of fees(); track fee; let rowIndex = $index) {
       <tr [ngClass]="{ 'table-warning': !fee.paid }">
         <!-- Cells -->
         <td>
