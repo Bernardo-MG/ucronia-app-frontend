@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
@@ -33,7 +33,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   private role = '';
 
-  @ViewChild('pickCloseButton') private pickCloseButton: any;
+  private readonly pickCloseButton = viewChild<any>('pickCloseButton');
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -64,7 +64,7 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   public onAddPermission(permission: ResourcePermission): void {
     this.data.permissions.push(permission);
     this.onSave(this.data);
-    this.pickCloseButton.nativeElement.click();
+    this.pickCloseButton().nativeElement.click();
   }
 
   public onRemovePermission(permission: ResourcePermission): void {
