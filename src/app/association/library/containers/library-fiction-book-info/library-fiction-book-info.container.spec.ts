@@ -70,9 +70,9 @@ describe('LibraryFictionBookInfoContainer', () => {
     const bookDetails = fixture.debugElement.query(By.css('assoc-library-fiction-book-details'));
     const bookLendings = fixture.debugElement.query(By.css('assoc-library-book-lendings'));
 
-    expect(bookDetails.componentInstance.data).toEqual(mockBook);
-    expect(bookDetails.componentInstance.languages).toEqual(languages);
-    expect(bookDetails.componentInstance.waiting).toBeFalse();
+    expect(bookDetails.componentInstance.data()).toEqual(mockBook);
+    expect(bookDetails.componentInstance.languages()).toEqual(languages);
+    expect(bookDetails.componentInstance.waiting()).toBeFalse();
 
     expect(bookLendings.componentInstance.lendings).toEqual(mockBook.lendings);
   });

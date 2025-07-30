@@ -1,6 +1,6 @@
 
 import { Component, input, output } from '@angular/core';
-import { Fee } from '@app/models/fees/fee';
+import { Fee, FeeTransaction } from '@app/models/fees/fee';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSearchComponent } from '@bernardo-mg/icons';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -30,7 +30,10 @@ export class FeeInfoComponent {
   public readonly goToTransaction = output<number>();
 
   public selectPayment() {
-    this.goToTransaction.emit(this.data().payment?.index);
+    if (this.data().payment) {
+      const payment = this.data().payment as FeeTransaction
+      this.goToTransaction.emit(payment.index);
+    }
   }
 
   public isPaymentDisabled(): boolean {
