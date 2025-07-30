@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { AccessUserCreationContainer } from './containers/access-user-creation/access-user-creation.container';
-import { AccessUserEditionContainer } from './containers/access-user-edition/access-user-edition.container';
-import { AccessListingContainer } from './containers/access-user-listing/access-user-listing.container';
+
+
+
 
 
 const routes: Routes = [
@@ -13,19 +13,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AccessListingContainer,
+        loadComponent: () => import('./containers/access-user-listing/access-user-listing.container').then(m => m.AccessListingContainer),
         canActivate: [ResourceGuard("user", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'add',
-        component: AccessUserCreationContainer,
+        loadComponent: () => import('./containers/access-user-creation/access-user-creation.container').then(m => m.AccessUserCreationContainer),
         canActivate: [ResourceGuard("user", "create")],
         data: { breadcrumb: 'Registrar' }
       },
       {
         path: ':user',
-        component: AccessUserEditionContainer,
+        loadComponent: () => import('./containers/access-user-edition/access-user-edition.container').then(m => m.AccessUserEditionContainer),
         canActivate: [ResourceGuard("user", "read")],
         data: { breadcrumb: 'Editar' }
       }

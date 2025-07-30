@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { PeopleCreationContainer } from './containers/people-creation/people-creation.container';
-import { PeopleInfoEditionContainer } from './containers/people-edition/people-edition.container';
-import { PeopleListingContainer } from './containers/people-listing/people-listing.container';
+
+
+
 
 
 const routes: Routes = [
@@ -13,19 +13,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: PeopleListingContainer,
+        loadComponent: () => import('./containers/people-listing/people-listing.container').then(m => m.PeopleListingContainer),
         canActivate: [ResourceGuard("person", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'register',
-        component: PeopleCreationContainer,
+        loadComponent: () => import('./containers/people-creation/people-creation.container').then(m => m.PeopleCreationContainer),
         canActivate: [ResourceGuard("person", "create")],
         data: { breadcrumb: 'Añadir' }
       },
       {
         path: ':number',
-        component: PeopleInfoEditionContainer,
+        loadComponent: () => import('./containers/people-edition/people-edition.container').then(m => m.PeopleInfoEditionContainer),
         canActivate: [ResourceGuard("person", "read")],
         data: { breadcrumb: 'Editar' }
       }

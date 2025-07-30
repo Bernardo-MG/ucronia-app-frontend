@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { FeeEditionContainer } from './containers/fee-edition/fee-edition.container';
-import { FeeListingContainer } from './containers/fee-listing/fee-listing.container';
-import { FeePayContainer } from './containers/fee-pay/fee-pay.container';
+
+
+
 
 
 const routes: Routes = [
@@ -13,19 +13,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: FeeListingContainer,
+        loadComponent: () => import('./containers/fee-listing/fee-listing.container').then(m => m.FeeListingContainer),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'pay',
-        component: FeePayContainer,
+        loadComponent: () => import('./containers/fee-pay/fee-pay.container').then(m => m.FeePayContainer),
         canActivate: [ResourceGuard("fee", "create")],
         data: { breadcrumb: 'Pagar' }
       },
       {
         path: ':date/:memberNumber',
-        component: FeeEditionContainer,
+        loadComponent: () => import('./containers/fee-edition/fee-edition.container').then(m => m.FeeEditionContainer),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: 'Editar' }
       }

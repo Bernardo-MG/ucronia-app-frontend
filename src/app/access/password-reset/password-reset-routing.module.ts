@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CenteredFrameComponent } from '@bernardo-mg/ui';
-import { PasswordResetRequestContainer } from './containers/password-reset-request/password-reset-request.container';
-import { PasswordResetContainer } from './containers/password-reset/password-reset.container';
+
+
 
 
 const routes: Routes = [
@@ -10,8 +10,8 @@ const routes: Routes = [
     path: '',
     component: CenteredFrameComponent,
     children: [
-      { path: '', component: PasswordResetRequestContainer },
-      { path: ':token', component: PasswordResetContainer }
+      { path: '', loadComponent: () => import('./containers/password-reset-request/password-reset-request.container').then(m => m.PasswordResetRequestContainer) },
+      { path: ':token', loadComponent: () => import('./containers/password-reset/password-reset.container').then(m => m.PasswordResetContainer) }
     ]
   }
 ];

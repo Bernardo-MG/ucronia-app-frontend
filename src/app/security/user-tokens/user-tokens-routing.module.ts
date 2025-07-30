@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { UserTokenEditionContainer } from './containers/user-token-edition/user-token-edition.container';
-import { UserTokenListingContainer } from './containers/user-token-listing/user-token-listing.container';
+
+
 
 const routes: Routes = [
   {
@@ -11,13 +11,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: UserTokenListingContainer,
+        loadComponent: () => import('./containers/user-token-listing/user-token-listing.container').then(m => m.UserTokenListingContainer),
         canActivate: [ResourceGuard("user_token", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: ':token',
-        component: UserTokenEditionContainer,
+        loadComponent: () => import('./containers/user-token-edition/user-token-edition.container').then(m => m.UserTokenEditionContainer),
         canActivate: [ResourceGuard("user_token", "read")],
         data: { breadcrumb: 'Editar' }
       }

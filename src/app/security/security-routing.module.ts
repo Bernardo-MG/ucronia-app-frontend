@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SecurityLayoutContainer } from '@app/security/layout/containers/security-layout/security-layout.container';
+
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
 const userModule = () => import('@app/security/users/users.module').then(m => m.UsersModule);
@@ -11,7 +11,7 @@ const securityAuditModule = () => import('@app/security/audit/audit.module').the
 const routes: Routes = [
   {
     path: '',
-    component: SecurityLayoutContainer,
+    loadComponent: () => import('@app/security/layout/containers/security-layout/security-layout.container').then(m => m.SecurityLayoutContainer),
     children: [
       {
         // Root

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MyFeesFrontpageContainer } from './containers/my-fees-listing/my-fees-listing.container';
+
 
 
 const routes: Routes = [
   {
     path: '',
-    component: MyFeesFrontpageContainer,
+    loadComponent: () => import('./containers/my-fees-listing/my-fees-listing.container').then(m => m.MyFeesFrontpageContainer),
     data: { breadcrumb: 'Mis cuotas' }
   }
 ];

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
-import { MemberInfoContainer } from './containers/member-info/member-info.container';
-import { MemberListingContainer } from './containers/member-listing/member-listing.container';
+
+
 
 
 const routes: Routes = [
@@ -12,13 +12,13 @@ const routes: Routes = [
     children: [
           {
             path: '',
-            component: MemberListingContainer,
+            loadComponent: () => import('./containers/member-listing/member-listing.container').then(m => m.MemberListingContainer),
             canActivate: [ResourceGuard("member", "view")],
             data: { breadcrumb: '' }
           },
           {
             path: ':number',
-            component: MemberInfoContainer,
+            loadComponent: () => import('./containers/member-info/member-info.container').then(m => m.MemberInfoContainer),
             canActivate: [ResourceGuard("member", "read")],
             data: { breadcrumb: 'Info' }
           }

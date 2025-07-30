@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountLayoutContainer } from './containers/account-layout/account-layout.container';
-import { AccountPasswordChangeContainer } from './containers/account-password-change/account-password-change.container';
-import { AccountProfileFrontpageContainer } from './containers/account-profile-frontpage/account-profile-frontpage.container';
+
+
+
 
 
 const routes: Routes = [
   {
     path: '',
-    component: AccountLayoutContainer,
+    loadComponent: () => import('./containers/account-layout/account-layout.container').then(m => m.AccountLayoutContainer),
     data: { breadcrumb: 'Cuenta' },
     children: [
       {
@@ -18,12 +18,12 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        component: AccountProfileFrontpageContainer,
+        loadComponent: () => import('./containers/account-profile-frontpage/account-profile-frontpage.container').then(m => m.AccountProfileFrontpageContainer),
         data: { breadcrumb: 'Perfil' }
       },
       {
         path: 'password',
-        component: AccountPasswordChangeContainer,
+        loadComponent: () => import('./containers/account-password-change/account-password-change.container').then(m => m.AccountPasswordChangeContainer),
         data: { breadcrumb: 'Contraseña' }
       }
     ]

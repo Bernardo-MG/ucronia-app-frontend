@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FrontpageComponent } from './containers/frontpage/frontpage.container';
+
 
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: '', component: FrontpageComponent }
+      { path: '', loadComponent: () => import('./containers/frontpage/frontpage.container').then(m => m.FrontpageComponent) }
     ]
   }
 ];
