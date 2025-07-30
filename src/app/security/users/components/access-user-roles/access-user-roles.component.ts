@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges, input } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
@@ -21,7 +21,7 @@ export class AccessUserRolesComponent implements OnChanges {
 
   public readonly waiting = input(false);
 
-  @Output() public remove = new EventEmitter<Role>();
+  public readonly remove = output<Role>();
 
   public data = new ArrayPaginatedResponse<Role>([], 0, 0);
 

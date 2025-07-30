@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'form-paged-selector',
@@ -20,9 +20,9 @@ export abstract class PagedSelectorComponent<Data> {
    */
   public readonly pages = input(0);
 
-  @Output() public choose = new EventEmitter<Data>();
+  public readonly choose = output<Data>();
 
-  @Output() public goToPage = new EventEmitter<number>();
+  public readonly goToPage = output<number>();
 
   public onPick(data: Data) {
     this.choose.emit(data);

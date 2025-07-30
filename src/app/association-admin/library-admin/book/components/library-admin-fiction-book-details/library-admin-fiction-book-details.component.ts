@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { FictionBook } from '@app/models/library/fiction-book';
@@ -32,9 +32,9 @@ export class LibraryAdminFictionBookDetailsComponent {
 
   public readonly languages = input<Language[]>([]);
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<string>();
+  public readonly startEditing = output<string>();
 
   public view: string = 'details';
 

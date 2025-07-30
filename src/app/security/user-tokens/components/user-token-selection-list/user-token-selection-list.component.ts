@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { UserToken } from '@bernardo-mg/authentication';
@@ -16,6 +16,6 @@ export class UserTokenSelectionListComponent {
 
   public readonly routeLinkAdapter = input<(data: UserToken) => string>((data) => '');
 
-  @Output() public changeDirection = new EventEmitter<SortingProperty>();
+  public readonly changeDirection = output<SortingProperty>();
 
 }

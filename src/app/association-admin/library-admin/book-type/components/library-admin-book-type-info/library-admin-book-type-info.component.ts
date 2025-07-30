@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
@@ -22,8 +22,8 @@ export class LibraryAdminBookTypeInfoComponent {
 
   public readonly editable = input(false);
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
 }

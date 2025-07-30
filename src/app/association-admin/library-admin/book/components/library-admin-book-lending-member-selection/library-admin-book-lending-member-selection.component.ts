@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -24,9 +24,9 @@ export class LibraryAdminBookLendingMemberSelectionComponent {
    */
   public readonly pages = input(0);
 
-  @Output() public selectMember = new EventEmitter<Member>();
+  public readonly selectMember = output<Member>();
 
-  @Output() public goToPage = new EventEmitter<number>();
+  public readonly goToPage = output<number>();
 
   public onPick(member: Member) {
     this.selectMember.emit(member);

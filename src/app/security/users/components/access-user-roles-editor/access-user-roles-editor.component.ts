@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -27,11 +27,11 @@ export class AccessUserRolesEditorComponent {
 
   readonly rolesSelection = input(new PaginatedResponse<Role>());
 
-  @Output() public remove = new EventEmitter<Role>();
+  public readonly remove = output<Role>();
 
-  @Output() public add = new EventEmitter<Role>();
+  public readonly add = output<Role>();
 
-  @Output() public goToSelectionPage = new EventEmitter<number>();
+  public readonly goToSelectionPage = output<number>();
 
   public view: 'list' | 'add' = 'list';
 

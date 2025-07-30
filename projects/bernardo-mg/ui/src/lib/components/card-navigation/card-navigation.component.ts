@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { CardTab } from '../../models/card-tab';
 
 /**
@@ -25,7 +25,7 @@ export class CardNavigationComponent {
     return this._tabs;
   }
 
-  @Output() public readonly pickTab = new EventEmitter<string>();
+  public readonly pickTab = output<string>();
 
   public active = '';
 

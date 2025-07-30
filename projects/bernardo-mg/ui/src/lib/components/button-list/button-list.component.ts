@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 
 /**
  * List of links component. They will be shown in the same order as received.
@@ -18,7 +18,7 @@ export class ButtonListComponent {
 
   @Input() public renderer: (d: any) => string = (a) => a;
 
-  @Output() public pick = new EventEmitter<any>();
+  public readonly pick = output<any>();
 
   public onPick(value: any) {
     this.pick.emit(value);

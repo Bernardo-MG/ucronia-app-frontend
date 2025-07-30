@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Active } from '@app/models/person/active';
 
 @Component({
@@ -10,7 +10,7 @@ export class MemberStatusSelectComponent {
 
   public readonly disabled = input(false);
 
-  @Output() public changeStatus = new EventEmitter<Active>();
+  public readonly changeStatus = output<Active>();
 
   public status = Active.Active;
 

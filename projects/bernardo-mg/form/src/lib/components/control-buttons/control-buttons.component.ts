@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { IconDeleteComponent, IconEditComponent } from '@bernardo-mg/icons';
 import { ModalComponent } from '@bernardo-mg/ui';
 
@@ -15,9 +15,9 @@ export class ControlButtonsComponent {
 
   @Input() public deletable = false;
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
   public get editableDisabled() {
     return this.disabled || !this.editable;
@@ -29,6 +29,7 @@ export class ControlButtonsComponent {
 
   public onDelete(): void {
     if (!this.deletableDisabled) {
+      // TODO: The 'emit' function requires a mandatory void argument
       this.delete.emit();
     }
   }

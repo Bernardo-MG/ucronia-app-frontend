@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { IconSearchComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective } from '@bernardo-mg/ui';
@@ -23,9 +23,9 @@ export class AccessUserMemberEditorComponent {
 
   public readonly membersSelection = input(new PaginatedResponse<Member>());
 
-  @Output() public goToSelectionPage = new EventEmitter<number>();
+  public readonly goToSelectionPage = output<number>();
 
-  @Output() public selectMember = new EventEmitter<Member>();
+  public readonly selectMember = output<Member>();
 
   public view: 'member' | 'select' = 'member';
 

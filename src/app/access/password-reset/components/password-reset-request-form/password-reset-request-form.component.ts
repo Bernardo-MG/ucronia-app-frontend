@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -16,7 +16,7 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
 })
 export class PasswordResetRequestFormComponent {
 
-  @Output() public save = new EventEmitter<PasswordResetRequest>();
+  public readonly save = output<PasswordResetRequest>();
 
   public form: any;
 

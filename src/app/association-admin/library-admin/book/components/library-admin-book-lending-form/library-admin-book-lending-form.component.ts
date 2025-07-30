@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
@@ -23,9 +23,9 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
     this.form.get('book')?.setValue(value.number);
   }
 
-  @Output() public goToPersonPage = new EventEmitter<number>();
+  public readonly goToPersonPage = output<number>();
 
-  @Output() public goToBookPage = new EventEmitter<number>();
+  public readonly goToBookPage = output<number>();
 
   public today = new Date().toISOString().split('T')[0];
 

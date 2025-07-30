@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
@@ -24,7 +24,7 @@ export class AccessRolePermissionsComponent {
 
   public readonly waiting = input(false);
 
-  @Output() public remove = new EventEmitter<ResourcePermission>();
+  public readonly remove = output<ResourcePermission>();
 
   public data = new ArrayPaginatedResponse<ResourcePermission>([], 0, 0);
 

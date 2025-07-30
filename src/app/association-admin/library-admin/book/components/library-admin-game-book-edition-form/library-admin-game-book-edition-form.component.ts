@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/author/components/library-admin-author-selection/library-admin-author-selection.component';
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
@@ -34,13 +34,13 @@ export class LibraryAdminGameBookEditionFormComponent extends FormComponent<Game
 
   public readonly languages = input<Language[]>([]);
 
-  @Output() public goToBookTypePage = new EventEmitter<number>();
+  public readonly goToBookTypePage = output<number>();
 
-  @Output() public goToGameSystemPage = new EventEmitter<number>();
+  public readonly goToGameSystemPage = output<number>();
 
-  @Output() public goToAuthorPage = new EventEmitter<number>();
+  public readonly goToAuthorPage = output<number>();
 
-  @Output() public goToPublisherPage = new EventEmitter<number>();
+  public readonly goToPublisherPage = output<number>();
 
   public view = 'form';
 

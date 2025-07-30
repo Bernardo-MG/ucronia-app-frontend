@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -30,9 +30,9 @@ export class LibraryAdminLendingListingContainer {
     return this._pageNumber;
   }
 
-  @Output() public wait = new EventEmitter<boolean>();
+  public readonly wait = output<boolean>();
 
-  @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
+  public readonly changePage = output<PaginatedResponse<any>>();
 
   public data = new PaginatedResponse<BookLending>();
 

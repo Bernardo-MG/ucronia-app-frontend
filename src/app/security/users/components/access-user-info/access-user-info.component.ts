@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Member } from '@app/models/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
@@ -43,19 +43,19 @@ export class AccessUserInfoComponent {
 
   public readonly rolesSelection = input(new PaginatedResponse<Role>());
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
-  @Output() public addRole = new EventEmitter<Role>();
+  public readonly addRole = output<Role>();
 
-  @Output() public removeRole = new EventEmitter<Role>();
+  public readonly removeRole = output<Role>();
 
-  @Output() public selectMember = new EventEmitter<Member>();
+  public readonly selectMember = output<Member>();
 
-  @Output() public goToRoleSelectionPage = new EventEmitter<number>();
+  public readonly goToRoleSelectionPage = output<number>();
 
-  @Output() public goToMemberSelectionPage = new EventEmitter<number>();
+  public readonly goToMemberSelectionPage = output<number>();
 
   public view: 'user' | 'roles' | 'member' | 'status' = 'user';
 

@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 
 /**
  * Pagination component template.
@@ -65,7 +65,7 @@ export class PaginationNavigationTemplateComponent {
   /**
    * "Go to page" event emitter.
    */
-  @Output() public goTo = new EventEmitter<number>();
+  public readonly goTo = output<number>();
 
   /**
    * Indicates if the backward button should be disabled.

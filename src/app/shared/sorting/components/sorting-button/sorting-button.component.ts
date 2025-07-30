@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faSort, faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@ export class SortingButtonComponent {
 
   @Input() public disabled = false;
 
-  @Output() public directionChange = new EventEmitter<SortingProperty>();
+  public readonly directionChange = output<SortingProperty>();
 
   /**
    * Ascending order icon.

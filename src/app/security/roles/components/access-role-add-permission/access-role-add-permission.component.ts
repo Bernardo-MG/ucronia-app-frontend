@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
@@ -16,11 +16,11 @@ export class AccessRoleAddPermissionComponent {
 
   public readonly permissions = input(new PaginatedResponse<ResourcePermission>());
 
-  @Output() public addPermission = new EventEmitter<ResourcePermission>();
+  public readonly addPermission = output<ResourcePermission>();
 
-  @Output() public goTo = new EventEmitter<number>();
+  public readonly goTo = output<number>();
 
-  @Output() public changeDirection = new EventEmitter<SortingProperty>();
+  public readonly changeDirection = output<SortingProperty>();
 
   public data = new ResourcePermission();
 

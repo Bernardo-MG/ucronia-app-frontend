@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
@@ -17,6 +17,6 @@ export class SaveControlsComponent {
 
   public readonly cancellable = input(false);
 
-  @Output() public reject = new EventEmitter<void>();
+  public readonly reject = output<void>();
 
 }

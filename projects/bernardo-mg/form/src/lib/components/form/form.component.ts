@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, input } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { FailureStore } from '@bernardo-mg/request';
 
 @Component({
@@ -50,9 +50,9 @@ export abstract class FormComponent<Data> {
     return this.form.value;
   }
 
-  @Output() public save = new EventEmitter<Data>();
+  public readonly save = output<Data>();
 
-  @Output() public reject = new EventEmitter<void>();
+  public readonly reject = output<void>();
 
   public form: any;
 
@@ -97,6 +97,7 @@ export abstract class FormComponent<Data> {
    * Handler for the cancel event.
    */
   public onCancel() {
+    // TODO: The 'emit' function requires a mandatory void argument
     this.reject.emit();
   }
 

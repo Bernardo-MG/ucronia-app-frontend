@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
@@ -17,6 +17,6 @@ export class LibraryAdminBookListComponent {
 
   public readonly routeLinkAdapter = input<(data: BookInfo) => string>((data) => '');
 
-  @Output() public directionChange = new EventEmitter<SortingProperty>();
+  public readonly directionChange = output<SortingProperty>();
 
 }

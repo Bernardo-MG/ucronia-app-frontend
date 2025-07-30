@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSearchComponent } from '@bernardo-mg/icons';
@@ -23,11 +23,11 @@ export class FeeInfoComponent {
 
   public readonly waiting = input(false);
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
-  @Output() public goToTransaction = new EventEmitter<number>();
+  public readonly goToTransaction = output<number>();
 
   public selectPayment() {
     this.goToTransaction.emit(this.data().payment?.index);

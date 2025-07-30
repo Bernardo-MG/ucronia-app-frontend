@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { User } from '@bernardo-mg/authentication';
 import { PlaceholderDirective } from '@bernardo-mg/ui';
 
@@ -20,8 +20,8 @@ export class AccessUserInfoDetailsComponent {
 
   public readonly waiting = input(false);
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
 }

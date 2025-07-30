@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 
@@ -17,6 +17,6 @@ export class PaginationInfoComponent {
 
   public readonly totalElements = input(0);
 
-  @Output() public goTo = new EventEmitter<number>();
+  public readonly goTo = output<number>();
 
 }

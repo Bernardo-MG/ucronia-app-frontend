@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Month } from '../../models/month';
@@ -19,9 +19,9 @@ export class CalendarMonthComponent implements OnChanges {
 
   public readonly month = input(new Month(0, 0));
 
-  @Output() public changeMonth = new EventEmitter<Month>();
+  public readonly changeMonth = output<Month>();
 
-  @Output() public pickDate = new EventEmitter<CalendarEvent<any>>();
+  public readonly pickDate = output<CalendarEvent<any>>();
 
   public currentMonth = new Month(0, 0);
 

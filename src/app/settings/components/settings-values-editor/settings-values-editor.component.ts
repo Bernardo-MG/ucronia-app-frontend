@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { IconEditComponent } from '@bernardo-mg/icons';
@@ -15,7 +15,7 @@ export class SettingValuesEditorComponent {
 
   public readonly settings = input<Setting[]>([]);
 
-  @Output() public save = new EventEmitter<Setting>();
+  public readonly save = output<Setting>();
 
   public activeConfig = '';
 

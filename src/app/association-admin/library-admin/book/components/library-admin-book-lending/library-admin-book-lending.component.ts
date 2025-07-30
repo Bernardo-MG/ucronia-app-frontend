@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
@@ -28,11 +28,11 @@ export class LibraryAdminBookLendingLendComponent {
 
   public readonly members = input(new PaginatedResponse<Member>());
 
-  @Output() public save = new EventEmitter<BookLent>();
+  public readonly save = output<BookLent>();
 
-  @Output() public goToMembersPage = new EventEmitter<number>();
+  public readonly goToMembersPage = output<number>();
 
-  @Output() public changeFilter = new EventEmitter<Active>();
+  public readonly changeFilter = output<Active>();
 
   public filled_bar = 0;
 

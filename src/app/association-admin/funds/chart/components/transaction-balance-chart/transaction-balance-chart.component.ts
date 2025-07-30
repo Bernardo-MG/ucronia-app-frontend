@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges, input } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, input, output } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 
@@ -20,9 +20,9 @@ export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {
 
   @Input() public months: string[] = [];
 
-  @Output() public startMonthChange = new EventEmitter<string>();
+  public readonly startMonthChange = output<string>();
 
-  @Output() public endMonthChange = new EventEmitter<string>();
+  public readonly endMonthChange = output<string>();
 
   public chart: any;
 

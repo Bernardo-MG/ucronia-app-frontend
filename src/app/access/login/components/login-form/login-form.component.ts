@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -46,17 +46,17 @@ export class LoginFormComponent {
   /**
    * Login event. Sent when the user accepts the data in the form.
    */
-  @Output() public login = new EventEmitter<UserLogin>();
+  public readonly login = output<UserLogin>();
 
   /**
    * Remember me event. Sent when the user changes the remember me flag.
    */
-  @Output() public rememberMe = new EventEmitter<boolean>();
+  public readonly rememberMe = output<boolean>();
 
   /**
    * Lost password event. Sent when the user clicks on the lost password option.
    */
-  @Output() public lostPassword = new EventEmitter<void>();
+  public readonly lostPassword = output<void>();
 
   /**
    * Login enabled flag.
@@ -120,6 +120,7 @@ export class LoginFormComponent {
    */
   public onLostPasword() {
     if (this.lostPasswordEnabled) {
+      // TODO: The 'emit' function requires a mandatory void argument
       this.lostPassword.emit();
     }
   }

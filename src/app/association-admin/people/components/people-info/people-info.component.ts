@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Person } from '@app/models/person/person';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
@@ -27,19 +27,19 @@ export class PeopleInfoComponent {
 
   public readonly editable = input(false);
 
-  @Output() public delete = new EventEmitter<void>();
+  public readonly delete = output<void>();
 
-  @Output() public startEditing = new EventEmitter<void>();
+  public readonly startEditing = output<void>();
 
-  @Output() public activate = new EventEmitter<void>();
+  public readonly activate = output<void>();
 
-  @Output() public deactivate = new EventEmitter<void>();
+  public readonly deactivate = output<void>();
 
-  @Output() public enableRenew = new EventEmitter<void>();
+  public readonly enableRenew = output<void>();
 
-  @Output() public disableRenew = new EventEmitter<void>();
+  public readonly disableRenew = output<void>();
 
-  @Output() public convertToMember = new EventEmitter<void>();
+  public readonly convertToMember = output<void>();
 
   public get isMember() {
     return this.data().membership !== null;

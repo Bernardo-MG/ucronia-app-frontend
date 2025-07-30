@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { Person } from '@app/models/person/person';
@@ -18,11 +18,11 @@ export class FeePaySelectMemberComponent {
 
   public readonly waiting = input(false);
 
-  @Output() public selectPerson = new EventEmitter<Person>();
+  public readonly selectPerson = output<Person>();
 
-  @Output() public goToPage = new EventEmitter<number>();
+  public readonly goToPage = output<number>();
 
-  @Output() public changeFilter = new EventEmitter<Active>();
+  public readonly changeFilter = output<Active>();
 
   public nameRenderer = (data: Person): string => data.name.fullName;
 

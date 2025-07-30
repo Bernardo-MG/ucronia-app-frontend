@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
@@ -23,7 +23,7 @@ export class FeeCalendarComponent implements OnChanges {
 
   public readonly feeCalendar = input<FeeCalendar[]>([]);
 
-  @Output() public goToYear = new EventEmitter<number>();
+  public readonly goToYear = output<number>();
 
   public year = new Date().getFullYear();
 

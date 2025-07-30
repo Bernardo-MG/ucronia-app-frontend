@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -31,9 +31,9 @@ export class LibraryAdminGameSystemListingContainer {
     return this._pageNumber;
   }
 
-  @Output() public wait = new EventEmitter<boolean>();
+  public readonly wait = output<boolean>();
 
-  @Output() public changePage = new EventEmitter<PaginatedResponse<any>>();
+  public readonly changePage = output<PaginatedResponse<any>>();
 
   public data = new PaginatedResponse<GameSystem>();
 

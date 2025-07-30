@@ -1,5 +1,5 @@
 
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -17,9 +17,9 @@ export class AccessUserAddRoleComponent {
 
   public readonly waiting = input(false);
 
-  @Output() public addRole = new EventEmitter<Role>();
+  public readonly addRole = output<Role>();
 
-  @Output() public goToPage = new EventEmitter<number>();
+  public readonly goToPage = output<number>();
 
   constructor() {
     this.onGoToPage(0);
