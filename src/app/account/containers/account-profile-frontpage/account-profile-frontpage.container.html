@@ -3,13 +3,15 @@
     <p-card>
       <account-profile-info [account]="account" [waiting]="waiting"></account-profile-info>
     </p-card>
-    <article *ngIf="account.person" class="p-4">
-      <header>
-        <h2 class="border-bottom">Socio</h2>
-      </header>
-      <p-card>
-        <account-profile-person [data]="person"></account-profile-person>
-      </p-card>
-    </article>
+    @if (account.person) {
+      <article class="p-4">
+        <header>
+          <h2 class="border-bottom">Socio</h2>
+        </header>
+        <p-card>
+          <account-profile-person [data]="person"></account-profile-person>
+        </p-card>
+      </article>
+    }
   </div>
 </ui-article>

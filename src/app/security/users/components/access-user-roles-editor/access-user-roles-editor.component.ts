@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -8,7 +8,7 @@ import { AccessUserRolesComponent } from '../access-user-roles/access-user-roles
 
 @Component({
   selector: 'access-user-roles-editor',
-  imports: [CommonModule, AccessUserAddRoleComponent, AccessUserRolesComponent, IconAddComponent],
+  imports: [AccessUserAddRoleComponent, AccessUserRolesComponent, IconAddComponent],
   templateUrl: './access-user-roles-editor.component.html'
 })
 export class AccessUserRolesEditorComponent {

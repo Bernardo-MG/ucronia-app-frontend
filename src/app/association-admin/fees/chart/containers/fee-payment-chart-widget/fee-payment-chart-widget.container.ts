@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
 import { CardModule } from 'primeng/card';
@@ -7,7 +7,7 @@ import { FeeReportService } from '../../services/fee-report.service';
 
 @Component({
   selector: 'assoc-fee-payment-chart-widget',
-  imports: [CommonModule, CardModule, FeePaymentChartComponent],
+  imports: [CardModule, FeePaymentChartComponent],
   templateUrl: './fee-payment-chart-widget.container.html'
 })
 export class FeePaymentChartWidgetContainer {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
 import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
     selector: 'account-profile-frontpage',
-    imports: [CommonModule, CardModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
+    imports: [CardModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
     templateUrl: './account-profile-frontpage.container.html'
 })
 export class AccountProfileFrontpageContainer {

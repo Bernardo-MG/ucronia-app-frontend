@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
@@ -13,7 +13,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-listing',
-  imports: [CommonModule, CardModule, RouterModule, ArticleComponent, PaginationInfoComponent, IconAddComponent, SortingButtonComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, ArticleComponent, PaginationInfoComponent, IconAddComponent, SortingButtonComponent, BlockUiDirective],
   templateUrl: './library-admin-publisher-listing.container.html'
 })
 export class LibraryAdminPublisherListingContainer {

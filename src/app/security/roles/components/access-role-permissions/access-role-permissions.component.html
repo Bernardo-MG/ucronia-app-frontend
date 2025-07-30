@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-permission [ngForOf]="data.content">
+      @for (permission of data.content; track permission) {
         <tr>
           <td>
             <button [disabled]="!deletable" (click)="onRemove(permission)" type="button" class="btn btn-link link-dark"
@@ -23,7 +23,7 @@
           <td>{{permission.resource}}</td>
           <td>{{permission.action}}</td>
         </tr>
-      </ng-template>
+      }
     </tbody>
   </table>
 </div>

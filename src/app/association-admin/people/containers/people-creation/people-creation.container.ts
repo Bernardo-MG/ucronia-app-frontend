@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Person } from '@app/models/person/person';
@@ -11,7 +11,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-creation',
-  imports: [CommonModule, CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, PeopleCreationFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './people-creation.container.html'
 })
 export class PeopleCreationContainer extends CreateComponent<Person> {

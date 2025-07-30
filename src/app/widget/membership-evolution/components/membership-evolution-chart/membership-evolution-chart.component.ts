@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'assoc-membership-evolution-chart',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './membership-evolution-chart.component.html'
 })
 export class MembershipEvolutionChartComponent implements OnDestroy {

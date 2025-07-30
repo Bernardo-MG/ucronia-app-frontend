@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/book/components/library-admin-book-lending/library-admin-book-lending.component';
@@ -15,7 +15,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
-  imports: [CommonModule, ArticleComponent, LibraryAdminBookLendingLendComponent],
+  imports: [ArticleComponent, LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
 export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> {

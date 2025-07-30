@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import { CardModule } from 'primeng/card';
@@ -7,7 +7,7 @@ import { TransactionBalanceChartComponent } from '../../components/transaction-b
 
 @Component({
   selector: 'assoc-transaction-balance-chart-widget',
-  imports: [CommonModule, CardModule, TransactionBalanceChartComponent],
+  imports: [CardModule, TransactionBalanceChartComponent],
   templateUrl: './transaction-balance-chart-widget.container.html'
 })
 export class TransactionBalanceChartWidgetContainer {

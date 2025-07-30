@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
@@ -13,7 +13,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-type-info-editor',
-  imports: [CommonModule, CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminBookTypeFormComponent, LibraryAdminBookTypeInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-type-info-editor.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> {

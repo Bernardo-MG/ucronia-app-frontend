@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Membership } from '@app/models/person/membership';
@@ -7,7 +7,7 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 
 @Component({
   selector: 'assoc-people-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './people-edition-form.component.html'
 })
 export class PeopleEditionFormComponent extends FormComponent<Person> {

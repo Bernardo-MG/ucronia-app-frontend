@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { MemberBalance } from '@app/models/members/member-balance';
 import { CardModule } from 'primeng/card';
@@ -7,7 +7,7 @@ import { MembershipEvolutionService } from '../../services/membership-evolution.
 
 @Component({
   selector: 'widget-membership-evolution-chart',
-  imports: [CommonModule, CardModule, MembershipEvolutionChartComponent],
+  imports: [CardModule, MembershipEvolutionChartComponent],
   templateUrl: './membership-evolution-chart-widget.container.html'
 })
 export class MembershipEvolutionChartWidgetContainer {

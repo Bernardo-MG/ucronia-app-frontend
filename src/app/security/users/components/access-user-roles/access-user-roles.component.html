@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <ng-template ngFor let-role [ngForOf]="data.content">
+    @for (role of data.content; track role) {
       <tr>
         <td>
           <button [disabled]="!deletable" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
@@ -19,7 +19,7 @@
         </td>
         <td>{{role.name}}</td>
       </tr>
-    </ng-template>
+    }
   </tbody>
 </table>
 <!-- Page navigation -->

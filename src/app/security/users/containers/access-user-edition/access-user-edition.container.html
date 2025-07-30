@@ -1,15 +1,15 @@
 <ui-article>
   <div uiResponsiveShortColumns>
-    <ng-container [ngSwitch]="editing">
+    @switch (editing) {
       <!-- Form -->
-      <ng-container *ngSwitchCase="true">
+      @case (true) {
         <p-card>
           <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
             [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
           </access-user-form>
         </p-card>
-      </ng-container>
-      <ng-container *ngSwitchCase="false">
+      }
+      @case (false) {
         <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
           [editEnabled]="editEnabled" [waiting]="waiting" [member]="member"
           [readingMemberSelection]="readingMemberSelection" [readingMember]="readingMember"
@@ -17,9 +17,9 @@
           [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
           (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
           (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
-          (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)"></access-user-info>
-      </ng-container>
-    </ng-container>
+        (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)"></access-user-info>
+      }
+    }
   </div>
 </ui-article>
 

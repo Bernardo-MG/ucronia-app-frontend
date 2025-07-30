@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -16,7 +16,7 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  */
 @Component({
   selector: 'access-user-activation',
-  imports: [CommonModule, CardModule, UserActivationFormComponent, BlockUIModule],
+  imports: [CardModule, UserActivationFormComponent, BlockUIModule],
   templateUrl: './user-activation.container.html'
 })
 export class UserActivationContainer {

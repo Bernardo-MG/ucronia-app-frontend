@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@bernardo-mg/authentication';
@@ -11,7 +11,7 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-creation',
-  imports: [CommonModule, CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, AccessUserFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-creation.container.html'
 })
 export class AccessUserCreationContainer extends CreateComponent<User> {

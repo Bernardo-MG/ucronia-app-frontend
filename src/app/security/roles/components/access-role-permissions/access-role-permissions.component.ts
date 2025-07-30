@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
@@ -8,7 +8,7 @@ import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
   selector: 'access-role-permissions',
-  imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconDeleteComponent, BlockUiDirective],
+  imports: [PaginationNavigationComponent, JustifyCenterDirective, IconDeleteComponent, BlockUiDirective],
   templateUrl: './access-role-permissions.component.html'
 })
 export class AccessRolePermissionsComponent {

@@ -1,3 +1,5 @@
 <div class="list-group text-center">
-   <button type="button" *ngFor="let value of values" (click)="onPick(value)" class="list-group-item list-group-item-action">{{renderer(value)}}</button>
+  @for (value of values; track value) {
+    <button type="button" (click)="onPick(value)" class="list-group-item list-group-item-action">{{renderer(value)}}</button>
+  }
 </div>

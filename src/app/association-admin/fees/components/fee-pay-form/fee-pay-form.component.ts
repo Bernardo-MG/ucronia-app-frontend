@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/models/fees/fee-payment';
@@ -9,7 +9,7 @@ import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-fee-pay-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {

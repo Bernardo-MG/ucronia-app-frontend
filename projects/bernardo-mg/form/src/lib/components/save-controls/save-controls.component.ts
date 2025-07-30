@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'form-save-controls',
-  imports: [CommonModule, WaitingDirective, JustifyBetweenDirective],
+  imports: [WaitingDirective, JustifyBetweenDirective],
   templateUrl: './save-controls.component.html'
 })
 export class SaveControlsComponent {

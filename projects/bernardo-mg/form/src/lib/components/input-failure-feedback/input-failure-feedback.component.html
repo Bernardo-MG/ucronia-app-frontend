@@ -1,3 +1,5 @@
-<div class="invalid-feedback" *ngFor="let failure of failures">
-  {{failure.message}}
-</div>
+@for (failure of failures; track failure) {
+  <div class="invalid-feedback">
+    {{failure.message}}
+  </div>
+}

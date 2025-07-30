@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
@@ -8,7 +8,7 @@ import { MemberDetailsComponent } from '../../components/member-details/member-d
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [CommonModule, ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './member-info.container.html'
 })
 export class MemberInfoContainer {

@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, SimpleChanges } from '@angular/core';
 import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './transaction-balance-chart.component.html'
 })
 export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {

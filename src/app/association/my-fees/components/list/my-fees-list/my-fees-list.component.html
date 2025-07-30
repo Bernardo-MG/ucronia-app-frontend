@@ -12,19 +12,21 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let fee of fees; let rowIndex = index" [ngClass]="{ 'table-warning': !fee.paid }">
-      <!-- Cells -->
-      <td>
-        {{fee.month}}
-      </td>
-      <td>
-        <ng-container *ngIf="fee.paid">
-          {{fee.payment?.date}}
-        </ng-container>
-        <ng-container *ngIf="!fee.paid">
-          <icon-failure class="text-danger"></icon-failure>
-        </ng-container>
-      </td>
-    </tr>
+    @for (fee of fees; track fee; let rowIndex = $index) {
+      <tr [ngClass]="{ 'table-warning': !fee.paid }">
+        <!-- Cells -->
+        <td>
+          {{fee.month}}
+        </td>
+        <td>
+          @if (fee.paid) {
+            {{fee.payment?.date}}
+          }
+          @if (!fee.paid) {
+            <icon-failure class="text-danger"></icon-failure>
+          }
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

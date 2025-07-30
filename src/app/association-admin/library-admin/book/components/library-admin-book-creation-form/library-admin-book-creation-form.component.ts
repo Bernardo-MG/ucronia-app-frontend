@@ -1,4 +1,4 @@
-import { CommonModule, } from '@angular/common';
+
 import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Language } from '@app/models/library/language';
@@ -8,7 +8,7 @@ import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-creation-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-book-creation-form.component.html'
 })
 export class LibraryAdminBookCreationFormComponent extends FormComponent<BookInfo> {

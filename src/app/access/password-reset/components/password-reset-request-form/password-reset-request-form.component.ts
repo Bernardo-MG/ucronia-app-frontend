@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -11,7 +11,7 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
  */
 @Component({
   selector: 'login-password-reset-request-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
   templateUrl: './password-reset-request-form.component.html'
 })
 export class PasswordResetRequestFormComponent {

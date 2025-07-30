@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
@@ -7,7 +7,7 @@ import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-library-admin-lending-list',
-  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  imports: [RouterModule, SortingButtonComponent],
   templateUrl: './assoc-library-admin-lending-list.component.html'
 })
 export class AssocLibraryAdminLendingListComponent {

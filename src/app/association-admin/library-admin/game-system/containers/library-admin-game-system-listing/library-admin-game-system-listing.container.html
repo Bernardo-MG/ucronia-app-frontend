@@ -18,18 +18,20 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let gameSystem of data.content; let rowIndex = index" role="button"
-          routerLink="gameSystem/{{gameSystem.number}}">
-          <!-- Cells -->
-          <td>
-            {{gameSystem.name}}
-          </td>
-        </tr>
+        @for (gameSystem of data.content; track gameSystem; let rowIndex = $index) {
+          <tr role="button"
+            routerLink="gameSystem/{{gameSystem.number}}">
+            <!-- Cells -->
+            <td>
+              {{gameSystem.name}}
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
     <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+      [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
     </ng-template>
   </p-card>
 </ui-article>

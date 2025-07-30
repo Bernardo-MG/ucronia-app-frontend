@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Member } from '@app/models/members/member';
@@ -7,7 +7,7 @@ import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [CommonModule, RouterModule, SortingButtonComponent],
+  imports: [RouterModule, SortingButtonComponent],
   templateUrl: './member-list.component.html'
 })
 export class MemberListComponent {

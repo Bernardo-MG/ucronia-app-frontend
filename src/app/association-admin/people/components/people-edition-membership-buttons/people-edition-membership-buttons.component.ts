@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ModalComponent } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-people-edition-membership-buttons',
-  imports: [CommonModule, ModalComponent],
+  imports: [ModalComponent],
   templateUrl: './people-edition-membership-buttons.component.html'
 })
 export class PeopleEditionMembershipButtonsComponent {

@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <ng-template ngFor let-permission [ngForOf]="permissions.content">
+    @for (permission of permissions.content; track permission) {
       <tr>
         <td>
           <button (click)="onAddPermission(permission)" type="button" class="btn btn-link link-dark" role="button"
@@ -22,7 +22,7 @@
         <td>{{permission.resource}}</td>
         <td>{{permission.action}}</td>
       </tr>
-    </ng-template>
+    }
   </tbody>
 </table>
 <!-- Permissions navigation -->

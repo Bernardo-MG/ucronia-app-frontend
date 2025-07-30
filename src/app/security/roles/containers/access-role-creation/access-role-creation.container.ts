@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@bernardo-mg/authentication';
@@ -11,7 +11,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-creation',
-  imports: [CommonModule, CardModule, AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-creation.container.html'
 })
 export class AccessRoleCreationContainer extends CreateComponent<Role> {

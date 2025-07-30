@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { CardTab, PlaceholderDirective } from '@bernardo-mg/ui';
@@ -6,7 +6,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-member-details',
-  imports: [CommonModule, CardModule, PlaceholderDirective],
+  imports: [CardModule, PlaceholderDirective],
   templateUrl: './member-details.component.html'
 })
 export class MemberDetailsComponent {

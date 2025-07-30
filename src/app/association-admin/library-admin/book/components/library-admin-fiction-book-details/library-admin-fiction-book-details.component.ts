@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
@@ -11,7 +11,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-details',
-  imports: [CommonModule, CardModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardNavigationComponent],
+  imports: [CardModule, RouterModule, LibraryBookLendingsComponent, IconTakeInComponent, IconTakeOutComponent, PlaceholderDirective, ControlButtonsComponent, CardNavigationComponent],
   templateUrl: './library-admin-fiction-book-details.component.html'
 })
 export class LibraryAdminFictionBookDetailsComponent {

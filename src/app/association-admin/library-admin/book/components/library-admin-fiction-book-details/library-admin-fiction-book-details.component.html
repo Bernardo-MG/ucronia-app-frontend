@@ -6,8 +6,8 @@
   <ng-template #title>
     <div *uiPlaceholder="waiting"># {{data.number}} {{data.title.fullTitle}}</div>
   </ng-template>
-  <ng-container [ngSwitch]="view">
-    <ng-container *ngSwitchCase="'details'">
+  @switch (view) {
+    @case ('details') {
       <!-- Member details -->
       <!-- Number -->
       <div class="row">
@@ -59,8 +59,8 @@
           {{publishers}}
         </div>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'donors'">
+    }
+    @case ('donors') {
       <!-- Donors -->
       <!-- Donation date -->
       <div class="row">
@@ -76,36 +76,38 @@
           {{donors}}
         </div>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'lendings'">
+    }
+    @case ('lendings') {
       <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
-    </ng-container>
-  </ng-container>
-  <ng-template #footer *ngIf="showMenu">
-    <ng-container [ngSwitch]="view">
-      <ng-container *ngSwitchCase="'lendings'">
-        <!-- Lend button -->
-        <ng-container [ngSwitch]="data.lent">
-          <ng-container *ngSwitchCase="true">
-            <!-- Return button -->
-            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
-              <icon-take-in></icon-take-in>Devolver
-            </button>
-          </ng-container>
-          <ng-container *ngSwitchCase="false">
-            <!-- Lend button -->
-            <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
-              [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
-              <icon-take-out></icon-take-out>Prestar
-            </button>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-      <ng-container *ngSwitchDefault>
-        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+    }
+  }
+  @if (showMenu) {
+    <ng-template #footer>
+      @switch (view) {
+        @case ('lendings') {
+          <!-- Lend button -->
+          @switch (data.lent) {
+            @case (true) {
+              <!-- Return button -->
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+                <icon-take-in></icon-take-in>Devolver
+              </button>
+            }
+            @case (false) {
+              <!-- Lend button -->
+              <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
+                [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+                <icon-take-out></icon-take-out>Prestar
+              </button>
+            }
+          }
+        }
+        @default {
+          <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
           (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
-      </ng-container>
-    </ng-container>
-  </ng-template>
+        }
+      }
+    </ng-template>
+  }
 </p-card>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Author } from '@app/models/library/author';
@@ -22,7 +22,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CommonModule, CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {

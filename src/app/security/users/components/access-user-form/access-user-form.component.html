@@ -3,36 +3,34 @@
   <div class="row mb-2">
     <label for="usernameInput" id="usernameLabel" class="col-sm-2 col-form-label">Usuario</label>
     <div class="col-sm-10">
-      <div *ngIf="create; then createUsername else editUsername"></div>
-      <ng-template #editUsername>
-        <input type="text" id="usernameInput" readonly="true" [value]="data?.username" [disabled]="readonly"
-          class="form-control" aria-describedby="usernameLabel">
-      </ng-template>
-      <ng-template #createUsername>
+      @if (create) {
         <input type="text" id="usernameInput" formControlName="username" class="form-control" formInvalidField
           [backendFailure]="failures.hasFailures('username')" aria-describedby="usernameLabel">
-        <form-input-failure-feedback [failures]="failures.getFailures('username')"></form-input-failure-feedback>
-      </ng-template>
-    </div>
-  </div>
-  <!-- Name -->
-  <div class="row mb-2">
-    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
-    <div class="col-sm-10">
-      <input type="text" id="nameInput" formControlName="name" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('name')" aria-describedby="nameLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('name')"></form-input-failure-feedback>
-    </div>
-  </div>
-  <!-- Email -->
-  <div class="row mb-2">
-    <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">E-mail</label>
-    <div class="col-sm-10">
-      <input type="text" id="emailInput" formControlName="email" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('email')" aria-describedby="emailLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('email')"></form-input-failure-feedback>
-    </div>
-  </div>
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
-</form>
+          <form-input-failure-feedback [failures]="failures.getFailures('username')"></form-input-failure-feedback>
+        } @else {
+          <input type="text" id="usernameInput" readonly="true" [value]="data?.username" [disabled]="readonly"
+            class="form-control" aria-describedby="usernameLabel">
+          }
+        </div>
+      </div>
+      <!-- Name -->
+      <div class="row mb-2">
+        <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
+        <div class="col-sm-10">
+          <input type="text" id="nameInput" formControlName="name" class="form-control" formInvalidField
+            [backendFailure]="failures.hasFailures('name')" aria-describedby="nameLabel">
+            <form-input-failure-feedback [failures]="failures.getFailures('name')"></form-input-failure-feedback>
+          </div>
+        </div>
+        <!-- Email -->
+        <div class="row mb-2">
+          <label for="emailInput" id="emailLabel" class="col-sm-2 col-form-label">E-mail</label>
+          <div class="col-sm-10">
+            <input type="text" id="emailInput" formControlName="email" class="form-control" formInvalidField
+              [backendFailure]="failures.hasFailures('email')" aria-describedby="emailLabel">
+              <form-input-failure-feedback [failures]="failures.getFailures('email')"></form-input-failure-feedback>
+            </div>
+          </div>
+          <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+          [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+        </form>

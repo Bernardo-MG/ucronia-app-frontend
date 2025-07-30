@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -10,7 +10,7 @@ import { UserTokenSelectionListComponent } from '../../components/user-token-sel
 
 @Component({
   selector: 'access-user-token-listing',
-  imports: [CommonModule, CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
+  imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './user-token-listing.container.html'
 })
 export class UserTokenListingContainer {

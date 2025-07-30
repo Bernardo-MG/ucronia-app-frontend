@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
@@ -7,7 +7,7 @@ import { ArticleComponent } from '@bernardo-mg/ui';
 
 @Component({
     selector: 'app-frontpage-frontpage',
-    imports: [CommonModule, ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
+    imports: [ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
     templateUrl: './frontpage.container.html',
     styleUrls: ['./frontpage.container.sass']
 })

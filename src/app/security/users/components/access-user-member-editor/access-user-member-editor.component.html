@@ -1,7 +1,7 @@
 <div *uiBlock="waiting">
-  <ng-container [ngSwitch]="view">
+  @switch (view) {
     <!-- Member -->
-    <ng-container *ngSwitchCase="'member'">
+    @case ('member') {
       <form class="needs-validation" novalidate>
         <!-- Name -->
         <div class="row mb-2">
@@ -9,26 +9,26 @@
           <div class="col-sm-10">
             <input type="text" [value]="member" id="nameInput" [readonly]="true" class="form-control"
               aria-describedby="nameLabel">
+            </div>
           </div>
+        </form>
+        <div class="d-grid">
+          <!-- Select button -->
+          <button type="button" class="btn btn-primary" aria-label="Select member" [disabled]="!editable"
+            (click)="onShowSelectMember()">
+            <icon-search></icon-search>
+          </button>
         </div>
-      </form>
-      <div class="d-grid">
-        <!-- Select button -->
-        <button type="button" class="btn btn-primary" aria-label="Select member" [disabled]="!editable"
-          (click)="onShowSelectMember()">
-          <icon-search></icon-search>
-        </button>
-      </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="'select'">
-      <access-user-select-member [members]="membersSelection" [waiting]="waitingMembersSelection"
+      }
+      @case ('select') {
+        <access-user-select-member [members]="membersSelection" [waiting]="waitingMembersSelection"
         (selectMember)="onSelectMember($event)" (goToPage)="onGoToSelectionPage($event)"></access-user-select-member>
-      <div class="d-grid">
-        <!-- Cancel button -->
-        <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">
-          Cancelar
-        </button>
-      </div>
-    </ng-container>
-  </ng-container>
-</div>
+        <div class="d-grid">
+          <!-- Cancel button -->
+          <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">
+            Cancelar
+          </button>
+        </div>
+      }
+    }
+  </div>

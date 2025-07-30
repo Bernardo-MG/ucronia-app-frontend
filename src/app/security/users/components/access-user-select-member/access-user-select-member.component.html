@@ -9,7 +9,7 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <ng-template ngFor let-member [ngForOf]="members.content">
+    @for (member of members.content; track member) {
       <tr>
         <td>
           <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
@@ -19,7 +19,7 @@
         </td>
         <td>{{member.name.fullName}}</td>
       </tr>
-    </ng-template>
+    }
   </tbody>
 </table>
 <div uiJustifyCenter class="mt-1">

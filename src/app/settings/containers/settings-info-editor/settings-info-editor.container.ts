@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
@@ -10,7 +10,7 @@ import { AssociationSettingsService } from '../../service/association-settings.s
 
 @Component({
   selector: 'assoc-settings-info-editor',
-  imports: [CommonModule, CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ArticleComponent, SettingValuesEditorComponent],
   templateUrl: './settings-info-editor.container.html'
 })
 export class SettingsInfoEditorContainer {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Author } from '@app/models/library/author';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-author-info',
-  imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
+  imports: [CardModule, PlaceholderDirective, ControlButtonsComponent],
   templateUrl: './library-admin-author-info.component.html'
 })
 export class LibraryAdminAuthorInfoComponent {

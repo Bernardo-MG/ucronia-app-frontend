@@ -1,10 +1,10 @@
 <article class="p-4">
   <div uiResponsiveShortColumns>
-    <ng-container [ngSwitch]="editing">
+    @switch (editing) {
       <!-- Form -->
-      <ng-container *ngSwitchCase="true">
-        <ng-container [ngSwitch]="view">
-          <ng-container *ngSwitchCase="'details'">
+      @case (true) {
+        @switch (view) {
+          @case ('details') {
             <p-card>
               <assoc-library-admin-fiction-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
                 [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
@@ -13,24 +13,24 @@
                 (goToPublisherPage)="onGoToPublisherPage($event)">
               </assoc-library-admin-fiction-book-edition-form>
             </p-card>
-          </ng-container>
-          <ng-container *ngSwitchCase="'donors'">
+          }
+          @case ('donors') {
             <p-card>
               <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
                 [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
                 (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
               </assoc-library-admin-book-donors-form>
             </p-card>
-          </ng-container>
-        </ng-container>
-      </ng-container>
+          }
+        }
+      }
       <!-- Info -->
-      <ng-container *ngSwitchCase="false">
+      @case (false) {
         <assoc-library-admin-fiction-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
           [languages]="languages" (delete)="onDelete()"
-          (startEditing)="onStartEditingView($event)"></assoc-library-admin-fiction-book-details>
-      </ng-container>
-    </ng-container>
+        (startEditing)="onStartEditingView($event)"></assoc-library-admin-fiction-book-details>
+      }
+    }
   </div>
 </article>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookLent } from '@app/models/library/book-lent';
 import { Member } from '@app/models/members/member';
@@ -13,7 +13,7 @@ import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admi
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [CommonModule, LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
   templateUrl: './library-admin-book-lending.component.html'
 })
 export class LibraryAdminBookLendingLendComponent {

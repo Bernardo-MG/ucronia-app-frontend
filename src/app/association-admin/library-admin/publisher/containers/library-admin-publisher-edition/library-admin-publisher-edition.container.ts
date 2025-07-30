@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
@@ -13,7 +13,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-edition',
-  imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminPublisherFormComponent, LibraryAdminPublisherInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-edition.container.html'
 })
 export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> {

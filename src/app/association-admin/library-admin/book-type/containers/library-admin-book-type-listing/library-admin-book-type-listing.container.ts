@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookType } from '@app/models/library/book-type';
@@ -13,7 +13,7 @@ import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-type-listing',
-  imports: [CommonModule, CardModule, RouterModule, SortingButtonComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, SortingButtonComponent, ArticleComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
   templateUrl: './library-admin-book-type-listing.container.html'
 })
 export class LibraryAdminBookTypeListingContainer {

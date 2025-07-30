@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { IconExcelComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
@@ -7,7 +7,7 @@ import { TransactionReportService } from '../../services/transaction-report.serv
 
 @Component({
   selector: 'assoc-transaction-report-widget',
-  imports: [CommonModule, CardModule, IconExcelComponent, WaitingDirective, JustifyCenterDirective],
+  imports: [CardModule, IconExcelComponent, WaitingDirective, JustifyCenterDirective],
   templateUrl: './transaction-report-widget.container.html'
 })
 export class TransactionReportWidgetContainer {

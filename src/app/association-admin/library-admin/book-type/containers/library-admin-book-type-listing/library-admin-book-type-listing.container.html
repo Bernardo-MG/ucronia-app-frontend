@@ -17,17 +17,19 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let bookType of data.content; let rowIndex = index" role="button" routerLink="{{bookType.number}}">
-          <!-- Cells -->
-          <td>
-            {{bookType.name}}
-          </td>
-        </tr>
+        @for (bookType of data.content; track bookType; let rowIndex = $index) {
+          <tr role="button" routerLink="{{bookType.number}}">
+            <!-- Cells -->
+            <td>
+              {{bookType.name}}
+            </td>
+          </tr>
+        }
       </tbody>
     </table>
     <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+      [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
     </ng-template>
   </p-card>
 </ui-article>

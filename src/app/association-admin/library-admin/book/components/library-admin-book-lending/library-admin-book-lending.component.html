@@ -1,10 +1,10 @@
 <div uiResponsiveShortColumns>
   <div class="progress mb-2">
     <div class="progress-bar" role="progressbar" aria-label="Book lending step" [style]="'width: ' + filled_bar + '%'"
-      [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
+    [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
   </div>
-  <ng-container [ngSwitch]="selectedMember">
-    <ng-container *ngSwitchCase="false">
+  @switch (selectedMember) {
+    @case (false) {
       <!-- Select member -->
       <div>
         <div class="row mb-2">
@@ -14,7 +14,7 @@
               Estado:
             </div>
             <assoc-member-status-select [disabled]="waiting"
-              (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
+            (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
           </div>
         </div>
         <assoc-library-admin-book-lending-member-selection *uiBlock="waiting" [values]="members.content"
@@ -22,14 +22,14 @@
           (goToPage)="goToMembersPage.emit($event)">
         </assoc-library-admin-book-lending-member-selection>
       </div>
-    </ng-container>
-    <ng-container *ngSwitchCase="true">
+    }
+    @case (true) {
       <!-- Lend book form -->
       <button type="button" class="btn btn-link" aria-label="Return"
         (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
-      <assoc-library-admin-book-lending-form [waiting]="waiting" [failures]="failures" [readonly]="readonly"
-        [borrower]="member" [book]="book" (save)="save.emit($event)">
-      </assoc-library-admin-book-lending-form>
-    </ng-container>
-  </ng-container>
-</div>
+        <assoc-library-admin-book-lending-form [waiting]="waiting" [failures]="failures" [readonly]="readonly"
+          [borrower]="member" [book]="book" (save)="save.emit($event)">
+        </assoc-library-admin-book-lending-form>
+      }
+    }
+  </div>

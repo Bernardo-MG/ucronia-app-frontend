@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
@@ -7,7 +7,7 @@ import { TransactionBalanceService } from '../../services/transaction-balance.se
 
 @Component({
   selector: 'assoc-transaction-current-balance-widget',
-  imports: [CommonModule, CardModule, BlockUiDirective],
+  imports: [CardModule, BlockUiDirective],
   templateUrl: './transaction-current-balance-widget.container.html'
 })
 export class FundsCurrentBalanceWidgetContainer {

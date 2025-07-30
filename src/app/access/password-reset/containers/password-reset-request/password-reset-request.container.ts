@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
@@ -10,7 +10,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset-request',
-  imports: [CommonModule, CardModule, PasswordResetRequestFormComponent],
+  imports: [CardModule, PasswordResetRequestFormComponent],
   templateUrl: './password-reset-request.container.html'
 })
 export class PasswordResetRequestContainer {

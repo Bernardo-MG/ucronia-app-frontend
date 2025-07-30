@@ -1,21 +1,21 @@
 <ui-article>
   <div uiResponsiveShortColumns>
-    <ng-container [ngSwitch]="editing">
+    @switch (editing) {
       <!-- Form -->
-      <ng-container *ngSwitchCase="true">
+      @case (true) {
         <p-card>
           <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
             [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()">
           </assoc-people-edition-form>
         </p-card>
-      </ng-container>
+      }
       <!-- Info -->
-      <ng-container *ngSwitchCase="false">
+      @case (false) {
         <assoc-people-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
           [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
           (activate)="onActivate()" (deactivate)="onDeactivate()" (enableRenew)="onEnableRenew()"
-          (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()"></assoc-people-info>
-      </ng-container>
-    </ng-container>
+        (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()"></assoc-people-info>
+      }
+    }
   </div>
 </ui-article>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
@@ -7,7 +7,7 @@ import { WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
     selector: 'account-change-password-form',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+    imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
     templateUrl: './account-change-password-form.component.html'
 })
 export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {

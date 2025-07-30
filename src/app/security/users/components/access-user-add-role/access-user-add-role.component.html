@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <ng-template ngFor let-role [ngForOf]="roles.content">
+      @for (role of roles.content; track role) {
         <tr role="button">
           <td>
             <button (click)="onAdd(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
@@ -19,7 +19,7 @@
           </td>
           <td>{{role.name}}</td>
         </tr>
-      </ng-template>
+      }
     </tbody>
   </table>
 </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Publisher } from '@app/models/library/publisher';
@@ -11,7 +11,7 @@ import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-creation',
-  imports: [CommonModule, CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminPublisherFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-publisher-creation.container.html'
 })
 export class LibraryAdminPublisherCreateContainer extends CreateComponent<Publisher> {

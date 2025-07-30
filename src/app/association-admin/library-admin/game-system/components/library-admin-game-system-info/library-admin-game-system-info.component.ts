@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { BookType } from '@app/models/library/book-type';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-library-admin-game-system-info',
-  imports: [CommonModule, CardModule, ControlButtonsComponent, PlaceholderDirective],
+  imports: [CardModule, ControlButtonsComponent, PlaceholderDirective],
   templateUrl: './library-admin-game-system-info.component.html'
 })
 export class LibraryAdminGameSystemInfoComponent {

@@ -10,8 +10,10 @@
         <ng-content></ng-content>
       </div>
       <div class="modal-footer">
-        <button *ngIf="acceptText" type="button" class="btn btn-danger" (click)="accept.emit()"
+        @if (acceptText) {
+          <button type="button" class="btn btn-danger" (click)="accept.emit()"
           data-bs-dismiss="modal" aria-label="Accept">{{acceptText}}</button>
+        }
       </div>
     </div>
   </div>

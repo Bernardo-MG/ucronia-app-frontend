@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -9,7 +9,7 @@ import { LayoutService } from '../../services/layout.service';
 
 @Component({
   selector: 'layout-navbar',
-  imports: [CommonModule, RouterModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
+  imports: [RouterModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
   templateUrl: './navbar.container.html'
 })
 export class NavbarContainer {

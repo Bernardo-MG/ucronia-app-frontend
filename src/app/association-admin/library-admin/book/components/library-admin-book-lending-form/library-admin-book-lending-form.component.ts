@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookLent } from '@app/models/library/book-lent';
@@ -9,7 +9,7 @@ import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
   templateUrl: './library-admin-book-lending-form.component.html'
 })
 export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {

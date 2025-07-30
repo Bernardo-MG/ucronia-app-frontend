@@ -36,13 +36,15 @@
 <!-- Expiration date -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Fecha de
-    expiración</div>
+  expiración</div>
   <div class="col-sm-10" *uiPlaceholder="waiting">
     {{data.expirationDate}}
   </div>
   <div class="col-sm-12">
-    <div *ngFor="let failure of failures.getFailures('expirationDate')" class="text-danger">
-      {{failure.message}}
-    </div>
+    @for (failure of failures.getFailures('expirationDate'); track failure) {
+      <div class="text-danger">
+        {{failure.message}}
+      </div>
+    }
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -11,7 +11,7 @@ import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-selection-list-widget',
-  imports: [CommonModule, CardModule, RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent],
+  imports: [CardModule, RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent],
   templateUrl: './access-user-selection-list-widget.container.html'
 })
 export class AccessUserSelectionListWidgetContainer {

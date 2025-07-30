@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/models/library/book-lending';
@@ -12,7 +12,7 @@ import { BookLendingService } from '../../services/book-lending.service';
 
 @Component({
   selector: 'app-library-admin-lending-listing',
-  imports: [CommonModule, CardModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, BlockUiDirective],
   templateUrl: './library-admin-lending-listing.container.html'
 })
 export class LibraryAdminLendingListingContainer {

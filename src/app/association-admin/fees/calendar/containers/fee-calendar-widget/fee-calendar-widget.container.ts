@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FeeCalendar } from '@app/models/fees/fee-calendar';
@@ -14,7 +14,7 @@ import { FeeCalendarService } from '../../services/fee-calendar.service';
 
 @Component({
   selector: 'assoc-fee-calendar-widget',
-  imports: [CommonModule, RouterModule, CardModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
+  imports: [RouterModule, CardModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
   templateUrl: './fee-calendar-widget.container.html'
 })
 export class FeeCalendarWidgetContainer {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
@@ -8,7 +8,7 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 
 @Component({
   selector: 'access-user-add-role',
-  imports: [CommonModule, PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
+  imports: [PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent {

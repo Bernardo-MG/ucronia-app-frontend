@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 /**
@@ -12,7 +12,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
  */
 @Component({
   selector: 'pagination-navigation-template',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './pagination-navigation-template.component.html'
 })
 export class PaginationNavigationTemplateComponent {

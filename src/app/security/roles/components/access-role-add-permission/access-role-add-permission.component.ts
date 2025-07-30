@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
@@ -9,7 +9,7 @@ import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
 
 @Component({
   selector: 'access-role-add-permission',
-  imports: [CommonModule, SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
+  imports: [SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
   templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent {

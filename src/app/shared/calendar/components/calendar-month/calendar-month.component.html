@@ -3,9 +3,11 @@
   <!-- Current month -->
   <div>
     <select class="form-select" aria-label="Select month" [disabled]="waiting" (change)="onGoTo($event)">
-      <option *ngFor="let selectionMonth of selectionMonths" [selected]="selectionMonth === currentMonth"
-        [value]="selectionMonth.year + '-' + selectionMonth.month">
+      @for (selectionMonth of selectionMonths; track selectionMonth) {
+        <option [selected]="selectionMonth === currentMonth"
+          [value]="selectionMonth.year + '-' + selectionMonth.month">
         {{getMonthName(selectionMonth)}}</option>
+      }
     </select>
   </div>
 </div>

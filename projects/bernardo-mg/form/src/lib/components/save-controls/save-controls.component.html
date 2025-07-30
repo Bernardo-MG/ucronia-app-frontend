@@ -1,9 +1,9 @@
 <div uiJustifyBetween>
   <!-- Save button -->
   <button type="submit" name="Save" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="saveDisabled"
-    [attr.aria-disabled]="saveDisabled">Guardar</button>
+  [attr.aria-disabled]="saveDisabled">Guardar</button>
   <!-- Cancel button -->
-  <ng-template [ngIf]="cancellable">
+  @if (cancellable) {
     <button class="btn btn-warning" [disabled]="cancelDisabled" name="Cancel" (click)="reject.emit()">Cancelar</button>
-  </ng-template>
+  }
 </div>

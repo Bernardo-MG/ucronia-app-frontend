@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
@@ -7,7 +7,7 @@ import { Fee } from '../../../../models/fees/fee';
 
 @Component({
   selector: 'assoc-fee-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, IconSuccessOrFailureComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, IconSuccessOrFailureComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './fee-edition-form.component.html'
 })
 export class FeeEditionFormComponent extends FormComponent<Fee> {

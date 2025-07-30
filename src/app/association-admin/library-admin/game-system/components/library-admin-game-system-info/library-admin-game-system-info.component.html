@@ -2,15 +2,17 @@
   <ng-template #title>
     <div *uiPlaceholder="waiting"># {{data.number}}</div>
   </ng-template>
-    <!-- Name -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Nombre</div>
-      <div class="col-sm-9" *uiPlaceholder="waiting">
-        {{data.name}}
-      </div>
+  <!-- Name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9" *uiPlaceholder="waiting">
+      {{data.name}}
     </div>
-  <ng-template #footer *ngIf="showMenu">
-    <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+  </div>
+  @if (showMenu) {
+    <ng-template #footer>
+      <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
       (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
-  </ng-template>
+    </ng-template>
+  }
 </p-card>

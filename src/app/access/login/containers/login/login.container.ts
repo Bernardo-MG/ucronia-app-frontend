@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
@@ -24,7 +24,7 @@ import { LoginService } from '../../services/login.service';
  */
 @Component({
   selector: 'login-card',
-  imports: [CommonModule, RouterModule, CardModule, LoginFormComponent],
+  imports: [RouterModule, CardModule, LoginFormComponent],
   templateUrl: './login.container.html'
 })
 export class LoginContainer {

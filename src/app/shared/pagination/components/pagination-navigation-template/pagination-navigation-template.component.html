@@ -14,39 +14,45 @@
       </button>
     </li>
     <!-- Left range -->
-    <li *ngFor="let page of left" class="page-item page-item-number" [class.active]="isCurrent(page)"
-      [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
-      <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
-        [attr.aria-disabled]="disabled" aria-label="Go to page">
-        {{page}}
-      </button>
-    </li>
+    @for (page of left; track page) {
+      <li class="page-item page-item-number" [class.active]="isCurrent(page)"
+        [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
+        <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
+          [attr.aria-disabled]="disabled" aria-label="Go to page">
+          {{page}}
+        </button>
+      </li>
+    }
     <!-- Center range -->
-    <ng-container *ngIf="drawCenterRange">
+    @if (drawCenterRange) {
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
-      <li *ngFor="let page of center" class="page-item page-item-number" [class.active]="isCurrent(page)"
-        [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
-        <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
-          [attr.aria-disabled]="disabled" aria-label="Go to page">
-          {{page}}
-        </button>
-      </li>
-    </ng-container>
+      @for (page of center; track page) {
+        <li class="page-item page-item-number" [class.active]="isCurrent(page)"
+          [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
+          <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
+            [attr.aria-disabled]="disabled" aria-label="Go to page">
+            {{page}}
+          </button>
+        </li>
+      }
+    }
     <!-- Right range -->
-    <ng-container *ngIf="drawRightRange">
+    @if (drawRightRange) {
       <li class="page-item disabled" aria-disabled="true">
         <span class="page-link">...</span>
       </li>
-      <li *ngFor="let page of right" class="page-item page-item-number" [class.active]="isCurrent(page)"
-        [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
-        <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
-          [attr.aria-disabled]="disabled" aria-label="Go to page">
-          {{page}}
-        </button>
-      </li>
-    </ng-container>
+      @for (page of right; track page) {
+        <li class="page-item page-item-number" [class.active]="isCurrent(page)"
+          [class.disabled]="disabled" [attr.aria-disabled]="disabled" [attr.aria-current]="getCurrentLabel(page)">
+          <button type="button" class="page-link" (click)="onGoTo(page)" [disabled]="disabled" [class.disabled]="disabled"
+            [attr.aria-disabled]="disabled" aria-label="Go to page">
+            {{page}}
+          </button>
+        </li>
+      }
+    }
     <!-- Forward buttons -->
     <li class="page-item" [class.disabled]="blockForward" [attr.aria-disabled]="blockForward">
       <button type="button" class="page-link" (click)="onForward()" [class.disabled]="blockForward"

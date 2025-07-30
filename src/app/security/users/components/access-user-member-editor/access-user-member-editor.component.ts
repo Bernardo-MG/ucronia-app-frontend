@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Member } from '@app/models/members/member';
 import { IconSearchComponent } from '@bernardo-mg/icons';
@@ -8,7 +8,7 @@ import { AccessUserSelectMemberComponent } from '../access-user-select-member/ac
 
 @Component({
   selector: 'access-user-member-editor',
-  imports: [CommonModule, AccessUserSelectMemberComponent, IconSearchComponent, BlockUiDirective],
+  imports: [AccessUserSelectMemberComponent, IconSearchComponent, BlockUiDirective],
   templateUrl: './access-user-member-editor.component.html'
 })
 export class AccessUserMemberEditorComponent {

@@ -9,11 +9,13 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let role of roles; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(role)}}">
-      <!-- Cells -->
-      <td>
-        {{role.name}}
-      </td>
-    </tr>
+    @for (role of roles; track role; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter(role)}}">
+        <!-- Cells -->
+        <td>
+          {{role.name}}
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

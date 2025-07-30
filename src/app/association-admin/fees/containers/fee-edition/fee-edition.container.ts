@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterContentInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
@@ -13,7 +13,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edition',
-  imports: [CommonModule, CardModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, FeeEditionFormComponent, FeeInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements AfterContentInit {

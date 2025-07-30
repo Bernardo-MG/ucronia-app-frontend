@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Author } from '@app/models/library/author';
@@ -11,7 +11,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-creation',
-  imports: [CommonModule, CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminAuthorFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-author-creation.container.html'
 })
 export class LibraryAdminAuthorCreateContainer extends CreateComponent<Author> {

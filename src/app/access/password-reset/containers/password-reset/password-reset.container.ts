@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -16,7 +16,7 @@ import { PasswordResetService } from '../../services/password-reset.service';
  */
 @Component({
   selector: 'login-password-reset',
-  imports: [CommonModule, CardModule, BlockUIModule, PasswordResetFormComponent],
+  imports: [CardModule, BlockUIModule, PasswordResetFormComponent],
   templateUrl: './password-reset.container.html'
 })
 export class PasswordResetContainer {

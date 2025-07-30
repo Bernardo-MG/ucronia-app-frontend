@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
@@ -11,7 +11,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 
 @Component({
   selector: 'assoc-library-admin-game-system-creation',
-  imports: [CommonModule, CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, LibraryAdminGameSystemFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-system-creation.container.html'
 })
 export class LibraryAdminGameSystemCreateContainer extends CreateComponent<GameSystem> {

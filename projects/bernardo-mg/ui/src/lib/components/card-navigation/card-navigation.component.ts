@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CardTab } from '../../models/card-tab';
 
@@ -7,7 +7,7 @@ import { CardTab } from '../../models/card-tab';
  */
 @Component({
   selector: 'ui-card-navigation',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './card-navigation.component.html'
 })
 export class CardNavigationComponent {

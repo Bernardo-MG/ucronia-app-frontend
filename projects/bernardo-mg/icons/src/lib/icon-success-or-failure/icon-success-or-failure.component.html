@@ -1,10 +1,11 @@
-<ng-container [ngSwitch]="success">
-  <ng-container *ngSwitchCase="true">
+
+@switch (success) {
+  @case (true) {
     <!-- Active -->
     <icon-success class="text-success"></icon-success>
-  </ng-container>
-  <ng-container *ngSwitchCase="false">
+  }
+  @case (false) {
     <!-- Not active -->
     <icon-failure class="text-danger"></icon-failure>
-  </ng-container>
-</ng-container>
+  }
+}

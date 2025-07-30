@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Transaction } from '@app/models/transactions/transaction';
 import { ControlButtonsComponent } from '@bernardo-mg/form';
@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-transaction-info',
-  imports: [CommonModule, CardModule, PlaceholderDirective, ControlButtonsComponent],
+  imports: [CardModule, PlaceholderDirective, ControlButtonsComponent],
   templateUrl: './transaction-info.component.html'
 })
 export class TransactionInfoComponent {

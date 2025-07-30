@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { GameSystem } from '@app/models/library/game-system';
@@ -13,7 +13,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
 
 @Component({
   selector: 'assoc-library-admin-game-system-listing',
-  imports: [CommonModule, CardModule, RouterModule, ArticleComponent, SortingButtonComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, ArticleComponent, SortingButtonComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
   templateUrl: './library-admin-game-system-listing.container.html'
 })
 export class LibraryAdminGameSystemListingContainer {

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Author } from '@app/models/library/author';
@@ -6,7 +6,7 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 
 @Component({
   selector: 'assoc-library-admin-author-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
   templateUrl: './library-admin-author-form.component.html'
 })
 export class LibraryAdminAuthorFormComponent extends FormComponent<Author> {

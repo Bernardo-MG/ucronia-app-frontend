@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
+
 import { AfterViewInit, Component, ElementRef, Input, inject } from '@angular/core';
 import { FieldFailure } from '@bernardo-mg/request';
 
 @Component({
   selector: 'form-input-failure-feedback',
-  imports: [CommonModule],
   templateUrl: './input-failure-feedback.component.html'
 })
 export class InputFailureFeedbackComponent implements AfterViewInit {

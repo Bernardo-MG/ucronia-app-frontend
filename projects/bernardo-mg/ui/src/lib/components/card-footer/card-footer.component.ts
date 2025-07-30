@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 import { CardModule } from 'primeng/card';
 
@@ -7,7 +7,7 @@ import { CardModule } from 'primeng/card';
  */
 @Component({
   selector: 'ui-card-footer',
-  imports: [CommonModule, CardModule],
+  imports: [CardModule],
   templateUrl: './card-footer.component.html'
 })
 export class CardFooterComponent {

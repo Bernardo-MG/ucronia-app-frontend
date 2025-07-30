@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
@@ -10,7 +10,7 @@ import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
   selector: 'app-my-fees-listing',
-  imports: [CommonModule, CardModule, ArticleComponent, MyFeesListComponent, PaginationInfoComponent],
+  imports: [CardModule, ArticleComponent, MyFeesListComponent, PaginationInfoComponent],
   templateUrl: './my-fees-listing.container.html'
 })
 export class MyFeesFrontpageContainer {

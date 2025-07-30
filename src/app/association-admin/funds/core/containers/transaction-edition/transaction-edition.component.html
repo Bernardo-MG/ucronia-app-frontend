@@ -1,19 +1,19 @@
 <ui-article>
   <div uiResponsiveShortColumns>
-    <ng-container [ngSwitch]="editing">
+    @switch (editing) {
       <!-- Form -->
-      <ng-container *ngSwitchCase="true">
+      @case (true) {
         <p-card>
           <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
             [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
           </assoc-transaction-form>
         </p-card>
-      </ng-container>
+      }
       <!-- Info -->
-      <ng-container *ngSwitchCase="false">
+      @case (false) {
         <assoc-transaction-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
-      </ng-container>
-    </ng-container>
+        [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
+      }
+    }
   </div>
 </ui-article>

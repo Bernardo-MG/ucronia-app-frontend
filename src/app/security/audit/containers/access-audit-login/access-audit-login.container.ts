@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
@@ -10,7 +10,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
 
 @Component({
   selector: 'access-audit-login',
-  imports: [CommonModule, CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
+  imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
   templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer {

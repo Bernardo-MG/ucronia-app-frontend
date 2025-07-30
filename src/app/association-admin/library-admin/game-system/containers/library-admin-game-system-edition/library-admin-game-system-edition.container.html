@@ -1,20 +1,20 @@
 <article class="p-4">
   <div uiResponsiveShortColumns>
-    <ng-container [ngSwitch]="editing">
+    @switch (editing) {
       <!-- Form -->
-      <ng-container *ngSwitchCase="true">
+      @case (true) {
         <p-card>
           <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
             [data]="data" [failures]="failures" (save)="onSave($event)"
-            (reject)="onCancel()"></assoc-library-admin-game-system-form>
+          (reject)="onCancel()"></assoc-library-admin-game-system-form>
         </p-card>
-      </ng-container>
+      }
       <!-- Info -->
-      <ng-container *ngSwitchCase="false">
+      @case (false) {
         <assoc-library-admin-game-system-info [data]="data" [showMenu]="showMenu" [waiting]="waiting"
           [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
-          (startEditing)="onStartEditing()"></assoc-library-admin-game-system-info>
-      </ng-container>
-    </ng-container>
+        (startEditing)="onStartEditing()"></assoc-library-admin-game-system-info>
+      }
+    }
   </div>
 </article>

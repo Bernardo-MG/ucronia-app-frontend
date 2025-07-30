@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
 import { ArticleComponent } from '@bernardo-mg/ui';
@@ -7,7 +7,7 @@ import { ActivityCalendarService } from '../../services/activity-calendar.servic
 
 @Component({
   selector: 'app-activity-calendar-frontpage',
-  imports: [CommonModule, CardModule, ArticleComponent, TeamupCalendarComponent],
+  imports: [CardModule, ArticleComponent, TeamupCalendarComponent],
   templateUrl: './activity-calendar-frontpage.container.html'
 })
 export class ActivityCalendarFrontpageContainer {

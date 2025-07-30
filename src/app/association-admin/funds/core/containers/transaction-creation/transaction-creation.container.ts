@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
@@ -11,7 +11,7 @@ import { TransactionFormComponent } from '../../components/transaction-form/tran
 
 @Component({
   selector: 'assoc-transaction-creation',
-  imports: [CommonModule, CardModule, ArticleComponent, TransactionFormComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, ArticleComponent, TransactionFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './transaction-creation.container.html'
 })
 export class TransactionCreationComponent extends CreateComponent<Transaction> {

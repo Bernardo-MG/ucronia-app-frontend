@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
@@ -12,7 +12,7 @@ import { TransactionCalendarService } from '../../services/transaction-calendar.
 
 @Component({
   selector: 'assoc-transaction-calendar-widget',
-  imports: [CommonModule, RouterModule, CardModule, CalendarsModule, IconAddComponent],
+  imports: [RouterModule, CardModule, CalendarsModule, IconAddComponent],
   templateUrl: './transaction-calendar-widget.container.html'
 })
 export class TransactionCalendarWidgetContainer {

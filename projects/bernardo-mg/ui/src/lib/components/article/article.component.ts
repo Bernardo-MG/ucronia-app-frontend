@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component } from '@angular/core';
 
 /**
@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'ui-article',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './article.component.html'
 })
 export class ArticleComponent {

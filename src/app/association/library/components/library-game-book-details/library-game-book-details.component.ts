@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input } from '@angular/core';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
@@ -6,7 +6,7 @@ import { PlaceholderDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-game-book-details',
-  imports: [CommonModule, PlaceholderDirective],
+  imports: [PlaceholderDirective],
   templateUrl: './library-game-book-details.component.html'
 })
 export class LibraryGameBookDetailsComponent {

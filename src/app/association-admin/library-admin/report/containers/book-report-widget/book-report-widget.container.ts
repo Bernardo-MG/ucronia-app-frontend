@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject } from '@angular/core';
 import { IconExcelComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
@@ -7,7 +7,7 @@ import { BookReportService } from '../../services/book-report.service';
 
 @Component({
   selector: 'assoc-book-report-widget',
-  imports: [CommonModule, CardModule, IconExcelComponent, WaitingDirective, JustifyCenterDirective],
+  imports: [CardModule, IconExcelComponent, WaitingDirective, JustifyCenterDirective],
   templateUrl: './book-report-widget.container.html'
 })
 export class BookReportWidgetContainer {

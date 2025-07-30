@@ -11,16 +11,18 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let book of books; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(book)}}">
-      <!-- Cells -->
-      <td>
-        <sup>{{book.title.supertitle}}</sup>
-        {{book.title.title}}
-        <sub>{{book.title.subtitle}}</sub>
-      </td>
-      <td>
-        <icon-success-or-failure [success]="!book.lent"></icon-success-or-failure>
-      </td>
-    </tr>
+    @for (book of books; track book; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter(book)}}">
+        <!-- Cells -->
+        <td>
+          <sup>{{book.title.supertitle}}</sup>
+          {{book.title.title}}
+          <sub>{{book.title.subtitle}}</sub>
+        </td>
+        <td>
+          <icon-success-or-failure [success]="!book.lent"></icon-success-or-failure>
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

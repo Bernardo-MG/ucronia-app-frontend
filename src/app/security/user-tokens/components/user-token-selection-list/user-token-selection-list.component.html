@@ -21,23 +21,25 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let token of userTokens; let rowIndex = index" role="button" routerLink="{{routeLinkAdapter(token)}}">
-      <!-- Cells -->
-      <td>
-        {{token.username}}
-      </td>
-      <td>
-        {{token.scope}}
-      </td>
-      <td>
-        {{token.creationDate}}
-      </td>
-      <td>
-        {{token.consumed}}
-      </td>
-      <td>
-        {{token.revoked}}
-      </td>
-    </tr>
+    @for (token of userTokens; track token; let rowIndex = $index) {
+      <tr role="button" routerLink="{{routeLinkAdapter(token)}}">
+        <!-- Cells -->
+        <td>
+          {{token.username}}
+        </td>
+        <td>
+          {{token.scope}}
+        </td>
+        <td>
+          {{token.creationDate}}
+        </td>
+        <td>
+          {{token.consumed}}
+        </td>
+        <td>
+          {{token.revoked}}
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

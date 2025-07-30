@@ -15,17 +15,19 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let user of data; let rowIndex = index">
-      <!-- Cells -->
-      <td>
-        {{user.username}}
-      </td>
-      <td>
-        {{user.date}}
-      </td>
-      <td>
-        <icon-success-or-failure [success]="user.loggedIn"></icon-success-or-failure>
-      </td>
-    </tr>
+    @for (user of data; track user; let rowIndex = $index) {
+      <tr>
+        <!-- Cells -->
+        <td>
+          {{user.username}}
+        </td>
+        <td>
+          {{user.date}}
+        </td>
+        <td>
+          <icon-success-or-failure [success]="user.loggedIn"></icon-success-or-failure>
+        </td>
+      </tr>
+    }
   </tbody>
 </table>

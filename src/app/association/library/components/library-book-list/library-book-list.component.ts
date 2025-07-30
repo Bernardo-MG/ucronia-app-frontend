@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
@@ -8,7 +8,7 @@ import { SortingProperty } from '@bernardo-mg/request';
 
 @Component({
   selector: 'assoc-library-book-list',
-  imports: [CommonModule, RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
+  imports: [RouterModule, SortingButtonComponent, IconSuccessOrFailureComponent],
   templateUrl: './library-book-list.component.html'
 })
 export class LibraryBookListComponent {
