@@ -1,7 +1,7 @@
 <p-card>
   <ng-template #header>
     <!-- Tabs -->
-    <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
+    <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)" />
   </ng-template>
   <ng-template #title>
     <div *uiPlaceholder="waiting()"># {{data().number}} {{data().title.fullTitle}}</div>
@@ -78,7 +78,7 @@
       </div>
     }
     @case ('lendings') {
-      <assoc-library-book-lendings [lendings]="data().lendings"></assoc-library-book-lendings>
+      <assoc-library-book-lendings [lendings]="data().lendings" />
     }
   }
   @if (showMenu()) {
@@ -91,21 +91,21 @@
               <!-- Return button -->
               <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
                 [disabled]="lendDisabled()" [attr.aria-disabled]="lendDisabled()">
-                <icon-take-in></icon-take-in>Devolver
+                <icon-take-in />Devolver
               </button>
             }
             @case (false) {
               <!-- Lend button -->
               <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
                 [disabled]="lendDisabled()" [attr.aria-disabled]="lendDisabled()">
-                <icon-take-out></icon-take-out>Prestar
+                <icon-take-out />Prestar
               </button>
             }
           }
         }
         @default {
           <form-control-buttons [editable]="editable()" [deletable]="deletable()" [disabled]="waiting()"
-          (startEditing)="startEditing.emit(view)" (delete)="delete.emit()"></form-control-buttons>
+          (startEditing)="startEditing.emit(view)" (delete)="delete.emit()" />
         }
       }
     </ng-template>

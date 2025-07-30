@@ -4,13 +4,13 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Usuario <sorting-button property="username" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Usuario <sorting-button property="username" (directionChange)="changeDirection.emit($event)" />
       </th>
       <th scope="col">
-        Fecha <sorting-button property="date" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Fecha <sorting-button property="date" (directionChange)="changeDirection.emit($event)" />
       </th>
       <th scope="col">
-        Login <sorting-button property="loggedIn" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Login <sorting-button property="loggedIn" (directionChange)="changeDirection.emit($event)" />
       </th>
     </tr>
   </thead>
@@ -25,7 +25,7 @@
           {{user.date}}
         </td>
         <td>
-          <icon-success-or-failure [success]="user.loggedIn"></icon-success-or-failure>
+          <icon-success-or-failure [success]="user.loggedIn" />
         </td>
       </tr>
     }

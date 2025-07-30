@@ -5,8 +5,7 @@
       @case (true) {
         <p-card>
           <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-            [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
-          </access-user-form>
+            [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
         </p-card>
       }
       @case (false) {
@@ -17,7 +16,7 @@
           [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
           (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
           (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
-        (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)"></access-user-info>
+        (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
       }
     }
   </div>

@@ -15,7 +15,7 @@
       <div class="col-sm-10">
         <input type="text" id="descriptionInput" formControlName="description" class="form-control" formInvalidField
           [backendFailure]="failures.hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
-          <form-input-failure-feedback [failures]="failures.getFailures('description')"></form-input-failure-feedback>
+          <form-input-failure-feedback [failures]="failures.getFailures('description')" />
         </div>
       </div>
       <!-- Date -->
@@ -24,7 +24,7 @@
         <div class="col-sm-10">
           <input type="date" id="dateInput" formControlName="date" class="form-control" formInvalidField
             [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
-            <form-input-failure-feedback [failures]="failures.getFailures('date')"></form-input-failure-feedback>
+            <form-input-failure-feedback [failures]="failures.getFailures('date')" />
           </div>
         </div>
         <!-- Amount -->
@@ -33,9 +33,9 @@
           <div class="col-sm-10">
             <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" formInvalidField
               [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
-              <form-input-failure-feedback [failures]="failures.getFailures('amount')"></form-input-failure-feedback>
+              <form-input-failure-feedback [failures]="failures.getFailures('amount')" />
             </div>
           </div>
           <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-          [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+          [cancellable]="cancellable" (reject)="onCancel()" />
         </form>

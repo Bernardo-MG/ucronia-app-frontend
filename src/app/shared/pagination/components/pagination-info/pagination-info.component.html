@@ -6,6 +6,5 @@
 </div>
 <!-- Page navigation -->
 <div uiJustifyCenter class="mt-1">
-  <pagination-navigation [current]="current()" [pages]="pages()" [disabled]="waiting()" (goTo)="goTo.emit($event)">
-  </pagination-navigation>
+  <pagination-navigation [current]="current()" [pages]="pages()" [disabled]="waiting()" (goTo)="goTo.emit($event)" />
 </div>

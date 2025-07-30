@@ -5,7 +5,7 @@
   <div class="row pb-2">
     <!-- Membership evolution -->
     <div uiJustifyCenter>
-      <widget-membership-evolution-chart></widget-membership-evolution-chart>
+      <widget-membership-evolution-chart />
     </div>
   </div>
   <div class="row">
@@ -17,13 +17,13 @@
             <!-- Add person -->
             <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
               [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-              <icon-add></icon-add>
+              <icon-add />
             </button>
           </div>
           <div class="offset-md-7 col-sm-2">
             <!-- Filter by membership -->
             <assoc-person-status-select [disabled]="reading"
-              (changeStatus)="onChangeActiveFilter($event)"></assoc-person-status-select>
+              (changeStatus)="onChangeActiveFilter($event)" />
           </div>
         </div>
         <div class="row">
@@ -37,12 +37,11 @@
       </ng-template>
       <!-- List -->
       <assoc-people-list [people]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-        (changeDirection)="onChangeDirection($event)">
-      </assoc-people-list>
+        (changeDirection)="onChangeDirection($event)" />
       <ng-template #footer>
         <!-- Pagination -->
         <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-          [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+          [totalElements]="data.totalElements" (goTo)="load($event)" />
       </ng-template>
     </p-card>
   </div>

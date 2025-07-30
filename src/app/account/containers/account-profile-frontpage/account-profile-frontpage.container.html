@@ -1,7 +1,7 @@
 <ui-article>
   <div uiResponsiveShortColumns>
     <p-card>
-      <account-profile-info [account]="account" [waiting]="waiting"></account-profile-info>
+      <account-profile-info [account]="account" [waiting]="waiting" />
     </p-card>
     @if (account.person) {
       <article class="p-4">
@@ -9,7 +9,7 @@
           <h2 class="border-bottom">Socio</h2>
         </header>
         <p-card>
-          <account-profile-person [data]="person"></account-profile-person>
+          <account-profile-person [data]="person" />
         </p-card>
       </article>
     }

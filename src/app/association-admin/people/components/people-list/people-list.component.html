@@ -4,10 +4,10 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Nombre <sorting-button property="fullName" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Nombre <sorting-button property="fullName" (directionChange)="changeDirection.emit($event)" />
       </th>
       <th scope="col">
-        Activo <sorting-button property="active" (directionChange)="changeDirection.emit($event)"></sorting-button>
+        Activo <sorting-button property="active" (directionChange)="changeDirection.emit($event)" />
       </th>
     </tr>
   </thead>
@@ -26,7 +26,7 @@
               No es socio
             }
             @case (false) {
-              <icon-success-or-failure [success]="person.membership?.active"></icon-success-or-failure>
+              <icon-success-or-failure [success]="person.membership?.active" />
             }
           }
         </td>

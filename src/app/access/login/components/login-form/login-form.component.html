@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-md-2">
             <p-toggleswitch inputId="rememberMe" [disabled]="!rememberMeEnabled"
-            (onChange)="onRememberMe($event)"></p-toggleswitch>
+            (onChange)="onRememberMe($event)" />
           </div>
           <div class="col-md-10">
             Mantener sesión
@@ -36,7 +36,7 @@
     <!-- Submit button -->
     <div class="d-flex">
       <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
-      [attr.aria-disabled]="!loginEnabled" class="w-100"></p-button>
+      [attr.aria-disabled]="!loginEnabled" class="w-100" />
     </div>
 
     <!-- Login failed warning -->

@@ -23,18 +23,18 @@
     <!-- User -->
     <ng-container *ngSwitchCase="'user'">
         <access-user-info-details [data]="data()" [showMenu]="showMenu()" [deletable]="deletable()" [editable]="editable()"
-          [waiting]="waiting()" (delete)="delete.emit()" (startEditing)="startEditing.emit()"></access-user-info-details>
+          [waiting]="waiting()" (delete)="delete.emit()" (startEditing)="startEditing.emit()" />
       <ng-template #footer *ngIf="showMenu()">
         <div>
           <form-control-buttons [editable]="editable()" [deletable]="deletable()" [disabled]="waiting()"
-            (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+            (startEditing)="startEditing.emit()" (delete)="delete.emit()" />
         </div>
       </ng-template>
     </ng-container>
     <!-- Status -->
     <ng-container *ngSwitchCase="'status'">
       <!-- Enable/disable button -->
-        <access-user-status [data]="data()"></access-user-status>
+        <access-user-status [data]="data()" />
       <ng-template #footer>
         <div class="row">
           <ng-template [ngIf]="!data().enabled">
@@ -62,7 +62,7 @@
         <access-user-roles-editor [editable]="editEnabled()" [deletable]="deletable()" [username]="data().username"
           [waiting]="waiting()" [waitingRolesSelection]="readingRoleSelection()" [roles]="data().roles"
           [rolesSelection]="rolesSelection()" (add)="addRole.emit($event)" (remove)="removeRole.emit($event)"
-          (goToSelectionPage)="goToRoleSelectionPage.emit($event)"></access-user-roles-editor>
+          (goToSelectionPage)="goToRoleSelectionPage.emit($event)" />
     </ng-container>
     <!-- Member -->
     <ng-container *ngSwitchCase="'member'">
@@ -70,7 +70,7 @@
         <access-user-member-editor [member]="member().name.fullName" [editable]="editable()" [waiting]="readingMember()"
           [waitingMembersSelection]="readingMemberSelection()" [membersSelection]="membersSelection()"
           (goToSelectionPage)="goToMemberSelectionPage.emit($event)"
-          (selectMember)="selectMember.emit($event)"></access-user-member-editor>
+          (selectMember)="selectMember.emit($event)" />
     </ng-container>
   </ng-container>
 </p-card>

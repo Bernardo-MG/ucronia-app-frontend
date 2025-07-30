@@ -21,14 +21,14 @@
     <div class="col-sm-1">
       <button [disabled]="isPaymentDisabled()" (click)="selectPayment()" type="button" class="btn btn-link link-dark"
         role="button" aria-label="Back">
-        <icon-search></icon-search>
+        <icon-search />
       </button>
     </div>
   </div>
   <ng-template #footer>
     <div>
       <form-control-buttons [editable]="editable()" [deletable]="deletable()" [disabled]="waiting()"
-      (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+      (startEditing)="startEditing.emit()" (delete)="delete.emit()" />
     </div>
   </ng-template>
 </p-card>

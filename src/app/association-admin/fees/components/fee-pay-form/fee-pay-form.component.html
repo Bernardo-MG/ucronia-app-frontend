@@ -14,7 +14,7 @@
         <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
           formInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
           aria-describedby="paymentDateLabel">
-          <form-input-failure-feedback [failures]="failures.getFailures('payment.date')"></form-input-failure-feedback>
+          <form-input-failure-feedback [failures]="failures.getFailures('payment.date')" />
         </div>
       </div>
       <!-- Fees -->
@@ -27,12 +27,12 @@
               <div class="col-md-6 mb-2">
                 <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
                   formInvalidField="feeMonths[]" [backendFailure]="failures.hasFailures('feeMonths[]')">
-                  <form-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')"></form-input-failure-feedback>
+                  <form-input-failure-feedback [failures]="failures.getFailures('feeMonths[]')" />
                 </div>
                 <div class="col-md-2 mb-2">
                   <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
                     (click)="removeDate(i)">
-                    <icon-delete></icon-delete>
+                    <icon-delete />
                   </button>
                 </div>
               </div>
@@ -42,7 +42,7 @@
               <div uiJustifyCenter>
                 <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled"
                   (click)="addDate()">
-                  <icon-add></icon-add>
+                  <icon-add />
                 </button>
               </div>
             </div>

@@ -12,16 +12,14 @@
                 [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
                 (save)="onSave($event)" (reject)="onCancel()" (goToBookTypePage)="onGoToBookTypePage($event)"
                 (goToGameSystemPage)="onGoToGameSystemPage($event)" (goToAuthorPage)="onGoToAuthorPage($event)"
-                (goToPublisherPage)="onGoToPublisherPage($event)">
-              </assoc-library-admin-game-book-edition-form>
+                (goToPublisherPage)="onGoToPublisherPage($event)" />
             </p-card>
           }
           @case ('donors') {
             <p-card>
               <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
                 [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
-                (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)">
-              </assoc-library-admin-book-donors-form>
+                (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
             </p-card>
           }
         }
@@ -31,7 +29,7 @@
         <assoc-library-admin-game-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
           [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
           [languages]="languages" (delete)="onDelete()"
-        (startEditing)="onStartEditingView($event)"></assoc-library-admin-game-book-details>
+        (startEditing)="onStartEditingView($event)" />
       }
     }
   </div>

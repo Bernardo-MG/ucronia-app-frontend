@@ -4,7 +4,7 @@
   @if (canGoPrevious) {
     <button id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
       [disabled]="!canGoPrevious" [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year">
-      <icon-backward></icon-backward>
+      <icon-backward />
     </button>
   }
   <div class="w-25 px-3">
@@ -21,7 +21,7 @@
   @if (canGoNext) {
     <button id="nextYearButton" type="button" class="btn btn-link" (click)="onGoNext()"
       [disabled]="!canGoNext" [attr.aria-disabled]="!canGoNext" aria-label="Next year">
-      <icon-forward></icon-forward>
+      <icon-forward />
     </button>
   }
 </div>
@@ -48,7 +48,7 @@
               @if (hasMonth(memberFees.months, monthNumber)) {
                 <button type="button" class="btn btn-secondary btn-sm" role="button"
                   routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.person.number}}">
-                  <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)"></icon-success-or-failure>
+                  <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)" />
                 </button>
               }
             </td>

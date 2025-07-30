@@ -3,10 +3,10 @@
     <tr>
       <th scope="col"></th>
       <th scope="col">
-        Recurso<sorting-button property="resource" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Recurso<sorting-button property="resource" (directionChange)="onChangeDirection($event)" />
       </th>
       <th scope="col">
-        Acción<sorting-button property="action" (directionChange)="onChangeDirection($event)"></sorting-button>
+        Acción<sorting-button property="action" (directionChange)="onChangeDirection($event)" />
       </th>
     </tr>
   </thead>
@@ -16,7 +16,7 @@
         <td>
           <button (click)="onAddPermission(permission)" type="button" class="btn btn-link link-dark" role="button"
             aria-label="Back">
-            <icon-add></icon-add>
+            <icon-add />
           </button>
         </td>
         <td>{{permission.resource}}</td>
@@ -27,6 +27,5 @@
 </table>
 <!-- Permissions navigation -->
 <div uiJustifyCenter class="mt-1">
-  <pagination-navigation [current]="permissions().page" [pages]="permissions().totalPages" (goTo)="onGoTo($event)">
-  </pagination-navigation>
+  <pagination-navigation [current]="permissions().page" [pages]="permissions().totalPages" (goTo)="onGoTo($event)" />
 </div>

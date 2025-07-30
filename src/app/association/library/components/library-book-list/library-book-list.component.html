@@ -3,10 +3,10 @@
     <tr>
       <!-- Headers -->
       <th scope="col">
-        Título <sorting-button property="title" (directionChange)="directionChange.emit($event)"></sorting-button>
+        Título <sorting-button property="title" (directionChange)="directionChange.emit($event)" />
       </th>
       <th scope="col">
-        Disponible <sorting-button property="lent" (directionChange)="directionChange.emit($event)"></sorting-button>
+        Disponible <sorting-button property="lent" (directionChange)="directionChange.emit($event)" />
       </th>
     </tr>
   </thead>
@@ -20,7 +20,7 @@
           <sub>{{book.title.subtitle}}</sub>
         </td>
         <td>
-          <icon-success-or-failure [success]="!book.lent"></icon-success-or-failure>
+          <icon-success-or-failure [success]="!book.lent" />
         </td>
       </tr>
     }

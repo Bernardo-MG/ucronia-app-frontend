@@ -1,7 +1,7 @@
 <p-card>
   <ng-template #header>
     <!-- Tabs -->
-    <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)"></ui-card-navigation>
+    <ui-card-navigation [tabs]="tabs" (pickTab)="onChangeView($event)" />
   </ng-template>
   <ng-template #title>
     <div *uiPlaceholder="waiting()"># {{data().number}} {{data().name.fullName}}</div>
@@ -10,10 +10,10 @@
   <ng-container [ngSwitch]="view">
     <ng-container *ngSwitchCase="'details'">
       <!-- Member details -->
-      <assoc-people-info-details [data]="data()" [waiting]="waiting()"></assoc-people-info-details>
+      <assoc-people-info-details [data]="data()" [waiting]="waiting()" />
       <ng-template #footer *ngIf="showMenu()">
         <form-control-buttons [editable]="editable()" [deletable]="deletable()" [disabled]="waiting()"
-          (startEditing)="startEditing.emit()" (delete)="delete.emit()"></form-control-buttons>
+          (startEditing)="startEditing.emit()" (delete)="delete.emit()" />
       </ng-template>
     </ng-container>
     <ng-container *ngSwitchCase="'membership'">
@@ -24,7 +24,7 @@
           <div class="row">
             <div class="col-sm-2 text-primary">Activo</div>
             <div class="col-sm-10">
-              <icon-success-or-failure [success]="data().membership?.active"></icon-success-or-failure>
+              <icon-success-or-failure [success]="data().membership?.active" />
             </div>
           </div>
         </ng-container>
@@ -37,14 +37,14 @@
       <div class="row">
         <div class="col-sm-2 text-primary">Renovación</div>
         <div class="col-sm-10">
-          <icon-success-or-failure [success]="data().membership?.renew"></icon-success-or-failure>
+          <icon-success-or-failure [success]="data().membership?.renew" />
         </div>
       </div>
       <ng-template #footer>
         <assoc-people-edition-membership-buttons [active]="data().membership?.active" [renew]="data().membership?.renew"
           [disabled]="!editEnabled()" (activate)="activate.emit()" (deactivate)="deactivate.emit()"
           (enableRenew)="enableRenew.emit()" (disableRenew)="disableRenew.emit()"
-          (convertToMember)="convertToMember.emit()"></assoc-people-edition-membership-buttons>
+          (convertToMember)="convertToMember.emit()" />
       </ng-template>
     </ng-container>
   </ng-container>

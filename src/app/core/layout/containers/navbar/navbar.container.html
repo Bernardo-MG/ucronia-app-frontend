@@ -7,7 +7,7 @@
       <ul class="nav navbar-nav ms-auto">
         <li class="nav-item">
           <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
-            <icon-login></icon-login>
+            <icon-login />
           </a>
         </li>
       </ul>
@@ -48,19 +48,19 @@
             @if (showSecurity) {
               <li class="nav-item">
                 <a routerLink="/security" class="nav-link" aria-label="Seguridad" title="Seguridad">
-                  <icon-shield></icon-shield>
+                  <icon-shield />
                 </a>
               </li>
             }
             @if (showSettings) {
               <li class="nav-item">
                 <a routerLink="/settings" class="nav-link" aria-label="Configuración" title="Configuración">
-                  <icon-settings></icon-settings>
+                  <icon-settings />
                 </a>
               </li>
             }
             <!-- Account menu -->
-            <layout-account-dropdown></layout-account-dropdown>
+            <layout-account-dropdown />
           </ul>
         </div>
       }

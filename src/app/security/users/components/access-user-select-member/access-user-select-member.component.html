@@ -14,7 +14,7 @@
         <td>
           <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
             aria-label="Back">
-            <icon-add></icon-add>
+            <icon-add />
           </button>
         </td>
         <td>{{member.name.fullName}}</td>
@@ -24,6 +24,5 @@
 </table>
 <div uiJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting()" [current]="members().page" [pages]="members().totalPages"
-    (goTo)="onGoToPage($event)">
-  </pagination-navigation>
+    (goTo)="onGoToPage($event)" />
 </div>

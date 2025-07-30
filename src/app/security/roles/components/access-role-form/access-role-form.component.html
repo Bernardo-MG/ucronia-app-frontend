@@ -5,9 +5,9 @@
     <div class="col-sm-10">
       <input type="text" id="nameInput" formControlName="name" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('name')" aria-describedby="nameLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('name')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name')" />
     </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+    [cancellable]="cancellable" (reject)="onCancel()" />
 </form>

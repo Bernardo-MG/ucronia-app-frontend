@@ -1,7 +1,6 @@
 <div>Escoge un editor</div>
-<ui-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)"></ui-button-list>
+<ui-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)" />
 <div uiJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" *uiBlock="waiting"
-    (goTo)="onGoToPage($event)">
-  </pagination-navigation>
+    (goTo)="onGoToPage($event)" />
 </div>

@@ -6,7 +6,7 @@
       </ng-template>
       <!-- Book info -->
       <assoc-library-game-book-details [data]="data" [languages]="languages"
-        [waiting]="waiting"></assoc-library-game-book-details>
+        [waiting]="waiting" />
     </p-card>
   </div>
   <!-- Lendings -->
@@ -15,7 +15,7 @@
       <ng-template #title>
         <h2>Préstamos</h2>
       </ng-template>
-      <assoc-library-book-lendings [lendings]="data.lendings"></assoc-library-book-lendings>
+      <assoc-library-book-lendings [lendings]="data.lendings" />
     </p-card>
   </div>
 </article>

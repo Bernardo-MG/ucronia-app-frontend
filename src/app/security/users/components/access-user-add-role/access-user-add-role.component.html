@@ -14,7 +14,7 @@
         <tr role="button">
           <td>
             <button (click)="onAdd(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
-              <icon-add></icon-add>
+              <icon-add />
             </button>
           </td>
           <td>{{role.name}}</td>
@@ -25,6 +25,5 @@
 </div>
 <div uiJustifyCenter class="mt-1">
   <pagination-navigation [disabled]="waiting()" [current]="roles().page" [pages]="roles().totalPages"
-    (goTo)="onGoToPage($event)">
-  </pagination-navigation>
+    (goTo)="onGoToPage($event)" />
 </div>

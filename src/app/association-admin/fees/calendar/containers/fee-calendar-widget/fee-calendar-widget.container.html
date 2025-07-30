@@ -5,19 +5,19 @@
         <!-- Pay fee -->
         <button type="button" class="btn btn-link" aria-label="register" routerLink="pay" [disabled]="!createPermission"
           [attr.aria-disabled]="!createPermission">
-          <icon-add></icon-add>
+          <icon-add />
         </button>
       </div>
       <div class="col-sm-9">
         <!-- Date selector -->
         <div uiJustifyEnd>
           <assoc-member-status-select [disabled]="readingCalendar"
-            (changeStatus)="onChangeActiveFilter($event)"></assoc-member-status-select>
+            (changeStatus)="onChangeActiveFilter($event)" />
         </div>
       </div>
     </div>
   </ng-template>
   <!-- Calendar -->
   <assoc-fee-calendar [range]="range" [waiting]="readingCalendar" [feeCalendar]="feeCalendar"
-    (goToYear)="onGoToYear($event)"></assoc-fee-calendar>
+    (goToYear)="onGoToYear($event)" />
 </p-card>

@@ -5,14 +5,13 @@
       @case (true) {
         <p-card>
           <assoc-transaction-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-            [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()">
-          </assoc-transaction-form>
+            [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
         </p-card>
       }
       <!-- Info -->
       @case (false) {
         <assoc-transaction-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-        [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"></assoc-transaction-info>
+        [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()" />
       }
     }
   </div>

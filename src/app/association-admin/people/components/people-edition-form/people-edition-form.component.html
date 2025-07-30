@@ -14,7 +14,7 @@
       <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
         aria-describedby="firstNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')" />
     </div>
   </div>
   <!-- Last name -->
@@ -24,7 +24,7 @@
       <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
         aria-describedby="lastNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')" />
     </div>
   </div>
   <!-- Birth date -->
@@ -33,7 +33,7 @@
     <div class="col-sm-10">
       <input type="date" id="birthDateInput" formControlName="birthDate" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('birthDate')" aria-describedby="birthDateLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('birthDate')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('birthDate')" />
     </div>
   </div>
   <!-- Identifier -->
@@ -42,7 +42,7 @@
     <div class="col-sm-10">
       <input type="text" id="identifierInput" formControlName="identifier" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('identifier')" aria-describedby="identifierLabel" maxlength="15">
-      <form-input-failure-feedback [failures]="failures.getFailures('identifier')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('identifier')" />
     </div>
   </div>
   <!-- Phone -->
@@ -51,9 +51,9 @@
     <div class="col-sm-10">
       <input type="text" id="phoneInput" formControlName="phone" class="form-control" formInvalidField
         [backendFailure]="failures.hasFailures('phone')" aria-describedby="phoneLabel" maxlength="15">
-      <form-input-failure-feedback [failures]="failures.getFailures('phone')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('phone')" />
     </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+    [cancellable]="cancellable" (reject)="onCancel()" />
 </form>

@@ -4,7 +4,7 @@
       <!-- Progress -->
       <div uiJustifyBetween>
         <button type="button" class="btn btn-link me-2" aria-label="Return" (click)="onReturnToMembers()"
-          [disabled]="isReturnDisabled()"><icon-backward></icon-backward></button>
+          [disabled]="isReturnDisabled()"><icon-backward /></button>
           <h2>{{currentStep}}/2</h2>
         </div>
         @switch (selectedMember) {
@@ -13,7 +13,7 @@
             <app-fee-pay-select-member [data]="personPage" [waiting]="readingMembers"
               (change)="onChangePay($event.target)" (selectPerson)="onSelectPerson($event)"
               (goToPage)="onGoToMembersPage($event)"
-            (changeFilter)="onChangeActiveFilter($event)"></app-fee-pay-select-member>
+            (changeFilter)="onChangeActiveFilter($event)" />
           }
           @case (true) {
             <!-- Date selection -->
@@ -27,13 +27,12 @@
                 @case (true) {
                   <!-- Pay form -->
                   <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                    [person]="person" (save)="onSave($event)">
-                  </assoc-fee-pay-form>
+                    [person]="person" (save)="onSave($event)" />
                 }
                 @case (false) {
                   <!-- Create unpaid form -->
                   <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [person]="person" (save)="onCreateUnpaid($event)"></assoc-fee-creation-form>
+                  [person]="person" (save)="onCreateUnpaid($event)" />
                 }
               }
             }

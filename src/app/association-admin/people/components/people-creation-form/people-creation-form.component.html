@@ -6,7 +6,7 @@
       <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
         aria-describedby="firstNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')" />
     </div>
   </div>
   <!-- Last name -->
@@ -16,7 +16,7 @@
       <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
         formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
         aria-describedby="lastNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')"></form-input-failure-feedback>
+      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')" />
     </div>
   </div>
   <!-- Membership -->
@@ -28,5 +28,5 @@
     </label>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()"></form-save-controls>
+    [cancellable]="cancellable" (reject)="onCancel()" />
 </form>

@@ -3,13 +3,13 @@
     <!-- Add user -->
     <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/users/add"
       [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-      <icon-add></icon-add>
+      <icon-add />
     </button>
   </ng-template>
   <access-user-selection-list [users]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-    (changeDirection)="onChangeDirection($event)"></access-user-selection-list>
+    (changeDirection)="onChangeDirection($event)" />
   <ng-template #footer>
     <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-      [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+      [totalElements]="data.totalElements" (goTo)="load($event)" />
   </ng-template>
 </p-card>

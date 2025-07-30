@@ -19,7 +19,7 @@
         </ng-template>
         <ng-container [ngSwitch]="view">
           <ng-container *ngSwitchCase="'details'">
-            <access-user-token-info [failures]="failures" [data]="data" [waiting]="waiting"></access-user-token-info>
+            <access-user-token-info [failures]="failures" [data]="data" [waiting]="waiting" />
             <ng-template #footer>
               <!-- Extend expiration button -->
               <button type="submit" name="Extend expiration" class="btn btn-primary" [uiWaiting]="waiting"
@@ -29,7 +29,7 @@
             </ng-template>
           </ng-container>
           <ng-container *ngSwitchCase="'status'">
-            <access-user-token-status [data]="data"></access-user-token-status>
+            <access-user-token-status [data]="data" />
             <ng-template #footer>
               <!-- Revoke button -->
               <button type="submit" name="Revoke" class="btn btn-primary" [uiWaiting]="waiting"

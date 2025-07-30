@@ -14,7 +14,7 @@
         <td>
           <button [disabled]="!deletable()" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
             role="button" aria-label="Remove role">
-            <icon-delete></icon-delete>
+            <icon-delete />
           </button>
         </td>
         <td>{{role.name}}</td>
@@ -25,6 +25,5 @@
 <!-- Page navigation -->
 <div uiJustifyCenter class="mt-1">
   <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting()"
-    (goTo)="onGoToPage($event)">
-  </pagination-navigation>
+    (goTo)="onGoToPage($event)" />
 </div>

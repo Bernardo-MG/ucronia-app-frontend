@@ -16,13 +16,13 @@
           <!-- Select button -->
           <button type="button" class="btn btn-primary" aria-label="Select member" [disabled]="!editable()"
             (click)="onShowSelectMember()">
-            <icon-search></icon-search>
+            <icon-search />
           </button>
         </div>
       }
       @case ('select') {
         <access-user-select-member [members]="membersSelection()" [waiting]="waitingMembersSelection()"
-        (selectMember)="onSelectMember($event)" (goToPage)="onGoToSelectionPage($event)"></access-user-select-member>
+        (selectMember)="onSelectMember($event)" (goToPage)="onGoToSelectionPage($event)" />
         <div class="d-grid">
           <!-- Cancel button -->
           <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">

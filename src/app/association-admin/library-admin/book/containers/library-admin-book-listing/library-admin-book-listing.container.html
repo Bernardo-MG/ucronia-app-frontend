@@ -1,5 +1,5 @@
 <ui-article>
-  <assoc-book-report-widget></assoc-book-report-widget>
+  <assoc-book-report-widget />
   <p-card>
     <ng-template #header>
       <div class="row">
@@ -7,7 +7,7 @@
           <!-- Add person -->
           <button type="button" class="btn btn-link" aria-label="register" routerLink="{{routerLink}}"
             [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-            <icon-add></icon-add>
+            <icon-add />
           </button>
         </div>
         <div class="col-sm-3">
@@ -20,10 +20,10 @@
       </div>
     </ng-template>
     <assoc-library-admin-book-list *uiBlock="reading" [books]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-      (directionChange)="onChangeDirection($event)"></assoc-library-admin-book-list>
+      (directionChange)="onChangeDirection($event)" />
     <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+        [totalElements]="data.totalElements" (goTo)="load($event)" />
     </ng-template>
   </p-card>
 </ui-article>

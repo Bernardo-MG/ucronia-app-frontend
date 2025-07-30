@@ -5,15 +5,15 @@
       <!-- Add role -->
       <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/roles/add"
         [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-        <icon-add></icon-add>
+        <icon-add />
       </button>
     </ng-template>
     <!-- List -->
     <access-role-selection-list [roles]="data.content" (changeDirection)="onChangeDirection($event)"
-      [routeLinkAdapter]="routeLinkAdapter"></access-role-selection-list>
+      [routeLinkAdapter]="routeLinkAdapter" />
     <ng-template #footer>
       <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)"></pagination-info>
+        [totalElements]="data.totalElements" (goTo)="load($event)" />
     </ng-template>
   </p-card>
 </ui-article>

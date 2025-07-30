@@ -14,22 +14,20 @@
               Estado:
             </div>
             <assoc-member-status-select [disabled]="waiting()"
-            (changeStatus)="changeFilter.emit($event)"></assoc-member-status-select>
+            (changeStatus)="changeFilter.emit($event)" />
           </div>
         </div>
         <assoc-library-admin-book-lending-member-selection *uiBlock="waiting()" [values]="members().content"
           [current]="members().page" [pages]="members().totalPages" (selectMember)="onSelectMember($event)"
-          (goToPage)="goToMembersPage.emit($event)">
-        </assoc-library-admin-book-lending-member-selection>
+          (goToPage)="goToMembersPage.emit($event)" />
       </div>
     }
     @case (true) {
       <!-- Lend book form -->
       <button type="button" class="btn btn-link" aria-label="Return"
-        (click)="onReturnToMembers()"><icon-backward></icon-backward></button>
+        (click)="onReturnToMembers()"><icon-backward /></button>
         <assoc-library-admin-book-lending-form [waiting]="waiting()" [failures]="failures()" [readonly]="readonly()"
-          [borrower]="member" [book]="book()" (save)="save.emit($event)">
-        </assoc-library-admin-book-lending-form>
+          [borrower]="member" [book]="book()" (save)="save.emit($event)" />
       }
     }
   </div>
