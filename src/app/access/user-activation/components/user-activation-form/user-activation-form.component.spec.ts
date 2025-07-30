@@ -214,7 +214,7 @@ describe('UserActivationFormComponent', () => {
   describe('validation messages', () => {
 
     it('should show validation messages for password when invalid', () => {
-      component.failures = new FailureStore({password: [{ message: 'Password is required' }]});
+      fixture.componentRef.setInput('failures', new FailureStore({password: [{ message: 'Password is required' }]}));
 
       component.form.get('password').markAsTouched();
       fixture.detectChanges();
