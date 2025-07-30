@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserActivationFormComponent } from './user-activation-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FailureStore } from '@bernardo-mg/request';
+import { UserActivationFormComponent } from './user-activation-form.component';
 
 describe('UserActivationFormComponent', () => {
   let component: UserActivationFormComponent;
@@ -213,9 +214,7 @@ describe('UserActivationFormComponent', () => {
   describe('validation messages', () => {
 
     it('should show validation messages for password when invalid', () => {
-      spyOn(component.failures, 'getFailures').and.returnValue([
-        { message: 'Password is required' }
-      ]);
+      component.failures = new FailureStore({password: [{ message: 'Password is required' }]});
 
       component.form.get('password').markAsTouched();
       fixture.detectChanges();

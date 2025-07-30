@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PasswordResetFormComponent } from './password-reset-form.component';
 import { By } from '@angular/platform-browser';
+import { FailureStore, FieldFailure } from '@bernardo-mg/request';
 
 describe('PasswordResetFormComponent', () => {
   let component: PasswordResetFormComponent;
@@ -244,9 +245,7 @@ describe('PasswordResetFormComponent', () => {
   describe('validation messages', () => {
 
     it('should show validation messages for password when invalid', () => {
-      spyOn(component.failures, 'getFailures').and.returnValue([
-        { message: 'Password is required' }
-      ]);
+      component.failures = new FailureStore({password: [{ message: 'Password is required' }]});
 
       component.form.get('password').markAsTouched();
       fixture.detectChanges();
