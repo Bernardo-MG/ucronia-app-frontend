@@ -4,8 +4,8 @@
     <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
     <div class="col-sm-10">
       <input type="text" id="isbnInput" formControlName="isbn" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
-        <form-input-failure-feedback [failures]="failures.getFailures('isbn')" />
+        [backendFailure]="failures().hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
+        <form-input-failure-feedback [failures]="failures().getFailures('isbn')" />
       </div>
     </div>
     <!-- Title -->
@@ -13,21 +13,21 @@
       <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Título</label>
       <div formGroupName="title" class="col-sm-3">
         <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
-          formInvalidField="title.supertitle" [backendFailure]="failures.hasFailures('title.supertitle')"
+          formInvalidField="title.supertitle" [backendFailure]="failures().hasFailures('title.supertitle')"
           aria-describedby="supertitleLabel" maxlength="100" placeholder="Supertítulo">
-          <form-input-failure-feedback [failures]="failures.getFailures('title.supertitle')" />
+          <form-input-failure-feedback [failures]="failures().getFailures('title.supertitle')" />
         </div>
         <div formGroupName="title" class="col-sm-3">
           <input type="text" id="titleInput" formControlName="title" class="form-control" formInvalidField="title.title"
-            [backendFailure]="failures.hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
+            [backendFailure]="failures().hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
             placeholder="Título">
-            <form-input-failure-feedback [failures]="failures.getFailures('title.title')" />
+            <form-input-failure-feedback [failures]="failures().getFailures('title.title')" />
           </div>
           <div formGroupName="title" class="col-sm-3">
             <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
-              formInvalidField="title.subtitle" [backendFailure]="failures.hasFailures('title.subtitle')"
+              formInvalidField="title.subtitle" [backendFailure]="failures().hasFailures('title.subtitle')"
               aria-describedby="titleLabel" maxlength="100" placeholder="Subtítulo">
-              <form-input-failure-feedback [failures]="failures.getFailures('title.subtitle')" />
+              <form-input-failure-feedback [failures]="failures().getFailures('title.subtitle')" />
             </div>
           </div>
           <!-- Language -->
@@ -35,13 +35,13 @@
             <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
             <div class="col-sm-10">
               <select class="form-select" aria-label="Select year" formControlName="language" formInvalidField
-                [backendFailure]="failures.hasFailures('language')" aria-describedby="languageLabel">
+                [backendFailure]="failures().hasFailures('language')" aria-describedby="languageLabel">
                 @for (selectionLanguage of languages(); track selectionLanguage) {
                   <option [value]="selectionLanguage.code">
                   {{selectionLanguage.name}}</option>
                 }
               </select>
-              <form-input-failure-feedback [failures]="failures.getFailures('language')" />
+              <form-input-failure-feedback [failures]="failures().getFailures('language')" />
             </div>
           </div>
           <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"

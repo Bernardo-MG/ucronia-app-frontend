@@ -27,9 +27,9 @@
     <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
     <div formGroupName="payment" class="col-sm-10">
       <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-        formInvalidField="payment.date" [backendFailure]="failures.hasFailures('payment.date')"
+        formInvalidField="payment.date" [backendFailure]="failures().hasFailures('payment.date')"
         aria-describedby="paymentDateLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('payment.date')" />
+      <form-input-failure-feedback [failures]="failures().getFailures('payment.date')" />
     </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"

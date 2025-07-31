@@ -14,8 +14,8 @@
       <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Descripción</label>
       <div class="col-sm-10">
         <input type="text" id="descriptionInput" formControlName="description" class="form-control" formInvalidField
-          [backendFailure]="failures.hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
-          <form-input-failure-feedback [failures]="failures.getFailures('description')" />
+          [backendFailure]="failures().hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
+          <form-input-failure-feedback [failures]="failures().getFailures('description')" />
         </div>
       </div>
       <!-- Date -->
@@ -23,8 +23,8 @@
         <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Fecha</label>
         <div class="col-sm-10">
           <input type="date" id="dateInput" formControlName="date" class="form-control" formInvalidField
-            [backendFailure]="failures.hasFailures('date')" aria-describedby="dateLabel">
-            <form-input-failure-feedback [failures]="failures.getFailures('date')" />
+            [backendFailure]="failures().hasFailures('date')" aria-describedby="dateLabel">
+            <form-input-failure-feedback [failures]="failures().getFailures('date')" />
           </div>
         </div>
         <!-- Amount -->
@@ -32,8 +32,8 @@
           <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Importe</label>
           <div class="col-sm-10">
             <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" formInvalidField
-              [backendFailure]="failures.hasFailures('amount')" aria-describedby="amountLabel">
-              <form-input-failure-feedback [failures]="failures.getFailures('amount')" />
+              [backendFailure]="failures().hasFailures('amount')" aria-describedby="amountLabel">
+              <form-input-failure-feedback [failures]="failures().getFailures('amount')" />
             </div>
           </div>
           <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"

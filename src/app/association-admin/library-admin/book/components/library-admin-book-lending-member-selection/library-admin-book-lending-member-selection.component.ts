@@ -10,7 +10,7 @@ import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@
 })
 export class LibraryAdminBookLendingMemberSelectionComponent {
 
-  @Input() public waiting = false;
+  public waiting = input(false);
 
   public readonly values = input<Member[]>([]);
 

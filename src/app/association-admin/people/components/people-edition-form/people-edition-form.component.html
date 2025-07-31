@@ -12,9 +12,9 @@
     <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
     <div formGroupName="name" class="col-sm-10">
       <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
-        formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.firstName')"
+        formInvalidField="name.firstName" [backendFailure]="failures().hasFailures('name.firstName')"
         aria-describedby="firstNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.firstName')" />
+      <form-input-failure-feedback [failures]="failures().getFailures('name.firstName')" />
     </div>
   </div>
   <!-- Last name -->
@@ -22,9 +22,9 @@
     <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
     <div formGroupName="name" class="col-sm-10">
       <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
-        formInvalidField="name.firstName" [backendFailure]="failures.hasFailures('name.lastName')"
+        formInvalidField="name.firstName" [backendFailure]="failures().hasFailures('name.lastName')"
         aria-describedby="lastNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures.getFailures('name.lastName')" />
+      <form-input-failure-feedback [failures]="failures().getFailures('name.lastName')" />
     </div>
   </div>
   <!-- Birth date -->
@@ -32,8 +32,8 @@
     <label for="birthDateInput" id="birthDateLabel" class="col-sm-2 col-form-label">Fecha de nacimiento</label>
     <div class="col-sm-10">
       <input type="date" id="birthDateInput" formControlName="birthDate" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('birthDate')" aria-describedby="birthDateLabel">
-      <form-input-failure-feedback [failures]="failures.getFailures('birthDate')" />
+        [backendFailure]="failures().hasFailures('birthDate')" aria-describedby="birthDateLabel">
+      <form-input-failure-feedback [failures]="failures().getFailures('birthDate')" />
     </div>
   </div>
   <!-- Identifier -->
@@ -41,8 +41,8 @@
     <label for="identifierInput" id="identifierLabel" class="col-sm-2 col-form-label">DNI</label>
     <div class="col-sm-10">
       <input type="text" id="identifierInput" formControlName="identifier" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('identifier')" aria-describedby="identifierLabel" maxlength="15">
-      <form-input-failure-feedback [failures]="failures.getFailures('identifier')" />
+        [backendFailure]="failures().hasFailures('identifier')" aria-describedby="identifierLabel" maxlength="15">
+      <form-input-failure-feedback [failures]="failures().getFailures('identifier')" />
     </div>
   </div>
   <!-- Phone -->
@@ -50,8 +50,8 @@
     <label for="phoneInput" id="phoneLabel" class="col-sm-2 col-form-label">Teléfono</label>
     <div class="col-sm-10">
       <input type="text" id="phoneInput" formControlName="phone" class="form-control" formInvalidField
-        [backendFailure]="failures.hasFailures('phone')" aria-describedby="phoneLabel" maxlength="15">
-      <form-input-failure-feedback [failures]="failures.getFailures('phone')" />
+        [backendFailure]="failures().hasFailures('phone')" aria-describedby="phoneLabel" maxlength="15">
+      <form-input-failure-feedback [failures]="failures().getFailures('phone')" />
     </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"

@@ -15,12 +15,12 @@ export class PaginationNavigationComponent implements OnChanges {
   /**
    * Current page number. This is the pointer to move around the pagination.
    */
-  @Input() public current = 1;
+  public readonly current = input(1);
 
   /**
    * Total number of pages.
    */
-  @Input() public pages = 0;
+  public readonly pages = input(0);
 
   /**
    * Disabled flag. To disable all the inner components.
@@ -58,7 +58,7 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the backward button should be disabled, false otherwise
    */
   public get disableBackward(): boolean {
-    return ((this.invalid) || (this.current <= 1));
+    return ((this.invalid) || (this.current() <= 1));
   }
 
   /**
@@ -67,12 +67,12 @@ export class PaginationNavigationComponent implements OnChanges {
    * @returns true if the forward button should be disabled, false otherwise
    */
   public get disableForward(): boolean {
-    return ((this.invalid) || (this.current >= this.pages));
+    return ((this.invalid) || (this.current() >= this.pages()));
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['current']) || (changes['pages'])) {
-      this.invalid = ((this.current < 1) || (this.current > this.pages));
+      this.invalid = ((this.current() < 1) || (this.current() > this.pages()));
 
       if (this.invalid) {
         // Invalid inputs
@@ -81,7 +81,7 @@ export class PaginationNavigationComponent implements OnChanges {
         this.center = [];
         this.right = [];
       } else {
-        const ranges = new PaginationRanges(this.current, this.pages);
+        const ranges = new PaginationRanges(this.current(), this.pages());
         this.left = ranges.left;
         this.center = ranges.center;
         this.right = ranges.right;
