@@ -102,7 +102,7 @@ describe('UserActivationContainer', () => {
       component['token'] = 'token';
       component.onActivateUser('password');
 
-      expect(component.failures().getFailures('field').length).toBeGreaterThan(0);
+      expect(component.failures.getFailures('field').length).toBeGreaterThan(0);
     });
 
     it('should clear failures on activation error that is not FailureResponse', () => {

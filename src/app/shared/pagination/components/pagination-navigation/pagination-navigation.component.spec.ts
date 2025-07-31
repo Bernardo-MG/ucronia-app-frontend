@@ -1,10 +1,11 @@
-import { SimpleChange } from '@angular/core';
+import { ComponentRef, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { PaginationNavigationComponent } from './pagination-navigation.component';
 
 describe('PaginationNavigationComponent', () => {
   let component: PaginationNavigationComponent;
+  let componentRef: ComponentRef<PaginationNavigationComponent>;
   let fixture: ComponentFixture<PaginationNavigationComponent>;
 
   beforeEach(async () => {
@@ -20,6 +21,7 @@ describe('PaginationNavigationComponent', () => {
 
     fixture = TestBed.createComponent(PaginationNavigationComponent);
     component = fixture.componentInstance;
+    componentRef = fixture.componentRef;
     fixture.detectChanges();
   });
 
@@ -36,18 +38,18 @@ describe('PaginationNavigationComponent', () => {
   // **************************************************************************
 
   it('should by default have a current page of 1', () => {
-    expect(component.current).toEqual(1);
+    expect(component.current()).toEqual(1);
   });
 
   it('should not change the current page when going to a page', () => {
-    component.current = 1;
+    fixture.componentRef.setInput('current', 1);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
     component.onGoTo(5);
-    expect(component.current).toEqual(1);
+    expect(component.current()).toEqual(1);
   });
 
   // **************************************************************************
@@ -55,43 +57,43 @@ describe('PaginationNavigationComponent', () => {
   // **************************************************************************
 
   it('should disable backward button when the current page is the first', () => {
-    component.current = 1;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 1);
+    fixture.componentRef.setInput('pages', 10);
 
     expect(component.disableBackward).toEqual(true);
   });
 
   it('should enable backward button when the current page is above the first', () => {
-    component.current = 2;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 2);
+    fixture.componentRef.setInput('pages', 10);
 
     expect(component.disableBackward).toEqual(false);
   });
 
   it('should disable forward button when the current page is the last', () => {
-    component.current = 10;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 10);
+    fixture.componentRef.setInput('pages', 10);
 
     expect(component.disableForward).toEqual(true);
   });
 
   it('should enable forward button when the current page is just before the last', () => {
-    component.current = 9;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 9);
+    fixture.componentRef.setInput('pages', 10);
 
     expect(component.disableForward).toEqual(false);
   });
 
   it('should disable backward button when the current page is the only one', () => {
-    component.current = 1;
-    component.pages = 1;
+    fixture.componentRef.setInput('current', 1);
+    fixture.componentRef.setInput('pages', 1);
 
     expect(component.disableBackward).toEqual(true);
   });
 
   it('should disable forward button when the current page is the only one', () => {
-    component.current = 1;
-    component.pages = 1;
+    fixture.componentRef.setInput('current', 1);
+    fixture.componentRef.setInput('pages', 1);
 
     expect(component.disableForward).toEqual(true);
   });
@@ -101,10 +103,10 @@ describe('PaginationNavigationComponent', () => {
   // **************************************************************************
 
   it('should change the ranges when setting current pages and total pages', () => {
-    component.current = 1;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 1);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
@@ -118,10 +120,10 @@ describe('PaginationNavigationComponent', () => {
   // **************************************************************************
 
   it('should mark the component as valid when the inputs are valid', () => {
-    component.current = 1;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 1);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
@@ -129,10 +131,10 @@ describe('PaginationNavigationComponent', () => {
   });
 
   it('should mark the component as invalid when the current page is zero', () => {
-    component.current = 0;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 0);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
@@ -140,10 +142,10 @@ describe('PaginationNavigationComponent', () => {
   });
 
   it('should mark the component as invalid when the current page is above the number of pages', () => {
-    component.current = 11;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 11);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
@@ -151,10 +153,10 @@ describe('PaginationNavigationComponent', () => {
   });
 
   it('should clear the ranges the current page is zero', () => {
-    component.current = 0;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 0);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 
@@ -164,10 +166,10 @@ describe('PaginationNavigationComponent', () => {
   });
 
   it('should clear the ranges the current page is above the number of pages', () => {
-    component.current = 11;
-    component.pages = 10;
+    fixture.componentRef.setInput('current', 11);
+    fixture.componentRef.setInput('pages', 10);
     component.ngOnChanges({
-      current: new SimpleChange(null, component.current, true)
+      current: new SimpleChange(null, component.current(), true)
     });
     fixture.detectChanges();
 

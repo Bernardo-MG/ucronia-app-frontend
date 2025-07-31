@@ -114,7 +114,7 @@ describe('PasswordResetContainer', () => {
       component['token'] = 'token';
       component.onPasswordReset('badpassword');
 
-      expect(component.failures().getFailures('field').length).toBeGreaterThan(0);
+      expect(component.failures.getFailures('field').length).toBeGreaterThan(0);
     });
 
     it('should clear failures on unknown error', () => {

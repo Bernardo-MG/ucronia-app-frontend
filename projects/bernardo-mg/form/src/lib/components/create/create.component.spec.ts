@@ -62,7 +62,7 @@ describe('CreateComponent', () => {
     component.onSave('bad-data');
 
     expect(component.saving).toBeFalse();
-    expect(component.failures().getFailures('test').length).toBe(0);
+    expect(component.failures.getFailures('test').length).toBe(0);
   });
 
 });
