@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { NavbarContainer } from './navbar.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { LayoutService } from '../../services/layout.service';
 import { MenuLink } from '@bernardo-mg/ui';
+import { LayoutService } from '../../services/layout.service';
+import { NavbarContainer } from './navbar.container';
 
 describe('NavbarContainer', () => {
   let component: NavbarContainer;
@@ -44,7 +44,7 @@ describe('NavbarContainer', () => {
   });
 
   it('should use title from layout service', () => {
-    spyOn(mockLayoutService, 'getTitle').and.returnValue('My App');
+    mockLayoutService.getTitle.and.returnValue('My App');
 
     createComponent();
 
@@ -53,8 +53,8 @@ describe('NavbarContainer', () => {
 
   it('should not load menu when logged out', () => {
     mockAuthContainer.logged = false;
-    spyOn(mockLayoutService, 'showAssociationLink').and.returnValue(true);
-    spyOn(mockLayoutService, 'getLinks').and.returnValue([
+    mockLayoutService.showAssociationLink.and.returnValue(true);
+    mockLayoutService.getLinks.and.returnValue([
       new MenuLink('Admin', '/admin')
     ]);
 
@@ -68,10 +68,10 @@ describe('NavbarContainer', () => {
 
     it('should show all flags as true and populate menuItems', () => {
       mockAuthContainer.logged = true;
-      spyOn(mockLayoutService, 'showSettingsLink').and.returnValue(true);
-      spyOn(mockLayoutService, 'showSecurityLink').and.returnValue(true);
-      spyOn(mockLayoutService, 'showAssociationLink').and.returnValue(true);
-      spyOn(mockLayoutService, 'getLinks').and.returnValue([
+      mockLayoutService.showSettingsLink.and.returnValue(true);
+      mockLayoutService.showSecurityLink.and.returnValue(true);
+      mockLayoutService.showAssociationLink.and.returnValue(true);
+      mockLayoutService.getLinks.and.returnValue([
         new MenuLink('Admin', '/admin')
       ]);
 
@@ -88,10 +88,10 @@ describe('NavbarContainer', () => {
 
     it('should show all flags as false and empty menu', () => {
       mockAuthContainer.logged = true;
-      spyOn(mockLayoutService, 'showSettingsLink').and.returnValue(false);
-      spyOn(mockLayoutService, 'showSecurityLink').and.returnValue(false);
-      spyOn(mockLayoutService, 'showAssociationLink').and.returnValue(false);
-      spyOn(mockLayoutService, 'getLinks').and.returnValue([]);
+      mockLayoutService.showSettingsLink.and.returnValue(false);
+      mockLayoutService.showSecurityLink.and.returnValue(false);
+      mockLayoutService.showAssociationLink.and.returnValue(false);
+      mockLayoutService.getLinks.and.returnValue([]);
 
       createComponent();
 
