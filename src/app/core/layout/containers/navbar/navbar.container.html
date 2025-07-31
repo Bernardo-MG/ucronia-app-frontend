@@ -1,69 +1,29 @@
-<nav id="navbar-main" class="navbar navbar-expand-md bg-primary" data-bs-theme="dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">
-      <img src="img/brand-icon.png" alt="Ucronía" width="19.85" height="24" class="me-2">{{title}}
+<p-menubar [model]="menuItems">
+  <ng-template pTemplate="start">
+    <a class="navbar-brand flex items-center" routerLink="/">
+      <img src="img/brand-icon.png" alt="Ucronía" width="20" height="24" class="mr-2" />
+      {{ title }}
     </a>
-    @if (loggedOut) {
-      <ul class="nav navbar-nav ms-auto">
-        <li class="nav-item">
-          <a routerLink="/login" class="nav-link" aria-label="Login" title="Login">
-            <icon-login />
-          </a>
-        </li>
-      </ul>
-    }
-    @if (loggedIn) {
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main-menu"
-        aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      @if (loggedIn) {
-        <div class="collapse navbar-collapse" id="navbar-main-menu">
-          <ul class="nav navbar-nav ms-auto">
-            @if (showAssociation) {
-              <li class="nav-item">
-                <a routerLink="/association" class="nav-link" aria-label="Asociación" title="Asociación">
-                  Asociación
-                </a>
-              </li>
-            }
-            @if (showAdmin) {
-              <li class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" id="adminMenuDropdown" data-bs-toggle="dropdown" role="button"
-                  aria-haspopup="true" aria-expanded="false">
-                  Administración
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenuDropdown">
-                  @for (link of adminLinks; track link) {
-                    <li>
-                      <a routerLink="{{link.path}}" class="dropdown-item" attr.aria-label="{{link.title}}"
-                        title="{{link.title}}">
-                        {{link.title}}
-                      </a>
-                    </li>
-                  }
-                </ul>
-              </li>
-            }
-            @if (showSecurity) {
-              <li class="nav-item">
-                <a routerLink="/security" class="nav-link" aria-label="Seguridad" title="Seguridad">
-                  <icon-shield />
-                </a>
-              </li>
-            }
-            @if (showSettings) {
-              <li class="nav-item">
-                <a routerLink="/settings" class="nav-link" aria-label="Configuración" title="Configuración">
-                  <icon-settings />
-                </a>
-              </li>
-            }
-            <!-- Account menu -->
-            <layout-account-dropdown />
-          </ul>
-        </div>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="d-flex align-items-center gap-2">
+      @if (loggedOut) {
+      <p-button icon="pi pi-sign-in" [link]="true" routerLink="/login" aria-label="Login" />
       }
-    }
-  </div>
-</nav>
+
+      @if (loggedIn) {
+      @if (showSecurity) {
+      <p-button icon="pi pi-shield" [link]="true" routerLink="/security" aria-label="Seguridad" />
+      }
+
+      @if (showSettings) {
+      <p-button icon="pi pi-cog" [link]="true" routerLink="/settings" aria-label="Configuración" />
+      }
+
+      <layout-account-dropdown />
+
+      }
+    </div>
+  </ng-template>
+</p-menubar>

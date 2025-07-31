@@ -11,8 +11,8 @@ import { LAYOUT_MENU_LINKS } from './layout-menu-links';
   providedIn: 'root'
 })
 export class LayoutService {
-  private authContainer = inject(AuthContainer);
 
+  private authContainer = inject(AuthContainer);
 
   private nodeFilter;
 
