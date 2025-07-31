@@ -9,22 +9,16 @@
   <ng-template pTemplate="end">
     <div class="d-flex align-items-center gap-2">
       @if (loggedOut) {
-      <a routerLink="/login" class="p-button p-button-rounded p-button-text" aria-label="Login" title="Login">
-        <icon-login />
-      </a>
+      <p-button icon="pi pi-sign-in" [link]="true" routerLink="/login" aria-label="Login" />
       }
 
       @if (loggedIn) {
       @if (showSecurity) {
-      <a routerLink="/security" class="p-button p-button-rounded p-button-text" title="Seguridad">
-        <icon-shield />
-      </a>
+      <p-button icon="pi pi-shield" [link]="true" routerLink="/security" aria-label="Seguridad" />
       }
 
       @if (showSettings) {
-      <a routerLink="/settings" class="p-button p-button-rounded p-button-text" title="Configuración">
-        <icon-settings />
-      </a>
+      <p-button icon="pi pi-cog" [link]="true" routerLink="/settings" aria-label="Configuración" />
       }
 
       <layout-account-dropdown class="ml-2" />

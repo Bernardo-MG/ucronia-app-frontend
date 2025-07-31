@@ -8,10 +8,11 @@ import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.c
 import { LayoutService } from '../../services/layout.service';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'layout-navbar',
-  imports: [RouterModule, MenubarModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
+  imports: [RouterModule, MenubarModule, ButtonModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
   templateUrl: './navbar.container.html'
 })
 export class NavbarContainer {
