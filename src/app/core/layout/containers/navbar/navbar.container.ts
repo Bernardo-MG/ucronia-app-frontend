@@ -2,17 +2,17 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '@bernardo-mg/icons';
 import { MenuLink } from '@bernardo-mg/ui';
-import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
-import { LayoutService } from '../../services/layout.service';
 import { MenuItem } from 'primeng/api';
-import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { LayoutService } from '../../services/layout.service';
+import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
 
 @Component({
   selector: 'layout-navbar',
-  imports: [RouterModule, MenubarModule, ButtonModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
+  imports: [RouterModule, MenubarModule, ButtonModule, MenuModule, AccountDropdownContainer],
   templateUrl: './navbar.container.html'
 })
 export class NavbarContainer {
