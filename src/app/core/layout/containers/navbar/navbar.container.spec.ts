@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthContainer, SecurityDetails } from '@bernardo-mg/authentication';
 import { MenuLink } from '@bernardo-mg/ui';
+import { of } from 'rxjs';
 import { LayoutService } from '../../services/layout.service';
 import { NavbarContainer } from './navbar.container';
 
@@ -10,10 +11,23 @@ describe('NavbarContainer', () => {
   let fixture: ComponentFixture<NavbarContainer>;
 
   // Mocks
-  const mockAuthContainer = { logged: false };
+  let mockAuthContainer: jasmine.SpyObj<AuthContainer>;
   let mockLayoutService: jasmine.SpyObj<LayoutService>;
 
+  let isLogged = false;
+
   beforeEach(async () => {
+    mockAuthContainer = jasmine.createSpyObj<AuthContainer>(
+      'AuthContainer',
+      ['logout'],
+      {
+        securityDetails: of({ username: 'test-user' } as SecurityDetails)
+      }
+    );
+    Object.defineProperty(mockAuthContainer, 'logged', {
+      get: () => isLogged
+    });
+
     mockLayoutService = jasmine.createSpyObj('LayoutService', [
       'getTitle',
       'showSettingsLink',
@@ -52,7 +66,7 @@ describe('NavbarContainer', () => {
   });
 
   it('should not load menu when logged out', () => {
-    mockAuthContainer.logged = false;
+    isLogged = false;
     mockLayoutService.showAssociationLink.and.returnValue(true);
     mockLayoutService.getLinks.and.returnValue([
       new MenuLink('Admin', '/admin')
@@ -67,7 +81,7 @@ describe('NavbarContainer', () => {
   describe('flags', () => {
 
     it('should show all flags as true and populate menuItems', () => {
-      mockAuthContainer.logged = true;
+      isLogged = true;
       mockLayoutService.showSettingsLink.and.returnValue(true);
       mockLayoutService.showSecurityLink.and.returnValue(true);
       mockLayoutService.showAssociationLink.and.returnValue(true);
@@ -87,7 +101,7 @@ describe('NavbarContainer', () => {
     });
 
     it('should show all flags as false and empty menu', () => {
-      mockAuthContainer.logged = true;
+      isLogged = true;
       mockLayoutService.showSettingsLink.and.returnValue(false);
       mockLayoutService.showSecurityLink.and.returnValue(false);
       mockLayoutService.showAssociationLink.and.returnValue(false);
