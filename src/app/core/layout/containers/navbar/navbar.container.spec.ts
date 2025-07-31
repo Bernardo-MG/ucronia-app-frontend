@@ -59,6 +59,7 @@ describe('NavbarContainer', () => {
 
   it('should use title from layout service', () => {
     mockLayoutService.getTitle.and.returnValue('My App');
+    mockLayoutService.getLinks.and.returnValue([]);
 
     createComponent();
 
