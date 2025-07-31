@@ -53,7 +53,10 @@ describe('NavbarContainer', () => {
   }
 
   it('should create', () => {
+    mockLayoutService.getLinks.and.returnValue([]);
+
     createComponent();
+
     expect(component).toBeTruthy();
   });
 
