@@ -6,10 +6,12 @@ import { IconLoginComponent, IconSettingsComponent, IconShieldComponent } from '
 import { MenuLink } from '@bernardo-mg/ui';
 import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
 import { LayoutService } from '../../services/layout.service';
+import { MenuItem } from 'primeng/api';
+import { MenubarModule } from 'primeng/menubar';
 
 @Component({
   selector: 'layout-navbar',
-  imports: [RouterModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
+  imports: [RouterModule, MenubarModule, IconLoginComponent, IconShieldComponent, IconSettingsComponent, AccountDropdownContainer],
   templateUrl: './navbar.container.html'
 })
 export class NavbarContainer {
@@ -38,6 +40,8 @@ export class NavbarContainer {
 
   public readonly adminLinks: MenuLink[];
 
+  public readonly menuItems: MenuItem[] = [];
+
   constructor() {
     const layoutService = inject(LayoutService);
 
@@ -51,6 +55,31 @@ export class NavbarContainer {
 
     // Links
     this.adminLinks = layoutService.getLinks();
+
+    this.loadMenu();
+  }
+
+  private loadMenu() {
+    if (!this.loggedIn) return;
+
+    if (this.showAssociation) {
+      this.menuItems.push({
+        label: 'Asociación',
+        icon: 'pi pi-users',
+        routerLink: '/association'
+      });
+    }
+
+    if (this.showAdmin) {
+      this.menuItems.push({
+        label: 'Administración',
+        icon: 'pi pi-cog',
+        items: this.adminLinks.map(link => ({
+          label: link.title,
+          routerLink: link.path
+        }))
+      });
+    }
   }
 
 }
