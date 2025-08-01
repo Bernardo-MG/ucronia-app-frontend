@@ -1,16 +1,3 @@
 <aside class="sidebar bg-secondary-subtle border ps-2">
-  <!-- Iterate over menu options and display each section -->
-  @for (menu of menus(); track menu) {
-    <h3>{{ menu.title }}</h3>
-    <!-- Iterate over links within each section and display them -->
-    @for (link of menu.links; track link) {
-      <a [routerLink]="link.path"
-        class="list-group-item list-group-item-action menu-item mb-2">
-        @if (link.icon) {
-          <ng-container *ngComponentOutlet="link.icon" />
-        }
-        {{ link.title }}
-      </a>
-    }
-  }
+  <p-menu [model]="menus()" />
 </aside>

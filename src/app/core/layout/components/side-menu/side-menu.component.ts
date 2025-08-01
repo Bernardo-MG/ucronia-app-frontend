@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Menu } from '@bernardo-mg/ui';
+import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'layout-side-menu',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MenuModule],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.sass'
 })
 export class SideMenuComponent {
 
-  public readonly menus = input<Menu[]>([]);
+  public readonly menus = input<MenuItem[]>([]);
 
 }

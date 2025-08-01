@@ -1,7 +1,8 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SideMenuComponent } from '@app/core/layout/components/side-menu/side-menu.component';
-import { Menu, RouterBreadcrumbComponent } from '@bernardo-mg/ui';
+import { RouterBreadcrumbComponent } from '@bernardo-mg/ui';
+import { MenuItem } from 'primeng/api';
 import { NavbarContainer } from '../../containers/navbar/navbar.container';
 
 @Component({
@@ -11,6 +12,6 @@ import { NavbarContainer } from '../../containers/navbar/navbar.container';
 })
 export class SidebarLayoutComponent {
 
-  public readonly menus = input<Menu[]>([]);
+  public readonly menus = input<MenuItem[]>([]);
 
 }
