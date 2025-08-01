@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { AssociationAdminLayoutContainer } from './association-admin-layout.container';
 
@@ -12,6 +13,7 @@ describe('AssociationAdminLayoutContainer', () => {
         AssociationAdminLayoutContainer
       ],
       providers: [
+        provideAnimationsAsync(),
         provideRouter([])
       ]
     })

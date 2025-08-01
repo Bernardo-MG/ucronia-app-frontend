@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { SecurityLayoutContainer } from './security-layout.container';
 
@@ -12,6 +13,7 @@ describe('SecurityLayoutContainer', () => {
         SecurityLayoutContainer
       ],
       providers: [
+        provideAnimationsAsync(),
         provideRouter([])
       ]
     })
