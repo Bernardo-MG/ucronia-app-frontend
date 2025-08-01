@@ -5,9 +5,9 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 
 @Component({
-    selector: 'account-layout',
-    imports: [RouterModule, SidebarLayoutComponent],
-    templateUrl: './account-layout.container.html'
+  selector: 'account-layout',
+  imports: [RouterModule, SidebarLayoutComponent],
+  templateUrl: './account-layout.container.html'
 })
 export class AccountLayoutContainer {
 
@@ -15,22 +15,18 @@ export class AccountLayoutContainer {
 
   constructor(authContainer: AuthContainer) {
     const items = [];
-    if (authContainer.hasPermission('member', 'view')) {
-      items.push(
-        {
-          label: 'Perfil',
-          routerLink: '/account/profile',
-          icon: 'pi pi-user'
-        });
-    }
-    if (authContainer.hasPermission('member', 'view')) {
-      items.push(
-        {
-          label: 'Contraseña',
-          routerLink: '/account/password',
-          icon: 'pi pi-user'
-        });
-    }
+    items.push(
+      {
+        label: 'Perfil',
+        routerLink: '/account/profile',
+        icon: 'pi pi-user'
+      });
+    items.push(
+      {
+        label: 'Contraseña',
+        routerLink: '/account/password',
+        icon: 'pi pi-user'
+      });
     this.menus =
       [
         {

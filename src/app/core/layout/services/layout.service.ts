@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { AuthMenuLink, MenuLink, ViewMenuLoader } from '@bernardo-mg/ui';
-import { ASSOCIATION_MENU_OPTIONS } from '../../../association/layout/services/association-menu-options';
+import { AuthMenuLink, MenuLink } from '@bernardo-mg/ui';
 import { LAYOUT_MENU_LINKS } from './layout-menu-links';
 
 /**
@@ -16,8 +15,6 @@ export class LayoutService {
 
   private nodeFilter;
 
-  private menuLoader: ViewMenuLoader;
-
   private adminLinks: MenuLink[] = [];
 
   private showSettingsLinkFlag = false;
@@ -29,7 +26,6 @@ export class LayoutService {
   constructor() {
     const authContainer = this.authContainer;
 
-    this.menuLoader = new ViewMenuLoader(authContainer);
     this.loadPermissions();
     // If the user changes, reload permissions
     authContainer.securityDetails.subscribe(u => { this.loadPermissions() });
@@ -68,7 +64,7 @@ export class LayoutService {
   private loadPermissions() {
     this.showSettingsLinkFlag = this.authContainer.hasPermission('association_settings', 'view');
     this.showSecurityLinkFlag = this.authContainer.hasPermission('security', 'view');
-    this.showAssociationLinkFlag = this.menuLoader.load(ASSOCIATION_MENU_OPTIONS).length > 0;
+    this.showAssociationLinkFlag = true;
   }
 
   private loadMenus() {
