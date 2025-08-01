@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -13,7 +13,8 @@ export class AssociationAdminLibraryLayoutContainer {
 
   public readonly menus: MenuItem[];
 
-  constructor(authContainer: AuthContainer) {
+  constructor() {
+    const authContainer = inject(AuthContainer);
     const bookItems = [];
     if (authContainer.hasPermission('library_book', 'view')) {
       bookItems.push(

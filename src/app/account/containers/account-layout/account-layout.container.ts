@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
-import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -13,7 +12,7 @@ export class AccountLayoutContainer {
 
   public readonly menus: MenuItem[];
 
-  constructor(authContainer: AuthContainer) {
+  constructor() {
     const items = [];
     items.push(
       {
