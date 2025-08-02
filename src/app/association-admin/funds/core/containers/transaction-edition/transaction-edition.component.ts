@@ -5,7 +5,7 @@ import { TransactionService } from '@app/association-admin/funds/core/service/tr
 import { Transaction } from '@app/models/transactions/transaction';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
@@ -13,7 +13,7 @@ import { TransactionInfoComponent } from '../../components/transaction-info/tran
 
 @Component({
   selector: 'assoc-transaction-edition',
-  imports: [CardModule, TransactionFormComponent, TransactionInfoComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, TransactionFormComponent, TransactionInfoComponent, ResponsiveShortColumnsDirective],
   templateUrl: './transaction-edition.component.html'
 })
 export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> {

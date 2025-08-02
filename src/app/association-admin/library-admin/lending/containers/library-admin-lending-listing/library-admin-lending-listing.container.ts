@@ -5,14 +5,14 @@ import { BookLending } from '@app/models/library/book-lending';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { AssocLibraryAdminLendingListComponent } from '../../components/assoc-library-admin-lending-list/assoc-library-admin-lending-list.component';
 import { BookLendingService } from '../../services/book-lending.service';
 
 @Component({
   selector: 'app-library-admin-lending-listing',
-  imports: [CardModule, RouterModule, AssocLibraryAdminLendingListComponent, ArticleComponent, PaginationInfoComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, AssocLibraryAdminLendingListComponent, PaginationInfoComponent, BlockUiDirective],
   templateUrl: './library-admin-lending-listing.container.html'
 })
 export class LibraryAdminLendingListingContainer {

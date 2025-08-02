@@ -1,36 +1,34 @@
-<ui-article>
-  <p-card>
-    <ng-template #header>
-      <!-- Add person -->
-      <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-        [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-        <icon-add />
-      </button>
-    </ng-template>
-    <!-- List -->
-    <table *uiBlock="reading" class="table table-hover">
-      <thead>
-        <tr>
-          <!-- Headers -->
-          <th scope="col">
-            Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)" />
-          </th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        @for (author of data.content; track author; let rowIndex = $index) {
-          <tr role="button" routerLink="{{author.number}}">
-            <!-- Cells -->
-            <td>
-              {{author.name}}
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-    <ng-template #footer>
-      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+<p-card>
+  <ng-template #header>
+    <!-- Add person -->
+    <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+      [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+      <icon-add />
+    </button>
+  </ng-template>
+  <!-- List -->
+  <table *uiBlock="reading" class="table table-hover">
+    <thead>
+      <tr>
+        <!-- Headers -->
+        <th scope="col">
+          Nombre<sorting-button property="name" (directionChange)="onChangeDirection($event)" />
+        </th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      @for (author of data.content; track author; let rowIndex = $index) {
+      <tr role="button" routerLink="{{author.number}}">
+        <!-- Cells -->
+        <td>
+          {{author.name}}
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <ng-template #footer>
+    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
       [totalElements]="data.totalElements" (goTo)="load($event)" />
-    </ng-template>
-  </p-card>
-</ui-article>
+  </ng-template>
+</p-card>

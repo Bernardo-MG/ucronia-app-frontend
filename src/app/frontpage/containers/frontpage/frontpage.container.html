@@ -8,39 +8,32 @@
     </div>
     <!-- Activities -->
     <div class="row">
-      <ui-article>
-        <header>
-          <h1 class="border-bottom">Actividades</h1>
-        </header>
-        <app-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
-          [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true"
-          [disableSidePanel]="true" />
-      </ui-article>
+      <header>
+        <h1 class="border-bottom">Actividades</h1>
+      </header>
+      <app-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+        [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true" />
     </div>
     <!-- Location -->
     <div class="row">
-      <ui-article>
-        <header>
-          <h1 class="border-bottom">Dónde estamos</h1>
-        </header>
-        <app-google-maps [code]="locationCode" />
-      </ui-article>
+      <header>
+        <h1 class="border-bottom">Dónde estamos</h1>
+      </header>
+      <app-google-maps [code]="locationCode" />
     </div>
     <!-- Contact -->
     <div class="row">
-      <ui-article>
-        <header>
-          <h1 class="border-bottom">Contacta con nosotros</h1>
-        </header>
-        <div class="container text-center">
-          <a [href]="instagramLink" class="me-3">
-            <img src='img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
-          </a>
-          <a [href]="emailLink">
-            <img src='img/email-icon.png' alt='Instagram' width="50" height="50">
-          </a>
-        </div>
-      </ui-article>
+      <header>
+        <h1 class="border-bottom">Contacta con nosotros</h1>
+      </header>
+      <div class="container text-center">
+        <a [href]="instagramLink" class="me-3">
+          <img src='img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
+        </a>
+        <a [href]="emailLink">
+          <img src='img/email-icon.png' alt='Instagram' width="50" height="50">
+        </a>
+      </div>
     </div>
   </div>
 </div>

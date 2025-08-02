@@ -1,26 +1,23 @@
-<ui-article>
-  <div uiResponsiveShortColumns>
-    @switch (editing) {
-      <!-- Form -->
-      @case (true) {
-        <p-card>
-          <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data"
-            [failures]="failures" [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
-        </p-card>
-      }
-      @case (false) {
-        <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          [editEnabled]="editEnabled" [waiting]="waiting" [member]="member"
-          [readingMemberSelection]="readingMemberSelection" [readingMember]="readingMember"
-          [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
-          [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
-          (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
-          (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
-        (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
-      }
-    }
-  </div>
-</ui-article>
+<div uiResponsiveShortColumns>
+  @switch (editing) {
+  <!-- Form -->
+  @case (true) {
+  <p-card>
+    <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
+  </p-card>
+  }
+  @case (false) {
+  <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+    [editEnabled]="editEnabled" [waiting]="waiting" [member]="member" [readingMemberSelection]="readingMemberSelection"
+    [readingMember]="readingMember" [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
+    [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
+    (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
+    (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
+    (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
+  }
+  }
+</div>
 
 <!-- Modal confirmation for disabling -->
 <ui-modal name="disableModal" title="Desactivar usuario" acceptText="Desactivar" (accept)="onDisable()">

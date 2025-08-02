@@ -7,13 +7,13 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-system-listing',
-  imports: [CardModule, RouterModule, ArticleComponent, SortingButtonComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, SortingButtonComponent, PaginationInfoComponent, IconAddComponent, BlockUiDirective],
   templateUrl: './library-admin-game-system-listing.container.html'
 })
 export class LibraryAdminGameSystemListingContainer {

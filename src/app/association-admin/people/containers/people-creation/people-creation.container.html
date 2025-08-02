@@ -1,11 +1,9 @@
-<ui-article>
-  <header>
-    <h1 class="border-bottom">Registro de socio</h1>
-  </header>
-  <div uiResponsiveShortColumns>
-    <p-card>
-      <!-- Form -->
-      <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onSave($event)" />
-    </p-card>
-  </div>
-</ui-article>
+<header>
+  <h1 class="border-bottom">Registro de socio</h1>
+</header>
+<div uiResponsiveShortColumns>
+  <p-card>
+    <!-- Form -->
+    <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onSave($event)" />
+  </p-card>
+</div>

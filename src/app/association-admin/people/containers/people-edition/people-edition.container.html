@@ -1,20 +1,18 @@
-<ui-article>
-  <div uiResponsiveShortColumns>
-    @switch (editing) {
-      <!-- Form -->
-      @case (true) {
-        <p-card>
-          <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-            [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()" />
-        </p-card>
-      }
-      <!-- Info -->
-      @case (false) {
-        <assoc-people-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
-          [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
-          (activate)="onActivate()" (deactivate)="onDeactivate()" (enableRenew)="onEnableRenew()"
-        (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()" />
-      }
-    }
-  </div>
-</ui-article>
+<div uiResponsiveShortColumns>
+  @switch (editing) {
+  <!-- Form -->
+  @case (true) {
+  <p-card>
+    <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()" />
+  </p-card>
+  }
+  <!-- Info -->
+  @case (false) {
+  <assoc-people-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
+    [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
+    (activate)="onActivate()" (deactivate)="onDeactivate()" (enableRenew)="onEnableRenew()"
+    (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()" />
+  }
+  }
+</div>

@@ -4,13 +4,12 @@ import { UserTokenService } from '@app/security/user-tokens/services/user-token.
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { UserTokenSelectionListComponent } from '../../components/user-token-selection-list/user-token-selection-list.component';
 
 @Component({
   selector: 'access-user-token-listing',
-  imports: [CardModule, UserTokenSelectionListComponent, ArticleComponent, PaginationInfoComponent],
+  imports: [CardModule, UserTokenSelectionListComponent, PaginationInfoComponent],
   templateUrl: './user-token-listing.container.html'
 })
 export class UserTokenListingContainer {

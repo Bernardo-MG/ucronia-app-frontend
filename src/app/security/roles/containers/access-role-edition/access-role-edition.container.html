@@ -1,53 +1,50 @@
-<ui-article>
-  <div uiResponsiveShortColumns>
-    <!-- Role -->
-    <div class="mb-1">
-      <p-card>
-        <ng-template #header>
-          <!-- Tabs -->
-          <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
-                (click)="onChangeView('details')">Detalles</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [class.active]="view === 'permissions'" aria-current="page" role="button"
-                (click)="onChangeView('permissions')">Permisos</a>
-            </li>
-          </ul>
-        </ng-template>
-        <ng-container [ngSwitch]="view">
-          <ng-container *ngSwitchCase="'details'">
-            <access-role-info [data]="data" [waiting]="waiting" />
-            <ng-template #footer *ngIf="showMenu">
-              <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
-                (startEditing)="onStartEditing()" (delete)="onDelete()" />
-            </ng-template>
-          </ng-container>
-          <ng-container *ngSwitchCase="'permissions'">
-            <!-- Permissions -->
-            <!-- Permissions list -->
-            <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-              (remove)="onRemovePermission($event)" />
-            <ng-template #footer>
-              <div class="d-grid">
-                <!-- Add button -->
-                <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
-                  data-bs-target="#pickPermissionModal">
-                  <icon-add />
-                </button>
-              </div>
-            </ng-template>
-          </ng-container>
+<div uiResponsiveShortColumns>
+  <!-- Role -->
+  <div class="mb-1">
+    <p-card>
+      <ng-template #header>
+        <!-- Tabs -->
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
+              (click)="onChangeView('details')">Detalles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="view === 'permissions'" aria-current="page" role="button"
+              (click)="onChangeView('permissions')">Permisos</a>
+          </li>
+        </ul>
+      </ng-template>
+      <ng-container [ngSwitch]="view">
+        <ng-container *ngSwitchCase="'details'">
+          <access-role-info [data]="data" [waiting]="waiting" />
+          <ng-template #footer *ngIf="showMenu">
+            <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+              (startEditing)="onStartEditing()" (delete)="onDelete()" />
+          </ng-template>
         </ng-container>
-      </p-card>
-    </div>
+        <ng-container *ngSwitchCase="'permissions'">
+          <!-- Permissions -->
+          <!-- Permissions list -->
+          <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
+            (remove)="onRemovePermission($event)" />
+          <ng-template #footer>
+            <div class="d-grid">
+              <!-- Add button -->
+              <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
+                data-bs-target="#pickPermissionModal">
+                <icon-add />
+              </button>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </p-card>
   </div>
-</ui-article>
+</div>
 
 <!-- Modal for picking permissions -->
 <ui-modal name="pickPermissionModal" title="Elige un permiso" acceptText="">
   <access-role-add-permission [permissions]="permissions" (goTo)="onLoadPermissions($event)"
-    (changeDirection)="onChangePermissionsDirection($event)"
-    (addPermission)="onAddPermission($event)" />
+    (changeDirection)="onChangePermissionsDirection($event)" (addPermission)="onAddPermission($event)" />
 </ui-modal>

@@ -10,7 +10,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { ArticleComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
@@ -20,7 +20,7 @@ import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [FormsModule, CardModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, ArticleComponent, FeePaySelectMemberComponent, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [FormsModule, CardModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, FeePaySelectMemberComponent, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.container.html'
 })
 export class FeePayContainer extends CreateComponent<FeePayment> {

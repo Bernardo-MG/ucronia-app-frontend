@@ -1,13 +1,12 @@
 
 import { Component, inject } from '@angular/core';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { ArticleComponent } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { ActivityCalendarService } from '../../services/activity-calendar.service';
 
 @Component({
   selector: 'app-activity-calendar-frontpage',
-  imports: [CardModule, ArticleComponent, TeamupCalendarComponent],
+  imports: [CardModule, TeamupCalendarComponent],
   templateUrl: './activity-calendar-frontpage.container.html'
 })
 export class ActivityCalendarFrontpageContainer {

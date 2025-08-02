@@ -8,14 +8,13 @@ import { Member } from '@app/models/members/member';
 import { Active } from '@app/models/person/active';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { ArticleComponent } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
-  imports: [ArticleComponent, LibraryAdminBookLendingLendComponent],
+  imports: [LibraryAdminBookLendingLendComponent],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
 export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> {
