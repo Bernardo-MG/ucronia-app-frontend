@@ -2,7 +2,6 @@
  * Public API Surface of ui
  */
 
-export * from './lib/components/article/article.component';
 export * from './lib/components/button-list/button-list.component';
 export * from './lib/components/card-navigation/card-navigation.component';
 export * from './lib/components/centered-frame/centered-frame.component';

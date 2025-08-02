@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ActivatedRoute } from '@angular/router';
 import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, ModalComponent, ResponsiveShortColumnsDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { ModalComponent, ResponsiveShortColumnsDirective, WaitingDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { UserTokenInfoComponent } from '../../components/user-token-info/user-token-info.component';
@@ -13,7 +13,7 @@ import { UserTokenService } from '../../services/user-token.service';
 
 @Component({
   selector: 'access-user-token-edition',
-  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ArticleComponent, ModalComponent, UserTokenStatusComponent, WaitingDirective, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, UserTokenInfoComponent, ModalComponent, UserTokenStatusComponent, WaitingDirective, ResponsiveShortColumnsDirective],
   templateUrl: './user-token-edition.container.html'
 })
 export class UserTokenEditionContainer extends InfoEditorStatusComponent<UserToken> {

@@ -1,11 +1,8 @@
-<ui-article>
-  <p-card>
-    <!-- List -->
-    <access-audit-login-list [data]="data.content"
-      (changeDirection)="onChangeDirection($event)" />
-    <ng-template #footer>
-      <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-        [totalElements]="data.totalElements" (goTo)="load($event)" />
-    </ng-template>
-  </p-card>
-</ui-article>
+<p-card>
+  <!-- List -->
+  <access-audit-login-list [data]="data.content" (changeDirection)="onChangeDirection($event)" />
+  <ng-template #footer>
+    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
+      [totalElements]="data.totalElements" (goTo)="load($event)" />
+  </ng-template>
+</p-card>

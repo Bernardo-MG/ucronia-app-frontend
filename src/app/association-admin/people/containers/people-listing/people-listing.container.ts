@@ -9,7 +9,7 @@ import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { debounceTime, Subject } from 'rxjs';
 import { PeopleListComponent } from '../../components/people-list/people-list.component';
@@ -17,7 +17,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-listing',
-  imports: [FormsModule, CardModule, RouterModule, ArticleComponent, PeopleListComponent, PaginationInfoComponent, IconAddComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, CardModule, RouterModule, PeopleListComponent, PaginationInfoComponent, IconAddComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-listing.container.html'
 })
 export class PeopleListingContainer {

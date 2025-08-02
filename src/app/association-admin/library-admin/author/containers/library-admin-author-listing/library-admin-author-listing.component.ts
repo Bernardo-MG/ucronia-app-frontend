@@ -7,13 +7,13 @@ import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-b
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent, BlockUiDirective } from '@bernardo-mg/ui';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-listing',
-  imports: [CardModule, RouterModule, SortingButtonComponent, ArticleComponent, IconAddComponent, PaginationInfoComponent, BlockUiDirective],
+  imports: [CardModule, RouterModule, SortingButtonComponent, IconAddComponent, PaginationInfoComponent, BlockUiDirective],
   templateUrl: './library-admin-author-listing.component.html'
 })
 export class LibraryAdminAuthorListingContainer {

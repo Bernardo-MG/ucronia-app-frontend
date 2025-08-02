@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Role } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { AccessRoleFormComponent } from '../../components/access-role-form/access-role-form.component';
@@ -11,7 +11,7 @@ import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-creation',
-  imports: [CardModule, AccessRoleFormComponent, ArticleComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, AccessRoleFormComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-creation.container.html'
 })
 export class AccessRoleCreationContainer extends CreateComponent<Role> {

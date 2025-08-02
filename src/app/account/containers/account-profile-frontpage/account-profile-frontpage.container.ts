@@ -5,13 +5,13 @@ import { AccountProfilePersonComponent } from '@app/account/components/profile/a
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 
 @Component({
-    selector: 'account-profile-frontpage',
-    imports: [CardModule, ArticleComponent, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './account-profile-frontpage.container.html'
+  selector: 'account-profile-frontpage',
+  imports: [CardModule, AccountProfileInfoComponent, AccountProfilePersonComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './account-profile-frontpage.container.html'
 })
 export class AccountProfileFrontpageContainer {
 

@@ -1,5 +1,3 @@
-<ui-article>
-  <assoc-library-admin-book-lending [readonly]="!createPermission" [waiting]="saving" [failures]="failures"
-    [book]="book" [members]="members" (save)="onSave($event)" (goToMembersPage)="onGoToMembersPage($event)"
-    (changeFilter)="onChangeActiveFilter($event)" />
-</ui-article>
+<assoc-library-admin-book-lending [readonly]="!createPermission" [waiting]="saving" [failures]="failures" [book]="book"
+  [members]="members" (save)="onSave($event)" (goToMembersPage)="onGoToMembersPage($event)"
+  (changeFilter)="onChangeActiveFilter($event)" />

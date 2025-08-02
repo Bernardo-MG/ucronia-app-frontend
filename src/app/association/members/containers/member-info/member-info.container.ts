@@ -3,12 +3,12 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { MemberDetailsComponent } from '../../components/member-details/member-details.component';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [ArticleComponent, MemberDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [MemberDetailsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './member-info.container.html'
 })
 export class MemberInfoContainer {

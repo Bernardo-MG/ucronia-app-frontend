@@ -1,19 +1,16 @@
-<ui-article>
-  <div uiResponsiveShortColumns>
-    @switch (editing) {
-      <!-- Form -->
-      @case (true) {
-        <p-card>
-          <assoc-fee-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-            [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
-        </p-card>
-      }
-      <!-- Info -->
-      @case (false) {
-        <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-          [waiting]="waiting" (delete)="onDelete()" (startEditing)="onStartEditing()"
-        (goToTransaction)="goToTransaction($event)" />
-      }
-    }
-  </div>
-</ui-article>
+<div uiResponsiveShortColumns>
+  @switch (editing) {
+  <!-- Form -->
+  @case (true) {
+  <p-card>
+    <assoc-fee-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
+  </p-card>
+  }
+  <!-- Info -->
+  @case (false) {
+  <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable" [waiting]="waiting"
+    (delete)="onDelete()" (startEditing)="onStartEditing()" (goToTransaction)="goToTransaction($event)" />
+  }
+  }
+</div>

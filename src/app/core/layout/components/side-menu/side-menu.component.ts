@@ -7,8 +7,7 @@ import { MenuModule } from 'primeng/menu';
 @Component({
   selector: 'layout-side-menu',
   imports: [CommonModule, RouterModule, MenuModule],
-  templateUrl: './side-menu.component.html',
-  styleUrl: './side-menu.component.sass'
+  templateUrl: './side-menu.component.html'
 })
 export class SideMenuComponent {
 

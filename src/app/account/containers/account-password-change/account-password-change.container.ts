@@ -3,14 +3,14 @@ import { AccountChangePasswordFormComponent } from '@app/account/components/pass
 import { PasswordChange } from '@app/account/models/password-change';
 import { AccountService } from '@app/account/services/account.service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 
 @Component({
-    selector: 'account-password-change',
-    imports: [ArticleComponent, CardModule, AccountChangePasswordFormComponent, ResponsiveShortColumnsDirective],
-    templateUrl: './account-password-change.container.html'
+  selector: 'account-password-change',
+  imports: [CardModule, AccountChangePasswordFormComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './account-password-change.container.html'
 })
 export class AccountPasswordChangeContainer {
 

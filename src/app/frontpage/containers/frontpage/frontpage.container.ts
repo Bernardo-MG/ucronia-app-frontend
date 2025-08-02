@@ -3,13 +3,12 @@ import { Component, inject } from '@angular/core';
 import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
-import { ArticleComponent } from '@bernardo-mg/ui';
 
 @Component({
-    selector: 'app-frontpage-frontpage',
-    imports: [ArticleComponent, TeamupCalendarComponent, GoogleMapsComponent],
-    templateUrl: './frontpage.container.html',
-    styleUrls: ['./frontpage.container.sass']
+  selector: 'app-frontpage-frontpage',
+  imports: [TeamupCalendarComponent, GoogleMapsComponent],
+  templateUrl: './frontpage.container.html',
+  styleUrls: ['./frontpage.container.sass']
 })
 export class FrontpageComponent {
   private service = inject(FrontpageService);
@@ -23,7 +22,7 @@ export class FrontpageComponent {
 
   public readonly emailLink;
 
-  constructor() { 
+  constructor() {
     // Read calendar code
     this.service.getCalendarCode().subscribe({
       next: response => {

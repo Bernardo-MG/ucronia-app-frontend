@@ -2,7 +2,6 @@
 import { Component, inject } from '@angular/core';
 import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ArticleComponent } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
 import { LoginRegister } from '../../models/login-register';
@@ -10,7 +9,7 @@ import { AccessAuditLoginService } from '../../services/access-audit-login.servi
 
 @Component({
   selector: 'access-audit-login',
-  imports: [CardModule, AccessAuditLoginListComponent, ArticleComponent, PaginationInfoComponent],
+  imports: [CardModule, AccessAuditLoginListComponent, PaginationInfoComponent],
   templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer {
