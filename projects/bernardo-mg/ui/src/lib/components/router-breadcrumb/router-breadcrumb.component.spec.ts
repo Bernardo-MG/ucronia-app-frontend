@@ -1,9 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 import { Subject } from 'rxjs';
-import { BreadcrumbLink } from '../../models/breadcrumb-link';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { RouterBreadcrumbComponent } from './router-breadcrumb.component';
 
 describe('RouterBreadcrumbComponent', () => {
@@ -43,7 +41,9 @@ describe('RouterBreadcrumbComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [RouterBreadcrumbComponent, BreadcrumbComponent, CommonModule],
+      imports: [
+        RouterBreadcrumbComponent
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
         { provide: Router, useValue: mockRouter }
@@ -60,15 +60,17 @@ describe('RouterBreadcrumbComponent', () => {
   });
 
   it('should build breadcrumbs correctly from route data', () => {
-    const breadcrumbs: BreadcrumbLink[] = component.breadcrumbs;
+    const breadcrumbs: MenuItem[] = component.breadcrumbs;
 
     expect(breadcrumbs.length).toBe(2);
 
-    expect(breadcrumbs[0].name).toBe('Dashboard');
-    expect(breadcrumbs[0].route).toBe('/dashboard');
+    expect(breadcrumbs[0].label).toBe('Dashboard');
+    expect(breadcrumbs[0].routerLink).toBe('/dashboard');
+    expect(breadcrumbs[1].disabled).toBe(false);
 
-    expect(breadcrumbs[1].name).toBe('Reports');
-    expect(breadcrumbs[1].route).toBe('');
+    expect(breadcrumbs[1].label).toBe('Reports');
+    expect(breadcrumbs[0].routerLink).toBe('/dashboard/reports');
+    expect(breadcrumbs[1].disabled).toBe(true);
   });
 
 });

@@ -1,22 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { filter } from 'rxjs';
-import { BreadcrumbLink } from '../../models/breadcrumb-link';
-import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 
 /**
  * Breadcrumb which takes info from the router.
  */
 @Component({
   selector: 'ui-router-breadcrumb',
-  imports: [BreadcrumbComponent],
+  imports: [BreadcrumbModule],
   templateUrl: './router-breadcrumb.component.html'
 })
 export class RouterBreadcrumbComponent {
 
   private readonly route = inject(ActivatedRoute);
 
-  public breadcrumbs: BreadcrumbLink[] = [];
+  public breadcrumbs: MenuItem[] = [];
 
   constructor() {
     const router = inject(Router);
@@ -32,8 +32,8 @@ export class RouterBreadcrumbComponent {
       });
   }
 
-  private buildBreadcrumbs(): BreadcrumbLink[] {
-    const breadcrumbs: BreadcrumbLink[] = [];
+  private buildBreadcrumbs(): MenuItem[] {
+    const breadcrumbs: MenuItem[] = [];
     let currentRoute: ActivatedRoute | null = this.route.root;
     let url = '';
 
@@ -48,7 +48,10 @@ export class RouterBreadcrumbComponent {
 
         // Add breadcrumb if the route has 'breadcrumb' data
         if (currentRoute.snapshot.data['breadcrumb']) {
-          breadcrumbs.push(new BreadcrumbLink(currentRoute.snapshot.data['breadcrumb'], url));
+          breadcrumbs.push({
+            label: currentRoute.snapshot.data['breadcrumb'],
+            routerLink: url
+          });
         }
       }
 
@@ -57,7 +60,8 @@ export class RouterBreadcrumbComponent {
     }
 
     if (breadcrumbs.length > 0) {
-      breadcrumbs[breadcrumbs.length - 1].route = '';
+      // Disable current breadcrumb
+      breadcrumbs[breadcrumbs.length - 1].disabled = true;
     }
     return breadcrumbs;
   }

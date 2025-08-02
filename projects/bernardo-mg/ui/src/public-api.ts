@@ -3,7 +3,6 @@
  */
 
 export * from './lib/components/article/article.component';
-export * from './lib/components/breadcrumb/breadcrumb.component';
 export * from './lib/components/button-list/button-list.component';
 export * from './lib/components/card-navigation/card-navigation.component';
 export * from './lib/components/centered-frame/centered-frame.component';
@@ -16,5 +15,4 @@ export * from './lib/directives/justify-end.directive';
 export * from './lib/directives/placeholder.directive';
 export * from './lib/directives/responsive-columns.directive';
 export * from './lib/directives/waiting.directive';
-export * from './lib/models/breadcrumb-link';
 export * from './lib/models/card-tab';
