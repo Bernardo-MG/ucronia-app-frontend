@@ -30,7 +30,7 @@ export class MemberListingContainer {
   /**
    * Loading flag.
    */
-  public reading = false;
+  public loading = false;
 
   constructor() {
     this.load(0);
@@ -51,7 +51,7 @@ export class MemberListingContainer {
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1
+    const page = (event.first / this.data.size) + 1;
     this.load(page);
   }
 
@@ -60,18 +60,18 @@ export class MemberListingContainer {
   }
 
   private load(page: number) {
-    this.reading = true;
+    this.loading = true;
 
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;
 
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       },
       error: error => {
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       }
     });
   }
