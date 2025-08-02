@@ -1,0 +1,70 @@
+<header>
+  <h1 class="border-bottom">Gente</h1>
+</header>
+<div class="row pb-2">
+  <!-- Membership evolution -->
+  <div uiJustifyCenter>
+    <widget-membership-evolution-chart />
+  </div>
+</div>
+<div class="row">
+  <!-- Member List -->
+  <p-card>
+    <ng-template #header>
+      <div class="row">
+        <div class="col-sm-3">
+          <!-- Add person -->
+          <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
+            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            <icon-add />
+          </button>
+        </div>
+        <div class="offset-md-7 col-sm-2">
+          <!-- Filter by membership -->
+          <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+        </div>
+      </div>
+      <div class="row">
+        <!-- Filter by name -->
+        <div class="col-sm-5">
+          <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+          <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+            aria-describedby="nameFilterLabel" maxlength="50">
+        </div>
+      </div>
+    </ng-template>
+    <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
+      [(selection)]="selectedPerson" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
+      [first]="first" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
+      (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectPerson()">
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
+          <th pSortableColumn="active">Activo <p-sortIcon field="active" /></th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-person>
+        <tr [pSelectableRow]="person">
+          <td>{{ person.name.fullName }}</td>
+          <td>
+            @switch (person.membership === null) {
+            @case (true) {
+            No es socio
+            }
+            @case (false) {
+            @switch (person.membership?.active) {
+            @case (true) {
+            <span class="pi pi-check text-success"></span>
+            }
+            @case (false) {
+            <span class="pi pi-times text-warning"></span>
+            }
+            }
+            }
+            }
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

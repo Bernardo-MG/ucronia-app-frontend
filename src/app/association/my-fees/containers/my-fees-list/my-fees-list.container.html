@@ -1,6 +1,7 @@
 <p-card>
   <p-table lazy="true" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-    [totalRecords]="data.totalElements" [first]="first" (onPage)="onPageChange($event)">
+    [totalRecords]="data.totalElements" [first]="first" showCurrentPageReport="true"
+    currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
     <ng-template #header>
       <tr>
         <th>Cuota</th>

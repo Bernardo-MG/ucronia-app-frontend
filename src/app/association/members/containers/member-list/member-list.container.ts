@@ -23,7 +23,7 @@ export class MemberListingContainer {
 
   public data = new PaginatedResponse<Member>();
 
-  public selectedMember: Member = new Member();
+  public selectedMember = new Member();
 
   private sort = new Sorting();
 

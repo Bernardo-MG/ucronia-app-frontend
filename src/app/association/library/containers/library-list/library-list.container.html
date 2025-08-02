@@ -12,7 +12,8 @@
   </ng-template>
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedBook" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
-    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectBook()">
+    showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}" (onSort)="onChangeDirection($event)"
+    (onPage)="onPageChange($event)" (onRowSelect)="onSelectBook()">
     <ng-template #header>
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
@@ -22,16 +23,18 @@
     <ng-template #body let-book>
       <tr [pSelectableRow]="book">
         <td>
-          <sup>{{book.title.supertitle}}</sup>
-          {{book.title.title}}
-          <sub>{{book.title.subtitle}}</sub>
+          <sup>{{ book.title.supertitle }}</sup>
+          {{ book.title.title }}
+          <sub>{{ book.title.subtitle }}</sub>
         </td>
         <td>
-          @if(book.lent) {
+          @switch (book.lent) {
+          @case (true) {
           <span class="pi pi-times text-warning"></span>
           }
-          @if(!book.lent) {
+          @case (false) {
           <span class="pi pi-check text-success"></span>
+          }
           }
         </td>
       </tr>

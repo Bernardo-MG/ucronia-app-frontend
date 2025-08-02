@@ -1,8 +1,8 @@
 <p-card>
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedMember" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
-    [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
-    (onRowSelect)="onSelectMember()">
+    [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
+    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectMember()">
     <ng-template #header>
       <tr>
         <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
