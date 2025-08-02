@@ -1,5 +1,4 @@
 <p-card>
-  <!-- List -->
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedMember" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
     [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"

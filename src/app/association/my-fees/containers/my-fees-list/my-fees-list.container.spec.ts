@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MyFeesFrontpageContainer } from './my-fees-listing.container';
+import { MyFeesFrontpageContainer } from './my-fees-list.container';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('MyFeesFrontpageContainer', () => {

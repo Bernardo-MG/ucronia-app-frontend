@@ -1,47 +1,56 @@
 
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Fee } from '@app/models/fees/fee';
-import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { MyFeesListComponent } from '../../components/list/my-fees-list/my-fees-list.component';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { MyFeesService } from '../../services/my-fees.service';
 
 @Component({
-  selector: 'app-my-fees-listing',
-  imports: [CardModule, MyFeesListComponent, PaginationInfoComponent],
-  templateUrl: './my-fees-listing.container.html'
+  selector: 'app-my-fees-list',
+  imports: [CommonModule, CardModule, TableModule],
+  templateUrl: './my-fees-list.container.html'
 })
 export class MyFeesFrontpageContainer {
 
   private readonly service = inject(MyFeesService);
+
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
 
   public data = new PaginatedResponse<Fee>();
 
   /**
    * Loading flag.
    */
-  public reading = false;
+  public loading = false;
 
   constructor() {
     this.load(0);
   }
 
   public load(page: number) {
-    this.reading = true;
+    this.loading = true;
 
     this.service.getAll(page).subscribe({
       next: response => {
         this.data = response;
 
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       },
       error: error => {
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       }
     });
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
   }
 
 }
