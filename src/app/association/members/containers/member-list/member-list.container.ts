@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
@@ -7,9 +7,9 @@ import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
-  selector: 'assoc-member-listing',
+  selector: 'assoc-member-list',
   imports: [RouterModule, CardModule, TableModule],
-  templateUrl: './member-listing.container.html'
+  templateUrl: './member-list.container.html'
 })
 export class MemberListingContainer {
 
