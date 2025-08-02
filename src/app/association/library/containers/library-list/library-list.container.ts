@@ -1,17 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookInfo } from '@app/models/library/book-info';
-import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { LibraryBookListComponent } from '../../components/library-book-list/library-book-list.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
-  selector: 'assoc-library-listing',
-  imports: [RouterModule, CardModule, TableModule, PaginationInfoComponent, LibraryBookListComponent],
-  templateUrl: './library-listing.container.html'
+  selector: 'assoc-library-list',
+  imports: [RouterModule, CardModule, TableModule],
+  templateUrl: './library-list.container.html'
 })
 export class LibraryListingContainer {
 

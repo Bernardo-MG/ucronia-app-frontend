@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/library-listing/library-listing.container').then(m => m.LibraryListingContainer),
+        loadComponent: () => import('./containers/library-list/library-list.container').then(m => m.LibraryListingContainer),
         canActivate: [ResourceGuard("library", "view")],
         data: { breadcrumb: 'Libros' }
       },
