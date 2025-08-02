@@ -4,8 +4,8 @@
     [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
     (onRowSelect)="onSelectMember()">
     <ng-template #header>
-      <tr pSortableColumn="fullName">
-        <th>Nombre <p-sortIcon field="fullName" /></th>
+      <tr>
+        <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
       </tr>
     </ng-template>
     <ng-template #body let-member>
