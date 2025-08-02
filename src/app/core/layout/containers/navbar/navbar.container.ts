@@ -2,7 +2,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuLink } from '@bernardo-mg/ui';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -35,15 +34,10 @@ export class NavbarContainer {
     return !this.loggedIn;
   }
 
-  public get showAdmin() {
-    return this.adminLinks.length > 0;
-  }
-
-  public readonly adminLinks: MenuLink[];
-
   public readonly menuItems: MenuItem[] = [];
 
   constructor() {
+    const authContainer = inject(AuthContainer);
     const layoutService = inject(LayoutService);
 
     // App title
@@ -55,14 +49,6 @@ export class NavbarContainer {
     this.showAssociation = layoutService.showAssociationLink();
 
     // Links
-    this.adminLinks = layoutService.getLinks();
-
-    this.loadMenu();
-  }
-
-  private loadMenu() {
-    if (!this.loggedIn) return;
-
     if (this.showAssociation) {
       this.menuItems.push({
         label: 'Asociación',
@@ -70,15 +56,30 @@ export class NavbarContainer {
         routerLink: '/association'
       });
     }
-
-    if (this.showAdmin) {
+    const adminLinks: MenuItem[] = [];
+    if (authContainer.hasPermission('person', 'view')) {
+      adminLinks.push({
+        label: 'Gente',
+        routerLink: '/association/admin/people'
+      });
+    }
+    if (authContainer.hasPermission('funds', 'view')) {
+      adminLinks.push({
+        label: 'Fondos',
+        routerLink: '/association/admin/money'
+      });
+    }
+    if (authContainer.hasPermission('library', 'view')) {
+      adminLinks.push({
+        label: 'Biblioteca',
+        routerLink: '/association/admin/library'
+      });
+    }
+    if (adminLinks.length > 0) {
       this.menuItems.push({
         label: 'Administración',
         icon: 'pi pi-cog',
-        items: this.adminLinks.map(link => ({
-          label: link.title,
-          routerLink: link.path
-        }))
+        items: adminLinks
       });
     }
   }
