@@ -1,9 +1,17 @@
 <p-card>
   <!-- List -->
-  <assoc-member-list [members]="data.content" [routeLinkAdapter]="routeLinkAdapter"
-    (changeDirection)="onChangeDirection($event)" />
-  <ng-template #footer>
-    <pagination-info [waiting]="reading" [current]="data.page" [pages]="data.totalPages"
-      [totalElements]="data.totalElements" (goTo)="load($event)" />
-  </ng-template>
+  <p-table lazy="true" [value]="data.content" selectionMode="single" [(selection)]="selectedMember" dataKey="number"
+    [paginator]="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
+    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectMember()">
+    <ng-template #header>
+      <tr pSortableColumn="fullName">
+        <th>Nombre <p-sortIcon field="fullName" /></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-member>
+      <tr [pSelectableRow]="member">
+        <td>{{ member.name.fullName }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </p-card>

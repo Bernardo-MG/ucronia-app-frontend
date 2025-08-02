@@ -1,22 +1,29 @@
-import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
-import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { MemberListComponent } from '../../components/member-list/member-list.component';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-member-listing',
-  imports: [RouterModule, CardModule, MemberListComponent, PaginationInfoComponent],
+  imports: [RouterModule, CardModule, TableModule],
   templateUrl: './member-listing.container.html'
 })
 export class MemberListingContainer {
 
+  private readonly router = inject(Router);
+
   private readonly service = inject(MemberService);
 
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
+
   public data = new PaginatedResponse<Member>();
+
+  public selectedMember: Member = new Member();
 
   private sort = new Sorting();
 
@@ -29,13 +36,30 @@ export class MemberListingContainer {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortingProperty) {
-    this.sort.addField(field);
+  public onChangeDirection(sorting: { field: string, order: number }) {
+    if (sorting.field === 'fullName') {
+      if (sorting.order == 1) {
+        this.sort.addField(new SortingProperty('firstName', SortingDirection.Ascending));
+        this.sort.addField(new SortingProperty('lastName', SortingDirection.Ascending));
+      } else {
+        this.sort.addField(new SortingProperty('firstName', SortingDirection.Descending));
+        this.sort.addField(new SortingProperty('lastName', SortingDirection.Descending));
+      }
+    }
 
     this.load(this.data.page);
   }
 
-  public load(page: number) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1
+    this.load(page);
+  }
+
+  public onSelectMember() {
+    this.router.navigate([`/association/members/${this.selectedMember.number}`]);
+  }
+
+  private load(page: number) {
     this.reading = true;
 
     this.service.getAll(page, this.sort).subscribe({
@@ -50,10 +74,6 @@ export class MemberListingContainer {
         this.reading = false;
       }
     });
-  }
-
-  public routeLinkAdapter(data: Member): string {
-    return `${data.number}`;
   }
 
 }
