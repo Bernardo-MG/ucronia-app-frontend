@@ -10,7 +10,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { ArticleComponent, BreadcrumbLink, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
@@ -46,8 +46,6 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
   public currentStep = 1;
 
   public pay = true;
-
-  public levels = [new BreadcrumbLink('Cuotas', '../'), new BreadcrumbLink('Pago')];
 
   constructor() {
     const authContainer = inject(AuthContainer);

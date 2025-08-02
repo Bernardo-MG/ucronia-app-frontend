@@ -6,7 +6,7 @@ import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-inf
 import { Fee } from '@app/models/fees/fee';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ArticleComponent, BreadcrumbLink, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ArticleComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
@@ -29,8 +29,6 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   private date: string = "";
 
   private memberNumber = -1;
-
-  public readonly levels = [new BreadcrumbLink('Cuotas', '../../'), new BreadcrumbLink('Editar')];
 
   constructor() {
     const authContainer = inject(AuthContainer);
