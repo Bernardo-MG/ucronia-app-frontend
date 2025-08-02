@@ -31,6 +31,7 @@ export class AccessUserMemberEditorComponent {
 
   public onShowSelectMember() {
     this.view = "select";
+    this.onGoToSelectionPage(0);
   }
 
   public onCancelSelectMember() {
