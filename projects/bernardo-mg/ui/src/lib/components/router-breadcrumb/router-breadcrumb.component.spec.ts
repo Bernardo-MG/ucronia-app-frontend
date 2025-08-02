@@ -66,10 +66,10 @@ describe('RouterBreadcrumbComponent', () => {
 
     expect(breadcrumbs[0].label).toBe('Dashboard');
     expect(breadcrumbs[0].routerLink).toBe('/dashboard');
-    expect(breadcrumbs[1].disabled).toBe(false);
+    expect(breadcrumbs[0].disabled).toBe(false);
 
     expect(breadcrumbs[1].label).toBe('Reports');
-    expect(breadcrumbs[0].routerLink).toBe('/dashboard/reports');
+    expect(breadcrumbs[1].routerLink).toBe('/dashboard/reports');
     expect(breadcrumbs[1].disabled).toBe(true);
   });
 
