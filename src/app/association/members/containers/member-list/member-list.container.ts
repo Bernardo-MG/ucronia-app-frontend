@@ -38,13 +38,14 @@ export class MemberListingContainer {
 
   public onChangeDirection(sorting: { field: string, order: number }) {
     if (sorting.field === 'fullName') {
+      let direction;
       if (sorting.order == 1) {
-        this.sort.addField(new SortingProperty('firstName', SortingDirection.Ascending));
-        this.sort.addField(new SortingProperty('lastName', SortingDirection.Ascending));
+        direction = SortingDirection.Ascending;
       } else {
-        this.sort.addField(new SortingProperty('firstName', SortingDirection.Descending));
-        this.sort.addField(new SortingProperty('lastName', SortingDirection.Descending));
+        direction = SortingDirection.Descending;
       }
+      this.sort.addField(new SortingProperty('firstName', direction));
+      this.sort.addField(new SortingProperty('lastName', direction));
     }
 
     this.load(this.data.page);

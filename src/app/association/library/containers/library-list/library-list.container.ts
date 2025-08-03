@@ -57,7 +57,20 @@ export class LibraryListingContainer {
     this.load(0);
   }
 
-  public load(page: number) {
+  public routeLinkAdapter = (data: BookInfo): string => {
+    return `${this.source}/${data.number}`;
+  };
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  public onSelectBook() {
+    this.router.navigate([`/association/library/${this.source}/${this.selectedBook.number}`]);
+  }
+
+  private load(page: number) {
     this.loading = true;
 
     if (this.source === 'games') {
@@ -87,19 +100,6 @@ export class LibraryListingContainer {
         }
       });
     }
-  }
-
-  public routeLinkAdapter = (data: BookInfo): string => {
-    return `${this.source}/${data.number}`;
-  };
-
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  public onSelectBook() {
-    this.router.navigate([`/association/library/${this.source}/${this.selectedBook.number}`]);
   }
 
 }

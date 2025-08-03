@@ -103,7 +103,11 @@ export class PeopleListingContainer {
     this.load(0);
   }
 
-  public load(page: number) {
+  public routeLinkAdapter(data: Person): string {
+    return `${data.number}`;
+  }
+
+  private load(page: number) {
     this.loading = true;
 
     this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter).subscribe({
@@ -115,10 +119,6 @@ export class PeopleListingContainer {
         this.loading = false;
       }
     });
-  }
-
-  public routeLinkAdapter(data: Person): string {
-    return `${data.number}`;
   }
 
 }

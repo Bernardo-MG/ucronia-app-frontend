@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AuthorAdminService } from '../../services/author-admin.service';
-import { LibraryAdminAuthorListingContainer } from './library-admin-author-listing.component';
+import { LibraryAdminAuthorListingContainer } from './library-admin-author-list.component';
 
 describe('LibraryAdminAuthorListingContainer', () => {
   let component: LibraryAdminAuthorListingContainer;

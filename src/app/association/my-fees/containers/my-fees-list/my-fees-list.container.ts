@@ -31,7 +31,12 @@ export class MyFeesFrontpageContainer {
     this.load(0);
   }
 
-  public load(page: number) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  private load(page: number) {
     this.loading = true;
 
     this.service.getAll(page).subscribe({
@@ -46,11 +51,6 @@ export class MyFeesFrontpageContainer {
         this.loading = false;
       }
     });
-  }
-
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
   }
 
 }

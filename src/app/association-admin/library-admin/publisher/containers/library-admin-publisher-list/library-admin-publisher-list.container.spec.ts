@@ -2,20 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { BookLendingService } from '../../services/book-lending.service';
-import { LibraryAdminLendingListingContainer } from './library-admin-lending-listing.container';
+import { PublisherAdminService } from '../../services/publisher-admin.service';
+import { LibraryAdminPublisherListingContainer } from './library-admin-publisher-list.container';
 
-describe('LibraryAdminLendingListingContainer', () => {
-  let component: LibraryAdminLendingListingContainer;
-  let fixture: ComponentFixture<LibraryAdminLendingListingContainer>;
+describe('LibraryAdminPublisherListingContainer', () => {
+  let component: LibraryAdminPublisherListingContainer;
+  let fixture: ComponentFixture<LibraryAdminPublisherListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminLendingListingContainer
+        LibraryAdminPublisherListingContainer
       ],
       providers: [
-        BookLendingService,
+        PublisherAdminService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -23,7 +23,7 @@ describe('LibraryAdminLendingListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminLendingListingContainer);
+    fixture = TestBed.createComponent(LibraryAdminPublisherListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

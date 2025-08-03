@@ -1,0 +1,98 @@
+
+import { Component, inject, Input } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { Publisher } from '@app/models/library/publisher';
+import { AuthContainer } from '@bernardo-mg/authentication';
+import { IconAddComponent } from '@bernardo-mg/icons';
+import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { CardModule } from 'primeng/card';
+import { TableModule, TablePageEvent } from 'primeng/table';
+import { PublisherAdminService } from '../../services/publisher-admin.service';
+
+@Component({
+  selector: 'assoc-library-admin-publisher-list',
+  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  templateUrl: './library-admin-publisher-list.container.html'
+})
+export class LibraryAdminPublisherListingContainer {
+
+  private readonly router = inject(Router);
+
+  private readonly service = inject(PublisherAdminService);
+
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
+
+  private _pageNumber = 0;
+
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
+
+  public data = new PaginatedResponse<Publisher>();
+
+  public selectedPublisher = new Publisher();
+
+  /**
+   * Loading flag.
+   */
+  public loading = false;
+
+  public createPermission = false;
+
+  private sort = new Sorting();
+
+  constructor() {
+    const authContainer = inject(AuthContainer);
+
+    // Load books
+    this.load(0)
+    // Check permissions
+    this.createPermission = authContainer.hasPermission("library_publisher", "create");
+  }
+
+  public onChangeDirection(sorting: { field: string, order: number }) {
+    let direction;
+    if (sorting.order == 1) {
+      direction = SortingDirection.Ascending;
+    } else {
+      direction = SortingDirection.Descending;
+    }
+    this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.load(this.data.page);
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  public onSelectPublisher() {
+    this.router.navigate([`/association/admin/library/publishers/${this.selectedPublisher.number}`]);
+  }
+
+  private load(page: number) {
+    this.loading = true;
+
+    this.service.getAll(page, this.sort).subscribe({
+      next: response => {
+        this.data = response;
+
+        // Reactivate view
+        this.loading = false;
+      },
+      error: error => {
+        // Reactivate view
+        this.loading = false;
+      }
+    });
+  }
+
+}

@@ -2,20 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { GameSystemAdminService } from '../../services/game-system-admin.service';
-import { LibraryAdminGameSystemListingContainer } from './library-admin-game-system-listing.container';
+import { BookLendingService } from '../../services/book-lending.service';
+import { LibraryAdminLendingListingContainer } from './library-admin-lending-list.container';
 
-describe('LibraryAdminGameSystemListingContainer', () => {
-  let component: LibraryAdminGameSystemListingContainer;
-  let fixture: ComponentFixture<LibraryAdminGameSystemListingContainer>;
+describe('LibraryAdminLendingListingContainer', () => {
+  let component: LibraryAdminLendingListingContainer;
+  let fixture: ComponentFixture<LibraryAdminLendingListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminGameSystemListingContainer
+        LibraryAdminLendingListingContainer
       ],
       providers: [
-        GameSystemAdminService,
+        BookLendingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -23,7 +23,7 @@ describe('LibraryAdminGameSystemListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminGameSystemListingContainer);
+    fixture = TestBed.createComponent(LibraryAdminLendingListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

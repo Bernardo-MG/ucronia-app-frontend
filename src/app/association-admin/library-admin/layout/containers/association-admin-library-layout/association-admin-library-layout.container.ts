@@ -26,7 +26,7 @@ export class AssociationAdminLibraryLayoutContainer {
     }
 
     const dataItems = [];
-    if (authContainer.hasPermission('activity_calendar', 'library_author')) {
+    if (authContainer.hasPermission('library_author', 'view')) {
       dataItems.push(
         {
           label: 'Autores',
