@@ -23,7 +23,7 @@ export class MemberListContainer {
 
   public data = new PaginatedResponse<Member>();
 
-  public selectedMember = new Member();
+  public selectedData = new Member();
 
   private sort = new Sorting();
 
@@ -56,8 +56,8 @@ export class MemberListContainer {
     this.load(page);
   }
 
-  public onSelectMember() {
-    this.router.navigate([`/association/members/${this.selectedMember.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/members/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

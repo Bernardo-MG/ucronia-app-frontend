@@ -39,7 +39,7 @@ export class PeopleListContainer {
 
   public nameFilterSubject = new Subject<string>();
 
-  public selectedPerson = new Person();
+  public selectedData = new Person();
 
   private sort = new Sorting();
 
@@ -95,8 +95,8 @@ export class PeopleListContainer {
     this.load(page);
   }
 
-  public onSelectPerson() {
-    this.router.navigate([`/association/admin/people/${this.selectedPerson.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/people/${this.selectedData.number}`]);
   }
 
   public onNameFilterChange(): void {

@@ -36,7 +36,7 @@ export class LibraryAdminBookListContainer {
     return this._pageNumber;
   }
 
-  public selectedBook = new BookInfo();
+  public selectedData = new BookInfo();
 
   public data = new PaginatedResponse<BookInfo>();
 
@@ -86,8 +86,8 @@ export class LibraryAdminBookListContainer {
     this.load(page);
   }
 
-  public onSelectBook() {
-    this.router.navigate([`/association/admin/library/books/${this.source}/${this.selectedBook.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/library/books/${this.source}/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

@@ -37,7 +37,7 @@ export class LibraryAdminGameSystemListContainer {
 
   public data = new PaginatedResponse<GameSystem>();
 
-  public selectedGameSystem = new GameSystem();
+  public selectedData = new GameSystem();
 
   /**
    * Loading flag.
@@ -74,8 +74,8 @@ export class LibraryAdminGameSystemListContainer {
     this.load(page);
   }
 
-  public onSelectGameSystem() {
-    this.router.navigate([`/association/admin/library/gametypes/${this.selectedGameSystem.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/library/gametypes/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

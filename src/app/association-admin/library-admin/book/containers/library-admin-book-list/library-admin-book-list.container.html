@@ -19,9 +19,9 @@
     </div>
   </ng-template>
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
-    [(selection)]="selectedBook" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
+    [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
     (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
-    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectBook()">
+    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
     <ng-template #header>
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>

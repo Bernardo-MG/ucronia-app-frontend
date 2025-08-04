@@ -35,7 +35,7 @@ export class LibraryAdminAuthorListContainer {
     return this._pageNumber;
   }
 
-  public selectedAuthor = new Author();
+  public selectedData = new Author();
 
   public data = new PaginatedResponse<Author>();
 
@@ -74,8 +74,8 @@ export class LibraryAdminAuthorListContainer {
     this.load(page);
   }
 
-  public onSelectAuthor() {
-    this.router.navigate([`/association/admin/library/authors/${this.selectedAuthor.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/library/authors/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

@@ -34,9 +34,9 @@
       </div>
     </ng-template>
     <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
-      [(selection)]="selectedPerson" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
+      [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
       [first]="first" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
-      (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectPerson()">
+      (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectRow()">
       <ng-template #header>
         <tr>
           <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>

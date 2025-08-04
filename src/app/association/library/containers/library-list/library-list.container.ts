@@ -23,7 +23,7 @@ export class LibraryListContainer {
 
   public data = new PaginatedResponse<BookInfo>();
 
-  public selectedBook = new BookInfo();
+  public selectedData = new BookInfo();
 
   /**
    * Loading flag.
@@ -62,8 +62,8 @@ export class LibraryListContainer {
     this.load(page);
   }
 
-  public onSelectBook() {
-    this.router.navigate([`/association/library/${this.source}/${this.selectedBook.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/library/${this.source}/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

@@ -37,7 +37,7 @@ export class LibraryAdminBookTypeListContainer {
 
   public data = new PaginatedResponse<BookType>();
 
-  public selectedBookType = new BookType();
+  public selectedData = new BookType();
 
   /**
    * Loading flag.
@@ -74,8 +74,8 @@ export class LibraryAdminBookTypeListContainer {
     this.load(page);
   }
 
-  public onSelectBookType() {
-    this.router.navigate([`/association/admin/library/booktypes/${this.selectedBookType.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/library/booktypes/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

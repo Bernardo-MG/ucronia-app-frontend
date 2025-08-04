@@ -37,7 +37,7 @@ export class LibraryAdminPublisherListContainer {
 
   public data = new PaginatedResponse<Publisher>();
 
-  public selectedPublisher = new Publisher();
+  public selectedData = new Publisher();
 
   /**
    * Loading flag.
@@ -74,8 +74,8 @@ export class LibraryAdminPublisherListContainer {
     this.load(page);
   }
 
-  public onSelectPublisher() {
-    this.router.navigate([`/association/admin/library/publishers/${this.selectedPublisher.number}`]);
+  public onSelectRow() {
+    this.router.navigate([`/association/admin/library/publishers/${this.selectedData.number}`]);
   }
 
   private load(page: number) {
