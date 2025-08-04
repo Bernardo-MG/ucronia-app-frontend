@@ -1,29 +1,27 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessListContainer } from './access-user-listing.container';
+import { BookService } from '../../services/book.service';
+import { LibraryListContainer } from './library-list.container';
 
-describe('AccessListContainer', () => {
-  let component: AccessListContainer;
-  let fixture: ComponentFixture<AccessListContainer>;
+describe('LibraryGameListContainer', () => {
+  let component: LibraryListContainer;
+  let fixture: ComponentFixture<LibraryListContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessListContainer
+        LibraryListContainer
       ],
       providers: [
-        AccessUserService,
+        BookService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        provideRouter([])
+        provideHttpClientTesting()
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessListContainer);
+    fixture = TestBed.createComponent(LibraryListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

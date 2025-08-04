@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./containers/my-fees-listing/my-fees-listing.container').then(m => m.MyFeesFrontpageContainer),
+    loadComponent: () => import('./containers/my-fees-list/my-fees-list.container').then(m => m.MyFeesFrontpageContainer),
     data: { breadcrumb: 'Mis cuotas' }
   }
 ];

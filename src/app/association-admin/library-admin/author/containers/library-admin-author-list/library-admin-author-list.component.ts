@@ -1,33 +1,43 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
+import { Author } from '@app/models/library/author';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessUserService } from '../../services/access-user.service';
+import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
+  selector: 'assoc-library-admin-author-list',
   imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './access-user-selection-list-widget.container.html'
+  templateUrl: './library-admin-author-list.component.html'
 })
-export class AccessUserSelectionListWidgetContainer {
+export class LibraryAdminAuthorListContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(AccessUserService);
-
-  public readonly createPermission;
+  private readonly service = inject(AuthorAdminService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<User>();
+  private _pageNumber = 0;
 
-  public selectedData = new User();
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
+
+  public selectedData = new Author();
+
+  public data = new PaginatedResponse<Author>();
 
   /**
    * Loading flag.
@@ -36,13 +46,15 @@ export class AccessUserSelectionListWidgetContainer {
 
   private sort = new Sorting();
 
+  public readonly createPermission;
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
+    // Load books
+    this.load(0)
     // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
-
-    this.load(0);
+    this.createPermission = authContainer.hasPermission("library_author", "create");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -63,11 +75,12 @@ export class AccessUserSelectionListWidgetContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/association/admin/library/authors/${this.selectedData.number}`]);
   }
 
   private load(page: number) {
     this.loading = true;
+
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;

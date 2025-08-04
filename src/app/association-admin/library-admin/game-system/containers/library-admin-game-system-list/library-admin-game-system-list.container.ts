@@ -1,48 +1,60 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
+import { GameSystem } from '@app/models/library/game-system';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessUserService } from '../../services/access-user.service';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
+  selector: 'assoc-library-admin-game-system-list',
   imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './access-user-selection-list-widget.container.html'
+  templateUrl: './library-admin-game-system-list.container.html'
 })
-export class AccessUserSelectionListWidgetContainer {
+export class LibraryAdminGameSystemListContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(AccessUserService);
-
-  public readonly createPermission;
+  private readonly service = inject(GameSystemAdminService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<User>();
+  private _pageNumber = 0;
 
-  public selectedData = new User();
+  @Input() public set pageNumber(value: number) {
+    this._pageNumber = value;
+    this.load(value);
+  }
+
+  public get pageNumber() {
+    return this._pageNumber;
+  }
+
+  public data = new PaginatedResponse<GameSystem>();
+
+  public selectedData = new GameSystem();
 
   /**
    * Loading flag.
    */
   public loading = false;
 
+  public readonly createPermission;
+
   private sort = new Sorting();
 
   constructor() {
     const authContainer = inject(AuthContainer);
 
+    // Load books
+    this.load(0)
     // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
-
-    this.load(0);
+    this.createPermission = authContainer.hasPermission("library_game_system", "create");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -63,11 +75,12 @@ export class AccessUserSelectionListWidgetContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/association/admin/library/gametypes/${this.selectedData.number}`]);
   }
 
   private load(page: number) {
     this.loading = true;
+
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;

@@ -2,24 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { FeeReportService } from '@app/association-admin/fees/chart/services/fee-report.service';
-import { FeeCalendarService } from '../../calendar/services/fee-calendar.service';
-import { FeeService } from '../../services/fee.service';
-import { FeeListContainer } from './fee-listing.container';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
+import { LibraryAdminGameSystemListContainer } from './library-admin-game-system-list.container';
 
-describe('FeeListContainer', () => {
-  let component: FeeListContainer;
-  let fixture: ComponentFixture<FeeListContainer>;
+describe('LibraryAdminGameSystemListContainer', () => {
+  let component: LibraryAdminGameSystemListContainer;
+  let fixture: ComponentFixture<LibraryAdminGameSystemListContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FeeListContainer
+        LibraryAdminGameSystemListContainer
       ],
       providers: [
-        FeeCalendarService,
-        FeeService,
-        FeeReportService,
+        GameSystemAdminService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -27,7 +23,7 @@ describe('FeeListContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeListContainer);
+    fixture = TestBed.createComponent(LibraryAdminGameSystemListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

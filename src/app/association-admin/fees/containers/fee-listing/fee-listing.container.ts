@@ -8,6 +8,6 @@ import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
   imports: [FeeCalendarWidgetContainer, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
   templateUrl: './fee-listing.container.html'
 })
-export class FeeListingContainer {
+export class FeeListContainer {
 
 }

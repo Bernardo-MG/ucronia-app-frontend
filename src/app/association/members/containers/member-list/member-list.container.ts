@@ -1,58 +1,52 @@
-
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
+import { MemberService } from '@app/association/members/services/member.service';
+import { Member } from '@app/models/members/member';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './access-user-selection-list-widget.container.html'
+  selector: 'assoc-member-list',
+  imports: [RouterModule, CardModule, TableModule],
+  templateUrl: './member-list.container.html'
 })
-export class AccessUserSelectionListWidgetContainer {
+export class MemberListContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(AccessUserService);
-
-  public readonly createPermission;
+  private readonly service = inject(MemberService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<User>();
+  public data = new PaginatedResponse<Member>();
 
-  public selectedData = new User();
+  public selectedData = new Member();
+
+  private sort = new Sorting();
 
   /**
    * Loading flag.
    */
   public loading = false;
 
-  private sort = new Sorting();
-
   constructor() {
-    const authContainer = inject(AuthContainer);
-
-    // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
-
     this.load(0);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
-    let direction;
-    if (sorting.order == 1) {
-      direction = SortingDirection.Ascending;
-    } else {
-      direction = SortingDirection.Descending;
+    if (sorting.field === 'fullName') {
+      let direction;
+      if (sorting.order == 1) {
+        direction = SortingDirection.Ascending;
+      } else {
+        direction = SortingDirection.Descending;
+      }
+      this.sort.addField(new SortingProperty('firstName', direction));
+      this.sort.addField(new SortingProperty('lastName', direction));
     }
-    this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
   }
@@ -63,11 +57,12 @@ export class AccessUserSelectionListWidgetContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/association/members/${this.selectedData.number}`]);
   }
 
   private load(page: number) {
     this.loading = true;
+
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;
