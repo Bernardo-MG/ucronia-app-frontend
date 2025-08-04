@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-
+import { ResourceGuard } from '@bernardo-mg/authentication';
 
 
 const routes: Routes = [
@@ -12,6 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        canActivate: [ResourceGuard("association_settings", "view")],
         loadComponent: () => import('./containers/settings-info-editor/settings-info-editor.container').then(m => m.SettingsInfoEditorContainer)
       }
     ]

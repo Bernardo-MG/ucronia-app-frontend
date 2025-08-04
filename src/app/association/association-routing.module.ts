@@ -3,11 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
 
-const activityCalendarModule = () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule);
-const myFeesModule = () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule);
-const membersModule = () => import('@app/association/members/members.module').then(m => m.MembersModule);
-const libraryModule = () => import('@app/association/library/library.module').then(m => m.LibraryModule);
-
 const routes: Routes = [
   {
     path: '',
@@ -21,22 +16,22 @@ const routes: Routes = [
       {
         path: 'calendar',
         canActivate: [ResourceGuard("activity_calendar", "view")],
-        loadChildren: activityCalendarModule
+        loadChildren: () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule)
       },
       {
         path: 'members',
         canActivate: [ResourceGuard("member", "view")],
-        loadChildren: membersModule
+        loadChildren: () => import('@app/association/members/members.module').then(m => m.MembersModule)
       },
       {
         path: 'myFees',
         canActivate: [ResourceGuard("my_fees", "view")],
-        loadChildren: myFeesModule
+        loadChildren: () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule)
       },
       {
         path: 'library',
         canActivate: [ResourceGuard("library", "view")],
-        loadChildren: libraryModule
+        loadChildren: () => import('@app/association/library/library.module').then(m => m.LibraryModule)
       }
     ]
   }
