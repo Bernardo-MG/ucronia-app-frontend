@@ -1,0 +1,25 @@
+<p-card>
+  <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
+    [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
+    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
+    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
+    <ng-template #header>
+      <tr>
+        <th pSortableColumn="username">Usuario <p-sortIcon field="username" /></th>
+        <th pSortableColumn="scope">Alcance <p-sortIcon field="scope" /></th>
+        <th pSortableColumn="creationDate">Creado <p-sortIcon field="creationDate" /></th>
+        <th pSortableColumn="consumed">Consumido <p-sortIcon field="consumed" /></th>
+        <th pSortableColumn="revoked">Revocado <p-sortIcon field="revoked" /></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-token>
+      <tr [pSelectableRow]="token">
+        <td>{{ token.username }}</td>
+        <td>{{ token.scope }}</td>
+        <td>{{ token.creationDate }}</td>
+        <td>{{ token.consumed }}</td>
+        <td>{{ token.revoked }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

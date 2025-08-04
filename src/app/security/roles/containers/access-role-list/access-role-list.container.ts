@@ -1,23 +1,22 @@
-
 import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
+import { AuthContainer, Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessUserService } from '../../services/access-user.service';
+import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './access-user-selection-list-widget.container.html'
+  selector: 'access-role-list',
+  imports: [RouterModule, CardModule, TableModule, IconAddComponent],
+  templateUrl: './access-role-list.container.html'
 })
-export class AccessUserSelectionListWidgetContainer {
+export class AccessRoleListingContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(AccessUserService);
+  private readonly service = inject(AccessRoleService);
 
   public readonly createPermission;
 
@@ -25,9 +24,9 @@ export class AccessUserSelectionListWidgetContainer {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<User>();
+  public data = new PaginatedResponse<Role>();
 
-  public selectedData = new User();
+  public selectedData = new Role();
 
   /**
    * Loading flag.
@@ -40,7 +39,7 @@ export class AccessUserSelectionListWidgetContainer {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
+    this.createPermission = authContainer.hasPermission("role", "create");
 
     this.load(0);
   }
@@ -63,7 +62,7 @@ export class AccessUserSelectionListWidgetContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/security/roles/${this.selectedData.name}`]);
   }
 
   public load(page: number) {

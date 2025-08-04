@@ -2,20 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AccessUserService } from '../../services/access-user.service';
-import { AccessUserSelectionListComponent } from './access-user-selection-list.component';
+import { AccessRoleService } from '../../services/access-role.service';
+import { AccessRoleListingContainer } from './access-role-list.container';
 
-describe('AccessUserSelectionListComponent', () => {
-  let component: AccessUserSelectionListComponent;
-  let fixture: ComponentFixture<AccessUserSelectionListComponent>;
+describe('AccessRoleListingContainer', () => {
+  let component: AccessRoleListingContainer;
+  let fixture: ComponentFixture<AccessRoleListingContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessUserSelectionListComponent
+        AccessRoleListingContainer
       ],
       providers: [
-        AccessUserService,
+        AccessRoleService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -23,7 +23,7 @@ describe('AccessUserSelectionListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserSelectionListComponent);
+    fixture = TestBed.createComponent(AccessRoleListingContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

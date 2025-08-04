@@ -1,47 +1,39 @@
 
 import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
+import { Router } from '@angular/router';
+import { UserTokenService } from '@app/security/user-tokens/services/user-token.service';
+import { UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'access-user-selection-list-widget',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './access-user-selection-list-widget.container.html'
+  selector: 'access-user-token-list',
+  imports: [CardModule, TableModule],
+  templateUrl: './user-token-list.container.html'
 })
-export class AccessUserSelectionListWidgetContainer {
+export class UserTokenListingContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(AccessUserService);
-
-  public readonly createPermission;
+  private readonly service = inject(UserTokenService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<User>();
+  public data = new PaginatedResponse<UserToken>();
 
-  public selectedData = new User();
+  public selectedData = new UserToken();
+
+  private sort = new Sorting();
 
   /**
    * Loading flag.
    */
   public loading = false;
 
-  private sort = new Sorting();
-
   constructor() {
-    const authContainer = inject(AuthContainer);
-
-    // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
-
     this.load(0);
   }
 
@@ -63,7 +55,7 @@ export class AccessUserSelectionListWidgetContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/security/user-tokens/${this.selectedData.token}`]);
   }
 
   public load(page: number) {
