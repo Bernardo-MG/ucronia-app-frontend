@@ -14,7 +14,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
   imports: [CardModule, RouterModule, TableModule, IconAddComponent],
   templateUrl: './library-admin-author-list.component.html'
 })
-export class LibraryAdminAuthorListingContainer {
+export class LibraryAdminAuthorListContainer {
 
   private readonly router = inject(Router);
 

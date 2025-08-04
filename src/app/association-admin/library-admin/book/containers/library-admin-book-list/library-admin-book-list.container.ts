@@ -15,7 +15,7 @@ import { BookAdminService } from '../../services/book-admin.service';
   imports: [CardModule, RouterModule, TableModule, IconAddComponent, BookReportWidgetContainer],
   templateUrl: './library-admin-book-list.container.html'
 })
-export class LibraryAdminBookListingContainer {
+export class LibraryAdminBookListContainer {
 
   private readonly router = inject(Router);
 

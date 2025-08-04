@@ -14,7 +14,7 @@ import { GameSystemAdminService } from '../../services/game-system-admin.service
   imports: [CardModule, RouterModule, TableModule, IconAddComponent],
   templateUrl: './library-admin-game-system-list.container.html'
 })
-export class LibraryAdminGameSystemListingContainer {
+export class LibraryAdminGameSystemListContainer {
 
   private readonly router = inject(Router);
 

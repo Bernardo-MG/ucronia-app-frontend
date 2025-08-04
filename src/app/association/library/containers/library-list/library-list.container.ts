@@ -11,7 +11,7 @@ import { BookService } from '../../services/book.service';
   imports: [RouterModule, CardModule, TableModule],
   templateUrl: './library-list.container.html'
 })
-export class LibraryListingContainer {
+export class LibraryListContainer {
 
   private readonly router = inject(Router);
 

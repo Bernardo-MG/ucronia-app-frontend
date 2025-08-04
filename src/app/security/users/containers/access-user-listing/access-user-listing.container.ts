@@ -6,6 +6,6 @@ import { AccessUserSelectionListWidgetContainer } from '../access-user-selection
     imports: [AccessUserSelectionListWidgetContainer],
     templateUrl: './access-user-listing.container.html'
 })
-export class AccessListingContainer {
+export class AccessListContainer {
 
 }

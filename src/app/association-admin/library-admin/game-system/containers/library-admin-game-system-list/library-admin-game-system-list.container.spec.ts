@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
-import { LibraryAdminGameSystemListingContainer } from './library-admin-game-system-list.container';
+import { LibraryAdminGameSystemListContainer } from './library-admin-game-system-list.container';
 
-describe('LibraryAdminGameSystemListingContainer', () => {
-  let component: LibraryAdminGameSystemListingContainer;
-  let fixture: ComponentFixture<LibraryAdminGameSystemListingContainer>;
+describe('LibraryAdminGameSystemListContainer', () => {
+  let component: LibraryAdminGameSystemListContainer;
+  let fixture: ComponentFixture<LibraryAdminGameSystemListContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminGameSystemListingContainer
+        LibraryAdminGameSystemListContainer
       ],
       providers: [
         GameSystemAdminService,
@@ -23,7 +23,7 @@ describe('LibraryAdminGameSystemListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminGameSystemListingContainer);
+    fixture = TestBed.createComponent(LibraryAdminGameSystemListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

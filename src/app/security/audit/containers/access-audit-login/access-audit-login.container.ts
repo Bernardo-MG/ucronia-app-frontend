@@ -35,7 +35,7 @@ export class AccessAuditLoginContainer {
     this.load(this.data.page);
   }
 
-  public load(page: number) {
+  private load(page: number) {
     this.reading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {

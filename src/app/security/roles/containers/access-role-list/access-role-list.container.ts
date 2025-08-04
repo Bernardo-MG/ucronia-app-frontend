@@ -12,7 +12,7 @@ import { AccessRoleService } from '../../services/access-role.service';
   imports: [RouterModule, CardModule, TableModule, IconAddComponent],
   templateUrl: './access-role-list.container.html'
 })
-export class AccessRoleListingContainer {
+export class AccessRoleListContainer {
 
   private readonly router = inject(Router);
 
@@ -65,7 +65,7 @@ export class AccessRoleListingContainer {
     this.router.navigate([`/security/roles/${this.selectedData.name}`]);
   }
 
-  public load(page: number) {
+  private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {

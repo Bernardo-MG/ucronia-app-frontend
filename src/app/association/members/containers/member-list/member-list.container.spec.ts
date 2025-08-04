@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberService } from '@app/association/members/services/member.service';
-import { MemberListingContainer } from './member-list.container';
+import { MemberListContainer } from './member-list.container';
 
-describe('MemberListingContainer', () => {
-  let component: MemberListingContainer;
-  let fixture: ComponentFixture<MemberListingContainer>;
+describe('MemberListContainer', () => {
+  let component: MemberListContainer;
+  let fixture: ComponentFixture<MemberListContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberListingContainer
+        MemberListContainer
       ],
       providers: [
         MemberService,
@@ -21,7 +21,7 @@ describe('MemberListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberListingContainer);
+    fixture = TestBed.createComponent(MemberListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

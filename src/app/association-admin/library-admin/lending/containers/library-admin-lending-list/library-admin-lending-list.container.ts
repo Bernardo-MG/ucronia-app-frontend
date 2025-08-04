@@ -13,7 +13,7 @@ import { BookLendingService } from '../../services/book-lending.service';
   imports: [CardModule, RouterModule, TableModule],
   templateUrl: './library-admin-lending-list.container.html'
 })
-export class LibraryAdminLendingListingContainer {
+export class LibraryAdminLendingListContainer {
 
   private readonly service = inject(BookLendingService);
 

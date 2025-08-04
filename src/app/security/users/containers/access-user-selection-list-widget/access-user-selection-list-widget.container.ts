@@ -66,7 +66,7 @@ export class AccessUserSelectionListWidgetContainer {
     this.router.navigate([`/security/users/${this.selectedData.username}}`]);
   }
 
-  public load(page: number) {
+  private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {

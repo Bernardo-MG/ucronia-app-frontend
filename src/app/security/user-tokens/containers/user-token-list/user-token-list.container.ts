@@ -12,7 +12,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   imports: [CardModule, TableModule],
   templateUrl: './user-token-list.container.html'
 })
-export class UserTokenListingContainer {
+export class UserTokenListContainer {
 
   private readonly router = inject(Router);
 
@@ -58,7 +58,7 @@ export class UserTokenListingContainer {
     this.router.navigate([`/security/user-tokens/${this.selectedData.token}`]);
   }
 
-  public load(page: number) {
+  private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {

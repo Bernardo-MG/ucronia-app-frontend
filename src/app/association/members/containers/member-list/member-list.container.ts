@@ -11,7 +11,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   imports: [RouterModule, CardModule, TableModule],
   templateUrl: './member-list.container.html'
 })
-export class MemberListingContainer {
+export class MemberListContainer {
 
   private readonly router = inject(Router);
 

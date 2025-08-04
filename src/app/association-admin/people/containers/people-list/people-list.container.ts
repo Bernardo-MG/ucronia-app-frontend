@@ -19,7 +19,7 @@ import { PeopleService } from '../../services/people.service';
   imports: [FormsModule, CardModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.container.html'
 })
-export class PeopleListingContainer {
+export class PeopleListContainer {
 
   private readonly router = inject(Router);
 
