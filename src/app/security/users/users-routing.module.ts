@@ -3,9 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
 
-
-
-
 const routes: Routes = [
   {
     path: '',
@@ -13,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/access-user-listing/access-user-listing.container').then(m => m.AccessListingContainer),
+        loadComponent: () => import('./containers/access-user-listing/access-user-listing.container').then(m => m.AccessListContainer),
         canActivate: [ResourceGuard("user", "read")],
         data: { breadcrumb: '' }
       },

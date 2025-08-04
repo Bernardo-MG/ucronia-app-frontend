@@ -1,27 +1,30 @@
 
 import { Component, inject } from '@angular/core';
-import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { AccessAuditLoginListComponent } from '../../components/access-audit-login-list/access-audit-login-list.component';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { LoginRegister } from '../../models/login-register';
 import { AccessAuditLoginService } from '../../services/access-audit-login.service';
 
 @Component({
   selector: 'access-audit-login',
-  imports: [CardModule, AccessAuditLoginListComponent, PaginationInfoComponent],
+  imports: [CardModule, TableModule],
   templateUrl: './access-audit-login.container.html'
 })
 export class AccessAuditLoginContainer {
 
   private readonly service = inject(AccessAuditLoginService);
 
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
+
   public data = new PaginatedResponse<LoginRegister>();
 
   /**
    * Loading flag.
    */
-  public reading = false;
+  public loading = false;
 
   private sort = new Sorting();
 
@@ -35,18 +38,23 @@ export class AccessAuditLoginContainer {
     this.load(this.data.page);
   }
 
-  public load(page: number) {
-    this.reading = true;
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  private load(page: number) {
+    this.loading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;
 
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       },
       error: error => {
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       }
     });
   }

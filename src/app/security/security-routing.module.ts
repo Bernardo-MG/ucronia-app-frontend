@@ -1,12 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
-const userModule = () => import('@app/security/users/users.module').then(m => m.UsersModule);
-const userTokenModule = () => import('@app/security/user-tokens/user-tokens.module').then(m => m.UserTokensModule);
-const rolesModule = () => import('@app/security/roles/roles.module').then(m => m.RolesModule);
-const securityAuditModule = () => import('@app/security/audit/audit.module').then(m => m.AuditModule);
 
 const routes: Routes = [
   {
@@ -23,25 +18,25 @@ const routes: Routes = [
         // Roles
         path: 'roles',
         canActivate: [ResourceGuard("role", "view")],
-        loadChildren: rolesModule
+        loadChildren: () => import('@app/security/roles/roles.module').then(m => m.RolesModule)
       },
       {
         // Users
         path: 'users',
         canActivate: [ResourceGuard("user", "view")],
-        loadChildren: userModule
+        loadChildren: () => import('@app/security/users/users.module').then(m => m.UsersModule)
       },
       {
         // User tokens
         path: 'user-tokens',
         canActivate: [ResourceGuard("user_token", "view")],
-        loadChildren: userTokenModule
+        loadChildren: () => import('@app/security/user-tokens/user-tokens.module').then(m => m.UserTokensModule)
       },
       {
         // Security audit
         path: 'audit',
         canActivate: [ResourceGuard("user", "view")],
-        loadChildren: securityAuditModule
+        loadChildren: () => import('@app/security/audit/audit.module').then(m => m.AuditModule)
       }
     ]
   }

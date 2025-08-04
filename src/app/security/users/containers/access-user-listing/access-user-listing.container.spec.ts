@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AccessUserService } from '../../services/access-user.service';
-import { AccessListingContainer } from './access-user-listing.container';
+import { AccessListContainer } from './access-user-listing.container';
 
-describe('AccessListingContainer', () => {
-  let component: AccessListingContainer;
-  let fixture: ComponentFixture<AccessListingContainer>;
+describe('AccessListContainer', () => {
+  let component: AccessListContainer;
+  let fixture: ComponentFixture<AccessListContainer>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessListingContainer
+        AccessListContainer
       ],
       providers: [
         AccessUserService,
@@ -23,7 +23,7 @@ describe('AccessListingContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessListingContainer);
+    fixture = TestBed.createComponent(AccessListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

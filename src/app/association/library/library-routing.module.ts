@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
-
-
-
-
 const routes: Routes = [
   {
     path: '',
@@ -13,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/library-listing/library-listing.container').then(m => m.LibraryListingContainer),
+        loadComponent: () => import('./containers/library-list/library-list.container').then(m => m.LibraryListContainer),
         canActivate: [ResourceGuard("library", "view")],
         data: { breadcrumb: 'Libros' }
       },

@@ -3,26 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const routes: Routes = [
   {
     path: '',
@@ -39,7 +19,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./author/containers/library-admin-author-listing/library-admin-author-listing.component').then(m => m.LibraryAdminAuthorListingContainer),
+            loadComponent: () => import('./author/containers/library-admin-author-list/library-admin-author-list.component').then(m => m.LibraryAdminAuthorListContainer),
             canActivate: [ResourceGuard("library_author", "view")],
             data: { breadcrumb: '' }
           },
@@ -63,7 +43,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./book/containers/library-admin-book-listing/library-admin-book-listing.container').then(m => m.LibraryAdminBookListingContainer),
+            loadComponent: () => import('./book/containers/library-admin-book-list/library-admin-book-list.container').then(m => m.LibraryAdminBookListContainer),
             canActivate: [ResourceGuard("library_book", "view")],
             data: { breadcrumb: '' }
           },
@@ -123,7 +103,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./publisher/containers/library-admin-publisher-listing/library-admin-publisher-listing.container').then(m => m.LibraryAdminPublisherListingContainer),
+            loadComponent: () => import('./publisher/containers/library-admin-publisher-list/library-admin-publisher-list.container').then(m => m.LibraryAdminPublisherListContainer),
             canActivate: [ResourceGuard("library_publisher", "view")],
             data: { breadcrumb: '' }
           },
@@ -147,7 +127,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./book-type/containers/library-admin-book-type-listing/library-admin-book-type-listing.container').then(m => m.LibraryAdminBookTypeListingContainer),
+            loadComponent: () => import('./book-type/containers/library-admin-book-type-list/library-admin-book-type-list.container').then(m => m.LibraryAdminBookTypeListContainer),
             canActivate: [ResourceGuard("library_book_type", "view")],
             data: { breadcrumb: '' }
           },
@@ -171,7 +151,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./game-system/containers/library-admin-game-system-listing/library-admin-game-system-listing.container').then(m => m.LibraryAdminGameSystemListingContainer),
+            loadComponent: () => import('./game-system/containers/library-admin-game-system-list/library-admin-game-system-list.container').then(m => m.LibraryAdminGameSystemListContainer),
             canActivate: [ResourceGuard("library_game_system", "view")],
             data: { breadcrumb: '' }
           },
@@ -195,7 +175,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./lending/containers/library-admin-lending-listing/library-admin-lending-listing.container').then(m => m.LibraryAdminLendingListingContainer),
+            loadComponent: () => import('./lending/containers/library-admin-lending-list/library-admin-lending-list.container').then(m => m.LibraryAdminLendingListContainer),
             canActivate: [ResourceGuard("library_lending", "view")],
             data: { breadcrumb: '' }
           }

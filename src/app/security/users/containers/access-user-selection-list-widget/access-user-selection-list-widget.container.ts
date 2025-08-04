@@ -1,31 +1,38 @@
 
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { PaginationInfoComponent } from '@app/shared/pagination/components/pagination-info/pagination-info.component';
+import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { AccessUserSelectionListComponent } from '../../components/access-user-selection-list/access-user-selection-list.component';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-selection-list-widget',
-  imports: [CardModule, RouterModule, AccessUserSelectionListComponent, PaginationInfoComponent, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
   templateUrl: './access-user-selection-list-widget.container.html'
 })
 export class AccessUserSelectionListWidgetContainer {
+
+  private readonly router = inject(Router);
 
   private readonly service = inject(AccessUserService);
 
   public readonly createPermission;
 
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
+
   public data = new PaginatedResponse<User>();
+
+  public selectedData = new User();
 
   /**
    * Loading flag.
    */
-  public reading = false;
+  public loading = false;
 
   private sort = new Sorting();
 
@@ -38,30 +45,41 @@ export class AccessUserSelectionListWidgetContainer {
     this.load(0);
   }
 
-  public onChangeDirection(field: SortingProperty) {
-    this.sort.addField(field);
+  public onChangeDirection(sorting: { field: string, order: number }) {
+    let direction;
+    if (sorting.order == 1) {
+      direction = SortingDirection.Ascending;
+    } else {
+      direction = SortingDirection.Descending;
+    }
+    this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
   }
 
-  public load(page: number) {
-    this.reading = true;
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  public onSelectRow() {
+    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+  }
+
+  private load(page: number) {
+    this.loading = true;
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;
 
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       },
       error: error => {
         // Reactivate view
-        this.reading = false;
+        this.loading = false;
       }
     });
-  }
-
-  public routeLinkAdapter(data: User): string {
-    return `/security/users/${data.username}`;
   }
 
 }

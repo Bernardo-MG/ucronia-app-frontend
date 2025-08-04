@@ -1,10 +1,11 @@
 
 import { Component, Input } from '@angular/core';
 import { BookLending } from '@app/models/library/book-lending';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'assoc-library-book-lendings',
-  imports: [],
+  imports: [TableModule],
   templateUrl: './library-book-lendings.component.html'
 })
 export class LibraryBookLendingsComponent {

@@ -1,0 +1,34 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { GameSystemAdminService } from '../../services/game-system-admin.service';
+import { LibraryAdminGameSystemListContainer } from './library-admin-game-system-list.container';
+
+describe('LibraryAdminGameSystemListContainer', () => {
+  let component: LibraryAdminGameSystemListContainer;
+  let fixture: ComponentFixture<LibraryAdminGameSystemListContainer>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        LibraryAdminGameSystemListContainer
+      ],
+      providers: [
+        GameSystemAdminService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
+      ]
+    })
+      .compileComponents();
+
+    fixture = TestBed.createComponent(LibraryAdminGameSystemListContainer);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

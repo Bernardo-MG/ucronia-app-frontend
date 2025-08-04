@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CenteredFrameComponent } from '@bernardo-mg/ui';
 
 
-
-
 const routes: Routes = [
   {
     path: '',

@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 
 
-
-
 const routes: Routes = [
   {
     path: '',
@@ -12,7 +10,7 @@ const routes: Routes = [
     children: [
           {
             path: '',
-            loadComponent: () => import('./containers/member-listing/member-listing.container').then(m => m.MemberListingContainer),
+            loadComponent: () => import('./containers/member-list/member-list.container').then(m => m.MemberListContainer),
             canActivate: [ResourceGuard("member", "view")],
             data: { breadcrumb: '' }
           },
