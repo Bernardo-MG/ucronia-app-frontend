@@ -87,11 +87,7 @@ export class LibraryAdminBookListingContainer {
   }
 
   public onSelectBook() {
-    this.router.navigate([`/association/admin/library/books/${this.selectedBook.number}`]);
-  }
-
-  public routeLinkAdapter = (data: BookInfo): string => {
-    return `${this.source}/${data.number}`;
+    this.router.navigate([`/association/admin/library/books/${this.source}/${this.selectedBook.number}`]);
   }
 
   private load(page: number) {

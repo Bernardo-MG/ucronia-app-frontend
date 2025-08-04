@@ -57,10 +57,6 @@ export class LibraryListingContainer {
     this.load(0);
   }
 
-  public routeLinkAdapter = (data: BookInfo): string => {
-    return `${this.source}/${data.number}`;
-  };
-
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);

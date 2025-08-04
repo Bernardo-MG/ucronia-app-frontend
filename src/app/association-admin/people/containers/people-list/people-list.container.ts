@@ -103,10 +103,6 @@ export class PeopleListingContainer {
     this.load(0);
   }
 
-  public routeLinkAdapter(data: Person): string {
-    return `${data.number}`;
-  }
-
   private load(page: number) {
     this.loading = true;
 
