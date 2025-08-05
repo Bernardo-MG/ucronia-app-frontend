@@ -4,9 +4,9 @@ import { FeePaymentChartWidgetContainer } from '@app/association-admin/fees/char
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 
 @Component({
-  selector: 'assoc-fee-listing',
+  selector: 'assoc-fee-list',
   imports: [FeeCalendarWidgetContainer, FeePaymentChartWidgetContainer, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-listing.container.html'
+  templateUrl: './fee-list.container.html'
 })
 export class FeeListContainer {
 
