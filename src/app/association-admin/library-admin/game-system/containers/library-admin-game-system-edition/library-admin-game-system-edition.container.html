@@ -1,20 +1,18 @@
-<article class="p-4">
-  <div uiResponsiveShortColumns>
-    @switch (editing) {
-      <!-- Form -->
-      @case (true) {
-        <p-card>
-          <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
-            [data]="data" [failures]="failures" (save)="onSave($event)"
-          (reject)="onCancel()" />
-        </p-card>
-      }
-      <!-- Info -->
-      @case (false) {
-        <assoc-library-admin-game-system-info [data]="data" [showMenu]="showMenu" [waiting]="waiting"
-          [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
-        (startEditing)="onStartEditing()" />
-      }
+<div uiResponsiveShortColumns>
+  @switch (editing) {
+    <!-- Form -->
+    @case (true) {
+      <p-card>
+        <assoc-library-admin-game-system-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
+          [data]="data" [failures]="failures" (save)="onSave($event)"
+        (reject)="onCancel()" />
+      </p-card>
     }
-  </div>
-</article>
+    <!-- Info -->
+    @case (false) {
+      <assoc-library-admin-game-system-info [data]="data" [showMenu]="showMenu" [waiting]="waiting"
+        [deletable]="deletable" [editable]="editable" (delete)="onDelete()"
+      (startEditing)="onStartEditing()" />
+    }
+  }
+</div>

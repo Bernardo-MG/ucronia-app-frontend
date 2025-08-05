@@ -1,34 +1,32 @@
-<article class="p-4">
-  <div uiResponsiveShortColumns>
-    @switch (editing) {
-      <!-- Form -->
-      @case (true) {
-        @switch (view) {
-          @case ('details') {
-            <p-card>
-              <assoc-library-admin-fiction-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
-                [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
-                [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
-                (save)="onSave($event)" (reject)="onCancel()" (goToAuthorPage)="onGoToAuthorPage($event)"
-                (goToPublisherPage)="onGoToPublisherPage($event)" />
-            </p-card>
-          }
-          @case ('donors') {
-            <p-card>
-              <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
-                [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
-                (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
-            </p-card>
-          }
+<div uiResponsiveShortColumns>
+  @switch (editing) {
+    <!-- Form -->
+    @case (true) {
+      @switch (view) {
+        @case ('details') {
+          <p-card>
+            <assoc-library-admin-fiction-book-edition-form [data]="data" [waiting]="saving" [failures]="failures"
+              [readonly]="!formEnabled" [cancellable]="true" [languages]="languages"
+              [authorsSelection]="authorsSelection" [publishersSelection]="publishersSelection"
+              (save)="onSave($event)" (reject)="onCancel()" (goToAuthorPage)="onGoToAuthorPage($event)"
+              (goToPublisherPage)="onGoToPublisherPage($event)" />
+          </p-card>
+        }
+        @case ('donors') {
+          <p-card>
+            <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
+              [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
+              (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+          </p-card>
         }
       }
-      <!-- Info -->
-      @case (false) {
-        <assoc-library-admin-fiction-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
-          [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
-          [languages]="languages" (delete)="onDelete()"
-        (startEditing)="onStartEditingView($event)" />
-      }
     }
-  </div>
-</article>
+    <!-- Info -->
+    @case (false) {
+      <assoc-library-admin-fiction-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
+        [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
+        [languages]="languages" (delete)="onDelete()"
+      (startEditing)="onStartEditingView($event)" />
+    }
+  }
+</div>
