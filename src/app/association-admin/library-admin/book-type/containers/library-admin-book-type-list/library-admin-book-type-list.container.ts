@@ -75,7 +75,7 @@ export class LibraryAdminBookTypeListContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/association/admin/library/booktypes/${this.selectedData.number}`]);
+    this.router.navigate([`/association/admin/library/types/${this.selectedData.number}`]);
   }
 
   private load(page: number) {
