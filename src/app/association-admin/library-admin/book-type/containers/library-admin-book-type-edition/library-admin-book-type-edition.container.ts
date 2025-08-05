@@ -12,9 +12,9 @@ import { LibraryAdminBookTypeFormComponent } from '../../components/library-admi
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-info-editor',
+  selector: 'assoc-library-admin-book-type-edition',
   imports: [CardModule, SkeletonModule, LibraryAdminBookTypeFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-book-type-info-editor.container.html'
+  templateUrl: './library-admin-book-type-edition.container.html'
 })
 export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> {
 

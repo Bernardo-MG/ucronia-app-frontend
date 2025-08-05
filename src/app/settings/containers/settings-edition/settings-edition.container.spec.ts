@@ -2,7 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssociationSettingsService } from '@app/settings/service/association-settings.service';
-import { SettingsInfoEditorContainer } from './settings-info-editor.container';
+import { SettingsInfoEditorContainer } from './settings-edition.container';
 
 describe('SettingsInfoEditorContainer', () => {
   let component: SettingsInfoEditorContainer;

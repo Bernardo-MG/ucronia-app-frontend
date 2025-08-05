@@ -8,9 +8,9 @@ import { SettingValuesEditorComponent } from '../../components/settings-values-e
 import { AssociationSettingsService } from '../../service/association-settings.service';
 
 @Component({
-  selector: 'assoc-settings-info-editor',
+  selector: 'assoc-settings-edition',
   imports: [CardModule, ReactiveFormsModule, FormsModule, SettingValuesEditorComponent],
-  templateUrl: './settings-info-editor.container.html'
+  templateUrl: './settings-edition.container.html'
 })
 export class SettingsInfoEditorContainer {
 

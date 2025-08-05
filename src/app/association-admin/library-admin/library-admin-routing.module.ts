@@ -139,7 +139,7 @@ const routes: Routes = [
           },
           {
             path: ':number',
-            loadComponent: () => import('./book-type/containers/library-admin-book-type-info-editor/library-admin-book-type-info-editor.container').then(m => m.LibraryAdminBookTypeInfoEditorContainer),
+            loadComponent: () => import('./book-type/containers/library-admin-book-type-edition/library-admin-book-type-edition.container').then(m => m.LibraryAdminBookTypeInfoEditorContainer),
             canActivate: [ResourceGuard("library_book_type", "read")],
             data: { breadcrumb: 'Editar tipo' }
           }
