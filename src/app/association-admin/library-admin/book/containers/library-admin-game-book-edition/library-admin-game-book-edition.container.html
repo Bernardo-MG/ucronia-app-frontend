@@ -27,5 +27,25 @@
       [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
       [languages]="languages" (delete)="onDelete()"
     (startEditing)="onStartEditingView($event)" />
+
+    <p-card>
+      <ng-template #title>
+        <h2>Préstamos</h2>
+      </ng-template>
+      <assoc-library-book-lendings [lendings]="data.lendings" />
+      @if (data.lent) {
+        <!-- Return button -->
+        <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="return"
+          [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+          <span class="pi pi-arrow-circle-down"></span> Devolver
+        </button>
+      } @else {
+        <!-- Lend button -->
+        <button type="button" class="btn btn-link link-dark" role="button" aria-label="lend" routerLink="lend"
+          [disabled]="lendDisabled" [attr.aria-disabled]="lendDisabled">
+          <span class="pi pi-arrow-circle-up"></span> Prestar
+        </button>
+      }
+    </p-card>
   }
 </div>

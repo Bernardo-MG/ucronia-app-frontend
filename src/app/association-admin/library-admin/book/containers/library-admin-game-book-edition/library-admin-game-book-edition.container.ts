@@ -1,6 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Author } from '@app/models/library/author';
 import { BookType } from '@app/models/library/book-type';
 import { Donation } from '@app/models/library/donation';
@@ -22,7 +23,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
