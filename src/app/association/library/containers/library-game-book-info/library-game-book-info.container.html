@@ -3,9 +3,9 @@
     <p-card>
       <ng-template #title>
         @if (loading) {
-        <p-skeleton height="2rem" class="mb-2" />
+          <p-skeleton height="2rem" class="mb-2" />
         } @else {
-        <h2># {{data.number}}</h2>
+          <h2># {{data.number}}</h2>
         }
       </ng-template>
       @if (loading) {
