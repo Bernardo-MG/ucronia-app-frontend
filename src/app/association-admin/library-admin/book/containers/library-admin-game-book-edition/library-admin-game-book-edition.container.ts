@@ -11,10 +11,11 @@ import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
@@ -23,7 +24,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CardModule, RouterModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, SkeletonModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, LibraryBookLendingsComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
@@ -71,6 +72,18 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
 
   public get lendDisabled() {
     return this.waiting || !this.lendPermission;
+  }
+
+  public get donors(): string {
+    let donors;
+    const data = this.data;
+    if (data.donation) {
+      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
+    } else {
+      donors = '';
+    }
+
+    return donors;
   }
 
   public view: string = '';

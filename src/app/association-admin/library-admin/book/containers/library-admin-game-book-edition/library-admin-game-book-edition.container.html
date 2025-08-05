@@ -30,6 +30,39 @@
 
     <p-card>
       <ng-template #title>
+        <h2>Donantes</h2>
+      </ng-template>
+      <!-- Donors -->
+      <!-- Donation date -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Fecha de donación</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.donation?.date}}
+          }
+        </div>
+      </div>
+      <!-- Donors -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Donante</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{donors}}
+          }
+        </div>
+      </div>
+      <ng-template #footer>
+        <form-control-buttons [editable]="editable" [disabled]="waiting"
+        (startEditing)="onStartEditingView('donors')"/>
+      </ng-template>
+    </p-card>
+
+    <p-card>
+      <ng-template #title>
         <h2>Préstamos</h2>
       </ng-template>
       <assoc-library-book-lendings [lendings]="data.lendings" />
