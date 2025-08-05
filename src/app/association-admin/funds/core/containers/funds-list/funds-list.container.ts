@@ -9,6 +9,6 @@ import { TransactionCalendarWidgetContainer } from '../../../calendar/containers
   imports: [TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionCalendarWidgetContainer, TransactionReportWidgetContainer],
   templateUrl: './funds-list.container.html'
 })
-export class FundsListingComponent {
+export class FundsListComponent {
 
 }
