@@ -1,16 +1,54 @@
 <div uiResponsiveShortColumns>
-  @switch (editing) {
-  <!-- Form -->
-  @case (true) {
-  <p-card>
-    <assoc-fee-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
-  </p-card>
-  }
-  <!-- Info -->
-  @case (false) {
-  <assoc-fee-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable" [waiting]="waiting"
-    (delete)="onDelete()" (startEditing)="onStartEditing()" (goToTransaction)="goToTransaction($event)" />
-  }
+  @if (editing) {
+    <!-- Form -->
+    <p-card>
+      <assoc-fee-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+        [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
+    </p-card>
+  }@else {
+    <!-- Info -->
+    <p-card>
+      <ng-template #title>
+        @if (waiting) {
+          <p-skeleton height="2rem" class="mb-2" />
+        } @else {
+          <h2>{{data.month}} {{data.person.name.fullName}}</h2>
+        }
+        @if (waiting) {
+          <p-skeleton />
+        } @else {
+          @if (data.paid) {
+            <!-- Active -->
+            <div class="text-success">Pagado</div>
+          }@else {
+            <!-- Not active -->
+            <div class="text-danger">No pagado</div>
+          }
+        }
+      </ng-template>
+      <!-- Payment date -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Fecha de pago</div>
+        <div class="col-sm-8">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.payment?.date}}
+          }
+        </div>
+        <div class="col-sm-1">
+          <button [disabled]="isPaymentDisabled()" (click)="selectPayment()" type="button" class="btn btn-link link-dark"
+            role="button" aria-label="Back">
+            <span class="pi pi-search"></span>
+          </button>
+        </div>
+      </div>
+      <ng-template #footer>
+        <div>
+          <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="onStartEditing()" (delete)="onDelete()" />
+        </div>
+      </ng-template>
+    </p-card>
   }
 </div>
