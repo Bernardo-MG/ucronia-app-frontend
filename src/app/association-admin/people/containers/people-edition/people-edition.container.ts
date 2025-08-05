@@ -6,8 +6,9 @@ import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { CardNavigationComponent, CardTab, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { TabsModule } from 'primeng/tabs';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
 import { PeopleEditionMembershipButtonsComponent } from '../../components/people-edition-membership-buttons/people-edition-membership-buttons.component';
@@ -16,7 +17,7 @@ import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-edition',
-  imports: [CommonModule, CardModule, PeopleEditionFormComponent, ResponsiveShortColumnsDirective, CardNavigationComponent, PeopleInfoDetailsComponent, ControlButtonsComponent, PeopleEditionMembershipButtonsComponent],
+  imports: [CommonModule, CardModule, TabsModule, PeopleEditionFormComponent, ResponsiveShortColumnsDirective, PeopleInfoDetailsComponent, ControlButtonsComponent, PeopleEditionMembershipButtonsComponent],
   templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
@@ -34,8 +35,6 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
   }
 
   private number = -1;
-
-  public tabs = [new CardTab('details', 'Detalles'), new CardTab('membership', 'Socio')];
 
   constructor() {
     const authContainer = inject(AuthContainer);
