@@ -1,6 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Author } from '@app/models/library/author';
 import { Donation } from '@app/models/library/donation';
 import { FictionBook } from '@app/models/library/fiction-book';
@@ -8,19 +9,19 @@ import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminFictionBookDetailsComponent } from '../../components/library-admin-fiction-book-details/library-admin-fiction-book-details.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CardModule, RouterModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminFictionBookDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, SkeletonModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
 export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
@@ -52,12 +53,37 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
   public languages: Language[] = [];
 
+  public get authors(): string {
+    return this.data.authors.map(e => e.name).join(", ");
+  }
+
+  public get publishers(): string {
+    return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public get language(): string {
+    const language = this.languages.find(lang => lang.code === this.data.language);
+    return language ? language.name : this.data.language;
+  }
+
   public get donation(): Donation {
     if (!this.data.donation) {
       this.data.donation = new Donation();
     }
 
     return this.data.donation;
+  }
+
+  public get donors(): string {
+    let donors;
+    const data = this.data;
+    if (data.donation) {
+      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
+    } else {
+      donors = '';
+    }
+
+    return donors;
   }
 
   public readonly lendPermission;

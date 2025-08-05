@@ -80,12 +80,6 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
     return this.data.donation;
   }
 
-  public readonly lendPermission;
-
-  public get lendDisabled() {
-    return this.waiting || !this.lendPermission;
-  }
-
   public get donors(): string {
     let donors;
     const data = this.data;
@@ -96,6 +90,12 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
     }
 
     return donors;
+  }
+
+  public readonly lendPermission;
+
+  public get lendDisabled() {
+    return this.waiting || !this.lendPermission;
   }
 
   public view: string = '';
