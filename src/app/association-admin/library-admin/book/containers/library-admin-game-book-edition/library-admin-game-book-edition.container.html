@@ -22,13 +22,122 @@
       }
     }
   } @else {
-    <!-- Info -->
-    <assoc-library-admin-game-book-details [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled"
-      [waiting]="waiting" [deletable]="deletable" [editable]="editable" [lendDisabled]="lendDisabled"
-      [languages]="languages" (delete)="onDelete()"
-    (startEditing)="onStartEditingView($event)" />
+    <p-card class="mb-2">
+      <ng-template #title>
+        @if (waiting) {
+          <p-skeleton height="2rem" class="mb-2" />
+        } @else {
+          <h2># {{data.number}} {{data.title.fullTitle}}</h2>
+        }
+      </ng-template>
+      <!-- Member details -->
+      <!-- Number -->
+      <div class="row">
+        <div class="col-3">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            # {{data.number}}
+          }
+        </div>
+      </div>
+      <!-- First name -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">ISBN</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.isbn}}
+          }
+        </div>
+      </div>
+      <!-- Title -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Título</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            <sup>{{data.title.supertitle}}</sup>
+            {{data.title.title}}
+            <sub>{{data.title.subtitle}}</sub>
+          }
+        </div>
+      </div>
+      <!-- Language -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Idioma</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{language}}
+          }
+        </div>
+      </div>
+      <!-- Publish date -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Fecha de publicación</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.publishDate}}
+          }
+        </div>
+      </div>
+      <!-- Authors -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Autor</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{authors}}
+          }
+        </div>
+      </div>
+      <!-- Publishers -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Editor</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{publishers}}
+          }
+        </div>
+      </div>
+      <!-- Book type -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Tipo</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.bookType?.name}}
+          }
+        </div>
+      </div>
+      <!-- Game system -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Sistema</div>
+        <div class="col-sm-9">
+          @if (waiting) {
+            <p-skeleton class="mb-2" />
+          } @else {
+            {{data.gameSystem?.name}}
+          }
+        </div>
+      </div>
+      <ng-template #footer>
+      <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+      (startEditing)="onStartEditingView('details')" (delete)="onDelete()" />
+      </ng-template>
+    </p-card>
 
-    <p-card>
+    <p-card class="mb-2">
       <ng-template #title>
         <h2>Donantes</h2>
       </ng-template>

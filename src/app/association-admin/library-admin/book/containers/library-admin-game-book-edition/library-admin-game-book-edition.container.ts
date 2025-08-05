@@ -18,13 +18,12 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminGameBookDetailsComponent } from '../../components/library-admin-game-book-details/library-admin-game-book-details.component';
 import { LibraryAdminGameBookEditionFormComponent } from '../../components/library-admin-game-book-edition-form/library-admin-game-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition',
-  imports: [CardModule, RouterModule, SkeletonModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminGameBookDetailsComponent, LibraryBookLendingsComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, SkeletonModule, LibraryAdminGameBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-game-book-edition.container.html'
 })
 export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusComponent<GameBook> {
@@ -59,6 +58,19 @@ export class LibraryAdminGameBookEditionContainer extends InfoEditorStatusCompon
   public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
+
+  public get authors(): string {
+    return this.data.authors.map(e => e.name).join(", ");
+  }
+
+  public get publishers(): string {
+    return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public get language(): string {
+    const language = this.languages.find(lang => lang.code === this.data.language);
+    return language ? language.name : this.data.language;
+  }
 
   public get donation(): Donation {
     if (!this.data.donation) {
