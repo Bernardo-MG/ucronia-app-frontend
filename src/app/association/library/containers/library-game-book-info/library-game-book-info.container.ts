@@ -3,15 +3,15 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
-import { PlaceholderDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 import { LibraryBookLendingsComponent } from '../../components/library-book-lendings/library-book-lendings.component';
-import { LibraryGameBookDetailsComponent } from '../../components/library-game-book-details/library-game-book-details.component';
 import { BookService } from '../../services/book.service';
 
 @Component({
   selector: 'assoc-library-game-book-info',
-  imports: [CommonModule, CardModule, LibraryGameBookDetailsComponent, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective, PlaceholderDirective],
+  imports: [CommonModule, CardModule, SkeletonModule, LibraryBookLendingsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-game-book-info.container.html'
 })
 export class LibraryGameBookInfoContainer {
@@ -23,15 +23,38 @@ export class LibraryGameBookInfoContainer {
   /**
    * Reading flag. Active while the data is being read.
    */
-  public waiting = false;
+  public loading = false;
 
   private index = -1;
 
   public data = new GameBook();
 
+  public get language(): string {
+    const language = this.languages.find(lang => lang.code === this.data.language);
+    return language ? language.name : this.data.language;
+  }
+
+  public get authors(): string {
+    return this.data.authors.map(e => e.name).join(", ");
+  }
+
+  public get editors(): string {
+    return this.data.publishers.map(e => e.name).join(", ");
+  }
+
+  public get donors(): string {
+    let donors;
+    if (this.data.donation) {
+      donors = this.data.donation.donors.map(e => e.name.fullName).join(", ");
+    } else {
+      donors = '';
+    }
+
+    return donors;
+  }
+
   constructor() {
     const route = inject(ActivatedRoute);
-
 
     // Get id
     route.paramMap.subscribe(params => {
@@ -47,15 +70,15 @@ export class LibraryGameBookInfoContainer {
   }
 
   private load(): void {
-    this.waiting = true;
+    this.loading = true;
     this.service.getOneGameBook(this.index)
       .subscribe({
         next: response => {
           this.data = response;
-          this.waiting = false;
+          this.loading = false;
         },
         error: error => {
-          this.waiting = false;
+          this.loading = false;
         }
       });
   }
