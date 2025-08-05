@@ -8,151 +8,118 @@
           <h2># {{data.number}}</h2>
         }
       </ng-template>
-      @if (loading) {
-        <!-- ISBN -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">ISBN</div>
-          <div class="col-sm-10">
+      <!-- ISBN -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">ISBN</div>
+        <div class="col-sm-10">
+          @if (loading) {
             <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Title -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Título</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Language -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Idioma</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Publish date -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Fecha de publicación</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Book type -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Tipo</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Game system -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Sistema</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Authors -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Autores</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Publishers -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Editoriales</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Donation date -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Fecha de donación</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-        <!-- Donors -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Donantes</div>
-          <div class="col-sm-10">
-            <p-skeleton class="mb-2" />
-          </div>
-        </div>
-      } @else {
-        <!-- ISBN -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">ISBN</div>
-          <div class="col-sm-10">
+          } @else {
             {{ data.isbn }}
-          </div>
+          }
         </div>
-        <!-- Title -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Título</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Title -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Título</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             <sup>{{ data.title.supertitle }}</sup>
             {{ data.title.title }}
             <sub>{{ data.title.subtitle }}</sub>
-          </div>
+          }
         </div>
-        <!-- Language -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Idioma</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Language -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Idioma</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ language }}
-          </div>
+          }
         </div>
-        <!-- Publish date -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Fecha de publicación</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Publish date -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Fecha de publicación</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ data.publishDate }}
-          </div>
+          }
         </div>
-        <!-- Book type -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Tipo</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Book type -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Tipo</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ data.bookType?.name }}
-          </div>
+          }
         </div>
-        <!-- Game system -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Sistema</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Game system -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Sistema</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ data.gameSystem?.name }}
-          </div>
+          }
         </div>
-        <!-- Authors -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Autores</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Authors -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Autores</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ authors }}
-          </div>
+          }
         </div>
-        <!-- Publishers -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Editoriales</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Publishers -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Editoriales</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ editors }}
-          </div>
+          }
         </div>
-        <!-- Donation date -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Fecha de donación</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Donation date -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Fecha de donación</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ data.donation?.date }}
-          </div>
+          }
         </div>
-        <!-- Donors -->
-        <div class="row mb-2">
-          <div class="col-sm-2 text-primary">Donantes</div>
-          <div class="col-sm-10">
+      </div>
+      <!-- Donors -->
+      <div class="row mb-2">
+        <div class="col-sm-2 text-primary">Donantes</div>
+        <div class="col-sm-10">
+          @if (loading) {
+            <p-skeleton class="mb-2" />
+          } @else {
             {{ donors }}
-          </div>
+          }
         </div>
-      }
+      </div>
     </p-card>
   </div>
   <!-- Lendings -->
