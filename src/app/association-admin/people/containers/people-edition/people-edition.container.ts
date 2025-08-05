@@ -1,20 +1,22 @@
 
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
-import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { CardNavigationComponent, CardTab, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
-import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
+import { PeopleEditionMembershipButtonsComponent } from '../../components/people-edition-membership-buttons/people-edition-membership-buttons.component';
+import { PeopleInfoDetailsComponent } from '../../components/people-info-details/people-info-details.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-edition',
-  imports: [CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, PeopleEditionFormComponent, ResponsiveShortColumnsDirective, CardNavigationComponent, PeopleInfoDetailsComponent, ControlButtonsComponent, PeopleEditionMembershipButtonsComponent],
   templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
@@ -27,7 +29,13 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
 
   public view: string = 'details';
 
+  public get isMember() {
+    return this.data.membership !== null;
+  }
+
   private number = -1;
+
+  public tabs = [new CardTab('details', 'Detalles'), new CardTab('membership', 'Socio')];
 
   constructor() {
     const authContainer = inject(AuthContainer);

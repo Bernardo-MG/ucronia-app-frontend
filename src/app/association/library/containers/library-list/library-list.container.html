@@ -28,13 +28,10 @@
           <sub>{{ book.title.subtitle }}</sub>
         </td>
         <td>
-          @switch (book.lent) {
-          @case (true) {
-          <span class="pi pi-times text-warning"></span>
-          }
-          @case (false) {
-          <span class="pi pi-check text-success"></span>
-          }
+          @if (book.lent) {
+            <span class="pi pi-times text-warning"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
           }
         </td>
       </tr>
