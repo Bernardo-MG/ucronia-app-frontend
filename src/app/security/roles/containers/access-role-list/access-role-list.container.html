@@ -7,7 +7,7 @@
     </button>
   </ng-template>
   <!-- List -->
-  <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
+  <p-table lazy="true" dataKey="name" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
     (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
     currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
