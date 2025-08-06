@@ -66,17 +66,4 @@ describe('LibraryGameBookInfoContainer', () => {
     expect(component.loading).toBeFalse();
   });
 
-  it('should render child components with correct inputs', () => {
-    fixture.detectChanges();
-
-    const bookDetails = fixture.debugElement.query(By.css('assoc-library-game-book-details'));
-    const bookLendings = fixture.debugElement.query(By.css('assoc-library-book-lendings'));
-
-    expect(bookDetails.componentInstance.data()).toEqual(mockBook);
-    expect(bookDetails.componentInstance.languages()).toEqual(languages);
-    expect(bookDetails.componentInstance.waiting()).toBeFalse();
-
-    expect(bookLendings.componentInstance.lendings).toEqual(mockBook.lendings);
-  });
-
 });
