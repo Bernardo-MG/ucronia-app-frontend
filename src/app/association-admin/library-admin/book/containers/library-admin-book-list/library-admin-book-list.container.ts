@@ -9,10 +9,11 @@ import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { BookAdminService } from '../../services/book-admin.service';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule],
   templateUrl: './library-admin-book-list.container.html'
 })
 export class LibraryAdminBookListContainer {

@@ -17,7 +17,7 @@
     <ng-template #header>
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
-        <th pSortableColumn="lent">Disponible <p-sortIcon field="lent" /></th>
+        <th pSortableColumn="lent">Estado <p-sortIcon field="lent" /></th>
       </tr>
     </ng-template>
     <ng-template #body let-book>
@@ -29,9 +29,9 @@
         </td>
         <td>
           @if (book.lent) {
-          <span class="pi pi-times text-warning"></span>
+            <p-badge value="Prestado" severity="success" />
           }@else {
-          <span class="pi pi-check text-success"></span>
+            <p-badge value="Disponible" severity="success" />
           }
         </td>
       </tr>
