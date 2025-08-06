@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
-import { AccountProfileInfoComponent } from '@app/account/components/profile/account-profile-info/account-profile-info.component';
-import { AccountProfilePersonComponent } from '@app/account/components/profile/account-profile-person/account-profile-person.component';
+import { AccountProfileInfoComponent } from '@app/account/components/account-profile-info/account-profile-info.component';
+import { AccountProfilePersonComponent } from '@app/account/components/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
 import { Person } from '@app/models/person/person';
