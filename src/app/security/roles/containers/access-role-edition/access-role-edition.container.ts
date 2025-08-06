@@ -71,12 +71,16 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   public onAddPermission(permission: ResourcePermission): void {
     this.data.permissions.push(permission);
+    const page = this.rolePermissions.page;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, page, this.pageSize);
     this.onSave(this.data);
     this.pickCloseButton().nativeElement.click();
   }
 
   public onRemovePermission(permission: ResourcePermission): void {
     this.data.permissions = this.data.permissions.filter(r => r.name != permission.name);
+    const page = this.rolePermissions.page;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, page, this.pageSize);
     this.onSave(this.data);
   }
 
