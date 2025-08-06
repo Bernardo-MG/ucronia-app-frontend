@@ -1,21 +1,18 @@
 <div uiResponsiveShortColumns>
-  @switch (editing) {
+  @if (editing) {
   <!-- Form -->
-  @case (true) {
   <p-card>
     <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
       [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
   </p-card>
-  }
-  @case (false) {
+  }@else {
   <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-    [editEnabled]="editEnabled" [waiting]="waiting" [member]="member" [readingMemberSelection]="readingMemberSelection"
+    [editEnabled]="editEnabled" [loading]="waiting" [member]="member" [readingMemberSelection]="readingMemberSelection"
     [readingMember]="readingMember" [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
     [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
     (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
     (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
     (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
-  }
   }
 </div>
 

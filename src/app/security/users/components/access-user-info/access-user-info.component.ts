@@ -7,14 +7,14 @@ import { ControlButtonsComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { WaitingDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
-import { AccessUserInfoDetailsComponent } from '../access-user-info-details/access-user-info-details.component';
+import { SkeletonModule } from 'primeng/skeleton';
 import { AccessUserMemberEditorComponent } from '../access-user-member-editor/access-user-member-editor.component';
 import { AccessUserRolesEditorComponent } from '../access-user-roles-editor/access-user-roles-editor.component';
 import { AccessUserStatusComponent } from '../access-user-status/access-user-status.component';
 
 @Component({
   selector: 'access-user-info',
-  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserInfoDetailsComponent, AccessUserStatusComponent, ControlButtonsComponent, WaitingDirective],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, SkeletonModule, AccessUserMemberEditorComponent, AccessUserRolesEditorComponent, AccessUserStatusComponent, ControlButtonsComponent, WaitingDirective],
   templateUrl: './access-user-info.component.html'
 })
 export class AccessUserInfoComponent {
@@ -29,7 +29,7 @@ export class AccessUserInfoComponent {
 
   public readonly editEnabled = input(false);
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
 
   public readonly member = input(new Member());
 
