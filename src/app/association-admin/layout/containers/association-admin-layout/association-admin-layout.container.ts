@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'layout-association-admin-layout',
-  imports: [RouterModule, SidebarLayoutComponent],
+  imports: [SidebarLayoutComponent],
   templateUrl: './association-admin-layout.container.html'
 })
 export class AssociationAdminLayoutContainer {
@@ -16,7 +15,7 @@ export class AssociationAdminLayoutContainer {
   constructor() {
     const authContainer = inject(AuthContainer);
     const items = [];
-    if (authContainer.hasPermission('activity_calendar', 'person')) {
+    if (authContainer.hasPermission('person', 'view')) {
       items.push(
         {
           label: 'Gente',
@@ -24,7 +23,7 @@ export class AssociationAdminLayoutContainer {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('member', 'fee')) {
+    if (authContainer.hasPermission('member', 'view')) {
       items.push(
         {
           label: 'Cuotas',
@@ -32,7 +31,7 @@ export class AssociationAdminLayoutContainer {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authContainer.hasPermission('my_fees', 'funds')) {
+    if (authContainer.hasPermission('my_fees', 'view')) {
       items.push(
         {
           label: 'Fondos',
