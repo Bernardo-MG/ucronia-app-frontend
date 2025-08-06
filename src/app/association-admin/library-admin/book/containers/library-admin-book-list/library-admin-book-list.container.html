@@ -1,9 +1,9 @@
-<assoc-book-report-widget />
 <p-panel>
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="{{routerLink}}" [disabled]="!createPermission"
       aria-label="Nuevo libro" [attr.aria-disabled]="!createPermission" rounded text />
-    <p-button icon="pi pi-file-excel" severity="secondary" rounded text />
+    <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+      [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
   </ng-template>
   <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
     (change)="onChangeSource($event)">

@@ -1,7 +1,7 @@
 
 import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
+import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { BookInfo } from '@app/models/library/book-info';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -12,7 +12,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BookReportWidgetContainer],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule],
   templateUrl: './library-admin-book-list.container.html'
 })
 export class LibraryAdminBookListContainer {
@@ -20,6 +20,8 @@ export class LibraryAdminBookListContainer {
   private readonly router = inject(Router);
 
   private readonly service = inject(BookAdminService);
+
+  private readonly reportService = inject(BookReportService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -46,6 +48,8 @@ export class LibraryAdminBookListContainer {
    * Loading flag.
    */
   public loading = false;
+
+  public loadingExcel = false;
 
   public readonly createPermission;
 
@@ -88,6 +92,19 @@ export class LibraryAdminBookListContainer {
 
   public onSelectRow() {
     this.router.navigate([`/association/admin/library/books/${this.source}/${this.selectedData.number}`]);
+  }
+
+  public downloadExcel() {
+    this.loadingExcel = true;
+    this.reportService.downloadExcelReport()
+      .subscribe({
+        next: response => {
+          this.loadingExcel = false;
+        },
+        error: error => {
+          this.loadingExcel = false;
+        }
+      });
   }
 
   private load(page: number) {
