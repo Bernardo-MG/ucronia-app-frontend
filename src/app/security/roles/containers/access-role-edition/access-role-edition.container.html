@@ -14,8 +14,8 @@
   </p-card>
   <p-card>
     <!-- Permissions -->
-    <p-table lazy="true" dataKey="name" [loading]="waiting" [value]="rolePermissions" paginator="true" [rows]="pageSize"
-      [totalRecords]="totalRolePermissions" [first]="firstRolePermission" (onPage)="onPermissionsPageChange($event)" showCurrentPageReport="true"
+    <p-table lazy="true" dataKey="name" [loading]="waiting" [value]="rolePermissions.content" paginator="true" [rows]="rolePermissions.size"
+      [totalRecords]="rolePermissions.totalElements" [first]="firstRolePermission" (onPage)="onPermissionsPageChange($event)" showCurrentPageReport="true"
       currentPageReportTemplate="Total: {totalRecords}">
       <ng-template #header>
         <tr>

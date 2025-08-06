@@ -29,17 +29,13 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   public view: string = 'details';
 
-  public rolePermissions: ResourcePermission[] = [];
+  public rolePermissions = new ArrayPaginatedResponse<ResourcePermission>([], 1, 0);
 
   public get firstRolePermission() {
-    return (this.rolePermissionsPage - 1) * this.pageSize;
+    return (this.rolePermissions.page - 1) * this.rolePermissions.size;
   }
 
-  public pageSize = 10;
-
-  public totalRolePermissions = 0;
-
-  public rolePermissionsPage = 0;
+  private pageSize = 10;
 
   private permissionsSort = new Sorting();
 
@@ -102,14 +98,13 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   }
 
   public onPermissionsPageChange(event: TablePageEvent) {
-    this.rolePermissionsPage = (event.first / this.pageSize) + 1;
-    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, this.rolePermissionsPage, this.pageSize).content;
+    const page = (event.first / this.pageSize) + 1;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, page, this.pageSize);
   }
 
   protected override onLoad(data: Role): void {
     this.data = data;
-    this.totalRolePermissions = data.permissions.length;
-    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, 1, this.pageSize).content;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, 1, this.pageSize);
   }
 
   protected override delete(): void {
