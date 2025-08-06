@@ -1,18 +1,18 @@
 <div uiResponsiveShortColumns>
   @if (editing) {
-  <!-- Form -->
-  <p-card>
-    <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
-  </p-card>
+    <!-- Form -->
+    <p-card>
+      <access-user-form [create]="false" [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+        [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
+    </p-card>
   }@else {
-  <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
-    [editEnabled]="editEnabled" [loading]="waiting" [member]="member" [readingMemberSelection]="readingMemberSelection"
-    [readingMember]="readingMember" [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
-    [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
-    (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
-    (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
-    (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
+    <access-user-info [data]="data" [showMenu]="showMenu" [deletable]="deletable" [editable]="editable"
+      [editEnabled]="editEnabled" [loading]="waiting" [member]="member" [readingMemberSelection]="readingMemberSelection"
+      [readingMember]="readingMember" [membersSelection]="membersSelection" [readingRoleSelection]="readingRoleSelection"
+      [rolesSelection]="rolesSelection" (delete)="onDelete()" (startEditing)="onStartEditing()"
+      (addRole)="onAddRole($event)" (removeRole)="onRemoveRole($event)" (selectMember)="onSelectMember($event)"
+      (goToRoleSelectionPage)="onGoToRoleSelectionPage($event)"
+      (goToMemberSelectionPage)="onGoToMemberSelectionPage($event)" />
     <p-card>
       <!-- Username -->
       <div class="row">
@@ -51,6 +51,73 @@
         <div>
           <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
             (startEditing)="onStartEditing()" (delete)="onDelete()" />
+        </div>
+      </ng-template>
+    </p-card>
+    <p-card>
+      <!-- Enable/disable button -->
+      <!-- Enabled -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Activo</div>
+        <div class="col-sm-9">
+          @if (data.enabled) {
+            <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
+          }
+        </div>
+      </div>
+      <!-- Expired -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">No expirado</div>
+        <div class="col-sm-9">
+          @if (data.notExpired) {
+            <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
+          }
+        </div>
+      </div>
+      <!-- Password expired -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Clave no expirada</div>
+        <div class="col-sm-9">
+          @if (data.passwordNotExpired) {
+            <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
+          }
+        </div>
+      </div>
+      <!-- Locked -->
+      <div class="row">
+        <div class="col-sm-3 text-primary">Desbloqueado</div>
+        <div class="col-sm-9">
+          @if (data.notLocked) {
+            <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
+          }
+        </div>
+      </div>
+      <ng-template #footer>
+        <div class="row">
+          <ng-template [ngIf]="!data.enabled">
+            <!-- Enable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <p-button type="submit" name="Enable" [disabled]="!editEnabled" [loading]="waiting"
+                [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#enableModal' : ''">Activar</p-button>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="data.enabled">
+            <!-- Disable button -->
+            <div class="col-sm-2 d-grid gap-2">
+              <p-button type="submit" name="Disable" [disabled]="!editEnabled"
+                [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+                [attr.data-bs-target]="editEnabled ? '#disableModal' : ''">Desactivar</p-button>
+            </div>
+          </ng-template>
         </div>
       </ng-template>
     </p-card>

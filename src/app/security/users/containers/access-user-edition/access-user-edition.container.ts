@@ -7,17 +7,19 @@ import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
 import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
+import { AccessUserStatusComponent } from '../../components/access-user-status/access-user-status.component';
 import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-edition',
-  imports: [CommonModule, CardModule, SkeletonModule, AccessUserFormComponent, ModalComponent, AccessUserInfoComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserFormComponent, ModalComponent, AccessUserInfoComponent, ControlButtonsComponent, AccessUserStatusComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> {
