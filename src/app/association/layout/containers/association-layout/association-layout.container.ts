@@ -19,8 +19,8 @@ export class AssociationLayoutContainer {
     if (authContainer.hasPermission('activity_calendar', 'view')) {
       items.push(
         {
-          label: 'Calendario',
-          routerLink: '/association/calendar',
+          label: 'Actividades',
+          routerLink: '/association/activity',
           icon: 'pi pi-calendar'
         });
     }
