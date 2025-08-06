@@ -23,7 +23,7 @@ export class AssociationAdminLayoutContainer {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('member', 'view')) {
+    if (authContainer.hasPermission('fee', 'view')) {
       items.push(
         {
           label: 'Cuotas',
@@ -31,7 +31,7 @@ export class AssociationAdminLayoutContainer {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authContainer.hasPermission('my_fees', 'view')) {
+    if (authContainer.hasPermission('funds', 'view')) {
       items.push(
         {
           label: 'Fondos',

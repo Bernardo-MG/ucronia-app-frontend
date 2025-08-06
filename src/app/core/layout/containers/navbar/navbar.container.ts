@@ -37,7 +37,6 @@ export class NavbarContainer {
   public readonly menuItems: MenuItem[] = [];
 
   constructor() {
-    const authContainer = inject(AuthContainer);
     const layoutService = inject(LayoutService);
 
     // App title
@@ -54,32 +53,6 @@ export class NavbarContainer {
         label: 'Asociación',
         icon: 'pi pi-users',
         routerLink: '/association'
-      });
-    }
-    const adminLinks: MenuItem[] = [];
-    if (authContainer.hasPermission('person', 'view')) {
-      adminLinks.push({
-        label: 'Gente',
-        routerLink: '/association/admin/people'
-      });
-    }
-    if (authContainer.hasPermission('funds', 'view')) {
-      adminLinks.push({
-        label: 'Fondos',
-        routerLink: '/association/admin/money'
-      });
-    }
-    if (authContainer.hasPermission('library', 'view')) {
-      adminLinks.push({
-        label: 'Biblioteca',
-        routerLink: '/association/admin/library'
-      });
-    }
-    if (adminLinks.length > 0) {
-      this.menuItems.push({
-        label: 'Administración',
-        icon: 'pi pi-cog',
-        items: adminLinks
       });
     }
   }
