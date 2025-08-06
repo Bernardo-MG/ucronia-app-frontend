@@ -1,18 +1,18 @@
 
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
 import { BookInfo } from '@app/models/library/book-info';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent, BookReportWidgetContainer],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BookReportWidgetContainer],
   templateUrl: './library-admin-book-list.container.html'
 })
 export class LibraryAdminBookListContainer {

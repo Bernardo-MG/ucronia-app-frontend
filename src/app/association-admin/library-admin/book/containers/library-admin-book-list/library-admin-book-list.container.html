@@ -1,23 +1,15 @@
 <assoc-book-report-widget />
-<p-card>
-  <ng-template #header>
-    <div class="row">
-      <div class="col-sm-3">
-        <!-- Add person -->
-        <button type="button" class="btn btn-link" aria-label="register" routerLink="{{routerLink}}"
-          [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-          <icon-add />
-        </button>
-      </div>
-      <div class="col-sm-3">
-        <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
-          (change)="onChangeSource($event)">
-          <option [selected]="source === 'games'" value="games">Juegos</option>
-          <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
-        </select>
-      </div>
-    </div>
+<p-panel>
+  <ng-template #icons>
+    <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="{{routerLink}}" [disabled]="!createPermission"
+      aria-label="Nuevo libro" [attr.aria-disabled]="!createPermission" rounded text />
+    <p-button icon="pi pi-file-excel" severity="secondary" rounded text />
   </ng-template>
+  <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
+    (change)="onChangeSource($event)">
+    <option [selected]="source === 'games'" value="games">Juegos</option>
+    <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
+  </select>
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
     (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
@@ -36,16 +28,13 @@
           <sub>{{book.title.subtitle}}</sub>
         </td>
         <td>
-          @switch (book.lent) {
-          @case (true) {
+          @if (book.lent) {
           <span class="pi pi-times text-warning"></span>
-          }
-          @case (false) {
+          }@else {
           <span class="pi pi-check text-success"></span>
-          }
           }
         </td>
       </tr>
     </ng-template>
   </p-table>
-</p-card>
+</p-panel>
