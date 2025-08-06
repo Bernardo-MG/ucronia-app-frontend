@@ -14,8 +14,29 @@
   </p-card>
   <p-card>
     <!-- Permissions -->
-    <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-      (remove)="onRemovePermission($event)" />
+    <p-table lazy="true" dataKey="name" [loading]="waiting" [value]="rolePermissions" paginator="true" [rows]="pageSize"
+      [totalRecords]="totalRolePermissions" [first]="firstRolePermission" (onPage)="onPermissionsPageChange($event)" showCurrentPageReport="true"
+      currentPageReportTemplate="Total: {totalRecords}">
+      <ng-template #header>
+        <tr>
+          <th></th>
+          <th>Recurso</th>
+          <th>Acción</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-permission>
+        <tr>
+          <td>
+            <button [disabled]="!deletable" (click)="onRemovePermission(permission)" type="button"
+              class="btn btn-link link-dark" role="button" aria-label="Back">
+              <span class="pi pi-trash"></span>
+            </button>
+          </td>
+          <td>{{permission.resource}}</td>
+          <td>{{permission.action}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
     <ng-template #footer>
       <div class="d-grid">
         <!-- Add button -->

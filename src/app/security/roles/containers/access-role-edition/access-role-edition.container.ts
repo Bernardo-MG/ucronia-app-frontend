@@ -3,21 +3,20 @@ import { Component, inject, viewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ArrayPaginatedResponse, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { AccessRoleAddPermissionComponent } from '../../components/access-role-add-permission/access-role-add-permission.component';
-import { AccessRoleInfoComponent } from '../../components/access-role-info/access-role-info.component';
-import { AccessRolePermissionsComponent } from '../../components/access-role-permissions/access-role-permissions.component';
 import { AccessRoleService } from '../../services/access-role.service';
 
 @Component({
   selector: 'access-role-edition',
-  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, SkeletonModule, AccessRoleInfoComponent, AccessRolePermissionsComponent, AccessRoleAddPermissionComponent, ModalComponent, IconAddComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, FormsModule, ReactiveFormsModule, SkeletonModule, TableModule, AccessRoleAddPermissionComponent, ModalComponent, IconAddComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-role-edition.container.html'
 })
 export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Role> {
@@ -29,6 +28,18 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   public permissions = new PaginatedResponse<ResourcePermission>();
 
   public view: string = 'details';
+
+  public rolePermissions: ResourcePermission[] = [];
+
+  public get firstRolePermission() {
+    return (this.rolePermissionsPage - 1) * this.pageSize;
+  }
+
+  public pageSize = 10;
+
+  public totalRolePermissions = 0;
+
+  public rolePermissionsPage = 0;
 
   private permissionsSort = new Sorting();
 
@@ -88,6 +99,17 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   public onChangePermissionsDirection(field: SortingProperty) {
     this.permissionsSort.addField(field);
     this.onLoadPermissions(0);
+  }
+
+  public onPermissionsPageChange(event: TablePageEvent) {
+    this.rolePermissionsPage = (event.first / this.pageSize) + 1;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, this.rolePermissionsPage, this.pageSize).content;
+  }
+
+  protected override onLoad(data: Role): void {
+    this.data = data;
+    this.totalRolePermissions = data.permissions.length;
+    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data.permissions, 1, this.pageSize).content;
   }
 
   protected override delete(): void {
