@@ -1,20 +1,20 @@
 
 import { Component, input, output } from '@angular/core';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
-import { SortingButtonComponent } from '@app/shared/sorting/components/sorting-button/sorting-button.component';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-role-add-permission',
-  imports: [SortingButtonComponent, PaginationNavigationComponent, IconAddComponent, JustifyCenterDirective],
+  imports: [TableModule, IconAddComponent],
   templateUrl: './access-role-add-permission.component.html'
 })
 export class AccessRoleAddPermissionComponent {
 
   public readonly permissions = input(new PaginatedResponse<ResourcePermission>());
+
+  public readonly loading = input(false);
 
   public readonly addPermission = output<ResourcePermission>();
 
@@ -22,10 +22,19 @@ export class AccessRoleAddPermissionComponent {
 
   public readonly changeDirection = output<SortingProperty>();
 
+  public get first() {
+    return (this.permissions().page - 1) * this.permissions().size;
+  }
+
   public data = new ResourcePermission();
 
   public onAddPermission(permission: ResourcePermission): void {
     this.addPermission.emit(permission);
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.permissions().size) + 1;
+    this.goTo.emit(page);
   }
 
   public onGoTo(page: number) {

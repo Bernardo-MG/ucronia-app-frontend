@@ -27,6 +27,8 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
 
   public permissions = new PaginatedResponse<ResourcePermission>();
 
+  public loadingPermissions = false;
+
   public view: string = 'details';
 
   public rolePermissions = new ArrayPaginatedResponse<ResourcePermission>([], 1, 0);
@@ -89,9 +91,11 @@ export class AccessRoleInfoEditionContainer extends InfoEditorStatusComponent<Ro
   }
 
   public onLoadPermissions(page: number) {
+    this.loadingPermissions = true;
     this.service.getAvailablePermissions(this.role, page, this.permissionsSort).subscribe({
       next: response => {
         this.permissions = response;
+        this.loadingPermissions = false;
       }
     });
   }
