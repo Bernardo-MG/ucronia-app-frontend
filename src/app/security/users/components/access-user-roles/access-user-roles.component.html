@@ -1,29 +1,21 @@
-<!-- Roles -->
-<table class="table" *uiBlock="waiting()">
-  <thead>
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data.content" paginator="true" [rows]="data.size"
+  [totalRecords]="data.totalElements" [first]="first" (onPage)="onPageChange($event)" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}">
+  <ng-template #header>
     <tr>
-      <th scope="col"></th>
-      <th scope="col">
-        Nombre
-      </th>
+      <th></th>
+      <th>Nombre</th>
     </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    @for (role of data.content; track role) {
-      <tr>
-        <td>
-          <button [disabled]="!deletable()" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
-            role="button" aria-label="Remove role">
-            <icon-delete />
-          </button>
-        </td>
-        <td>{{role.name}}</td>
-      </tr>
-    }
-  </tbody>
-</table>
-<!-- Page navigation -->
-<div uiJustifyCenter class="mt-1">
-  <pagination-navigation [current]="data.page" [pages]="data.totalPages" [disabled]="waiting()"
-    (goTo)="onGoToPage($event)" />
-</div>
+  </ng-template>
+  <ng-template #body let-role>
+    <tr>
+      <td>
+        <button [disabled]="!deletable()" (click)="onRemove(role)" type="button" class="btn btn-link link-dark"
+          role="button" aria-label="Remove role">
+          <icon-delete />
+        </button>
+      </td>
+      <td>{{role.name}}</td>
+    </tr>
+  </ng-template>
+</p-table>

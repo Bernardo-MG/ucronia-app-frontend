@@ -1,14 +1,13 @@
 
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconDeleteComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective } from '@bernardo-mg/ui';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-user-roles',
-  imports: [PaginationNavigationComponent, BlockUiDirective, IconDeleteComponent],
+  imports: [TableModule, IconDeleteComponent],
   templateUrl: './access-user-roles.component.html'
 })
 export class AccessUserRolesComponent implements OnChanges {
@@ -19,9 +18,13 @@ export class AccessUserRolesComponent implements OnChanges {
 
   public readonly deletable = input(false);
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
 
   public readonly remove = output<Role>();
+
+  public get first() {
+    return (this.data.page - 1) * this.data.size;
+  }
 
   public data = new ArrayPaginatedResponse<Role>([], 0, 0);
 
@@ -33,7 +36,8 @@ export class AccessUserRolesComponent implements OnChanges {
     }
   }
 
-  public onGoToPage(page: number) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
     this.data = this.buildPage(page);
   }
 

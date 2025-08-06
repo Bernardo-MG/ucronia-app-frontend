@@ -12,14 +12,14 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { AccessUserFormComponent } from '../../components/access-user-form/access-user-form.component';
-import { AccessUserInfoComponent } from '../../components/access-user-info/access-user-info.component';
-import { AccessUserStatusComponent } from '../../components/access-user-status/access-user-status.component';
+import { AccessUserMemberEditorComponent } from '../../components/access-user-member-editor/access-user-member-editor.component';
+import { AccessUserRolesEditorComponent } from '../../components/access-user-roles-editor/access-user-roles-editor.component';
 import { UserUpdate } from '../../models/user-update';
 import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
   selector: 'access-user-edition',
-  imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserFormComponent, ModalComponent, AccessUserInfoComponent, ControlButtonsComponent, AccessUserStatusComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserFormComponent, ModalComponent, AccessUserRolesEditorComponent, AccessUserMemberEditorComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-edition.container.html'
 })
 export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> {
@@ -79,6 +79,8 @@ export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> 
         this.readingMember = false;
       }
     });
+
+    this.onGoToRoleSelectionPage(1);
   }
 
   public onGoToRoleSelectionPage(page: number) {
