@@ -62,7 +62,7 @@ export class AccessListContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}}`]);
+    this.router.navigate([`/security/users/${this.selectedData.username}`]);
   }
 
   private load(page: number) {
