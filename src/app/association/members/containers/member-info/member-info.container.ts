@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
 import { Member } from '@app/models/members/member';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
-import { MemberDetailsComponent } from '../../components/member-details/member-details.component';
+import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [MemberDetailsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, SkeletonModule, ResponsiveShortColumnsDirective],
   templateUrl: './member-info.container.html'
 })
 export class MemberInfoContainer {
@@ -19,7 +20,7 @@ export class MemberInfoContainer {
 
   public view: string = 'details';
 
-  public reading = false;
+  public loading = false;
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -38,15 +39,15 @@ export class MemberInfoContainer {
   }
 
   private load(id: number): void {
-    this.reading = true;
+    this.loading = true;
     this.service.getOne(id)
       .subscribe({
         next: response => {
           this.data = response;
-          this.reading = false;
+          this.loading = false;
         },
         error: error => {
-          this.reading = false;
+          this.loading = false;
         }
       });
   }

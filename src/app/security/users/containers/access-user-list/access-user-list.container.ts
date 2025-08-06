@@ -1,60 +1,47 @@
-
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BookType } from '@app/models/library/book-type';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { BookTypeAdminService } from '../../services/book-type-admin.service';
+import { AccessUserService } from '../../services/access-user.service';
 
 @Component({
-  selector: 'assoc-library-admin-book-type-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-  templateUrl: './library-admin-book-type-list.container.html'
+    selector: 'access-user-list',
+    imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+    templateUrl: './access-user-list.container.html'
 })
-export class LibraryAdminBookTypeListContainer {
+export class AccessListContainer {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(BookTypeAdminService);
+  private readonly service = inject(AccessUserService);
+
+  public readonly createPermission;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  private _pageNumber = 0;
+  public data = new PaginatedResponse<User>();
 
-  @Input() public set pageNumber(value: number) {
-    this._pageNumber = value;
-    this.load(value);
-  }
-
-  public get pageNumber() {
-    return this._pageNumber;
-  }
-
-  public data = new PaginatedResponse<BookType>();
-
-  public selectedData = new BookType();
+  public selectedData = new User();
 
   /**
    * Loading flag.
    */
   public loading = false;
 
-  public readonly createPermission;
-
   private sort = new Sorting();
 
   constructor() {
     const authContainer = inject(AuthContainer);
 
-    // Load books
-    this.load(0)
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_book_type", "create");
+    this.createPermission = authContainer.hasPermission("user", "create");
+
+    this.load(0);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -75,12 +62,11 @@ export class LibraryAdminBookTypeListContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/association/admin/library/types/${this.selectedData.number}`]);
+    this.router.navigate([`/security/users/${this.selectedData.username}`]);
   }
 
   private load(page: number) {
     this.loading = true;
-
     this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;

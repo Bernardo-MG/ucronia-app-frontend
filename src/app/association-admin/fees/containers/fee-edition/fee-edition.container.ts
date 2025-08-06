@@ -2,18 +2,18 @@
 import { AfterContentInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
-import { FeeInfoComponent } from '@app/association-admin/fees/components/fee-info/fee-info.component';
-import { Fee } from '@app/models/fees/fee';
+import { Fee, FeeTransaction } from '@app/models/fees/fee';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { FeeService } from '../../services/fee.service';
 
 @Component({
   selector: 'assoc-fee-edition',
-  imports: [CardModule, FeeEditionFormComponent, FeeInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, SkeletonModule, FeeEditionFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './fee-edition.container.html'
 })
 export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements AfterContentInit {
@@ -59,8 +59,19 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
     this.cdRef.detectChanges();
   }
 
+  public selectPayment() {
+    if (this.data.payment) {
+      const payment = this.data.payment as FeeTransaction
+      this.router.navigate([`association/admin/funds/transaction/${payment.index}`]);
+    }
+  }
+
   public goToTransaction(index: number) {
     this.router.navigate([`association/admin/funds/transaction/${index}`]);
+  }
+
+  public isPaymentDisabled(): boolean {
+    return (this.waiting) || (this.data.payment === null);
   }
 
   protected override delete(): void {

@@ -2,9 +2,8 @@
   @if (editing) {
     <!-- Form -->
     <p-card>
-      <assoc-library-admin-author-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true"
-        [data]="data" [failures]="failures" (save)="onSave($event)"
-      (reject)="onCancel()" />
+      <assoc-library-admin-book-type-form [waiting]="waiting" [readonly]="!formEnabled" [cancellable]="true" [data]="data"
+        [failures]="failures" (save)="onSave($event)" (reject)="onCancel()" />
     </p-card>
   }@else {
     <!-- Info -->

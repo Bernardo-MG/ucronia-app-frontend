@@ -1,28 +1,32 @@
 
 import { Component, input, output } from '@angular/core';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-user-add-role',
-  imports: [PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
+  imports: [TableModule, IconAddComponent],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent {
 
   public readonly roles = input(new PaginatedResponse<Role>());
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
 
   public readonly addRole = output<Role>();
 
   public readonly goToPage = output<number>();
 
-  constructor() {
-    this.onGoToPage(0);
+  public get first() {
+    return (this.roles().page - 1) * this.roles().size;
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.roles().size) + 1;
+    this.goToPage.emit(page);
   }
 
   public onAdd(data: Role): void {

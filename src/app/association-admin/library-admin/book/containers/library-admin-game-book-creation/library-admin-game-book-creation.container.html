@@ -1,9 +1,7 @@
-<article class="p-4">
-  <div uiResponsiveShortColumns>
-    <p-card>
-      <!-- Form -->
-      <assoc-library-admin-book-creation-form [waiting]="saving" [failures]="failures" [languages]="languages"
-        (save)="onSave($event)" />
-    </p-card>
-  </div>
-</article>
+<div uiResponsiveShortColumns>
+  <p-card>
+    <!-- Form -->
+    <assoc-library-admin-book-creation-form [waiting]="saving" [failures]="failures" [languages]="languages"
+      (save)="onSave($event)" />
+  </p-card>
+</div>

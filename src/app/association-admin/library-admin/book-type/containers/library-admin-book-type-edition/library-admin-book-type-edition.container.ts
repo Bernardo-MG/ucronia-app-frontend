@@ -1,38 +1,38 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Publisher } from '@app/models/library/publisher';
+import { BookType } from '@app/models/library/book-type';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
-import { LibraryAdminPublisherFormComponent } from '../../components/library-admin-publisher-form/library-admin-publisher-form.component';
-import { PublisherAdminService } from '../../services/publisher-admin.service';
+import { LibraryAdminBookTypeFormComponent } from '../../components/library-admin-book-type-form/library-admin-book-type-form.component';
+import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
-  selector: 'assoc-library-admin-publisher-edition',
-  imports: [CardModule, SkeletonModule, LibraryAdminPublisherFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './library-admin-publisher-edition.container.html'
+  selector: 'assoc-library-admin-book-type-edition',
+  imports: [CardModule, SkeletonModule, LibraryAdminBookTypeFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './library-admin-book-type-edition.container.html'
 })
-export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusComponent<Publisher> {
+export class LibraryAdminBookTypeInfoEditorContainer extends InfoEditorStatusComponent<BookType> {
 
   private readonly route = inject(ActivatedRoute);
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(PublisherAdminService);
+  private readonly service = inject(BookTypeAdminService);
 
   private number = -1;
 
   constructor() {
     const authContainer = inject(AuthContainer);
 
-    super(new Publisher());
+    super(new BookType());
     // Check permissions
-    this.editable = authContainer.hasPermission("library_publisher", "update");
-    this.deletable = authContainer.hasPermission("library_publisher", "delete");
+    this.editable = authContainer.hasPermission("library_book_type", "update");
+    this.deletable = authContainer.hasPermission("library_book_type", "delete");
 
     // Get id
     this.route.paramMap.subscribe(params => {
@@ -50,11 +50,11 @@ export class LibraryAdminPublisherInfoEditorContainer extends InfoEditorStatusCo
     });
   }
 
-  protected override read(): Observable<Publisher> {
+  protected override read(): Observable<BookType> {
     return this.service.getOne(this.number);
   }
 
-  protected override save(toSave: Publisher): Observable<Publisher> {
+  protected override save(toSave: BookType): Observable<BookType> {
     return this.service.update(this.data.number, toSave);
   }
 

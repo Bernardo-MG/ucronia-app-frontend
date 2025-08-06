@@ -1,18 +1,57 @@
 <div uiResponsiveShortColumns>
-  @switch (editing) {
-  <!-- Form -->
-  @case (true) {
-  <p-card>
-    <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
-      [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()" />
-  </p-card>
-  }
-  <!-- Info -->
-  @case (false) {
-  <assoc-people-info [data]="data" [showMenu]="showMenu" [editEnabled]="editEnabled" [waiting]="waiting"
-    [deletable]="deletable" [editable]="editable" (delete)="onDelete()" (startEditing)="onStartEditing()"
-    (activate)="onActivate()" (deactivate)="onDeactivate()" (enableRenew)="onEnableRenew()"
-    (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()" />
-  }
+  @if (editing) {
+    <!-- Form -->
+    <p-card>
+      <assoc-people-edition-form [waiting]="waiting" [readonly]="!formEnabled" [data]="data" [failures]="failures"
+        [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" (startEditing)="onStartEditing()" />
+    </p-card>
+  } @else {
+    <!-- Info -->
+    <p-card class="mb-2">
+      <!-- Person details -->
+      <assoc-people-info-details [data]="data" [loading]="waiting" />
+      <ng-template #footer *ngIf="showMenu">
+        <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
+          (startEditing)="onStartEditing()" (delete)="onDelete()" />
+      </ng-template>
+    </p-card>
+    <p-card>
+      <!-- Membership -->
+      <ng-container [ngSwitch]="isMember">
+        <ng-container *ngSwitchCase="true">
+          <!-- It is a member -->
+          <div class="row">
+            <div class="col-sm-2 text-primary">Activo</div>
+            <div class="col-sm-10">
+              @if (data.membership?.active) {
+              <span class="pi pi-check text-success"></span>
+              } @else {
+              <span class="pi pi-times text-warning"></span>
+              }
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="false">
+          <!-- It isn't a member -->
+          No es socio
+        </ng-container>
+      </ng-container>
+      <!-- Renewal -->
+      <div class="row">
+        <div class="col-sm-2 text-primary">Renovación</div>
+        <div class="col-sm-10">
+          @if (data.membership?.renew) {
+          <span class="pi pi-check text-success"></span>
+          } @else {
+          <span class="pi pi-times text-warning"></span>
+          }
+        </div>
+      </div>
+      <ng-template #footer>
+        <assoc-people-edition-membership-buttons [active]="data.membership?.active" [renew]="data.membership?.renew"
+          [disabled]="!editEnabled" (activate)="onActivate()" (deactivate)="onDeactivate()"
+          (enableRenew)="onEnableRenew()" (disableRenew)="onDisableRenew()" (convertToMember)="onConvertToMember()" />
+      </ng-template>
+    </p-card>
   }
 </div>

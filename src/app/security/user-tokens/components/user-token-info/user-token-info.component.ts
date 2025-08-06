@@ -2,11 +2,11 @@
 import { Component, input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
 import { FailureStore } from '@bernardo-mg/request';
-import { PlaceholderDirective } from '@bernardo-mg/ui';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'access-user-token-info',
-  imports: [PlaceholderDirective],
+  imports: [SkeletonModule],
   templateUrl: './user-token-info.component.html'
 })
 export class UserTokenInfoComponent {
@@ -15,6 +15,6 @@ export class UserTokenInfoComponent {
 
   public readonly failures = input(new FailureStore());
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
 
 }

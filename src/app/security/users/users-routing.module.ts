@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/access-user-listing/access-user-listing.container').then(m => m.AccessListContainer),
+        loadComponent: () => import('./containers/access-user-list/access-user-list.container').then(m => m.AccessListContainer),
         canActivate: [ResourceGuard("user", "read")],
         data: { breadcrumb: '' }
       },

@@ -75,7 +75,7 @@ export class LibraryAdminGameSystemListContainer {
   }
 
   public onSelectRow() {
-    this.router.navigate([`/association/admin/library/gametypes/${this.selectedData.number}`]);
+    this.router.navigate([`/association/admin/library/systems/${this.selectedData.number}`]);
   }
 
   private load(page: number) {

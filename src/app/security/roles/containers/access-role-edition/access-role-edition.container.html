@@ -1,50 +1,58 @@
 <div uiResponsiveShortColumns>
-  <!-- Role -->
-  <div class="mb-1">
-    <p-card>
+  <p-card>
+    <!-- Name -->
+    <div class="row">
+      <div class="col-sm-3 text-primary">Nombre</div>
+      <div class="col-sm-9">
+        @if (waiting) {
+          <p-skeleton class="mb-2" />
+        } @else {
+          {{data.name}}
+        }
+      </div>
+    </div>
+  </p-card>
+  <p-card>
+    <!-- Permissions -->
+    <p-table lazy="true" dataKey="name" [loading]="waiting" [value]="rolePermissions.content" paginator="true"
+      [rows]="rolePermissions.size" [totalRecords]="rolePermissions.totalElements" [first]="firstRolePermission"
+      (onPage)="onPermissionsPageChange($event)" showCurrentPageReport="true"
+      currentPageReportTemplate="Total: {totalRecords}">
       <ng-template #header>
-        <!-- Tabs -->
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
-              (click)="onChangeView('details')">Detalles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'permissions'" aria-current="page" role="button"
-              (click)="onChangeView('permissions')">Permisos</a>
-          </li>
-        </ul>
+        <tr>
+          <th></th>
+          <th>Recurso</th>
+          <th>Acción</th>
+        </tr>
       </ng-template>
-      <ng-container [ngSwitch]="view">
-        <ng-container *ngSwitchCase="'details'">
-          <access-role-info [data]="data" [waiting]="waiting" />
-          <ng-template #footer *ngIf="showMenu">
-            <form-control-buttons [editable]="editable" [deletable]="deletable" [disabled]="waiting"
-              (startEditing)="onStartEditing()" (delete)="onDelete()" />
-          </ng-template>
-        </ng-container>
-        <ng-container *ngSwitchCase="'permissions'">
-          <!-- Permissions -->
-          <!-- Permissions list -->
-          <access-role-permissions [permissions]="data.permissions" [deletable]="deleteEnabled"
-            (remove)="onRemovePermission($event)" />
-          <ng-template #footer>
-            <div class="d-grid">
-              <!-- Add button -->
-              <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
-                data-bs-target="#pickPermissionModal">
-                <icon-add />
-              </button>
-            </div>
-          </ng-template>
-        </ng-container>
-      </ng-container>
-    </p-card>
-  </div>
+      <ng-template #body let-permission>
+        <tr>
+          <td>
+            <button [disabled]="!deletable" (click)="onRemovePermission(permission)" type="button"
+              class="btn btn-link link-dark" role="button" aria-label="Back">
+              <span class="pi pi-trash"></span>
+            </button>
+          </td>
+          <td>{{permission.resource}}</td>
+          <td>{{permission.action}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template #footer>
+      <div class="d-grid">
+        <!-- Add button -->
+        <button type="button" class="btn btn-primary" aria-label="Pick permission" data-bs-toggle="modal"
+          data-bs-target="#pickPermissionModal">
+          <icon-add />
+        </button>
+      </div>
+    </ng-template>
+  </p-card>
 </div>
 
 <!-- Modal for picking permissions -->
 <ui-modal name="pickPermissionModal" title="Elige un permiso" acceptText="">
-  <access-role-add-permission [permissions]="permissions" (goTo)="onLoadPermissions($event)"
-    (changeDirection)="onChangePermissionsDirection($event)" (addPermission)="onAddPermission($event)" />
+  <access-role-add-permission [permissions]="permissions" [loading]="loadingPermissions"
+    (goTo)="onLoadPermissions($event)" (changeDirection)="onChangePermissionsDirection($event)"
+    (addPermission)="onAddPermission($event)" />
 </ui-modal>

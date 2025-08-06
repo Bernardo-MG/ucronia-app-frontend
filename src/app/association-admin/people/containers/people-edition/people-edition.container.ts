@@ -1,20 +1,23 @@
 
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Membership } from '@app/models/person/membership';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { TabsModule } from 'primeng/tabs';
 import { Observable } from 'rxjs';
 import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
-import { PeopleInfoComponent } from '../../components/people-info/people-info.component';
+import { PeopleEditionMembershipButtonsComponent } from '../../components/people-edition-membership-buttons/people-edition-membership-buttons.component';
+import { PeopleInfoDetailsComponent } from '../../components/people-info-details/people-info-details.component';
 import { PeopleService } from '../../services/people.service';
 
 @Component({
   selector: 'assoc-people-edition',
-  imports: [CardModule, PeopleEditionFormComponent, PeopleInfoComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, TabsModule, PeopleEditionFormComponent, ResponsiveShortColumnsDirective, PeopleInfoDetailsComponent, ControlButtonsComponent, PeopleEditionMembershipButtonsComponent],
   templateUrl: './people-edition.container.html'
 })
 export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
@@ -26,6 +29,10 @@ export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person
   private readonly service = inject(PeopleService);
 
   public view: string = 'details';
+
+  public get isMember() {
+    return this.data.membership !== null;
+  }
 
   private number = -1;
 

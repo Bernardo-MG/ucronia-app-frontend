@@ -12,7 +12,7 @@ const routes: Routes = [
       {
         path: '',
         canActivate: [ResourceGuard("association_settings", "view")],
-        loadComponent: () => import('./containers/settings-info-editor/settings-info-editor.container').then(m => m.SettingsInfoEditorContainer)
+        loadComponent: () => import('./containers/settings-edition/settings-edition.container').then(m => m.SettingsInfoEditorContainer)
       }
     ]
   }
