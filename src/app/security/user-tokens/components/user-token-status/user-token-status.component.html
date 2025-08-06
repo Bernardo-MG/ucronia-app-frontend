@@ -2,13 +2,29 @@
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Consumido</div>
   <div class="col-sm-10">
-    <icon-success-or-failure [success]="data().consumed" />
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      @if (data().consumed) {
+        <span class="pi pi-times text-warning"></span>
+      } @else {
+        <span class="pi pi-check text-success"></span>
+      }
+    }
   </div>
 </div>
 <!-- Revoked -->
 <div class="row mb-2">
   <div class="col-sm-2 text-primary">Revocado</div>
   <div class="col-sm-10">
-    <icon-success-or-failure [success]="data().revoked" />
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      @if (data().revoked) {
+        <span class="pi pi-times text-warning"></span>
+      } @else {
+        <span class="pi pi-check text-success"></span>
+      }
+    }
   </div>
 </div>

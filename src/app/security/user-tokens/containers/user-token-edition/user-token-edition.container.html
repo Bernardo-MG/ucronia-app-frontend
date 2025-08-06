@@ -1,44 +1,23 @@
 <div uiResponsiveShortColumns>
-  <!-- Role -->
-  <div class="mb-1">
-    <!-- Info -->
-    <p-card>
-      <ng-template #header>
-        <!-- Tabs -->
-        <ul class="nav nav-tabs card-header-tabs">
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'details'" aria-current="page" role="button"
-              (click)="onChangeView('details')">Detalles</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="view === 'status'" aria-current="page" role="button"
-              (click)="onChangeView('status')">Estado</a>
-          </li>
-        </ul>
-      </ng-template>
-      <ng-container [ngSwitch]="view">
-        <ng-container *ngSwitchCase="'details'">
-          <access-user-token-info [failures]="failures" [data]="data" [waiting]="waiting" />
-          <ng-template #footer>
-            <!-- Extend expiration button -->
-            <button type="submit" name="Extend expiration" class="btn btn-primary" [uiWaiting]="waiting"
-              [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
-              [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
-              expiración</button>
-          </ng-template>
-        </ng-container>
-        <ng-container *ngSwitchCase="'status'">
-          <access-user-token-status [data]="data" />
-          <ng-template #footer>
-            <!-- Revoke button -->
-            <button type="submit" name="Revoke" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!editEnabled"
-              [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
-              [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</button>
-          </ng-template>
-        </ng-container>
-      </ng-container>
-    </p-card>
-  </div>
+  <p-card>
+    <access-user-token-info [failures]="failures" [data]="data" [loading]="waiting" />
+    <ng-template #footer>
+      <!-- Extend expiration button -->
+      <button type="submit" name="Extend expiration" class="btn btn-primary" [uiWaiting]="waiting"
+        [disabled]="!editEnabled" [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+        [attr.data-bs-target]="editEnabled ? '#extendExpirationModal' : ''">Extender
+        expiración</button>
+    </ng-template>
+  </p-card>
+  <p-card>
+    <access-user-token-status [data]="data" [loading]="waiting" />
+    <ng-template #footer>
+      <!-- Revoke button -->
+      <button type="submit" name="Revoke" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!editEnabled"
+        [attr.aria-disabled]="!editEnabled" data-bs-toggle="modal"
+        [attr.data-bs-target]="editEnabled ? '#revokeModal' : ''">Revocar</button>
+    </ng-template>
+  </p-card>
 </div>
 
 <!-- Modal for extending expiration -->

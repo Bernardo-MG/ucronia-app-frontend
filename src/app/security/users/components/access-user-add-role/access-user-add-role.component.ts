@@ -1,15 +1,13 @@
 
 import { Component, input, output } from '@angular/core';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-user-add-role',
-  imports: [TableModule, PaginationNavigationComponent, JustifyCenterDirective, IconAddComponent, BlockUiDirective],
+  imports: [TableModule, IconAddComponent],
   templateUrl: './access-user-add-role.component.html'
 })
 export class AccessUserAddRoleComponent {
