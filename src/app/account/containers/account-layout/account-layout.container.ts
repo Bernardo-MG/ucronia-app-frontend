@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'account-layout',
-  imports: [RouterModule, SidebarLayoutComponent],
+  imports: [RouterModule, MenuModule],
   templateUrl: './account-layout.container.html'
 })
 export class AccountLayoutContainer {

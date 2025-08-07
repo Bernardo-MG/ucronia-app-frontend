@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
@@ -16,6 +16,8 @@ import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.c
 })
 export class NavbarContainer {
 
+  public readonly toggleMenu = output<boolean>();
+
   private readonly authContainer = inject(AuthContainer);
 
   public title = '';
@@ -26,15 +28,9 @@ export class NavbarContainer {
 
   public showAssociation = false;
 
-  public get loggedIn() {
-    return this.authContainer.logged;
-  }
-
   public get loggedOut() {
-    return !this.loggedIn;
+    return !this.authContainer.logged;
   }
-
-  public readonly menuItems: MenuItem[] = [];
 
   constructor() {
     const layoutService = inject(LayoutService);
@@ -46,15 +42,6 @@ export class NavbarContainer {
     this.showSettings = layoutService.showSettingsLink();
     this.showSecurity = layoutService.showSecurityLink();
     this.showAssociation = layoutService.showAssociationLink();
-
-    // Links
-    if (this.showAssociation) {
-      this.menuItems.push({
-        label: 'Asociación',
-        icon: 'pi pi-users',
-        routerLink: '/association'
-      });
-    }
   }
 
 }

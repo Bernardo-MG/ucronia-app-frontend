@@ -6,33 +6,30 @@ export const routes: Routes = [
   // Main app
   {
     path: '',
+    loadComponent: () => import('@app/core/layout/components/association-layout/association-layout').then(m => m.AssociationLayout),
     children: [
       // Public routes
       {
         // Logged out
         path: '',
-        loadComponent: () => import('./core/layout/components/simple-layout/simple-layout.component').then(m => m.SimpleLayoutComponent),
         loadChildren: () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule)
       },
       {
         // Log in form
         path: 'login',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./core/layout/components/simple-layout/simple-layout.component').then(m => m.SimpleLayoutComponent),
         loadChildren: () => import('@app/access/login/login.module').then(m => m.LoginModule)
       },
       {
         // Password reset form
         path: 'password/reset',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./core/layout/components/simple-layout/simple-layout.component').then(m => m.SimpleLayoutComponent),
         loadChildren: () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule)
       },
       {
         // Activate user form
         path: 'users/activate',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./core/layout/components/simple-layout/simple-layout.component').then(m => m.SimpleLayoutComponent),
         loadChildren: () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule)
       },
       // Private routes
