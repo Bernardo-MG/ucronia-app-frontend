@@ -58,7 +58,7 @@ export class LibraryAdminBookListContainer {
 
   public data = new PaginatedResponse<FictionBook | GameBook>();
 
-  public source: 'games' | 'fiction' = 'games';
+  public source: 'game' | 'fiction' = 'game';
 
   /**
    * Loading flag.
@@ -157,9 +157,15 @@ export class LibraryAdminBookListContainer {
         severity: 'danger'
       },
       accept: () => {
-        this.service.deleteFictionBook(number).subscribe(r => {
-          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-        });
+        if (this.source === 'game') {
+          this.service.deleteGameBook(number).subscribe(r => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+          });
+        } else {
+          this.service.deleteFictionBook(number).subscribe(r => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+          });
+        }
       }
     });
   }
@@ -177,7 +183,7 @@ export class LibraryAdminBookListContainer {
   }
 
   public onChangeSource(event: any) {
-    this.source = event.target.value as 'games' | 'fiction';
+    this.source = event.target.value as 'game' | 'fiction';
     this.load(0);
   }
 
@@ -211,7 +217,7 @@ export class LibraryAdminBookListContainer {
   private load(page: number) {
     this.loading = true;
 
-    if (this.source === 'games') {
+    if (this.source === 'game') {
       this.service.getAllGameBooks(page, this.sort).subscribe({
         next: response => {
           this.data = response;
