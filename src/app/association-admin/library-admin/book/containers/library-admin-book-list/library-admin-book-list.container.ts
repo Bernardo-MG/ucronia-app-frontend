@@ -148,12 +148,12 @@ export class LibraryAdminBookListContainer {
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
-        label: 'Cancel',
+        label: 'Cancelar',
         severity: 'secondary',
         outlined: true
       },
       acceptButtonProps: {
-        label: 'Delete',
+        label: 'Borrar',
         severity: 'danger'
       },
       accept: () => {
