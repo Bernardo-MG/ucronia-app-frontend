@@ -63,7 +63,8 @@
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
       [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
   </ng-template>
-  <p-dataview #dv [value]="data.content" layout="grid">
+  <p-dataview #dv [value]="data.content" layout="grid" paginator="true" [rows]="data.size"
+    [totalRecords]="data.totalElements" [first]="first" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #grid let-books>
       <div class="row">
         @for (book of books; track book.number) {
