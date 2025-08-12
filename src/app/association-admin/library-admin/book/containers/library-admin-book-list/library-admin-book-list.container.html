@@ -63,6 +63,11 @@
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
       [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
   </ng-template>
+  <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
+    (change)="onChangeSource($event)">
+    <option [selected]="source === 'games'" value="games">Juegos</option>
+    <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
+  </select>
   <p-dataview #dv [value]="data.content" layout="grid" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #grid let-books>
