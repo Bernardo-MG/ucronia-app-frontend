@@ -80,13 +80,13 @@
                 }
                 <span class="ps-1">
                   @if (book.lent) {
-                  <p-badge value="Prestado" severity="success" />
+                  <p-badge value="Prestado" severity="warn" />
                   }@else {
                   <p-badge value="Disponible" severity="success" />
                   }
                 </span>
                 <span class="ps-1">
-                  <p-badge [value]="book.language" severity="success" />
+                  <p-badge [value]="book.language" severity="info" />
                 </span>
               </h2>
             </div>
@@ -98,6 +98,18 @@
                   [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
               </div>
             </div>
+          </div>
+          <div>
+            @if(book.gameSystem) {
+            <span class="p3-1">
+              <p-badge [value]="book.gameSystem.name" severity="info" />
+            </span>
+            }
+            @if(book.bookType) {
+            <span class="p3-1">
+              <p-badge [value]="book.bookType.name" severity="info" />
+            </span>
+            }
           </div>
           <div class="row">
             <div class="col-sm-6">
@@ -118,9 +130,9 @@
             </div>
           </div>
           <div>
-              @if (book.authors.length > 0) {
-                Autores: {{ authors(book) }}
-              }
+            @if (book.authors.length > 0) {
+            Autores: {{ authors(book) }}
+            }
           </div>
           <div class="d-flex justify-content-end">
             @if (book.donation) {

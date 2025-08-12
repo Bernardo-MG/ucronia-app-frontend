@@ -2,7 +2,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
-import { BookInfo } from '@app/models/library/book-info';
 import { Donor } from '@app/models/library/donor';
 import { Publisher } from '@app/models/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -18,10 +17,13 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { BookAdminService } from '../../services/book-admin.service';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { FictionBook } from '@app/models/library/fiction-book';
+import { GameBook } from '@app/models/library/game-book';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, MenuModule, DrawerModule, DataViewModule],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -52,9 +54,9 @@ export class LibraryAdminBookListContainer {
     return this._pageNumber;
   }
 
-  public selectedData = new BookInfo();
+  public selectedData: FictionBook | GameBook = new GameBook();
 
-  public data = new PaginatedResponse<BookInfo>();
+  public data = new PaginatedResponse<FictionBook | GameBook>();
 
   public source: 'games' | 'fiction' = 'games';
 
@@ -104,40 +106,40 @@ export class LibraryAdminBookListContainer {
       });
   }
 
-  public donors(book: BookInfo) {
-      let data: Donor[];
-  
-      if (book.donation) {
-        data = book.donation.donors;
-      } else {
-        data = [];
-      }
-  
-      return data.map(e => e.name.fullName).join(", ");
+  public donors(book: FictionBook | GameBook) {
+    let data: Donor[];
+
+    if (book.donation) {
+      data = book.donation.donors;
+    } else {
+      data = [];
+    }
+
+    return data.map(e => e.name.fullName).join(", ");
   }
 
-  public publishers(book: BookInfo) {
-      let data: Publisher[];
-  
-      if (book.publishers) {
-        data = book.publishers;
-      } else {
-        data = [];
-      }
-  
-      return data.map(e => e.name).join(", ");
+  public publishers(book: FictionBook | GameBook) {
+    let data: Publisher[];
+
+    if (book.publishers) {
+      data = book.publishers;
+    } else {
+      data = [];
+    }
+
+    return data.map(e => e.name).join(", ");
   }
 
-  public authors(book: BookInfo) {
-      let data: Publisher[];
-  
-      if (book.authors) {
-        data = book.authors;
-      } else {
-        data = [];
-      }
-  
-      return data.map(e => e.name).join(", ");
+  public authors(book: FictionBook | GameBook) {
+    let data: Publisher[];
+
+    if (book.authors) {
+      data = book.authors;
+    } else {
+      data = [];
+    }
+
+    return data.map(e => e.name).join(", ");
   }
 
   public onConfirmDelete(event: Event, number: number) {
