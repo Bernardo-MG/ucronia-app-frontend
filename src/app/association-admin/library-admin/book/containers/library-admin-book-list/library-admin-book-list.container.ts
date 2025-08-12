@@ -3,12 +3,16 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { BookInfo } from '@app/models/library/book-info';
+import { Donor } from '@app/models/library/donor';
+import { Publisher } from '@app/models/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DataViewModule } from 'primeng/dataview';
+import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -17,7 +21,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, MenuModule],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, MenuModule, DrawerModule, DataViewModule],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -69,13 +73,17 @@ export class LibraryAdminBookListContainer {
 
   public editable = false;
 
+  public editing = false;
+
   public readonly editionMenu: MenuItem[] = [];
+
+  public view: string = '';
 
   private sort = new Sorting();
 
   constructor() {
     const authContainer = inject(AuthContainer);
-    
+
     this.editable = authContainer.hasPermission("library_book", "update");
 
     // Load books
@@ -87,13 +95,49 @@ export class LibraryAdminBookListContainer {
     this.editionMenu.push(
       {
         label: 'Datos',
-        //command: () => this.onStartEditingView('details')
+        command: () => this.onStartEditingView('details')
       });
     this.editionMenu.push(
       {
         label: 'Donantes',
-        //command: () => this.onStartEditingView('donors')
+        command: () => this.onStartEditingView('donors')
       });
+  }
+
+  public donors(book: BookInfo) {
+      let data: Donor[];
+  
+      if (book.donation) {
+        data = book.donation.donors;
+      } else {
+        data = [];
+      }
+  
+      return data.map(e => e.name.fullName).join(", ");
+  }
+
+  public publishers(book: BookInfo) {
+      let data: Publisher[];
+  
+      if (book.publishers) {
+        data = book.publishers;
+      } else {
+        data = [];
+      }
+  
+      return data.map(e => e.name).join(", ");
+  }
+
+  public authors(book: BookInfo) {
+      let data: Publisher[];
+  
+      if (book.authors) {
+        data = book.authors;
+      } else {
+        data = [];
+      }
+  
+      return data.map(e => e.name).join(", ");
   }
 
   public onConfirmDelete(event: Event, number: number) {
@@ -154,6 +198,11 @@ export class LibraryAdminBookListContainer {
           this.loadingExcel = false;
         }
       });
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
   private load(page: number) {
