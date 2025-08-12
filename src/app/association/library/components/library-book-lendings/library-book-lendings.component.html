@@ -1,18 +1,15 @@
-<p-table lazy="true" [value]="lendings">
-  <ng-template #header>
-    <tr>
-      <th>Socio</th>
-      <th>Prestado</th>
-      <th>Devuelto</th>
-      <th>Días</th>
-    </tr>
+<p-timeline [value]="history">
+  <ng-template #opposite let-event>
+    <small>{{ event.borrower }}</small>
   </ng-template>
-  <ng-template #body let-lending>
-    <tr [pSelectableRow]="lending">
-      <td>{{ lending.borrower.name.fullName }}</td>
-      <td>{{ lending.lendingDate }}</td>
-      <td>{{ lending.returnDate }}</td>
-      <td>{{ lending.days }}</td>
-    </tr>
+  <ng-template #marker let-event>
+    @if(event.lent) {
+      <i class="pi pi-upload lent-icon"></i>
+    } @else {
+      <i class="pi pi-download returned-icon"></i>
+    }
   </ng-template>
-</p-table>
+  <ng-template #content let-event>
+    {{ event.date }}
+  </ng-template>
+</p-timeline>

@@ -4,16 +4,22 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
 import { Author } from '@app/models/library/author';
 import { Donation } from '@app/models/library/donation';
+import { Donor } from '@app/models/library/donor';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
 import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
+import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
@@ -21,7 +27,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CardModule, RouterModule, SkeletonModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent],
   templateUrl: './library-admin-fiction-book-edition.container.html'
 })
 export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
@@ -35,10 +41,6 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   private index = -1;
 
   // TODO: these flags are not being used
-  public readingBookTypes = false;
-
-  public readingGameSystems = false;
-
   public readingAuthors = false;
 
   public readingPublishers = false;
@@ -52,6 +54,8 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public donorPage = new PaginatedResponse<Person>();
 
   public languages: Language[] = [];
+
+  public readonly editionMenu: MenuItem[] = [];
 
   public get authors(): string {
     return this.data.authors.map(e => e.name).join(", ");
@@ -74,16 +78,20 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     return this.data.donation;
   }
 
-  public get donors(): string {
-    let donors;
-    const data = this.data;
-    if (data.donation) {
-      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
+  public get donated(): Boolean {
+    return this.data.donation != undefined;
+  }
+
+  public get donors(): String {
+    let data: Donor[];
+
+    if (this.data.donation) {
+      data = this.data.donation.donors;
     } else {
-      donors = '';
+      data = [];
     }
 
-    return donors;
+    return data.map(e => e.name.fullName).join(", ");
   }
 
   public readonly lendPermission;
@@ -93,6 +101,8 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   }
 
   public view: string = '';
+
+  public showConfirmDelete = false;
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -120,6 +130,18 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
     // Load languages
     this.languages = this.service.getLanguages();
+
+    // Load edition menu
+    this.editionMenu.push(
+      {
+        label: 'Datos',
+        command: () => this.onStartEditingView('details')
+      });
+    this.editionMenu.push(
+      {
+        label: 'Donantes',
+        command: () => this.onStartEditingView('donors')
+      });
   }
 
   public onStartEditingView(view: string): void {
@@ -179,6 +201,10 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   public onSetDonation(donation: Donation) {
     this.data.donation = donation;
     super.onSave(this.data);
+  }
+
+  public confirmDelete() {
+    this.showConfirmDelete = true;
   }
 
   protected override delete(): void {
