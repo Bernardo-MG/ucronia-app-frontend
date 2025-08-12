@@ -160,10 +160,12 @@ export class LibraryAdminBookListContainer {
         if (this.source === 'game') {
           this.service.deleteGameBook(number).subscribe(r => {
             this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
           });
         } else {
           this.service.deleteFictionBook(number).subscribe(r => {
             this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
           });
         }
       }

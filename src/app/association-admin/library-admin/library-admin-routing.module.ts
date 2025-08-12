@@ -48,25 +48,25 @@ const routes: Routes = [
             data: { breadcrumb: '' }
           },
           {
-            path: 'games/register',
+            path: 'game/register',
             loadComponent: () => import('./book/containers/library-admin-game-book-creation/library-admin-game-book-creation.container').then(m => m.LibraryAdminGameBookCreationContainer),
             canActivate: [ResourceGuard("library_book", "create")],
             data: { breadcrumb: 'Registrar libro' }
           },
           {
-            path: 'games/:number',
+            path: 'game/:number',
             loadComponent: () => import('./book/containers/library-admin-game-book-edition/library-admin-game-book-edition.container').then(m => m.LibraryAdminGameBookEditionContainer),
             canActivate: [ResourceGuard("library_book", "read")],
             data: { breadcrumb: 'Editar libro' }
           },
           {
-            path: 'games/:number/lend',
+            path: 'game/:number/lend',
             loadComponent: () => import('./book/containers/library-admin-book-lending-lending/library-admin-book-lending-lending.container').then(m => m.LibraryAdminBookLendingLendContainer),
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Préstamo' }
           },
           {
-            path: 'games/:number/return',
+            path: 'game/:number/return',
             loadComponent: () => import('./book/containers/library-admin-book-lending-returning/library-admin-book-lending-returning.container').then(m => m.LibraryAdminBookLendingReturnContainer),
             canActivate: [ResourceGuard("library_lending", "update")],
             data: { breadcrumb: 'Devolución' }
