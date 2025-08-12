@@ -12,7 +12,7 @@ import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -24,13 +24,19 @@ import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent],
-  templateUrl: './library-admin-fiction-book-edition.container.html'
+  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, ToastModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryBookLendingsComponent],
+  templateUrl: './library-admin-fiction-book-edition.container.html',
+  providers: [ConfirmationService, MessageService]
 })
 export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusComponent<FictionBook> {
+
+  private readonly confirmationService = inject(ConfirmationService);
+
+  private readonly messageService = inject(MessageService);
 
   private readonly route = inject(ActivatedRoute);
 
@@ -203,8 +209,26 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     super.onSave(this.data);
   }
 
-  public confirmDelete() {
+  public confirmDelete(event: Event) {
     this.showConfirmDelete = true;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: 'Do you want to delete this record?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.delete();
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+      }
+    });
   }
 
   protected override delete(): void {

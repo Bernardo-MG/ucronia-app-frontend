@@ -19,6 +19,8 @@
       }
     }
   } @else {
+    <p-toast />
+    <p-confirmpopup />
     <div class="row justify-content-md-center">
       <p-panel class="col-sm-6">
         <ng-template #header>
@@ -33,7 +35,7 @@
             [attr.aria-disabled]="!editable" (click)="menu.toggle($event)" rounded text />
           <p-menu #menu [model]="editionMenu" [popup]="true" />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-            [attr.aria-disabled]="!editable" (click)="confirmDelete()" rounded text />
+            [attr.aria-disabled]="!editable" (click)="confirmDelete($event)" rounded text />
         </ng-template>
         <div class="row">
           @if (donated) {
