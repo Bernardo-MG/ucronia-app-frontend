@@ -145,7 +145,7 @@ export class LibraryAdminBookListContainer {
   public onConfirmDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: 'Do you want to delete this record?',
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancel',
@@ -157,8 +157,9 @@ export class LibraryAdminBookListContainer {
         severity: 'danger'
       },
       accept: () => {
-        this.service.deleteFictionBook(number).subscribe();
-        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.service.deleteFictionBook(number).subscribe(r => {
+          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        });
       }
     });
   }
