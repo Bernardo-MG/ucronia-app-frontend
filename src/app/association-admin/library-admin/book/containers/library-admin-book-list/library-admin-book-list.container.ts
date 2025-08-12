@@ -5,16 +5,21 @@ import { BookReportService } from '@app/association-admin/library-admin/report/s
 import { BookInfo } from '@app/models/library/book-info';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { BookAdminService } from '../../services/book-admin.service';
-import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule],
-  templateUrl: './library-admin-book-list.container.html'
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, MenuModule],
+  templateUrl: './library-admin-book-list.container.html',
+  providers: [ConfirmationService, MessageService]
 })
 export class LibraryAdminBookListContainer {
 
@@ -23,6 +28,10 @@ export class LibraryAdminBookListContainer {
   private readonly service = inject(BookAdminService);
 
   private readonly reportService = inject(BookReportService);
+
+  private readonly confirmationService = inject(ConfirmationService);
+
+  private readonly messageService = inject(MessageService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -58,15 +67,54 @@ export class LibraryAdminBookListContainer {
     return `${this.source}/register`;
   }
 
+  public editable = false;
+
+  public readonly editionMenu: MenuItem[] = [];
+
   private sort = new Sorting();
 
   constructor() {
     const authContainer = inject(AuthContainer);
+    
+    this.editable = authContainer.hasPermission("library_book", "update");
 
     // Load books
     this.load(0);
     // Check permissions
     this.createPermission = authContainer.hasPermission("library_book", "create");
+
+    // Load edition menu
+    this.editionMenu.push(
+      {
+        label: 'Datos',
+        //command: () => this.onStartEditingView('details')
+      });
+    this.editionMenu.push(
+      {
+        label: 'Donantes',
+        //command: () => this.onStartEditingView('donors')
+      });
+  }
+
+  public onConfirmDelete(event: Event, number: number) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: 'Do you want to delete this record?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.service.deleteFictionBook(number).subscribe();
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+      }
+    });
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {

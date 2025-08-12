@@ -1,4 +1,7 @@
+<p-toast />
+<p-confirmpopup />
 <p-panel>
+  <p-menu #menu [model]="editionMenu" [popup]="true" />
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="{{routerLink}}" [disabled]="!createPermission"
       aria-label="Nuevo libro" [attr.aria-disabled]="!createPermission" rounded text />
@@ -18,6 +21,7 @@
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
         <th pSortableColumn="lent">Estado <p-sortIcon field="lent" /></th>
+        <th></th>
       </tr>
     </ng-template>
     <ng-template #body let-book>
@@ -33,6 +37,12 @@
           }@else {
             <p-badge value="Disponible" severity="success" />
           }
+        </td>
+        <td>
+          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+            [attr.aria-disabled]="!editable" (click)="menu.toggle($event)" rounded text />
+          <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
+            [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
         </td>
       </tr>
     </ng-template>
