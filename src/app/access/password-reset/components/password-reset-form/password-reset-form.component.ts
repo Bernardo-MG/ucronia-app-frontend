@@ -19,12 +19,12 @@ import { confirmPasswordValidator } from '../../../shared/validators/confirm-pas
 })
 export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
 
-  private formBuilder = inject(FormBuilder);
-
   constructor() {
     super();
 
-    this.form = this.formBuilder.nonNullable.group(
+    const formBuilder = inject(FormBuilder);
+
+    this.form = formBuilder.nonNullable.group(
       {
         password: ['', Validators.required],
         confirmPassword: ['', [Validators.required]]
