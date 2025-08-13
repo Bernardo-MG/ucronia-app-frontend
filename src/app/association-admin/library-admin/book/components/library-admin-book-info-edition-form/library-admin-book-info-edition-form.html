@@ -9,9 +9,9 @@
       </p-floatlabel>
       <div class="mb-2">
         @for (failure of failures().getFailures('title.supertitle'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
         }
       </div>
     </div>
@@ -22,9 +22,9 @@
       </p-floatlabel>
       <div class="mb-2">
         @for (failure of failures().getFailures('title.title'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
         }
       </div>
     </div>
@@ -36,9 +36,9 @@
       </p-floatlabel>
       <div class="mb-2">
         @for (failure of failures().getFailures('title.subtitle'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
         }
       </div>
     </div>
@@ -50,9 +50,9 @@
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('isbn'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{failure.message}}
-    </p-message>
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
   </div>
   <!-- Language -->
@@ -60,9 +60,9 @@
     optionValue="code" placeholder="Idioma" />
   <div class="mb-2">
     @for (failure of failures().getFailures('language'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{failure.message}}
-    </p-message>
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
   </div>
   <!-- Publish date -->
@@ -72,9 +72,9 @@
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('publishDate'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{failure.message}}
-    </p-message>
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
