@@ -29,6 +29,7 @@ export class LibraryAdminFictionBookCreationContainer extends CreateComponent<Fi
 
   constructor() {
     super();
+
     this.languages = this.service.getLanguages();
   }
 

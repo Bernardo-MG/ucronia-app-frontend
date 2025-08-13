@@ -1,197 +1,186 @@
-
 @switch (view) {
-  @case ('form') {
-    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-      <!-- Number -->
-      <div class="row mb-2">
-        <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Número</label>
-        <div class="col-sm-10">
-          <input type="text" formControlName="number" id="indexInput" [readonly]="true" class="form-control"
-            aria-describedby="indexLabel">
-          </div>
-        </div>
-        <!-- ISBN -->
-        <div class="row mb-2">
-          <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
-          <div class="col-sm-10">
-            <input type="text" id="isbnInput" formControlName="isbn" class="form-control" formInvalidField
-              [backendFailure]="failures().hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
-              <form-input-failure-feedback [failures]="failures().getFailures('isbn')" />
-            </div>
-          </div>
-          <!-- Title -->
-          <div class="row mb-2">
-            <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Título</label>
-            <div formGroupName="title" class="col-sm-3">
-              <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
-                formInvalidField="title.supertitle" [backendFailure]="failures().hasFailures('title.supertitle')"
-                aria-describedby="supertitleLabel" maxlength="100" placeholder="Supertítulo">
-                <form-input-failure-feedback [failures]="failures().getFailures('title.supertitle')" />
-              </div>
-              <div formGroupName="title" class="col-sm-3">
-                <input type="text" id="titleInput" formControlName="title" class="form-control" formInvalidField="title.title"
-                  [backendFailure]="failures().hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
-                  placeholder="Título">
-                  <form-input-failure-feedback [failures]="failures().getFailures('title.title')" />
-                </div>
-                <div formGroupName="title" class="col-sm-3">
-                  <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
-                    formInvalidField="title.subtitle" [backendFailure]="failures().hasFailures('title.subtitle')"
-                    aria-describedby="titleLabel" maxlength="100" placeholder="Subtítulo">
-                    <form-input-failure-feedback [failures]="failures().getFailures('title.subtitle')" />
-                  </div>
-                </div>
-                <!-- Language -->
-                <div class="row mb-2">
-                  <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" aria-label="Select year" formControlName="language" formInvalidField
-                      [backendFailure]="failures().hasFailures('language')" aria-describedby="languageLabel">
-                      @for (selectionLanguage of languages(); track selectionLanguage) {
-                        <option [value]="selectionLanguage.code">
-                        {{selectionLanguage.name}}</option>
-                      }
-                    </select>
-                    <form-input-failure-feedback [failures]="failures().getFailures('language')" />
-                  </div>
-                </div>
-                <!-- Publish date -->
-                <div class="row mb-2">
-                  <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
-                  <div class="col-sm-10">
-                    <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
-                      formInvalidField="publishDate" [backendFailure]="failures().hasFailures('publishDate')"
-                      aria-describedby="publishDateLabel">
-                      <form-input-failure-feedback [failures]="failures().getFailures('publishDate')" />
-                    </div>
-                  </div>
-                  <!-- Book type -->
-                  <div class="row mb-2">
-                    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
-                    <div class="col-sm-9">
-                      <input type="text" [value]="bookType?.name" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
-                        class="form-control" aria-describedby="bookTypeLabel">
-                      </div>
-                      <div class="col-sm-1">
-                        <button (click)="onShowBookTypeSelection()" [disabled]="!formEnabled" type="button"
-                          class="btn btn-link link-dark" role="button" aria-label="Pick book type">
-                          <icon-search />
-                        </button>
-                      </div>
-                    </div>
-                    <!-- Game system -->
-                    <div class="row mb-2">
-                      <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
-                      <div class="col-sm-9">
-                        <input type="text" [value]="gameSystem?.name" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
-                          class="form-control" aria-describedby="gameSystemLabel">
-                        </div>
-                        <div class="col-sm-1">
-                          <button (click)="onShowGameSystemSelection()" [disabled]="!formEnabled" type="button"
-                            class="btn btn-link link-dark" role="button" aria-label="Pick game system">
-                            <icon-search />
-                          </button>
-                        </div>
-                      </div>
-                      <!-- Publishers -->
-                      <div class="row mb-2">
-                        <div class="col-sm-12">
-                          <h2>Editores</h2>
-                        </div>
-                        <div class="col-sm-12">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">
-                                </th>
-                                <th scope="col">
-                                  Nombre
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                              @for (publisher of publishers; track publisher; let i = $index) {
-                                <tr>
-                                  <td>
-                                    <button (click)="onRemovePublisher(publisher)" [disabled]="!formEnabled" type="button"
-                                      class="btn btn-link link-dark" role="button" aria-label="Remove publisher">
-                                      <icon-delete />
-                                    </button>
-                                  </td>
-                                  <td>{{publisher.name}}</td>
-                                </tr>
-                              }
-                            </tbody>
-                          </table>
-                        </div>
-                        <div uiJustifyCenter>
-                          <button (click)="onShowPublisherSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-                            aria-label="Add publisher">
-                            <icon-add />
-                          </button>
-                        </div>
-                      </div>
-                      <!-- Authors -->
-                      <div class="row mb-2">
-                        <div class="col-sm-12">
-                          <h2>Autores</h2>
-                        </div>
-                        <div class="col-sm-12">
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">
-                                </th>
-                                <th scope="col">
-                                  Nombre
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                              @for (author of authors; track author) {
-                                <tr>
-                                  <td>
-                                    <button (click)="onRemoveAuthor(author)" [disabled]="!formEnabled" type="button"
-                                      class="btn btn-link link-dark" role="button" aria-label="Remove author">
-                                      <icon-delete />
-                                    </button>
-                                  </td>
-                                  <td>{{author.name}}</td>
-                                </tr>
-                              }
-                            </tbody>
-                          </table>
-                        </div>
-                        <div uiJustifyCenter>
-                          <button (click)="onShowAuthorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
-                            aria-label="Add author">
-                            <icon-add />
-                          </button>
-                        </div>
-                      </div>
-                      <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-                      [cancellable]="cancellable" (reject)="onCancel()" />
-                    </form>
-                  }
-                  @case ('book_type') {
-                    <assoc-library-admin-book-type-selection [values]="bookTypesSelection().content" [current]="bookTypesSelection().page"
-                      [pages]="bookTypesSelection().totalPages" (choose)="onSelectBookType($event)"
-                    (goToPage)="goToBookTypePage.emit($event)" />
-                  }
-                  @case ('game_system') {
-                    <assoc-library-admin-game-system-selection [values]="gameSystemsSelection().content"
-                      [current]="gameSystemsSelection().page" [pages]="gameSystemsSelection().totalPages"
-                      (choose)="onSelectGameSystem($event)"
-                    (goToPage)="goToGameSystemPage.emit($event)" />
-                  }
-                  @case ('author') {
-                    <assoc-library-admin-author-selection [values]="authorsSelection().content" [current]="authorsSelection().page"
-                      [pages]="authorsSelection().totalPages" (choose)="onSelectAuthor($event)"
-                    (goToPage)="goToAuthorPage.emit($event)" />
-                  }
-                  @case ('publisher') {
-                    <assoc-library-admin-publisher-selection [values]="publishersSelection().content" [current]="publishersSelection().page"
-                      [pages]="publishersSelection().totalPages" (choose)="onSelectPublisher($event)"
-                    (goToPage)="goToPublisherPage.emit($event)" />
-                  }
-                }
+@case ('form') {
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- ISBN -->
+  <div class="row mb-2">
+    <label for="isbnInput" id="isbnLabel" class="col-sm-2 col-form-label">ISBN</label>
+    <div class="col-sm-10">
+      <input type="text" id="isbnInput" formControlName="isbn" class="form-control" formInvalidField
+        [backendFailure]="failures().hasFailures('isbn')" aria-describedby="isbnLabel" maxlength="17">
+      <form-input-failure-feedback [failures]="failures().getFailures('isbn')" />
+    </div>
+  </div>
+  <!-- Title -->
+  <div class="row mb-2">
+    <label for="supertitleInput" id="supertitleLabel" class="col-sm-2 col-form-label">Título</label>
+    <div formGroupName="title" class="col-sm-3">
+      <input type="text" id="supertitleInput" formControlName="supertitle" class="form-control"
+        formInvalidField="title.supertitle" [backendFailure]="failures().hasFailures('title.supertitle')"
+        aria-describedby="supertitleLabel" maxlength="100" placeholder="Supertítulo">
+      <form-input-failure-feedback [failures]="failures().getFailures('title.supertitle')" />
+    </div>
+    <div formGroupName="title" class="col-sm-3">
+      <input type="text" id="titleInput" formControlName="title" class="form-control" formInvalidField="title.title"
+        [backendFailure]="failures().hasFailures('title.title')" aria-describedby="titleLabel" maxlength="100"
+        placeholder="Título">
+      <form-input-failure-feedback [failures]="failures().getFailures('title.title')" />
+    </div>
+    <div formGroupName="title" class="col-sm-3">
+      <input type="text" id="titleInput" formControlName="subtitle" class="form-control"
+        formInvalidField="title.subtitle" [backendFailure]="failures().hasFailures('title.subtitle')"
+        aria-describedby="titleLabel" maxlength="100" placeholder="Subtítulo">
+      <form-input-failure-feedback [failures]="failures().getFailures('title.subtitle')" />
+    </div>
+  </div>
+  <!-- Language -->
+  <div class="row mb-2">
+    <label for="languageInput" id="languageLabel" class="col-sm-2 col-form-label">Idioma</label>
+    <div class="col-sm-10">
+      <select class="form-select" aria-label="Select year" formControlName="language" formInvalidField
+        [backendFailure]="failures().hasFailures('language')" aria-describedby="languageLabel">
+        @for (selectionLanguage of languages(); track selectionLanguage) {
+        <option [value]="selectionLanguage.code">
+          {{selectionLanguage.name}}</option>
+        }
+      </select>
+      <form-input-failure-feedback [failures]="failures().getFailures('language')" />
+    </div>
+  </div>
+  <!-- Publish date -->
+  <div class="row mb-2">
+    <label for="publishDateInput" id="publishDateLabel" class="col-sm-2 col-form-label">Fecha de publicación</label>
+    <div class="col-sm-10">
+      <input type="date" id="publishDateInput" formControlName="publishDate" class="form-control"
+        formInvalidField="publishDate" [backendFailure]="failures().hasFailures('publishDate')"
+        aria-describedby="publishDateLabel">
+      <form-input-failure-feedback [failures]="failures().getFailures('publishDate')" />
+    </div>
+  </div>
+  <!-- Book type -->
+  <div class="row mb-2">
+    <label for="bookTypeInput" id="bookTypeLabel" class="col-sm-2 col-form-label">Tipo</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="bookType?.name" id="bookTypeInput" [readonly]="true" [disabled]="!formEnabled"
+        class="form-control" aria-describedby="bookTypeLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowBookTypeSelection()" [disabled]="!formEnabled" type="button" class="btn btn-link link-dark"
+        role="button" aria-label="Pick book type">
+        <icon-search />
+      </button>
+    </div>
+  </div>
+  <!-- Game system -->
+  <div class="row mb-2">
+    <label for="gameSystemInput" id="gameSystemLabel" class="col-sm-2 col-form-label">Sistema</label>
+    <div class="col-sm-9">
+      <input type="text" [value]="gameSystem?.name" id="gameSystemInput" [readonly]="true" [disabled]="!formEnabled"
+        class="form-control" aria-describedby="gameSystemLabel">
+    </div>
+    <div class="col-sm-1">
+      <button (click)="onShowGameSystemSelection()" [disabled]="!formEnabled" type="button"
+        class="btn btn-link link-dark" role="button" aria-label="Pick game system">
+        <icon-search />
+      </button>
+    </div>
+  </div>
+  <!-- Publishers -->
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h2>Editores</h2>
+    </div>
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          @for (publisher of publishers; track publisher; let i = $index) {
+          <tr>
+            <td>
+              <button (click)="onRemovePublisher(publisher)" [disabled]="!formEnabled" type="button"
+                class="btn btn-link link-dark" role="button" aria-label="Remove publisher">
+                <icon-delete />
+              </button>
+            </td>
+            <td>{{publisher.name}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div uiJustifyCenter>
+      <button (click)="onShowPublisherSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
+        aria-label="Add publisher">
+        <icon-add />
+      </button>
+    </div>
+  </div>
+  <!-- Authors -->
+  <div class="row mb-2">
+    <div class="col-sm-12">
+      <h2>Autores</h2>
+    </div>
+    <div class="col-sm-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          @for (author of authors; track author) {
+          <tr>
+            <td>
+              <button (click)="onRemoveAuthor(author)" [disabled]="!formEnabled" type="button"
+                class="btn btn-link link-dark" role="button" aria-label="Remove author">
+                <icon-delete />
+              </button>
+            </td>
+            <td>{{author.name}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div uiJustifyCenter>
+      <button (click)="onShowAuthorSelection()" [disabled]="!formEnabled" type="button" class="btn btn-primary"
+        aria-label="Add author">
+        <icon-add />
+      </button>
+    </div>
+  </div>
+  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (reject)="onCancel()" />
+</form>
+}
+@case ('book_type') {
+<assoc-library-admin-book-type-selection [values]="bookTypesSelection().content" [current]="bookTypesSelection().page"
+  [pages]="bookTypesSelection().totalPages" (choose)="onSelectBookType($event)"
+  (goToPage)="goToBookTypePage.emit($event)" />
+}
+@case ('game_system') {
+<assoc-library-admin-game-system-selection [values]="gameSystemsSelection().content"
+  [current]="gameSystemsSelection().page" [pages]="gameSystemsSelection().totalPages"
+  (choose)="onSelectGameSystem($event)" (goToPage)="goToGameSystemPage.emit($event)" />
+}
+@case ('author') {
+<assoc-library-admin-author-selection [values]="authorsSelection().content" [current]="authorsSelection().page"
+  [pages]="authorsSelection().totalPages" (choose)="onSelectAuthor($event)" (goToPage)="goToAuthorPage.emit($event)" />
+}
+@case ('publisher') {
+<assoc-library-admin-publisher-selection [values]="publishersSelection().content" [current]="publishersSelection().page"
+  [pages]="publishersSelection().totalPages" (choose)="onSelectPublisher($event)"
+  (goToPage)="goToPublisherPage.emit($event)" />
+}
+}

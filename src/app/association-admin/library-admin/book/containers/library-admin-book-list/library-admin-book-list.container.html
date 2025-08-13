@@ -125,7 +125,7 @@
               }
             </div>
             <div class="col-sm-6">
-              @if (book.publishDate && book.publishers.length > 0) {
+              @if (book.publishDate || book.publishers.length > 0) {
               Publicado
               @if (book.publishDate) {
               el {{book.publishDate}}
@@ -151,24 +151,30 @@
       </div>
     </ng-template>
   </p-dataview>
-  <p-drawer header="Edición" [(visible)]="editing" position="right">
+  <p-drawer [(visible)]="editing" position="right">
     @switch (view) {
       @case ('details') {
-        <p-card>
-          <assoc-library-admin-fiction-book-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
-            [readonly]="false" [cancellable]="true" [languages]="languages" [authorsSelection]="authorsSelection"
-            [publishersSelection]="publishersSelection" (save)="onSave($event)" (reject)="onCancel()"
-            (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)" />
-        </p-card>
+        <ng-template #header>
+          <h2>
+            #{{ selectedData.number }}
+            @if (selectedData.title.supertitle) {
+            <sup>{{selectedData.title.supertitle}}</sup>
+            }
+            {{selectedData.title.title}}
+            @if (selectedData.title.subtitle) {
+            <sub>{{selectedData.title.subtitle}}</sub>
+            }
+          </h2>
+        </ng-template>
+        <assoc-library-admin-book-info-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
+          [readonly]="false" [cancellable]="true" [languages]="languages" (save)="onSave($event)" (reject)="onCancel()" />
       }
       @case ('donors') {
-        <p-card>
-          @if(selectedData.donation) {
-            <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-              [readonly]="false" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
-              (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
-          }
-        </p-card>
+        @if(selectedData.donation) {
+          <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
+            [readonly]="false" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
+            (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+        }
       }
     }
   </p-drawer>

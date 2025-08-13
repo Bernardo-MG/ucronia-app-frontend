@@ -2,10 +2,14 @@
 import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
+import { Author } from '@app/models/library/author';
+import { Donation } from '@app/models/library/donation';
 import { Donor } from '@app/models/library/donor';
 import { FictionBook } from '@app/models/library/fiction-book';
 import { GameBook } from '@app/models/library/game-book';
+import { Language } from '@app/models/library/language';
 import { Publisher } from '@app/models/library/publisher';
+import { Person } from '@app/models/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -20,18 +24,14 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
-import { BookAdminService } from '../../services/book-admin.service';
-import { Language } from '@app/models/library/language';
-import { Author } from '@app/models/library/author';
-import { Person } from '@app/models/person/person';
 import { throwError } from 'rxjs';
-import { Donation } from '@app/models/library/donation';
+import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
+import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
+import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule, CardModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule, CardModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -103,6 +103,8 @@ export class LibraryAdminBookListContainer {
 
   constructor() {
     const authContainer = inject(AuthContainer);
+
+    this.languages = this.service.getLanguages();
 
     this.editable = authContainer.hasPermission("library_book", "update");
 
@@ -239,8 +241,8 @@ export class LibraryAdminBookListContainer {
 
   public onSave(toSave: FictionBook | GameBook) {
     this.loading = true;
-    if (toSave instanceof FictionBook) {
-      this.service.updateFictionBook(toSave.number, toSave as FictionBook).subscribe({
+    if (this.source === 'game') {
+      this.service.updateGameBook(toSave.number, toSave as GameBook).subscribe({
         next: response => {
           this.interceptSave(response);
         },
@@ -248,8 +250,8 @@ export class LibraryAdminBookListContainer {
           this.interceptError(error);
         }
       });
-    } else if (toSave instanceof GameBook) {
-      this.service.updateGameBook(toSave.number, toSave as GameBook).subscribe({
+    } else {
+      this.service.updateFictionBook(toSave.number, toSave as FictionBook).subscribe({
         next: response => {
           this.interceptSave(response);
         },

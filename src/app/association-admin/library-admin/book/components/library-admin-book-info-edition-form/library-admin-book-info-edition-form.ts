@@ -1,38 +1,53 @@
 
 import { Component, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FictionBook } from '@app/models/library/fiction-book';
+import { GameBook } from '@app/models/library/game-book';
 import { Language } from '@app/models/library/language';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
-  selector: 'assoc-library-admin-book-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, SaveControlsComponent],
-  templateUrl: './library-admin-book-creation-form.component.html'
+  selector: 'assoc-library-admin-book-info-edition-form',
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, DatePickerModule, SaveControlsComponent],
+  templateUrl: './library-admin-book-info-edition-form.html'
 })
-export class LibraryAdminBookCreationFormComponent extends FormComponent<BookInfo> {
+export class LibraryAdminBookInfoEditionFormComponent extends FormComponent<FictionBook | GameBook> {
 
   public readonly languages = input<Language[]>([]);
 
-  constructor() {
-    super();
+  public view = 'form';
 
+  constructor() {
     const fb = inject(FormBuilder);
 
+    super();
+
     this.form = fb.group({
+      number: [undefined],
+      index: [-1],
       isbn: ['', isbnValidator()],
       title: fb.group({
         supertitle: [''],
         title: ['', Validators.required],
         subtitle: ['']
       }),
-      language: ['', Validators.required]
+      language: ['', Validators.required],
+      publishDate: [''],
+      authors: [[]],
+      donation: fb.group({
+        date: [''],
+        donors: [[]]
+      }),
+      bookType: [],
+      publishers: [[]],
+      gameSystem: []
     });
   }
 
