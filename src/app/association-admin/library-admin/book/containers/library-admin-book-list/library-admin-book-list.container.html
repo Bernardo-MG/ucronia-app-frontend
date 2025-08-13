@@ -75,7 +75,7 @@
         @for (book of books; track book.number) {
         <div class="col-sm-6 border">
           <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 pt-2">
               <h2>
                 @if (book.title.supertitle) {
                 <sup>{{book.title.supertitle}}</sup>
@@ -99,7 +99,7 @@
             <div class="col-sm-6">
               <div class="d-flex justify-content-end">
                 <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-                  [attr.aria-disabled]="!editable" (click)="menu.toggle($event)" rounded text />
+                  [attr.aria-disabled]="!editable" (click)="onSelect(book); menu.toggle($event)" rounded text />
                 <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
                   [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
               </div>
@@ -150,4 +150,25 @@
       </div>
     </ng-template>
   </p-dataview>
+  <p-drawer header="Edición" [(visible)]="editing" position="right">
+    @switch (view) {
+      @case ('details') {
+        <p-card>
+          <assoc-library-admin-fiction-book-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
+            [readonly]="false" [cancellable]="true" [languages]="languages" [authorsSelection]="authorsSelection"
+            [publishersSelection]="publishersSelection" (save)="onSave($event)" (reject)="onCancel()"
+            (goToAuthorPage)="onGoToAuthorPage($event)" (goToPublisherPage)="onGoToPublisherPage($event)" />
+        </p-card>
+      }
+      @case ('donors') {
+        <p-card>
+          @if(selectedData.donation) {
+            <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
+              [readonly]="false" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
+              (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+          }
+        </p-card>
+      }
+    }
+  </p-drawer>
 </p-panel>

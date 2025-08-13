@@ -3,27 +3,35 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
 import { Donor } from '@app/models/library/donor';
+import { FictionBook } from '@app/models/library/fiction-book';
+import { GameBook } from '@app/models/library/game-book';
 import { Publisher } from '@app/models/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DataViewModule } from 'primeng/dataview';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
+import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { OverlayBadgeModule } from 'primeng/overlaybadge';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { GameBook } from '@app/models/library/game-book';
+import { Language } from '@app/models/library/language';
+import { Author } from '@app/models/library/author';
+import { Person } from '@app/models/person/person';
+import { throwError } from 'rxjs';
+import { Donation } from '@app/models/library/donation';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule, CardModule, LibraryAdminFictionBookEditionFormComponent, LibraryAdminBookDonorsFormComponent],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -38,6 +46,16 @@ export class LibraryAdminBookListContainer {
   private readonly confirmationService = inject(ConfirmationService);
 
   private readonly messageService = inject(MessageService);
+
+  public failures = new FailureStore();
+
+  public languages: Language[] = [];
+
+  public authorsSelection = new PaginatedResponse<Author>();
+
+  public publishersSelection = new PaginatedResponse<Publisher>();
+
+  public donorPage = new PaginatedResponse<Person>();
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -210,10 +228,100 @@ export class LibraryAdminBookListContainer {
         }
       });
   }
+  public onSelect(selection: FictionBook | GameBook) {
+    this.selectedData = selection;
+  }
 
   public onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
+  }
+
+  public onSave(toSave: FictionBook | GameBook) {
+    this.loading = true;
+    if (toSave instanceof FictionBook) {
+      this.service.updateFictionBook(toSave.number, toSave as FictionBook).subscribe({
+        next: response => {
+          this.interceptSave(response);
+        },
+        error: error => {
+          this.interceptError(error);
+        }
+      });
+    } else if (toSave instanceof GameBook) {
+      this.service.updateGameBook(toSave.number, toSave as GameBook).subscribe({
+        next: response => {
+          this.interceptSave(response);
+        },
+        error: error => {
+          this.interceptError(error);
+        }
+      });
+    }
+  }
+
+  public onSetDonation(donation: Donation) {
+    this.selectedData.donation = donation;
+    this.onSave(this.selectedData);
+  }
+
+  public onGoToAuthorPage(page: number) {
+    this.service.getAuthors(page).subscribe({
+      next: response => {
+        this.authorsSelection = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onGoToPublisherPage(page: number) {
+    this.service.getPublishers(page).subscribe({
+      next: response => {
+        this.publishersSelection = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onGoToDonorPage(page: number) {
+    this.service.getDonors(page).subscribe({
+      next: response => {
+        this.donorPage = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onCancel(): void {
+    this.editing = false;
+  }
+
+  protected interceptSave(response: FictionBook | GameBook) {
+    this.load(this.data.page);
+
+    this.failures.clear();
+
+    // Reactivate component
+    this.loading = false;
+    this.editing = false;
+  }
+
+  protected interceptError(error: any) {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      // No failure response
+      // Just remove the failures
+      this.failures.clear();
+    }
+
+    // Reactivate component
+    this.loading = false;
+
+    return throwError(() => error);
   }
 
   private load(page: number) {
