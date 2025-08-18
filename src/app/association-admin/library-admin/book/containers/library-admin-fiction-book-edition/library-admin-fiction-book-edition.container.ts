@@ -204,7 +204,7 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
     });
   }
 
-  public onSetDonation(donation: Donation) {
+  public onSetDonation(donation: Donation | undefined) {
     this.data.donation = donation;
     super.onSave(this.data);
   }

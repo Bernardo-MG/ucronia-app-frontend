@@ -15,7 +15,7 @@ import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-library-admin-book-info-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, DatePickerModule, SaveControlsComponent],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, SaveControlsComponent],
   templateUrl: './library-admin-book-info-edition-form.html'
 })
 export class LibraryAdminBookInfoEditionFormComponent extends FormComponent<FictionBook | GameBook> {

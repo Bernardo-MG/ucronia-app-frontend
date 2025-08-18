@@ -108,8 +108,10 @@ export class LibraryAdminBookListContainer {
 
     this.editable = authContainer.hasPermission("library_book", "update");
 
-    // Load books
+    // Load data
     this.load(0);
+    this.onGoToDonorPage(0);
+
     // Check permissions
     this.createPermission = authContainer.hasPermission("library_book", "create");
 
@@ -262,7 +264,7 @@ export class LibraryAdminBookListContainer {
     }
   }
 
-  public onSetDonation(donation: Donation) {
+  public onSetDonation(donation: Donation | undefined) {
     this.selectedData.donation = donation;
     this.onSave(this.selectedData);
   }

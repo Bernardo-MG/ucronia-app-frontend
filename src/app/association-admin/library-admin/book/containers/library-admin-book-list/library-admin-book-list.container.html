@@ -1,12 +1,5 @@
 <p-toast />
 <p-confirmpopup />
-<p-drawer header="Right Drawer" [(visible)]="editing" position="right">
-  <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-    aliquip ex ea commodo consequat.
-  </p>
-</p-drawer>
 <p-panel>
   <p-menu #menu [model]="editionMenu" [popup]="true" />
   <ng-template #icons>
@@ -170,11 +163,9 @@
           [readonly]="false" [cancellable]="true" [languages]="languages" (save)="onSave($event)" (reject)="onCancel()" />
       }
       @case ('donors') {
-        @if(selectedData.donation) {
-          <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-            [readonly]="false" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
-            (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
-        }
+        <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
+          [readonly]="false" [cancellable]="true" [donorsSelection]="donorPage" (save)="onSetDonation($event)"
+          (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
       }
     }
   </p-drawer>

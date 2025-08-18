@@ -16,7 +16,7 @@
       @case ('donors') {
         <p-card>
           <assoc-library-admin-book-donors-form [data]="donation" [waiting]="saving" [failures]="failures"
-            [readonly]="!formEnabled" [cancellable]="true" [donors]="donorPage" (save)="onSetDonation($event)"
+            [readonly]="!formEnabled" [cancellable]="true" [donorsSelection]="donorPage" (save)="onSetDonation($event)"
             (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
         </p-card>
       }
