@@ -2,12 +2,12 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
-import { Author } from '@app/models/library/author';
-import { Donation } from '@app/models/library/donation';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { Language } from '@app/models/library/language';
-import { Publisher } from '@app/models/library/publisher';
-import { Person } from '@app/models/person/person';
+import { Author } from '@app/domain/library/author';
+import { Donation } from '@app/domain/library/donation';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { Language } from '@app/domain/library/language';
+import { Publisher } from '@app/domain/library/publisher';
+import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';

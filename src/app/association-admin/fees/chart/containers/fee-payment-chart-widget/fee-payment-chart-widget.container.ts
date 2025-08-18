@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
+import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import { CardModule } from 'primeng/card';
 import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
 import { FeeReportService } from '../../services/fee-report.service';

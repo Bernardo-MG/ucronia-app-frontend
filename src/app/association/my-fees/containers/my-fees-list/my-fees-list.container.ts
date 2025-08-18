@@ -1,7 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Fee } from '@app/models/fees/fee';
+import { Fee } from '@app/domain/fees/fee';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';

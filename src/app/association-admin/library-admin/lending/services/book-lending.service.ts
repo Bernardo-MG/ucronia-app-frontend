@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BookLending } from '@app/models/library/book-lending';
+import { BookLending } from '@app/domain/library/book-lending';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingParams } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';

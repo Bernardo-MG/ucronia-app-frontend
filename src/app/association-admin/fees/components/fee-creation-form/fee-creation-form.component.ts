@@ -1,8 +1,8 @@
 
 import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Fee } from '@app/models/fees/fee';
-import { Member } from '@app/models/members/member';
+import { Fee } from '@app/domain/fees/fee';
+import { Member } from '@app/domain/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
 

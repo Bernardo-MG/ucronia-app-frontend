@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Publisher } from '@app/models/library/publisher';
+import { Publisher } from '@app/domain/library/publisher';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';

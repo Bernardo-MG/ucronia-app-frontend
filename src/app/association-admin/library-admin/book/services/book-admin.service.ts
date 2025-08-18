@@ -1,20 +1,20 @@
 import { Injectable, inject } from '@angular/core';
-import { Author } from '@app/models/library/author';
-import { BookLent } from '@app/models/library/book-lent';
-import { BookReturned } from '@app/models/library/book-returned';
-import { BookType } from '@app/models/library/book-type';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { GameBook } from '@app/models/library/game-book';
-import { GameSystem } from '@app/models/library/game-system';
-import { Language } from '@app/models/library/language';
-import { Publisher } from '@app/models/library/publisher';
-import { Member } from '@app/models/members/member';
-import { Active } from '@app/models/person/active';
-import { Person } from '@app/models/person/person';
+import { Author } from '@app/domain/library/author';
+import { BookLent } from '@app/domain/library/book-lent';
+import { BookReturned } from '@app/domain/library/book-returned';
+import { BookType } from '@app/domain/library/book-type';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { GameBook } from '@app/domain/library/game-book';
+import { GameSystem } from '@app/domain/library/game-system';
+import { Language } from '@app/domain/library/language';
+import { Publisher } from '@app/domain/library/publisher';
+import { Member } from '@app/domain/members/member';
+import { Active } from '@app/domain/person/active';
+import { Person } from '@app/domain/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { BookInfo } from '../../../../models/library/book-info';
+import { BookInfo } from '@app/domain/library/book-info';
 
 @Injectable({
   providedIn: "root"

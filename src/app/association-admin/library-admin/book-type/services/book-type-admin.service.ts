@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BookType } from '@app/models/library/book-type';
+import { BookType } from '@app/domain/library/book-type';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

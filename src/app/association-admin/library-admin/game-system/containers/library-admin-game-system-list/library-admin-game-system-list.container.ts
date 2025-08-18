@@ -1,7 +1,7 @@
 
 import { Component, inject, Input, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { GameSystem } from '@app/models/library/game-system';
+import { GameSystem } from '@app/domain/library/game-system';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';

@@ -1,6 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { BookLending } from '@app/models/library/book-lending';
+import { BookLending } from '@app/domain/library/book-lending';
 import { TableModule } from 'primeng/table';
 
 @Component({

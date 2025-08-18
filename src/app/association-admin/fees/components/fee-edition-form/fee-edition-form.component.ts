@@ -3,7 +3,7 @@ import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
-import { Fee } from '../../../../models/fees/fee';
+import { Fee } from '@app/domain/fees/fee';
 
 @Component({
   selector: 'assoc-fee-edition-form',

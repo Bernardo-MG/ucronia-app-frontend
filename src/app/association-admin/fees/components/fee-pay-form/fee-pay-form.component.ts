@@ -1,8 +1,8 @@
 
 import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FeePayment } from '@app/models/fees/fee-payment';
-import { Person } from '@app/models/person/person';
+import { FeePayment } from '@app/domain/fees/fee-payment';
+import { Person } from '@app/domain/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';

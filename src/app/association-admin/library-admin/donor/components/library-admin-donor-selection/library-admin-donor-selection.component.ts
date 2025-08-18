@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Person } from '@app/models/person/person';
+import { Person } from '@app/domain/person/person';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';

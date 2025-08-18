@@ -1,8 +1,8 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookInfo } from '@app/models/library/book-info';
-import { Language } from '@app/models/library/language';
+import { BookInfo } from '@app/domain/library/book-info';
+import { Language } from '@app/domain/library/language';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';

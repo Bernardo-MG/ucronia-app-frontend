@@ -2,10 +2,10 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Fee } from '@app/models/fees/fee';
-import { FeePayment } from '@app/models/fees/fee-payment';
-import { Active } from '@app/models/person/active';
-import { Person } from '@app/models/person/person';
+import { Fee } from '@app/domain/fees/fee';
+import { FeePayment } from '@app/domain/fees/fee-payment';
+import { Active } from '@app/domain/person/active';
+import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { IconBackwardComponent } from '@bernardo-mg/icons';

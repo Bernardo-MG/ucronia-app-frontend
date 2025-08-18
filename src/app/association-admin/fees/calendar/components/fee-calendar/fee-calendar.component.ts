@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
-import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
+import { FeeCalendar, FeeCalendarMonth } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 
