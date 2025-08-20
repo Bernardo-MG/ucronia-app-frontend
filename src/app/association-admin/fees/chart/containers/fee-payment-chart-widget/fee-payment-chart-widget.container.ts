@@ -17,6 +17,9 @@ export class FeePaymentChartWidgetContainer {
   constructor() {
     const service = inject(FeeReportService);
 
+    this.report.paid = 0;
+    this.report.unpaid = 0;
+
     service.getPaymentReport().subscribe({
       next: response => {
         this.report = response;

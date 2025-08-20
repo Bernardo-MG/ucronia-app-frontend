@@ -39,13 +39,20 @@ export class FeeCalendarComponent implements OnChanges {
     return (this.index > 0);
   }
 
-  public ngOnChanges({ range }: SimpleChanges): void {
-    if (range) {
-      const lastYear = Number(this.range.years[this.range.years.length - 1]);
-      if (this.year > lastYear) {
-        this.year = lastYear;
+  public ngOnChanges(changes: SimpleChanges): void {
+    const rangeChange = changes['range'];
+    if (rangeChange) {
+      const range = rangeChange.currentValue as FeeCalendarYearsRange;
+
+      if (range?.years?.length) {
+        const lastYear = Number(range.years[range.years.length - 1]);
+
+        if (this.year > lastYear) {
+          this.year = lastYear;
+        }
+
+        this.index = range.years.indexOf(this.year.toString());
       }
-      this.index = this.range.years.indexOf(this.year.toString());
     }
   }
 

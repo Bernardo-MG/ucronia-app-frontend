@@ -3,18 +3,22 @@ import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Fee } from '@app/domain/fees/fee';
 import { Member } from '@app/domain/members/member';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
+import { FormComponent } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
   templateUrl: './fee-creation-form.component.html'
 })
 export class FeeCreationFormComponent extends FormComponent<Fee> {
 
-  @Input() public set person(value: Member) {
-    this.form.get('person')?.get('number')?.setValue(value.number);
+  @Input() public set member(value: Member) {
+    this.form.get('member')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
 
@@ -26,9 +30,7 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
     super();
 
     this.form = fb.group({
-      person: fb.group({
-        number: [null, Validators.required]
-      }),
+      member: [null, Validators.required],
       month: ['', Validators.required]
     });
   }

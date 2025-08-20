@@ -1,20 +1,17 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
-  <div class="row mb-2">
-    <label for="fullNameInput" class="col-sm-2 col-form-label">Socio</label>
-    <div class="col-sm-10">
-      <input disabled type="text" [value]="fullname" id="fullNameInput" readonly="true" class="form-control"
-        aria-describedby="fullNameLabel">
-    </div>
-  </div>
+  <h2>{{fullname}}</h2>
   <!-- Month -->
-  <div class="row mb-2">
-    <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Cuota</label>
-    <div class="col-sm-10">
-      <input type="month" id="monthInput" formControlName="month" class="form-control" formInvalidField="month"
-        [backendFailure]="failures().hasFailures('month')">
-      <form-input-failure-feedback [failures]="failures().getFailures('month')" />
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker formControlName="month" [invalid]="isFieldInvalid('selectedDate')" view="month" dateFormat="yy-mm" />
+    <label for="usernameInput">Mes</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
 
   <!-- Save button -->

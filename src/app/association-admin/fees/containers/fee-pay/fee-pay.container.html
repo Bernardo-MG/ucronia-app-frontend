@@ -29,7 +29,7 @@
     }
     @case (false) {
     <!-- Create unpaid form -->
-    <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [person]="person"
+    <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="person"
       (save)="onCreateUnpaid($event)" />
     }
     }

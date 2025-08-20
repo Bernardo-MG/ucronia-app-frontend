@@ -10,7 +10,9 @@ import Chart from 'chart.js/auto';
 export class FeePaymentChartComponent implements OnDestroy {
 
   @Input() public set report(data: FeePaymentReport) {
-    this.loadChart(data);
+    if (data) {
+      this.loadChart(data);
+    }
   }
 
   public chart: any;
