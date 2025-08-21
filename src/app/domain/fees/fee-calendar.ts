@@ -1,7 +1,7 @@
 import { PersonName } from "../person/person-name";
 
 export class FeeCalendar {
-  member = new FeeCalendarPerson();
+  member = new FeeCalendarMember();
   year = -1;
   months: FeeCalendarMonth[] = [];
 }
@@ -12,12 +12,8 @@ export class FeeCalendarMonth {
   paid = false;
 }
 
-export class FeeCalendarPerson {
+export class FeeCalendarMember {
   number = -1;
   name = new PersonName();
-  membership = new FeeCalendarPersonMembership();
-}
-
-export class FeeCalendarPersonMembership {
   active = false;
 }

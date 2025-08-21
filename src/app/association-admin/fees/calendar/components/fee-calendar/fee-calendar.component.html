@@ -40,7 +40,7 @@
     </thead>
     <tbody class="table-group-divider">
       @for (memberFees of feeCalendar(); track memberFees) {
-        <tr [ngClass]="{ 'table-warning': !memberFees.member.membership.active}">
+        <tr [ngClass]="{ 'table-warning': !memberFees.member.active}">
           <td>
             {{memberFees.member.name.fullName}}
           </td>
