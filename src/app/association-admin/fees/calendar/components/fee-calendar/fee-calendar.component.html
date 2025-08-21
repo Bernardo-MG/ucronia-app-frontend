@@ -40,16 +40,16 @@
     </thead>
     <tbody class="table-group-divider">
       @for (memberFees of feeCalendar(); track memberFees) {
-        <tr [ngClass]="{ 'table-warning': !memberFees.person.membership.active}">
+        <tr [ngClass]="{ 'table-warning': !memberFees.member.membership.active}">
           <td>
-            {{memberFees.person.name.fullName}}
+            {{memberFees.member.name.fullName}}
           </td>
           <!-- Month fees -->
           @for (monthNumber of monthNumbers; track monthNumber) {
             <td>
               @if (hasMonth(memberFees.months, monthNumber)) {
                 <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.person.number}}">
+                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}">
                   <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)" />
                 </button>
               }

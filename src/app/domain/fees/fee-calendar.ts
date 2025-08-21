@@ -1,7 +1,7 @@
 import { PersonName } from "../person/person-name";
 
 export class FeeCalendar {
-  person = new FeeCalendarPerson();
+  member = new FeeCalendarPerson();
   year = -1;
   months: FeeCalendarMonth[] = [];
 }
