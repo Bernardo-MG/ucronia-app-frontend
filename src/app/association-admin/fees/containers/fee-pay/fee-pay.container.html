@@ -24,7 +24,7 @@
     @switch (pay) {
     @case (true) {
     <!-- Pay form -->
-    <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [person]="person"
+    <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="person"
       (save)="onSave($event)" />
     }
     @case (false) {
