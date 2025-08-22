@@ -52,10 +52,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    // Construct UTC date at midnight
-    const utcDate = new Date(Date.UTC(year, month, 1, 0, 0, 0));
-
-    this.months.at(index).setValue(utcDate, { emitEvent: false });
+    this.months.at(index).setValue(`${year}-${month}`, { emitEvent: false });
   }
 
 }

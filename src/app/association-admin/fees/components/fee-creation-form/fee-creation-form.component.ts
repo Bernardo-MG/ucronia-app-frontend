@@ -39,10 +39,7 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    // Construct UTC date at midnight
-    const utcDate = new Date(Date.UTC(year, month, 1, 0, 0, 0));
-
-    this.form.get('month')?.setValue(utcDate, { emitEvent: false });
+    this.form.get('month')?.setValue(`${year}-${month}`, { emitEvent: false });
   }
 
 }
