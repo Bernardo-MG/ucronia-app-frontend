@@ -39,7 +39,14 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    this.form.get('month')?.setValue(`${year}-${month}`, { emitEvent: false });
+    let dateValue;
+    if (month < 10) {
+      dateValue = `${year}-0${month}`;
+    } else {
+      dateValue = `${year}-${month}`;
+    }
+
+    this.form.get('month')?.setValue(dateValue, { emitEvent: false });
   }
 
 }

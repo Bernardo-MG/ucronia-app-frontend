@@ -52,7 +52,14 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
     const year = date.getFullYear();
     const month = date.getMonth();
 
-    this.months.at(index).setValue(`${year}-${month}`, { emitEvent: false });
+    let dateValue;
+    if (month < 10) {
+      dateValue = `${year}-0${month}`;
+    } else {
+      dateValue = `${year}-${month}`;
+    }
+
+    this.months.at(index).setValue(dateValue, { emitEvent: false });
   }
 
 }
