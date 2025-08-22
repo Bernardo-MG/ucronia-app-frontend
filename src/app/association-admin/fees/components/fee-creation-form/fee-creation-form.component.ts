@@ -37,7 +37,7 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
 
   public onMonthSelect(date: Date) {
     const year = date.getFullYear();
-    const month = date.getMonth(); // already 0-based
+    const month = date.getMonth();
 
     // Construct UTC date at midnight
     const utcDate = new Date(Date.UTC(year, month, 1, 0, 0, 0));

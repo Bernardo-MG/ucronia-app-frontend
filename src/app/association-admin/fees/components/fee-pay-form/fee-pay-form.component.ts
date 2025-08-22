@@ -26,6 +26,10 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
 
   public fullname = "";
 
+  public get feeMonths(): FormArray {
+    return this.form.get('feeMonths') as FormArray;
+  }
+
   constructor() {
     super();
     const fb = this.fb;
@@ -39,13 +43,21 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
   }
 
   public addDate() {
-    const dates = this.form.get('feeMonths') as FormArray;
-    dates.push(this.fb.control(''));
+    this.feeMonths.push(this.fb.control(''));
   }
 
   public removeDate(index: number): void {
-    const feeMonthsArray = this.form.get('feeMonths') as FormArray;
-    feeMonthsArray.removeAt(index);
+    this.feeMonths.removeAt(index);
+  }
+
+  public onMonthSelect(date: Date, index: number) {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+
+    // Construct UTC date at midnight
+    const utcDate = new Date(Date.UTC(year, month, 1, 0, 0, 0));
+
+    this.feeMonths.at(index).setValue(utcDate, { emitEvent: false });
   }
 
 }

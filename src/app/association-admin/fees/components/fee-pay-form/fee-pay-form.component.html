@@ -18,21 +18,21 @@
   <h3>Cuotas</h3>
   <!-- Each fee -->
   @for (date of form.get('feeMonths').controls; track date; let i = $index) {
-    <div formGroupName="feeMonths" class="row">
+    <div class="row">
       <div class="col-sm-10">
-      <p-floatlabel variant="in" class="mb-2 d-flex">
-        <p-datepicker [id]="'monthYearInput_' + i" [formControlName]="i" [invalid]="isFieldInvalid('feeMonths[]')"
-          view="month" dateFormat="yy-mm" />
-        <label [for]="'monthYearInput_' + i">Mes</label>
-      </p-floatlabel>
+        <p-floatlabel variant="in" class="mb-2 d-flex">
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('feeMonths[]')"
+            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" />
+          <label [for]="'monthYearInput_' + i">Mes</label>
+        </p-floatlabel>
       </div>
       <div class="col-sm-2">
-      <div class="col-md-2 mb-2">
-        <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
-          (click)="removeDate(i)">
-          <icon-delete />
-        </button>
-      </div>
+        <div class="col-md-2 mb-2">
+          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
+            (click)="removeDate(i)">
+            <icon-delete />
+          </button>
+        </div>
       </div>
     </div>
   }
