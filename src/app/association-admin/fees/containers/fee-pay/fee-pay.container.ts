@@ -118,6 +118,7 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
     } else {
       this.pay = event.checked;
     }
+    this.failures.clear();
   }
 
   protected override handleSaveSuccess(saved: FeePayment) {
