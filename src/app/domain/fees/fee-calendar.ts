@@ -7,7 +7,6 @@ export class FeeCalendar {
 }
 
 export class FeeCalendarMonth {
-  monthNumber = -1;
   month = '';
   paid = false;
 }
