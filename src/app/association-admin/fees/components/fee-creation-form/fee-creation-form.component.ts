@@ -25,9 +25,9 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
   public fullname = "";
 
   constructor() {
-    const fb = inject(FormBuilder);
-
     super();
+
+    const fb = inject(FormBuilder);
 
     this.form = fb.group({
       member: [null, Validators.required],

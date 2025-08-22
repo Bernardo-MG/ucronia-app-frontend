@@ -24,9 +24,9 @@ export class FeeEditionFormComponent extends FormComponent<Fee> {
   public fee = new Fee();
 
   constructor() {
-    const fb = inject(FormBuilder);
-
     super();
+
+    const fb = inject(FormBuilder);
 
     this.form = fb.group({
       person: fb.group({

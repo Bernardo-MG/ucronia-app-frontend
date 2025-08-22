@@ -17,11 +17,11 @@
   <!-- Fees -->
   <h3>Cuotas</h3>
   <!-- Each fee -->
-  @for (date of form.get('feeMonths').controls; track date; let i = $index) {
+  @for (date of months.controls; track date; let i = $index) {
     <div class="row">
       <div class="col-sm-10">
         <p-floatlabel variant="in" class="mb-2 d-flex">
-          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('feeMonths[]')"
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
             view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" />
           <label [for]="'monthYearInput_' + i">Mes</label>
         </p-floatlabel>
@@ -45,7 +45,7 @@
     </div>
   </div>
   <div class="mb-2">
-    @for (failure of failures().getFailures('feeMonths[]'); track failure) {
+    @for (failure of failures().getFailures('months[]'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{failure.message}}
       </p-message>
