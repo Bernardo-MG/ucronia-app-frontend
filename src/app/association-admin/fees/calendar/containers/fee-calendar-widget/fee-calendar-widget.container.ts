@@ -1,9 +1,9 @@
 
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendar } from '@app/models/fees/fee-calendar';
-import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
-import { Active } from '@app/models/person/active';
+import { FeeCalendar } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
+import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';

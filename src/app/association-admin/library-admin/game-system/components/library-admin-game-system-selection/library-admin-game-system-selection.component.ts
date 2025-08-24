@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GameSystem } from '@app/models/library/game-system';
+import { GameSystem } from '@app/domain/library/game-system';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';

@@ -2,7 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
-import { Transaction } from '../../../../../models/transactions/transaction';
+import { Transaction } from '@app/domain/transactions/transaction';
 
 @Component({
   selector: 'assoc-transaction-form',

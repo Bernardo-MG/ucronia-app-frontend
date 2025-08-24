@@ -2,7 +2,7 @@
 import { Component, inject, Input, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportWidgetContainer } from '@app/association-admin/library-admin/report/containers/book-report-widget/book-report-widget.container';
-import { BookInfo } from '@app/models/library/book-info';
+import { BookInfo } from '@app/domain/library/book-info';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';

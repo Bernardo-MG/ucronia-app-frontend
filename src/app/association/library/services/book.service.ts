@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { GameBook } from '@app/models/library/game-book';
-import { Language } from '@app/models/library/language';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { GameBook } from '@app/domain/library/game-book';
+import { Language } from '@app/domain/library/language';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

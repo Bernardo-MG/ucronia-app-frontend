@@ -2,10 +2,10 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LibraryAdminBookLendingLendComponent } from '@app/association-admin/library-admin/book/components/library-admin-book-lending/library-admin-book-lending.component';
-import { BookInfo } from '@app/models/library/book-info';
-import { BookLent } from '@app/models/library/book-lent';
-import { Member } from '@app/models/members/member';
-import { Active } from '@app/models/person/active';
+import { BookInfo } from '@app/domain/library/book-info';
+import { BookLent } from '@app/domain/library/book-lent';
+import { Member } from '@app/domain/members/member';
+import { Active } from '@app/domain/person/active';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';

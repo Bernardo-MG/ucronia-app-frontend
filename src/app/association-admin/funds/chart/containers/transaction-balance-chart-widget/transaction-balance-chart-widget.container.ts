@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
+import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import { CardModule } from 'primeng/card';
 import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
 import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';

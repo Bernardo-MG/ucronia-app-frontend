@@ -1,6 +1,6 @@
 
 import { Component, input, output } from '@angular/core';
-import { Member } from '@app/models/members/member';
+import { Member } from '@app/domain/members/member';
 import { IconSearchComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';

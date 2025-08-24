@@ -1,10 +1,10 @@
 
 import { Component, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Language } from '@app/models/library/language';
+import { Language } from '@app/domain/library/language';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
-import { BookInfo } from '../../../../../models/library/book-info';
+import { BookInfo } from '@app/domain/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-creation-form',

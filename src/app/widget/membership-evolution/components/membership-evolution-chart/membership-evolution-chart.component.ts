@@ -1,6 +1,6 @@
 
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges, input, output } from '@angular/core';
-import { MemberBalance } from '@app/models/members/member-balance';
+import { MemberBalance } from '@app/domain/members/member-balance';
 import Chart from 'chart.js/auto';
 
 @Component({

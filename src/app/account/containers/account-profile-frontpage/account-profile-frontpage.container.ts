@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { AccountProfilePersonComponent } from '@app/account/components/account-profile-person/account-profile-person.component';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account.service';
-import { Person } from '@app/models/person/person';
+import { Person } from '@app/domain/person/person';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';

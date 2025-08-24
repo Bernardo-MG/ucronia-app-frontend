@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { TransactionCurrentBalance } from '../../../../models/transactions/transaction-current-balance';
-import { TransactionMonthlyBalance } from '../../../../models/transactions/transaction-monthly-balance';
+import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
+import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 
 @Injectable({
   providedIn: "root"

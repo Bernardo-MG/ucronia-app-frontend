@@ -2,9 +2,9 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
-import { Donation } from '@app/models/library/donation';
-import { Donor } from '@app/models/library/donor';
-import { Person } from '@app/models/person/person';
+import { Donation } from '@app/domain/library/donation';
+import { Donor } from '@app/domain/library/donor';
+import { Person } from '@app/domain/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';

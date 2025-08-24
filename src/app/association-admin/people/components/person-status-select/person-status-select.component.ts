@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { Active } from '@app/models/person/active';
+import { Active } from '@app/domain/person/active';
 
 @Component({
   selector: 'assoc-person-status-select',

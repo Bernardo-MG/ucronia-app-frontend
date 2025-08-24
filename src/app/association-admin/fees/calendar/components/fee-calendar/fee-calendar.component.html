@@ -10,10 +10,12 @@
   <div class="w-25 px-3">
     <!-- Current year -->
     <select class="form-select" aria-label="Select year" [disabled]="waiting()" (change)="onGoTo($event)">
-      @for (selectionYear of range.years.slice().reverse(); track selectionYear) {
-        <option [selected]="selectionYear === year.toString()"
-          [value]="selectionYear">
-        {{selectionYear}}</option>
+      @if (range.years) {
+        @for (selectionYear of range.years.slice().reverse(); track selectionYear) {
+          <option [selected]="selectionYear === year.toString()"
+            [value]="selectionYear">
+          {{selectionYear}}</option>
+        }
       }
     </select>
   </div>
@@ -38,16 +40,16 @@
     </thead>
     <tbody class="table-group-divider">
       @for (memberFees of feeCalendar(); track memberFees) {
-        <tr [ngClass]="{ 'table-warning': !memberFees.person.membership.active}">
+        <tr [ngClass]="{ 'table-warning': !memberFees.member.active}">
           <td>
-            {{memberFees.person.name.fullName}}
+            {{memberFees.member.name.fullName}}
           </td>
           <!-- Month fees -->
           @for (monthNumber of monthNumbers; track monthNumber) {
             <td>
               @if (hasMonth(memberFees.months, monthNumber)) {
                 <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.person.number}}">
+                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}">
                   <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)" />
                 </button>
               }

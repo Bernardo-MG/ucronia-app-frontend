@@ -1,7 +1,7 @@
 
 import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { BookLending } from '@app/models/library/book-lending';
+import { BookLending } from '@app/domain/library/book-lending';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';

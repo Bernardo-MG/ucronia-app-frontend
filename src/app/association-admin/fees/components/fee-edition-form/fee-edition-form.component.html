@@ -1,19 +1,17 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
-  <div class="row mb-2">
-    <label for="fullNameInput" id="fullNameLabel" class="col-sm-2 col-form-label">Socio</label>
-    <div class="col-sm-10">
-      <input disabled type="text" [value]="fee.person.name.fullName" id="fullNameInput" readonly="true" class="form-control"
-        aria-describedby="fullNameLabel">
-    </div>
-  </div>
+  <h2>{{fee.member.name.fullName}}</h2>
   <!-- Month -->
-  <div class="row mb-2">
-    <label for="monthInput" id="monthLabel" class="col-sm-2 col-form-label">Mes</label>
-    <div class="col-sm-10">
-      <input disabled type="month" [value]="fee.month" id="monthInput" readonly="true" class="form-control"
-        aria-describedby="monthLabel">
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
+      (onSelect)="onMonthSelect($event)" />
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <!-- Paid -->
   <div class="row mb-2">
@@ -23,14 +21,19 @@
     </div>
   </div>
   <!-- Payment date -->
-  <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
-    <div formGroupName="payment" class="col-sm-10">
-      <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-        formInvalidField="payment.date" [backendFailure]="failures().hasFailures('payment.date')"
-        aria-describedby="paymentDateLabel">
-      <form-input-failure-feedback [failures]="failures().getFailures('payment.date')" />
-    </div>
+  <div formGroupName="transaction">
+    <p-floatlabel variant="in" class="mb-2 d-flex">
+      <p-datepicker id="transaction.dateInput" formControlName="date" [invalid]="isFieldInvalid('transaction.date')"
+        dateFormat="yy-mm-dd" />
+      <label for="transaction.dateInput">Pago</label>
+    </p-floatlabel>
+  </div>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('transaction.date'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
     [cancellable]="cancellable" (reject)="onCancel()" />

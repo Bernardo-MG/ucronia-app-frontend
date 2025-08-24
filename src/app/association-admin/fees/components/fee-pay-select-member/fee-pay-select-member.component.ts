@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
-import { Member } from '@app/models/members/member';
-import { Active } from '@app/models/person/active';
-import { Person } from '@app/models/person/person';
+import { Member } from '@app/domain/members/member';
+import { Active } from '@app/domain/person/active';
+import { Person } from '@app/domain/person/person';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { BlockUiDirective, ButtonListComponent, JustifyBetweenDirective } from '@bernardo-mg/ui';

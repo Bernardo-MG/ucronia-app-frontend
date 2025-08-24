@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BookLending } from '@app/models/library/book-lending';
-import { LentBook } from '@app/models/library/lent-book';
+import { BookLending } from '@app/domain/library/book-lending';
+import { LentBook } from '@app/domain/library/lent-book';
 import { LibraryBookLendingsComponent } from './library-book-lendings.component';
 
 describe('LibraryBookLendingsComponent', () => {

@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BookInfo } from '@app/models/library/book-info';
-import { BookReturned } from '@app/models/library/book-returned';
-import { Borrower } from '@app/models/library/borrower';
+import { BookInfo } from '@app/domain/library/book-info';
+import { BookReturned } from '@app/domain/library/book-returned';
+import { Borrower } from '@app/domain/library/borrower';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';

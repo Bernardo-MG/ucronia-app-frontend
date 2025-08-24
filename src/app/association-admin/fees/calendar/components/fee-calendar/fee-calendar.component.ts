@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendar, FeeCalendarMonth } from '@app/models/fees/fee-calendar';
-import { FeeCalendarYearsRange } from '@app/models/fees/fee-calendar-years-range';
+import { FeeCalendar, FeeCalendarMonth } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 
@@ -39,13 +39,20 @@ export class FeeCalendarComponent implements OnChanges {
     return (this.index > 0);
   }
 
-  public ngOnChanges({ range }: SimpleChanges): void {
-    if (range) {
-      const lastYear = Number(this.range.years[this.range.years.length - 1]);
-      if (this.year > lastYear) {
-        this.year = lastYear;
+  public ngOnChanges(changes: SimpleChanges): void {
+    const rangeChange = changes['range'];
+    if (rangeChange) {
+      const range = rangeChange.currentValue as FeeCalendarYearsRange;
+
+      if (range?.years?.length) {
+        const lastYear = Number(range.years[range.years.length - 1]);
+
+        if (this.year > lastYear) {
+          this.year = lastYear;
+        }
+
+        this.index = range.years.indexOf(this.year.toString());
       }
-      this.index = this.range.years.indexOf(this.year.toString());
     }
   }
 
@@ -68,7 +75,7 @@ export class FeeCalendarComponent implements OnChanges {
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
-    return months.find(m => m.monthNumber === month) !== undefined;
+    return months.find(m => this.getMonthNumber(m.month) === month) !== undefined;
   }
 
   public isPaid(months: FeeCalendarMonth[], month: number): boolean {
@@ -80,7 +87,11 @@ export class FeeCalendarComponent implements OnChanges {
   }
 
   private getCalendarMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth {
-    return months.find(m => m.monthNumber === month) as FeeCalendarMonth;
+    return months.find(m => this.getMonthNumber(m.month) === month) as FeeCalendarMonth;
+  }
+
+  private getMonthNumber(date: string): number {
+    return parseInt(date.split("-")[1], 10);
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BookType } from '@app/models/library/book-type';
+import { BookType } from '@app/domain/library/book-type';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';

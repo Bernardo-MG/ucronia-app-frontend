@@ -1,4 +1,4 @@
-import { Title } from "@app/models/library/title";
+import { Title } from "@app/domain/library/title";
 import { BookLending } from "./book-lending";
 
 export class BookInfo {

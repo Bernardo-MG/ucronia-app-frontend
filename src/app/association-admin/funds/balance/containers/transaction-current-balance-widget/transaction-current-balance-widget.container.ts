@@ -2,7 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
-import { TransactionCurrentBalance } from '../../../../../models/transactions/transaction-current-balance';
+import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { TransactionBalanceService } from '../../services/transaction-balance.service';
 
 @Component({

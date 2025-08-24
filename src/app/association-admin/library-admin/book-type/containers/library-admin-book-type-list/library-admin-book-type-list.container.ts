@@ -1,7 +1,7 @@
 
 import { Component, inject, Input, output } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BookType } from '@app/models/library/book-type';
+import { BookType } from '@app/domain/library/book-type';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
