@@ -1,10 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
-  <h2>{{fee.person.name.fullName}}</h2>
+  <h2>{{fee.member.name.fullName}}</h2>
   <!-- Month -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('selectedDate')" view="month" dateFormat="yy-mm" />
-    <label for="monthInput">Mes</label>
+    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
+      (onSelect)="onMonthSelect($event)" />
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('month'); track failure) {
@@ -21,14 +21,19 @@
     </div>
   </div>
   <!-- Payment date -->
-  <div class="row mb-2">
-    <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
-    <div formGroupName="payment" class="col-sm-10">
-      <input id="paymentDateInput" type="date" formControlName="date" class="form-control"
-        formInvalidField="payment.date" [backendFailure]="failures().hasFailures('payment.date')"
-        aria-describedby="paymentDateLabel">
-      <form-input-failure-feedback [failures]="failures().getFailures('payment.date')" />
-    </div>
+  <div formGroupName="transaction">
+    <p-floatlabel variant="in" class="mb-2 d-flex">
+      <p-datepicker id="transaction.dateInput" formControlName="date" [invalid]="isFieldInvalid('transaction.date')"
+        dateFormat="yy-mm-dd" />
+      <label for="transaction.dateInput">Pago</label>
+    </p-floatlabel>
+  </div>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('transaction.date'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
     [cancellable]="cancellable" (reject)="onCancel()" />

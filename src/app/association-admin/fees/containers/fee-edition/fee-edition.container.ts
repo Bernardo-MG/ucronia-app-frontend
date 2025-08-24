@@ -31,9 +31,10 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   private memberNumber = -1;
 
   constructor() {
+    super(new Fee());
+
     const authContainer = inject(AuthContainer);
 
-    super(new Fee());
     // Check permissions
     this.editable = authContainer.hasPermission("fee", "update");
     this.deletable = authContainer.hasPermission("fee", "delete");
@@ -60,8 +61,8 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   }
 
   public selectPayment() {
-    if (this.data.payment) {
-      const payment = this.data.payment as FeeTransaction
+    if (this.data.transaction) {
+      const payment = this.data.transaction as FeeTransaction
       this.router.navigate([`association/admin/funds/transaction/${payment.index}`]);
     }
   }
@@ -71,11 +72,11 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   }
 
   public isPaymentDisabled(): boolean {
-    return (this.waiting) || (this.data.payment === null);
+    return (this.waiting) || (this.data.transaction === null);
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.month, this.data.person.number).subscribe(r => {
+    this.service.delete(this.data.month, this.data.member.number).subscribe(r => {
       this.router.navigate([`../..`], { relativeTo: this.route });
     });
   }
@@ -85,7 +86,7 @@ export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implemen
   }
 
   protected override save(toSave: Fee): Observable<Fee> {
-    return this.service.update(this.data.month, this.data.person.number, toSave);
+    return this.service.update(this.data.month, this.data.member.number, toSave);
   }
 
 }

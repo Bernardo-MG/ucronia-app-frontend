@@ -12,7 +12,7 @@
         @if (waiting) {
           <p-skeleton height="2rem" class="mb-2" />
         } @else {
-          <h2>{{data.month}} {{data.person.name.fullName}}</h2>
+          <h2>{{data.month}} {{data.member.name.fullName}}</h2>
         }
         @if (waiting) {
           <p-skeleton />
@@ -33,7 +33,7 @@
           @if (waiting) {
             <p-skeleton class="mb-2" />
           } @else {
-            {{data.payment?.date}}
+            {{data.transaction?.date}}
           }
         </div>
         <div class="col-sm-1">
