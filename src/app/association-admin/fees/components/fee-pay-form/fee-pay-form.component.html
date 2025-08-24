@@ -3,12 +3,12 @@
   <h2>{{fullname}}</h2>
   <!-- Payment date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="transactionInput" formControlName="transaction" [invalid]="isFieldInvalid('transaction')"
+    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [invalid]="isFieldInvalid('transaction')"
       dateFormat="yy-mm-dd" />
-    <label for="transactionInput">Pago</label>
+    <label for="paymentDateInput">Pago</label>
   </p-floatlabel>
   <div class="mb-2">
-    @for (failure of failures().getFailures('transaction'); track failure) {
+    @for (failure of failures().getFailures('paymentDate'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{failure.message}}
       </p-message>

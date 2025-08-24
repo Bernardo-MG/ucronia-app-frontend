@@ -37,7 +37,7 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
 
   public onMonthSelect(date: Date) {
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
 
     let dateValue;
     if (month < 10) {

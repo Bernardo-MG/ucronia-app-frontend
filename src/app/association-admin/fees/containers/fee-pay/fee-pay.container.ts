@@ -48,9 +48,10 @@ export class FeePayContainer extends CreateComponent<FeePayment> {
   public pay = true;
 
   constructor() {
+    super();
+
     const authContainer = inject(AuthContainer);
 
-    super();
     // Check permissions
     this.createPermission = authContainer.hasPermission("fee", "create");
 

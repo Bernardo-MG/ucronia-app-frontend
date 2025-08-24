@@ -34,7 +34,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
     super();
 
     this.form = this.fb.group({
-      transaction: [null, Validators.required],
+      paymentDate: [null, Validators.required],
       member: [null, Validators.required],
       months: this.fb.array([''], Validators.required)
     });
@@ -50,7 +50,7 @@ export class FeePayFormComponent extends FormComponent<FeePayment> {
 
   public onMonthSelect(date: Date, index: number) {
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
 
     let dateValue;
     if (month < 10) {

@@ -3,9 +3,9 @@
   <h2>{{fullname}}</h2>
   <!-- Month -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
+    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
       (onSelect)="onMonthSelect($event)" />
-    <label for="usernameInput">Mes</label>
+    <label for="monthInput">Mes</label>
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('month'); track failure) {
