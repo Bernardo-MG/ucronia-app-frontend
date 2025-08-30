@@ -25,7 +25,7 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
 
   private readonly service = inject(BookAdminService);
 
-  public source: 'games' | 'fiction' = 'games';
+  public source: 'game' | 'fiction' = 'game';
 
   public book = new BookInfo();
 
@@ -40,9 +40,10 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
   private index = -1;
 
   constructor() {
+    super();
+
     const authContainer = inject(AuthContainer);
 
-    super();
     // Get id
     this.route.paramMap.subscribe(params => {
       const indexParam = params.get('number');
@@ -52,7 +53,7 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
 
       const urlSegments = this.route.snapshot.url;
       const sourceSegment = urlSegments.length > 0 ? urlSegments[0].path : '';
-      this.source = sourceSegment as 'games' | 'fiction';
+      this.source = sourceSegment as 'game' | 'fiction';
 
       this.load();
     });
@@ -66,7 +67,7 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
   }
 
   private load() {
-    if (this.source === 'games') {
+    if (this.source === 'game') {
       this.service.getOneGameBook(this.index).subscribe({
         next: response => {
           this.book = response;
@@ -74,7 +75,7 @@ export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLe
         error: error => {
         }
       });
-    } else {
+    } else if (this.source === 'fiction') {
       this.service.getOneFictionBook(this.index).subscribe({
         next: response => {
           this.book = response;

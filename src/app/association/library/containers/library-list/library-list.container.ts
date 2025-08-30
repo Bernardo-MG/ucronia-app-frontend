@@ -30,7 +30,7 @@ export class LibraryListContainer {
    */
   public loading = false;
 
-  public source: 'games' | 'fiction' = 'games';
+  public source: 'game' | 'fiction' = 'game';
 
   private sort = new Sorting();
 
@@ -53,7 +53,7 @@ export class LibraryListContainer {
 
 
   public onChangeSource(event: any) {
-    this.source = event.target.value as 'games' | 'fiction';
+    this.source = event.target.value as 'game' | 'fiction';
     this.load(0);
   }
 
@@ -69,7 +69,7 @@ export class LibraryListContainer {
   private load(page: number) {
     this.loading = true;
 
-    if (this.source === 'games') {
+    if (this.source === 'game') {
       this.service.getAllGameBooks(page, this.sort).subscribe({
         next: response => {
           this.data = response;

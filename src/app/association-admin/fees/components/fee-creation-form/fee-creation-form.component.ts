@@ -19,10 +19,10 @@ export class FeeCreationFormComponent extends FormComponent<Fee> {
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
-    this.fullname = value.name.fullName;
+    this.memberName = value.name.fullName;
   }
 
-  public fullname = "";
+  public memberName = "";
 
   constructor() {
     super();

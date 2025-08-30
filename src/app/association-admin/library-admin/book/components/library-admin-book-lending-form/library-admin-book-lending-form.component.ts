@@ -1,15 +1,19 @@
 
 import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
+import { FormComponent } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
-import { BookInfo } from '@app/domain/library/book-info';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-form',
-  imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
   templateUrl: './library-admin-book-lending-form.component.html'
 })
 export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {

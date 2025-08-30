@@ -1,10 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Member -->
-  <h2>{{fullname}}</h2>
+  <h2>{{memberName}}</h2>
   <!-- Month -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
-      (onSelect)="onMonthSelect($event)" />
+    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month"
+      dateFormat="yy-mm" (onSelect)="onMonthSelect($event)" />
     <label for="monthInput">Mes</label>
   </p-floatlabel>
   <div class="mb-2">

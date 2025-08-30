@@ -1,13 +1,13 @@
 
 import { Component, input, output } from '@angular/core';
+import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { BookInfo } from '@app/domain/library/book-info';
+import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';
 import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
