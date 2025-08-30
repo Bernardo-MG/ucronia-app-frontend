@@ -19,7 +19,7 @@ import { MessageModule } from 'primeng/message';
 export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {
 
   @Input() public set borrower(value: Member) {
-    this.form.get('person')?.setValue(value.number);
+    this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }
 
@@ -42,7 +42,7 @@ export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent
 
     this.form = fb.group({
       lendingDate: [null, Validators.required],
-      person: [-1, Validators.required],
+      borrower: [-1, Validators.required],
       book: [-1, Validators.required]
     });
   }
