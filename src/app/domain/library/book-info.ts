@@ -1,5 +1,5 @@
-import { Title } from "@app/models/library/title";
 import { Author } from "./author";
+import { Title } from "@app/domain/library/title";
 import { BookLending } from "./book-lending";
 import { BookType } from "./book-type";
 import { Donation } from "./donation";

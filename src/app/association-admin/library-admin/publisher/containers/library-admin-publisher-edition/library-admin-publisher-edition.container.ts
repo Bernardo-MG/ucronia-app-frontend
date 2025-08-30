@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Publisher } from '@app/models/library/publisher';
+import { Publisher } from '@app/domain/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';

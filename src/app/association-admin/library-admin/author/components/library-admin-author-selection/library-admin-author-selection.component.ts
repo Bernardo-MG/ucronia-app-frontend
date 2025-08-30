@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Author } from '@app/models/library/author';
+import { Author } from '@app/domain/library/author';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent } from '@bernardo-mg/ui';

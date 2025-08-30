@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Fee } from '@app/models/fees/fee';
+import { Fee } from '@app/domain/fees/fee';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';

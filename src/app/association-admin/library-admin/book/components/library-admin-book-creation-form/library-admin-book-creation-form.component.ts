@@ -1,7 +1,8 @@
 
 import { Component, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Language } from '@app/models/library/language';
+import { BookInfo } from '@app/domain/library/book-info';
+import { Language } from '@app/domain/library/language';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
@@ -9,7 +10,6 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { BookInfo } from '../../../../../models/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-creation-form',

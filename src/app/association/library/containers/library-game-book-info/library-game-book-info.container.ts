@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GameBook } from '@app/models/library/game-book';
-import { Language } from '@app/models/library/language';
+import { GameBook } from '@app/domain/library/game-book';
+import { Language } from '@app/domain/library/language';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';

@@ -1,9 +1,9 @@
 
 import { Component, inject, input } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { GameBook } from '@app/models/library/game-book';
-import { Language } from '@app/models/library/language';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { GameBook } from '@app/domain/library/game-book';
+import { Language } from '@app/domain/library/language';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';

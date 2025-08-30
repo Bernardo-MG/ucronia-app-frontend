@@ -1,8 +1,8 @@
 
 export class FeePayment {
   person = new FeePaymentPerson();
-  transaction = new FeePaymentTransaction();
-  feeMonths: Date[] = [];
+  paymentDate = new FeePaymentTransaction();
+  months: Date[] = [];
 }
 
 export class FeePaymentTransaction {

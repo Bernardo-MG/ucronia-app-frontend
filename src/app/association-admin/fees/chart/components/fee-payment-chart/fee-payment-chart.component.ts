@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy } from '@angular/core';
-import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
+import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -10,7 +10,9 @@ import Chart from 'chart.js/auto';
 export class FeePaymentChartComponent implements OnDestroy {
 
   @Input() public set report(data: FeePaymentReport) {
-    this.loadChart(data);
+    if (data) {
+      this.loadChart(data);
+    }
   }
 
   public chart: any;

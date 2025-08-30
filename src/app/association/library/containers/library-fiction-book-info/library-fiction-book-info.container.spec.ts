@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { FictionBook } from '@app/models/library/fiction-book';
+import { FictionBook } from '@app/domain/library/fiction-book';
 import { of } from 'rxjs';
 import { BookService } from '../../services/book.service';
 import { LibraryFictionBookInfoContainer } from './library-fiction-book-info.container';

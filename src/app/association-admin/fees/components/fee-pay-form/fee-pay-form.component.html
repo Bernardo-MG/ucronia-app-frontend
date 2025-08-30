@@ -1,60 +1,63 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- Person -->
-  <div class="row mb-2">
-    <label for="fullNameInput" class="col-sm-2 col-form-label">Socio</label>
-    <div class="col-sm-10">
-      <input disabled type="text" id="fullNameInput" [value]="fullname" readonly="true" class="form-control"
-        aria-describedby="fullNameLabel">
+  <h2>{{fullname}}</h2>
+  <!-- Payment date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [invalid]="isFieldInvalid('paymentDate')"
+      dateFormat="yy-mm-dd" />
+    <label for="paymentDateInput">Pago</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('paymentDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Fees -->
+  <h3>Cuotas</h3>
+  <!-- Each fee -->
+  @for (date of months.controls; track date; let i = $index) {
+    <div class="row">
+      <div class="col-sm-10">
+        <p-floatlabel variant="in" class="mb-2 d-flex">
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
+            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" />
+          <label [for]="'monthYearInput_' + i">Mes</label>
+        </p-floatlabel>
+      </div>
+      <div class="col-sm-2">
+        <div class="col-md-2 mb-2">
+          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
+            (click)="removeDate(i)">
+            <icon-delete />
+          </button>
+        </div>
       </div>
     </div>
-    <!-- Payment date -->
-    <div class="row mb-2">
-      <label for="paymentDateInput" id="paymentDateLabel" class="col-sm-2 col-form-label">Pago</label>
-      <div formGroupName="payment" class="col-sm-10">
-        <input type="date" id="paymentDateInput" formControlName="date" class="form-control"
-          formInvalidField="payment.date" [backendFailure]="failures().hasFailures('payment.date')"
-          aria-describedby="paymentDateLabel">
-          <form-input-failure-feedback [failures]="failures().getFailures('payment.date')" />
-        </div>
-      </div>
-      <!-- Fees -->
-      <div class="row mb-2">
-        <label class="col-sm-2 col-form-label">Cuotas</label>
-        <div class="col-sm-10">
-          <!-- Each fee -->
-          @for (date of form.get('feeMonths').controls; track date; let i = $index) {
-            <div formGroupName="feeMonths" class="row">
-              <div class="col-md-6 mb-2">
-                <input type="month" [id]="'monthYearInput_' + i" [formControlName]="i" class="form-control"
-                  formInvalidField="feeMonths[]" [backendFailure]="failures().hasFailures('feeMonths[]')">
-                  <form-input-failure-feedback [failures]="failures().getFailures('feeMonths[]')" />
-                </div>
-                <div class="col-md-2 mb-2">
-                  <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
-                    (click)="removeDate(i)">
-                    <icon-delete />
-                  </button>
-                </div>
-              </div>
-            }
-            <!-- Add fee button -->
-            <div class="row">
-              <div uiJustifyCenter>
-                <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled"
-                  (click)="addDate()">
-                  <icon-add />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+  }
+  <!-- Add fee button -->
+  <div class="row">
+    <div uiJustifyCenter>
+      <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled" (click)="addDate()">
+        <icon-add />
+      </button>
+    </div>
+  </div>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('months[]'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
 
-        <!-- Save button -->
-        <div class="row">
-          <div class="col-sm-2 d-grid gap-2">
-            <!-- Save button -->
-            <button type="submit" name="Login" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
-            [attr.aria-disabled]="!saveEnabled" (click)="onSave()">Guardar</button>
-          </div>
-        </div>
-      </form>
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <button type="submit" name="Login" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled">Guardar</button>
+    </div>
+  </div>
+</form>

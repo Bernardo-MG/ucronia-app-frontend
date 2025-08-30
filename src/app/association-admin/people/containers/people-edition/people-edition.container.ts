@@ -2,8 +2,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Membership } from '@app/models/person/membership';
-import { Person } from '@app/models/person/person';
+import { Membership } from '@app/domain/person/membership';
+import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';

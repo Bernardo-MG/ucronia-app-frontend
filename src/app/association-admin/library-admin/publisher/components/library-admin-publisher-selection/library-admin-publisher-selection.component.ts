@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Publisher } from '@app/models/library/publisher';
+import { Publisher } from '@app/domain/library/publisher';
 import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { PagedSelectorComponent } from '@bernardo-mg/form';
 import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@bernardo-mg/ui';

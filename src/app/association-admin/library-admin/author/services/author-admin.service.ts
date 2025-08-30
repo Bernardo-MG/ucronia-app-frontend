@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Author } from '@app/models/library/author';
+import { Author } from '@app/domain/library/author';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

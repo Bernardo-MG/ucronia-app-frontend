@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { GameSystem } from '@app/models/library/game-system';
+import { GameSystem } from '@app/domain/library/game-system';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

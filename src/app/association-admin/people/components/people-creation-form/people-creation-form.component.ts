@@ -1,8 +1,8 @@
 
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Membership } from '@app/models/person/membership';
-import { Person } from '@app/models/person/person';
+import { Membership } from '@app/domain/person/membership';
+import { Person } from '@app/domain/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({

@@ -2,13 +2,13 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
-import { Author } from '@app/models/library/author';
-import { Donation } from '@app/models/library/donation';
-import { Donor } from '@app/models/library/donor';
-import { FictionBook } from '@app/models/library/fiction-book';
-import { Language } from '@app/models/library/language';
-import { Publisher } from '@app/models/library/publisher';
-import { Person } from '@app/models/person/person';
+import { Author } from '@app/domain/library/author';
+import { Donation } from '@app/domain/library/donation';
+import { Donor } from '@app/domain/library/donor';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { Language } from '@app/domain/library/language';
+import { Publisher } from '@app/domain/library/publisher';
+import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { InfoEditorStatusComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -20,11 +20,11 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { Observable } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminFictionBookEditionFormComponent } from '../../components/library-admin-fiction-book-edition-form/library-admin-fiction-book-edition-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition',

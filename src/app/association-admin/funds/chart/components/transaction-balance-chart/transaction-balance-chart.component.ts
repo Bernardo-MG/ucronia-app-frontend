@@ -1,6 +1,6 @@
 
 import { Component, Input, OnChanges, OnDestroy, SimpleChanges, input, output } from '@angular/core';
-import { TransactionMonthlyBalance } from '@app/models/transactions/transaction-monthly-balance';
+import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 
 @Component({

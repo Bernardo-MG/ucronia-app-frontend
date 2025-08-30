@@ -1,11 +1,11 @@
 
 import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BookReturned } from '@app/models/library/book-returned';
-import { Member } from '@app/models/members/member';
+import { BookReturned } from '@app/domain/library/book-returned';
+import { Member } from '@app/domain/members/member';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
-import { BookInfo } from '../../../../../models/library/book-info';
+import { BookInfo } from '@app/domain/library/book-info';
 
 @Component({
   selector: 'assoc-library-admin-book-return-form',

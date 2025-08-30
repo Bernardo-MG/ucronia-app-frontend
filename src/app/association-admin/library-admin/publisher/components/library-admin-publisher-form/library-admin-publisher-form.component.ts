@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Publisher } from '@app/models/library/publisher';
+import { Publisher } from '@app/domain/library/publisher';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
 @Component({

@@ -2,7 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MemberService } from '@app/association/members/services/member.service';
-import { Member } from '@app/models/members/member';
+import { Member } from '@app/domain/members/member';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';

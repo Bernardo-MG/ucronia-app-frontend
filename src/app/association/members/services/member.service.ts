@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Member } from '@app/models/members/member';
-import { Active } from '@app/models/person/active';
+import { Member } from '@app/domain/members/member';
+import { Active } from '@app/domain/person/active';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

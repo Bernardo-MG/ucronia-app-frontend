@@ -1,52 +1,65 @@
 
 import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FeePayment } from '@app/models/fees/fee-payment';
-import { Person } from '@app/models/person/person';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
+import { FeePayment } from '@app/domain/fees/fee-payment';
+import { Person } from '@app/domain/person/person';
+import { FormComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-pay-form',
-  imports: [FormsModule, ReactiveFormsModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, WaitingDirective],
   templateUrl: './fee-pay-form.component.html'
 })
 export class FeePayFormComponent extends FormComponent<FeePayment> {
+
   private fb = inject(FormBuilder);
 
-
-  @Input() public set person(value: Person) {
-    this.form.get('person')?.get('number')?.setValue(value.number);
+  @Input() public set member(value: Person) {
+    this.form.get('member')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
 
   public fullname = "";
 
+  public get months(): FormArray {
+    return this.form.get('months') as FormArray;
+  }
+
   constructor() {
     super();
-    const fb = this.fb;
 
-
-    this.form = fb.group({
-      payment: fb.group({
-        date: [null, Validators.required]
-      }),
-      person: fb.group({
-        number: [null, Validators.required]
-      }),
-      feeMonths: fb.array([''], Validators.required)
+    this.form = this.fb.group({
+      paymentDate: [null, Validators.required],
+      member: [null, Validators.required],
+      months: this.fb.array([''], Validators.required)
     });
   }
 
   public addDate() {
-    const dates = this.form.get('feeMonths') as FormArray;
-    dates.push(this.fb.control(''));
+    this.months.push(this.fb.control(''));
   }
 
   public removeDate(index: number): void {
-    const feeMonthsArray = this.form.get('feeMonths') as FormArray;
-    feeMonthsArray.removeAt(index);
+    this.months.removeAt(index);
+  }
+
+  public onMonthSelect(date: Date, index: number) {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
+    let dateValue;
+    if (month < 10) {
+      dateValue = `${year}-0${month}`;
+    } else {
+      dateValue = `${year}-${month}`;
+    }
+
+    this.months.at(index).setValue(dateValue, { emitEvent: false });
   }
 
 }

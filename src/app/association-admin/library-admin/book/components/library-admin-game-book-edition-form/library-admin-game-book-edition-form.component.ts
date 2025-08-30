@@ -5,17 +5,17 @@ import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/lib
 import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book-type/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
 import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/game-system/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
 import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/publisher/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
-import { Author } from '@app/models/library/author';
-import { BookType } from '@app/models/library/book-type';
-import { GameBook } from '@app/models/library/game-book';
-import { GameSystem } from '@app/models/library/game-system';
-import { Language } from '@app/models/library/language';
-import { Publisher } from '@app/models/library/publisher';
+import { Author } from '@app/domain/library/author';
+import { BookType } from '@app/domain/library/book-type';
+import { GameBook } from '@app/domain/library/game-book';
+import { GameSystem } from '@app/domain/library/game-system';
+import { Language } from '@app/domain/library/language';
+import { Publisher } from '@app/domain/library/publisher';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent, IconSearchComponent } from '@bernardo-mg/icons';
-import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition-form',

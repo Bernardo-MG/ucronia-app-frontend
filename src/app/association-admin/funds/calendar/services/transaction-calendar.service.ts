@@ -3,9 +3,9 @@ import { Month } from '@app/shared/calendar/models/month';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
-import { Transaction } from '../../../../models/transactions/transaction';
-import { TransactionCalendarMonth } from '../../../../models/transactions/transaction-calendar-month';
-import { TransactionCalendarMonthsRange } from '../../../../models/transactions/transaction-calendar-months-range';
+import { Transaction } from '@app/domain/transactions/transaction';
+import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
+import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
 
 @Injectable({
   providedIn: "root"

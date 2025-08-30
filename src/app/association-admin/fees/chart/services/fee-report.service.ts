@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { FeePaymentReport } from '@app/models/fees/fee-payment-report';
+import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
