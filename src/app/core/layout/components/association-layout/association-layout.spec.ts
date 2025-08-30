@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter } from '@angular/router';
 import { AssociationLayout } from './association-layout';
 
 describe('AssociationLayout', () => {
@@ -8,9 +9,15 @@ describe('AssociationLayout', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AssociationLayout]
+      imports: [
+        AssociationLayout
+      ],
+      providers: [
+        provideAnimationsAsync(),
+        provideRouter([])
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(AssociationLayout);
     component = fixture.componentInstance;

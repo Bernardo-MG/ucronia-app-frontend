@@ -2,7 +2,6 @@
 import { Component, inject, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
