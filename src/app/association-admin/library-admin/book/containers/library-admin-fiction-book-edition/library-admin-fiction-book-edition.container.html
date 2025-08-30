@@ -25,9 +25,9 @@
       <p-panel class="col-sm-6">
         <ng-template #header>
           @if (waiting) {
-          <p-skeleton height="2rem" class="mb-2" />
+            <p-skeleton height="2rem" class="mb-2" />
           } @else {
-          <span class="p-panel-title"># {{data.number}} {{data.title.fullTitle}}</span>
+            <span class="p-panel-title"># {{data.number}} {{data.title.fullTitle}}</span>
           }
         </ng-template>
         <ng-template #icons>
@@ -40,9 +40,9 @@
         <div class="row">
           @if (donated) {
               @if (waiting) {
-              <p-skeleton height="2rem" class="mb-2" />
+                <p-skeleton height="2rem" class="mb-2" />
               } @else {
-              Donado el {{ data.donation?.date }} por {{ donors }}
+                Donado el {{ data.donation?.date }} por {{ donors }}
               }
           }
         </div>
@@ -52,9 +52,9 @@
               <div class="col-sm-3 text-primary">ISBN</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                {{data.isbn}}
+                  {{data.isbn}}
                 }
               </div>
             </div>
@@ -63,11 +63,11 @@
               <div class="col-sm-3 text-primary">Título</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                <sup>{{data.title.supertitle}}</sup>
-                {{data.title.title}}
-                <sub>{{data.title.subtitle}}</sub>
+                  <sup>{{data.title.supertitle}}</sup>
+                  {{data.title.title}}
+                  <sub>{{data.title.subtitle}}</sub>
                 }
               </div>
             </div>
@@ -76,9 +76,9 @@
               <div class="col-sm-3 text-primary">Idioma</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                {{language}}
+                  {{language}}
                 }
               </div>
             </div>
@@ -87,9 +87,9 @@
               <div class="col-sm-3 text-primary">Fecha de publicación</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                {{data.publishDate}}
+                  {{data.publishDate}}
                 }
               </div>
             </div>
@@ -98,9 +98,9 @@
               <div class="col-sm-3 text-primary">Autor</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                {{authors}}
+                  {{authors}}
                 }
               </div>
             </div>
@@ -109,9 +109,9 @@
               <div class="col-sm-3 text-primary">Editor</div>
               <div class="col-sm-9">
                 @if (waiting) {
-                <p-skeleton class="mb-2" />
+                  <p-skeleton class="mb-2" />
                 } @else {
-                {{publishers}}
+                  {{publishers}}
                 }
               </div>
             </div>
@@ -124,13 +124,13 @@
         </ng-template>
         <ng-template #icons>
           @if (data.lent) {
-          <!-- Return button -->
-          <p-button severity="secondary" routerLink="return" [disabled]="lendDisabled" aria-label="Devolver"
-            [attr.aria-disabled]="lendDisabled" text><span class="pi pi-download"></span> Devolver</p-button>
+            <!-- Return button -->
+            <p-button severity="secondary" routerLink="return" [disabled]="lendDisabled" aria-label="Devolver"
+              [attr.aria-disabled]="lendDisabled" text><span class="pi pi-download"></span> Devolver</p-button>
           } @else {
-          <!-- Lend button -->
-          <p-button severity="secondary" routerLink="lend" [disabled]="lendDisabled" aria-label="Prestar"
-            [attr.aria-disabled]="lendDisabled" text><span class="pi pi-upload"></span> Prestar</p-button>
+            <!-- Lend button -->
+            <p-button severity="secondary" routerLink="lend" [disabled]="lendDisabled" aria-label="Prestar"
+              [attr.aria-disabled]="lendDisabled" text><span class="pi pi-upload"></span> Prestar</p-button>
           }
         </ng-template>
         <assoc-library-book-lendings [lendings]="data.lendings" />
