@@ -1,4 +1,5 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { BookLending } from '@app/domain/library/book-lending';
 import { TableModule } from 'primeng/table';
@@ -6,7 +7,7 @@ import { TimelineModule } from 'primeng/timeline';
 
 @Component({
   selector: 'assoc-library-book-lendings',
-  imports: [TableModule, TimelineModule],
+  imports: [TableModule, TimelineModule, DatePipe],
   templateUrl: './library-book-lendings.component.html',
   styleUrl: './library-book-lendings.component.sass'
 })

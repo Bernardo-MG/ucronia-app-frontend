@@ -10,6 +10,6 @@
     }
   </ng-template>
   <ng-template #content let-event>
-    {{ event.date }}
+    {{ event.date | date:'dd-MM-yyyy' }}
   </ng-template>
 </p-timeline>
