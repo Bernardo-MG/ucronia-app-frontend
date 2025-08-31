@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EntityList } from '@app/core/layout/components/entity-list/entity-list';
+import { EntityCrudList } from '@app/core/layout/components/entity-list/entity-crud-list';
 import { Author } from '@app/domain/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
@@ -20,7 +20,7 @@ import { AuthorAdminService } from '../../services/author-admin.service';
   imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, LibraryAdminAuthorFormComponent],
   templateUrl: './library-admin-author-list.component.html'
 })
-export class LibraryAdminAuthorListContainer extends EntityList<Author> {
+export class LibraryAdminAuthorListContainer extends EntityCrudList<Author> {
 
   private readonly service = inject(AuthorAdminService);
 

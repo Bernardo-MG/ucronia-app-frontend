@@ -3,7 +3,7 @@ import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirec
 import { TablePageEvent } from 'primeng/table';
 import { Observable, throwError } from 'rxjs';
 
-export abstract class EntityList<E> {
+export abstract class EntityCrudList<E> {
 
   public data = new PaginatedResponse<E>();
 
