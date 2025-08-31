@@ -1,17 +1,19 @@
 
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookType } from '@app/domain/library/book-type';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { BookTypeAdminService } from '../../services/book-type-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-type-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule],
   templateUrl: './library-admin-book-type-list.container.html'
 })
 export class LibraryAdminBookTypeListContainer {
@@ -44,7 +46,9 @@ export class LibraryAdminBookTypeListContainer {
    */
   public loading = false;
 
-  public readonly createPermission;
+  public readonly editable;
+
+  public readonly createable;
 
   private sort = new Sorting();
 
@@ -54,7 +58,8 @@ export class LibraryAdminBookTypeListContainer {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_book_type", "create");
+    this.createable = authContainer.hasPermission("library_book_type", "create");
+    this.editable = authContainer.hasPermission("library_book_type", "update");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -74,8 +79,8 @@ export class LibraryAdminBookTypeListContainer {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/library/types/${this.selectedData.number}`]);
+  public onEdit(number: number) {
+    this.router.navigate([`/association/admin/library/types/${number}`]);
   }
 
   private load(page: number) {

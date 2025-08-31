@@ -8,10 +8,13 @@ import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { GameSystemAdminService } from '../../services/game-system-admin.service';
+import { ButtonModule } from 'primeng/button';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'assoc-library-admin-game-system-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule],
   templateUrl: './library-admin-game-system-list.container.html'
 })
 export class LibraryAdminGameSystemListContainer {
@@ -44,7 +47,9 @@ export class LibraryAdminGameSystemListContainer {
    */
   public loading = false;
 
-  public readonly createPermission;
+  public readonly editable;
+
+  public readonly createable;
 
   private sort = new Sorting();
 
@@ -53,8 +58,10 @@ export class LibraryAdminGameSystemListContainer {
 
     // Load books
     this.load(0)
+
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_game_system", "create");
+    this.createable = authContainer.hasPermission("library_game_system", "create");
+    this.editable = authContainer.hasPermission("library_game_system", "update");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -74,8 +81,8 @@ export class LibraryAdminGameSystemListContainer {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/library/systems/${this.selectedData.number}`]);
+  public onEdit(number: number) {
+    this.router.navigate([`/association/admin/library/systems/${number}`]);
   }
 
   private load(page: number) {

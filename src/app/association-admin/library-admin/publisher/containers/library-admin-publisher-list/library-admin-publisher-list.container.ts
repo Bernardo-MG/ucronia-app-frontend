@@ -3,15 +3,17 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Publisher } from '@app/domain/library/publisher';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { PublisherAdminService } from '../../services/publisher-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-publisher-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule],
   templateUrl: './library-admin-publisher-list.container.html'
 })
 export class LibraryAdminPublisherListContainer {
@@ -44,7 +46,9 @@ export class LibraryAdminPublisherListContainer {
    */
   public loading = false;
 
-  public createPermission = false;
+  public readonly editable;
+
+  public readonly createable;
 
   private sort = new Sorting();
 
@@ -53,8 +57,10 @@ export class LibraryAdminPublisherListContainer {
 
     // Load books
     this.load(0)
+
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_publisher", "create");
+    this.createable = authContainer.hasPermission("library_publisher", "create");
+    this.editable = authContainer.hasPermission("library_publisher", "update");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -74,8 +80,8 @@ export class LibraryAdminPublisherListContainer {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/library/publishers/${this.selectedData.number}`]);
+  public onEdit(number: number) {
+    this.router.navigate([`/association/admin/library/publishers/${number}`]);
   }
 
   private load(page: number) {

@@ -3,15 +3,17 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule],
   templateUrl: './library-admin-author-list.component.html'
 })
 export class LibraryAdminAuthorListContainer {
@@ -35,8 +37,6 @@ export class LibraryAdminAuthorListContainer {
     return this._pageNumber;
   }
 
-  public selectedData = new Author();
-
   public data = new PaginatedResponse<Author>();
 
   /**
@@ -46,7 +46,9 @@ export class LibraryAdminAuthorListContainer {
 
   private sort = new Sorting();
 
-  public readonly createPermission;
+  public readonly editable;
+
+  public readonly createable;
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -54,7 +56,8 @@ export class LibraryAdminAuthorListContainer {
     // Load books
     this.load(0)
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_author", "create");
+    this.createable = authContainer.hasPermission("library_author", "create");
+    this.editable = authContainer.hasPermission("library_author", "update");
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -74,8 +77,8 @@ export class LibraryAdminAuthorListContainer {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/library/authors/${this.selectedData.number}`]);
+  public onEdit(number: number) {
+    this.router.navigate([`/association/admin/library/authors/${number}`]);
   }
 
   private load(page: number) {

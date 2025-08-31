@@ -1,24 +1,25 @@
-<p-card>
-  <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
-    [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
-    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
-    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
+<p-panel>
+  <ng-template #icons>
+    <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="register" [disabled]="!createable"
+      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #header>
       <tr>
         <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
+        <th></th>
       </tr>
     </ng-template>
-    <ng-template #body let-gameSystem>
-      <tr [pSelectableRow]="gameSystem">
-        <td>{{gameSystem.name}}</td>
+    <ng-template #body let-author>
+      <tr [pSelectableRow]="author">
+        <td>{{ author.name }}</td>
+        <td>
+          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+            [attr.aria-disabled]="!editable" (click)="onEdit(author.number)" rounded text />
+        </td>
       </tr>
     </ng-template>
   </p-table>
-  <ng-template #header>
-    <!-- Add person -->
-    <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-      [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-      <icon-add />
-    </button>
-  </ng-template>
-</p-card>
+</p-panel>

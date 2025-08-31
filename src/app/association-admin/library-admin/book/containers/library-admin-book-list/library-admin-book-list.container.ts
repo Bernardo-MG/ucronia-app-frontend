@@ -85,7 +85,7 @@ export class LibraryAdminBookListContainer {
 
   public loadingExcel = false;
 
-  public readonly createPermission;
+  public readonly createable;
 
   public get routerLink(): string {
     return `${this.source}/register`;
@@ -106,14 +106,14 @@ export class LibraryAdminBookListContainer {
 
     this.languages = this.service.getLanguages();
 
-    this.editable = authContainer.hasPermission("library_book", "update");
 
     // Load data
     this.load(0);
     this.onGoToDonorPage(0);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("library_book", "create");
+    this.createable = authContainer.hasPermission("library_book", "create");
+    this.editable = authContainer.hasPermission("library_book", "update");
 
     // Load edition menu
     this.editionMenu.push(
