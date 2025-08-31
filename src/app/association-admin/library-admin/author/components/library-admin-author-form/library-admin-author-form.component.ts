@@ -20,6 +20,7 @@ export class LibraryAdminAuthorFormComponent extends FormComponent<Author> {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      number: [],
       name: ['']
     });
   }

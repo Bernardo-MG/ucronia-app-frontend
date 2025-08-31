@@ -3,17 +3,20 @@ import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { throwError } from 'rxjs';
+import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
 import { AuthorAdminService } from '../../services/author-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-author-list',
-  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, LibraryAdminAuthorFormComponent],
   templateUrl: './library-admin-author-list.component.html'
 })
 export class LibraryAdminAuthorListContainer {
@@ -44,11 +47,22 @@ export class LibraryAdminAuthorListContainer {
    */
   public loading = false;
 
+  public editing = false;
+
   private sort = new Sorting();
 
   public readonly editable;
 
   public readonly createable;
+
+  public selected: Author = new Author();
+
+  public saving = false;
+
+  /**
+   * Failures after saving.
+   */
+  protected failures = new FailureStore();
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -77,8 +91,41 @@ export class LibraryAdminAuthorListContainer {
     this.load(page);
   }
 
-  public onEdit(number: number) {
-    this.router.navigate([`/association/admin/library/authors/${number}`]);
+  public onStartEditing(author: Author): void {
+    this.selected = author;
+    this.editing = true;
+  }
+
+  public onUpdate(toSave: Author): void {
+    this.saving = true;
+    this.service.update(toSave.number, toSave).subscribe({
+      next: response => {
+        this.failures.clear();
+
+        // Reactivate component
+        this.saving = false;
+        this.editing = false;
+        this.load(this.data.page);
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          // No failure response
+          // Just remove the failures
+          this.failures.clear();
+        }
+
+        // Reactivate component
+        this.saving = false;
+
+        return throwError(() => error);
+      }
+    });
+  }
+
+  public onCancel(): void {
+    this.editing = false;
   }
 
   private load(page: number) {

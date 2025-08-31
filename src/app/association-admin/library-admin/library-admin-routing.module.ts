@@ -28,12 +28,6 @@ const routes: Routes = [
             loadComponent: () => import('./author/containers/library-admin-author-creation/library-admin-author-creation.container').then(m => m.LibraryAdminAuthorCreateContainer),
             canActivate: [ResourceGuard("library_author", "create")],
             data: { breadcrumb: 'Registrar autor' }
-          },
-          {
-            path: ':number',
-            loadComponent: () => import('./author/containers/library-admin-author-edition/library-admin-author-edition.container').then(m => m.LibraryAdminAuthorInfoEditorContainer),
-            canActivate: [ResourceGuard("library_author", "read")],
-            data: { breadcrumb: 'Editar autor' }
           }
         ]
       },
