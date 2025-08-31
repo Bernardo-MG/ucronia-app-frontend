@@ -29,7 +29,8 @@
       <ng-template #header>
         Crear autor
       </ng-template>
-      <assoc-library-admin-author-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-library-admin-author-form [cancellable]="true" [waiting]="loading" [failures]="failures"
+        (save)="onCreate($event)" (reject)="onCancel()" />
     }
     @case ('Edition') {
       <ng-template #header>
