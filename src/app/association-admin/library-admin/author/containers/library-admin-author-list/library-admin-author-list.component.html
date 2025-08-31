@@ -23,10 +23,10 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-drawer [(visible)]="editing" position="right">
+<p-drawer header="Crear autor" [(visible)]="creating" position="right">
+  <assoc-library-admin-author-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+</p-drawer>
+<p-drawer header="Editar autor" [(visible)]="editing" position="right">
   <assoc-library-admin-author-form [cancellable]="true" [data]="selected" [failures]="failures"
     (save)="onUpdate($event)" (reject)="onCancel()" />
-</p-drawer>
-<p-drawer [(visible)]="creating" position="right">
-  <assoc-library-admin-author-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
 </p-drawer>
