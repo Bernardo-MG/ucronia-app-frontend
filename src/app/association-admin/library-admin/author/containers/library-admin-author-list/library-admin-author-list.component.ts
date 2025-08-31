@@ -49,6 +49,8 @@ export class LibraryAdminAuthorListContainer {
 
   public editing = false;
 
+  public creating = false;
+
   private sort = new Sorting();
 
   public readonly editable;
@@ -94,6 +96,38 @@ export class LibraryAdminAuthorListContainer {
   public onStartEditing(author: Author): void {
     this.selected = author;
     this.editing = true;
+  }
+
+  public onStartCreating(): void {
+    this.creating = true;
+  }
+
+  public onCreate(toCreate: Author): void {
+    this.saving = true;
+    this.service.create(toCreate).subscribe({
+      next: response => {
+        this.failures.clear();
+
+        // Reactivate component
+        this.saving = false;
+        this.editing = false;
+        this.load(this.data.page);
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          // No failure response
+          // Just remove the failures
+          this.failures.clear();
+        }
+
+        // Reactivate component
+        this.saving = false;
+
+        return throwError(() => error);
+      }
+    });
   }
 
   public onUpdate(toSave: Author): void {

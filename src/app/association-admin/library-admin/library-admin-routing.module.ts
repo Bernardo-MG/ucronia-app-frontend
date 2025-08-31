@@ -22,12 +22,6 @@ const routes: Routes = [
             loadComponent: () => import('./author/containers/library-admin-author-list/library-admin-author-list.component').then(m => m.LibraryAdminAuthorListContainer),
             canActivate: [ResourceGuard("library_author", "view")],
             data: { breadcrumb: '' }
-          },
-          {
-            path: 'register',
-            loadComponent: () => import('./author/containers/library-admin-author-creation/library-admin-author-creation.container').then(m => m.LibraryAdminAuthorCreateContainer),
-            canActivate: [ResourceGuard("library_author", "create")],
-            data: { breadcrumb: 'Registrar autor' }
           }
         ]
       },

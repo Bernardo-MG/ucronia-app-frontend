@@ -1,7 +1,7 @@
 <p-panel>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="register" [disabled]="!createable"
-      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!createable" aria-label="Nuevo libro"
+      [attr.aria-disabled]="!createable" rounded text (click)="onStartCreating()" />
   </ng-template>
   <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
@@ -26,4 +26,7 @@
 <p-drawer [(visible)]="editing" position="right">
   <assoc-library-admin-author-form [cancellable]="true" [data]="selected" [failures]="failures"
     (save)="onUpdate($event)" (reject)="onCancel()" />
+</p-drawer>
+<p-drawer [(visible)]="creating" position="right">
+  <assoc-library-admin-author-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
 </p-drawer>
