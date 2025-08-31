@@ -4,6 +4,6 @@
   [attr.aria-disabled]="saveDisabled()">Guardar</button>
   <!-- Cancel button -->
   @if (cancellable()) {
-    <button class="btn btn-warning" [disabled]="cancelDisabled()" name="Cancel" (click)="reject.emit()">Cancelar</button>
+    <button type="button" class="btn btn-warning" [disabled]="cancelDisabled()" name="Cancel" (click)="reject.emit()">Cancelar</button>
   }
 </div>
