@@ -15,9 +15,7 @@ import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirec
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { DataViewModule } from 'primeng/dataview';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
@@ -25,13 +23,11 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { throwError } from 'rxjs';
-import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, DataViewModule, CardModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
