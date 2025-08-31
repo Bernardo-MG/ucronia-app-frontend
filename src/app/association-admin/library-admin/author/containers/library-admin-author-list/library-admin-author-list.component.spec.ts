@@ -1,6 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { AuthorAdminService } from '../../services/author-admin.service';
 import { LibraryAdminAuthorListContainer } from './library-admin-author-list.component';
@@ -16,6 +17,7 @@ describe('LibraryAdminAuthorListContainer', () => {
       ],
       providers: [
         AuthorAdminService,
+        provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
