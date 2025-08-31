@@ -1,6 +1,6 @@
 
-import { Component, inject, Input } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -21,23 +21,10 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 })
 export class LibraryAdminAuthorListContainer {
 
-  private readonly router = inject(Router);
-
   private readonly service = inject(AuthorAdminService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
-  }
-
-  private _pageNumber = 0;
-
-  @Input() public set pageNumber(value: number) {
-    this._pageNumber = value;
-    this.load(value);
-  }
-
-  public get pageNumber() {
-    return this._pageNumber;
   }
 
   public data = new PaginatedResponse<Author>();
@@ -47,19 +34,30 @@ export class LibraryAdminAuthorListContainer {
    */
   public loading = false;
 
-  public editing = false;
+  private _shownForm: 'None' | 'Creation' | 'Edition' = 'None';
 
-  public creating = false;
+  public get shownForm() {
+    return this._shownForm;
+  }
 
-  private sort = new Sorting();
+  public set shownForm(form) {
+    this._shownForm = form;
+    if (form === 'None') {
+      this.showForm = false;
+    } else {
+      this.showForm = true;
+    }
+  }
+
+  public showForm = false;
 
   public readonly editable;
 
   public readonly createable;
 
-  public selected: Author = new Author();
+  private sort = new Sorting();
 
-  public saving = false;
+  public selected: Author = new Author();
 
   /**
    * Failures after saving.
@@ -69,8 +67,9 @@ export class LibraryAdminAuthorListContainer {
   constructor() {
     const authContainer = inject(AuthContainer);
 
-    // Load books
-    this.load(0)
+    // First page
+    this.load(0);
+
     // Check permissions
     this.createable = authContainer.hasPermission("library_author", "create");
     this.editable = authContainer.hasPermission("library_author", "update");
@@ -78,11 +77,13 @@ export class LibraryAdminAuthorListContainer {
 
   public onChangeDirection(sorting: { field: string, order: number }) {
     let direction;
+
     if (sorting.order == 1) {
       direction = SortingDirection.Ascending;
     } else {
       direction = SortingDirection.Descending;
     }
+
     this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
@@ -95,22 +96,21 @@ export class LibraryAdminAuthorListContainer {
 
   public onStartEditing(author: Author): void {
     this.selected = author;
-    this.editing = true;
+    this.shownForm = 'Edition';
   }
 
   public onStartCreating(): void {
-    this.creating = true;
+    this.shownForm = 'Creation';
   }
 
   public onCreate(toCreate: Author): void {
-    this.saving = true;
+    this.loading = true;
     this.service.create(toCreate).subscribe({
       next: response => {
         this.failures.clear();
 
         // Reactivate component
-        this.saving = false;
-        this.editing = false;
+        this.shownForm = 'None';
         this.load(this.data.page);
       },
       error: error => {
@@ -123,7 +123,7 @@ export class LibraryAdminAuthorListContainer {
         }
 
         // Reactivate component
-        this.saving = false;
+        this.loading = false;
 
         return throwError(() => error);
       }
@@ -131,14 +131,13 @@ export class LibraryAdminAuthorListContainer {
   }
 
   public onUpdate(toSave: Author): void {
-    this.saving = true;
+    this.loading = true;
     this.service.update(toSave.number, toSave).subscribe({
       next: response => {
         this.failures.clear();
 
         // Reactivate component
-        this.saving = false;
-        this.editing = false;
+        this.shownForm = 'None';
         this.load(this.data.page);
       },
       error: error => {
@@ -151,7 +150,7 @@ export class LibraryAdminAuthorListContainer {
         }
 
         // Reactivate component
-        this.saving = false;
+        this.loading = false;
 
         return throwError(() => error);
       }
@@ -159,7 +158,7 @@ export class LibraryAdminAuthorListContainer {
   }
 
   public onCancel(): void {
-    this.editing = false;
+    this.shownForm = 'None';
   }
 
   private load(page: number) {
