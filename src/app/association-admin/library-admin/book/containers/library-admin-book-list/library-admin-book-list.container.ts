@@ -1,7 +1,7 @@
 
 import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BookReportService } from '@app/association-admin/library-admin/report/services/book-report.service';
+import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';

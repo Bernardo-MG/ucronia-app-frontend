@@ -3,20 +3,20 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { GameSystemCrudService } from '../../services/game-system-crud-service';
-import { LibraryAdminGameSystemListContainer } from './library-admin-game-system-list.container';
+import { BookTypeCrudService } from '../book-type-crud-service/book-type-crud-service';
+import { LibraryAdminBookTypeList } from './library-admin-book-type-list';
 
-describe('LibraryAdminGameSystemListContainer', () => {
-  let component: LibraryAdminGameSystemListContainer;
-  let fixture: ComponentFixture<LibraryAdminGameSystemListContainer>;
+describe('LibraryAdminBookTypeList', () => {
+  let component: LibraryAdminBookTypeList;
+  let fixture: ComponentFixture<LibraryAdminBookTypeList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminGameSystemListContainer
+        LibraryAdminBookTypeList
       ],
       providers: [
-        GameSystemCrudService,
+        BookTypeCrudService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
@@ -25,7 +25,7 @@ describe('LibraryAdminGameSystemListContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminGameSystemListContainer);
+    fixture = TestBed.createComponent(LibraryAdminBookTypeList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

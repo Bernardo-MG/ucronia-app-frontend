@@ -12,16 +12,16 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from "primeng/toast";
-import { LibraryAdminNameFormComponent } from '../../../common/component/library-admin-name-form/library-admin-name-form';
-import { AuthorCrudService } from '../../services/author-crud-service';
+import { LibraryAdminNameForm } from '../../common/library-admin-name-form/library-admin-name-form';
+import { AuthorCrudService } from '../author-crud-service/author-crud-service';
 
 @Component({
   selector: 'assoc-library-admin-author-list',
-  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminNameFormComponent],
-  templateUrl: './library-admin-author-list.component.html',
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminNameForm],
+  templateUrl: './library-admin-author-list.html',
   providers: [ConfirmationService, MessageService]
 })
-export class LibraryAdminAuthorListContainer extends EntityCrudList<Author> {
+export class LibraryAdminAuthorList extends EntityCrudList<Author> {
 
   constructor() {
     super(

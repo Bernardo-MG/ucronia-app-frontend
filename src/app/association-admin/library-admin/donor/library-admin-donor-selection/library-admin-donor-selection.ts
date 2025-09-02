@@ -7,9 +7,9 @@ import { BlockUiDirective, ButtonListComponent, JustifyCenterDirective } from '@
 @Component({
     selector: 'assoc-library-admin-donor-selection',
     imports: [ButtonListComponent, PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective],
-    templateUrl: './library-admin-donor-selection.component.html'
+    templateUrl: './library-admin-donor-selection.html'
 })
-export class LibraryAdminDonorSelectionComponent extends PagedSelectorComponent<Person> {
+export class LibraryAdminDonorSelection extends PagedSelectorComponent<Person> {
 
   public readonly nameRenderer = (data: Person): string => data.name.fullName;
 

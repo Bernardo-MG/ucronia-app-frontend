@@ -14,7 +14,7 @@ import { MessageModule } from 'primeng/message';
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule, JustifyBetweenDirective],
   templateUrl: './library-admin-name-form.html'
 })
-export class LibraryAdminNameFormComponent extends FormComponent<Author> {
+export class LibraryAdminNameForm extends FormComponent<Author> {
 
   constructor() {
     super();

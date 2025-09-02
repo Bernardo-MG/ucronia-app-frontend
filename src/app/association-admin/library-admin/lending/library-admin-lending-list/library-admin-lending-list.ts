@@ -6,14 +6,14 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { BookLendingService } from '../../services/book-lending.service';
+import { BookLendingService } from '../book-lending-service/book-lending-service';
 
 @Component({
   selector: 'app-library-admin-lending-list',
   imports: [CardModule, RouterModule, TableModule],
-  templateUrl: './library-admin-lending-list.container.html'
+  templateUrl: './library-admin-lending-list.html'
 })
-export class LibraryAdminLendingListContainer {
+export class LibraryAdminLendingList {
 
   private readonly service = inject(BookLendingService);
 

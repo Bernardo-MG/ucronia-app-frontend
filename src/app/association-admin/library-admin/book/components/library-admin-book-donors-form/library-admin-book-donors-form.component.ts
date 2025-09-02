@@ -1,7 +1,7 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LibraryAdminDonorSelectionComponent } from '@app/association-admin/library-admin/donor/components/library-admin-donor-selection/library-admin-donor-selection.component';
+import { LibraryAdminDonorSelection } from '@app/association-admin/library-admin/donor/library-admin-donor-selection/library-admin-donor-selection';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { Person } from '@app/domain/person/person';
@@ -15,7 +15,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, LibraryAdminDonorSelectionComponent, IconAddComponent, IconDeleteComponent],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, LibraryAdminDonorSelection, IconAddComponent, IconDeleteComponent],
   templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation | undefined> {
