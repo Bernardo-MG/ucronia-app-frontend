@@ -16,7 +16,6 @@ export class AssociationLayout {
     const authContainer = inject(AuthContainer);
     const items = this.getAssociationItems(authContainer);
     const adminItems = this.getAdminItems(authContainer);
-    const libraryItems = this.getLibraryItems(authContainer);
     this.menus = [];
     if (items.length) {
       this.menus.push(
@@ -31,14 +30,6 @@ export class AssociationLayout {
         {
           label: 'Administración',
           items: adminItems
-        }
-      );
-    }
-    if (libraryItems.length) {
-      this.menus.push(
-        {
-          label: 'Adm. Biblioteca',
-          items: libraryItems
         }
       );
     }
@@ -107,57 +98,12 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    return items;
-  }
-
-  private getLibraryItems(authContainer: AuthContainer) {
-    const items = [];
     if (authContainer.hasPermission('library_book', 'view')) {
       items.push(
         {
           label: 'Libros',
           routerLink: '/association/admin/library/books',
           icon: 'pi pi-book'
-        });
-    }
-    if (authContainer.hasPermission('library_author', 'view')) {
-      items.push(
-        {
-          label: 'Autores',
-          routerLink: '/association/admin/library/authors',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authContainer.hasPermission('library_publisher', 'view')) {
-      items.push(
-        {
-          label: 'Editores',
-          routerLink: '/association/admin/library/publishers',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authContainer.hasPermission('library_book_type', 'view')) {
-      items.push(
-        {
-          label: 'Tipos',
-          routerLink: '/association/admin/library/types',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authContainer.hasPermission('library_game_system', 'view')) {
-      items.push(
-        {
-          label: 'Sistemas',
-          routerLink: '/association/admin/library/systems',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authContainer.hasPermission('library_lending', 'view')) {
-      items.push(
-        {
-          label: 'Préstamos',
-          routerLink: '/association/admin/library/lendings',
-          icon: 'pi pi-users'
         });
     }
     return items;

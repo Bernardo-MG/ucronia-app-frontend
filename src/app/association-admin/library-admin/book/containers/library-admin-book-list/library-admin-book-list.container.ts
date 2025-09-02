@@ -93,7 +93,9 @@ export class LibraryAdminBookListContainer {
 
   public editing = false;
 
-  public readonly editionMenu: MenuItem[] = [];
+  public readonly editionMenuItems: MenuItem[] = [];
+
+  public readonly dataMenuItems: MenuItem[] = [];
 
   public view: string = '';
 
@@ -113,13 +115,50 @@ export class LibraryAdminBookListContainer {
     this.createable = authContainer.hasPermission("library_book", "create");
     this.editable = authContainer.hasPermission("library_book", "update");
 
+    // Load data menu
+    if (authContainer.hasPermission('library_author', 'view')) {
+      this.dataMenuItems.push(
+        {
+          label: 'Autores',
+          command: () => this.router.navigate(['/association/admin/library/authors'])
+        });
+    }
+    if (authContainer.hasPermission('library_publisher', 'view')) {
+      this.dataMenuItems.push(
+        {
+          label: 'Editores',
+          command: () => this.router.navigate(['/association/admin/library/publishers'])
+        });
+    }
+    if (authContainer.hasPermission('library_book_type', 'view')) {
+      this.dataMenuItems.push(
+        {
+          label: 'Tipos',
+          command: () => this.router.navigate(['/association/admin/library/types'])
+        });
+    }
+    if (authContainer.hasPermission('library_game_system', 'view')) {
+      this.dataMenuItems.push(
+        {
+          label: 'Sistemas',
+          command: () => this.router.navigate(['/association/admin/library/systems'])
+        });
+    }
+    if (authContainer.hasPermission('library_lending', 'view')) {
+      this.dataMenuItems.push(
+        {
+          label: 'Préstamos',
+          command: () => this.router.navigate(['/association/admin/library/lendings'])
+        });
+    }
+
     // Load edition menu
-    this.editionMenu.push(
+    this.editionMenuItems.push(
       {
         label: 'Datos',
         command: () => this.onStartEditingView('details')
       });
-    this.editionMenu.push(
+    this.editionMenuItems.push(
       {
         label: 'Donantes',
         command: () => this.onStartEditingView('donors')
