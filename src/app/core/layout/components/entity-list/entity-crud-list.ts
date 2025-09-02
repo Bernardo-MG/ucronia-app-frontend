@@ -30,7 +30,11 @@ export abstract class EntityCrudList<E> {
 
   public readonly editable: boolean;
 
-  constructor(protected readonly auth: AuthContainer, entityKey: string) {
+  public get canCreate() {
+    return this.createable && !this.loading;
+  }
+
+  constructor(readonly auth: AuthContainer, readonly entityKey: string) {
     this.createable = auth.hasPermission(entityKey, "create");
     this.editable = auth.hasPermission(entityKey, "update");
   }
