@@ -3,13 +3,14 @@ import { FailureResponse, FailureStore, PaginatedResponse, SimpleResponse, Sorti
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TablePageEvent } from 'primeng/table';
 import { Observable, throwError } from 'rxjs';
+import { CrudService } from '../../services/crud-service';
 
 export abstract class EntityCrudList<E> {
 
   public data = new PaginatedResponse<E>();
 
   public loading = false;
-  
+
   public showConfirmDelete = false;
 
   private _shownForm: 'None' | 'Creation' | 'Edition' = 'None';
@@ -40,6 +41,7 @@ export abstract class EntityCrudList<E> {
   }
 
   constructor(
+    private readonly service: CrudService<E>,
     readonly auth: AuthContainer,
     readonly entityKey: string,
     private readonly messageService: MessageService,
@@ -48,6 +50,9 @@ export abstract class EntityCrudList<E> {
     this.createable = auth.hasPermission(entityKey, "create");
     this.editable = auth.hasPermission(entityKey, "update");
     this.deletable = auth.hasPermission(entityKey, "delete");
+    
+    // First page
+    this.load(0);
   }
 
   public get first() {
@@ -81,7 +86,15 @@ export abstract class EntityCrudList<E> {
     this.shownForm = 'None';
   }
 
-  public onDelete(event: Event, data: E) {
+  public onCreate(toCreate: E): void {
+    this.mutate(() => this.service.create(toCreate));
+  }
+
+  public onUpdate(toSave: E): void {
+    this.mutate(() => this.service.update(toSave));
+  }
+
+  public onDelete(event: Event, id: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Quieres borrar estos datos?',
@@ -96,7 +109,7 @@ export abstract class EntityCrudList<E> {
         severity: 'danger'
       },
       accept: () => {
-        this.mutate(() => this.delete(data));
+        this.mutate(() => this.service.delete(id));
         this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
       }
     });
@@ -104,7 +117,7 @@ export abstract class EntityCrudList<E> {
 
   protected load(page: number) {
     this.loading = true;
-    this.getAll(page, this.sort).subscribe({
+    this.service.getAll(page, this.sort).subscribe({
       next: response => {
         this.data = response;
         this.loading = false;
@@ -132,9 +145,5 @@ export abstract class EntityCrudList<E> {
       }
     });
   }
-
-  protected abstract getAll(page: number, sort: Sorting): Observable<PaginatedResponse<E>>;
-  
-  protected abstract delete(data: E): Observable<E>;
 
 }

@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { CrudService } from '@app/core/layout/services/crud-service';
 import { Author } from '@app/domain/library/author';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -7,7 +8,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class AuthorAdminService {
+export class AuthorCrudService implements CrudService<Author> {
 
   private readonly client;
 
@@ -23,9 +24,9 @@ export class AuthorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: Author): Observable<Author> {
+  public update(data: Author): Observable<Author> {
     return this.client
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .update<SimpleResponse<Author>>(data)
       .pipe(map(r => r.content));
   }

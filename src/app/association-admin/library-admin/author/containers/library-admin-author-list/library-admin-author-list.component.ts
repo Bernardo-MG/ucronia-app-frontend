@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { EntityCrudList } from '@app/core/layout/components/entity-list/entity-crud-list';
 import { Author } from '@app/domain/library/author';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -14,9 +13,8 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from "primeng/toast";
-import { Observable } from 'rxjs';
 import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
-import { AuthorAdminService } from '../../services/author-admin.service';
+import { AuthorCrudService } from '../../services/author-crud-service';
 
 @Component({
   selector: 'assoc-library-admin-author-list',
@@ -26,34 +24,14 @@ import { AuthorAdminService } from '../../services/author-admin.service';
 })
 export class LibraryAdminAuthorListContainer extends EntityCrudList<Author> {
 
-  private readonly service = inject(AuthorAdminService);
-
   constructor() {
     super(
+      inject(AuthorCrudService),
       inject(AuthContainer),
       "library_author",
       inject(MessageService),
       inject(ConfirmationService)
     );
-
-    // First page
-    this.load(0);
-  }
-
-  public onCreate(toCreate: Author): void {
-    this.mutate(() => this.service.create(toCreate));
-  }
-
-  public onUpdate(toSave: Author): void {
-    this.mutate(() => this.service.update(toSave.number, toSave));
-  }
-
-  protected override getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Author>> {
-    return this.service.getAll(page, this.sort);
-  }
-  
-  protected override delete(data: Author): Observable<Author> {
-    return this.service.delete(data.number);
   }
 
 }
