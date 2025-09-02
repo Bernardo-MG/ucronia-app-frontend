@@ -10,11 +10,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-library-admin-author-form',
+  selector: 'assoc-library-admin-name-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule, JustifyBetweenDirective],
-  templateUrl: './library-admin-author-form.component.html'
+  templateUrl: './library-admin-name-form.html'
 })
-export class LibraryAdminAuthorFormComponent extends FormComponent<Author> {
+export class LibraryAdminNameFormComponent extends FormComponent<Author> {
 
   constructor() {
     super();

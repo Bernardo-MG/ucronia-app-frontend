@@ -12,6 +12,12 @@
     }
   </div>
   <!-- Save controls -->
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()" />
+  <div uiJustifyBetween>
+    <!-- Save button -->
+    <p-button type="submit" name="Guardar" [disabled]="!saveEnabled"
+      [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
+    <!-- Cancel button -->
+    <p-button type="button" severity="danger" name="Cancelar" [disabled]="!cancelEnabled"
+      [attr.aria-disabled]="!cancelEnabled" (click)="onCancel()">Cancelar</p-button>
+  </div>
 </form>

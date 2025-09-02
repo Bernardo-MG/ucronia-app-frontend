@@ -1,21 +1,22 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PublisherAdminService } from './publisher-admin.service';
+import { BookTypeCrudService } from './book-type-crud-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('PublisherAdminService', () => {
-  let service: PublisherAdminService;
+describe('BookTypeCrudService', () => {
+  let service: BookTypeCrudService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [],
     providers: [
-        PublisherAdminService,
+        BookTypeCrudService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
     ]
 });
-    service = TestBed.inject(PublisherAdminService);
+
+    service = TestBed.inject(BookTypeCrudService);
   });
 
   it('should be created', () => {

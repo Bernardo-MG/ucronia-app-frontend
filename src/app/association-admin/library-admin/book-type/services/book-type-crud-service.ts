@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { CrudService } from '@app/core/layout/services/crud-service';
 import { BookType } from '@app/domain/library/book-type';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -7,13 +8,13 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class BookTypeAdminService {
+export class BookTypeCrudService implements CrudService<BookType> {
 
   private readonly client;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
- 
+
     this.client = clientProvider.url(environment.apiUrl + '/library/bookType');
   }
 
@@ -23,9 +24,9 @@ export class BookTypeAdminService {
       .pipe(map(r => r.content));
   }
 
-  public update(number: number, data: BookType): Observable<BookType> {
+  public update(data: BookType): Observable<BookType> {
     return this.client
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .update<SimpleResponse<BookType>>(data)
       .pipe(map(r => r.content));
   }
@@ -37,10 +38,10 @@ export class BookTypeAdminService {
       .pipe(map(r => r.content));
   }
 
-  public delete(number: number): Observable<boolean> {
+  public delete(number: number): Observable<BookType> {
     return this.client
       .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<BookType>>()
       .pipe(map(r => r.content));
   }
 

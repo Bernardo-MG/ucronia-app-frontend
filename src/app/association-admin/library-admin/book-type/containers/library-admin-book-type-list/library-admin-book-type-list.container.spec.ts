@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { BookTypeAdminService } from '../../services/book-type-admin.service';
+import { BookTypeCrudService } from '../../services/book-type-crud-service';
 import { LibraryAdminBookTypeListContainer } from './library-admin-book-type-list.container';
 
 describe('LibraryAdminBookTypeListContainer', () => {
@@ -16,7 +16,7 @@ describe('LibraryAdminBookTypeListContainer', () => {
         LibraryAdminBookTypeListContainer
       ],
       providers: [
-        BookTypeAdminService,
+        BookTypeCrudService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),

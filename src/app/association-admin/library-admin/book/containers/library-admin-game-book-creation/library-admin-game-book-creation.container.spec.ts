@@ -3,9 +3,9 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AuthorCrudService } from '@app/association-admin/library-admin/author/services/author-crud-service';
-import { BookTypeAdminService } from '@app/association-admin/library-admin/book-type/services/book-type-admin.service';
-import { GameSystemAdminService } from '@app/association-admin/library-admin/game-system/services/game-system-admin.service';
-import { PublisherAdminService } from '@app/association-admin/library-admin/publisher/services/publisher-admin.service';
+import { BookTypeCrudService } from '@app/association-admin/library-admin/book-type/services/book-type-crud-service';
+import { GameSystemCrudService } from '@app/association-admin/library-admin/game-system/services/game-system-crud-service';
+import { PublisherCrudService } from '@app/association-admin/library-admin/publisher/services/publisher-crud-service';
 import { LibraryAdminGameBookCreationContainer } from './library-admin-game-book-creation.container';
 
 describe('LibraryAdminGameBookCreationContainer', () => {
@@ -18,11 +18,11 @@ describe('LibraryAdminGameBookCreationContainer', () => {
         LibraryAdminGameBookCreationContainer
       ],
       providers: [
-        BookTypeAdminService,
-        BookTypeAdminService,
-        GameSystemAdminService,
+        BookTypeCrudService,
+        BookTypeCrudService,
+        GameSystemCrudService,
         AuthorCrudService,
-        PublisherAdminService,
+        PublisherCrudService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])

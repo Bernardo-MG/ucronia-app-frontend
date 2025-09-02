@@ -9,6 +9,7 @@ export abstract class FormComponent<Data> {
 
   /**
    * Allows cancelling flag.
+   * TODO: remove this
    */
   @Input() cancellable = false;
 

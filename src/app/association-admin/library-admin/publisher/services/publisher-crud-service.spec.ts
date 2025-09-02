@@ -1,22 +1,21 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { GameSystemAdminService } from './game-system-admin.service';
+import { PublisherCrudService } from './publisher-crud-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-describe('GameSystemAdminService', () => {
-  let service: GameSystemAdminService;
+describe('PublisherCrudService', () => {
+  let service: PublisherCrudService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
     imports: [],
     providers: [
-        GameSystemAdminService,
+        PublisherCrudService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
     ]
 });
-
-    service = TestBed.inject(GameSystemAdminService);
+    service = TestBed.inject(PublisherCrudService);
   });
 
   it('should be created', () => {

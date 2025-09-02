@@ -13,12 +13,12 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from "primeng/toast";
-import { LibraryAdminAuthorFormComponent } from '../../components/library-admin-author-form/library-admin-author-form.component';
+import { LibraryAdminNameFormComponent } from '../../../common/component/library-admin-name-form/library-admin-name-form';
 import { AuthorCrudService } from '../../services/author-crud-service';
 
 @Component({
   selector: 'assoc-library-admin-author-list',
-  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminAuthorFormComponent],
+  imports: [CardModule, RouterModule, TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminNameFormComponent],
   templateUrl: './library-admin-author-list.component.html',
   providers: [ConfirmationService, MessageService]
 })

@@ -94,18 +94,6 @@ const routes: Routes = [
             loadComponent: () => import('./publisher/containers/library-admin-publisher-list/library-admin-publisher-list.container').then(m => m.LibraryAdminPublisherListContainer),
             canActivate: [ResourceGuard("library_publisher", "view")],
             data: { breadcrumb: '' }
-          },
-          {
-            path: 'register',
-            loadComponent: () => import('./publisher/containers/library-admin-publisher-creation/library-admin-publisher-creation.container').then(m => m.LibraryAdminPublisherCreateContainer),
-            canActivate: [ResourceGuard("library_publisher", "create")],
-            data: { breadcrumb: 'Registrar editor' }
-          },
-          {
-            path: ':number',
-            loadComponent: () => import('./publisher/containers/library-admin-publisher-edition/library-admin-publisher-edition.container').then(m => m.LibraryAdminPublisherInfoEditorContainer),
-            canActivate: [ResourceGuard("library_publisher", "read")],
-            data: { breadcrumb: 'Editar editor' }
           }
         ]
       },
@@ -118,18 +106,6 @@ const routes: Routes = [
             loadComponent: () => import('./book-type/containers/library-admin-book-type-list/library-admin-book-type-list.container').then(m => m.LibraryAdminBookTypeListContainer),
             canActivate: [ResourceGuard("library_book_type", "view")],
             data: { breadcrumb: '' }
-          },
-          {
-            path: 'register',
-            loadComponent: () => import('./book-type/containers/library-admin-book-type-creation/library-admin-book-type-creation.container').then(m => m.LibraryAdminBookTypeCreateContainer),
-            canActivate: [ResourceGuard("library_book_type", "create")],
-            data: { breadcrumb: 'Registrar tipo' }
-          },
-          {
-            path: ':number',
-            loadComponent: () => import('./book-type/containers/library-admin-book-type-edition/library-admin-book-type-edition.container').then(m => m.LibraryAdminBookTypeInfoEditorContainer),
-            canActivate: [ResourceGuard("library_book_type", "read")],
-            data: { breadcrumb: 'Editar tipo' }
           }
         ]
       },
@@ -142,18 +118,6 @@ const routes: Routes = [
             loadComponent: () => import('./game-system/containers/library-admin-game-system-list/library-admin-game-system-list.container').then(m => m.LibraryAdminGameSystemListContainer),
             canActivate: [ResourceGuard("library_game_system", "view")],
             data: { breadcrumb: '' }
-          },
-          {
-            path: 'register',
-            loadComponent: () => import('./game-system/containers/library-admin-game-system-creation/library-admin-game-system-creation.container').then(m => m.LibraryAdminGameSystemCreateContainer),
-            canActivate: [ResourceGuard("library_game_system", "create")],
-            data: { breadcrumb: 'Registrar sistema' }
-          },
-          {
-            path: ':number',
-            loadComponent: () => import('./game-system/containers/library-admin-game-system-edition/library-admin-game-system-edition.container').then(m => m.LibraryAdminGameSystemInfoEditorContainer),
-            canActivate: [ResourceGuard("library_game_system", "read")],
-            data: { breadcrumb: 'Editar sistema' }
           }
         ]
       },
