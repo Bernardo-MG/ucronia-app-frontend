@@ -1,3 +1,5 @@
+<p-toast />
+<p-confirmpopup />
 <p-panel>
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!canCreate" aria-label="Nuevo libro"
@@ -18,6 +20,8 @@
         <td>
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="onStartEditing(author)" rounded text />
+          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Eliminar"
+            [attr.aria-disabled]="!deletable" (click)="onDelete($event, author)" rounded text />
         </td>
       </tr>
     </ng-template>

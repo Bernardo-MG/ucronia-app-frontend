@@ -37,10 +37,10 @@ export class AuthorAdminService {
       .pipe(map(r => r.content));
   }
 
-  public delete(number: number): Observable<boolean> {
+  public delete(number: number): Observable<Author> {
     return this.client
       .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<Author>>()
       .pipe(map(r => r.content));
   }
 

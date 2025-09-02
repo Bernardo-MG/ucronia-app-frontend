@@ -108,8 +108,6 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
 
   public view: string = '';
 
-  public showConfirmDelete = false;
-
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -210,7 +208,6 @@ export class LibraryAdminFictionBookEditionContainer extends InfoEditorStatusCom
   }
 
   public confirmDelete(event: Event) {
-    this.showConfirmDelete = true;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: 'Do you want to delete this record?',

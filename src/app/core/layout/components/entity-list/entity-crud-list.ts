@@ -1,5 +1,6 @@
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, SimpleResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TablePageEvent } from 'primeng/table';
 import { Observable, throwError } from 'rxjs';
 
@@ -8,6 +9,8 @@ export abstract class EntityCrudList<E> {
   public data = new PaginatedResponse<E>();
 
   public loading = false;
+  
+  public showConfirmDelete = false;
 
   private _shownForm: 'None' | 'Creation' | 'Edition' = 'None';
 
@@ -30,13 +33,21 @@ export abstract class EntityCrudList<E> {
 
   public readonly editable: boolean;
 
+  public readonly deletable: boolean;
+
   public get canCreate() {
     return this.createable && !this.loading;
   }
 
-  constructor(readonly auth: AuthContainer, readonly entityKey: string) {
+  constructor(
+    readonly auth: AuthContainer,
+    readonly entityKey: string,
+    private readonly messageService: MessageService,
+    private readonly confirmationService: ConfirmationService
+  ) {
     this.createable = auth.hasPermission(entityKey, "create");
     this.editable = auth.hasPermission(entityKey, "update");
+    this.deletable = auth.hasPermission(entityKey, "delete");
   }
 
   public get first() {
@@ -68,6 +79,27 @@ export abstract class EntityCrudList<E> {
 
   public onCancel(): void {
     this.shownForm = 'None';
+  }
+
+  public onDelete(event: Event, data: E) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Quieres borrar estos datos?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.mutate(() => this.delete(data));
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+      }
+    });
   }
 
   protected load(page: number) {
@@ -102,5 +134,7 @@ export abstract class EntityCrudList<E> {
   }
 
   protected abstract getAll(page: number, sort: Sorting): Observable<PaginatedResponse<E>>;
+  
+  protected abstract delete(data: E): Observable<E>;
 
 }
