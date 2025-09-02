@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { EntityCrudList } from '@app/core/layout/components/entity-list/entity-crud-list';
 import { Author } from '@app/domain/library/author';
-import { AuthContainer } from '@bernardo-mg/authentication';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
