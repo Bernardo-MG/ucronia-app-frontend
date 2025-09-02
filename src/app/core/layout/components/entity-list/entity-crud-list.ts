@@ -4,8 +4,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { TablePageEvent } from 'primeng/table';
 import { Observable, throwError } from 'rxjs';
 import { CrudService } from '../../services/crud-service';
+import { inject } from '@angular/core';
 
 export abstract class EntityCrudList<E> {
+
+  private readonly auth = inject(AuthContainer);
+
+  private readonly messageService = inject(MessageService);
+
+  private readonly confirmationService = inject(ConfirmationService);
 
   public data = new PaginatedResponse<E>();
 
@@ -42,14 +49,11 @@ export abstract class EntityCrudList<E> {
 
   constructor(
     private readonly service: CrudService<E>,
-    readonly auth: AuthContainer,
-    readonly entityKey: string,
-    private readonly messageService: MessageService,
-    private readonly confirmationService: ConfirmationService
+    readonly entityKey: string
   ) {
-    this.createable = auth.hasPermission(entityKey, "create");
-    this.editable = auth.hasPermission(entityKey, "update");
-    this.deletable = auth.hasPermission(entityKey, "delete");
+    this.createable = this.auth.hasPermission(entityKey, "create");
+    this.editable = this.auth.hasPermission(entityKey, "update");
+    this.deletable = this.auth.hasPermission(entityKey, "delete");
     
     // First page
     this.load(0);

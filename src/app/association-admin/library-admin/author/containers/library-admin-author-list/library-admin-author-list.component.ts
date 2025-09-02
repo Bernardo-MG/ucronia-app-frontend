@@ -27,10 +27,7 @@ export class LibraryAdminAuthorListContainer extends EntityCrudList<Author> {
   constructor() {
     super(
       inject(AuthorCrudService),
-      inject(AuthContainer),
-      "library_author",
-      inject(MessageService),
-      inject(ConfirmationService)
+      "library_author"
     );
   }
 
