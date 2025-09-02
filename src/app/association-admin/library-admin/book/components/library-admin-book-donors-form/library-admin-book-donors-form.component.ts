@@ -1,7 +1,7 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LibraryAdminDonorSelection } from '@app/association-admin/library-admin/donor/library-admin-donor-selection/library-admin-donor-selection';
+import { LibraryAdminDonorSelection } from '@app/association-admin/library-admin/book/components/library-admin-donor-selection/library-admin-donor-selection';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { Person } from '@app/domain/person/person';
