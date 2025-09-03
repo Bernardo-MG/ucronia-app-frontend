@@ -8,7 +8,7 @@
       aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
       [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
-      <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" />
+    <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" />
   </ng-template>
   <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
     (change)="onChangeSource($event)">
@@ -42,7 +42,7 @@
         </td>
         <td>
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="editionMenu.toggle($event)" rounded text />
+            [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
             [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
         </td>
@@ -72,6 +72,16 @@
   <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
     [readonly]="false" [cancellable]="true" [donorsSelection]="donorPage" (save)="onSetDonation($event)"
     (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+  }
+  @case ('lendings') {
+  @if(selectedData.lent) {
+  <assoc-library-admin-book-return-form [waiting]="loading" [failures]="failures" [borrower]="borrower"
+    [book]="selectedData" (save)="onReturn($event)" />
+  } @else {
+  <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData" [members]="members"
+    (save)="onLend($event)" (goToMembersPage)="onGoToMembersPage($event)"
+    (changeFilter)="onChangeMemberFilter($event)" />
+  }
   }
   }
 </p-drawer>

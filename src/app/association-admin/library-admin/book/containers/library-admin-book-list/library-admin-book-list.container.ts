@@ -1,35 +1,41 @@
 
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
+import { BookLent } from '@app/domain/library/book-lent';
+import { BookReturned } from '@app/domain/library/book-returned';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { Language } from '@app/domain/library/language';
 import { Publisher } from '@app/domain/library/publisher';
+import { Member } from '@app/domain/members/member';
+import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MenuItemCommandEvent, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
-import { MenuModule } from 'primeng/menu';
+import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
+import { LibraryAdminBookLendingLendComponent } from '../../components/library-admin-book-lending/library-admin-book-lending.component';
+import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -101,6 +107,16 @@ export class LibraryAdminBookListContainer {
 
   private sort = new Sorting();
 
+  public members = new PaginatedResponse<Member>();
+
+  public memberFilter = Active.Active;
+
+  @ViewChild('editionMenu') editionMenu!: Menu;
+
+  public get borrower() {
+    return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
+  }
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -163,6 +179,16 @@ export class LibraryAdminBookListContainer {
         label: 'Donantes',
         command: () => this.onStartEditingView('donors')
       });
+    this.editionMenuItems.push(
+      {
+        label: 'Préstamos',
+        command: () => this.onStartEditingView('lendings')
+      });
+  }
+
+  public openEditionMenu(event: Event, book: FictionBook | GameBook) {
+    this.selectedData = book;
+    this.editionMenu.toggle(event);
   }
 
   public donors(book: FictionBook | GameBook) {
@@ -269,7 +295,7 @@ export class LibraryAdminBookListContainer {
         }
       });
   }
-  
+
   public onSelect(selection: FictionBook | GameBook) {
     this.selectedData = selection;
   }
@@ -335,6 +361,30 @@ export class LibraryAdminBookListContainer {
       error: error => {
       }
     });
+  }
+
+  public onGoToMembersPage(page: number) {
+    // TODO: The page correction should be done automatically
+    this.service.getMembers(page, this.memberFilter).subscribe({
+      next: response => {
+        this.members = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onChangeMemberFilter(active: Active) {
+    this.memberFilter = active;
+    this.onGoToMembersPage(0);
+  }
+
+  public onLend(toSave: BookLent) {
+    this.service.lend(toSave).subscribe();
+  }
+
+  public onReturn(toSave: BookReturned) {
+    this.service.return(toSave).subscribe();
   }
 
   public onCancel(): void {
