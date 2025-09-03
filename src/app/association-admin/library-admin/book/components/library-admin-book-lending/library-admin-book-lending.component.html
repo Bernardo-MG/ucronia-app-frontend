@@ -15,9 +15,8 @@
       <assoc-member-status-select [disabled]="waiting()" (changeStatus)="changeFilter.emit($event)" />
     </div>
   </div>
-  <assoc-library-admin-book-lending-member-selection *uiBlock="waiting()" [values]="members().content"
-    [current]="members().page" [pages]="members().totalPages" (selectMember)="onSelectMember($event)"
-    (goToPage)="goToMembersPage.emit($event)" />
+  <assoc-library-admin-list-selection heading="Socio" [data]="members()" (choose)="onSelectMember($event)"
+    (goToPage)="goToMembersPage.emit($event)" [nameRenderer]="nameRenderer"/>
 </div>
 }
 @case (true) {

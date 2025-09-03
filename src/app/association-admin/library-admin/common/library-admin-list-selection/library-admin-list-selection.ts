@@ -11,6 +11,10 @@ export class LibraryAdminListSelection<T> {
 
   public readonly data = input(new PaginatedResponse<T>());
 
+  public readonly heading = input('Data');
+
+  public readonly nameRenderer = input((row: T) => (row as any).name);
+
   public readonly choose = output<T>();
 
   public readonly goToPage = output<number>();

@@ -4,12 +4,12 @@
   (onRowSelect)="onSelectRow()">
     <ng-template #header>
       <tr>
-        <th>Autor</th>
+        <th>{{heading()}}</th>
       </tr>
     </ng-template>
     <ng-template #body let-row>
       <tr [pSelectableRow]="row">
-        <td>{{row.name}}</td>
+        <td>{{nameRenderer()(row)}}</td>
       </tr>
     </ng-template>
 </p-table>

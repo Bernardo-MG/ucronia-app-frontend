@@ -166,22 +166,22 @@
   }
   @case ('book_type') {
     <div>Escoge un tipo</div>
-    <assoc-library-admin-list-selection [data]="bookTypesSelection()" (choose)="onSelectBookType($event)"
+    <assoc-library-admin-list-selection heading="Tipo" [data]="bookTypesSelection()" (choose)="onSelectBookType($event)"
       (goToPage)="goToBookTypePage.emit($event)" />
   }
   @case ('game_system') {
     <div>Escoge un sistema</div>
-    <assoc-library-admin-list-selection [data]="gameSystemsSelection()" (choose)="onSelectGameSystem($event)"
+    <assoc-library-admin-list-selection heading="Sistema" [data]="gameSystemsSelection()" (choose)="onSelectGameSystem($event)"
       (goToPage)="goToGameSystemPage.emit($event)" />
   }
   @case ('author') {
     <div>Escoge un autor</div>
-    <assoc-library-admin-list-selection [data]="authorsSelection()" (choose)="onSelectAuthor($event)"
+    <assoc-library-admin-list-selection heading="Autor" [data]="authorsSelection()" (choose)="onSelectAuthor($event)"
       (goToPage)="goToAuthorPage.emit($event)" />
   }
   @case ('publisher') {
     <div>Escoge un editor</div>
-    <assoc-library-admin-list-selection [data]="publishersSelection()" (choose)="onSelectPublisher($event)"
+    <assoc-library-admin-list-selection heading="Editor" [data]="publishersSelection()" (choose)="onSelectPublisher($event)"
       (goToPage)="goToPublisherPage.emit($event)" />
   }
 }

@@ -1,5 +1,6 @@
 
 import { Component, input, output } from '@angular/core';
+import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
@@ -7,13 +8,11 @@ import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { BlockUiDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';
-import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admin-book-lending-member-selection/library-admin-book-lending-member-selection.component';
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, BlockUiDirective],
+  imports: [MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, LibraryAdminListSelection],
   templateUrl: './library-admin-book-lending.component.html'
 })
 export class LibraryAdminBookLendingLendComponent {
@@ -49,6 +48,10 @@ export class LibraryAdminBookLendingLendComponent {
     this.member = member;
     this.selectedMember = true;
     this.filled_bar = 50;
+  }
+
+  public nameRenderer(row: Member) {
+    return row.name.fullName;
   }
 
 }

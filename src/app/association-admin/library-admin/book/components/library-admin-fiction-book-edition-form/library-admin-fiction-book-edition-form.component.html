@@ -147,12 +147,12 @@
               }
               @case ('author') {
                 <div>Escoge un autor</div>
-                <assoc-library-admin-list-selection [data]="authorsSelection()" (choose)="onSelectAuthor($event)"
+                <assoc-library-admin-list-selection heading="Autor" [data]="authorsSelection()" (choose)="onSelectAuthor($event)"
                   (goToPage)="goToAuthorPage.emit($event)" />
               }
               @case ('publisher') {
                 <div>Escoge un editor</div>
-                <assoc-library-admin-list-selection [data]="publishersSelection()" (choose)="onSelectPublisher($event)"
+                <assoc-library-admin-list-selection heading="Editor" [data]="publishersSelection()" (choose)="onSelectPublisher($event)"
                   (goToPage)="goToPublisherPage.emit($event)" />
               }
             }
