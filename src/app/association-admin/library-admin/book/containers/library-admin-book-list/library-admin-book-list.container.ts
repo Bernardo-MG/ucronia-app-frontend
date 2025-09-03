@@ -27,16 +27,18 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { throwError } from 'rxjs';
+import { LibraryAdminAuthorsFormComponent } from '../../components/library-admin-book-authors-form/library-admin-book-authors-form.component';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../../components/library-admin-book-info/library-admin-book-info';
 import { LibraryAdminBookLendingLendComponent } from '../../components/library-admin-book-lending/library-admin-book-lending.component';
 import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
+import { BookUpdate } from '@app/domain/library/book-update';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminAuthorsFormComponent],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -129,6 +131,8 @@ export class LibraryAdminBookListContainer {
     // Load data
     this.load(0);
     this.onGoToDonorPage(0);
+    this.onGoToAuthorPage(0);
+    this.onGoToPublisherPage(0);
 
     // Check permissions
     this.createable = authContainer.hasPermission("library_book", "create");
@@ -181,6 +185,16 @@ export class LibraryAdminBookListContainer {
       {
         label: 'Donantes',
         command: () => this.onStartEditingView('donors')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Autores',
+        command: () => this.onStartEditingView('authors')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Editor',
+        command: () => this.onStartEditingView('publisher')
       });
     this.editionMenuItems.push(
       {
@@ -313,10 +327,10 @@ export class LibraryAdminBookListContainer {
     this.editing = true;
   }
 
-  public onSave(toSave: FictionBook | GameBook) {
+  public onSave(toSave: BookUpdate) {
     this.loading = true;
     if (this.source === 'game') {
-      this.service.updateGameBook(toSave.number, toSave as GameBook).subscribe({
+      this.service.updateGameBookNew(toSave.number, toSave).subscribe({
         next: response => {
           this.interceptSave(response);
         },
@@ -325,7 +339,7 @@ export class LibraryAdminBookListContainer {
         }
       });
     } else {
-      this.service.updateFictionBook(toSave.number, toSave as FictionBook).subscribe({
+      this.service.updateFictionBookNew(toSave.number, toSave).subscribe({
         next: response => {
           this.interceptSave(response);
         },
@@ -336,9 +350,66 @@ export class LibraryAdminBookListContainer {
     }
   }
 
+  public onSetAuthors(authors: Author[]) {
+    let updateDate;
+    if (this.selectedData instanceof GameBook) {
+      updateDate = {
+        ...this.selectedData,
+        publishers: this.selectedData.publishers.map(p => p.number),
+        bookType: this.selectedData.bookType?.number,
+        gameSystem: this.selectedData.gameSystem?.number,
+        authors: authors.map(a => a.number)
+      };
+    } else {
+      updateDate = {
+        ...this.selectedData,
+        publishers: this.selectedData.publishers.map(p => p.number),
+        authors: authors.map(a => a.number)
+      };
+    }
+    this.onSave(updateDate as BookUpdate);
+  }
+
   public onSetDonation(donation: Donation | undefined) {
-    this.selectedData.donation = donation;
-    this.onSave(this.selectedData);
+    let updateDate;
+    if (this.selectedData instanceof GameBook) {
+      updateDate = {
+        ...this.selectedData,
+        publishers: this.selectedData.publishers.map(p => p.number),
+        bookType: this.selectedData.bookType?.number,
+        gameSystem: this.selectedData.gameSystem?.number,
+        authors: this.selectedData.authors.map(a => a.number),
+        donation: donation
+      };
+    } else {
+      updateDate = {
+        ...this.selectedData,
+        publishers: this.selectedData.publishers.map(p => p.number),
+        authors: this.selectedData.authors.map(a => a.number),
+        donation: donation
+      };
+    }
+    this.onSave(updateDate as BookUpdate);
+  }
+
+  public onSaveBook(book: FictionBook | GameBook ) {
+    let updateDate;
+    if (book instanceof GameBook) {
+      updateDate = {
+        ...book,
+        publishers: book.publishers.map(p => p.number),
+        bookType: book.bookType?.number,
+        gameSystem: book.gameSystem?.number,
+        authors: book.authors.map(a => a.number)
+      };
+    } else {
+      updateDate = {
+        ...book,
+        publishers: book.publishers.map(p => p.number),
+        authors: book.authors.map(a => a.number)
+      };
+    }
+    this.onSave(updateDate as BookUpdate);
   }
 
   public onGoToAuthorPage(page: number) {

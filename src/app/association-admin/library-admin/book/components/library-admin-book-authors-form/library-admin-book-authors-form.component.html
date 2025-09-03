@@ -1,0 +1,48 @@
+@switch (selecting) {
+  @case (false) {
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+      <!-- Donors -->
+      <div class="row mb-2">
+        <div class="col-sm-12">
+          <h2>Autores</h2>
+        </div>
+        <div class="col-sm-12">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">
+                </th>
+                <th scope="col">
+                  Nombre
+                </th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              @for (row of rows; track row; let i = $index) {
+              <tr>
+                <td>
+                  <button (click)="onRemove(row)" [disabled]="!formEnabled" type="button"
+                    class="btn btn-link link-dark" role="button" aria-label="Remove author">
+                    <icon-delete />
+                  </button>
+                </td>
+                <td>{{row.name}}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div uiJustifyCenter>
+          <button (click)="onStartSelecting()" type="button" class="btn btn-primary" [disabled]="!formEnabled"
+            aria-label="Add donor" data-bs-toggle="modal" data-bs-target="#donorModal"><icon-add /></button>
+        </div>
+      </div>
+      <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+        [cancellable]="cancellable" (reject)="onCancel()" />
+    </form>
+  }
+  @case (true) {
+    <assoc-library-admin-list-selection heading="Autor" [data]="selection()" (choose)="onSelect($event)"
+      (goToPage)="goToSelectionPage.emit($event)" [nameRenderer]="nameRenderer" />
+  }
+}

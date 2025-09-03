@@ -15,6 +15,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { BookInfo } from '@app/domain/library/book-info';
+import { BookUpdate } from '@app/domain/library/book-update';
 
 @Injectable({
   providedIn: "root"
@@ -59,6 +60,13 @@ export class BookAdminService {
       .pipe(map(r => r.content));
   }
 
+  public updateGameBookNew(number: number, data: BookUpdate): Observable<GameBook> {
+    return this.gameBookClient
+      .appendRoute(`/${number}`)
+      .update<SimpleResponse<GameBook>>(data)
+      .pipe(map(r => r.content));
+  }
+
   public updateGameBook(number: number, data: GameBook): Observable<GameBook> {
     return this.gameBookClient
       .appendRoute(`/${number}`)
@@ -95,6 +103,13 @@ export class BookAdminService {
   public createFictionBook(data: FictionBook): Observable<FictionBook> {
     return this.fictionBookClient
       .create<SimpleResponse<FictionBook>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  public updateFictionBookNew(number: number, data: BookUpdate): Observable<FictionBook> {
+    return this.fictionBookClient
+      .appendRoute(`/${number}`)
+      .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 

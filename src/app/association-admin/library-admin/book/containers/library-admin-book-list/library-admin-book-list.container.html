@@ -71,12 +71,17 @@
     </h2>
   </ng-template>
   <assoc-library-admin-book-info-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [languages]="languages" (save)="onSave($event)" (reject)="onCancel()" />
+    [readonly]="false" [cancellable]="true" [languages]="languages" (save)="onSaveBook($event)" (reject)="onCancel()" />
   }
   @case ('donors') {
   <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
     [readonly]="false" [cancellable]="true" [donorsSelection]="donorPage" (save)="onSetDonation($event)"
     (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+  }
+  @case ('authors') {
+  <assoc-library-admin-book-authors-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
+    [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
+    (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
   }
   @case ('lendings') {
   @if(selectedData.lent) {
