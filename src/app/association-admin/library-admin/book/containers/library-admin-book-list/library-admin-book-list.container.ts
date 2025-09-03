@@ -269,6 +269,7 @@ export class LibraryAdminBookListContainer {
         }
       });
   }
+  
   public onSelect(selection: FictionBook | GameBook) {
     this.selectedData = selection;
   }

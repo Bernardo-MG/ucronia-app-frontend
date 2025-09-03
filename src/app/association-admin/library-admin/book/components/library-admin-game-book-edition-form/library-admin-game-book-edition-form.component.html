@@ -175,8 +175,8 @@
   (choose)="onSelectGameSystem($event)" (goToPage)="goToGameSystemPage.emit($event)" />
 }
 @case ('author') {
-<assoc-library-admin-author-selection [values]="authorsSelection().content" [current]="authorsSelection().page"
-  [pages]="authorsSelection().totalPages" (choose)="onSelectAuthor($event)" (goToPage)="goToAuthorPage.emit($event)" />
+<div>Escoge un autor</div>
+<assoc-library-admin-author-selection [data]="authorsSelection()" (choose)="onSelectAuthor($event)" (goToPage)="goToAuthorPage.emit($event)" />
 }
 @case ('publisher') {
 <assoc-library-admin-publisher-selection [values]="publishersSelection().content" [current]="publishersSelection().page"
