@@ -13,7 +13,7 @@ import { LibraryAdminBookLendingMemberSelectionComponent } from '../library-admi
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, ResponsiveShortColumnsDirective, BlockUiDirective],
+  imports: [LibraryAdminBookLendingMemberSelectionComponent, MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, BlockUiDirective],
   templateUrl: './library-admin-book-lending.component.html'
 })
 export class LibraryAdminBookLendingLendComponent {

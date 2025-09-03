@@ -23,7 +23,7 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
 
   private readonly service = inject(BookAdminService);
 
-  public source: 'games' | 'fiction' = 'games';
+  public source: 'game' | 'fiction' = 'game';
 
   public book = new BookInfo();
 
@@ -46,7 +46,7 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
 
       const urlSegments = this.route.snapshot.url;
       const sourceSegment = urlSegments.length > 0 ? urlSegments[0].path : '';
-      this.source = sourceSegment as 'games' | 'fiction';
+      this.source = sourceSegment as 'game' | 'fiction';
 
       this.load();
     });
@@ -59,7 +59,7 @@ export class LibraryAdminBookLendingReturnContainer extends CreateComponent<Book
   }
 
   private load() {
-    if (this.source === 'games') {
+    if (this.source === 'game') {
       this.service.getOneGameBook(this.index).subscribe({
         next: response => {
           this.book = response;

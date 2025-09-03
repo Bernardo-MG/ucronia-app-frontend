@@ -9,12 +9,13 @@ import { Active } from '@app/domain/person/active';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { Observable } from 'rxjs';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-lending',
-  imports: [LibraryAdminBookLendingLendComponent],
+  imports: [LibraryAdminBookLendingLendComponent, ResponsiveShortColumnsDirective],
   templateUrl: './library-admin-book-lending-lending.container.html'
 })
 export class LibraryAdminBookLendingLendContainer extends CreateComponent<BookLent> {
