@@ -7,9 +7,9 @@
         <th>Autor</th>
       </tr>
     </ng-template>
-    <ng-template #body let-author>
-      <tr [pSelectableRow]="author">
-        <td>{{author.name}}</td>
+    <ng-template #body let-row>
+      <tr [pSelectableRow]="row">
+        <td>{{row.name}}</td>
       </tr>
     </ng-template>
 </p-table>

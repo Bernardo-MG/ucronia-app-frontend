@@ -1,18 +1,17 @@
 import { Component, input, output } from '@angular/core';
-import { Author } from '@app/domain/library/author';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
-  selector: 'assoc-library-admin-author-selection',
+  selector: 'assoc-library-admin-list-selection',
   imports: [TableModule],
-  templateUrl: './library-admin-author-selection.component.html'
+  templateUrl: './library-admin-list-selection.html'
 })
-export class LibraryAdminAuthorSelectionComponent {
+export class LibraryAdminListSelection<T> {
 
-  public readonly data = input(new PaginatedResponse<Author>());
+  public readonly data = input(new PaginatedResponse<T>());
 
-  public readonly choose = output<Author>();
+  public readonly choose = output<T>();
 
   public readonly goToPage = output<number>();
 
@@ -20,11 +19,9 @@ export class LibraryAdminAuthorSelectionComponent {
     return (this.data().page - 1) * this.data().size;
   }
 
-  public readonly nameRenderer = (data: Author): string => data.name;
-
   public loading = false;
 
-  public selectedData = new Author();
+  public selectedData: T | undefined;
 
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data().size) + 1;
@@ -32,7 +29,9 @@ export class LibraryAdminAuthorSelectionComponent {
   }
 
   public onSelectRow() {
-    this.choose.emit(this.selectedData);
+    if (this.selectedData) {
+      this.choose.emit(this.selectedData);
+    }
   }
 
 }

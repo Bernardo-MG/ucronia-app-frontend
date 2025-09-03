@@ -1,8 +1,7 @@
 
 import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-author-selection/library-admin-author-selection.component';
-import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
+import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { Author } from '@app/domain/library/author';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { Language } from '@app/domain/library/language';
@@ -15,7 +14,7 @@ import { JustifyCenterDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-fiction-book-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  imports: [FormsModule, ReactiveFormsModule, LibraryAdminListSelection, SaveControlsComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
   templateUrl: './library-admin-fiction-book-edition-form.component.html'
 })
 export class LibraryAdminFictionBookEditionFormComponent extends FormComponent<FictionBook> {

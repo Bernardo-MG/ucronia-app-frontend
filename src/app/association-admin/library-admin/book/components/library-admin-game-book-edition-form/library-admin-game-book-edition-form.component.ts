@@ -1,10 +1,7 @@
 
 import { Component, inject, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LibraryAdminAuthorSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-author-selection/library-admin-author-selection.component';
-import { LibraryAdminBookTypeSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-book-type-selection/library-admin-book-type-selection.component';
-import { LibraryAdminGameSystemSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-game-system-selection/library-admin-game-system-selection.component';
-import { LibraryAdminPublisherSelectionComponent } from '@app/association-admin/library-admin/book/components/library-admin-publisher-selection/library-admin-publisher-selection.component';
+import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { Author } from '@app/domain/library/author';
 import { BookType } from '@app/domain/library/book-type';
 import { GameBook } from '@app/domain/library/game-book';
@@ -19,7 +16,7 @@ import { JustifyCenterDirective } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'assoc-library-admin-game-book-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, LibraryAdminGameSystemSelectionComponent, LibraryAdminBookTypeSelectionComponent, LibraryAdminPublisherSelectionComponent, LibraryAdminAuthorSelectionComponent, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
+  imports: [FormsModule, ReactiveFormsModule, LibraryAdminListSelection, SaveControlsComponent, IconSearchComponent, IconAddComponent, IconDeleteComponent, InputFailureFeedbackComponent, InvalidFieldDirective, JustifyCenterDirective],
   templateUrl: './library-admin-game-book-edition-form.component.html'
 })
 export class LibraryAdminGameBookEditionFormComponent extends FormComponent<GameBook> {
