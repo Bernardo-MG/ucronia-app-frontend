@@ -3,7 +3,6 @@ import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { FormComponent } from '@bernardo-mg/form';
-import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -11,7 +10,7 @@ import { NameNumber } from '../model/name-number';
 
 @Component({
   selector: 'assoc-library-admin-list-selection-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, TableModule, IconAddComponent, IconDeleteComponent, LibraryAdminListSelection],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, TableModule, LibraryAdminListSelection],
   templateUrl: './library-admin-list-selection-form.html'
 })
 export class LibraryAdminListSelectionForm extends FormComponent<NameNumber[]> {

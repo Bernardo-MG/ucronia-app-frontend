@@ -18,10 +18,7 @@
             <ng-template #body let-row>
               <tr>
                 <td>
-                  <button (click)="onRemove(row)" [disabled]="!formEnabled" type="button" class="btn btn-link link-dark"
-                    role="button" aria-label="Remove row">
-                    <icon-delete />
-                  </button>
+                  <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemove(row)" rounded text />
                 </td>
                 <td>{{nameRenderer(row)}}</td>
               </tr>
@@ -29,8 +26,7 @@
           </p-table>
         </div>
         <div uiJustifyCenter>
-          <button (click)="onStartSelecting()" type="button" class="btn btn-primary" [disabled]="!formEnabled"
-            aria-label="Add donor"><icon-add /></button>
+          <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
         </div>
       </div>
       <!-- Save controls -->
