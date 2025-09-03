@@ -1,10 +1,12 @@
 
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { LibraryAdminListSelectionForm } from '@app/association-admin/library-admin/common/library-admin-list-selection-form/library-admin-list-selection-form';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
+import { BookUpdate } from '@app/domain/library/book-update';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { FictionBook } from '@app/domain/library/fiction-book';
@@ -27,18 +29,16 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { throwError } from 'rxjs';
-import { LibraryAdminAuthorsFormComponent } from '../../components/library-admin-book-authors-form/library-admin-book-authors-form.component';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../../components/library-admin-book-info/library-admin-book-info';
 import { LibraryAdminBookLendingLendComponent } from '../../components/library-admin-book-lending/library-admin-book-lending.component';
 import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
 import { BookAdminService } from '../../services/book-admin.service';
-import { BookUpdate } from '@app/domain/library/book-update';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminAuthorsFormComponent],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -194,7 +194,7 @@ export class LibraryAdminBookListContainer {
     this.editionMenuItems.push(
       {
         label: 'Editor',
-        command: () => this.onStartEditingView('publisher')
+        command: () => this.onStartEditingView('publishers')
       });
     this.editionMenuItems.push(
       {

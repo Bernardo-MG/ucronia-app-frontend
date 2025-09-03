@@ -79,7 +79,12 @@
     (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
   }
   @case ('authors') {
-  <assoc-library-admin-book-authors-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
+  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
+    [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
+    (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
+  }
+  @case ('publishers') {
+  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
     [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
     (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
   }
