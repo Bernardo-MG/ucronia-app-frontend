@@ -1,4 +1,5 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/domain/library/book-lending';
@@ -10,7 +11,7 @@ import { BookLendingService } from '../book-lending-service/book-lending-service
 
 @Component({
   selector: 'app-library-admin-lending-list',
-  imports: [CardModule, RouterModule, TableModule],
+  imports: [CardModule, RouterModule, TableModule, DatePipe],
   templateUrl: './library-admin-lending-list.html'
 })
 export class LibraryAdminLendingList {
