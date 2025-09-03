@@ -41,6 +41,8 @@
           }
         </td>
         <td>
+          <p-button icon="pi pi-eye" severity="secondary" [disabled]="!editable" aria-label="Editar"
+            [attr.aria-disabled]="!editable" (click)="onShowBook(book)" rounded text />
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
@@ -50,6 +52,9 @@
     </ng-template>
   </p-table>
 </p-panel>
+<p-drawer [(visible)]="showing" position="full">
+  <assoc-library-admin-book-info [book]="selectedData"></assoc-library-admin-book-info>
+</p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
   @case ('details') {
