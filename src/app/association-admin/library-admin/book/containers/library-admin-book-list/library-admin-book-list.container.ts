@@ -2,15 +2,18 @@
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { LibraryAdminListSelectionForm } from '@app/association-admin/library-admin/common/library-admin-list-selection-form/library-admin-list-selection-form';
+import { LibraryAdminSelectionForm } from '@app/association-admin/library-admin/common/library-admin-selection-form/library-admin-selection-form';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
+import { BookType } from '@app/domain/library/book-type';
 import { BookUpdate } from '@app/domain/library/book-update';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
+import { GameSystem } from '@app/domain/library/game-system';
 import { Language } from '@app/domain/library/language';
 import { Publisher } from '@app/domain/library/publisher';
 import { Member } from '@app/domain/members/member';
@@ -38,7 +41,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -63,6 +66,10 @@ export class LibraryAdminBookListContainer {
   public publishersSelection = new PaginatedResponse<Publisher>();
 
   public donorPage = new PaginatedResponse<Person>();
+
+  public gameSystems = new PaginatedResponse<GameSystem>();
+
+  public bookTypes = new PaginatedResponse<BookType>();
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -104,7 +111,9 @@ export class LibraryAdminBookListContainer {
 
   public showing = false;
 
-  public readonly editionMenuItems: MenuItem[] = [];
+  public readonly fictionEditionMenuItems: MenuItem[] = [];
+
+  public readonly gameEditionMenuItems: MenuItem[] = [];
 
   public readonly dataMenuItems: MenuItem[] = [];
 
@@ -116,7 +125,9 @@ export class LibraryAdminBookListContainer {
 
   public memberFilter = Active.Active;
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
+  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
+
+  @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public get borrower() {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
@@ -133,6 +144,8 @@ export class LibraryAdminBookListContainer {
     this.onGoToDonorPage(0);
     this.onGoToAuthorPage(0);
     this.onGoToPublisherPage(0);
+    this.onGoToGameSystemPage(0);
+    this.onGoToBookTypePage(0);
 
     // Check permissions
     this.createable = authContainer.hasPermission("library_book", "create");
@@ -176,27 +189,65 @@ export class LibraryAdminBookListContainer {
     }
 
     // Load edition menu
-    this.editionMenuItems.push(
+    this.fictionEditionMenuItems.push(
       {
         label: 'Datos',
         command: () => this.onStartEditingView('details')
       });
-    this.editionMenuItems.push(
+    this.fictionEditionMenuItems.push(
       {
         label: 'Donantes',
         command: () => this.onStartEditingView('donors')
       });
-    this.editionMenuItems.push(
+    this.fictionEditionMenuItems.push(
       {
         label: 'Autores',
         command: () => this.onStartEditingView('authors')
       });
-    this.editionMenuItems.push(
+    this.fictionEditionMenuItems.push(
       {
         label: 'Editor',
         command: () => this.onStartEditingView('publishers')
       });
-    this.editionMenuItems.push(
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Préstamos',
+        command: () => this.onStartEditingView('lendings')
+      });
+
+
+    // Load edition menu
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onStartEditingView('details')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Donantes',
+        command: () => this.onStartEditingView('donors')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Autores',
+        command: () => this.onStartEditingView('authors')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Editor',
+        command: () => this.onStartEditingView('publishers')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Sistema',
+        command: () => this.onStartEditingView('gameSystem')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Tipo',
+        command: () => this.onStartEditingView('bookType')
+      });
+    this.gameEditionMenuItems.push(
       {
         label: 'Préstamos',
         command: () => this.onStartEditingView('lendings')
@@ -205,7 +256,11 @@ export class LibraryAdminBookListContainer {
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.editionMenu.toggle(event);
+    if (book.hasOwnProperty('gameSystem')) {
+      this.gameEditionMenu.toggle(event);
+    } else {
+      this.fictionEditionMenu.toggle(event);
+    }
   }
 
   public donors(book: FictionBook | GameBook) {
@@ -390,6 +445,28 @@ export class LibraryAdminBookListContainer {
     this.onSave(updateDate as BookUpdate);
   }
 
+  public onSetGameSystem(gameSystem: GameSystem) {
+    let updateDate = {
+      ...this.selectedData,
+      publishers: this.selectedData.publishers.map(p => p.number),
+      bookType: (this.selectedData as GameBook).bookType?.number,
+      authors: this.selectedData.authors.map(a => a.number),
+      gameSystem: gameSystem.number
+    };
+    this.onSave(updateDate as BookUpdate);
+  }
+
+  public onSetBookType(bookType: BookType) {
+    let updateDate = {
+      ...this.selectedData,
+      publishers: this.selectedData.publishers.map(p => p.number),
+      gameSystem: (this.selectedData as GameBook).gameSystem?.number,
+      authors: this.selectedData.authors.map(a => a.number),
+      bookType: bookType.number
+    };
+    this.onSave(updateDate as BookUpdate);
+  }
+
   public onSetDonation(donation: Donation | undefined) {
     let updateDate;
     if (this.selectedData instanceof GameBook) {
@@ -432,6 +509,14 @@ export class LibraryAdminBookListContainer {
     this.onSave(updateDate as BookUpdate);
   }
 
+  public getGameSystem(book: FictionBook | GameBook): GameSystem {
+    return (book as GameBook).gameSystem as GameSystem;
+  }
+
+  public getBookType(book: FictionBook | GameBook): BookType {
+    return (book as GameBook).bookType as BookType;
+  }
+
   public onGoToAuthorPage(page: number) {
     this.service.getAuthors(page).subscribe({
       next: response => {
@@ -467,6 +552,26 @@ export class LibraryAdminBookListContainer {
     this.service.getMembers(page, this.memberFilter).subscribe({
       next: response => {
         this.members = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onGoToGameSystemPage(page: number) {
+    this.service.getGameSystems(page).subscribe({
+      next: response => {
+        this.gameSystems = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
+  public onGoToBookTypePage(page: number) {
+    this.service.getBookTypes(page).subscribe({
+      next: response => {
+        this.bookTypes = response;
       },
       error: error => {
       }

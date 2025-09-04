@@ -1,7 +1,8 @@
 <p-toast />
 <p-confirmpopup />
 <p-panel>
-  <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
+  <p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
+  <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
   <p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" routerLink="{{routerLink}}" [disabled]="!createable"
@@ -80,15 +81,23 @@
   }
   @case ('authors') {
   <h2>Autores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
-    (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
+  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [selection]="authorsSelection"
+    (save)="onSetAuthors($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
+  }
+  @case ('gameSystem') {
+  <h2>Sistema</h2>
+  <assoc-library-admin-selection-form [data]="getGameSystem(selectedData)" [selection]="gameSystems"
+    (save)="onSetGameSystem($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToGameSystemPage($event)" />
+  }
+  @case ('bookType') {
+  <h2>Tipo</h2>
+  <assoc-library-admin-selection-form [data]="getBookType(selectedData)" [selection]="bookTypes"
+    (save)="onSetBookType($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToBookTypePage($event)" />
   }
   @case ('publishers') {
   <h2>Editores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.publishers" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [selection]="publishersSelection" (save)="onSetPublishers($event)"
-    (reject)="onCancel()" (goToSelectionPage)="onGoToPublisherPage($event)" />
+  <assoc-library-admin-list-selection-form [data]="selectedData.publishers" [selection]="publishersSelection"
+    (save)="onSetPublishers($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToPublisherPage($event)" />
   }
   @case ('lendings') {
   @if(selectedData.lent) {
