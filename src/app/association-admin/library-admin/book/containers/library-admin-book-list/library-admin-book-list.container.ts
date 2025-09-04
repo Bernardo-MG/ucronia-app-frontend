@@ -31,18 +31,18 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { EMPTY, Observable, throwError } from 'rxjs';
-import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
-import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
-import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
+import { Observable, throwError } from 'rxjs';
+import { LibraryAdminBookCreationForm } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form';
+import { LibraryAdminBookDonorsForm } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form';
+import { LibraryAdminBookInfoEditionForm } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../../components/library-admin-book-info/library-admin-book-info';
-import { LibraryAdminBookLendingLendComponent } from '../../components/library-admin-book-lending/library-admin-book-lending.component';
-import { LibraryAdminBookReturnFormComponent } from '../../components/library-admin-book-return-form/library-admin-book-return-form.component';
+import { LibraryAdminBookLendingLend } from '../../components/library-admin-book-lending/library-admin-book-lending';
+import { LibraryAdminBookReturnForm } from '../../components/library-admin-book-return-form/library-admin-book-return-form';
 import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationFormComponent],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })

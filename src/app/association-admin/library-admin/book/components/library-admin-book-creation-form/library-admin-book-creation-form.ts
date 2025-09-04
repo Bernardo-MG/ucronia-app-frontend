@@ -14,9 +14,9 @@ import { SelectModule } from 'primeng/select';
 @Component({
   selector: 'assoc-library-admin-book-creation-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, SaveControlsComponent],
-  templateUrl: './library-admin-book-creation-form.component.html'
+  templateUrl: './library-admin-book-creation-form.html'
 })
-export class LibraryAdminBookCreationFormComponent extends FormComponent<BookInfo> {
+export class LibraryAdminBookCreationForm extends FormComponent<BookInfo> {
 
   public readonly languages = input<Language[]>([]);
 

@@ -16,9 +16,9 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, IconAddComponent, IconDeleteComponent, LibraryAdminListSelection],
-  templateUrl: './library-admin-book-donors-form.component.html'
+  templateUrl: './library-admin-book-donors-form.html'
 })
-export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation | undefined> {
+export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefined> {
 
   public readonly selection = input(new PaginatedResponse<Person>());
 

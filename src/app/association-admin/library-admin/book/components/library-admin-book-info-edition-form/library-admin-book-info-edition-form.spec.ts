@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibraryAdminBookInfoEditionFormComponent } from './library-admin-book-info-edition-form';
+import { LibraryAdminBookInfoEditionForm } from './library-admin-book-info-edition-form';
 
-describe('LibraryAdminBookInfoEditionFormComponent', () => {
-  let component: LibraryAdminBookInfoEditionFormComponent;
-  let fixture: ComponentFixture<LibraryAdminBookInfoEditionFormComponent>;
+describe('LibraryAdminBookInfoEditionForm', () => {
+  let component: LibraryAdminBookInfoEditionForm;
+  let fixture: ComponentFixture<LibraryAdminBookInfoEditionForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryAdminBookInfoEditionFormComponent]
+      imports: [LibraryAdminBookInfoEditionForm]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminBookInfoEditionFormComponent);
+    fixture = TestBed.createComponent(LibraryAdminBookInfoEditionForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

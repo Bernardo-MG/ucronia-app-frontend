@@ -8,16 +8,16 @@ import { BookTypeCrudService } from '@app/association-admin/library-admin/book-t
 import { GameSystemCrudService } from '@app/association-admin/library-admin/game-system/game-system-crud-service/game-system-crud-service';
 import { PublisherCrudService } from '@app/association-admin/library-admin/publisher/publisher-crud-service/publisher-crud-service';
 import { BookAdminService } from '../../services/book-admin.service';
-import { LibraryAdminFictionBookEditionContainer } from './library-admin-book-info';
+import { LibraryAdminBookInfo } from './library-admin-book-info';
 
-describe('LibraryAdminFictionBookEditionContainer', () => {
-  let component: LibraryAdminFictionBookEditionContainer;
-  let fixture: ComponentFixture<LibraryAdminFictionBookEditionContainer>;
+describe('LibraryAdminBookInfo', () => {
+  let component: LibraryAdminBookInfo;
+  let fixture: ComponentFixture<LibraryAdminBookInfo>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminFictionBookEditionContainer
+        LibraryAdminBookInfo
       ],
       providers: [
         BookAdminService,
@@ -33,7 +33,7 @@ describe('LibraryAdminFictionBookEditionContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminFictionBookEditionContainer);
+    fixture = TestBed.createComponent(LibraryAdminBookInfo);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

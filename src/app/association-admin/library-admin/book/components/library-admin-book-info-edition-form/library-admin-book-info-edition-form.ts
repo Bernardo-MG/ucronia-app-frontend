@@ -18,7 +18,7 @@ import { SelectModule } from 'primeng/select';
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, SaveControlsComponent],
   templateUrl: './library-admin-book-info-edition-form.html'
 })
-export class LibraryAdminBookInfoEditionFormComponent extends FormComponent<FictionBook | GameBook> {
+export class LibraryAdminBookInfoEditionForm extends FormComponent<FictionBook | GameBook> {
 
   public readonly languages = input<Language[]>([]);
 

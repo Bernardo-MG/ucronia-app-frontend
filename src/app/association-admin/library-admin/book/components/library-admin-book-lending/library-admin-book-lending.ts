@@ -8,14 +8,14 @@ import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { LibraryAdminBookLendingFormComponent } from '../library-admin-book-lending-form/library-admin-book-lending-form.component';
+import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/library-admin-book-lending-form';
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [MemberStatusSelectComponent, LibraryAdminBookLendingFormComponent, IconBackwardComponent, LibraryAdminListSelection],
-  templateUrl: './library-admin-book-lending.component.html'
+  imports: [MemberStatusSelectComponent, LibraryAdminBookLendingForm, IconBackwardComponent, LibraryAdminListSelection],
+  templateUrl: './library-admin-book-lending.html'
 })
-export class LibraryAdminBookLendingLendComponent {
+export class LibraryAdminBookLendingLend {
 
   public readonly readonly = input(false);
 

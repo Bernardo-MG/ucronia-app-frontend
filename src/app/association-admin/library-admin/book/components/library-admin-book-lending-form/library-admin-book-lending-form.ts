@@ -14,9 +14,9 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'assoc-library-admin-book-lending-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
-  templateUrl: './library-admin-book-lending-form.component.html'
+  templateUrl: './library-admin-book-lending-form.html'
 })
-export class LibraryAdminBookLendingFormComponent extends FormComponent<BookLent> {
+export class LibraryAdminBookLendingForm extends FormComponent<BookLent> {
 
   @Input() public set borrower(value: Member) {
     this.form.get('borrower')?.setValue(value.number);
