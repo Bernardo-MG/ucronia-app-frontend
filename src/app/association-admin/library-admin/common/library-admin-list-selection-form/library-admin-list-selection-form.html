@@ -1,35 +1,26 @@
 @switch (selecting) {
   @case (false) {
     <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-      <!-- Donors -->
-      <div class="row mb-2">
-        <div class="col-sm-12">
-          <h2>Autores</h2>
-        </div>
-        <div class="col-sm-12">
-          <p-table dataKey="number" selectionMode="single" [value]="rows">
-            <ng-template #header>
-              <tr>
-                <th scope="col">
-                </th>
-                <th>Nombre</th>
-              </tr>
-            </ng-template>
-            <ng-template #body let-row>
-              <tr>
-                <td>
-                  <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemove(row)" rounded text />
-                </td>
-                <td>{{nameRenderer(row)}}</td>
-              </tr>
-            </ng-template>
-          </p-table>
-        </div>
-        <div uiJustifyCenter>
-          <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
-        </div>
+      <p-table dataKey="number" selectionMode="single" [value]="rows">
+        <ng-template #header>
+          <tr>
+            <th scope="col">
+            </th>
+            <th>Nombre</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-row>
+          <tr>
+            <td>
+              <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemove(row)" rounded text />
+            </td>
+            <td>{{nameRenderer(row)}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div uiJustifyCenter>
+        <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
       </div>
-      <!-- Save controls -->
       <div uiJustifyBetween>
         <!-- Save button -->
         <p-button type="submit" name="Guardar" [disabled]="!saveEnabled"
@@ -41,7 +32,7 @@
     </form>
   }
   @case (true) {
-    <assoc-library-admin-list-selection heading="Autor" [data]="selection()" (choose)="onSelect($event)"
+    <assoc-library-admin-list-selection heading="Nombre" [data]="selection()" (choose)="onSelect($event)"
       (goToPage)="goToSelectionPage.emit($event)" [nameRenderer]="nameRenderer" />
   }
 }

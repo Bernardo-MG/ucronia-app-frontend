@@ -370,6 +370,26 @@ export class LibraryAdminBookListContainer {
     this.onSave(updateDate as BookUpdate);
   }
 
+  public onSetPublishers(publishers: Publisher[]) {
+    let updateDate;
+    if (this.selectedData instanceof GameBook) {
+      updateDate = {
+        ...this.selectedData,
+        bookType: this.selectedData.bookType?.number,
+        gameSystem: this.selectedData.gameSystem?.number,
+        authors: this.selectedData.authors.map(a => a.number),
+        publishers: publishers.map(a => a.number)
+      };
+    } else {
+      updateDate = {
+        ...this.selectedData,
+        authors: this.selectedData.authors.map(a => a.number),
+        publishers: publishers.map(a => a.number)
+      };
+    }
+    this.onSave(updateDate as BookUpdate);
+  }
+
   public onSetDonation(donation: Donation | undefined) {
     let updateDate;
     if (this.selectedData instanceof GameBook) {
@@ -392,7 +412,7 @@ export class LibraryAdminBookListContainer {
     this.onSave(updateDate as BookUpdate);
   }
 
-  public onSaveBook(book: FictionBook | GameBook ) {
+  public onSaveBook(book: FictionBook | GameBook) {
     let updateDate;
     if (book instanceof GameBook) {
       updateDate = {

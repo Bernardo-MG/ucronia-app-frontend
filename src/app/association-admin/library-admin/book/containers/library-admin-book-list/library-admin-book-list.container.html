@@ -79,14 +79,16 @@
     (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
   }
   @case ('authors') {
+  <h2>Autores</h2>
   <assoc-library-admin-list-selection-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
     [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
     (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
   }
   @case ('publishers') {
-  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [selection]="authorsSelection" (save)="onSetAuthors($event)"
-    (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
+  <h2>Editores</h2>
+  <assoc-library-admin-list-selection-form [data]="selectedData.publishers" [waiting]="loading" [failures]="failures"
+    [readonly]="false" [cancellable]="true" [selection]="publishersSelection" (save)="onSetPublishers($event)"
+    (reject)="onCancel()" (goToSelectionPage)="onGoToPublisherPage($event)" />
   }
   @case ('lendings') {
   @if(selectedData.lent) {
