@@ -5,8 +5,8 @@
   <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
   <p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')" [disabled]="!createable"
-      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
       [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
     <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" />
@@ -16,10 +16,9 @@
     <option [selected]="source === 'game'" value="game">Juegos</option>
     <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
   </select>
-  <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
-    [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
-    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
-    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
+  <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #header>
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>

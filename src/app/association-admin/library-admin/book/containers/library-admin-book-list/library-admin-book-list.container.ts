@@ -102,10 +102,6 @@ export class LibraryAdminBookListContainer {
 
   public readonly createable;
 
-  public get routerLink(): string {
-    return `${this.source}/register`;
-  }
-
   public editable = false;
 
   public editing = false;
@@ -138,7 +134,6 @@ export class LibraryAdminBookListContainer {
     const authContainer = inject(AuthContainer);
 
     this.languages = this.service.getLanguages();
-
 
     // Load data
     this.load(0);
@@ -360,10 +355,6 @@ export class LibraryAdminBookListContainer {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
-  }
-
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/library/books/${this.source}/${this.selectedData.number}`]);
   }
 
   public onShowBook(book: FictionBook | GameBook) {
