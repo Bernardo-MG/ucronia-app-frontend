@@ -44,7 +44,7 @@ export class LibraryAdminBookInfo {
   }
 
   public get bookType(): BookType | undefined {
-    if (this.book() instanceof GameBook) {
+    if (this.book().hasOwnProperty('bookType')) {
       return (this.book() as GameBook).bookType;
     } else {
       return undefined;
@@ -52,7 +52,7 @@ export class LibraryAdminBookInfo {
   }
 
   public get gameSystem(): GameSystem | undefined {
-    if (this.book() instanceof GameBook) {
+    if (this.book().hasOwnProperty('gameSystem')) {
       return (this.book() as GameBook).gameSystem;
     } else {
       return undefined;
