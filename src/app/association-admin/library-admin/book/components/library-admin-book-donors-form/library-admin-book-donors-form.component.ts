@@ -1,7 +1,7 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LibraryAdminDonorSelection } from '@app/association-admin/library-admin/book/components/library-admin-donor-selection/library-admin-donor-selection';
+import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
 import { Person } from '@app/domain/person/person';
@@ -15,14 +15,14 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, LibraryAdminDonorSelection, IconAddComponent, IconDeleteComponent],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, IconAddComponent, IconDeleteComponent, LibraryAdminListSelection],
   templateUrl: './library-admin-book-donors-form.component.html'
 })
 export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation | undefined> {
 
-  public readonly donorsSelection = input(new PaginatedResponse<Person>());
+  public readonly selection = input(new PaginatedResponse<Person>());
 
-  public readonly goToDonorPage = output<number>();
+  public readonly goToSelectionPage = output<number>();
 
   @Input() public override set data(value: Donation | undefined) {
     if (value) {
@@ -51,7 +51,7 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation 
     this.selectingDonor = true;
   }
 
-  public onSelectDonor(donor: Person) {
+  public onSelect(donor: Person) {
     if (!this.donors.find(d => d.number === donor.number)) {
       this.form.get('donors').setValue([...this.donors, donor]);
     }
@@ -63,8 +63,6 @@ export class LibraryAdminBookDonorsFormComponent extends FormComponent<Donation 
     this.form.get('donors').setValue(filteredDonors);
   }
 
-  public onGoToDonorPage(page: number) {
-    this.goToDonorPage.emit(page);
-  }
+  public readonly nameRenderer = (row: Donor): string => row.name.fullName;
 
 }

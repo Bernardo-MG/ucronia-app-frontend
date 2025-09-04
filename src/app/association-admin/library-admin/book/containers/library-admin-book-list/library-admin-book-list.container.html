@@ -79,8 +79,8 @@
   }
   @case ('donors') {
   <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [donorsSelection]="donorPage" (save)="onSetDonation($event)"
-    (reject)="onCancel()" (goToDonorPage)="onGoToDonorPage($event)" />
+    [readonly]="false" [cancellable]="true" [selection]="donorPage" (save)="onSetDonation($event)"
+    (reject)="onCancel()" (goToSelectionPage)="onGoToDonorPage($event)" />
   }
   @case ('authors') {
   <h2>Autores</h2>

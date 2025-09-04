@@ -54,7 +54,7 @@
     </form>
   }
   @case (true) {
-    <assoc-library-admin-donor-selection [values]="donorsSelection().content" [current]="donorsSelection().page" [pages]="donorsSelection().totalPages"
-      (choose)="onSelectDonor($event)" (goToPage)="goToDonorPage.emit($event)" />
+    <assoc-library-admin-list-selection heading="Nombre" [nameRenderer]="nameRenderer" [data]="selection()"
+      (choose)="onSelect($event)" (goToPage)="goToSelectionPage.emit($event)" />
   }
 }

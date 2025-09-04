@@ -50,8 +50,6 @@ export class LibraryAdminBookLendingLendComponent {
     this.filled_bar = 50;
   }
 
-  public nameRenderer(row: Member) {
-    return row.name.fullName;
-  }
+  public readonly nameRenderer = (row: Member): string => row.name.fullName;
 
 }
