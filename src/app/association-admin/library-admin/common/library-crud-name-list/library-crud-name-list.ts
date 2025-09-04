@@ -37,13 +37,13 @@ export class LibraryCrudNameList implements OnInit {
 
   public showConfirmDelete = false;
 
-  private _shownForm: 'None' | 'Creation' | 'Edition' = 'None';
+  private _shownForm: 'none' | 'creation' | 'edition' = 'none';
 
   public get shownForm() { return this._shownForm; }
 
-  public set shownForm(form: 'None' | 'Creation' | 'Edition') {
+  public set shownForm(form: 'none' | 'creation' | 'edition') {
     this._shownForm = form;
-    this.showForm = form !== 'None';
+    this.showForm = form !== 'none';
   }
 
   public showForm = false;
@@ -93,15 +93,15 @@ export class LibraryCrudNameList implements OnInit {
 
   public onStartEditing(item: any): void {
     this.selected = item;
-    this.shownForm = 'Edition';
+    this.shownForm = 'edition';
   }
 
   public onStartCreating(): void {
-    this.shownForm = 'Creation';
+    this.shownForm = 'creation';
   }
 
   public onCancel(): void {
-    this.shownForm = 'None';
+    this.shownForm = 'none';
   }
 
   public onCreate(toCreate: any): void {
@@ -174,7 +174,7 @@ export class LibraryCrudNameList implements OnInit {
     action().subscribe({
       next: () => {
         this.failures.clear();
-        this.shownForm = 'None';
+        this.shownForm = 'none';
         this.load(this.data.page);
       },
       error: error => {

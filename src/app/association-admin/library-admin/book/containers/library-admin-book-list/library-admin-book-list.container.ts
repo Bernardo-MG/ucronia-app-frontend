@@ -31,7 +31,8 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { throwError } from 'rxjs';
+import { EMPTY, Observable, throwError } from 'rxjs';
+import { LibraryAdminBookCreationFormComponent } from '../../components/library-admin-book-creation-form/library-admin-book-creation-form.component';
 import { LibraryAdminBookDonorsFormComponent } from '../../components/library-admin-book-donors-form/library-admin-book-donors-form.component';
 import { LibraryAdminBookInfoEditionFormComponent } from '../../components/library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../../components/library-admin-book-info/library-admin-book-info';
@@ -41,7 +42,7 @@ import { BookAdminService } from '../../services/book-admin.service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionFormComponent, LibraryAdminBookDonorsFormComponent, LibraryAdminBookLendingLendComponent, LibraryAdminBookReturnFormComponent, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationFormComponent],
   templateUrl: './library-admin-book-list.container.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -261,6 +262,16 @@ export class LibraryAdminBookListContainer {
     } else {
       this.fictionEditionMenu.toggle(event);
     }
+  }
+
+  public onCreate(toCreate: any): void {
+    this.mutate(() => {
+      if (this.source === 'game') {
+        return this.service.createGameBook(toCreate);
+      } else {
+        return this.service.createFictionBook(toCreate);
+      }
+    });
   }
 
   public donors(book: FictionBook | GameBook) {
@@ -650,6 +661,26 @@ export class LibraryAdminBookListContainer {
         }
       });
     }
+  }
+
+  protected mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action().subscribe({
+      next: () => {
+        this.failures.clear();
+        this.view = 'none';
+        this.load(this.data.page);
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          this.failures.clear();
+        }
+        this.loading = false;
+        return throwError(() => error);
+      }
+    });
   }
 
 }

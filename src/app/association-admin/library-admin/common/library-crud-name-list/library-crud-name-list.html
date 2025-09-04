@@ -29,14 +29,14 @@
 </p-panel>
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (shownForm) {
-    @case ('Creation') {
+    @case ('creation') {
       <ng-template #header>
         Crear autor
       </ng-template>
       <assoc-library-admin-name-form [cancellable]="true" [waiting]="loading" [failures]="failures"
         (save)="onCreate($event)" (reject)="onCancel()" />
     }
-    @case ('Edition') {
+    @case ('edition') {
       <ng-template #header>
         Modificar autor
       </ng-template>
