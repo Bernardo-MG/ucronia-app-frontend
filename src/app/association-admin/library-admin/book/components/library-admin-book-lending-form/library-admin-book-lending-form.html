@@ -3,7 +3,8 @@
   <h2>{{memberName}}</h2>
   <!-- Lending date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="lendingDateInput" formControlName="lendingDate" [invalid]="isFieldInvalid('lendingDate')" dateFormat="yy-mm-dd"/>
+    <p-datepicker id="lendingDateInput" formControlName="lendingDate" [invalid]="isFieldInvalid('lendingDate')"
+      dateFormat="yy-mm-dd" />
     <label for="lendingDateInput">Fecha</label>
   </p-floatlabel>
   <div class="mb-2">
@@ -18,8 +19,8 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
-      <button type="submit" name="Save" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled">Prestar</button>
+      <p-button type="submit" label="Save" [loading]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled" class="w-100" />
     </div>
   </div>
 </form>

@@ -6,6 +6,7 @@ import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
 import { FormComponent } from '@bernardo-mg/form';
 import { WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,7 +14,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-admin-book-lending-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule, WaitingDirective],
   templateUrl: './library-admin-book-lending-form.html'
 })
 export class LibraryAdminBookLendingForm extends FormComponent<BookLent> {
