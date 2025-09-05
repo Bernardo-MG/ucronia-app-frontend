@@ -4,8 +4,8 @@
       <img src="img/brand-icon.png" alt="Ucronía" width="20" height="24" class="mr-2" />
       {{ title }}
     </a>
-    @if (showAssociation) {
-      <p-button class="ms-1" icon="pi pi-bars" (click)="toggleMenu.emit(true)" severity="secondary" rounded text/>
+    @if (!loggedOut) {
+      <p-button class="ms-1" icon="pi pi-bars" (click)="toggleMenu.emit(true)" severity="secondary" rounded text />
     }
   </ng-template>
 

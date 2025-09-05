@@ -25,8 +25,6 @@ export class NavbarContainer {
 
   public showSecurity = false;
 
-  public showAssociation = false;
-
   public get loggedOut() {
     return !this.authContainer.logged;
   }
@@ -40,7 +38,6 @@ export class NavbarContainer {
     // Show sections flags
     this.showSettings = layoutService.showSettingsLink();
     this.showSecurity = layoutService.showSecurityLink();
-    this.showAssociation = layoutService.showAssociationLink();
   }
 
 }

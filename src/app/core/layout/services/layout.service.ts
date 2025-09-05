@@ -42,14 +42,9 @@ export class LayoutService {
     return this.showSecurityLinkFlag;
   }
 
-  public showAssociationLink(): boolean {
-    return this.showAssociationLinkFlag;
-  }
-
   private loadPermissions() {
     this.showSettingsLinkFlag = this.authContainer.hasPermission('association_settings', 'view');
     this.showSecurityLinkFlag = this.authContainer.hasPermission('security', 'view');
-    this.showAssociationLinkFlag = true;
   }
 
 }
