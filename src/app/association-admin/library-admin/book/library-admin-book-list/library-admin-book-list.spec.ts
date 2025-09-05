@@ -3,17 +3,17 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { BookAdminService } from '../../services/book-admin.service';
-import { LibraryAdminBookListContainer } from './library-admin-book-list.container';
+import { BookAdminService } from '../book-admin-service/book-admin-service';
+import { LibraryAdminBookList } from './library-admin-book-list';
 
-describe('LibraryAdminBookListContainer', () => {
-  let component: LibraryAdminBookListContainer;
-  let fixture: ComponentFixture<LibraryAdminBookListContainer>;
+describe('LibraryAdminBookList', () => {
+  let component: LibraryAdminBookList;
+  let fixture: ComponentFixture<LibraryAdminBookList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryAdminBookListContainer
+        LibraryAdminBookList
       ],
       providers: [
         BookAdminService,
@@ -25,7 +25,7 @@ describe('LibraryAdminBookListContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryAdminBookListContainer);
+    fixture = TestBed.createComponent(LibraryAdminBookList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

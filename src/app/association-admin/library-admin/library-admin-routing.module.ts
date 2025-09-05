@@ -31,7 +31,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./book/containers/library-admin-book-list/library-admin-book-list.container').then(m => m.LibraryAdminBookListContainer),
+            loadComponent: () => import('./book/library-admin-book-list/library-admin-book-list').then(m => m.LibraryAdminBookList),
             canActivate: [ResourceGuard("library_book", "view")],
             data: { breadcrumb: '' }
           }
