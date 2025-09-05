@@ -10,29 +10,31 @@ import { MenuItem } from 'primeng/api';
 })
 export class AssociationLayout {
 
-  public readonly menus: MenuItem[];
+  public menus: MenuItem[] = [];
 
   constructor() {
     const authContainer = inject(AuthContainer);
-    const items = this.getAssociationItems(authContainer);
-    const adminItems = this.getAdminItems(authContainer);
-    this.menus = [];
-    if (items.length) {
-      this.menus.push(
-        {
-          label: 'Asociación',
-          items: items
-        }
-      );
-    }
-    if (adminItems.length) {
-      this.menus.push(
-        {
-          label: 'Administración',
-          items: adminItems
-        }
-      );
-    }
+    authContainer.securityDetails.subscribe(details => {
+      const items = this.getAssociationItems(authContainer);
+      const adminItems = this.getAdminItems(authContainer);
+      this.menus = [];
+      if (items.length) {
+        this.menus.push(
+          {
+            label: 'Asociación',
+            items: items
+          }
+        );
+      }
+      if (adminItems.length) {
+        this.menus.push(
+          {
+            label: 'Administración',
+            items: adminItems
+          }
+        );
+      }
+    });
   }
 
   private getAssociationItems(authContainer: AuthContainer) {
