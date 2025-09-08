@@ -17,7 +17,7 @@ import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/
   imports: [ButtonModule, StepperModule, MemberStatusSelectComponent, LibraryAdminBookLendingForm, SelectionList],
   templateUrl: './library-admin-book-lending.html'
 })
-export class LibraryAdminBookLendingLend {
+export class LibraryAdminBookLending {
 
   public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<any>>>((page: number, active: Active) => EMPTY);
 

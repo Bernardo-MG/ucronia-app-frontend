@@ -32,12 +32,12 @@ import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-for
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';
 import { LibraryAdminBookInfoEditionForm } from '../library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../library-admin-book-info/library-admin-book-info';
-import { LibraryAdminBookLendingLend } from '../library-admin-book-lending/library-admin-book-lending';
+import { LibraryAdminBookLending } from '../library-admin-book-lending/library-admin-book-lending';
 import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/library-admin-book-return-form';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLending, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
   providers: [ConfirmationService, MessageService]
 })
