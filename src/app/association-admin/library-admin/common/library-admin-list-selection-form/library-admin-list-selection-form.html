@@ -32,7 +32,6 @@
     </form>
   }
   @case (true) {
-    <assoc-library-admin-list-selection heading="Nombre" [data]="selection()" (choose)="onSelect($event)"
-      (goToPage)="goToSelectionPage.emit($event)" />
+    <assoc-library-admin-list-selection heading="Nombre" [getSelection]="getSelection()" (choose)="onSelect($event)" />
   }
 }

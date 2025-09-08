@@ -49,7 +49,7 @@ export class LibraryAdminBookList {
 
   private readonly router = inject(Router);
 
-  private readonly service = inject(BookAdminService);
+  public readonly service = inject(BookAdminService);
 
   private readonly reportService = inject(BookReportService);
 
@@ -58,18 +58,6 @@ export class LibraryAdminBookList {
   private readonly messageService = inject(MessageService);
 
   public failures = new FailureStore();
-
-  public languages: Language[] = [];
-
-  public authorsSelection = new PaginatedResponse<Author>();
-
-  public publishersSelection = new PaginatedResponse<Publisher>();
-
-  public donorPage = new PaginatedResponse<Person>();
-
-  public gameSystems = new PaginatedResponse<GameSystem>();
-
-  public bookTypes = new PaginatedResponse<BookType>();
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -101,7 +89,7 @@ export class LibraryAdminBookList {
 
   public readonly createable;
 
-  public editable = false;
+  public readonly editable;
 
   public editing = false;
 
@@ -117,10 +105,6 @@ export class LibraryAdminBookList {
 
   private sort = new Sorting();
 
-  public members = new PaginatedResponse<Member>();
-
-  public memberFilter = Active.Active;
-
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
 
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -132,15 +116,8 @@ export class LibraryAdminBookList {
   constructor() {
     const authContainer = inject(AuthContainer);
 
-    this.languages = this.service.getLanguages();
-
     // Load data
     this.load(0);
-    this.onGoToDonorPage(0);
-    this.onGoToAuthorPage(0);
-    this.onGoToPublisherPage(0);
-    this.onGoToGameSystemPage(0);
-    this.onGoToBookTypePage(0);
 
     // Check permissions
     this.createable = authContainer.hasPermission("library_book", "create");
@@ -268,42 +245,6 @@ export class LibraryAdminBookList {
     });
   }
 
-  public donors(book: FictionBook | GameBook) {
-    let data: Donor[];
-
-    if (book.donation) {
-      data = book.donation.donors;
-    } else {
-      data = [];
-    }
-
-    return data.map(e => e.name.fullName).join(", ");
-  }
-
-  public publishers(book: FictionBook | GameBook) {
-    let data: Publisher[];
-
-    if (book.publishers) {
-      data = book.publishers;
-    } else {
-      data = [];
-    }
-
-    return data.map(e => e.name).join(", ");
-  }
-
-  public authors(book: FictionBook | GameBook) {
-    let data: Publisher[];
-
-    if (book.authors) {
-      data = book.authors;
-    } else {
-      data = [];
-    }
-
-    return data.map(e => e.name).join(", ");
-  }
-
   public onConfirmDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
@@ -372,10 +313,6 @@ export class LibraryAdminBookList {
           this.loadingExcel = false;
         }
       });
-  }
-
-  public onSelect(selection: FictionBook | GameBook) {
-    this.selectedData = selection;
   }
 
   public onStartEditingView(view: string): void {
@@ -516,72 +453,6 @@ export class LibraryAdminBookList {
 
   public getBookType(book: FictionBook | GameBook): BookType {
     return (book as GameBook).bookType as BookType;
-  }
-
-  public onGoToAuthorPage(page: number) {
-    this.service.getAuthors(page).subscribe({
-      next: response => {
-        this.authorsSelection = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onGoToPublisherPage(page: number) {
-    this.service.getPublishers(page).subscribe({
-      next: response => {
-        this.publishersSelection = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onGoToDonorPage(page: number) {
-    this.service.getDonors(page).subscribe({
-      next: response => {
-        this.donorPage = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onGoToMembersPage(page: number) {
-    // TODO: The page correction should be done automatically
-    this.service.getMembers(page, this.memberFilter).subscribe({
-      next: response => {
-        this.members = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onGoToGameSystemPage(page: number) {
-    this.service.getGameSystems(page).subscribe({
-      next: response => {
-        this.gameSystems = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onGoToBookTypePage(page: number) {
-    this.service.getBookTypes(page).subscribe({
-      next: response => {
-        this.bookTypes = response;
-      },
-      error: error => {
-      }
-    });
-  }
-
-  public onChangeMemberFilter(active: Active) {
-    this.memberFilter = active;
-    this.onGoToMembersPage(0);
   }
 
   public onLend(toSave: BookLent) {

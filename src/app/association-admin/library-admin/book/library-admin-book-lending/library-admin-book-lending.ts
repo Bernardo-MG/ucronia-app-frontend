@@ -9,6 +9,7 @@ import { MemberStatusSelectComponent } from '@app/shared/person/components/membe
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
+import { EMPTY, Observable } from 'rxjs';
 import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/library-admin-book-lending-form';
 
 @Component({
@@ -18,6 +19,8 @@ import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/
 })
 export class LibraryAdminBookLendingLend {
 
+  public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<any>>>((page: number, active: Active) => EMPTY);
+
   public readonly readonly = input(false);
 
   public readonly waiting = input(false);
@@ -26,25 +29,25 @@ export class LibraryAdminBookLendingLend {
 
   public readonly book = input(new BookInfo());
 
-  public readonly members = input(new PaginatedResponse<Member>());
-
   public readonly save = output<BookLent>();
-
-  public readonly goToMembersPage = output<number>();
-
-  public readonly changeFilter = output<Active>();
 
   public currentStep = 1;
 
   public member = new Member();
 
+  public status = Active.Active;
+
   public onReturnToMembers() {
     this.currentStep = 1;
   }
 
-  public onSelectMember(member: Member) {
-    this.member = member;
+  public onSelectMember(member: any) {
+    this.member = (member as Member);
     this.currentStep = 2;
+  }
+
+  public onGetSelection(page: number) {
+    return this.getMemberSelection()(page, this.status);
   }
 
   public readonly nameRenderer = (row: Member): string => row.name.fullName;

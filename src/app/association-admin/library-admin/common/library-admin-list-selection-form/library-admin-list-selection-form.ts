@@ -6,6 +6,7 @@ import { FormStatus } from '@app/core/form/form-status/form-status';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { EMPTY, Observable } from 'rxjs';
 import { NameNumber } from '../model/name-number';
 
 @Component({
@@ -15,9 +16,7 @@ import { NameNumber } from '../model/name-number';
 })
 export class LibraryAdminListSelectionForm {
 
-  public readonly selection = input(new PaginatedResponse<NameNumber>());
-
-  public readonly goToSelectionPage = output<number>();
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<NameNumber>>>((page: number) => EMPTY);
 
   public readonly save = output<NameNumber[]>();
 
@@ -41,6 +40,7 @@ export class LibraryAdminListSelectionForm {
 
   constructor() {
     const fb = inject(FormBuilder);
+
 
     this.form = fb.group({
       rows: [[], Validators.required]

@@ -1,5 +1,5 @@
 
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
@@ -12,6 +12,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
+import { BookAdminConfig } from '../book-admin-config/book-admin-config';
 
 @Component({
   selector: 'assoc-library-admin-book-info-edition-form',
@@ -20,14 +21,17 @@ import { SelectModule } from 'primeng/select';
 })
 export class LibraryAdminBookInfoEditionForm extends FormComponent<FictionBook | GameBook> {
 
-  public readonly languages = input<Language[]>([]);
+  public readonly languages: Language[] = [];
 
   public view = 'form';
 
   constructor() {
-    const fb = inject(FormBuilder);
-
     super();
+
+    const fb = inject(FormBuilder);
+    const config = inject(BookAdminConfig);
+
+    this.languages = config.getLanguages();
 
     this.form = fb.group({
       number: [undefined],

@@ -11,11 +11,11 @@
               <div class="me-2">
                 Estado:
               </div>
-              <assoc-member-status-select [disabled]="waiting()" (changeStatus)="changeFilter.emit($event)" />
+              <assoc-member-status-select [disabled]="waiting()" (changeStatus)="status = $event" />
             </div>
           </div>
-          <assoc-library-admin-list-selection heading="Socio" [data]="members()" (choose)="onSelectMember($event)"
-            (goToPage)="goToMembersPage.emit($event)" [nameRenderer]="nameRenderer" />
+          <assoc-library-admin-list-selection heading="Socio" [getSelection]="onGetSelection"
+            (choose)="onSelectMember($event)" [nameRenderer]="nameRenderer" />
         </div>
       </ng-template>
     </p-step-panel>

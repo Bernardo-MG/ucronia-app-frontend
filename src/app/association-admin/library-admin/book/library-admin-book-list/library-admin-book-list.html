@@ -1,8 +1,8 @@
 <p-confirmpopup />
+<p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
+<p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
+<p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
 <p-panel>
-  <p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
-  <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
-  <p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
@@ -70,45 +70,43 @@
     </h2>
   </ng-template>
   <assoc-library-admin-book-info-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [languages]="languages" (save)="onSaveBook($event)" (reject)="onCancel()" />
+    [readonly]="false" [cancellable]="true" (save)="onSaveBook($event)" (reject)="onCancel()" />
   }
   @case ('creation') {
-  <assoc-library-admin-book-creation-form [waiting]="loading" [failures]="failures" [languages]="languages"
-    (save)="onCreate($event)" />
+  <assoc-library-admin-book-creation-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('donors') {
   <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" [selection]="donorPage" (save)="onSetDonation($event)"
-    (reject)="onCancel()" (goToSelectionPage)="onGoToDonorPage($event)" />
+    [getSelection]="service.getDonors.bind(service)" [readonly]="false" [cancellable]="true"
+    (save)="onSetDonation($event)" (reject)="onCancel()" />
   }
   @case ('authors') {
   <h2>Autores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.authors" [selection]="authorsSelection"
-    (save)="onSetAuthors($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToAuthorPage($event)" />
+  <assoc-library-admin-list-selection-form [data]="selectedData.authors"
+    [getSelection]="service.getAuthors.bind(service)" (save)="onSetAuthors($event)" (reject)="onCancel()" />
   }
   @case ('gameSystem') {
   <h2>Sistema</h2>
-  <assoc-library-admin-selection-form [data]="getGameSystem(selectedData)" [selection]="gameSystems"
-    (save)="onSetGameSystem($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToGameSystemPage($event)" />
+  <assoc-library-admin-selection-form [data]="getGameSystem(selectedData)"
+    [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" (reject)="onCancel()" />
   }
   @case ('bookType') {
   <h2>Tipo</h2>
-  <assoc-library-admin-selection-form [data]="getBookType(selectedData)" [selection]="bookTypes"
-    (save)="onSetBookType($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToBookTypePage($event)" />
+  <assoc-library-admin-selection-form [data]="getBookType(selectedData)"
+    [getSelection]="service.getBookTypes.bind(service)" (save)="onSetBookType($event)" (reject)="onCancel()" />
   }
   @case ('publishers') {
   <h2>Editores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.publishers" [selection]="publishersSelection"
-    (save)="onSetPublishers($event)" (reject)="onCancel()" (goToSelectionPage)="onGoToPublisherPage($event)" />
+  <assoc-library-admin-list-selection-form [data]="selectedData.publishers"
+    [getSelection]="service.getPublishers.bind(service)" (save)="onSetPublishers($event)" (reject)="onCancel()" />
   }
   @case ('lendings') {
   @if(selectedData.lent) {
   <assoc-library-admin-book-return-form [waiting]="loading" [failures]="failures" [borrower]="borrower"
     [book]="selectedData" (save)="onReturn($event)" />
   } @else {
-  <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData" [members]="members"
-    (save)="onLend($event)" (goToMembersPage)="onGoToMembersPage($event)"
-    (changeFilter)="onChangeMemberFilter($event)" />
+  <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
+    (save)="onLend($event)" (getMemberSelection)="service.getMembers.bind(service)" />
   }
   }
   }

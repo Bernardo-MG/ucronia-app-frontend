@@ -56,7 +56,7 @@
     }
   </div>
   <!-- Language -->
-  <p-select [options]="languages()" [invalid]="isFieldInvalid('language')" formControlName="language" optionLabel="name"
+  <p-select [options]="languages" [invalid]="isFieldInvalid('language')" formControlName="language" optionLabel="name"
     optionValue="code" placeholder="Idioma" />
   <div class="mb-2">
     @for (failure of failures().getFailures('language'); track failure) {

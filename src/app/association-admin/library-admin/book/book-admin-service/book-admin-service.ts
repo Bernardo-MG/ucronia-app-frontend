@@ -146,10 +146,6 @@ export class BookAdminService {
       .read();
   }
 
-  public getLanguages(): Language[] {
-    return [new Language('es', 'Castellano'), new Language('en', 'Inglés')];
-  }
-
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]

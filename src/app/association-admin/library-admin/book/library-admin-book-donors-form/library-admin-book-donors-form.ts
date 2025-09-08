@@ -1,10 +1,9 @@
 
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, Input, input, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
-import { Person } from '@app/domain/person/person';
 import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -12,17 +11,17 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { EMPTY, Observable } from 'rxjs';
+import { NameNumber } from '../../common/model/name-number';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, IconAddComponent, IconDeleteComponent, LibraryAdminListSelection],
   templateUrl: './library-admin-book-donors-form.html'
 })
-export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefined> {
+export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefined> implements OnInit {
 
-  public readonly selection = input(new PaginatedResponse<Person>());
-
-  public readonly goToSelectionPage = output<number>();
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Donor>>>((page: number) => EMPTY);
 
   @Input() public override set data(value: Donation | undefined) {
     if (value) {
@@ -36,10 +35,12 @@ export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefin
 
   public selectingDonor = false;
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public selection = new PaginatedResponse<Donor>();
 
+  constructor() {
     super();
+
+    const fb = inject(FormBuilder);
 
     this.form = fb.group({
       date: ["", Validators.required],
@@ -47,11 +48,25 @@ export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefin
     });
   }
 
+  public ngOnInit(): void {
+    this.onGoToSelectionPage(0);
+  }
+
+  public onGoToSelectionPage(page: number) {
+    this.getSelection()(page).subscribe({
+      next: response => {
+        this.selection = response;
+      },
+      error: error => {
+      }
+    });
+  }
+
   public onStartSelectingDonor() {
     this.selectingDonor = true;
   }
 
-  public onSelect(donor: Person) {
+  public onSelect(donor: NameNumber) {
     if (!this.donors.find(d => d.number === donor.number)) {
       this.form.get('donors').setValue([...this.donors, donor]);
     }
