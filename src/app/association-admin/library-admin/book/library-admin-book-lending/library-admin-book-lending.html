@@ -1,28 +1,35 @@
-<div class="progress mb-2">
-  <div class="progress-bar" role="progressbar" aria-label="Book lending step" [style]="'width: ' + filled_bar + '%'"
-    [attr.aria-valuenow]="filled_bar" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-@switch (selectedMember) {
-  @case (false) {
-    <!-- Select member -->
-    <div>
-      <div class="row mb-2">
-        <div class="col-2">Elige socio</div>
-        <div class="col-4 offset-6 d-flex">
-          <div class="me-2">
-            Estado:
+<p-stepper [value]="currentStep" [linear]="true">
+  <p-step-item [value]="1">
+    <p-step>Header I</p-step>
+    <p-step-panel>
+      <ng-template #content let-activateCallback="activateCallback">
+        <!-- Select member -->
+        <div>
+          <div class="row mb-2">
+            <div class="col-2">Elige socio</div>
+            <div class="col-4 offset-6 d-flex">
+              <div class="me-2">
+                Estado:
+              </div>
+              <assoc-member-status-select [disabled]="waiting()" (changeStatus)="changeFilter.emit($event)" />
+            </div>
           </div>
-          <assoc-member-status-select [disabled]="waiting()" (changeStatus)="changeFilter.emit($event)" />
+          <assoc-library-admin-list-selection heading="Socio" [data]="members()" (choose)="onSelectMember($event)"
+            (goToPage)="goToMembersPage.emit($event)" [nameRenderer]="nameRenderer" />
         </div>
-      </div>
-      <assoc-library-admin-list-selection heading="Socio" [data]="members()" (choose)="onSelectMember($event)"
-        (goToPage)="goToMembersPage.emit($event)" [nameRenderer]="nameRenderer" />
-    </div>
-  }
-  @case (true) {
-    <!-- Lend book form -->
-    <button type="button" class="btn btn-link" aria-label="Return" (click)="onReturnToMembers()"><icon-backward /></button>
-    <assoc-library-admin-book-lending-form [waiting]="waiting()" [failures]="failures()" [readonly]="readonly()"
-      [borrower]="member" [book]="book()" (save)="save.emit($event)" />
-  }
-}
+      </ng-template>
+    </p-step-panel>
+  </p-step-item>
+  <p-step-item [value]="2">
+    <p-step>Header II</p-step>
+    <p-step-panel>
+      <ng-template #content let-activateCallback="activateCallback">
+        <!-- Lend book form -->
+        <p-button icon="pi pi-step-backward" severity="secondary" (click)="onReturnToMembers()" aria-label="Atrás"
+          rounded text />
+        <assoc-library-admin-book-lending-form [waiting]="waiting()" [failures]="failures()" [readonly]="readonly()"
+          [borrower]="member" [book]="book()" (save)="save.emit($event)" />
+      </ng-template>
+    </p-step-panel>
+  </p-step-item>
+</p-stepper>

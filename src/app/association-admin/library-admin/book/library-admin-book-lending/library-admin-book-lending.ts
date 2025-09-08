@@ -6,13 +6,14 @@ import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
-import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
+import { StepperModule } from 'primeng/stepper';
 import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/library-admin-book-lending-form';
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [MemberStatusSelectComponent, LibraryAdminBookLendingForm, IconBackwardComponent, LibraryAdminListSelection],
+  imports: [ButtonModule, StepperModule, MemberStatusSelectComponent, LibraryAdminBookLendingForm, LibraryAdminListSelection],
   templateUrl: './library-admin-book-lending.html'
 })
 export class LibraryAdminBookLendingLend {
@@ -33,21 +34,17 @@ export class LibraryAdminBookLendingLend {
 
   public readonly changeFilter = output<Active>();
 
-  public filled_bar = 0;
-
-  public selectedMember = false;
+  public currentStep = 1;
 
   public member = new Member();
 
   public onReturnToMembers() {
-    this.selectedMember = false;
-    this.filled_bar = 0;
+    this.currentStep = 1;
   }
 
   public onSelectMember(member: Member) {
     this.member = member;
-    this.selectedMember = true;
-    this.filled_bar = 50;
+    this.currentStep = 2;
   }
 
   public readonly nameRenderer = (row: Member): string => row.name.fullName;
