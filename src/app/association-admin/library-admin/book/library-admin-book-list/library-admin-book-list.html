@@ -2,6 +2,9 @@
 <p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
 <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
 <p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
+<p-card header="Préstamos">
+  <a routerLink="/association/admin/library/lendings">Ver préstamos</a>
+</p-card>
 <p-panel>
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"

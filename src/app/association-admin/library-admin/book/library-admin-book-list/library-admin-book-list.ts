@@ -10,20 +10,16 @@ import { BookReturned } from '@app/domain/library/book-returned';
 import { BookType } from '@app/domain/library/book-type';
 import { BookUpdate } from '@app/domain/library/book-update';
 import { Donation } from '@app/domain/library/donation';
-import { Donor } from '@app/domain/library/donor';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
-import { Language } from '@app/domain/library/language';
 import { Publisher } from '@app/domain/library/publisher';
-import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -41,7 +37,7 @@ import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/li
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
   providers: [ConfirmationService]
 })
@@ -150,13 +146,6 @@ export class LibraryAdminBookList {
         {
           label: 'Sistemas',
           command: () => this.router.navigate(['/association/admin/library/systems'])
-        });
-    }
-    if (authContainer.hasPermission('library_lending', 'view')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Préstamos',
-          command: () => this.router.navigate(['/association/admin/library/lendings'])
         });
     }
 
