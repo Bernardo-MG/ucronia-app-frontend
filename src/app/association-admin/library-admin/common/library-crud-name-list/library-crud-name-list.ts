@@ -14,7 +14,7 @@ import { EMPTY, Observable, throwError } from 'rxjs';
 import { LibraryAdminNameForm } from '../library-admin-name-form/library-admin-name-form';
 
 @Component({
-  selector: 'library-crud-name-list',
+  selector: 'assoc-library-crud-name-list',
   imports: [TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminNameForm],
   templateUrl: './library-crud-name-list.html',
   providers: [ConfirmationService, MessageService]
