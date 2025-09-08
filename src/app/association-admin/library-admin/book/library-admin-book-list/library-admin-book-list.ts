@@ -30,21 +30,20 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { Observable, throwError } from 'rxjs';
+import { BookAdminService } from '../book-admin-service/book-admin-service';
 import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-form/library-admin-book-creation-form';
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';
 import { LibraryAdminBookInfoEditionForm } from '../library-admin-book-info-edition-form/library-admin-book-info-edition-form';
 import { LibraryAdminBookInfo } from '../library-admin-book-info/library-admin-book-info';
 import { LibraryAdminBookLendingLend } from '../library-admin-book-lending/library-admin-book-lending';
 import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/library-admin-book-return-form';
-import { BookAdminService } from '../book-admin-service/book-admin-service';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, ToastModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService]
 })
 export class LibraryAdminBookList {
 
