@@ -252,7 +252,7 @@ export class LibraryAdminBookList {
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     this.selectedData = book;
-    if (book.hasOwnProperty('gameSystem')) {
+    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
       this.gameEditionMenu.toggle(event);
     } else {
       this.fictionEditionMenu.toggle(event);
@@ -448,7 +448,7 @@ export class LibraryAdminBookList {
   }
 
   public onSetGameSystem(gameSystem: GameSystem) {
-    let updateDate = {
+    const updateDate = {
       ...this.selectedData,
       publishers: this.selectedData.publishers.map(p => p.number),
       bookType: (this.selectedData as GameBook).bookType?.number,
@@ -459,7 +459,7 @@ export class LibraryAdminBookList {
   }
 
   public onSetBookType(bookType: BookType) {
-    let updateDate = {
+    const updateDate = {
       ...this.selectedData,
       publishers: this.selectedData.publishers.map(p => p.number),
       gameSystem: (this.selectedData as GameBook).gameSystem?.number,

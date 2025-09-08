@@ -44,7 +44,7 @@ export class LibraryAdminBookInfo {
   }
 
   public get bookType(): BookType | undefined {
-    if (this.book().hasOwnProperty('bookType')) {
+    if (Object.prototype.hasOwnProperty.call(this.book(), 'bookType')) {
       return (this.book() as GameBook).bookType;
     } else {
       return undefined;
@@ -52,7 +52,7 @@ export class LibraryAdminBookInfo {
   }
 
   public get gameSystem(): GameSystem | undefined {
-    if (this.book().hasOwnProperty('gameSystem')) {
+    if (Object.prototype.hasOwnProperty.call(this.book(), 'gameSystem')) {
       return (this.book() as GameBook).gameSystem;
     } else {
       return undefined;
