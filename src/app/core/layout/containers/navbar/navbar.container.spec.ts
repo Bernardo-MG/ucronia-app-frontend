@@ -73,7 +73,6 @@ describe('NavbarContainer', () => {
       mockLayoutService.getTitle.and.returnValue('App');
       mockLayoutService.showSettingsLink.and.returnValue(true);
       mockLayoutService.showSecurityLink.and.returnValue(true);
-      mockLayoutService.showAssociationLink.and.returnValue(true);
 
       mockAuthContainer.hasPermission.and.callFake((resource: string, action: string) => {
         return ['person', 'funds', 'library'].includes(resource) && action === 'view';
@@ -84,7 +83,6 @@ describe('NavbarContainer', () => {
       expect(component.loggedOut).toBeFalse();
       expect(component.showSettings).toBeTrue();
       expect(component.showSecurity).toBeTrue();
-      expect(component.showAssociation).toBeTrue();
     });
 
   });
