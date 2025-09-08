@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LibraryCrudNameList } from './library-crud-name-list';
 
 describe('LibraryCrudNameList', () => {
@@ -8,9 +8,14 @@ describe('LibraryCrudNameList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryCrudNameList]
+      imports: [
+        LibraryCrudNameList
+      ],
+      providers: [
+        provideAnimationsAsync()
+      ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LibraryCrudNameList);
     component = fixture.componentInstance;
