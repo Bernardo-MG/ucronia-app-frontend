@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryAdminListSelection } from './library-admin-list-selection';
 
 describe('LibraryAdminAuthorSelection', () => {
-  let component: LibraryAdminListSelection;
-  let fixture: ComponentFixture<LibraryAdminListSelection>;
+  let component: LibraryAdminListSelection<any>;
+  let fixture: ComponentFixture<LibraryAdminListSelection<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
