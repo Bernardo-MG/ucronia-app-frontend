@@ -5,11 +5,11 @@ import { EMPTY, Observable } from 'rxjs';
 import { NameNumber } from '../model/name-number';
 
 @Component({
-  selector: 'assoc-library-admin-list-selection',
+  selector: 'shared-selection-list',
   imports: [TableModule],
-  templateUrl: './library-admin-list-selection.html'
+  templateUrl: './selection-list.html'
 })
-export class LibraryAdminListSelection implements OnInit {
+export class SelectionList implements OnInit {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<any>>>((page: number) => EMPTY);
 

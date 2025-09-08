@@ -85,22 +85,22 @@
   }
   @case ('authors') {
   <h2>Autores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.authors"
+  <shared-selection-list-form [data]="selectedData.authors"
     [getSelection]="service.getAuthors.bind(service)" (save)="onSetAuthors($event)" (reject)="onCancel()" />
   }
   @case ('gameSystem') {
   <h2>Sistema</h2>
-  <assoc-library-admin-selection-form [data]="getGameSystem(selectedData)"
+  <shared-form-with-selection [data]="getGameSystem(selectedData)"
     [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" (reject)="onCancel()" />
   }
   @case ('bookType') {
   <h2>Tipo</h2>
-  <assoc-library-admin-selection-form [data]="getBookType(selectedData)"
+  <shared-form-with-selection [data]="getBookType(selectedData)"
     [getSelection]="service.getBookTypes.bind(service)" (save)="onSetBookType($event)" (reject)="onCancel()" />
   }
   @case ('publishers') {
   <h2>Editores</h2>
-  <assoc-library-admin-list-selection-form [data]="selectedData.publishers"
+  <shared-selection-list-form [data]="selectedData.publishers"
     [getSelection]="service.getPublishers.bind(service)" (save)="onSetPublishers($event)" (reject)="onCancel()" />
   }
   @case ('lendings') {

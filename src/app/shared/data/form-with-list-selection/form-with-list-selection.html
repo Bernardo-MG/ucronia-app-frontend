@@ -1,12 +1,23 @@
 @switch (selecting) {
   @case (false) {
     <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
-      <div class="row">
-        <div class="col-sm-3 text-primary">Tipo</div>
-        <div class="col-sm-9">
-            {{name}}
-        </div>
-      </div>
+      <p-table dataKey="number" selectionMode="single" [value]="rows">
+        <ng-template #header>
+          <tr>
+            <th scope="col">
+            </th>
+            <th>Nombre</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-row>
+          <tr>
+            <td>
+              <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemove(row)" rounded text />
+            </td>
+            <td>{{row.name}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
       <div uiJustifyCenter>
         <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
       </div>
@@ -21,6 +32,6 @@
     </form>
   }
   @case (true) {
-    <assoc-library-admin-list-selection heading="Nombre" [getSelection]="getSelection()" (choose)="onSelect($event)" />
+    <shared-selection-list heading="Nombre" [getSelection]="getSelection()" (choose)="onSelect($event)" />
   }
 }

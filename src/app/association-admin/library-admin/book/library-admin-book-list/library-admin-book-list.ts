@@ -1,8 +1,8 @@
 
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { LibraryAdminListSelectionForm } from '@app/association-admin/library-admin/common/library-admin-list-selection-form/library-admin-list-selection-form';
-import { LibraryAdminSelectionForm } from '@app/association-admin/library-admin/common/library-admin-selection-form/library-admin-selection-form';
+import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
+import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { BookLent } from '@app/domain/library/book-lent';
@@ -37,7 +37,7 @@ import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/li
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, LibraryAdminListSelectionForm, LibraryAdminSelectionForm, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
   providers: [ConfirmationService]
 })

@@ -54,7 +54,7 @@
     </form>
   }
   @case (true) {
-    <assoc-library-admin-list-selection heading="Nombre" [nameRenderer]="nameRenderer" [getSelection]="getSelection()" 
+    <shared-selection-list heading="Nombre" [nameRenderer]="nameRenderer" [getSelection]="getSelection()" 
       (choose)="onSelect($event)"/>
   }
 }

@@ -1,4 +1,3 @@
-<p-toast />
 <p-confirmpopup />
 <p-panel>
   <ng-template #icons>
@@ -33,14 +32,14 @@
       <ng-template #header>
         Crear autor
       </ng-template>
-      <assoc-library-admin-name-form [cancellable]="true" [waiting]="loading" [failures]="failures"
+      <shared-name-form [cancellable]="true" [waiting]="loading" [failures]="failures"
         (save)="onCreate($event)" (reject)="onCancel()" />
     }
     @case ('edition') {
       <ng-template #header>
         Modificar autor
       </ng-template>
-      <assoc-library-admin-name-form [cancellable]="true" [data]="selected" [waiting]="loading" [failures]="failures"
+      <shared-name-form [cancellable]="true" [data]="selected" [waiting]="loading" [failures]="failures"
         (save)="onUpdate($event)" (reject)="onCancel()" />
     }
   }

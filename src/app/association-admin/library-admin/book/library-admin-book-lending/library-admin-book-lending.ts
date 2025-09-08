@@ -1,6 +1,6 @@
 
 import { Component, input, output } from '@angular/core';
-import { LibraryAdminListSelection } from '@app/association-admin/library-admin/common/library-admin-list-selection/library-admin-list-selection';
+import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
@@ -14,7 +14,7 @@ import { LibraryAdminBookLendingForm } from '../library-admin-book-lending-form/
 
 @Component({
   selector: 'assoc-library-admin-book-lending',
-  imports: [ButtonModule, StepperModule, MemberStatusSelectComponent, LibraryAdminBookLendingForm, LibraryAdminListSelection],
+  imports: [ButtonModule, StepperModule, MemberStatusSelectComponent, LibraryAdminBookLendingForm, SelectionList],
   templateUrl: './library-admin-book-lending.html'
 })
 export class LibraryAdminBookLendingLend {

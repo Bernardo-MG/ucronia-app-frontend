@@ -11,15 +11,15 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { EMPTY, Observable, throwError } from 'rxjs';
-import { LibraryAdminNameForm } from '../library-admin-name-form/library-admin-name-form';
+import { NameForm } from '../name-form/name-form';
 
 @Component({
-  selector: 'assoc-library-crud-name-list',
-  imports: [TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, LibraryAdminNameForm],
-  templateUrl: './library-crud-name-list.html',
+  selector: 'shared-crud-name-list',
+  imports: [TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, NameForm],
+  templateUrl: './crud-name-list.html',
   providers: [ConfirmationService, MessageService]
 })
-export class LibraryCrudNameList implements OnInit {
+export class CrudNameList implements OnInit {
 
   private readonly auth = inject(AuthContainer);
 
