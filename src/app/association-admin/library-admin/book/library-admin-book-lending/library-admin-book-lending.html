@@ -14,8 +14,8 @@
               <assoc-member-status-select [disabled]="waiting()" (changeStatus)="status = $event" />
             </div>
           </div>
-          <shared-selection-list heading="Socio" [getSelection]="onGetSelection"
-            (choose)="onSelectMember($event)" [nameRenderer]="nameRenderer" />
+          <shared-selection-list heading="Socio" [getSelection]="onGetSelection.bind(this)" (choose)="onSelectMember($event)"
+            [nameRenderer]="nameRenderer" />
         </div>
       </ng-template>
     </p-step-panel>
