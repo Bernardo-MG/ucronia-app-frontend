@@ -39,7 +39,7 @@ import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/li
   selector: 'assoc-library-admin-book-list',
   imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLendingLend, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
-  providers: [ConfirmationService]
+  providers: [ConfirmationService, MessageService]
 })
 export class LibraryAdminBookList {
 
