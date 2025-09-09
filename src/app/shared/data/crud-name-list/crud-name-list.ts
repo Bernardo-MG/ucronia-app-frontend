@@ -52,7 +52,7 @@ export class CrudNameList implements OnInit {
 
   protected sort = new Sorting();
 
-  protected failures = new FailureStore();
+  public failures = new FailureStore();
 
   public createable = false;
 
@@ -142,7 +142,10 @@ export class CrudNameList implements OnInit {
       },
       accept: () => {
         const service = this.service();
-        if (service) {
+        console.log("service: " + service)
+        console.log("id: " + id)
+        if (service != undefined) {
+          console.log("service exists an d called with " + id)
           this.mutate(() => service.delete(id));
           return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
         } else {

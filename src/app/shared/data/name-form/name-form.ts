@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormComponent } from '@bernardo-mg/form';
 import { JustifyBetweenDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +23,7 @@ export class NameForm extends FormComponent<NameNumber> {
 
     this.form = fb.group({
       number: [],
-      name: ['']
+      name: ['', Validators.required]
     });
   }
 
