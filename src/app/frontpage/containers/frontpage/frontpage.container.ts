@@ -11,8 +11,8 @@ import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-ca
   styleUrls: ['./frontpage.container.sass']
 })
 export class FrontpageComponent {
-  private service = inject(FrontpageService);
 
+  private service = inject(FrontpageService);
 
   public calendarCode: string | undefined;
 

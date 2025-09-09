@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Member -->
+  <h2>{{memberName}}</h2>
+  <!-- Return date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="returnDateInput" formControlName="returnDate" [invalid]="isFieldInvalid('returnDate')" dateFormat="yy-mm-dd"/>
+    <label for="returnDateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <button type="submit" name="Save" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled">Guardar</button>
+    </div>
+  </div>
+</form>

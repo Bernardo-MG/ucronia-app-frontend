@@ -1,6 +1,0 @@
-<div>Escoge un tipo</div>
-<ui-button-list [values]="values()" [renderer]="nameRenderer" (pick)="onPick($event)" />
-<div uiJustifyCenter class="mt-1">
-  <pagination-navigation [disabled]="waiting()" [current]="current()" [pages]="pages()" *uiBlock="waiting()"
-    (goTo)="onGoToPage($event)" />
-</div>

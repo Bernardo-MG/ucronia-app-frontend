@@ -1,0 +1,26 @@
+@switch (selecting) {
+  @case (false) {
+    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+      <div class="row">
+        <div class="col-sm-3 text-primary">Tipo</div>
+        <div class="col-sm-9">
+            {{name}}
+        </div>
+      </div>
+      <div uiJustifyCenter>
+        <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
+      </div>
+      <div uiJustifyBetween>
+        <!-- Save button -->
+        <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled"
+          [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+        <!-- Cancel button -->
+        <p-button type="button" severity="danger" name="Cancelar" [disabled]="!formStatus.cancelEnabled"
+          [attr.aria-disabled]="!formStatus.cancelEnabled" (click)="onCancel()">Cancelar</p-button>
+      </div>
+    </form>
+  }
+  @case (true) {
+    <shared-selection-list heading="Nombre" [getSelection]="getSelection()" (choose)="onSelect($event)" />
+  }
+}

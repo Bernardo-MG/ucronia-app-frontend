@@ -6,7 +6,6 @@ import { ResourceGuard } from '@bernardo-mg/authentication';
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('@app/core/layout/components/simple-layout/simple-layout.component').then(m => m.SimpleLayoutComponent),
     data: { breadcrumb: 'Configuración' },
     children: [
       {

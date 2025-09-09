@@ -32,8 +32,8 @@ describe('LibraryBookLendingsComponent', () => {
     component.lendings = lendings;
     fixture.detectChanges();
 
-    const rows = fixture.debugElement.queryAll(By.css('tbody tr'));
-    expect(rows.length).toBe(lendings.length);
+    const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
+    expect(rows.length).toBe(lendings.length * 2);
   });
 
   it('should display the correct data in each row', () => {
@@ -44,20 +44,26 @@ describe('LibraryBookLendingsComponent', () => {
     component.lendings = lendings;
     fixture.detectChanges();
 
-    const row = fixture.debugElement.query(By.css('tbody tr'));
-    const cells = row.queryAll(By.css('td'));
+    const dates = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
 
-    expect(cells[0].nativeElement.textContent.trim()).toBe('John Doe');
-    expect(cells[1].nativeElement.textContent.trim()).toBe('2024-01-01');
-    expect(cells[2].nativeElement.textContent.trim()).toBe('2024-01-05');
-    expect(cells[3].nativeElement.textContent.trim()).toBe('4');
+    expect(dates.length).toBe(2);
+
+    expect(dates[0].nativeElement.textContent.trim()).toBe('2024-01-01');
+    expect(dates[1].nativeElement.textContent.trim()).toBe('2024-01-05');
+
+    const names = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-opposite'));
+
+    expect(names.length).toBe(2);
+
+    expect(names[0].nativeElement.textContent.trim()).toBe('John Doe');
+    expect(names[1].nativeElement.textContent.trim()).toBe('John Doe');
   });
 
   it('should not show anything when there is no data', () => {
     component.lendings = [];
     fixture.detectChanges();
 
-    const rows = fixture.debugElement.queryAll(By.css('tbody tr'));
+    const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
     expect(rows.length).toBe(0);
   });
 

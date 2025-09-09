@@ -1,0 +1,23 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Name -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />
+    <label for="nameInput">Nombre</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('name'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Save controls -->
+  <div uiJustifyBetween>
+    <!-- Save button -->
+    <p-button type="submit" name="Guardar" [disabled]="!saveEnabled"
+      [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
+    <!-- Cancel button -->
+    <p-button type="button" severity="danger" name="Cancelar" [disabled]="!cancelEnabled"
+      [attr.aria-disabled]="!cancelEnabled" (click)="onCancel()">Cancelar</p-button>
+  </div>
+</form>

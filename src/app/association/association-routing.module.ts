@@ -6,15 +6,14 @@ import { ResourceGuard } from '@bernardo-mg/authentication';
 const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./layout/containers/association-layout/association-layout.container').then(m => m.AssociationLayoutContainer),
     children: [
       {
         path: '',
-        redirectTo: 'calendar',
+        redirectTo: 'activity',
         pathMatch: 'prefix'
       },
       {
-        path: 'calendar',
+        path: 'activity',
         canActivate: [ResourceGuard("activity_calendar", "view")],
         loadChildren: () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule)
       },

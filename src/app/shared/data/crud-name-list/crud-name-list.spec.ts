@@ -1,0 +1,139 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CrudService } from '@app/core/layout/services/crud-service';
+import { FailureResponse, PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { of, throwError } from 'rxjs';
+import { CrudNameList } from './crud-name-list';
+
+describe('CrudNameList', () => {
+  let component: CrudNameList;
+  let fixture: ComponentFixture<CrudNameList>;
+  let mockService: jasmine.SpyObj<CrudService<any>>;
+  let confirmationService: ConfirmationService;
+  let messageService: MessageService;
+
+  beforeEach(async () => {
+    mockService = jasmine.createSpyObj('CrudService', ['getAll', 'create', 'update', 'delete']);
+    mockService.getAll.and.returnValue(of(new PaginatedResponse()));
+    mockService.create.and.returnValue(of({}));
+    mockService.update.and.returnValue(of({}));
+    mockService.delete.and.returnValue(of({}));
+
+    await TestBed.configureTestingModule({
+      imports: [CrudNameList],
+      providers: [
+        provideAnimationsAsync(),
+        ConfirmationService,
+        MessageService
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CrudNameList);
+    component = fixture.componentInstance;
+    confirmationService = TestBed.inject(ConfirmationService);
+    messageService = TestBed.inject(MessageService);
+
+    fixture.componentRef.setInput('service', mockService);
+    fixture.componentRef.setInput('entityKey', 'testEntity');
+    fixture.detectChanges();
+
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should call load on init', () => {
+    expect(mockService.getAll).toHaveBeenCalledWith(0, jasmine.any(Sorting));
+  });
+
+  describe('sorting', () => {
+
+    it('should change sorting direction to ascending', () => {
+      spyOn(component as any, 'load');
+
+      component.onChangeDirection({ field: 'name', order: 1 });
+
+      expect((component as any).sort.properties.length).toBeGreaterThan(0);
+      expect((component as any).load).toHaveBeenCalled();
+    });
+
+    it('should change sorting direction to descending', () => {
+      spyOn(component as any, 'load');
+
+      component.onChangeDirection({ field: 'name', order: -1 });
+
+      expect((component as any).sort.properties.length).toBeGreaterThan(0);
+      expect((component as any).load).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('pagination', () => {
+
+    it('should calculate first correctly', () => {
+      component.data.page = 2;
+      component.data.size = 10;
+
+      expect(component.first).toBe(10);
+    });
+
+    it('should handle page change', () => {
+      spyOn(component as any, 'load');
+      component.data.size = 10;
+
+      component.onPageChange({ first: 20 } as any);
+
+      expect((component as any).load).toHaveBeenCalledWith(3);
+    });
+
+  });
+
+  describe('shown form', () => {
+
+    it('should toggle creation', () => {
+      component.onStartCreating();
+      expect(component.shownForm).toBe('creation');
+      expect(component.showForm).toBeTrue();
+    });
+
+    it('should toggle edition', () => {
+      component.onStartEditing({ id: 1 });
+      expect(component.shownForm).toBe('edition');
+      expect(component.selected).toEqual({ id: 1 });
+    });
+
+    it('should toggle back on cancel', () => {
+      component.onCancel();
+      expect(component.shownForm).toBe('none');
+      expect(component.showForm).toBeFalse();
+    });
+
+  });
+
+  it('should call service on onCreate', () => {
+    spyOn(component as any, 'load');
+    component.onCreate({ id: 123 });
+    
+    expect(mockService.create).toHaveBeenCalledWith({ id: 123 });
+  });
+
+  it('should call service on onUpdate', () => {
+    spyOn(component as any, 'load');
+    component.onUpdate({ id: 123 });
+    expect(mockService.update).toHaveBeenCalledWith({ id: 123 });
+  });
+
+  it('should handle errors in mutate', () => {
+    const failure = new FailureResponse({ 'field': [{ field: 'password', message: 'too weak' }] });
+    mockService.create.and.returnValue(throwError(() => failure));
+
+    component.onCreate({ id: 1 });
+
+    expect(component.loading).toBeFalse();
+    expect(component.failures).toBe(failure.failures);
+  });
+
+});
