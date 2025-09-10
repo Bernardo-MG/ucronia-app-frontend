@@ -19,8 +19,8 @@ export class TransactionCalendarService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.calendarClient = clientProvider.url(environment.apiUrl + '/funds/calendar');
-    this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/funds/calendar/range');
+    this.calendarClient = clientProvider.url(environment.apiUrl + '/transaction/calendar');
+    this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/transaction/calendar/range');
   }
 
   public getCalendar(year: number, month: number): Observable<Transaction[]> {

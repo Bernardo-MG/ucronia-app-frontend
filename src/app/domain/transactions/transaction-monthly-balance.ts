@@ -1,5 +1,5 @@
 export class TransactionMonthlyBalance {
-  date = '';
+  month = '';
   total = -1;
   results = -1;
 }

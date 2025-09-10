@@ -14,7 +14,7 @@ export class TransactionService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/funds/transaction');
+    this.client = clientProvider.url(environment.apiUrl + '/transaction');
   }
 
   public create(data: Transaction): Observable<Transaction> {

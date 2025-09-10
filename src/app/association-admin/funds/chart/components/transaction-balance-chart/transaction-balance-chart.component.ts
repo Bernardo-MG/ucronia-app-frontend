@@ -51,7 +51,7 @@ export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = this.balance().map(b => b.date)
+    const labels = this.balance().map(b => b.month)
     const totals = this.balance().map(b => b.total)
     const results = this.balance().map(b => b.results)
 
