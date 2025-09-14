@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/chart/containers/transaction-balance-chart-widget/transaction-balance-chart-widget.container';
-import { TransactionReportWidgetContainer } from '@app/association-admin/funds/report/containers/transaction-report-widget/transaction-report-widget.container';
+import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/core/transaction-balance-chart-widget/transaction-balance-chart-widget';
+import { TransactionReport } from '@app/association-admin/funds/core/transaction-report-widget/transaction-report';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
@@ -10,12 +10,12 @@ import { IconAddComponent } from '@bernardo-mg/icons';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
-import { FundsCurrentBalanceWidgetContainer } from '../../balance/containers/transaction-current-balance-widget/transaction-current-balance-widget.container';
+import { FundsCurrentBalance } from '../transaction-current-balance/transaction-current-balance';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionReportWidgetContainer],
+  imports: [RouterModule, PanelModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalance, TransactionReport],
   templateUrl: './funds.html'
 })
 export class Funds {

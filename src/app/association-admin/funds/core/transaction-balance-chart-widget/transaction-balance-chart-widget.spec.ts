@@ -1,7 +1,7 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
-import { TransactionBalanceChartWidgetContainer } from './transaction-balance-chart-widget.container';
+import { TransactionBalanceService } from '../../../balance/transaction-balance.service/transaction-balance.service';
+import { TransactionBalanceChartWidgetContainer } from './transaction-balance-chart-widget';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TransactionBalanceChartWidgetContainer', () => {

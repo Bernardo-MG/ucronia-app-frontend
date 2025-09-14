@@ -1,20 +1,20 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TransactionBalanceService } from './transaction-balance.service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TransactionBalanceService } from './transaction-balance-service';
 
 describe('TransactionBalanceService', () => {
   let service: TransactionBalanceService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [
+      imports: [],
+      providers: [
         TransactionBalanceService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
-    ]
-});
+      ]
+    });
     service = TestBed.inject(TransactionBalanceService);
   });
 

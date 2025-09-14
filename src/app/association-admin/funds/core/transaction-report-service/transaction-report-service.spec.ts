@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TransactionReportService } from './transaction-report.service';
+import { TransactionReportService } from './transaction-report-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('TransactionReportService', () => {

@@ -1,16 +1,16 @@
 
 import { Component, inject } from '@angular/core';
+import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
-import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
-import { TransactionBalanceService } from '../../services/transaction-balance.service';
+import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
 
 @Component({
   selector: 'assoc-transaction-current-balance-widget',
   imports: [CardModule, BlockUiDirective],
-  templateUrl: './transaction-current-balance-widget.container.html'
+  templateUrl: './transaction-current-balance.html'
 })
-export class FundsCurrentBalanceWidgetContainer {
+export class FundsCurrentBalance {
 
   public readingBalance = false;
 

@@ -1,14 +1,14 @@
 
 import { Component, inject } from '@angular/core';
+import { TransactionBalanceService } from '@app/association-admin/funds/core/transaction-balance-service/transaction-balance-service';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import { CardModule } from 'primeng/card';
-import { TransactionBalanceService } from '../../../balance/services/transaction-balance.service';
-import { TransactionBalanceChartComponent } from '../../components/transaction-balance-chart/transaction-balance-chart.component';
+import { TransactionBalanceChart } from '../transaction-balance-chart/transaction-balance-chart';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-widget',
-  imports: [CardModule, TransactionBalanceChartComponent],
-  templateUrl: './transaction-balance-chart-widget.container.html'
+  imports: [CardModule, TransactionBalanceChart],
+  templateUrl: './transaction-balance-chart-widget.html'
 })
 export class TransactionBalanceChartWidgetContainer {
 

@@ -6,9 +6,9 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'assoc-transaction-balance-chart',
   imports: [],
-  templateUrl: './transaction-balance-chart.component.html'
+  templateUrl: './transaction-balance-chart.html'
 })
-export class TransactionBalanceChartComponent implements OnChanges, OnDestroy {
+export class TransactionBalanceChart implements OnChanges, OnDestroy {
 
   public readonly waiting = input(false);
 
