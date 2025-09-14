@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
+import { TransactionService } from '@app/association-admin/funds/core/transaction-service/transaction-service';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
@@ -9,14 +9,14 @@ import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
-import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
+import { TransactionForm } from '../transaction-form/transaction-form';
 
 @Component({
   selector: 'assoc-transaction-edition',
-  imports: [CardModule, SkeletonModule, TransactionFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-edition.component.html'
+  imports: [CardModule, SkeletonModule, TransactionForm, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './transaction-edition.html'
 })
-export class TransactionEditionComponent extends InfoEditorStatusComponent<Transaction> {
+export class TransactionEdition extends InfoEditorStatusComponent<Transaction> {
 
   private readonly route = inject(ActivatedRoute);
 

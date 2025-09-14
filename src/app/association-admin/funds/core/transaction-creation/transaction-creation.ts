@@ -1,20 +1,20 @@
 
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TransactionService } from '@app/association-admin/funds/core/service/transaction.service';
+import { TransactionService } from '@app/association-admin/funds/core/transaction-service/transaction-service';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
-import { TransactionFormComponent } from '../../components/transaction-form/transaction-form.component';
+import { TransactionForm } from '../transaction-form/transaction-form';
 
 @Component({
   selector: 'assoc-transaction-creation',
-  imports: [CardModule, TransactionFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './transaction-creation.container.html'
+  imports: [CardModule, TransactionForm, ResponsiveShortColumnsDirective],
+  templateUrl: './transaction-creation.html'
 })
-export class TransactionCreationComponent extends CreateComponent<Transaction> {
+export class TransactionCreation extends CreateComponent<Transaction> {
 
   private readonly service = inject(TransactionService);
 
