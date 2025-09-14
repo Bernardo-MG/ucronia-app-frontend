@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/core/transaction-balance-chart-widget/transaction-balance-chart-widget';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
-import { Colors } from '@app/shared/utils/colors';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CalendarEvent } from 'angular-calendar';
@@ -82,23 +81,7 @@ export class Funds {
     this.readingCalendar = true;
     this.service.getCalendar(this.month.year, this.month.month).subscribe({
       next: response => {
-        this.events = response.map(t => {
-          const date = new Date(t.date);
-          let color;
-          if (t.amount >= 0) {
-            color = Colors.blue;
-          } else {
-            color = Colors.red;
-          }
-          return {
-            title: `${t.description} (${t.amount}€)`,
-            color: color,
-            start: date,
-            meta: {
-              transactionId: t.index,
-            }
-          };
-        });
+        this.events = response;
         // Reactivate view
         this.readingCalendar = false;
       },
