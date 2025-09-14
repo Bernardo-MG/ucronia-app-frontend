@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./core/containers/funds-list/funds-list.container').then(m => m.FundsListComponent),
+        loadComponent: () => import('./core/funds/funds').then(m => m.Funds),
         canActivate: [ResourceGuard("transaction", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'add',
-        loadComponent: () => import('./core/containers/transaction-creation/transaction-creation.container').then(m => m.TransactionCreationComponent),
+        loadComponent: () => import('./core/transaction-creation/transaction-creation').then(m => m.TransactionCreation),
         canActivate: [ResourceGuard("transaction", "create")],
         data: { breadcrumb: 'Registro de transacción' }
       },
       {
         path: 'transaction/:index',
-        loadComponent: () => import('./core/containers/transaction-edition/transaction-edition.component').then(m => m.TransactionEditionComponent),
+        loadComponent: () => import('./core/transaction-edition/transaction-edition').then(m => m.TransactionEdition),
         canActivate: [ResourceGuard("transaction", "read")],
         data: { breadcrumb: 'Edición de transacción' }
       }

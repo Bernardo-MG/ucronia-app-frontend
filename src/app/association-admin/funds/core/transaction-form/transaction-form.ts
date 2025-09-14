@@ -7,9 +7,9 @@ import { Transaction } from '@app/domain/transactions/transaction';
 @Component({
   selector: 'assoc-transaction-form',
   imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './transaction-form.component.html'
+  templateUrl: './transaction-form.html'
 })
-export class TransactionFormComponent extends FormComponent<Transaction> {
+export class TransactionForm extends FormComponent<Transaction> {
 
   constructor() {
     const fb = inject(FormBuilder);

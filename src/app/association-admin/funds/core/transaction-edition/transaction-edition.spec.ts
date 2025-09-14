@@ -2,22 +2,20 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { TransactionBalanceService } from '@app/association-admin/funds/balance/services/transaction-balance.service';
-import { TransactionCalendarService } from '@app/association-admin/funds/calendar/services/transaction-calendar.service';
-import { FundsListComponent } from './funds-list.container';
+import { TransactionService } from '@app/association-admin/funds/core/transaction-service/transaction-service';
+import { TransactionEdition } from './transaction-edition';
 
-describe('FundsListComponent', () => {
-  let component: FundsListComponent;
-  let fixture: ComponentFixture<FundsListComponent>;
+describe('TransactionEdition', () => {
+  let component: TransactionEdition;
+  let fixture: ComponentFixture<TransactionEdition>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FundsListComponent
+        TransactionEdition
       ],
       providers: [
-        TransactionCalendarService,
-        TransactionBalanceService,
+        TransactionService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -25,7 +23,7 @@ describe('FundsListComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FundsListComponent);
+    fixture = TestBed.createComponent(TransactionEdition);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
