@@ -10,14 +10,16 @@
   </div>
 </div>
 <!-- Funds calendar -->
-<p-card>
-  <ng-template #title>
+<p-panel>
+  <ng-template #icons>
     <!-- Add transaction -->
-    <button type="button" class="btn btn-link" aria-label="register" routerLink="add" [disabled]="!createPermission"
-      [attr.aria-disabled]="!createPermission">
+    <button type="button" class="btn btn-link" aria-label="register" routerLink="add" [disabled]="!createable"
+      [attr.aria-disabled]="!createable">
       <icon-add />
     </button>
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-    <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
-      (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
-</p-card>
+  <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
+    (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
+</p-panel>

@@ -8,13 +8,14 @@ import { Colors } from '@app/shared/utils/colors';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CalendarEvent } from 'angular-calendar';
-import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 import { FundsCurrentBalanceWidgetContainer } from '../../balance/containers/transaction-current-balance-widget/transaction-current-balance-widget.container';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, CardModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionReportWidgetContainer],
+  imports: [RouterModule, PanelModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalanceWidgetContainer, TransactionReportWidgetContainer],
   templateUrl: './funds.html'
 })
 export class Funds {
@@ -34,7 +35,7 @@ export class Funds {
    */
   public readingCalendar = false;
 
-  public readonly createPermission;
+  public readonly createable;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
@@ -42,7 +43,7 @@ export class Funds {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("transaction", "create");
+    this.createable = authContainer.hasPermission("transaction", "create");
 
     // Read range
     this.service.getRange().subscribe(months => {
@@ -67,6 +68,9 @@ export class Funds {
         this.load();
       }
     });
+  }
+
+  public onStartEditingView(view: string): void {
   }
 
   private load() {
