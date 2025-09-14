@@ -48,8 +48,8 @@ export class TransactionCalendarService {
     const nextMonthQuery = this.readCalendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
 
     return concat(previousMonthQuery, thisMonthQuery, nextMonthQuery).pipe(
-      mergeMap((data) => data.transactions), // Flatten the arrays emitted by each observable
-      toArray(), // Collect all emissions into a single array
+      mergeMap((data) => data.transactions),
+      toArray(),
     );
   }
 
