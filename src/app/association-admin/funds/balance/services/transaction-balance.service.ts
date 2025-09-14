@@ -17,8 +17,8 @@ export class TransactionBalanceService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.balanceClient = clientProvider.url(environment.apiUrl + '/balance');
-    this.monthlyBalanceClient = clientProvider.url(environment.apiUrl + '/balance/monthly');
+    this.balanceClient = clientProvider.url(environment.apiUrl + '/transaction/balance');
+    this.monthlyBalanceClient = clientProvider.url(environment.apiUrl + '/transaction/balance/monthly');
   }
 
   public current(): Observable<TransactionCurrentBalance> {
