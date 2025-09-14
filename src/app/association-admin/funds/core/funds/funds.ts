@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/core/transaction-balance-chart-widget/transaction-balance-chart-widget';
-import { TransactionReport } from '@app/association-admin/funds/core/transaction-report-widget/transaction-report';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
@@ -9,13 +8,15 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
-import { FundsCurrentBalance } from '../transaction-current-balance/transaction-current-balance';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
+import { FundsCurrentBalance } from '../transaction-current-balance/transaction-current-balance';
+import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalance, TransactionReport],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalance],
   templateUrl: './funds.html'
 })
 export class Funds {
@@ -25,6 +26,8 @@ export class Funds {
   private readonly service = inject(TransactionCalendarService);
 
   private readonly router = inject(Router);
+
+  private readonly reportService = inject(TransactionReportService);
 
   public months: Month[] = [];
 
@@ -38,6 +41,8 @@ export class Funds {
   public readonly createable;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
+
+  public loadingExcel = false;
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -119,6 +124,19 @@ export class Funds {
 
   public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
     this.router.navigate([`transaction/${event.meta?.transactionId}`], { relativeTo: this.route });
+  }
+
+  public downloadExcel() {
+    this.loadingExcel = true;
+    this.reportService.downloadExcelReport()
+      .subscribe({
+        next: response => {
+          this.loadingExcel = false;
+        },
+        error: error => {
+          this.loadingExcel = false;
+        }
+      });
   }
 
 }
