@@ -1,22 +1,24 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/core/transaction-balance-chart-widget/transaction-balance-chart-widget';
+import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
+import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { finalize } from 'rxjs';
+import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
-import { FundsCurrentBalance } from '../transaction-current-balance/transaction-current-balance';
 import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, FundsCurrentBalance],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {
@@ -31,13 +33,16 @@ export class Funds {
 
   public loadingCalendar = false;
   public loadingExcel = false;
+  public loadingBalance = false;
 
   public readonly createable;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
+  public balance = new TransactionCurrentBalance();
 
   constructor() {
     const authContainer = inject(AuthContainer);
+    const transactionBalanceService = inject(TransactionBalanceService);
 
     // Check permissions
     this.createable = authContainer.hasPermission("transaction", "create");
@@ -52,6 +57,12 @@ export class Funds {
         this.loadCalendar();
       }
     });
+
+    // Read balance
+    this.loadingBalance = true;
+    transactionBalanceService.current()
+      .pipe(finalize(() => this.loadingBalance = false))
+      .subscribe(b => this.balance = b);
   }
 
   private setInitialMonth() {

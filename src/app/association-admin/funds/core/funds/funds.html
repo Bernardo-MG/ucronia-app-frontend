@@ -3,7 +3,15 @@
     <assoc-transaction-balance-chart-widget />
   </div>
   <div class="col-md-4 pb-2">
-    <assoc-transaction-current-balance-widget />
+    <p-card>
+      <ng-template #title>
+        Saldo
+      </ng-template>
+      <div *uiBlock="loadingBalance">
+        <p>Saldo actual: {{balance.total}}</p>
+        <p>Resultados del mes: {{balance.results}}</p>
+      </div>
+    </p-card>
   </div>
   <div class="col-md-4">
     <p-card>
