@@ -7,9 +7,7 @@
   </div>
   <div class="col-md-4">
     <p-card>
-      <ng-template #title>
-        Descargas
-      </ng-template>
+      <ng-template #title>Descargas</ng-template>
       <div class="mt-2" uiJustifyCenter>
         <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()"
           aria-label="Descargar excel" [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
@@ -28,6 +26,6 @@
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="readingCalendar"
+  <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="loadingCalendar"
     (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
 </p-panel>

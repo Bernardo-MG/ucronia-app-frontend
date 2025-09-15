@@ -1,13 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Month } from '@app/shared/calendar/models/month';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
-import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
-import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
+import { Month } from '@app/shared/calendar/models/month';
 import { Colors } from '@app/shared/utils/colors';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { CalendarEvent } from 'angular-calendar';
+import { environment } from 'environments/environment';
+import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 
 @Injectable({
   providedIn: "root"

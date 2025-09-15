@@ -9,6 +9,7 @@ import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
+import { finalize } from 'rxjs';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
 import { FundsCurrentBalance } from '../transaction-current-balance/transaction-current-balance';
 import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
@@ -21,27 +22,19 @@ import { TransactionReportService } from '../transaction-report-service/transact
 export class Funds {
 
   private readonly route = inject(ActivatedRoute);
-
-  private readonly service = inject(TransactionCalendarService);
-
   private readonly router = inject(Router);
-
+  private readonly service = inject(TransactionCalendarService);
   private readonly reportService = inject(TransactionReportService);
 
   public months: Month[] = [];
+  public month = this.getCurrentMonth();
 
-  public month = this.getThisMonth();
-
-  /**
-   * Loading flag.
-   */
-  public readingCalendar = false;
+  public loadingCalendar = false;
+  public loadingExcel = false;
 
   public readonly createable;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
-
-  public loadingExcel = false;
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -54,55 +47,36 @@ export class Funds {
       // To show in the selection box we have to reverse the order
       this.months = months;
       // TODO: What happens if this date is not in the range?
-      if (!this.readingCalendar) {
-        const date = new Date();
-        if (this.months.length > 0) {
-          const month = this.months[this.months.length - 1];
-          if ((date.getFullYear() >= month.year) || ((date.getFullYear() >= month.year) && (date.getMonth() >= month.month))) {
-            // The current date is after the last date in range
-            // Replace with the last date
-            this.month = month;
-          } else {
-            this.month = this.getThisMonth();
-          }
-        } else {
-          this.month = this.getThisMonth();
-        }
-
-        this.load();
+      if (!this.loadingCalendar) {
+        this.setInitialMonth();
+        this.loadCalendar();
       }
     });
+  }
+
+  private setInitialMonth() {
+    const date = new Date();
+    if (this.months.length > 0) {
+      const month = this.months[this.months.length - 1];
+      if ((date.getFullYear() >= month.year) || ((date.getFullYear() >= month.year) && (date.getMonth() >= month.month))) {
+        // The current date is after the last date in range
+        // Replace with the last date
+        this.month = month;
+      } else {
+        this.month = this.getCurrentMonth();
+      }
+    } else {
+      this.month = this.getCurrentMonth();
+    }
   }
 
   public onStartEditingView(view: string): void {
   }
 
-  private load() {
-    this.readingCalendar = true;
-    this.service.getCalendar(this.month.year, this.month.month).subscribe({
-      next: response => {
-        this.events = response;
-        // Reactivate view
-        this.readingCalendar = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingCalendar = false;
-      }
-    });
-  }
-
-  private getThisMonth() {
-    const date = new Date();
-    const month = new Month(date.getFullYear(), date.getMonth() + 1);
-
-    return month;
-  }
-
   public onChangeMonth(date: Month) {
     // Corrects month value
     this.month = date;
-    this.load();
+    this.loadCalendar();
   }
 
   public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
@@ -112,14 +86,20 @@ export class Funds {
   public downloadExcel() {
     this.loadingExcel = true;
     this.reportService.downloadExcelReport()
-      .subscribe({
-        next: response => {
-          this.loadingExcel = false;
-        },
-        error: error => {
-          this.loadingExcel = false;
-        }
-      });
+      .pipe(finalize(() => this.loadingExcel = false))
+      .subscribe();
+  }
+
+  private loadCalendar() {
+    this.loadingCalendar = true;
+    this.service.getCalendar(this.month.year, this.month.month)
+      .pipe(finalize(() => this.loadingCalendar = false))
+      .subscribe(events => this.events = events);
+  }
+
+  private getCurrentMonth() {
+    const now = new Date();
+    return new Month(now.getFullYear(), now.getMonth() + 1);
   }
 
 }
