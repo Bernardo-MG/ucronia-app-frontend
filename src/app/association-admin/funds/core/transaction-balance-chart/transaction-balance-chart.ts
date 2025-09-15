@@ -35,11 +35,7 @@ export class TransactionBalanceChartContainer implements OnDestroy {
     this.endMonth$.next(month);
   }
 
-  public get waiting() {
-    return this.reading;
-  }
-
-  private reading = false;
+  public loading = false;
 
   public chart: any;
 
@@ -99,9 +95,9 @@ export class TransactionBalanceChartContainer implements OnDestroy {
   }
 
   private loadInitialRange() {
-    this.reading = true;
+    this.loading = true;
     this.balanceService.monthly('', '')
-      .pipe(finalize(() => this.reading = false))
+      .pipe(finalize(() => this.loading = false))
       .subscribe(data => {
         if (!data.length) return;
         this.months = data.map(d => d.month);
@@ -115,9 +111,9 @@ export class TransactionBalanceChartContainer implements OnDestroy {
       .pipe(
         switchMap(([start, end]) => {
           if (!start || !end) return [];
-          this.reading = true;
+          this.loading = true;
           return this.balanceService.monthly(start, end)
-            .pipe(finalize(() => this.reading = false));
+            .pipe(finalize(() => this.loading = false));
         })
       )
       .subscribe(data => {
