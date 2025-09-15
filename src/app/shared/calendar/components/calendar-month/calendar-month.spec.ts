@@ -4,11 +4,11 @@ import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { Month } from '../../models/month';
-import { CalendarMonthComponent } from './calendar-month.component';
+import { CalendarMonth } from './calendar-month';
 
-describe('CalendarMonthComponent', () => {
-  let component: CalendarMonthComponent;
-  let fixture: ComponentFixture<CalendarMonthComponent>;
+describe('CalendarMonth', () => {
+  let component: CalendarMonth;
+  let fixture: ComponentFixture<CalendarMonth>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,11 +19,11 @@ describe('CalendarMonthComponent', () => {
         }),
         BlockUiDirective
       ],
-      declarations: [CalendarMonthComponent]
+      declarations: [CalendarMonth]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(CalendarMonthComponent);
+    fixture = TestBed.createComponent(CalendarMonth);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

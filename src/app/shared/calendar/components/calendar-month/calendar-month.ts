@@ -6,10 +6,10 @@ import { Month } from '../../models/month';
 
 @Component({
   selector: 'shared-calendar-month',
-  templateUrl: './calendar-month.component.html',
+  templateUrl: './calendar-month.html',
   standalone: false
 })
-export class CalendarMonthComponent implements OnChanges {
+export class CalendarMonth implements OnChanges {
 
   public readonly waiting = input(false);
 
