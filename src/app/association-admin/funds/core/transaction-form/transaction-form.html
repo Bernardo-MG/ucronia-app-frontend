@@ -6,36 +6,46 @@
       <div class="col-sm-10">
         <input type="text" [value]="data?.index" id="indexInput" [readonly]="true" class="form-control"
           aria-describedby="indexLabel">
-        </div>
       </div>
+    </div>
+  }
+  <!-- Description -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="descriptionInput" formControlName="description" class="w-100" />
+    <label for="descriptionInput">Descripción</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
-    <!-- Description -->
-    <div class="row mb-2">
-      <label for="descriptionInput" id="descriptionLabel" class="col-sm-2 col-form-label">Descripción</label>
-      <div class="col-sm-10">
-        <input type="text" id="descriptionInput" formControlName="description" class="form-control" formInvalidField
-          [backendFailure]="failures().hasFailures('description')" aria-describedby="descriptionLabel" maxlength="200">
-          <form-input-failure-feedback [failures]="failures().getFailures('description')" />
-        </div>
-      </div>
-      <!-- Date -->
-      <div class="row mb-2">
-        <label for="dateInput" id="dateLabel" class="col-sm-2 col-form-label">Fecha</label>
-        <div class="col-sm-10">
-          <input type="date" id="dateInput" formControlName="date" class="form-control" formInvalidField
-            [backendFailure]="failures().hasFailures('date')" aria-describedby="dateLabel">
-            <form-input-failure-feedback [failures]="failures().getFailures('date')" />
-          </div>
-        </div>
-        <!-- Amount -->
-        <div class="row mb-2">
-          <label for="amountInput" id="amountLabel" class="col-sm-2 col-form-label">Importe</label>
-          <div class="col-sm-10">
-            <input type="number" step="any" id="amountInput" formControlName="amount" class="form-control" formInvalidField
-              [backendFailure]="failures().hasFailures('amount')" aria-describedby="amountLabel">
-              <form-input-failure-feedback [failures]="failures().getFailures('amount')" />
-            </div>
-          </div>
-          <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-          [cancellable]="cancellable" (reject)="onCancel()" />
-        </form>
+  </div>
+  <!-- Date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')"
+      dateFormat="yy-mm-dd" />
+    <label for="dateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Amount -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-100" />
+    <label for="amountInput">Importe</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('amount'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (reject)="onCancel()" />
+</form>
