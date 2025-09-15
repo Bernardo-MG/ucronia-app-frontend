@@ -4,6 +4,7 @@ import { TransactionBalanceService } from '@app/association-admin/funds/core/tra
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import { CardModule } from 'primeng/card';
 import { TransactionBalanceChart } from '../transaction-balance-chart/transaction-balance-chart';
+import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-widget',
@@ -18,54 +19,57 @@ export class TransactionBalanceChartWidgetContainer {
 
   public months: string[] = [];
 
-  private _startMonth = '';
-
-  public get startMonth() {
-    return this._startMonth;
+  private startMonth$ = new BehaviorSubject<string>('');
+  public get startMonth(): string {
+    return this.startMonth$.value;
   }
-
   public set startMonth(month: string) {
-    this._startMonth = month;
-    this.loadBalance();
+    this.startMonth$.next(month);
   }
 
-  private _endMonth = '';
-
-  public get endMonth() {
-    return this._endMonth;
+  private endMonth$ = new BehaviorSubject<string>('');
+  public get endMonth(): string {
+    return this.endMonth$.value;
   }
-
   public set endMonth(month: string) {
-    this._endMonth = month;
-    this.loadBalance();
+    this.endMonth$.next(month);
   }
 
   public get waiting() {
-    return (this.readingBalance || this.readingRange);
+    return this.reading;
   }
 
-  private readingBalance = false;
-
-  private readingRange = false;
+  private reading = false;
 
   constructor() {
     // Read balance range
-    this.readingRange = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => v.month);
-      this.startMonth = this.months[0];
-      this.endMonth = this.months[this.months.length - 1];
-      this.readingRange = false;
-      this.loadBalance();
-    });
+    this.loadInitialRange();
+    this.setupBalanceReload();
   }
 
-  private loadBalance() {
-    this.readingBalance = true;
-    this.balanceService.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.balance = b;
-      this.readingBalance = false;
-    });
+  private loadInitialRange() {
+    this.reading = true;
+    this.balanceService.monthly('', '')
+      .pipe(finalize(() => this.reading = false))
+      .subscribe(data => {
+        if (!data.length) return;
+        this.months = data.map(d => d.month);
+        this.startMonth = this.months[0];
+        this.endMonth = this.months[this.months.length - 1];
+      });
+  }
+
+  private setupBalanceReload() {
+    combineLatest([this.startMonth$, this.endMonth$])
+      .pipe(
+        switchMap(([start, end]) => {
+          if (!start || !end) return [];
+          this.reading = true;
+          return this.balanceService.monthly(start, end)
+            .pipe(finalize(() => this.reading = false));
+        })
+      )
+      .subscribe(data => this.balance = data);
   }
 
 }
