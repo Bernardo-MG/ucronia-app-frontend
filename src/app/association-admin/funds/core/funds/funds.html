@@ -38,6 +38,6 @@
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <shared-calendar-month [events]="events" [month]="month" [months]="months" [waiting]="loadingCalendar"
+  <shared-calendar-month [events]="events" [month]="month" [selectionMonths]="months" [waiting]="loadingCalendar"
     (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
 </p-panel>

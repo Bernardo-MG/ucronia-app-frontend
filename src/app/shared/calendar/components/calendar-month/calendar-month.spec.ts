@@ -81,9 +81,9 @@ describe('CalendarMonth', () => {
       new Month(2024, 2),
       new Month(2024, 3)
     ];
-    component.months = months;
+    fixture.componentRef.setInput('months', months);
     component.ngOnChanges({
-      months: new SimpleChange(null, component.months, true)
+      months: new SimpleChange(null, component.selectionMonths, true)
     });
     fixture.detectChanges();
 
@@ -100,9 +100,9 @@ describe('CalendarMonth', () => {
 
   it('should render empty month selector when months array is empty', () => {
     const emptyMonths: Month[] = [];
-    component.months = emptyMonths;
+    fixture.componentRef.setInput('months', emptyMonths);
     component.ngOnChanges({
-      months: new SimpleChange(null, component.months, true)
+      months: new SimpleChange(null, component.selectionMonths, true)
     });
     fixture.detectChanges();
 
