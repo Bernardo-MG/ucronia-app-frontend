@@ -1,28 +1,33 @@
-<canvas id="balanceChart"></canvas>
+<p-card>
+  <ng-template #title>
+    Evolución
+  </ng-template>
+  <canvas id="balanceChart"></canvas>
 
-<div class="row pt-2">
-  <div class="col-4">
-    Inicio
+  <div class="row pt-2">
+    <div class="col-4">
+      Inicio
+    </div>
+    <div class="col-8">
+      <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting"
+        (change)="onSelectStartMonth($event)">
+        @for (selectionMonth of months; track selectionMonth) {
+          <option [selected]="selectionMonth === startMonth" [value]="selectionMonth">
+            {{selectionMonth}}</option>
+        }
+      </select>
+    </div>
+    <div class="col-4">
+      Fin
+    </div>
+    <div class="col-8">
+      <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting"
+        (change)="onSelectEndMonth($event)">
+        @for (selectionMonth of months; track selectionMonth) {
+          <option [selected]="selectionMonth === endMonth" [value]="selectionMonth">
+            {{selectionMonth}}</option>
+        }
+      </select>
+    </div>
   </div>
-  <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting()"
-      (change)="onSelectStartMonth($event)">
-      @for (selectionMonth of months; track selectionMonth) {
-        <option [selected]="selectionMonth === startMonth()" [value]="selectionMonth">
-        {{selectionMonth}}</option>
-      }
-    </select>
-  </div>
-  <div class="col-4">
-    Fin
-  </div>
-  <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting()"
-      (change)="onSelectEndMonth($event)">
-      @for (selectionMonth of months; track selectionMonth) {
-        <option [selected]="selectionMonth === endMonth()" [value]="selectionMonth">
-        {{selectionMonth}}</option>
-      }
-    </select>
-  </div>
-</div>
+</p-card>

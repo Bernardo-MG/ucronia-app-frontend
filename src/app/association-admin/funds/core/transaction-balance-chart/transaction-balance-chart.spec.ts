@@ -1,18 +1,23 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TransactionBalanceChart } from './transaction-balance-chart';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
+import { TransactionBalanceChartContainer } from './transaction-balance-chart';
 
-describe('TransactionBalanceChart', () => {
-  let component: TransactionBalanceChart;
-  let fixture: ComponentFixture<TransactionBalanceChart>;
+describe('TransactionBalanceChartContainer', () => {
+  let component: TransactionBalanceChartContainer;
+  let fixture: ComponentFixture<TransactionBalanceChartContainer>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [TransactionBalanceChart],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
-    fixture = TestBed.createComponent(TransactionBalanceChart);
+      imports: [TransactionBalanceChartContainer],
+      providers: [
+        TransactionBalanceService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    });
+    fixture = TestBed.createComponent(TransactionBalanceChartContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -20,27 +25,4 @@ describe('TransactionBalanceChart', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should emit startMonthChange event on start month selection', () => {
-    component.months = ['2024-01'];
-    fixture.detectChanges();
-
-    spyOn(component.startMonthChange, 'emit');
-    const select = fixture.nativeElement.querySelector('select[aria-label="Start month"]');
-    select.value = select.options[0].value;
-    select.dispatchEvent(new Event('change'));
-    expect(component.startMonthChange.emit).toHaveBeenCalledWith(select.value);
-  });
-
-  it('should emit endMonthChange event on end month selection', () => {
-    component.months = ['2024-01'];
-    fixture.detectChanges();
-
-    spyOn(component.endMonthChange, 'emit');
-    const select = fixture.nativeElement.querySelector('select[aria-label="End month"]');
-    select.value = select.options[0].value;
-    select.dispatchEvent(new Event('change'));
-    expect(component.endMonthChange.emit).toHaveBeenCalledWith(select.value);
-  });
-
 });

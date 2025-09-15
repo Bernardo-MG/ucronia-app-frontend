@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { TransactionBalanceChartWidgetContainer } from '@app/association-admin/funds/core/transaction-balance-chart-widget/transaction-balance-chart-widget';
+import { TransactionBalanceChartContainer } from '@app/association-admin/funds/core/transaction-balance-chart/transaction-balance-chart';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
@@ -18,7 +18,7 @@ import { TransactionReportService } from '../transaction-report-service/transact
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartWidgetContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {

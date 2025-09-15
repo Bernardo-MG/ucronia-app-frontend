@@ -1,35 +1,52 @@
 
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges, input, output } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
+import { TransactionBalanceService } from '@app/association-admin/funds/core/transaction-balance-service/transaction-balance-service';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
+import { CardModule } from 'primeng/card';
+import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
-  imports: [],
+  imports: [CardModule],
   templateUrl: './transaction-balance-chart.html'
 })
-export class TransactionBalanceChart implements OnChanges, OnDestroy {
+export class TransactionBalanceChartContainer implements OnDestroy {
 
-  public readonly waiting = input(false);
+  private readonly balanceService = inject(TransactionBalanceService);
 
-  public readonly balance = input<TransactionMonthlyBalance[]>([]);
+  public balance: TransactionMonthlyBalance[] = [];
 
-  public readonly startMonth = input('');
+  public months: string[] = [];
 
-  public readonly endMonth = input('');
+  private startMonth$ = new BehaviorSubject<string>('');
+  public get startMonth(): string {
+    return this.startMonth$.value;
+  }
+  public set startMonth(month: string) {
+    this.startMonth$.next(month);
+  }
 
-  @Input() public months: string[] = [];
+  private endMonth$ = new BehaviorSubject<string>('');
+  public get endMonth(): string {
+    return this.endMonth$.value;
+  }
+  public set endMonth(month: string) {
+    this.endMonth$.next(month);
+  }
 
-  public readonly startMonthChange = output<string>();
+  public get waiting() {
+    return this.reading;
+  }
 
-  public readonly endMonthChange = output<string>();
+  private reading = false;
 
   public chart: any;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['balance']) {
-      this.loadChart();
-    }
+  constructor() {
+    // Read balance range
+    this.loadInitialRange();
+    this.setupBalanceReload();
   }
 
   public ngOnDestroy(): void {
@@ -39,21 +56,21 @@ export class TransactionBalanceChart implements OnChanges, OnDestroy {
   }
 
   public onSelectStartMonth(event: any) {
-    this.startMonthChange.emit(event.target.value);
+    this.startMonth = event.target.value;
   }
 
   public onSelectEndMonth(event: any) {
-    this.endMonthChange.emit(event.target.value);
+    this.endMonth = event.target.value;
   }
 
-  public loadChart() {
+  private loadChart() {
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const labels = this.balance().map(b => b.month)
-    const totals = this.balance().map(b => b.total)
-    const results = this.balance().map(b => b.results)
+    const labels = this.balance.map(b => b.month)
+    const totals = this.balance.map(b => b.total)
+    const results = this.balance.map(b => b.results)
 
     const data = {
       labels: labels,
@@ -79,6 +96,34 @@ export class TransactionBalanceChart implements OnChanges, OnDestroy {
         responsive: true,
       }
     });
+  }
+
+  private loadInitialRange() {
+    this.reading = true;
+    this.balanceService.monthly('', '')
+      .pipe(finalize(() => this.reading = false))
+      .subscribe(data => {
+        if (!data.length) return;
+        this.months = data.map(d => d.month);
+        this.startMonth = this.months[0];
+        this.endMonth = this.months[this.months.length - 1];
+      });
+  }
+
+  private setupBalanceReload() {
+    combineLatest([this.startMonth$, this.endMonth$])
+      .pipe(
+        switchMap(([start, end]) => {
+          if (!start || !end) return [];
+          this.reading = true;
+          return this.balanceService.monthly(start, end)
+            .pipe(finalize(() => this.reading = false));
+        })
+      )
+      .subscribe(data => {
+        this.balance = data;
+        this.loadChart();
+      });
   }
 
 }
