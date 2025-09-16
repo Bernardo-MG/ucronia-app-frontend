@@ -1,0 +1,54 @@
+<div class="row pb-2">
+  <div class="col-md-4 pb-2"><p-card>
+      <ng-template #title>
+        Evolución
+      </ng-template>
+      <assoc-transaction-balance-chart />
+    </p-card>
+  </div>
+  <div class="col-md-4 pb-2">
+    <p-card>
+      <ng-template #title>
+        Saldo
+      </ng-template>
+      <div *uiBlock="loadingBalance">
+        <p>Saldo actual: {{balance.total}}</p>
+        <p>Resultados del mes: {{balance.results}}</p>
+      </div>
+    </p-card>
+  </div>
+  <div class="col-md-4">
+    <p-card>
+      <ng-template #title>Descargas</ng-template>
+      <div class="mt-2" uiJustifyCenter>
+        <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()"
+          aria-label="Descargar excel" [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
+      </div>
+    </p-card>
+  </div>
+</div>
+<!-- Funds calendar -->
+<p-panel>
+  <ng-template #icons>
+    <!-- Add transaction -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <shared-calendar-month [events]="events" [month]="month" [selectionMonths]="selectionMonths"
+    [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
+</p-panel>
+<p-drawer [(visible)]="showing" position="full">
+  <assoc-transaction-info [transaction]="selectedData" />
+  <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+    [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+</p-drawer>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+  @case ('creation') {
+  <assoc-transaction-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+  }
+  @case ('edition') {
+  <assoc-transaction-form [data]="selectedData" [waiting]="loading" [failures]="failures" (save)="onUpdate($event)" />
+  }
+  }
+</p-drawer>

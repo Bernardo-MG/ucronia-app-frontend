@@ -1,8 +1,6 @@
 
 import { Component, inject, Input, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
-import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { BookLent } from '@app/domain/library/book-lent';
@@ -14,6 +12,8 @@ import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Publisher } from '@app/domain/library/publisher';
+import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
+import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -30,14 +30,14 @@ import { Observable, throwError } from 'rxjs';
 import { BookAdminService } from '../book-admin-service/book-admin-service';
 import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-form/library-admin-book-creation-form';
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';
-import { LibraryAdminBookInfoEditionForm } from '../library-admin-book-info-edition-form/library-admin-book-info-edition-form';
+import { LibraryAdminBookEditionForm } from '../library-admin-book-edition-form/library-admin-book-edition-form';
 import { LibraryAdminBookInfo } from '../library-admin-book-info/library-admin-book-info';
 import { LibraryAdminBookLending } from '../library-admin-book-lending/library-admin-book-lending';
 import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/library-admin-book-return-form';
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookInfoEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLending, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, ConfirmPopupModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLending, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -80,16 +80,12 @@ export class LibraryAdminBookList {
    * Loading flag.
    */
   public loading = false;
-
   public loadingExcel = false;
+  public editing = false;
+  public showing = false;
 
   public readonly createable;
-
   public readonly editable;
-
-  public editing = false;
-
-  public showing = false;
 
   public readonly fictionEditionMenuItems: MenuItem[] = [];
 
