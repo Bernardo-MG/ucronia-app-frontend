@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { TransactionBalanceChartContainer } from '@app/association-admin/funds/core/transaction-balance-chart/transaction-balance-chart';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
-import { CalendarsModule } from '@app/shared/calendar/calendar.module';
+import { CalendarMonth } from '@app/shared/calendar/components/calendar-month/calendar-month';
 import { Month } from '@app/shared/calendar/models/month';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -23,7 +23,7 @@ import { TransactionService } from '../transaction-service/transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DrawerModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {

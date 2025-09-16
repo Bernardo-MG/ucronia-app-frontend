@@ -1,12 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
-import { CalendarEvent, CalendarMonthViewDay } from 'angular-calendar';
+import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameDay, isSameMonth } from 'date-fns';
 import { Month } from '../../models/month';
 
 
 @Component({
   selector: 'shared-calendar-month',
-  templateUrl: './calendar-month.html'
+  templateUrl: './calendar-month.html',
+  imports: [CommonModule, BlockUiDirective, JustifyCenterDirective, CalendarMonthViewComponent],
+  providers: [
+    provideCalendar({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+  ]
 })
 export class CalendarMonth implements OnChanges {
 
