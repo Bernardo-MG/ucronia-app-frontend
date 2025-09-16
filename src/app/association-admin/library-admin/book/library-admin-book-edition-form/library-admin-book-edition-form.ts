@@ -15,11 +15,11 @@ import { SelectModule } from 'primeng/select';
 import { BookAdminConfig } from '../book-admin-config/book-admin-config';
 
 @Component({
-  selector: 'assoc-library-admin-book-info-edition-form',
+  selector: 'assoc-library-admin-book-edition-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule, SaveControlsComponent],
-  templateUrl: './library-admin-book-info-edition-form.html'
+  templateUrl: './library-admin-book-edition-form.html'
 })
-export class LibraryAdminBookInfoEditionForm extends FormComponent<FictionBook | GameBook> {
+export class LibraryAdminBookEditionForm extends FormComponent<FictionBook | GameBook> {
 
   public readonly languages: Language[] = [];
 

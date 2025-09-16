@@ -55,7 +55,7 @@
   </p-table>
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
-  <assoc-library-admin-book-info [book]="selectedData"></assoc-library-admin-book-info>
+  <assoc-library-admin-book-info [book]="selectedData"/>
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
@@ -72,7 +72,7 @@
       }
     </h2>
   </ng-template>
-  <assoc-library-admin-book-info-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
+  <assoc-library-admin-book-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
     [readonly]="false" [cancellable]="true" (save)="onSaveBook($event)" (reject)="onCancel()" />
   }
   @case ('creation') {
