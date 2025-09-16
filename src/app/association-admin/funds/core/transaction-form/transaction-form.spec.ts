@@ -1,5 +1,8 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { provideRouter } from '@angular/router';
+import { TransactionService } from '@app/association-admin/funds/core/transaction-service/transaction-service';
 import { TransactionForm } from './transaction-form';
 
 describe('TransactionForm', () => {
@@ -9,8 +12,13 @@ describe('TransactionForm', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ReactiveFormsModule,
         TransactionForm
+      ],
+      providers: [
+        TransactionService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     })
       .compileComponents();

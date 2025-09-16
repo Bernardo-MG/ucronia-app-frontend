@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { TransactionBalanceChartContainer } from '@app/association-admin/funds/core/transaction-balance-chart/transaction-balance-chart';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
@@ -16,20 +16,18 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
-import { TransactionCreationForm } from '../transaction-creation-form/transaction-creation-form';
+import { TransactionForm } from '../transaction-form/transaction-form';
 import { LibraryAdminBookInfo } from '../transaction-info/transaction-info';
 import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
 import { TransactionService } from '../transaction-service/transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, LibraryAdminBookInfo, TransactionCreationForm, TransactionBalanceChartContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {
 
-  private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
   private readonly service = inject(TransactionService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly reportService = inject(TransactionReportService);

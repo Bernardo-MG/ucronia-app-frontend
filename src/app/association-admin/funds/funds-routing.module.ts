@@ -13,12 +13,6 @@ const routes: Routes = [
         loadComponent: () => import('./core/funds/funds').then(m => m.Funds),
         canActivate: [ResourceGuard("transaction", "read")],
         data: { breadcrumb: '' }
-      },
-      {
-        path: 'transaction/:index',
-        loadComponent: () => import('./core/transaction-edition/transaction-edition').then(m => m.TransactionEdition),
-        canActivate: [ResourceGuard("transaction", "read")],
-        data: { breadcrumb: 'Edición de transacción' }
       }
     ]
   }
