@@ -17,12 +17,13 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
 import { TransactionCreationForm } from '../transaction-creation-form/transaction-creation-form';
+import { LibraryAdminBookInfo } from '../transaction-info/transaction-info';
 import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
 import { TransactionService } from '../transaction-service/transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, TransactionCreationForm, TransactionBalanceChartContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, LibraryAdminBookInfo, TransactionCreationForm, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {
@@ -41,8 +42,11 @@ export class Funds {
   public loadingExcel = false;
   public loadingBalance = false;
   public editing = false;
+  public showing = false;
 
   public readonly createable;
+
+  public selectedData = new Transaction();
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
   public balance = new TransactionCurrentBalance();
@@ -128,7 +132,11 @@ export class Funds {
   }
 
   public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
-    this.router.navigate([`transaction/${event.meta?.transactionId}`], { relativeTo: this.route });
+    if (event.meta) {
+      this.service.getOne(event.meta.transactionId)
+        .subscribe(transaction => this.selectedData = transaction);
+      this.showing = true;
+    }
   }
 
   public downloadExcel() {
