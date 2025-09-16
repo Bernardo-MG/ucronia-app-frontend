@@ -80,16 +80,12 @@ export class LibraryAdminBookList {
    * Loading flag.
    */
   public loading = false;
-
   public loadingExcel = false;
+  public editing = false;
+  public showing = false;
 
   public readonly createable;
-
   public readonly editable;
-
-  public editing = false;
-
-  public showing = false;
 
   public readonly fictionEditionMenuItems: MenuItem[] = [];
 

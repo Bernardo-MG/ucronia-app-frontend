@@ -31,13 +31,16 @@
 <p-panel>
   <ng-template #icons>
     <!-- Add transaction -->
-    <button type="button" class="btn btn-link" aria-label="register" routerLink="add" [disabled]="!createable"
-      [attr.aria-disabled]="!createable">
-      <icon-add />
-    </button>
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <shared-calendar-month [events]="events" [month]="month" [selectionMonths]="selectionMonths" [waiting]="loadingCalendar"
-    (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
+  <shared-calendar-month [events]="events" [month]="month" [selectionMonths]="selectionMonths"
+    [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
 </p-panel>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+  @case ('creation') {
+  <assoc-transaction-creation-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+  }
+  }
+</p-drawer>

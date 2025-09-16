@@ -15,12 +15,6 @@ const routes: Routes = [
         data: { breadcrumb: '' }
       },
       {
-        path: 'add',
-        loadComponent: () => import('./core/transaction-creation/transaction-creation').then(m => m.TransactionCreation),
-        canActivate: [ResourceGuard("transaction", "create")],
-        data: { breadcrumb: 'Registro de transacción' }
-      },
-      {
         path: 'transaction/:index',
         loadComponent: () => import('./core/transaction-edition/transaction-edition').then(m => m.TransactionEdition),
         canActivate: [ResourceGuard("transaction", "read")],

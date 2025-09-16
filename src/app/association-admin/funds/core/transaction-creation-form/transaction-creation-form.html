@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Index -->
+  @if (data?.index) {
+    <div class="row mb-2">
+      <label for="indexInput" id="indexLabel" class="col-sm-2 col-form-label">Índice</label>
+      <div class="col-sm-10">
+        <input type="text" [value]="data?.index" id="indexInput" [readonly]="true" class="form-control"
+          aria-describedby="indexLabel">
+      </div>
+    </div>
+  }
+  <!-- Description -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="descriptionInput" formControlName="description" class="w-100" />
+    <label for="descriptionInput">Descripción</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')"
+      dateFormat="yy-mm-dd" />
+    <label for="dateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Amount -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-100" />
+    <label for="amountInput">Importe</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('amount'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
+    [cancellable]="cancellable" (reject)="onCancel()" />
+</form>

@@ -1,44 +1,55 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { TransactionBalanceChartContainer } from '@app/association-admin/funds/core/transaction-balance-chart/transaction-balance-chart';
+import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { CalendarsModule } from '@app/shared/calendar/calendar.module';
 import { Month } from '@app/shared/calendar/models/month';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
+import { TransactionCreationForm } from '../transaction-creation-form/transaction-creation-form';
 import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
+import { TransactionService } from '../transaction-service/transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, IconAddComponent, TransactionBalanceChartContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, CalendarsModule, DrawerModule, TransactionCreationForm, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
 export class Funds {
 
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly service = inject(TransactionCalendarService);
+  private readonly service = inject(TransactionService);
+  private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly reportService = inject(TransactionReportService);
 
   public selectionMonths: Month[] = [];
   public month = this.getCurrentMonth();
 
+  public loading = false;
   public loadingCalendar = false;
   public loadingExcel = false;
   public loadingBalance = false;
+  public editing = false;
 
   public readonly createable;
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
   public balance = new TransactionCurrentBalance();
+
+  public view: string = '';
+
+  public failures = new FailureStore();
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -48,7 +59,7 @@ export class Funds {
     this.createable = authContainer.hasPermission("transaction", "create");
 
     // Read range
-    this.service.getRange().subscribe(months => {
+    this.transactionCalendarService.getRange().subscribe(months => {
       // To show in the selection box we have to reverse the order
       this.selectionMonths = months;
       // TODO: What happens if this date is not in the range?
@@ -81,7 +92,33 @@ export class Funds {
     }
   }
 
+  public onCreate(toCreate: Transaction): void {
+    this.mutate(() => this.service.create(toCreate));
+  }
+
+  protected mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action().subscribe({
+      next: () => {
+        this.failures.clear();
+        this.view = 'none';
+        this.loadCalendar();
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          this.failures.clear();
+        }
+        this.loading = false;
+        return throwError(() => error);
+      }
+    });
+  }
+
   public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
   public onChangeMonth(date: Month) {
@@ -103,7 +140,7 @@ export class Funds {
 
   private loadCalendar() {
     this.loadingCalendar = true;
-    this.service.getCalendar(this.month.year, this.month.month)
+    this.transactionCalendarService.getCalendar(this.month.year, this.month.month)
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(events => this.events = events);
   }

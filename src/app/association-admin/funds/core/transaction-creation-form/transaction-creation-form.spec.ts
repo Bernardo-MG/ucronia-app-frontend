@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { TransactionService } from '@app/association-admin/funds/core/transaction-service/transaction-service';
-import { TransactionCreation } from './transaction-creation';
+import { TransactionCreationForm } from './transaction-creation-form';
 
 describe('TransactionCreation', () => {
-  let component: TransactionCreation;
-  let fixture: ComponentFixture<TransactionCreation>;
+  let component: TransactionCreationForm;
+  let fixture: ComponentFixture<TransactionCreationForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        TransactionCreation
+        TransactionCreationForm
       ],
       providers: [
         TransactionService,
@@ -23,7 +23,7 @@ describe('TransactionCreation', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TransactionCreation);
+    fixture = TestBed.createComponent(TransactionCreationForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
