@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendar } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
@@ -9,13 +9,13 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { JustifyEndDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
-import { FeeCalendarComponent } from '../../components/fee-calendar/fee-calendar.component';
-import { FeeCalendarService } from '../../services/fee-calendar.service';
+import { FeeCalendar } from '../../components/fee-calendar/fee-calendar';
+import { FeeCalendarService } from '../../services/fee-calendar-service';
 
 @Component({
   selector: 'assoc-fee-calendar-widget',
-  imports: [RouterModule, CardModule, FeeCalendarComponent, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
-  templateUrl: './fee-calendar-widget.container.html'
+  imports: [RouterModule, CardModule, FeeCalendar, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
+  templateUrl: './fee-calendar-widget.html'
 })
 export class FeeCalendarWidgetContainer {
 
@@ -34,7 +34,7 @@ export class FeeCalendarWidgetContainer {
    */
   public readingCalendar = false;
 
-  public feeCalendar: FeeCalendar[] = [];
+  public feeCalendar: FeeCalendarYear[] = [];
 
   constructor() {
     const authContainer = inject(AuthContainer);

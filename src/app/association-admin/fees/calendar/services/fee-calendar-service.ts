@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { FeeCalendar } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { Active } from '@app/domain/person/active';
 import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
@@ -19,12 +19,12 @@ export class FeeCalendarService {
     this.client = clientProvider.url(environment.apiUrl + '/fee/calendar');
   }
 
-  public getCalendar(year: number, active: Active): Observable<FeeCalendar[]> {
+  public getCalendar(year: number, active: Active): Observable<FeeCalendarYear[]> {
     return this.client
       .loadParameters(new SortingParams([new SortingProperty("firstName"), new SortingProperty("lastName")]))
       .parameter('status', active.toString().toUpperCase())
       .appendRoute(`/${year}`)
-      .read<SimpleResponse<FeeCalendar[]>>()
+      .read<SimpleResponse<FeeCalendarYear[]>>()
       .pipe(map(r => r.content));
   }
 

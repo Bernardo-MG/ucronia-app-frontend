@@ -2,15 +2,15 @@
 import { Component, inject } from '@angular/core';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import { CardModule } from 'primeng/card';
-import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart.component';
-import { FeeReportService } from '../../services/fee-report.service';
+import { FeePaymentChartComponent } from '../../components/fee-payment-chart/fee-payment-chart';
+import { FeeReportService } from '../../services/fee-report-service';
 
 @Component({
-  selector: 'assoc-fee-payment-chart-widget',
+  selector: 'assoc-fee-payment-chart',
   imports: [CardModule, FeePaymentChartComponent],
-  templateUrl: './fee-payment-chart-widget.container.html'
+  templateUrl: './fee-payment-chart.html'
 })
-export class FeePaymentChartWidgetContainer {
+export class FeePaymentChart {
 
   public report = new FeePaymentReport();
 

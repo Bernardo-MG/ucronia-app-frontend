@@ -5,7 +5,7 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'assoc-fee-payment-chart',
   imports: [],
-  templateUrl: './fee-payment-chart.component.html'
+  templateUrl: './fee-payment-chart.html'
 })
 export class FeePaymentChartComponent implements OnDestroy {
 

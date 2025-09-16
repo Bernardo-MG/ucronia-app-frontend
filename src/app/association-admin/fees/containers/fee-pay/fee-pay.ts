@@ -13,17 +13,17 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 import { JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
-import { FeeCreationFormComponent } from '../../components/fee-creation-form/fee-creation-form.component';
-import { FeePayFormComponent } from '../../components/fee-pay-form/fee-pay-form.component';
-import { FeePaySelectMemberComponent } from '../../components/fee-pay-select-member/fee-pay-select-member.component';
-import { FeeService } from '../../services/fee.service';
+import { FeeCreationForm } from '../../components/fee-creation-form/fee-creation-form';
+import { FeePayForm } from '../../components/fee-pay-form/fee-pay-form';
+import { FeePaySelectMember } from '../../components/fee-pay-select-member/fee-pay-select-member';
+import { FeeService } from '../../services/fee-service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [FormsModule, CardModule, ReactiveFormsModule, FeePayFormComponent, FeeCreationFormComponent, FeePaySelectMemberComponent, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-pay.container.html'
+  imports: [FormsModule, CardModule, ReactiveFormsModule, FeePayForm, FeeCreationForm, FeePaySelectMember, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  templateUrl: './fee-pay.html'
 })
-export class FeePayContainer extends CreateComponent<FeePayment> {
+export class FeePay extends CreateComponent<FeePayment> {
 
   private readonly service = inject(FeeService);
 

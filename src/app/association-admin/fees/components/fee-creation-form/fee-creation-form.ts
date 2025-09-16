@@ -2,26 +2,27 @@
 import { Component, Input, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Fee } from '@app/domain/fees/fee';
-import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
-import { IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
+import { Member } from '@app/domain/members/member';
+import { FormComponent } from '@bernardo-mg/form';
+import { WaitingDirective } from '@bernardo-mg/ui';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-fee-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, SaveControlsComponent, IconSuccessOrFailureComponent],
-  templateUrl: './fee-edition-form.component.html'
+  selector: 'assoc-fee-creation-form',
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
+  templateUrl: './fee-creation-form.html'
 })
-export class FeeEditionFormComponent extends FormComponent<Fee> {
+export class FeeCreationForm extends FormComponent<Fee> {
 
-  @Input() public override set data(value: Fee) {
-    super.loadData(value);
-    this.fee = value;
+  @Input() public set member(value: Member) {
+    this.form.get('member')?.setValue(value.number);
+    this.memberName = value.name.fullName;
   }
 
-  public fee = new Fee();
+  public memberName = "";
 
   constructor() {
     super();
@@ -29,14 +30,8 @@ export class FeeEditionFormComponent extends FormComponent<Fee> {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      member: fb.group({
-        number: [null, Validators.required]
-      }),
-      month: ['', Validators.required],
-      transaction: fb.group({
-        index: [null],
-        date: ['', Validators.required]
-      })
+      member: [null, Validators.required],
+      month: ['', Validators.required]
     });
   }
 

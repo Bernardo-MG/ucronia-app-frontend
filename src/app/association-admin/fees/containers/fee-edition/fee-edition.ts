@@ -1,7 +1,7 @@
 
 import { AfterContentInit, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FeeEditionFormComponent } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form.component';
+import { FeeEditionForm } from '@app/association-admin/fees/components/fee-edition-form/fee-edition-form';
 import { Fee, FeeTransaction } from '@app/domain/fees/fee';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { ControlButtonsComponent, InfoEditorStatusComponent } from '@bernardo-mg/form';
@@ -9,14 +9,14 @@ import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
-import { FeeService } from '../../services/fee.service';
+import { FeeService } from '../../services/fee-service';
 
 @Component({
   selector: 'assoc-fee-edition',
-  imports: [CardModule, SkeletonModule, FeeEditionFormComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './fee-edition.container.html'
+  imports: [CardModule, SkeletonModule, FeeEditionForm, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  templateUrl: './fee-edition.html'
 })
-export class FeeEditionContainer extends InfoEditorStatusComponent<Fee> implements AfterContentInit {
+export class FeeEdition extends InfoEditorStatusComponent<Fee> implements AfterContentInit {
 
   private readonly route = inject(ActivatedRoute);
 

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeeCalendar, FeeCalendarMonth } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarYear, FeeCalendarMonth } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -9,10 +9,10 @@ import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 @Component({
   selector: 'assoc-fee-calendar',
   imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
-  templateUrl: './fee-calendar.component.html',
-  styleUrl: './fee-calendar.component.sass'
+  templateUrl: './fee-calendar.html',
+  styleUrl: './fee-calendar.sass'
 })
-export class FeeCalendarComponent implements OnChanges {
+export class FeeCalendar implements OnChanges {
 
   @Input() public range = new FeeCalendarYearsRange();
 
@@ -21,7 +21,7 @@ export class FeeCalendarComponent implements OnChanges {
    */
   public readonly waiting = input(false);
 
-  public readonly feeCalendar = input<FeeCalendar[]>([]);
+  public readonly feeCalendar = input<FeeCalendarYear[]>([]);
 
   public readonly goToYear = output<number>();
 

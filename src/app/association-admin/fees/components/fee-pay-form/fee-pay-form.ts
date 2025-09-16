@@ -13,9 +13,9 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'assoc-fee-pay-form',
   imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, WaitingDirective],
-  templateUrl: './fee-pay-form.component.html'
+  templateUrl: './fee-pay-form.html'
 })
-export class FeePayFormComponent extends FormComponent<FeePayment> {
+export class FeePayForm extends FormComponent<FeePayment> {
 
   private fb = inject(FormBuilder);
 

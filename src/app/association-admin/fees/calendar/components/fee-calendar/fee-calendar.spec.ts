@@ -1,20 +1,20 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FeeCalendarComponent } from './fee-calendar.component';
+import { FeeCalendar } from './fee-calendar';
 
-describe('FeeCalendarComponent', () => {
-  let component: FeeCalendarComponent;
-  let fixture: ComponentFixture<FeeCalendarComponent>;
+describe('FeeCalendar', () => {
+  let component: FeeCalendar;
+  let fixture: ComponentFixture<FeeCalendar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FeeCalendarComponent
+        FeeCalendar
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeCalendarComponent);
+    fixture = TestBed.createComponent(FeeCalendar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

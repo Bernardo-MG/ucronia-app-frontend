@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { FeeCalendarService } from './fee-calendar.service';
+import { FeeCalendarService } from './fee-calendar-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FeeCalendarService', () => {

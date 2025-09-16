@@ -10,9 +10,9 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 @Component({
   selector: 'app-fee-pay-select-member',
   imports: [ButtonListComponent, PaginationNavigationComponent, MemberStatusSelectComponent, JustifyBetweenDirective, BlockUiDirective],
-  templateUrl: './fee-pay-select-member.component.html'
+  templateUrl: './fee-pay-select-member.html'
 })
-export class FeePaySelectMemberComponent {
+export class FeePaySelectMember {
 
   public readonly data = input(new PaginatedResponse<Member>());
 

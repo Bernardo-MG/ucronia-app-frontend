@@ -3,12 +3,12 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../../services/fee.service';
-import { FeePayContainer } from './fee-pay.container';
+import { FeeService } from '../../services/fee-service';
+import { FeePay } from './fee-pay';
 
-describe('FeePayContainer', () => {
-  let component: FeePayContainer;
-  let fixture: ComponentFixture<FeePayContainer>;
+describe('FeePay', () => {
+  let component: FeePay;
+  let fixture: ComponentFixture<FeePay>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -18,7 +18,7 @@ describe('FeePayContainer', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        FeePayContainer
+        FeePay
       ],
       providers: [
         { provide: FeeService, useValue: service },
@@ -29,7 +29,7 @@ describe('FeePayContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeePayContainer);
+    fixture = TestBed.createComponent(FeePay);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

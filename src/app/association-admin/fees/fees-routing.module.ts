@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/fee-list/fee-list.container').then(m => m.FeeListContainer),
+        loadComponent: () => import('./containers/fee-list/fee-list').then(m => m.FeeList),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'pay',
-        loadComponent: () => import('./containers/fee-pay/fee-pay.container').then(m => m.FeePayContainer),
+        loadComponent: () => import('./containers/fee-pay/fee-pay').then(m => m.FeePay),
         canActivate: [ResourceGuard("fee", "create")],
         data: { breadcrumb: 'Pagar' }
       },
       {
         path: ':date/:memberNumber',
-        loadComponent: () => import('./containers/fee-edition/fee-edition.container').then(m => m.FeeEditionContainer),
+        loadComponent: () => import('./containers/fee-edition/fee-edition').then(m => m.FeeEdition),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: 'Editar' }
       }
