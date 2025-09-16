@@ -55,7 +55,7 @@ export class TransactionEdition extends InfoEditorStatusComponent<Transaction> {
   }
 
   protected override save(toSave: Transaction): Observable<Transaction> {
-    return this.service.update(this.data.index, toSave);
+    return this.service.update(toSave);
   }
 
 }

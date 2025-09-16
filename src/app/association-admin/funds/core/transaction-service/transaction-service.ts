@@ -23,9 +23,9 @@ export class TransactionService {
       .pipe(map(r => r.content));
   }
 
-  public update(index: number, data: Transaction): Observable<Transaction> {
+  public update(data: Transaction): Observable<Transaction> {
     return this.client
-      .appendRoute(`/${index}`)
+      .appendRoute(`/${data.index}`)
       .update<SimpleResponse<Transaction>>(data)
       .pipe(map(r => r.content));
   }

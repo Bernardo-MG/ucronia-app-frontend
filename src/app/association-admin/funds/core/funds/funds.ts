@@ -45,6 +45,7 @@ export class Funds {
   public showing = false;
 
   public readonly createable;
+  public readonly editable;
 
   public selectedData = new Transaction();
 
@@ -61,6 +62,7 @@ export class Funds {
 
     // Check permissions
     this.createable = authContainer.hasPermission("transaction", "create");
+    this.editable = authContainer.hasPermission("transaction", "update");
 
     // Read range
     this.transactionCalendarService.getRange().subscribe(months => {
@@ -100,7 +102,11 @@ export class Funds {
     this.mutate(() => this.service.create(toCreate));
   }
 
-  protected mutate(action: () => Observable<any>) {
+  public onUpdate(toCreate: Transaction): void {
+    this.mutate(() => this.service.update(toCreate));
+  }
+
+  private mutate(action: () => Observable<any>) {
     this.loading = true;
     action().subscribe({
       next: () => {

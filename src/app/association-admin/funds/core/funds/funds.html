@@ -38,12 +38,18 @@
     [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
-  <assoc-transaction-info [transaction]="selectedData"/>
+  <assoc-transaction-info [transaction]="selectedData" />
+  <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+    [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
   @case ('creation') {
   <assoc-transaction-creation-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+  }
+  @case ('edition') {
+  <assoc-transaction-creation-form [data]="selectedData" [waiting]="loading" [failures]="failures"
+    (save)="onUpdate($event)" />
   }
   }
 </p-drawer>

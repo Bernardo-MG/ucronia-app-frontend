@@ -22,6 +22,7 @@ export class TransactionCreationForm extends FormComponent<Transaction> {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      index: [0],
       description: ['', Validators.required],
       date: [null, Validators.required],
       amount: [0, Validators.required]
