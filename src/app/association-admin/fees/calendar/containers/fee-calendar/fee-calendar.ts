@@ -15,7 +15,7 @@ import { FeeCalendarService } from '../../services/fee-calendar-service';
 @Component({
   selector: 'assoc-fee-calendar-widget',
   imports: [RouterModule, CardModule, FeeCalendar, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective],
-  templateUrl: './fee-calendar-widget.html'
+  templateUrl: './fee-calendar.html'
 })
 export class FeeCalendarWidgetContainer {
 
