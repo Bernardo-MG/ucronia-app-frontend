@@ -1,41 +1,44 @@
 <div uiResponsiveShortColumns>
-  <p-stepper [value]="currentStep" [linear]="true">
-    <p-step-item [value]="1">
-      <p-step>Header I</p-step>
-      <p-step-panel>
-        <ng-template #content let-activateCallback="activateCallback">
-          <!-- Member selection -->
-          <app-fee-pay-select-member [data]="personPage" [loading]="loading"
-            (change)="onChangePay($event.target)" (selectPerson)="onSelectPerson($event)"
-            (goToPage)="onGoToMembersPage($event)" (changeFilter)="onChangeActiveFilter($event)" />
-        </ng-template>
-      </p-step-panel>
-    </p-step-item>
-    <p-step-item [value]="2">
-      <p-step>Header II</p-step>
-      <p-step-panel>
-        <ng-template #content let-activateCallback="activateCallback">
-          <!-- Date selection -->
-          <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" role="switch" id="switchPaid" [checked]="pay"
-              [disabled]="saving" [attr.aria-disabled]="saving" (change)="onChangePay($event.target)">
-            <label class="form-check-label" for="switchPaid">Pagada</label>
-          </div>
-          <!-- Form -->
-          @switch (pay) {
-            @case (true) {
-              <!-- Pay form -->
-              <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="person"
-                (save)="onSave($event)" />
+  <p-card>
+    <p-stepper [value]="currentStep" [linear]="true">
+      <p-step-item [value]="1">
+        <p-step>Socio</p-step>
+        <p-step-panel>
+          <ng-template #content>
+            <!-- Member selection -->
+            <app-fee-pay-select-member [data]="personPage" [loading]="loading" (change)="onChangePay($event.target)"
+              (selectPerson)="onSelectPerson($event)" (goToPage)="onGoToMembersPage($event)"
+              (changeFilter)="onChangeActiveFilter($event)" />
+          </ng-template>
+        </p-step-panel>
+      </p-step-item>
+      <p-step-item [value]="2">
+        <p-step>Fecha</p-step>
+        <p-step-panel>
+          <ng-template #content>
+            <p-button label="Back" icon="pi pi-arrow-left" iconPos="right" (onClick)="onReturnToMembers()" />
+            <!-- Date selection -->
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="switchPaid" [checked]="pay"
+                [disabled]="saving" [attr.aria-disabled]="saving" (change)="onChangePay($event.target)">
+              <label class="form-check-label" for="switchPaid">Pagada</label>
+            </div>
+            <!-- Form -->
+            @switch (pay) {
+              @case (true) {
+                <!-- Pay form -->
+                <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+                  [member]="person" (save)="onSave($event)" />
+              }
+              @case (false) {
+                <!-- Create unpaid form -->
+                <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+                  [member]="person" (save)="onCreateUnpaid($event)" />
+              }
             }
-            @case (false) {
-              <!-- Create unpaid form -->
-              <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                [member]="person" (save)="onCreateUnpaid($event)" />
-            }
-          }
-        </ng-template>
-      </p-step-panel>
-    </p-step-item>
-  </p-stepper>
+          </ng-template>
+        </p-step-panel>
+      </p-step-item>
+    </p-stepper>
+  </p-card>
 </div>

@@ -10,6 +10,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { Observable } from 'rxjs';
@@ -20,7 +21,7 @@ import { FeeService } from '../../services/fee-service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [FormsModule, CardModule, ReactiveFormsModule, StepperModule, FeePayForm, FeeCreationForm, FeePaySelectMember, ResponsiveShortColumnsDirective],
+  imports: [FormsModule, ButtonModule, CardModule, ReactiveFormsModule, StepperModule, FeePayForm, FeeCreationForm, FeePaySelectMember, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.html'
 })
 export class FeePay extends CreateComponent<FeePayment> {
@@ -32,8 +33,6 @@ export class FeePay extends CreateComponent<FeePayment> {
   private readonly route = inject(ActivatedRoute);
 
   public loading = false;
-
-  public selectedMember = false;
 
   public readonly createPermission;
 
@@ -98,18 +97,12 @@ export class FeePay extends CreateComponent<FeePayment> {
   }
 
   public onReturnToMembers() {
-    this.selectedMember = false;
     this.currentStep = 1;
   }
 
   public onSelectPerson(person: Person) {
     this.person = person;
-    this.selectedMember = true;
     this.currentStep = 2;
-  }
-
-  public isReturnDisabled() {
-    return this.currentStep < 2;
   }
 
   public onChangePay(event: any) {
