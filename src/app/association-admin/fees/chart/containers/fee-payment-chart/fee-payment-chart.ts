@@ -2,12 +2,11 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
-import { CardModule } from 'primeng/card';
 import { FeeReportService } from '../../services/fee-report-service';
 
 @Component({
   selector: 'assoc-fee-payment-chart',
-  imports: [CardModule],
+  imports: [],
   templateUrl: './fee-payment-chart.html'
 })
 export class FeePaymentChart implements OnDestroy {
