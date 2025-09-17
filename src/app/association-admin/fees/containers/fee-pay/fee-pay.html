@@ -8,7 +8,7 @@
             <!-- Member selection -->
             <app-fee-pay-select-member [data]="personPage" [loading]="loading"
               [getMemberSelection]="onGetSelection.bind(this)" (change)="onChangePay($event.target)"
-              (selectPerson)="onSelectMember($event)" />
+              (selectMember)="onSelectMember($event)" />
           </ng-template>
         </p-step-panel>
       </p-step-item>
