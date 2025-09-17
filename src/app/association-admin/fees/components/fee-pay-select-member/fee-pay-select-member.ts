@@ -24,6 +24,6 @@ export class FeePaySelectMember {
 
   public readonly changeFilter = output<Active>();
 
-  public nameRenderer = (data: Person): string => data.name.fullName;
+  public readonly nameRenderer = (data: Person): string => data.name.fullName;
 
 }
