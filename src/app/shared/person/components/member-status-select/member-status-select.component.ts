@@ -1,9 +1,11 @@
 import { Component, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Active } from '@app/domain/person/active';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-member-status-select',
-  imports: [],
+  imports: [FormsModule, SelectModule],
   templateUrl: './member-status-select.component.html'
 })
 export class MemberStatusSelectComponent {
@@ -12,12 +14,13 @@ export class MemberStatusSelectComponent {
 
   public readonly changeStatus = output<Active>();
 
-  public status = Active.Active;
+  public status: 'Active' | 'Inactive' | 'AllMember' = 'Active';
 
-  public onChangeStatus(event: any) {
-    const value = event.target.value as 'Active' | 'Inactive' | 'AllMember';
-    this.status = (Active[value] as Active);
-    this.changeStatus.emit(this.status);
+  public readonly statuses = [{ name: 'Activo', value: 'Active' }, { name: 'Inactivo', value: 'Inactive' }, { name: 'Todos', value: 'AllMember' }];
+
+  public onChangeStatus() {
+    const newStatus = Active[this.status];
+    this.changeStatus.emit(newStatus);
   }
 
 }

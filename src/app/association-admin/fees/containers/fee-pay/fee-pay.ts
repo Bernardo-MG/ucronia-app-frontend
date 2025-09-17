@@ -31,7 +31,7 @@ export class FeePay extends CreateComponent<FeePayment> {
 
   private readonly route = inject(ActivatedRoute);
 
-  public readingMembers = false;
+  public loading = false;
 
   public selectedMember = false;
 
@@ -81,18 +81,18 @@ export class FeePay extends CreateComponent<FeePayment> {
   }
 
   public onGoToMembersPage(page: number) {
-    this.readingMembers = true;
+    this.loading = true;
     // TODO: The page correction should be done automatically
     this.service.getPersons(page, this.activeFilter).subscribe({
       next: response => {
         this.personPage = response;
 
         // Reactivate view
-        this.readingMembers = false;
+        this.loading = false;
       },
       error: error => {
         // Reactivate view
-        this.readingMembers = false;
+        this.loading = false;
       }
     });
   }

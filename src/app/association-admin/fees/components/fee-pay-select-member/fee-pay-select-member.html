@@ -1,12 +1,12 @@
 <div class="row mb-2">
   <div uiJustifyBetween>
     <div>Selecciona un socio</div>
-    <assoc-member-status-select [disabled]="waiting()" (changeStatus)="changeFilter.emit($event)" />
+    <assoc-member-status-select [disabled]="loading()" (changeStatus)="changeFilter.emit($event)" />
   </div>
 </div>
-<ui-button-list [values]="data().content" [renderer]="nameRenderer" *uiBlock="waiting()"
+<ui-button-list [values]="data().content" [renderer]="nameRenderer" *uiBlock="loading()"
   (pick)="selectPerson.emit($event)" />
 <div uiJustifyCenter class="mt-1">
-  <pagination-navigation [disabled]="waiting()" [current]="data().page" [pages]="data().totalPages"
+  <pagination-navigation [disabled]="loading()" [current]="data().page" [pages]="data().totalPages"
     (goTo)="goToPage.emit($event)" />
 </div>

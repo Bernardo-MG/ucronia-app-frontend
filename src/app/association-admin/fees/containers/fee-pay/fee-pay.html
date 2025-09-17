@@ -5,7 +5,7 @@
       <p-step-panel>
         <ng-template #content let-activateCallback="activateCallback">
           <!-- Member selection -->
-          <app-fee-pay-select-member [data]="personPage" [waiting]="readingMembers"
+          <app-fee-pay-select-member [data]="personPage" [loading]="loading"
             (change)="onChangePay($event.target)" (selectPerson)="onSelectPerson($event)"
             (goToPage)="onGoToMembersPage($event)" (changeFilter)="onChangeActiveFilter($event)" />
         </ng-template>
