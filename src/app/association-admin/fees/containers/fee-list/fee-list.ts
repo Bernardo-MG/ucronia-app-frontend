@@ -9,19 +9,21 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { JustifyEndDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
 import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, FeeCalendar, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective, FeePaymentChart, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, PanelModule, ButtonModule, FeeCalendar, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective, FeePaymentChart, ResponsiveShortColumnsDirective],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
 
   private readonly service = inject(FeeCalendarService);
 
-  public readonly createPermission;
+  public readonly createable;
 
   public activeFilter = Active.Active;
 
@@ -40,7 +42,7 @@ export class FeeList {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("fee", "create");
+    this.createable = authContainer.hasPermission("fee", "create");
 
     // Load range
     this.service.getRange().subscribe(d => {
@@ -63,6 +65,9 @@ export class FeeList {
 
   public onGoToYear(year: number) {
     this.load(year);
+  }
+
+  public onStartEditingView(view: string): void {
   }
 
   private load(year: number) {
