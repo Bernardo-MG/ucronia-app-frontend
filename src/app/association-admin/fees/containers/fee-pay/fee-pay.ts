@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -38,9 +39,7 @@ export class FeePay extends CreateComponent<FeePayment> {
 
   public personPage = new PaginatedResponse<Person>();
 
-  public person = new Person();
-
-  public activeFilter = Active.Active;
+  public member = new Member();
 
   public currentStep = 1;
 
@@ -53,14 +52,6 @@ export class FeePay extends CreateComponent<FeePayment> {
 
     // Check permissions
     this.createPermission = authContainer.hasPermission("fee", "create");
-
-    // Load members
-    this.onGoToMembersPage(0);
-  }
-
-  public onChangeActiveFilter(active: Active) {
-    this.activeFilter = active;
-    this.onGoToMembersPage(0);
   }
 
   public onCreateUnpaid(data: Fee): void {
@@ -79,29 +70,16 @@ export class FeePay extends CreateComponent<FeePayment> {
     return this.service.pay(toSave);
   }
 
-  public onGoToMembersPage(page: number) {
-    this.loading = true;
-    // TODO: The page correction should be done automatically
-    this.service.getPersons(page, this.activeFilter).subscribe({
-      next: response => {
-        this.personPage = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+  public onGetSelection(page: number, active: Active) {
+    return this.service.getPersons(page, active);
   }
 
   public onReturnToMembers() {
     this.currentStep = 1;
   }
 
-  public onSelectPerson(person: Person) {
-    this.person = person;
+  public onSelectMember(member: any) {
+    this.member = (member as Member);
     this.currentStep = 2;
   }
 

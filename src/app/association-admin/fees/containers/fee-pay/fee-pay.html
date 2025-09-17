@@ -6,9 +6,9 @@
         <p-step-panel>
           <ng-template #content>
             <!-- Member selection -->
-            <app-fee-pay-select-member [data]="personPage" [loading]="loading" (change)="onChangePay($event.target)"
-              (selectPerson)="onSelectPerson($event)" (goToPage)="onGoToMembersPage($event)"
-              (changeFilter)="onChangeActiveFilter($event)" />
+            <app-fee-pay-select-member [data]="personPage" [loading]="loading"
+              [getMemberSelection]="onGetSelection.bind(this)" (change)="onChangePay($event.target)"
+              (selectPerson)="onSelectMember($event)" />
           </ng-template>
         </p-step-panel>
       </p-step-item>
@@ -28,12 +28,12 @@
               @case (true) {
                 <!-- Pay form -->
                 <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [member]="person" (save)="onSave($event)" />
+                  [member]="member" (save)="onSave($event)" />
               }
               @case (false) {
                 <!-- Create unpaid form -->
                 <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
-                  [member]="person" (save)="onCreateUnpaid($event)" />
+                  [member]="member" (save)="onCreateUnpaid($event)" />
               }
             }
           </ng-template>

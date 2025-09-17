@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
@@ -9,11 +9,13 @@ import { NameNumber } from '../model/name-number';
   imports: [TableModule],
   templateUrl: './selection-list.html'
 })
-export class SelectionList implements OnInit {
+export class SelectionList implements OnChanges {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<any>>>((page: number) => EMPTY);
 
   public readonly heading = input('Data');
+
+  public readonly dataKey = input('number');
 
   public readonly nameRenderer = input((row: any) => row.name);
 
@@ -29,25 +31,15 @@ export class SelectionList implements OnInit {
 
   public selection = new PaginatedResponse<NameNumber>();
 
-  public ngOnInit(): void {
-    this.getSelection()(0).subscribe({
-      next: response => {
-        this.selection = response;
-      },
-      error: error => {
-      }
-    });
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['getSelection'] && this.getSelection) {
+      this.getSelection()(0).subscribe(response => this.selection = response);
+    }
   }
 
   public onGoToSelectionPage(event: TablePageEvent) {
     const page = (event.first / this.selection.size) + 1;
-    this.getSelection()(page).subscribe({
-      next: response => {
-        this.selection = response;
-      },
-      error: error => {
-      }
-    });
+    this.getSelection()(page).subscribe(response => this.selection = response);
   }
 
   public onSelectRow() {

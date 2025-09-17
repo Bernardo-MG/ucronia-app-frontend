@@ -2,7 +2,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/domain/fees/fee-payment';
-import { Person } from '@app/domain/person/person';
+import { Member } from '@app/domain/members/member';
 import { FormComponent } from '@bernardo-mg/form';
 import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
@@ -19,7 +19,7 @@ export class FeePayForm extends FormComponent<FeePayment> {
 
   private fb = inject(FormBuilder);
 
-  @Input() public set member(value: Person) {
+  @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
