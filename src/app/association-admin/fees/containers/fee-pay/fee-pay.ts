@@ -8,10 +8,10 @@ import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { IconBackwardComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { JustifyBetweenDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
+import { StepperModule } from 'primeng/stepper';
 import { Observable } from 'rxjs';
 import { FeeCreationForm } from '../../components/fee-creation-form/fee-creation-form';
 import { FeePayForm } from '../../components/fee-pay-form/fee-pay-form';
@@ -20,7 +20,7 @@ import { FeeService } from '../../services/fee-service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [FormsModule, CardModule, ReactiveFormsModule, FeePayForm, FeeCreationForm, FeePaySelectMember, IconBackwardComponent, JustifyBetweenDirective, ResponsiveShortColumnsDirective],
+  imports: [FormsModule, CardModule, ReactiveFormsModule, StepperModule, FeePayForm, FeeCreationForm, FeePaySelectMember, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.html'
 })
 export class FeePay extends CreateComponent<FeePayment> {
