@@ -34,7 +34,7 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
 
     // Build axis categories
     const members = calendar.map(c => c.member.name.fullName);
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
     const data = calendar.flatMap((c, yIndex) =>
       months.map((monthName, xIndex) => {
