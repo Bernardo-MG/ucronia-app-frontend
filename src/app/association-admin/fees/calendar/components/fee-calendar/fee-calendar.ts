@@ -63,7 +63,7 @@ export class FeeCalendar implements OnChanges {
   }
 
   public onGoTo(event: any) {
-    this.year = Number(event.target.value);
+    this.year = Number(event.value);
     this.index = this.range.years.indexOf(this.year.toString());
     this.goToYear.emit(this.year);
   }
