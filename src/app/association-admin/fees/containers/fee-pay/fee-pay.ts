@@ -32,8 +32,6 @@ export class FeePay extends CreateComponent<FeePayment> {
 
   private readonly route = inject(ActivatedRoute);
 
-  public loading = false;
-
   public readonly createPermission;
 
   public member = new Member();

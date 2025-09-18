@@ -1,7 +1,7 @@
 <div class="row mb-2">
   <div uiJustifyBetween>
     <div>Selecciona un socio</div>
-    <assoc-member-status-select [disabled]="loading()" (changeStatus)="onChangeActiveFilter($event)" />
+    <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)" />
   </div>
 </div>
 <shared-selection-list heading="Socio" [getSelection]="getSelection" (choose)="selectMember.emit($event)"

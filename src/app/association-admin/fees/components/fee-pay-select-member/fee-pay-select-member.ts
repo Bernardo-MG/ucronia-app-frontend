@@ -15,8 +15,6 @@ import { EMPTY, Observable } from 'rxjs';
 })
 export class FeePaySelectMember implements OnInit {
 
-  public readonly loading = input(false);
-
   public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<Member>>>((page: number, active: Active) => EMPTY);
 
   public readonly selectMember = output<NameNumber>();
