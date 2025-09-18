@@ -12,6 +12,7 @@ import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Observable } from 'rxjs';
 import { FeeCreationForm } from '../../components/fee-creation-form/fee-creation-form';
 import { FeePayForm } from '../../components/fee-pay-form/fee-pay-form';
@@ -20,7 +21,7 @@ import { FeeService } from '../../services/fee-service';
 
 @Component({
   selector: 'assoc-fee-create',
-  imports: [FormsModule, ButtonModule, CardModule, ReactiveFormsModule, StepperModule, FeePayForm, FeeCreationForm, FeePaySelectMember, ResponsiveShortColumnsDirective],
+  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeePayForm, FeeCreationForm, FeePaySelectMember, ResponsiveShortColumnsDirective],
   templateUrl: './fee-pay.html'
 })
 export class FeePay extends CreateComponent<FeePayment> {

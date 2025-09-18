@@ -17,10 +17,13 @@
           <ng-template #content>
             <p-button label="Back" icon="pi pi-arrow-left" iconPos="right" (onClick)="onReturnToMembers()" />
             <!-- Date selection -->
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="switchPaid" [checked]="pay"
-                [disabled]="saving" [attr.aria-disabled]="saving" (change)="onChangePay($event.target)">
-              <label class="form-check-label" for="switchPaid">Pagada</label>
+            <div class="row">
+              <div class="col-md-2">
+                <p-toggleswitch [(ngModel)]="pay" [disabled]="saving" [attr.aria-disabled]="saving" />
+              </div>
+              <div class="col-md-10">
+                Pagada
+              </div>
             </div>
             <!-- Form -->
             @switch (pay) {
