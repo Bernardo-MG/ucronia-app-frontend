@@ -1,7 +1,6 @@
 
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
@@ -25,10 +24,6 @@ import { FeeService } from '../../services/fee-service';
 export class FeeCreate extends CreateComponent<FeePayment> {
 
   private readonly service = inject(FeeService);
-
-  private readonly router = inject(Router);
-
-  private readonly route = inject(ActivatedRoute);
 
   public readonly createPermission;
 
@@ -84,11 +79,6 @@ export class FeeCreate extends CreateComponent<FeePayment> {
       this.pay = event.checked;
     }
     this.failures.clear();
-  }
-
-  protected override handleSaveSuccess(saved: FeePayment) {
-    super.handleSaveSuccess(saved);
-    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }
