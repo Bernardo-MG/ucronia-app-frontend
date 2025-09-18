@@ -37,13 +37,16 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const data = calendar.flatMap((c, yIndex) =>
-      // Map over that member’s months only
-      c.months.map(mo => {
-        const monthIndex = parseInt(mo.month.split('-')[1], 10) - 1;
+      months.map((monthName, xIndex) => {
+        const m = c.months.find(mo => {
+          const monthIndex = parseInt(mo.month.split('-')[1], 10) - 1;
+          return monthIndex === xIndex;
+        });
+
         return {
-          x: monthIndex,
+          x: xIndex,
           y: yIndex,
-          v: mo.paid,
+          v: m ? (m.paid ? 1 : 0) : null
         };
       })
     );
@@ -58,7 +61,11 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
             label: 'Pagos',
             data,
             backgroundColor: (ctx: any) => {
-              return ctx?.raw?.v ? '#28a745' : '#dc3545';
+              if (ctx?.raw?.v == null) {
+                return 'transparent';
+              } else {
+                return ctx?.raw?.v ? 'green' : 'red';
+              }
             }
           },
         ],
