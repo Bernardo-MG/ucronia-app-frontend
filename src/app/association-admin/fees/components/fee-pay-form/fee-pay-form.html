@@ -27,21 +27,16 @@
         </p-floatlabel>
       </div>
       <div class="col-sm-2">
-        <div class="col-md-2 mb-2">
-          <button type="button" class="btn btn-link link-danger" aria-label="Remove date" [disabled]="!formEnabled"
-            (click)="removeDate(i)">
-            <icon-delete />
-          </button>
-        </div>
+        <p-button icon="pi pi-trash" (click)="removeDate(i)"
+          [disabled]="!formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formEnabled" rounded text />
       </div>
     </div>
   }
   <!-- Add fee button -->
   <div class="row">
     <div uiJustifyCenter>
-      <button type="button" class="btn btn-primary" aria-label="Add date" [disabled]="!formEnabled" (click)="addDate()">
-        <icon-add />
-      </button>
+      <p-button icon="pi pi-plus-circle" (click)="addDate()"
+        [disabled]="!formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formEnabled" rounded text />
     </div>
   </div>
   <div class="mb-2">
@@ -56,8 +51,8 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
-      <button type="submit" name="Login" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled">Guardar</button>
+      <p-button type="submit" name="Login" [uiWaiting]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
     </div>
   </div>
 </form>

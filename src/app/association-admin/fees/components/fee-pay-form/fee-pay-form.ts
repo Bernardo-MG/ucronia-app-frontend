@@ -4,15 +4,16 @@ import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } 
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { FormComponent } from '@bernardo-mg/form';
-import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
+import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { JustifyCenterDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-pay-form',
-  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, IconAddComponent, IconDeleteComponent, JustifyCenterDirective, WaitingDirective],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, IconDeleteComponent, JustifyCenterDirective, WaitingDirective],
   templateUrl: './fee-pay-form.html'
 })
 export class FeePayForm extends FormComponent<FeePayment> {
