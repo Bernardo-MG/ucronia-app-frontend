@@ -6,7 +6,7 @@ import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { JustifyEndDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -20,7 +20,7 @@ import { FeePay } from '../fee-pay/fee-pay';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, JustifyEndDirective, FeePaymentChart, FeeCreate, FeePay, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeePaymentChart, FeeCreate, FeePay, ResponsiveShortColumnsDirective],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
