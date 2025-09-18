@@ -1,14 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FeeCalendarYear, FeeCalendarMonth } from '@app/domain/fees/fee-calendar';
+import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [CommonModule, RouterModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
   templateUrl: './fee-calendar.html',
   styleUrl: './fee-calendar.sass'
 })
@@ -37,6 +39,10 @@ export class FeeCalendar implements OnChanges {
 
   public get canGoPrevious() {
     return (this.index > 0);
+  }
+
+  public get years() {
+    return [...this.range.years].reverse();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

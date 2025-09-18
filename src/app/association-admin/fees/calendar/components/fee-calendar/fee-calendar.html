@@ -9,15 +9,7 @@
   }
   <div class="w-25 px-3">
     <!-- Current year -->
-    <select class="form-select" aria-label="Select year" [disabled]="waiting()" (change)="onGoTo($event)">
-      @if (range.years) {
-        @for (selectionYear of range.years.slice().reverse(); track selectionYear) {
-          <option [selected]="selectionYear === year.toString()"
-            [value]="selectionYear">
-          {{selectionYear}}</option>
-        }
-      }
-    </select>
+    <p-select [(ngModel)]="year" [disabled]="waiting()" [options]="years" (onChange)="onGoTo($event)" />
   </div>
   <!-- To next year button -->
   @if (canGoNext) {
