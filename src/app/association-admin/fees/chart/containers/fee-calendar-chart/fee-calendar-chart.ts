@@ -84,9 +84,8 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
         },
         scales: {
           x: {
-            ticks: {
-              callback: (val) => months[val as number],
-            },
+            type: 'category',
+            labels: months,
             title: { display: true, text: 'Cuotas' },
           },
           y: {
