@@ -14,18 +14,9 @@
   <div uiResponsiveShortColumns>
     <p-panel>
       <ng-template #icons>
+        <assoc-member-status-select [disabled]="readingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
         <p-button icon="pi pi-plus-circle" severity="secondary" (click)="feeCreationMenu.toggle($event);"
           [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
-      </ng-template>
-      <ng-template #header>
-        <div class="row">
-          <div class="col-sm-9">
-            <!-- Status selector -->
-            <div uiJustifyEnd>
-              <assoc-member-status-select [disabled]="readingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
-            </div>
-          </div>
-        </div>
       </ng-template>
       <!-- Calendar -->
       <assoc-fee-calendar [range]="range" [waiting]="readingCalendar" [feeCalendar]="feeCalendar"
