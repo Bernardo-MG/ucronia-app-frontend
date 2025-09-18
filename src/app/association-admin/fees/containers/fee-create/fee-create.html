@@ -15,9 +15,9 @@
       <p-step-panel>
         <ng-template #content>
           <p-button label="Back" icon="pi pi-arrow-left" iconPos="right" (onClick)="onReturnToMembers()" />
-          <!-- Pay form -->
-          <assoc-fee-pay-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
-            (save)="onSave($event)" />
+          <!-- Form -->
+          <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission"
+            [member]="member" (save)="onCreateUnpaid($event)" />
         </ng-template>
       </p-step-panel>
     </p-step-item>

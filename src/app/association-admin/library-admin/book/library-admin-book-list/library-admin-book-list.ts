@@ -88,9 +88,7 @@ export class LibraryAdminBookList {
   public readonly editable;
 
   public readonly fictionEditionMenuItems: MenuItem[] = [];
-
   public readonly gameEditionMenuItems: MenuItem[] = [];
-
   public readonly dataMenuItems: MenuItem[] = [];
 
   public view: string = '';

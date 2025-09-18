@@ -6,17 +6,21 @@ import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { JustifyEndDirective, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
+import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
-import { ButtonModule } from 'primeng/button';
+import { FeeCreate } from '../fee-create/fee-create';
+import { FeePay } from '../fee-pay/fee-pay';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, PanelModule, ButtonModule, FeeCalendar, MemberStatusSelectComponent, IconAddComponent, JustifyEndDirective, FeePaymentChart, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, JustifyEndDirective, FeePaymentChart, FeeCreate, FeePay, ResponsiveShortColumnsDirective],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
@@ -24,6 +28,8 @@ export class FeeList {
   private readonly service = inject(FeeCalendarService);
 
   public readonly createable;
+
+  public editing = false;
 
   public activeFilter = Active.Active;
 
@@ -37,6 +43,10 @@ export class FeeList {
   public readingCalendar = false;
 
   public feeCalendar: FeeCalendarYear[] = [];
+
+  public view: string = '';
+
+  public readonly creationItems: MenuItem[] = [];
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -55,6 +65,17 @@ export class FeeList {
 
       // Load initial year
       this.load(this.year);
+
+      this.creationItems.push(
+        {
+          label: 'Pagar cuota',
+          command: () => this.onStartEditingView('pay')
+        });
+      this.creationItems.push(
+        {
+          label: 'Cuota sin pagar',
+          command: () => this.onStartEditingView('create')
+        });
     });
   }
 
@@ -68,6 +89,8 @@ export class FeeList {
   }
 
   public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
   private load(year: number) {

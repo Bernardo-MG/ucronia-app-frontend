@@ -1,3 +1,4 @@
+<p-menu #feeCreationMenu [model]="creationItems" [popup]="true" />
 <div class="row pb-2">
   <div class="col-md-2 offset-md-5 pb-2">
     <p-card>
@@ -13,18 +14,11 @@
   <div uiResponsiveShortColumns>
     <p-panel>
       <ng-template #icons>
-        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="feeCreationMenu.toggle($event);"
           [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
       </ng-template>
       <ng-template #header>
         <div class="row">
-          <div class="col-sm-3">
-            <!-- Pay fee -->
-            <button type="button" class="btn btn-link" aria-label="register" routerLink="pay" [disabled]="!createable"
-              [attr.aria-disabled]="!createable">
-              <icon-add />
-            </button>
-          </div>
           <div class="col-sm-9">
             <!-- Status selector -->
             <div uiJustifyEnd>
@@ -39,3 +33,13 @@
     </p-panel>
   </div>
 </div>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+    @case ('create') {
+      <assoc-fee-create></assoc-fee-create>
+    }
+    @case ('pay') {
+      <assoc-fee-pay></assoc-fee-pay>
+    }
+  }
+</p-drawer>
