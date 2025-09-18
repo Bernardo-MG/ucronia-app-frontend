@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FeePaySelectMember } from './fee-pay-select-member';
 
-describe('FeePaySelectMemberComponent', () => {
+describe('FeePaySelectMember', () => {
   let component: FeePaySelectMember;
   let fixture: ComponentFixture<FeePaySelectMember>;
 

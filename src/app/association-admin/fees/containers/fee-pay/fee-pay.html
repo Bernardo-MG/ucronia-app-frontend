@@ -6,8 +6,7 @@
         <p-step-panel>
           <ng-template #content>
             <!-- Member selection -->
-            <app-fee-pay-select-member [data]="personPage" [loading]="loading"
-              [getMemberSelection]="onGetSelection.bind(this)" (change)="onChangePay($event.target)"
+            <app-fee-pay-select-member [loading]="loading" [getMemberSelection]="onGetSelection.bind(this)"
               (selectMember)="onSelectMember($event)" />
           </ng-template>
         </p-step-panel>

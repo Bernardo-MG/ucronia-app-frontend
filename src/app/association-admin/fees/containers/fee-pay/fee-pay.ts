@@ -6,10 +6,8 @@ import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
-import { PaginatedResponse } from '@bernardo-mg/request';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -36,8 +34,6 @@ export class FeePay extends CreateComponent<FeePayment> {
   public loading = false;
 
   public readonly createPermission;
-
-  public personPage = new PaginatedResponse<Person>();
 
   public member = new Member();
 
