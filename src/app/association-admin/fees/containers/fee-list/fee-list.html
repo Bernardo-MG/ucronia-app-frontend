@@ -19,7 +19,7 @@
           [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
       </ng-template>
       <!-- Calendar -->
-      <assoc-fee-calendar-chart [feeCalendar]="feeCalendar" />
+      <assoc-fee-calendar-chart [feeCalendar]="feeCalendar" (selectMonth)="onSelectMonth($event)" />
       <assoc-fee-calendar [range]="range" [waiting]="loadingCalendar" [feeCalendar]="feeCalendar"
         (goToYear)="onGoToYear($event)" />
     </p-panel>

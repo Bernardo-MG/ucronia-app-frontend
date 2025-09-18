@@ -1,8 +1,9 @@
 
-import { Component, input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, OnDestroy, output, SimpleChanges } from '@angular/core';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
-import Chart from 'chart.js/auto';
+import Chart, { ActiveElement, ChartEvent } from 'chart.js/auto';
 import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
+import { FeeCalendarSelection } from '../../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-calendar-chart',
@@ -11,7 +12,9 @@ import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 })
 export class FeeCalendarChart implements OnChanges, OnDestroy {
 
-  public feeCalendar = input<FeeCalendarYear[]>([]);
+  public readonly feeCalendar = input<FeeCalendarYear[]>([]);
+
+  public readonly selectMonth = output<FeeCalendarSelection>();
 
   public chart: any;
 
@@ -42,11 +45,17 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
           const monthIndex = parseInt(mo.month.split('-')[1], 10) - 1;
           return monthIndex === xIndex;
         });
+        let selection;
+        if (m) {
+          selection = { number: c.member.number, name: c.member.name, month: m?.month, paid: m?.paid } as FeeCalendarSelection;
+        } else {
+          selection = undefined;
+        }
 
         return {
           x: xIndex,
           y: yIndex,
-          v: m ? (m.paid ? 1 : 0) : null
+          v: selection
         };
       })
     );
@@ -64,7 +73,7 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
               if (ctx?.raw?.v == null) {
                 return 'transparent';
               } else {
-                return ctx?.raw?.v ? 'green' : 'red';
+                return ctx?.raw?.v.paid ? 'green' : 'red';
               }
             }
           },
@@ -75,11 +84,7 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
         plugins: {
           legend: { display: false },
           tooltip: {
-            callbacks: {
-              label: (context: any) =>
-                `${members[context.raw.y]} - ${months[context.raw.x]}: ${context.raw.v ? 'Pagado' : 'No pagado'
-                }`,
-            },
+            enabled: false
           },
         },
         scales: {
@@ -95,7 +100,29 @@ export class FeeCalendarChart implements OnChanges, OnDestroy {
             title: { display: true, text: 'Socios' },
           },
         },
-      },
+        onHover: (event: ChartEvent, elements: ActiveElement[]) => {
+          const canvas = event.native?.target as HTMLCanvasElement;
+          if (!canvas) return;
+
+          if (elements.length) {
+            canvas.style.cursor = 'pointer';
+          } else {
+            canvas.style.cursor = 'default';
+          }
+        },
+        onClick: (event: ChartEvent, elements: ActiveElement[]) => {
+          const points = this.chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true);
+
+          if (points.length) {
+            const firstPoint = points[0];
+            const datasetIndex = firstPoint.datasetIndex;
+            const index = firstPoint.index;
+            const pointData = this.chart.data.datasets[datasetIndex].data[index];
+
+            this.selectMonth.emit(pointData.v);
+          }
+        }
+      }
     });
   }
 

@@ -19,6 +19,7 @@ import { FeeCalendarService } from '../../calendar/services/fee-calendar-service
 import { FeeCalendarChart } from '../../chart/containers/fee-calendar-chart/fee-calendar-chart';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
+import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -79,6 +80,10 @@ export class FeeList {
           command: () => this.onStartEditingView('create')
         });
     });
+  }
+
+  public onSelectMonth(selection: FeeCalendarSelection) {
+    this.onStartEditingView('edit');
   }
 
   public onChangeActiveFilter(active: Active) {
