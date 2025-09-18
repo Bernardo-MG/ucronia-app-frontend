@@ -17,6 +17,7 @@ import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -40,7 +41,7 @@ export class FeeList {
   /**
    * Loading flag. Shows the loading visual cue.
    */
-  public readingCalendar = false;
+  public loadingCalendar = false;
 
   public feeCalendar: FeeCalendarYear[] = [];
 
@@ -94,18 +95,11 @@ export class FeeList {
   }
 
   private load(year: number) {
-    this.readingCalendar = true;
+    this.loadingCalendar = true;
 
-    this.service.getCalendar(year, this.activeFilter).subscribe({
-      next: data => {
-        this.feeCalendar = data;
-        this.readingCalendar = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingCalendar = false;
-      }
-    });
+    this.service.getCalendar(year, this.activeFilter)
+      .pipe(finalize(() => this.loadingCalendar = false))
+      .subscribe(data => this.feeCalendar = data);
   }
 
 }
