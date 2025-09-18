@@ -49,6 +49,7 @@
     "bootstrap": "~5.3.3",
     "bootswatch": "~5.3.3",
     "chart.js": "^4.4.7",
+    "chartjs-chart-matrix": "^3.0.0",
     "date-fns": "^4.1.0",
     "lodash.isequal": "~4.5.0",
     "primeicons": "^7.0.0",

@@ -13,15 +13,16 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
+import { finalize } from 'rxjs';
 import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
+import { FeeCalendarChart } from '../../chart/containers/fee-calendar-chart/fee-calendar-chart';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeePaymentChart, FeeCreate, FeePay, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeePaymentChart, FeeCreate, FeePay, FeeCalendarChart, ResponsiveShortColumnsDirective],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
