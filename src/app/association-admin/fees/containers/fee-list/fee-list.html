@@ -28,10 +28,14 @@
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
     @case ('create') {
-      <assoc-fee-create></assoc-fee-create>
+      <assoc-fee-create/>
     }
     @case ('pay') {
-      <assoc-fee-pay></assoc-fee-pay>
+      <assoc-fee-pay/>
+    }
+    @case ('edition') {
+      <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures"
+        [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
     }
   }
 </p-drawer>

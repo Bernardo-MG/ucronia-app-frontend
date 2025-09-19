@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FeePaymentChart } from '@app/association-admin/fees/chart/containers/fee-payment-chart/fee-payment-chart';
+import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -13,22 +15,26 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
 import { FeeCalendarChart } from '../../chart/containers/fee-calendar-chart/fee-calendar-chart';
+import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
+import { FeeEditionForm } from '../../components/fee-edition-form/fee-edition-form';
+import { FeeService } from '../../services/fee-service';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
-import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeePaymentChart, FeeCreate, FeePay, FeeCalendarChart, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeePaymentChart, FeeCreate, FeePay, FeeCalendarChart, ResponsiveShortColumnsDirective],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
 
-  private readonly service = inject(FeeCalendarService);
+  private readonly feeCalendarService = inject(FeeCalendarService);
+
+  private readonly service = inject(FeeService);
 
   public readonly createable;
 
@@ -44,6 +50,11 @@ export class FeeList {
    * Loading flag. Shows the loading visual cue.
    */
   public loadingCalendar = false;
+  public loading = false;
+
+  public selectedData = new Fee();
+
+  public failures = new FailureStore();
 
   public feeCalendar: FeeCalendarYear[] = [];
 
@@ -58,7 +69,7 @@ export class FeeList {
     this.createable = authContainer.hasPermission("fee", "create");
 
     // Load range
-    this.service.getRange().subscribe(d => {
+    this.feeCalendarService.getRange().subscribe(d => {
       this.range = d;
       const lastYear = Number(this.range.years[this.range.years.length - 1]);
       // If the current year is after the last year, move backwards to the last year
@@ -67,7 +78,7 @@ export class FeeList {
       }
 
       // Load initial year
-      this.load(this.year);
+      this.loadCalendar(this.year);
 
       this.creationItems.push(
         {
@@ -82,17 +93,48 @@ export class FeeList {
     });
   }
 
+  public onCancel(): void {
+    this.view = '';
+    this.editing = false;
+  }
+
+  public onSave(toCreate: Fee): void {
+    this.mutate(() => this.service.create(toCreate));
+  }
+
+  private mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action().subscribe({
+      next: () => {
+        this.failures.clear();
+        this.view = 'none';
+        this.loadCalendar(this.year);
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          this.failures.clear();
+        }
+        this.loading = false;
+        return throwError(() => error);
+      }
+    });
+  }
+
   public onSelectMonth(selection: FeeCalendarSelection) {
-    this.onStartEditingView('edit');
+    this.service.getOne(selection.month, selection.number)
+      .pipe(finalize(() => this.onStartEditingView('edition')))
+      .subscribe(fee => this.selectedData = fee);
   }
 
   public onChangeActiveFilter(active: Active) {
     this.activeFilter = active;
-    this.load(this.year);
+    this.loadCalendar(this.year);
   }
 
   public onGoToYear(year: number) {
-    this.load(year);
+    this.loadCalendar(year);
   }
 
   public onStartEditingView(view: string): void {
@@ -100,10 +142,10 @@ export class FeeList {
     this.editing = true;
   }
 
-  private load(year: number) {
+  private loadCalendar(year: number) {
     this.loadingCalendar = true;
 
-    this.service.getCalendar(year, this.activeFilter)
+    this.feeCalendarService.getCalendar(year, this.activeFilter)
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
   }
