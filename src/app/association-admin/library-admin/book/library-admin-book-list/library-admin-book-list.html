@@ -43,8 +43,8 @@
           }
         </td>
         <td>
-          <p-button icon="pi pi-eye" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="onShowBook(book)" rounded text />
+          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
+            (click)="onShowBook(book)" rounded text />
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
@@ -55,7 +55,7 @@
   </p-table>
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
-  <assoc-library-admin-book-info [book]="selectedData"/>
+  <assoc-library-admin-book-info [book]="selectedData" />
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
@@ -85,23 +85,23 @@
   }
   @case ('authors') {
   <h2>Autores</h2>
-  <shared-selection-list-form [data]="selectedData.authors"
-    [getSelection]="service.getAuthors.bind(service)" (save)="onSetAuthors($event)" (reject)="onCancel()" />
+  <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
+    (save)="onSetAuthors($event)" (reject)="onCancel()" />
   }
   @case ('gameSystem') {
   <h2>Sistema</h2>
-  <shared-form-with-selection [data]="getGameSystem(selectedData)"
-    [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" (reject)="onCancel()" />
+  <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
+    (save)="onSetGameSystem($event)" (reject)="onCancel()" />
   }
   @case ('bookType') {
   <h2>Tipo</h2>
-  <shared-form-with-selection [data]="getBookType(selectedData)"
-    [getSelection]="service.getBookTypes.bind(service)" (save)="onSetBookType($event)" (reject)="onCancel()" />
+  <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
+    (save)="onSetBookType($event)" (reject)="onCancel()" />
   }
   @case ('publishers') {
   <h2>Editores</h2>
-  <shared-selection-list-form [data]="selectedData.publishers"
-    [getSelection]="service.getPublishers.bind(service)" (save)="onSetPublishers($event)" (reject)="onCancel()" />
+  <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
+    (save)="onSetPublishers($event)" (reject)="onCancel()" />
   }
   @case ('lendings') {
   @if(selectedData.lent) {

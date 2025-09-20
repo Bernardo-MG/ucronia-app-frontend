@@ -9,8 +9,10 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -20,14 +22,17 @@ import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
-  templateUrl: './people-list.html'
+  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  templateUrl: './people-list.html',
+  providers: [ConfirmationService, MessageService]
 })
 export class PeopleList {
 
   private readonly router = inject(Router);
 
   private readonly service = inject(PeopleService);
+
+  private readonly confirmationService = inject(ConfirmationService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -36,6 +41,7 @@ export class PeopleList {
   public activeFilter = Active.Active;
 
   public readonly createable;
+  public readonly editable;
 
   public data = new PaginatedResponse<Person>();
 
@@ -53,6 +59,7 @@ export class PeopleList {
   public loading = false;
   public editing = false;
   public saving = false;
+  public showing = false;
 
   public view: string = '';
 
@@ -63,6 +70,7 @@ export class PeopleList {
 
     // Check permissions
     this.createable = authContainer.hasPermission("person", "create");
+    this.editable = authContainer.hasPermission("person", "update");
 
     this.nameFilterSubject.pipe(
       debounceTime(300)
@@ -103,6 +111,31 @@ export class PeopleList {
     }
 
     this.load(this.data.page);
+  }
+
+  public onConfirmDelete(event: Event, number: number) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.service.delete(number);
+      }
+    });
+  }
+
+  public onShowInfo(person: Person) {
+    this.selectedData = person;
+    this.showing = true;
   }
 
   public onPageChange(event: TablePageEvent) {
