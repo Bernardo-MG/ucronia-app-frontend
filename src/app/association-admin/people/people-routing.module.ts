@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/people-list/people-list.container').then(m => m.PeopleListContainer),
+        loadComponent: () => import('./containers/people-list/people-list').then(m => m.PeopleList),
         canActivate: [ResourceGuard("person", "read")],
         data: { breadcrumb: '' }
       },
       {
         path: 'register',
-        loadComponent: () => import('./containers/people-creation/people-creation.container').then(m => m.PeopleCreationContainer),
+        loadComponent: () => import('./containers/people-creation/people-creation').then(m => m.PeopleCreation),
         canActivate: [ResourceGuard("person", "create")],
         data: { breadcrumb: 'Añadir' }
       },
       {
         path: ':number',
-        loadComponent: () => import('./containers/people-edition/people-edition.container').then(m => m.PeopleInfoEditionContainer),
+        loadComponent: () => import('./containers/people-edition/people-edition').then(m => m.PeopleInfoEdition),
         canActivate: [ResourceGuard("person", "read")],
         data: { breadcrumb: 'Editar' }
       }

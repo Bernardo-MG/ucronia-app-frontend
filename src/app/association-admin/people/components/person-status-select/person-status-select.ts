@@ -4,9 +4,9 @@ import { Active } from '@app/domain/person/active';
 @Component({
   selector: 'assoc-person-status-select',
   imports: [],
-  templateUrl: './person-status-select.component.html'
+  templateUrl: './person-status-select.html'
 })
-export class PersonStatusSelectComponent {
+export class PersonStatusSelect {
 
   public readonly disabled = input(false);
 

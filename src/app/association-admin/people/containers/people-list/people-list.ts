@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PersonStatusSelectComponent } from '@app/association-admin/people/components/person-status-select/person-status-select.component';
+import { PersonStatusSelect } from '@app/association-admin/people/components/person-status-select/person-status-select';
 import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
 import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
@@ -12,14 +12,14 @@ import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, Subject } from 'rxjs';
-import { PeopleService } from '../../services/people.service';
+import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, CardModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelectComponent, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
-  templateUrl: './people-list.container.html'
+  imports: [FormsModule, CardModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  templateUrl: './people-list.html'
 })
-export class PeopleListContainer {
+export class PeopleList {
 
   private readonly router = inject(Router);
 

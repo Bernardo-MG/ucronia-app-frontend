@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { PeopleInfoEditionContainer } from './people-edition.container';
+import { PeopleList } from './people-list';
 
-describe('PeopleInfoEditionContainer', () => {
-  let component: PeopleInfoEditionContainer;
-  let fixture: ComponentFixture<PeopleInfoEditionContainer>;
+describe('PeopleList', () => {
+  let component: PeopleList;
+  let fixture: ComponentFixture<PeopleList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PeopleInfoEditionContainer
+        PeopleList
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
@@ -21,7 +21,7 @@ describe('PeopleInfoEditionContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PeopleInfoEditionContainer);
+    fixture = TestBed.createComponent(PeopleList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

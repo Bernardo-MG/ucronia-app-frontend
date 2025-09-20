@@ -8,9 +8,9 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 @Component({
   selector: 'assoc-people-creation-form',
   imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
-  templateUrl: './people-creation-form.component.html'
+  templateUrl: './people-creation-form.html'
 })
-export class PeopleCreationFormComponent extends FormComponent<Person> {
+export class PeopleCreationForm extends FormComponent<Person> {
 
   public get member() {
     return !!((this.data) && (this.data.membership));

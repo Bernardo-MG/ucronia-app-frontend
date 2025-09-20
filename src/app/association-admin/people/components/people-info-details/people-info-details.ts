@@ -5,9 +5,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 @Component({
   selector: 'assoc-people-info-details',
   imports: [SkeletonModule],
-  templateUrl: './people-info-details.component.html'
+  templateUrl: './people-info-details.html'
 })
-export class PeopleInfoDetailsComponent {
+export class PeopleInfoDetails {
 
   public readonly data = input(new Person());
 

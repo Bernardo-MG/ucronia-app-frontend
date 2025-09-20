@@ -5,9 +5,9 @@ import { ModalComponent } from '@bernardo-mg/ui';
 @Component({
   selector: 'assoc-people-edition-membership-buttons',
   imports: [ModalComponent],
-  templateUrl: './people-edition-membership-buttons.component.html'
+  templateUrl: './people-edition-membership-buttons.html'
 })
-export class PeopleEditionMembershipButtonsComponent {
+export class PeopleEditionMembershipButtons {
 
   public readonly active = input<boolean>();
 

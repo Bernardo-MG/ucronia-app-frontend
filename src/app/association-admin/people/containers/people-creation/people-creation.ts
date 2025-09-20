@@ -6,15 +6,15 @@ import { CreateComponent } from '@bernardo-mg/form';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { Observable } from 'rxjs';
-import { PeopleCreationFormComponent } from '../../components/people-creation-form/people-creation-form.component';
-import { PeopleService } from '../../services/people.service';
+import { PeopleCreationForm } from '../../components/people-creation-form/people-creation-form';
+import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-creation',
-  imports: [CardModule, PeopleCreationFormComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './people-creation.container.html'
+  imports: [CardModule, PeopleCreationForm, ResponsiveShortColumnsDirective],
+  templateUrl: './people-creation.html'
 })
-export class PeopleCreationContainer extends CreateComponent<Person> {
+export class PeopleCreation extends CreateComponent<Person> {
 
   private readonly service = inject(PeopleService);
 

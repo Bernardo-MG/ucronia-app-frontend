@@ -10,17 +10,17 @@ import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { TabsModule } from 'primeng/tabs';
 import { Observable } from 'rxjs';
-import { PeopleEditionFormComponent } from '../../components/people-edition-form/people-edition-form.component';
-import { PeopleEditionMembershipButtonsComponent } from '../../components/people-edition-membership-buttons/people-edition-membership-buttons.component';
-import { PeopleInfoDetailsComponent } from '../../components/people-info-details/people-info-details.component';
-import { PeopleService } from '../../services/people.service';
+import { PeopleEditionForm } from '../../components/people-edition-form/people-edition-form';
+import { PeopleEditionMembershipButtons } from '../../components/people-edition-membership-buttons/people-edition-membership-buttons';
+import { PeopleInfoDetails } from '../../components/people-info-details/people-info-details';
+import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-edition',
-  imports: [CommonModule, CardModule, TabsModule, PeopleEditionFormComponent, ResponsiveShortColumnsDirective, PeopleInfoDetailsComponent, ControlButtonsComponent, PeopleEditionMembershipButtonsComponent],
-  templateUrl: './people-edition.container.html'
+  imports: [CommonModule, CardModule, TabsModule, PeopleEditionForm, ResponsiveShortColumnsDirective, PeopleInfoDetails, ControlButtonsComponent, PeopleEditionMembershipButtons],
+  templateUrl: './people-edition.html'
 })
-export class PeopleInfoEditionContainer extends InfoEditorStatusComponent<Person> {
+export class PeopleInfoEdition extends InfoEditorStatusComponent<Person> {
 
   private readonly route = inject(ActivatedRoute);
 
