@@ -1,5 +1,5 @@
 
-import { ChangeDetectorRef, Component, inject, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { CardModule } from 'primeng/card';
@@ -17,8 +17,6 @@ export class FeeInfo {
   public readonly data = input(new Fee());
 
   private readonly router = inject(Router);
-
-  private readonly cdRef = inject(ChangeDetectorRef);
 
   public goToTransaction(index: number) {
     this.router.navigate([`association/admin/funds/transaction/${index}`]);
