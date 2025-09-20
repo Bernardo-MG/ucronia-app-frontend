@@ -84,6 +84,7 @@
   </p-panel>
 </div>
 <p-drawer [(visible)]="showing" position="full">
+  <assoc-people-info [data]="selectedData" />
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
@@ -91,8 +92,8 @@
   <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('edition') {
-  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures"
-    [cancellable]="true" (save)="onUpdate($event)" />
+  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
+    (save)="onUpdate($event)" />
   }
   }
 </p-drawer>

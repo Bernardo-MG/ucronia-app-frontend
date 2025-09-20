@@ -19,11 +19,12 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, Observable, Subject, throwError } from 'rxjs';
 import { PeopleCreationForm } from '../../components/people-creation-form/people-creation-form';
 import { PeopleEditionForm } from '../../components/people-edition-form/people-edition-form';
+import { PeopleInfo } from '../../components/people-info/people-info';
 import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html',
   providers: [ConfirmationService, MessageService]
 })
