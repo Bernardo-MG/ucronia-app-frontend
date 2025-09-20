@@ -2,7 +2,7 @@
   <p-step-item [value]="1">
     <p-step>Header I</p-step>
     <p-step-panel>
-      <ng-template #content let-activateCallback="activateCallback">
+      <ng-template #content>
         <!-- Select member -->
         <div>
           <div class="row mb-2">
@@ -23,7 +23,7 @@
   <p-step-item [value]="2">
     <p-step>Header II</p-step>
     <p-step-panel>
-      <ng-template #content let-activateCallback="activateCallback">
+      <ng-template #content>
         <!-- Lend book form -->
         <p-button icon="pi pi-step-backward" severity="secondary" (click)="onReturnToMembers()" aria-label="Atrás"
           rounded text />

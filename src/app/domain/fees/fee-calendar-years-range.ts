@@ -1,3 +1,3 @@
 export class FeeCalendarYearsRange {
-  years: string[] = []
+  years: number[] = []
 }

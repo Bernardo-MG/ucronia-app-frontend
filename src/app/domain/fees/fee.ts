@@ -8,6 +8,6 @@ export class Fee {
 }
 
 export class FeeTransaction {
-  date = '';
+  date: Date | undefined;
   index = -1;
 }

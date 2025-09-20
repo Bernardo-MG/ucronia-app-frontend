@@ -1,4 +1,4 @@
-<p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="selection.content"
+<p-table lazy="true" [dataKey]="dataKey()" selectionMode="single" [loading]="loading" [value]="selection.content"
   [(selection)]="selectedData" paginator="true" [rows]="selection.size" [totalRecords]="selection.totalElements"
   [first]="first" (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">

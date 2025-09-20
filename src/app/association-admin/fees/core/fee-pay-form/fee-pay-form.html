@@ -1,0 +1,58 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+  <!-- Person -->
+  <h2>{{fullname}}</h2>
+  <!-- Payment date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [invalid]="isFieldInvalid('paymentDate')"
+      dateFormat="yy-mm-dd" />
+    <label for="paymentDateInput">Pago</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('paymentDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Fees -->
+  <h3>Cuotas</h3>
+  <!-- Each fee -->
+  @for (date of months.controls; track date; let i = $index) {
+    <div class="row">
+      <div class="col-sm-10">
+        <p-floatlabel variant="in" class="mb-2 d-flex">
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
+            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" />
+          <label [for]="'monthYearInput_' + i">Mes</label>
+        </p-floatlabel>
+      </div>
+      <div class="col-sm-2">
+        <p-button icon="pi pi-trash" (click)="removeDate(i)"
+          [disabled]="!formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formEnabled" rounded text />
+      </div>
+    </div>
+  }
+  <!-- Add fee button -->
+  <div class="row">
+    <div uiJustifyCenter>
+      <p-button icon="pi pi-plus-circle" (click)="addDate()"
+        [disabled]="!formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formEnabled" rounded text />
+    </div>
+  </div>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('months[]'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+
+  <!-- Save button -->
+  <div class="row">
+    <div class="col-sm-2 d-grid gap-2">
+      <!-- Save button -->
+      <p-button type="submit" name="Login" [uiWaiting]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
+    </div>
+  </div>
+</form>

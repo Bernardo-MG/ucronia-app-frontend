@@ -7,6 +7,7 @@ import Aura from '@primeng/themes/aura';
 import { environment } from 'environments/environment';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
+import { dateInterceptor } from './core/request/date-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([jwtAuthenticationInterceptor(environment.apiUrl), unauthorizedInterceptor(environment.apiUrl)])
+      withInterceptors([
+        jwtAuthenticationInterceptor(environment.apiUrl), 
+        unauthorizedInterceptor(environment.apiUrl), 
+        dateInterceptor()])
     ),
     providePrimeNG({
       theme: {

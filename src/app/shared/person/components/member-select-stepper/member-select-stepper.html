@@ -1,0 +1,29 @@
+<p-card>
+  <p-stepper [value]="currentStep" [linear]="true">
+    <p-step-item [value]="1">
+      <p-step>Socio</p-step>
+      <p-step-panel>
+        <ng-template #content>
+          <!-- Member selection -->
+          <div class="row mb-2">
+            <div uiJustifyBetween>
+              <div>Selecciona un socio</div>
+              <assoc-member-status-select (changeStatus)="onChangeActiveFilter($event)" />
+            </div>
+          </div>
+          <shared-selection-list heading="Socio" [getSelection]="getSelection" (choose)="onSelectMember($event)"
+            [nameRenderer]="nameRenderer" />
+        </ng-template>
+      </p-step-panel>
+    </p-step-item>
+    <p-step-item [value]="2">
+      <p-step>Fecha</p-step>
+      <p-step-panel>
+        <ng-template #content>
+          <p-button label="Back" icon="pi pi-arrow-left" iconPos="right" (onClick)="onReturnToMembers()" />
+          <ng-content />
+        </ng-template>
+      </p-step-panel>
+    </p-step-item>
+  </p-stepper>
+</p-card>

@@ -88,9 +88,7 @@ export class LibraryAdminBookList {
   public readonly editable;
 
   public readonly fictionEditionMenuItems: MenuItem[] = [];
-
   public readonly gameEditionMenuItems: MenuItem[] = [];
-
   public readonly dataMenuItems: MenuItem[] = [];
 
   public view: string = '';
@@ -305,7 +303,7 @@ export class LibraryAdminBookList {
     this.editing = true;
   }
 
-  public onSave(toSave: BookUpdate) {
+  private onUpdate(toSave: BookUpdate) {
     this.loading = true;
     if (this.source === 'game') {
       this.service.updateGameBookNew(toSave.number, toSave).subscribe({
@@ -345,7 +343,7 @@ export class LibraryAdminBookList {
         authors: authors.map(a => a.number)
       };
     }
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public onSetPublishers(publishers: Publisher[]) {
@@ -365,7 +363,7 @@ export class LibraryAdminBookList {
         publishers: publishers.map(a => a.number)
       };
     }
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public onSetGameSystem(gameSystem: GameSystem) {
@@ -376,7 +374,7 @@ export class LibraryAdminBookList {
       authors: this.selectedData.authors.map(a => a.number),
       gameSystem: gameSystem.number
     };
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public onSetBookType(bookType: BookType) {
@@ -387,7 +385,7 @@ export class LibraryAdminBookList {
       authors: this.selectedData.authors.map(a => a.number),
       bookType: bookType.number
     };
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public onSetDonation(donation: Donation | undefined) {
@@ -409,7 +407,7 @@ export class LibraryAdminBookList {
         donation: donation
       };
     }
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public onSaveBook(book: FictionBook | GameBook) {
@@ -429,7 +427,7 @@ export class LibraryAdminBookList {
         authors: book.authors.map(a => a.number)
       };
     }
-    this.onSave(updateDate as BookUpdate);
+    this.onUpdate(updateDate as BookUpdate);
   }
 
   public getGameSystem(book: FictionBook | GameBook): GameSystem {
