@@ -18,11 +18,12 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, Observable, Subject, throwError } from 'rxjs';
 import { PeopleCreationForm } from '../../components/people-creation-form/people-creation-form';
+import { PeopleEditionForm } from '../../components/people-edition-form/people-edition-form';
 import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -153,6 +154,10 @@ export class PeopleList {
 
   public onCreate(toCreate: Person): void {
     this.mutate(() => this.service.create(toCreate));
+  }
+
+  public onUpdate(toUpdate: Person): void {
+    this.mutate(() => this.service.patch(this.selectedData.number, toUpdate));
   }
 
   private mutate(action: () => Observable<any>) {

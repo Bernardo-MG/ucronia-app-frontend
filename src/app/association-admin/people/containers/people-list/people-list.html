@@ -91,6 +91,8 @@
   <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('edition') {
+  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures"
+    [cancellable]="true" (save)="onUpdate($event)" />
   }
   }
 </p-drawer>
