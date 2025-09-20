@@ -5,6 +5,7 @@ import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
+import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
@@ -13,23 +14,20 @@ import { StepperModule } from 'primeng/stepper';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Observable } from 'rxjs';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
-import { FeePaySelectMember } from '../fee-pay-select-member/fee-pay-select-member';
 import { FeeService } from '../fee-service/fee-service';
 
 @Component({
   selector: 'assoc-fee-create-unpaid',
-  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeeCreationForm, FeePaySelectMember],
+  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-create-unpaid.html'
 })
 export class FeeCreateUnpaid extends CreateComponent<FeePayment> {
 
-  private readonly service = inject(FeeService);
+  public readonly service = inject(FeeService);
 
   public readonly createPermission;
 
   public member = new Member();
-
-  public currentStep = 1;
 
   public pay = true;
 
@@ -54,21 +52,12 @@ export class FeeCreateUnpaid extends CreateComponent<FeePayment> {
     });
   }
 
-  protected override save(toSave: FeePayment): Observable<FeePayment> {
-    return this.service.pay(toSave);
-  }
-
   public onGetSelection(page: number, active: Active) {
     return this.service.getPersons(page, active);
   }
 
-  public onReturnToMembers() {
-    this.currentStep = 1;
-  }
-
   public onSelectMember(member: any) {
     this.member = (member as Member);
-    this.currentStep = 2;
   }
 
   public onChangePay(event: any) {
@@ -79,6 +68,10 @@ export class FeeCreateUnpaid extends CreateComponent<FeePayment> {
       this.pay = event.checked;
     }
     this.failures.clear();
+  }
+
+  protected override save(toSave: FeePayment): Observable<FeePayment> {
+    throw new Error('Method not implemented.');
   }
 
 }

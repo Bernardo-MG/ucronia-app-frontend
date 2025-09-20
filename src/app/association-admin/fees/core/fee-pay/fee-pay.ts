@@ -5,6 +5,7 @@ import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
+import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CreateComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
@@ -13,12 +14,11 @@ import { StepperModule } from 'primeng/stepper';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Observable } from 'rxjs';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
-import { FeePaySelectMember } from '../fee-pay-select-member/fee-pay-select-member';
 import { FeeService } from '../fee-service/fee-service';
 
 @Component({
   selector: 'assoc-fee-pay',
-  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeePayForm, FeePaySelectMember],
+  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeePayForm, MemberSelectStepper],
   templateUrl: './fee-pay.html'
 })
 export class FeePay extends CreateComponent<FeePayment> {
@@ -28,8 +28,6 @@ export class FeePay extends CreateComponent<FeePayment> {
   public readonly createPermission;
 
   public member = new Member();
-
-  public currentStep = 1;
 
   public pay = true;
 
@@ -62,13 +60,8 @@ export class FeePay extends CreateComponent<FeePayment> {
     return this.service.getPersons(page, active);
   }
 
-  public onReturnToMembers() {
-    this.currentStep = 1;
-  }
-
   public onSelectMember(member: any) {
     this.member = (member as Member);
-    this.currentStep = 2;
   }
 
   public onChangePay(event: any) {
