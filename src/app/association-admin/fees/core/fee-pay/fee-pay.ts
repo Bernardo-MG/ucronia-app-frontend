@@ -12,16 +12,16 @@ import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { Observable } from 'rxjs';
-import { FeeCreationForm } from '../../components/fee-creation-form/fee-creation-form';
-import { FeePaySelectMember } from '../../components/fee-pay-select-member/fee-pay-select-member';
-import { FeeService } from '../../services/fee-service';
+import { FeePayForm } from '../fee-pay-form/fee-pay-form';
+import { FeePaySelectMember } from '../fee-pay-select-member/fee-pay-select-member';
+import { FeeService } from '../fee-service/fee-service';
 
 @Component({
-  selector: 'assoc-fee-create',
-  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeeCreationForm, FeePaySelectMember],
-  templateUrl: './fee-create.html'
+  selector: 'assoc-fee-pay',
+  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeePayForm, FeePaySelectMember],
+  templateUrl: './fee-pay.html'
 })
-export class FeeCreate extends CreateComponent<FeePayment> {
+export class FeePay extends CreateComponent<FeePayment> {
 
   private readonly service = inject(FeeService);
 

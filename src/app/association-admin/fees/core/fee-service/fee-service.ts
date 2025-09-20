@@ -1,12 +1,12 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
+import { FeeUpdate } from '@app/domain/fees/fee-update';
 import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { Fee } from '@app/domain/fees/fee';
-import { FeeUpdate } from '@app/domain/fees/fee-update';
 
 @Injectable({
   providedIn: "root"

@@ -2,26 +2,24 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { FeeService } from '../../services/fee-service';
-import { FeePay } from './fee-pay';
+import { FeeReportService } from '@app/association-admin/fees/core/fee-report-service/fee-report-service';
+import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
+import { FeeService } from '../fee-service/fee-service';
+import { FeeList } from './fee-list';
 
-describe('FeePay', () => {
-  let component: FeePay;
-  let fixture: ComponentFixture<FeePay>;
-  let service: FeeService;
+describe('FeeList', () => {
+  let component: FeeList;
+  let fixture: ComponentFixture<FeeList>;
 
   beforeEach(async () => {
-    service = jasmine.createSpyObj('FeeService', ['getPersons', 'getFields']);
-    (service as any).getPersons.and.returnValue(EMPTY);
-    (service as any).getFields.and.returnValue([]);
-
     await TestBed.configureTestingModule({
       imports: [
-        FeePay
+        FeeList
       ],
       providers: [
-        { provide: FeeService, useValue: service },
+        FeeCalendarService,
+        FeeService,
+        FeeReportService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
@@ -29,7 +27,7 @@ describe('FeePay', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeePay);
+    fixture = TestBed.createComponent(FeeList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

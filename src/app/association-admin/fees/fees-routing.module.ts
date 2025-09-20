@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./containers/fee-list/fee-list').then(m => m.FeeList),
+        loadComponent: () => import('./core/fee-list/fee-list').then(m => m.FeeList),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: '' }
       }

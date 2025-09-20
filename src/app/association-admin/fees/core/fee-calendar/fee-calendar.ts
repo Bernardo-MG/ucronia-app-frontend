@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';

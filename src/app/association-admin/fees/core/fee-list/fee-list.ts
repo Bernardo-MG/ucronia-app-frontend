@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FeePaymentChart } from '@app/association-admin/fees/chart/containers/fee-payment-chart/fee-payment-chart';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
@@ -15,14 +14,15 @@ import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
-import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
-import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
-import { FeeEditionForm } from '../../components/fee-edition-form/fee-edition-form';
-import { FeeInfo } from '../../components/fee-info/fee-info';
-import { FeeService } from '../../services/fee-service';
+import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
+import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreate } from '../fee-create/fee-create';
+import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
+import { FeeInfo } from '../fee-info/fee-info';
 import { FeePay } from '../fee-pay/fee-pay';
+import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
+import { FeeService } from '../fee-service/fee-service';
+import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
