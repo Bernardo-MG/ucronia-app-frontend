@@ -114,7 +114,7 @@ export class PeopleList {
     // Renewal toggle
     this.personEditionMenuItems.push({
       label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
-      command: () => this.onSetRenewal(!canRenew)
+      command: () => this.onConfirmSetRenewal(event, !canRenew)
     });
 
     // Show menu
@@ -143,6 +143,32 @@ export class PeopleList {
       },
       accept: () => {
         this.onSetActive(status);
+      }
+    });
+  }
+
+  public onConfirmSetRenewal(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar la renovación del usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar la renovación del usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.onSetRenewal(status);
       }
     });
   }
