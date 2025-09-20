@@ -13,18 +13,6 @@ const routes: Routes = [
         loadComponent: () => import('./containers/people-list/people-list').then(m => m.PeopleList),
         canActivate: [ResourceGuard("person", "read")],
         data: { breadcrumb: '' }
-      },
-      {
-        path: 'register',
-        loadComponent: () => import('./containers/people-creation/people-creation').then(m => m.PeopleCreation),
-        canActivate: [ResourceGuard("person", "create")],
-        data: { breadcrumb: 'Añadir' }
-      },
-      {
-        path: ':number',
-        loadComponent: () => import('./containers/people-edition/people-edition').then(m => m.PeopleInfoEdition),
-        canActivate: [ResourceGuard("person", "read")],
-        data: { breadcrumb: 'Editar' }
       }
     ]
   }
