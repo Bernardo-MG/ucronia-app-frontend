@@ -13,12 +13,6 @@ const routes: Routes = [
         loadComponent: () => import('./containers/fee-list/fee-list').then(m => m.FeeList),
         canActivate: [ResourceGuard("fee", "read")],
         data: { breadcrumb: '' }
-      },
-      {
-        path: ':date/:memberNumber',
-        loadComponent: () => import('./containers/fee-edition/fee-edition').then(m => m.FeeEdition),
-        canActivate: [ResourceGuard("fee", "read")],
-        data: { breadcrumb: 'Editar' }
       }
     ]
   }
