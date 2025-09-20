@@ -11,28 +11,28 @@
 </div>
 <div class="row">
   <!-- Fee calendar -->
-    <p-panel>
-      <ng-template #icons>
-        <assoc-member-status-select [disabled]="loadingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
-        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="feeCreationMenu.toggle($event);"
-          [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
-      </ng-template>
-      <!-- Calendar -->
-      <assoc-fee-calendar [range]="range" [waiting]="loadingCalendar" [feeCalendar]="feeCalendar"
-        (goToYear)="onGoToYear($event)" />
-    </p-panel>
+  <p-panel>
+    <ng-template #icons>
+      <assoc-member-status-select [disabled]="loadingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="feeCreationMenu.toggle($event);"
+        [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    </ng-template>
+    <!-- Calendar -->
+    <assoc-fee-calendar [range]="range" [waiting]="loadingCalendar" [feeCalendar]="feeCalendar"
+      (goToYear)="onGoToYear($event)" />
+  </p-panel>
 </div>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
     @case ('create') {
-      <assoc-fee-create/>
+      <assoc-fee-create />
     }
     @case ('pay') {
-      <assoc-fee-pay/>
+      <assoc-fee-pay />
     }
     @case ('edition') {
-      <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures"
-        [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
+      <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures" [cancellable]="true"
+        (save)="onUpdate($event)" (reject)="onCancel()" />
     }
   }
 </p-drawer>
