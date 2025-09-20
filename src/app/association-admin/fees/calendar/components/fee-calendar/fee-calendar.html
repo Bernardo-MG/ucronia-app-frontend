@@ -1,23 +1,13 @@
 <!-- Controls -->
 <div uiJustifyCenter class="pb-2">
   <!-- To previous year button -->
-  @if (canGoPrevious) {
-    <button id="previousYearButton" type="button" class="btn btn-link" (click)="onGoPrevious()"
-      [disabled]="!canGoPrevious" [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year">
-      <icon-backward />
-    </button>
-  }
-  <div class="w-25 px-3">
-    <!-- Current year -->
-    <p-select [(ngModel)]="year" [disabled]="waiting()" [options]="years" (onChange)="onGoTo($event)" />
-  </div>
+  <p-button id="previousYearButton" icon="pi pi-caret-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
+    [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year" rounded text />
+  <!-- Current year -->
+  <p-select [(ngModel)]="year" [disabled]="waiting()" [options]="years" (onChange)="onGoTo($event)" />
   <!-- To next year button -->
-  @if (canGoNext) {
-    <button id="nextYearButton" type="button" class="btn btn-link" (click)="onGoNext()"
-      [disabled]="!canGoNext" [attr.aria-disabled]="!canGoNext" aria-label="Next year">
-      <icon-forward />
-    </button>
-  }
+  <p-button id="nextYearButton" icon="pi pi-caret-right" (click)="onGoNext()" [disabled]="!canGoNext"
+    [attr.aria-disabled]="!canGoNext" aria-label="Previous year" rounded text />
 </div>
 <!-- Table -->
 <div class="table-responsive" *uiBlock="waiting()">
@@ -40,9 +30,11 @@
           <td>
             @if (hasMonth(memberFees.months, monthNumber)) {
               @if(isPaid(memberFees.months, monthNumber)) {
-                <p-button icon="pi pi-check text-success" routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
+                <p-button icon="pi pi-check text-success"
+                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
               } @else {
-                <p-button icon="pi pi-times text-danger" routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
+                <p-button icon="pi pi-times text-danger"
+                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
               }
             }
           </td>
