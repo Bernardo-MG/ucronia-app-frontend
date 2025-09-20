@@ -33,7 +33,9 @@
       <assoc-fee-create-unpaid />
     }
     @case ('pay') {
-      <assoc-fee-pay />
+      <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+        <assoc-fee-pay-form [waiting]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
+      </assoc-member-select-stepper>
     }
     @case ('edition') {
       <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures" [cancellable]="true"

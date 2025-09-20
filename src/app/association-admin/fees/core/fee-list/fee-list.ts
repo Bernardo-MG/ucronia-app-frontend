@@ -3,7 +3,10 @@ import { RouterModule } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
+import { FeePayment } from '@app/domain/fees/fee-payment';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
+import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -19,14 +22,14 @@ import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreateUnpaid } from '../fee-create-unpaid/fee-create-unpaid';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
-import { FeePay } from '../fee-pay/fee-pay';
+import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
 import { FeeService } from '../fee-service/fee-service';
 import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreateUnpaid, FeePay],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreateUnpaid, FeePayForm, MemberSelectStepper],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
@@ -54,6 +57,7 @@ export class FeeList {
   public showing = false;
 
   public selectedData = new Fee();
+  public selectedMember = new Member();
 
   public failures = new FailureStore();
 
@@ -108,6 +112,11 @@ export class FeeList {
     this.mutate(() => this.service.update(update));
   }
 
+  public onPay(data: FeePayment): void {
+    this.loading = true;
+    this.mutate(() => this.service.pay(data));
+  }
+
   private mutate(action: () => Observable<any>) {
     this.loading = true;
     action().subscribe({
@@ -128,7 +137,7 @@ export class FeeList {
     });
   }
 
-  public onSelectFee(fee:{ member: number, date: string }) {
+  public onSelectFee(fee: { member: number, date: string }) {
     this.service.getOne(fee.date, fee.member).subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }
@@ -151,6 +160,14 @@ export class FeeList {
   public onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
+  }
+
+  public onGetSelection(page: number, active: Active) {
+    return this.service.getPersons(page, active);
+  }
+
+  public onSelectMember(member: any) {
+    this.selectedMember = (member as Member);
   }
 
   private loadCalendar(year: number) {
