@@ -9,13 +9,18 @@
 </div>
 <div class="row">
   <!-- Member List -->
-  <p-card>
+  <p-panel>
+    <ng-template #icons>
+      <!-- Add transaction -->
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
+    </ng-template>
     <ng-template #header>
       <div class="row">
         <div class="col-sm-3">
           <!-- Add person -->
           <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-            [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
+            [disabled]="!createable" [attr.aria-disabled]="!createable">
             <icon-add />
           </button>
         </div>
@@ -66,5 +71,14 @@
         </tr>
       </ng-template>
     </p-table>
-  </p-card>
+  </p-panel>
 </div>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+    @case ('creation') {
+    <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+    }
+    @case ('edition') {
+    }
+  }
+</p-drawer>

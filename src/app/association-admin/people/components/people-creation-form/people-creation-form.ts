@@ -3,11 +3,15 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
+import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-people-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, SaveControlsComponent, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule, SaveControlsComponent],
   templateUrl: './people-creation-form.html'
 })
 export class PeopleCreationForm extends FormComponent<Person> {
@@ -37,10 +41,9 @@ export class PeopleCreationForm extends FormComponent<Person> {
     });
   }
 
-  public onChangeMemberStatus(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
+  public onChangeMemberStatus(event: ToggleSwitchChangeEvent) {
     if (this.data) {
-      if (checkbox.checked) {
+      if (event.checked) {
         if (!this.data.membership) {
           this.data.membership = new Membership();
         }

@@ -1,31 +1,40 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
   <!-- First name -->
-  <div class="row mb-2">
-    <label for="firstNameInput" id="firstNameLabel" class="col-sm-2 col-form-label">Nombre</label>
-    <div formGroupName="name" class="col-sm-10">
-      <input type="text" id="firstNameInput" formControlName="firstName" class="form-control"
-        formInvalidField="name.firstName" [backendFailure]="failures().hasFailures('name.firstName')"
-        aria-describedby="firstNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures().getFailures('name.firstName')" />
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="firstNameInput" formControlName="firstName" class="w-100" />
+    <label for="firstNameInput">Nombre</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('firstName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <!-- Last name -->
-  <div class="row mb-2">
-    <label for="lastNameInput" id="lastNameLabel" class="col-sm-2 col-form-label">Apellidos</label>
-    <div formGroupName="name" class="col-sm-10">
-      <input type="text" id="lastNameInput" formControlName="lastName" class="form-control"
-        formInvalidField="name.firstName" [backendFailure]="failures().hasFailures('name.lastName')"
-        aria-describedby="lastNameLabel" maxlength="50">
-      <form-input-failure-feedback [failures]="failures().getFailures('name.lastName')" />
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="lastNameInput" formControlName="lastName" class="w-100" />
+    <label for="lastNameInput">Apellidos</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('lastName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <!-- Membership -->
   <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-      (change)="onChangeMemberStatus($event)" [checked]="member">
-    <label class="form-check-label" for="flexCheckDefault">
-      Socio
-    </label>
+    <div class="row">
+      <div class="col-md-2">
+        <p-toggleswitch inputId="rememberMe" (onChange)="onChangeMemberStatus($event)" />
+      </div>
+      <div class="col-md-10">
+        <label class="form-check-label" for="flexCheckDefault">
+          Socio
+        </label>
+      </div>
+    </div>
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
     [cancellable]="cancellable" (reject)="onCancel()" />
