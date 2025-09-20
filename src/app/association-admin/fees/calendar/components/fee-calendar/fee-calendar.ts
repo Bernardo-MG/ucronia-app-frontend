@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -16,7 +17,7 @@ import { TableModule } from 'primeng/table';
 })
 export class FeeCalendar implements OnChanges {
 
-  @Input() public range = new FeeCalendarYearsRange();
+  public range = input(new FeeCalendarYearsRange());
 
   /**
    * Loading flag. Shows the loading visual cue.
@@ -27,6 +28,8 @@ export class FeeCalendar implements OnChanges {
 
   public readonly goToYear = output<number>();
 
+  public readonly selectFee = output<{ member: number, date: string }>();
+
   public year = new Date().getFullYear();
 
   public monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -36,7 +39,7 @@ export class FeeCalendar implements OnChanges {
   private index = 0;
 
   public get canGoNext() {
-    return ((this.index >= 0) && ((this.index + 1) < this.range.years.length));
+    return ((this.index >= 0) && ((this.index + 1) < this.range().years.length));
   }
 
   public get canGoPrevious() {
@@ -44,7 +47,7 @@ export class FeeCalendar implements OnChanges {
   }
 
   public get years() {
-    return [...this.range.years].reverse();
+    return [...this.range().years].reverse();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -66,24 +69,29 @@ export class FeeCalendar implements OnChanges {
 
   public onGoTo(event: any) {
     this.year = Number(event.value);
-    this.index = this.range.years.indexOf(this.year);
+    this.index = this.range().years.indexOf(this.year);
     this.goToYear.emit(this.year);
   }
 
   public onGoPrevious() {
     this.index = this.index - 1;
-    this.year = Number(this.range.years[this.index]);
+    this.year = Number(this.range().years[this.index]);
     this.goToYear.emit(this.year);
   }
 
   public onGoNext() {
     this.index = this.index + 1;
-    this.year = Number(this.range.years[this.index]);
+    this.year = Number(this.range().years[this.index]);
     this.goToYear.emit(this.year);
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
     return months.find(m => this.getMonthNumber(m.month) === month) !== undefined;
+  }
+
+  public onSelectFee(member:number, months: FeeCalendarMonth[], month: number) {
+    const calendarMonth = this.getCalendarMonth(months,month);
+    this.selectFee.emit({member: member, date: calendarMonth.month})
   }
 
   public isPaid(months: FeeCalendarMonth[], month: number): boolean {

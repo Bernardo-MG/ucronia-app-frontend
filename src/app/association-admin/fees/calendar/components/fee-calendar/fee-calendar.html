@@ -30,11 +30,9 @@
           <td>
             @if (hasMonth(memberFees.months, monthNumber)) {
               @if(isPaid(memberFees.months, monthNumber)) {
-                <p-button icon="pi pi-check text-success"
-                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
+                <p-button icon="pi pi-check text-success" (click)="onSelectFee(memberFees.member.number, memberFees.months, monthNumber)" rounded text />
               } @else {
-                <p-button icon="pi pi-times text-danger"
-                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
+                <p-button icon="pi pi-times text-danger" (click)="onSelectFee(memberFees.member.number, memberFees.months, monthNumber)" rounded text />
               }
             }
           </td>

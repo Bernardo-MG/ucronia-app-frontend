@@ -19,13 +19,14 @@ import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
 import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
 import { FeeEditionForm } from '../../components/fee-edition-form/fee-edition-form';
+import { FeeInfo } from '../../components/fee-info/fee-info';
 import { FeeService } from '../../services/fee-service';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeePaymentChart, FeeCreate, FeePay],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreate, FeePay],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
@@ -49,6 +50,7 @@ export class FeeList {
    */
   public loadingCalendar = false;
   public loading = false;
+  public showing = false;
 
   public selectedData = new Fee();
 
@@ -122,6 +124,11 @@ export class FeeList {
         return throwError(() => error);
       }
     });
+  }
+
+  public onSelectFee(fee:{ member: number, date: string }) {
+    this.service.getOne(fee.date, fee.member).subscribe(fee => this.selectedData = fee);
+    this.showing = true;
   }
 
   public onSelectMonth(selection: FeeCalendarSelection) {
