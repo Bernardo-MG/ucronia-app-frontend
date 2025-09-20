@@ -1,4 +1,4 @@
 <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
-  <assoc-fee-creation-form [waiting]="saving" [failures]="failures" [readonly]="!createPermission" [member]="member"
+  <assoc-fee-creation-form [waiting]="loading" [failures]="failures" [member]="member"
     (save)="onCreateUnpaid($event)" />
 </assoc-member-select-stepper>

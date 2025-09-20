@@ -1,18 +1,16 @@
 
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Fee } from '@app/domain/fees/fee';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
 import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
-import { AuthContainer } from '@bernardo-mg/authentication';
-import { CreateComponent } from '@bernardo-mg/form';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeeService } from '../fee-service/fee-service';
 
@@ -21,39 +19,37 @@ import { FeeService } from '../fee-service/fee-service';
   imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeePayForm, MemberSelectStepper],
   templateUrl: './fee-pay.html'
 })
-export class FeePay extends CreateComponent<FeePayment> {
+export class FeePay {
 
   private readonly service = inject(FeeService);
 
-  public readonly createPermission;
-
   public member = new Member();
 
-  public pay = true;
+  public failures = new FailureStore();
 
-  constructor() {
-    super();
+  public loading = false;
 
-    const authContainer = inject(AuthContainer);
-
-    // Check permissions
-    this.createPermission = authContainer.hasPermission("fee", "create");
-  }
-
-  public onCreateUnpaid(data: Fee): void {
-    this.saving = true;
-    this.service.create(data).subscribe({
+  public onPay(data: FeePayment): void {
+    this.loading = true;
+    this.service.pay(data).subscribe({
       next: response => {
-        this.handleSaveSuccess(response);
+        this.failures.clear();
+
+        // Reactivate component
+        this.loading = false;
       },
       error: error => {
-        return this.handleSaveFailure(error);
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          // No failure response
+          // Just remove the failures
+          this.failures.clear();
+        }
+
+        return throwError(() => error);
       }
     });
-  }
-
-  protected override save(toSave: FeePayment): Observable<FeePayment> {
-    return this.service.pay(toSave);
   }
 
   public onGetSelection(page: number, active: Active) {
@@ -62,16 +58,6 @@ export class FeePay extends CreateComponent<FeePayment> {
 
   public onSelectMember(member: any) {
     this.member = (member as Member);
-  }
-
-  public onChangePay(event: any) {
-    if (event.checked === undefined) {
-      // If the status was not received, fall back to default
-      this.pay = true;
-    } else {
-      this.pay = event.checked;
-    }
-    this.failures.clear();
   }
 
 }
