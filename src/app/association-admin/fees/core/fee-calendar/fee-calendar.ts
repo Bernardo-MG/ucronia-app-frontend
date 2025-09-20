@@ -38,7 +38,7 @@ export class FeeCalendar implements OnChanges {
   private index = 0;
 
   public get canGoNext() {
-    return ((this.index >= 0) && ((this.index + 1) < this.range().years.length));
+    return (this.index >= 0) && ((this.index + 1) < this.range().years.length);
   }
 
   public get canGoPrevious() {
@@ -55,13 +55,8 @@ export class FeeCalendar implements OnChanges {
       const range = rangeChange.currentValue as FeeCalendarYearsRange;
 
       if (range?.years?.length) {
-        const lastYear = Number(range.years[range.years.length - 1]);
-
-        if (this.year > lastYear) {
-          this.year = lastYear;
-        }
-
         this.index = range.years.indexOf(this.year);
+        console.log("years: " + range.years + " year: " + this.year + " index: " +this.index)
       }
     }
   }

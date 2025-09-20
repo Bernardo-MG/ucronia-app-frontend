@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../fee-service/fee-service';
 import { FeePay } from './fee-pay';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('FeePay', () => {
   let component: FeePay;
@@ -22,6 +23,7 @@ describe('FeePay', () => {
       ],
       providers: [
         { provide: FeeService, useValue: service },
+        provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])

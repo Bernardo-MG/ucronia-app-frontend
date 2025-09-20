@@ -1,6 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { FeeReportService } from '@app/association-admin/fees/core/fee-report-service/fee-report-service';
 import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
@@ -20,6 +21,7 @@ describe('FeeList', () => {
         FeeCalendarService,
         FeeService,
         FeeReportService,
+        provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])

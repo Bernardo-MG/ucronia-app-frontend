@@ -1,4 +1,3 @@
-import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeCalendar } from './fee-calendar';
 
@@ -19,162 +18,122 @@ describe('FeeCalendar', () => {
     fixture.detectChanges();
   });
 
-  // **************************************************************************
-  // General tests
-  // **************************************************************************
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // **************************************************************************
-  // Disable buttons
-  // **************************************************************************
+  describe('button enable status', () => {
 
-  it('should enable the backward button when the current year is after the start', () => {
-    component.range = { years: ["2020", "2021", "2022"] };
-    component.year = 2021;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+    it('should enable the backward button when the current year is inside the range', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2021;
+
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#previousYearButton button');
+      expect(button.disabled).toBeFalse();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button.disabled).toEqual(false);
-  });
+    it('should enable the forward button when the current year is inside the range', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2021;
 
-  it('should enable the forward button when the current year is before the end', () => {
-    component.range = { years: ["2020", "2021", "2022"] };
-    component.year = 2021;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#nextYearButton button');
+      expect(button.disabled).toBeFalse();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button.disabled).toEqual(false);
-  });
+    it('should disable the backward button when the current year is equal to the start', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2020;
 
-  it('should enable the backward button when the current year is inside the range', () => {
-    component.range = { years: ["2019", "2020", "2021"] };
-    component.year = 2020;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#previousYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button.disabled).toEqual(false);
-  });
+    it('should enable the forward button when the current year is equal to the start', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2020;
 
-  it('should enable the forward button when the current year is inside the range', () => {
-    component.range = { years: ["2019", "2020", "2021"] };
-    component.year = 2020;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#nextYearButton button');
+      expect(button.disabled).toBeFalse();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button.disabled).toEqual(false);
-  });
+    it('should enable the backward button when the current year is equal to the end', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2022;
 
-  // **************************************************************************
-  // Hide buttons
-  // **************************************************************************
+      await fixture.whenStable();
+      fixture.detectChanges();
 
-  it('should hide the forward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-
-    expect(button).toBeNull();
-  });
-
-  it('should hide the backward button by default', () => {
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-
-    expect(button).toBeNull();
-  });
-
-  it('should hide the backward button when the current year is before the range', () => {
-    component.range = { years: ["2020"] };
-    component.year = 2019;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      const button = fixture.nativeElement.querySelector('#previousYearButton button');
+      expect(button.disabled).toBeFalse();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button).toBeNull();
-  });
+    it('should disable the forward button when the current year is equal to the end', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2022;
 
-  it('should hide the forward button when the current year is before the range', () => {
-    component.range = { years: ["2020"] };
-    component.year = 2019;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#nextYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button).toBeNull();
-  });
+    it('should disable the backward button when the current year is before the start', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2019;
 
-  it('should hide the backward button when the current year is before the range', () => {
-    component.range = { years: ["2020"] };
-    component.year = 2021;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#previousYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button).toBeNull();
-  });
+    it('should disable the forward button when the current year is before the start', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2019;
 
-  it('should hide the forward button when the current year is before the range', () => {
-    component.range = { years: ["2020"] };
-    component.year = 2021;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#nextYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button).toBeNull();
-  });
+    it('should disable the backward button when the current year is after the end', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2023;
 
-  it('should hide the forward button when the current year is equal to the end', () => {
-    component.range = { years: ["2019", "2020"] };
-    component.year = 2020;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#previousYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#nextYearButton');
-    expect(button).toBeNull();
-  });
+    it('should disable the forward button when the current year is after the end', async () => {
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.year = 2023;
 
-  it('should hide the backward button when the current year is equal to the start', () => {
-    component.range = { years: ["2020", "2021"] };
-    component.year = 2020;
-    component.ngOnChanges({
-      range: new SimpleChange(null, component.range, true),
-      year: new SimpleChange(null, component.year, true)
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      const button = fixture.nativeElement.querySelector('#nextYearButton button');
+      expect(button.disabled).toBeTrue();
     });
-    fixture.detectChanges();
 
-    const button = fixture.nativeElement.querySelector('#previousYearButton');
-    expect(button).toBeNull();
   });
 
 });
