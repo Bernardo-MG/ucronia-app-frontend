@@ -16,7 +16,7 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreate } from '../fee-create/fee-create';
+import { FeeCreateUnpaid } from '../fee-create-unpaid/fee-create-unpaid';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePay } from '../fee-pay/fee-pay';
@@ -26,7 +26,7 @@ import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreate, FeePay],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreateUnpaid, FeePay],
   templateUrl: './fee-list.html'
 })
 export class FeeList {

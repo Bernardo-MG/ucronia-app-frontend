@@ -4,11 +4,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { FeeService } from '../fee-service/fee-service';
-import { FeeCreate } from './fee-create';
+import { FeeCreateUnpaid } from './fee-create-unpaid';
 
-describe('FeeCreate', () => {
-  let component: FeeCreate;
-  let fixture: ComponentFixture<FeeCreate>;
+describe('FeeCreateUnpaid', () => {
+  let component: FeeCreateUnpaid;
+  let fixture: ComponentFixture<FeeCreateUnpaid>;
   let service: FeeService;
 
   beforeEach(async () => {
@@ -18,7 +18,7 @@ describe('FeeCreate', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        FeeCreate
+        FeeCreateUnpaid
       ],
       providers: [
         { provide: FeeService, useValue: service },
@@ -29,7 +29,7 @@ describe('FeeCreate', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeCreate);
+    fixture = TestBed.createComponent(FeeCreateUnpaid);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

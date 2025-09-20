@@ -30,7 +30,7 @@
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
     @case ('create') {
-      <assoc-fee-create />
+      <assoc-fee-create-unpaid />
     }
     @case ('pay') {
       <assoc-fee-pay />

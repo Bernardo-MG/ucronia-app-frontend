@@ -17,11 +17,11 @@ import { FeePaySelectMember } from '../fee-pay-select-member/fee-pay-select-memb
 import { FeeService } from '../fee-service/fee-service';
 
 @Component({
-  selector: 'assoc-fee-create',
+  selector: 'assoc-fee-create-unpaid',
   imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, FeeCreationForm, FeePaySelectMember],
-  templateUrl: './fee-create.html'
+  templateUrl: './fee-create-unpaid.html'
 })
-export class FeeCreate extends CreateComponent<FeePayment> {
+export class FeeCreateUnpaid extends CreateComponent<FeePayment> {
 
   private readonly service = inject(FeeService);
 
