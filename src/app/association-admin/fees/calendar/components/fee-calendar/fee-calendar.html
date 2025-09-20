@@ -21,34 +21,33 @@
 </div>
 <!-- Table -->
 <div class="table-responsive" *uiBlock="waiting()">
-  <table class="table table-sm table-hover">
-    <thead class="thead-light">
+  <p-table [value]="feeCalendar()">
+    <ng-template #header>
       <tr>
-        <th scope="col">Socio</th>
-        @for (monthNumber of monthNumbers; track monthNumber) {
-          <th scope="col"> {{monthNumber}}</th>
+        <th>Socio</th>
+        @for (monthName of monthNames; track monthName) {
+          <th> {{monthName}}</th>
         }
       </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      @for (memberFees of feeCalendar(); track memberFees) {
-        <tr [ngClass]="{ 'table-warning': !memberFees.member.active}">
+    </ng-template>
+    <ng-template #body let-memberFees>
+      <tr [ngClass]="{ 'table-warning': !memberFees.member.active}">
+        <td>
+          {{memberFees.member.name.fullName}}
+        </td>
+        <!-- Month fees -->
+        @for (monthNumber of monthNumbers; track monthNumber) {
           <td>
-            {{memberFees.member.name.fullName}}
-          </td>
-          <!-- Month fees -->
-          @for (monthNumber of monthNumbers; track monthNumber) {
-            <td>
-              @if (hasMonth(memberFees.months, monthNumber)) {
-                <button type="button" class="btn btn-secondary btn-sm" role="button"
-                  routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}">
-                  <icon-success-or-failure [success]="isPaid(memberFees.months, monthNumber)" />
-                </button>
+            @if (hasMonth(memberFees.months, monthNumber)) {
+              @if(isPaid(memberFees.months, monthNumber)) {
+                <p-button icon="pi pi-check text-success" routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
+              } @else {
+                <p-button icon="pi pi-times text-danger" routerLink="{{getMonth(memberFees.months, monthNumber)}}/{{memberFees.member.number}}" rounded text />
               }
-            </td>
-          }
-        </tr>
-      }
-    </tbody>
-  </table>
+            }
+          </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

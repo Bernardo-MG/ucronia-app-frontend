@@ -4,15 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
-import { IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent } from '@bernardo-mg/icons';
+import { IconBackwardComponent, IconForwardComponent } from '@bernardo-mg/icons';
 import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, IconSuccessOrFailureComponent, BlockUiDirective],
-  templateUrl: './fee-calendar.html',
-  styleUrl: './fee-calendar.sass'
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, JustifyCenterDirective, IconBackwardComponent, IconForwardComponent, BlockUiDirective],
+  templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
 
@@ -29,7 +30,9 @@ export class FeeCalendar implements OnChanges {
 
   public year = new Date().getFullYear();
 
-  public monthNumbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+  public monthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   private index = 0;
 

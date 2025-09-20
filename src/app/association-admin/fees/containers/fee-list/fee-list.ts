@@ -8,7 +8,6 @@ import { Active } from '@app/domain/person/active';
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -18,17 +17,15 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { FeeCalendar } from '../../calendar/components/fee-calendar/fee-calendar';
 import { FeeCalendarService } from '../../calendar/services/fee-calendar-service';
-import { FeeCalendarChart } from '../../chart/containers/fee-calendar-chart/fee-calendar-chart';
 import { FeeCalendarSelection } from '../../chart/model/fee-calendar-selection';
 import { FeeEditionForm } from '../../components/fee-edition-form/fee-edition-form';
 import { FeeService } from '../../services/fee-service';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
-import { FeeUpdate } from '@app/domain/fees/fee-update';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeePaymentChart, FeeCreate, FeePay, FeeCalendarChart, ResponsiveShortColumnsDirective],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeePaymentChart, FeeCreate, FeePay],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
