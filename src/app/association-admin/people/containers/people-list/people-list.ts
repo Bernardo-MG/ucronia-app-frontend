@@ -80,23 +80,6 @@ export class PeopleList {
     this.createable = authContainer.hasPermission("person", "create");
     this.editable = authContainer.hasPermission("person", "update");
 
-    // Load edition menu
-    this.personEditionMenuItems.push(
-      {
-        label: 'Editar',
-        command: () => this.onStartEditingView('edition')
-      });
-    this.personEditionMenuItems.push(
-      {
-        label: 'Desactivar',
-        command: () => this.onSetActive(false)
-      });
-    this.personEditionMenuItems.push(
-      {
-        label: 'Desactivar renovación',
-        command: () => this.onSetRenewal(false)
-      });
-
     this.nameFilterSubject.pipe(
       debounceTime(300)
     ).subscribe(() => {
@@ -125,7 +108,7 @@ export class PeopleList {
     // Active/Deactivate toggle
     this.personEditionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: () => this.onSetActive(!isActive)
+      command: () => this.onConfirmSetActive(event, !isActive)
     });
 
     // Renewal toggle
@@ -136,6 +119,32 @@ export class PeopleList {
 
     // Show menu
     this.personEditionMenu.toggle(event);
+  }
+
+  public onConfirmSetActive(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar el usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar el usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.onSetActive(status);
+      }
+    });
   }
 
   public onSetActive(status: boolean) {
