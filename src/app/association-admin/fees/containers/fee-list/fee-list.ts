@@ -36,6 +36,7 @@ export class FeeList {
   private readonly service = inject(FeeService);
 
   public readonly createable;
+  public readonly editable;
 
   public editing = false;
 
@@ -67,6 +68,7 @@ export class FeeList {
 
     // Check permissions
     this.createable = authContainer.hasPermission("fee", "create");
+    this.editable = authContainer.hasPermission("fee", "update");
 
     // Load range
     this.feeCalendarService.getRange().subscribe(d => {

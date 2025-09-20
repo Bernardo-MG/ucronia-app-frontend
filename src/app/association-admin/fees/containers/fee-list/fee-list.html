@@ -24,6 +24,8 @@
 </div>
 <p-drawer [(visible)]="showing" position="full">
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
+  <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+    [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
