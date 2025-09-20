@@ -85,8 +85,12 @@ export class FeeEdition extends InfoEditorStatusComponent<Fee> implements AfterC
     return this.service.getOne(this.date, this.memberNumber);
   }
 
-  protected override save(toSave: Fee): Observable<Fee> {
-    return this.service.update(this.data.month, this.data.member.number, toSave);
+  protected override save(toUpdate: Fee): Observable<Fee> {
+    const update = {
+      ...toUpdate,
+      member: toUpdate.member.number
+    }
+    return this.service.update(update);
   }
 
 }

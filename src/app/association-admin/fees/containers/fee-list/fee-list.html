@@ -35,7 +35,7 @@
     }
     @case ('edition') {
       <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures"
-        [cancellable]="true" (save)="onSave($event)" (reject)="onCancel()" />
+        [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
     }
   }
 </p-drawer>

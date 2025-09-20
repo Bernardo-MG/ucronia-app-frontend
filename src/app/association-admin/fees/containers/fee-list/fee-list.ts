@@ -24,6 +24,7 @@ import { FeeEditionForm } from '../../components/fee-edition-form/fee-edition-fo
 import { FeeService } from '../../services/fee-service';
 import { FeeCreate } from '../fee-create/fee-create';
 import { FeePay } from '../fee-pay/fee-pay';
+import { FeeUpdate } from '@app/domain/fees/fee-update';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -98,8 +99,12 @@ export class FeeList {
     this.editing = false;
   }
 
-  public onSave(toCreate: Fee): void {
-    this.mutate(() => this.service.create(toCreate));
+  public onUpdate(toUpdate: Fee): void {
+    const update = {
+      ...toUpdate,
+      member: toUpdate.member.number
+    }
+    this.mutate(() => this.service.update(update));
   }
 
   private mutate(action: () => Observable<any>) {

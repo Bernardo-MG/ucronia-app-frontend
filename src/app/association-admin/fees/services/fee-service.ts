@@ -6,6 +6,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 import { Fee } from '@app/domain/fees/fee';
+import { FeeUpdate } from '@app/domain/fees/fee-update';
 
 @Injectable({
   providedIn: "root"
@@ -36,9 +37,9 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public update(date: string, memberNumber: number, data: Fee): Observable<Fee> {
+  public update(data: FeeUpdate): Observable<Fee> {
     return this.feeClient
-      .appendRoute(`/${date}/${memberNumber}`)
+      .appendRoute(`/${data.month}/${data.member}`)
       .update<SimpleResponse<Fee>>(data)
       .pipe(map(r => r.content));
   }
