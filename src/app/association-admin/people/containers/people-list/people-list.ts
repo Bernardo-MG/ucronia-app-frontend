@@ -1,19 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { PersonStatusSelect } from '@app/association-admin/people/components/person-status-select/person-status-select';
 import { Active } from '@app/domain/person/active';
+import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
 import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
+import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, Observable, Subject, throwError } from 'rxjs';
@@ -24,7 +26,7 @@ import { PeopleService } from '../../services/people-service';
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html',
   providers: [ConfirmationService, MessageService]
 })
@@ -35,6 +37,8 @@ export class PeopleList {
   private readonly service = inject(PeopleService);
 
   private readonly confirmationService = inject(ConfirmationService);
+
+  @ViewChild('personEditionMenu') personEditionMenu!: Menu;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -67,12 +71,31 @@ export class PeopleList {
 
   public failures = new FailureStore();
 
+  public readonly personEditionMenuItems: MenuItem[] = [];
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
     this.createable = authContainer.hasPermission("person", "create");
     this.editable = authContainer.hasPermission("person", "update");
+
+    // Load edition menu
+    this.personEditionMenuItems.push(
+      {
+        label: 'Editar',
+        command: () => this.onStartEditingView('edition')
+      });
+    this.personEditionMenuItems.push(
+      {
+        label: 'Desactivar',
+        command: () => this.onSetActive(false)
+      });
+    this.personEditionMenuItems.push(
+      {
+        label: 'Desactivar renovación',
+        command: () => this.onSetRenewal(false)
+      });
 
     this.nameFilterSubject.pipe(
       debounceTime(300)
@@ -81,6 +104,28 @@ export class PeopleList {
     });
 
     this.load(0);
+  }
+
+  public openEditionMenu(event: Event, person: Person) {
+    this.selectedData = person;
+    this.personEditionMenu.toggle(event);
+  }
+
+  public onSetActive(status: boolean) {
+    if (this.selectedData.membership === undefined) {
+      this.selectedData.membership = new Membership();
+    }
+    this.selectedData.membership.active = status;
+    this.selectedData.membership.renew = status;
+    this.onUpdate(this.selectedData);
+  }
+
+  public onSetRenewal(status: boolean) {
+    if (this.selectedData.membership === undefined) {
+      this.selectedData.membership = new Membership();
+    }
+    this.selectedData.membership.renew = status;
+    this.onUpdate(this.selectedData);
   }
 
   public onStartEditingView(view: string): void {

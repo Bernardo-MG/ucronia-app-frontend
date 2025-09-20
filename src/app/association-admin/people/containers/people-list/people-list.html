@@ -1,4 +1,5 @@
 <p-confirmpopup />
+<p-menu #personEditionMenu [model]="personEditionMenuItems" [popup]="true" />
 <header>
   <h1 class="border-bottom">Gente</h1>
 </header>
@@ -74,7 +75,7 @@
             <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
               (click)="onShowInfo(person)" rounded text />
             <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-              [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, person)" rounded text />
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
               [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, person.number)" rounded text />
           </td>
