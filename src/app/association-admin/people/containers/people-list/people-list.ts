@@ -71,7 +71,7 @@ export class PeopleList {
 
   public failures = new FailureStore();
 
-  public readonly personEditionMenuItems: MenuItem[] = [];
+  public personEditionMenuItems: MenuItem[] = [];
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -108,6 +108,33 @@ export class PeopleList {
 
   public openEditionMenu(event: Event, person: Person) {
     this.selectedData = person;
+
+    // Rebuild menu items dynamically
+    this.personEditionMenuItems = [];
+
+    // Edit option is always available
+    this.personEditionMenuItems.push({
+      label: 'Editar',
+      command: () => this.onStartEditingView('edition')
+    });
+
+    // Determine current membership values (default to active=true, renew=true if undefined)
+    const isActive = !!this.selectedData.membership?.active;
+    const canRenew = !!this.selectedData.membership?.renew;
+
+    // Active/Deactivate toggle
+    this.personEditionMenuItems.push({
+      label: isActive ? 'Desactivar' : 'Activar',
+      command: () => this.onSetActive(!isActive)
+    });
+
+    // Renewal toggle
+    this.personEditionMenuItems.push({
+      label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
+      command: () => this.onSetRenewal(!canRenew)
+    });
+
+    // Show menu
     this.personEditionMenu.toggle(event);
   }
 
