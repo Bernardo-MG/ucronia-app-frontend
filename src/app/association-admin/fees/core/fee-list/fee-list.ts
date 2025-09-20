@@ -19,7 +19,7 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreateUnpaid } from '../fee-create-unpaid/fee-create-unpaid';
+import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
@@ -29,7 +29,7 @@ import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeeCreateUnpaid, FeePayForm, MemberSelectStepper],
+  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-list.html'
 })
 export class FeeList {
@@ -115,6 +115,11 @@ export class FeeList {
   public onPay(data: FeePayment): void {
     this.loading = true;
     this.mutate(() => this.service.pay(data));
+  }
+
+  public onCreateUnpaid(data: Fee): void {
+    this.loading = true;
+    this.mutate(() => this.service.create(data));
   }
 
   private mutate(action: () => Observable<any>) {

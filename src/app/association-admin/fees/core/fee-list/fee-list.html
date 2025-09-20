@@ -30,7 +30,10 @@
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
     @case ('create') {
-      <assoc-fee-create-unpaid />
+      <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+        <assoc-fee-creation-form [waiting]="loading" [failures]="failures" [member]="selectedMember"
+          (save)="onCreateUnpaid($event)" />
+      </assoc-member-select-stepper>
     }
     @case ('pay') {
       <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
