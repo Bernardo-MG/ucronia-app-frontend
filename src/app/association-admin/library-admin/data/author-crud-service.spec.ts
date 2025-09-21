@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AuthorCrudService } from '../author/author-crud-service';
+import { AuthorCrudService } from './author-crud-service';
 
 describe('AuthorCrudService', () => {
   let service: AuthorCrudService;
