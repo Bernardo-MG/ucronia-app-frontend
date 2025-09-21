@@ -2,7 +2,7 @@
 import { Component, inject, OnDestroy } from '@angular/core';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
-import { FeeReportService } from '../fee-report-service/fee-report-service';
+import { FeeReportService } from '../fee-report-service';
 
 @Component({
   selector: 'assoc-fee-payment-chart',

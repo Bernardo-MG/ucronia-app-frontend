@@ -21,7 +21,7 @@ import { debounceTime, Observable, Subject, throwError } from 'rxjs';
 import { PeopleCreationForm } from '../people-creation-form/people-creation-form';
 import { PeopleEditionForm } from '../people-edition-form/people-edition-form';
 import { PeopleInfo } from '../people-info/people-info';
-import { PeopleService } from '../people-service/people-service';
+import { PeopleService } from '../people-service';
 import { PersonStatusSelect } from '../person-status-select/person-status-select';
 
 @Component({

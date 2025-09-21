@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Author } from '@app/domain/library/author';
+import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { BookType } from '@app/domain/library/book-type';
+import { BookUpdate } from '@app/domain/library/book-update';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
-import { Language } from '@app/domain/library/language';
 import { Publisher } from '@app/domain/library/publisher';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
@@ -14,8 +15,6 @@ import { Person } from '@app/domain/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { BookInfo } from '@app/domain/library/book-info';
-import { BookUpdate } from '@app/domain/library/book-update';
 
 @Injectable({
   providedIn: "root"

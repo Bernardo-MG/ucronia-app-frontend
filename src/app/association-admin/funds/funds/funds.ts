@@ -15,11 +15,11 @@ import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
-import { TransactionCalendarService } from '../transaction-calendar-service/transaction-calendar-service';
+import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { LibraryAdminBookInfo } from '../transaction-info/transaction-info';
-import { TransactionReportService } from '../transaction-report-service/transaction-report-service';
-import { TransactionService } from '../transaction-service/transaction-service';
+import { TransactionReportService } from '../transaction-report-service';
+import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
