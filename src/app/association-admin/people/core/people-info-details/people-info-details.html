@@ -38,7 +38,7 @@
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().birthDate}}
+      {{data().birthDate | date:'yyyy-MM-dd'}}
     }
   </div>
 </div>

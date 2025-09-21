@@ -1,10 +1,11 @@
+import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { Person } from '@app/domain/person/person';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-people-info-details',
-  imports: [SkeletonModule],
+  imports: [SkeletonModule, DatePipe],
   templateUrl: './people-info-details.html'
 })
 export class PeopleInfoDetails {

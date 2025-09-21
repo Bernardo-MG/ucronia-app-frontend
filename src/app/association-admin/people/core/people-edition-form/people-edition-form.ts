@@ -27,7 +27,7 @@ export class PeopleEditionForm extends FormComponent<Person> {
         lastName: ['']
       }),
       identifier: [''],
-      birthDate: [''],
+      birthDate: [new Date()],
       phone: [''],
       membership: fb.group({
         active: [false],
