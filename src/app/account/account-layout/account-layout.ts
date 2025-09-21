@@ -6,9 +6,9 @@ import { MenuModule } from 'primeng/menu';
 @Component({
   selector: 'account-layout',
   imports: [RouterModule, MenuModule],
-  templateUrl: './account-layout.container.html'
+  templateUrl: './account-layout.html'
 })
-export class AccountLayoutContainer {
+export class AccountLayout {
 
   public readonly menus: MenuItem[];
 

@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AccountChangePasswordFormComponent } from './account-change-password-form.component';
+import { AccountChangePasswordForm } from './account-change-password-form';
 
-describe('AccountChangePasswordFormComponent', () => {
-  let component: AccountChangePasswordFormComponent;
-  let fixture: ComponentFixture<AccountChangePasswordFormComponent>;
+describe('AccountChangePasswordForm', () => {
+  let component: AccountChangePasswordForm;
+  let fixture: ComponentFixture<AccountChangePasswordForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        AccountChangePasswordFormComponent
+        AccountChangePasswordForm
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountChangePasswordFormComponent);
+    fixture = TestBed.createComponent(AccountChangePasswordForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

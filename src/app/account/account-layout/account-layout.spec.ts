@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { AccountLayoutContainer } from './account-layout.container';
+import { AccountLayout } from './account-layout';
 
-describe('AccountLayoutContainer', () => {
-  let component: AccountLayoutContainer;
-  let fixture: ComponentFixture<AccountLayoutContainer>;
+describe('AccountLayout', () => {
+  let component: AccountLayout;
+  let fixture: ComponentFixture<AccountLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccountLayoutContainer
+        AccountLayout
       ],
       providers: [
         provideAnimationsAsync(),
@@ -23,7 +23,7 @@ describe('AccountLayoutContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountLayoutContainer);
+    fixture = TestBed.createComponent(AccountLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

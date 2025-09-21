@@ -49,12 +49,12 @@ export const routes: Routes = [
           },
           {
             path: 'profile',
-            loadComponent: () => import('./account/containers/account-profile-frontpage/account-profile-frontpage.container').then(m => m.AccountProfileFrontpageContainer),
+            loadComponent: () => import('./account/account-profile-frontpage/account-profile-frontpage').then(m => m.AccountProfileFrontpage),
             data: { breadcrumb: 'Perfil' }
           },
           {
             path: 'password',
-            loadComponent: () => import('./account/containers/account-password-change/account-password-change.container').then(m => m.AccountPasswordChangeContainer),
+            loadComponent: () => import('./account/account-password-change/account-password-change').then(m => m.AccountPasswordChange),
             data: { breadcrumb: 'Contraseña' }
           }
         ]

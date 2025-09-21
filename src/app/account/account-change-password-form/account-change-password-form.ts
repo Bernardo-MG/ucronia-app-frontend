@@ -6,11 +6,11 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } f
 import { WaitingDirective } from '@bernardo-mg/ui';
 
 @Component({
-    selector: 'account-change-password-form',
-    imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
-    templateUrl: './account-change-password-form.component.html'
+  selector: 'account-change-password-form',
+  imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  templateUrl: './account-change-password-form.html'
 })
-export class AccountChangePasswordFormComponent extends FormComponent<PasswordChange> {
+export class AccountChangePasswordForm extends FormComponent<PasswordChange> {
   private fb = inject(FormBuilder);
 
 
