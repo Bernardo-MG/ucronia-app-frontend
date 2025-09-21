@@ -15,22 +15,54 @@ const routes: Routes = [
       {
         path: 'activity',
         canActivate: [ResourceGuard("activity_calendar", "view")],
-        loadChildren: () => import('@app/association/activity-calendar/activity-calendar.module').then(m => m.ActivityCalendarModule)
+        loadComponent: () => import('./activity-calendar/containers/activity-calendar-frontpage/activity-calendar-frontpage.container').then(m => m.ActivityCalendarFrontpageContainer)
       },
       {
         path: 'members',
         canActivate: [ResourceGuard("member", "view")],
-        loadChildren: () => import('@app/association/members/members.module').then(m => m.MembersModule)
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./members/containers/member-list/member-list.container').then(m => m.MemberListContainer),
+            canActivate: [ResourceGuard("member", "view")],
+            data: { breadcrumb: '' }
+          },
+          {
+            path: ':number',
+            loadComponent: () => import('./members/containers/member-info/member-info.container').then(m => m.MemberInfoContainer),
+            canActivate: [ResourceGuard("member", "read")],
+            data: { breadcrumb: 'Info' }
+          }
+        ]
       },
       {
         path: 'myFees',
         canActivate: [ResourceGuard("my_fees", "view")],
-        loadChildren: () => import('@app/association/my-fees/my-fees.module').then(m => m.MyFeesModule)
+        loadComponent: () => import('./my-fees/containers/my-fees-list/my-fees-list.container').then(m => m.MyFeesFrontpageContainer)
       },
       {
         path: 'library',
         canActivate: [ResourceGuard("library", "view")],
-        loadChildren: () => import('@app/association/library/library.module').then(m => m.LibraryModule)
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./library/containers/library-list/library-list.container').then(m => m.LibraryListContainer),
+            canActivate: [ResourceGuard("library", "view")],
+            data: { breadcrumb: 'Libros' }
+          },
+          {
+            path: 'games/:index',
+            loadComponent: () => import('./library/containers/library-game-book-info/library-game-book-info.container').then(m => m.LibraryGameBookInfoContainer),
+            canActivate: [ResourceGuard("library_book", "read")],
+            data: { breadcrumb: 'Juego' }
+          },
+          {
+            path: 'fiction/:index',
+            loadComponent: () => import('./library/containers/library-fiction-book-info/library-fiction-book-info.container').then(m => m.LibraryFictionBookInfoContainer),
+            canActivate: [ResourceGuard("library_book", "read")],
+            data: { breadcrumb: 'Ficción' }
+          }
+        ]
       }
     ]
   }
