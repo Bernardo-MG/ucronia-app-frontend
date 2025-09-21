@@ -5,9 +5,9 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
-import { UserActivationFormComponent } from '../../components/user-activation-form/user-activation-form.component';
-import { UserActivate } from '../../models/user-activate';
-import { AccessUserActivateService } from '../../services/user-activate.service';
+import { UserActivate } from '../models/user-activate';
+import { AccessUserActivateService } from '../services/user-activate-service';
+import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
@@ -16,10 +16,10 @@ import { AccessUserActivateService } from '../../services/user-activate.service'
  */
 @Component({
   selector: 'access-user-activation',
-  imports: [CardModule, UserActivationFormComponent, BlockUIModule],
+  imports: [CardModule, UserActivationForm, BlockUIModule],
   templateUrl: './user-activation.container.html'
 })
-export class UserActivationContainer {
+export class UserActivation {
 
   private readonly service = inject(AccessUserActivateService);
 

@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
 import { of } from 'rxjs';
-import { Email } from './models/email';
-import { Password } from './models/password';
+import { Email } from '../models/email';
+import { Password } from '../models/password';
 import { PasswordResetService } from './password-reset-service';
 
 describe('PasswordResetService', () => {

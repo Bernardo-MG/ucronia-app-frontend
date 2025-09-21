@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { Email } from '../models/email';
+import { Email } from '../../models/email';
 
 /**
  * Password reset request form component. Dumb component for just handling the form.

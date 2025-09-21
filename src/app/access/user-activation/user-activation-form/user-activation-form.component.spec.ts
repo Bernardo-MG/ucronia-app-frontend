@@ -1,22 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FailureStore } from '@bernardo-mg/request';
-import { UserActivationFormComponent } from './user-activation-form.component';
+import { UserActivationForm } from './user-activation-form.component';
 
-describe('UserActivationFormComponent', () => {
-  let component: UserActivationFormComponent;
-  let fixture: ComponentFixture<UserActivationFormComponent>;
+describe('UserActivationForm', () => {
+  let component: UserActivationForm;
+  let fixture: ComponentFixture<UserActivationForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        UserActivationFormComponent
+        UserActivationForm
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivationFormComponent);
+    fixture = TestBed.createComponent(UserActivationForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

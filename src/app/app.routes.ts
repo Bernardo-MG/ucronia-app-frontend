@@ -33,7 +33,7 @@ export const routes: Routes = [
         // Activate user form
         path: 'users/activate',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./access/user-activation/containers/user-activation/user-activation.container').then(m => m.UserActivationContainer)
+        loadComponent: () => import('./access/user-activation/user-activation/user-activation.container').then(m => m.UserActivation)
       },
       // Private routes
       // Security

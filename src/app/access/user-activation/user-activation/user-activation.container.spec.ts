@@ -4,17 +4,17 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
-import { AccessUserActivateService } from '../../services/user-activate.service';
-import { UserActivationContainer } from './user-activation.container';
+import { AccessUserActivateService } from '../services/user-activate-service';
+import { UserActivation } from './user-activation.container';
 
-describe('UserActivationContainer', () => {
-  let component: UserActivationContainer;
-  let fixture: ComponentFixture<UserActivationContainer>;
+describe('UserActivation', () => {
+  let component: UserActivation;
+  let fixture: ComponentFixture<UserActivation>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        UserActivationContainer
+        UserActivation
       ],
       providers: [
         AccessUserActivateService,
@@ -25,7 +25,7 @@ describe('UserActivationContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivationContainer);
+    fixture = TestBed.createComponent(UserActivation);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

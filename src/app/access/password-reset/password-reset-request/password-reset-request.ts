@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Email } from '../models/email';
+import { Email } from '../../models/email';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
 import { PasswordResetService } from '../password-reset-service';
 

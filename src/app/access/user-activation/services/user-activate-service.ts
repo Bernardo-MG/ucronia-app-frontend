@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { Password } from '@app/access/models/password';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { PasswordReset } from '@app/access/password-reset/models/password';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ export class AccessUserActivateService {
     this.client = clientProvider.url(environment.apiUrl + '/security/user/activate');
   }
 
-  public activateUser(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
+  public activateUser(token: string, reset: Password): Observable<SimpleResponse<void>> {
     return this.client
       // Validate token request
       .appendRoute(`/${token}`)

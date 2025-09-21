@@ -3,8 +3,8 @@ import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { PasswordReset } from './models/password';
-import { PasswordResetRequest } from './models/email';
+import { PasswordReset } from '../models/password';
+import { PasswordResetRequest } from '../models/email';
 
 @Injectable({
   providedIn: "root"

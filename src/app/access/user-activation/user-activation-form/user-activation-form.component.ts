@@ -17,7 +17,7 @@ import { MessageModule } from 'primeng/message';
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
-export class UserActivationFormComponent extends FormComponent<ConfirmPassword> {
+export class UserActivationForm extends FormComponent<ConfirmPassword> {
 
   private formBuilder = inject(FormBuilder);
 

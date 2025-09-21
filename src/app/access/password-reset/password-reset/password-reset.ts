@@ -5,7 +5,7 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
-import { Password } from '../models/password';
+import { Password } from '../../models/password';
 import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
 
