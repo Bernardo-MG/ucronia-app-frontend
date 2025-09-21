@@ -56,19 +56,19 @@
           <td>{{ person.name.fullName }}</td>
           <td>
             @switch (person.membership === null) {
-            @case (true) {
-            No es socio
-            }
-            @case (false) {
-            @switch (person.membership?.active) {
-            @case (true) {
-            <span class="pi pi-check text-success"></span>
-            }
-            @case (false) {
-            <span class="pi pi-times text-warning"></span>
-            }
-            }
-            }
+              @case (true) {
+                No es socio
+              }
+              @case (false) {
+                @switch (person.membership?.active) {
+                  @case (true) {
+                    <span class="pi pi-check text-success"></span>
+                  }
+                  @case (false) {
+                    <span class="pi pi-times text-warning"></span>
+                  }
+                }
+              }
             }
           </td>
           <td>
@@ -89,12 +89,12 @@
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
-  @case ('creation') {
-  <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
-  }
-  @case ('edition') {
-  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
-    (save)="onUpdate($event)" />
-  }
+    @case ('creation') {
+      <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+    }
+    @case ('edition') {
+      <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
+        (save)="onUpdate($event)" />
+    }
   }
 </p-drawer>

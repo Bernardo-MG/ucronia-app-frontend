@@ -1,11 +1,10 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PersonStatusSelect } from '@app/association-admin/people/components/person-status-select/person-status-select';
+import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/people/core/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
-import { MembershipEvolutionChartWidgetContainer } from '@app/widget/membership-evolution/containers/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -19,10 +18,11 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, Observable, Subject, throwError } from 'rxjs';
-import { PeopleCreationForm } from '../../components/people-creation-form/people-creation-form';
-import { PeopleEditionForm } from '../../components/people-edition-form/people-edition-form';
-import { PeopleInfo } from '../../components/people-info/people-info';
-import { PeopleService } from '../../services/people-service';
+import { PeopleCreationForm } from '../people-creation-form/people-creation-form';
+import { PeopleEditionForm } from '../people-edition-form/people-edition-form';
+import { PeopleInfo } from '../people-info/people-info';
+import { PeopleService } from '../people-service/people-service';
+import { PersonStatusSelect } from '../person-status-select/person-status-select';
 
 @Component({
   selector: 'assoc-people-list',

@@ -8,7 +8,7 @@
       (change)="onSelectStartMonth($event)">
       @for (selectionMonth of months(); track selectionMonth) {
         <option [selected]="selectionMonth === startMonth()" [value]="selectionMonth">
-        {{selectionMonth}}</option>
+          {{selectionMonth}}</option>
       }
     </select>
   </div>
@@ -20,7 +20,7 @@
       (change)="onSelectEndMonth($event)">
       @for (selectionMonth of months(); track selectionMonth) {
         <option [selected]="selectionMonth === endMonth()" [value]="selectionMonth">
-        {{selectionMonth}}</option>
+          {{selectionMonth}}</option>
       }
     </select>
   </div>

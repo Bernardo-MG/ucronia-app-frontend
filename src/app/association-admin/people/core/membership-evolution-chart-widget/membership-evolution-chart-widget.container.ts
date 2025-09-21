@@ -2,8 +2,8 @@
 import { Component, inject } from '@angular/core';
 import { MemberBalance } from '@app/domain/members/member-balance';
 import { CardModule } from 'primeng/card';
-import { MembershipEvolutionChartComponent } from '../../components/membership-evolution-chart/membership-evolution-chart.component';
-import { MembershipEvolutionService } from '../../services/membership-evolution.service';
+import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
+import { MembershipEvolutionService } from '../membership-evolution-service/membership-evolution-service';
 
 @Component({
   selector: 'widget-membership-evolution-chart',
