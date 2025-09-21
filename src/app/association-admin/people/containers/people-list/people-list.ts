@@ -237,7 +237,7 @@ export class PeopleList {
         severity: 'danger'
       },
       accept: () => {
-        this.service.delete(number);
+        this.mutate(() => this.service.delete(number));
       }
     });
   }
