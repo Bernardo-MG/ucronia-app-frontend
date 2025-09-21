@@ -1,7 +1,6 @@
 
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
 import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, SaveControlsComponent } from '@bernardo-mg/form';
 
@@ -12,18 +11,11 @@ import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective, Sa
 })
 export class PeopleEditionForm extends FormComponent<Person> {
 
-  public get member() {
-    return !!((this.data) && (this.data.membership));
-  }
-
   constructor() {
     const fb = inject(FormBuilder);
 
     super();
 
-    const membership = new Membership();
-    membership.active = true;
-    membership.renew = true;
     this.form = fb.group({
       number: [-1],
       name: fb.group({
@@ -33,21 +25,11 @@ export class PeopleEditionForm extends FormComponent<Person> {
       identifier: [''],
       birthDate: [''],
       phone: [''],
-      membership: membership
+      membership: fb.group({
+        active: [false],
+        renew: [false]
+      })
     });
-  }
-
-  public onChangeMemberStatus(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
-    if ((this.data) && (this.data.membership)) {
-      if (checkbox.checked) {
-        this.data.membership.active = true;
-        this.data.membership.renew = true;
-      } else if (this.data) {
-        this.data.membership.active = false;
-        this.data.membership.renew = false;
-      }
-    }
   }
 
 }
