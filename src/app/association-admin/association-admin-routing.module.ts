@@ -9,7 +9,7 @@ const routes: Routes = [
       {
         path: 'people',
         canActivate: [ResourceGuard("person", "view")],
-        loadComponent: () => import('./people/core/people-list/people-list').then(m => m.PeopleList)
+        loadComponent: () => import('./people/people-list/people-list').then(m => m.PeopleList)
       },
       {
         path: 'library',
@@ -19,12 +19,12 @@ const routes: Routes = [
       {
         path: 'fees',
         canActivate: [ResourceGuard("fee", "view")],
-        loadComponent: () => import('./fees/core/fee-list/fee-list').then(m => m.FeeList)
+        loadComponent: () => import('./fees/fee-list/fee-list').then(m => m.FeeList)
       },
       {
         path: 'funds',
         canActivate: [ResourceGuard("funds", "view")],
-        loadComponent: () => import('./funds/core/funds/funds').then(m => m.Funds)
+        loadComponent: () => import('./funds/funds/funds').then(m => m.Funds)
       }
     ]
   }
