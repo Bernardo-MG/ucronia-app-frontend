@@ -2,28 +2,30 @@
   <!-- First name -->
   <div formGroupName="name">
     <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="firstNameInput" formControlName="firstName" class="w-100" />
+      <input pInputText type="text" id="firstNameInput" formControlName="firstName"
+        [invalid]="isFieldInvalid('name.firstName')" class="w-100" />
       <label for="firstNameInput">Nombre</label>
     </p-floatlabel>
     <div class="mb-2">
-      @for (failure of failures().getFailures('firstName'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+      @for (failure of failures().getFailures('name.firstName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
       }
     </div>
   </div>
   <!-- Last name -->
   <div formGroupName="name">
     <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="lastNameInput" formControlName="lastName" class="w-100" />
+      <input pInputText type="text" id="lastNameInput" formControlName="lastName"
+        [invalid]="isFieldInvalid('name.lastName')" class="w-100" />
       <label for="lastNameInput">Apellidos</label>
     </p-floatlabel>
     <div class="mb-2">
-      @for (failure of failures().getFailures('lastName'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+      @for (failure of failures().getFailures('name.lastName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
       }
     </div>
   </div>
