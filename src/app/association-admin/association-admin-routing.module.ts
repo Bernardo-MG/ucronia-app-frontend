@@ -26,7 +26,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () => import('./library-admin/author/library-admin-author-list/library-admin-author-list').then(m => m.LibraryAdminAuthorList),
+                loadComponent: () => import('./library-admin/data/library-admin-author-list/library-admin-author-list').then(m => m.LibraryAdminAuthorList),
                 canActivate: [ResourceGuard("library_author", "view")],
                 data: { breadcrumb: '' }
               }
@@ -50,7 +50,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () => import('./library-admin/publisher/library-admin-publisher-list/library-admin-publisher-list').then(m => m.LibraryAdminPublisherList),
+                loadComponent: () => import('./library-admin/data/library-admin-publisher-list/library-admin-publisher-list').then(m => m.LibraryAdminPublisherList),
                 canActivate: [ResourceGuard("library_publisher", "view")],
                 data: { breadcrumb: '' }
               }
@@ -62,7 +62,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () => import('./library-admin/book-type/library-admin-book-type-list/library-admin-book-type-list').then(m => m.LibraryAdminBookTypeList),
+                loadComponent: () => import('./library-admin/data/library-admin-book-type-list/library-admin-book-type-list').then(m => m.LibraryAdminBookTypeList),
                 canActivate: [ResourceGuard("library_book_type", "view")],
                 data: { breadcrumb: '' }
               }
@@ -74,7 +74,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () => import('./library-admin/game-system/library-admin-game-system-list/library-admin-game-system-list').then(m => m.LibraryAdminGameSystemList),
+                loadComponent: () => import('./library-admin/data/library-admin-game-system-list/library-admin-game-system-list').then(m => m.LibraryAdminGameSystemList),
                 canActivate: [ResourceGuard("library_game_system", "view")],
                 data: { breadcrumb: '' }
               }
