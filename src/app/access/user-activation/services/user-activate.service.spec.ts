@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { PasswordReset } from '@app/access/password-reset/models/password-reset';
+import { PasswordReset } from '@app/access/password-reset/models/password';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
 import { of } from 'rxjs';
 import { AccessUserActivateService } from './user-activate.service';

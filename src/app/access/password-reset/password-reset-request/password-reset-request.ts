@@ -1,19 +1,19 @@
 
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { PasswordResetRequestFormComponent } from '../../components/password-reset-request-form/password-reset-request-form.component';
-import { PasswordResetRequest } from '../../models/email';
-import { PasswordResetService } from '../../password-reset-service';
+import { Email } from '../models/email';
+import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
+import { PasswordResetService } from '../password-reset-service';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
   selector: 'login-password-reset-request',
-  imports: [CardModule, PasswordResetRequestFormComponent],
-  templateUrl: './password-reset-request.container.html'
+  imports: [CardModule, PasswordResetRequestForm],
+  templateUrl: './password-reset-request.html'
 })
-export class PasswordResetRequestContainer {
+export class PasswordResetRequest {
 
   private readonly service = inject(PasswordResetService);
 
@@ -27,7 +27,8 @@ export class PasswordResetRequestContainer {
    * 
    * @param resetPassword password reset data
    */
-  public onPasswordResetRequest(resetPassword: PasswordResetRequest) {
+  public onPasswordResetRequest(resetPassword: Email) {
+    // TODO: maybe an string is enough
     this.service.requestResetPassword(resetPassword).subscribe();
     this.finished = true;
   }

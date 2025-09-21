@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PasswordResetFormComponent } from './password-reset-form.component';
 import { By } from '@angular/platform-browser';
-import { FailureStore, FieldFailure } from '@bernardo-mg/request';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FailureStore } from '@bernardo-mg/request';
+import { PasswordResetForm } from './password-reset-form';
 
-describe('PasswordResetFormComponent', () => {
-  let component: PasswordResetFormComponent;
-  let fixture: ComponentFixture<PasswordResetFormComponent>;
+describe('PasswordResetForm', () => {
+  let component: PasswordResetForm;
+  let fixture: ComponentFixture<PasswordResetForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         BrowserAnimationsModule,
-        PasswordResetFormComponent
+        PasswordResetForm
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetFormComponent);
+    fixture = TestBed.createComponent(PasswordResetForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

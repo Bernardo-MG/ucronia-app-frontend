@@ -4,7 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordResetRequest } from '../../models/password-reset-request';
+import { Email } from '../models/email';
 
 /**
  * Password reset request form component. Dumb component for just handling the form.
@@ -12,11 +12,11 @@ import { PasswordResetRequest } from '../../models/password-reset-request';
 @Component({
   selector: 'login-password-reset-request-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
-  templateUrl: './password-reset-request-form.component.html'
+  templateUrl: './password-reset-request-form.html'
 })
-export class PasswordResetRequestFormComponent {
+export class PasswordResetRequestForm {
 
-  public readonly save = output<PasswordResetRequest>();
+  public readonly save = output<Email>();
 
   public form: any;
 

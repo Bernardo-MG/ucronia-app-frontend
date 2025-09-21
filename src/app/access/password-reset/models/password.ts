@@ -1,4 +1,4 @@
-export class PasswordReset {
+export class Password {
   constructor(
     public password = ''
   ) { }

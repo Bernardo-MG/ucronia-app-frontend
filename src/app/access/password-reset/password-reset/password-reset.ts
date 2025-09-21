@@ -5,9 +5,9 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
-import { PasswordResetFormComponent } from '../../components/password-reset-form/password-reset-form.component';
-import { PasswordReset } from '../../models/password';
-import { PasswordResetService } from '../../password-reset-service';
+import { Password } from '../models/password';
+import { PasswordResetForm } from '../password-reset-form/password-reset-form';
+import { PasswordResetService } from '../password-reset-service';
 
 /**
  * Password reset. Changes the password for an existing user, identified by a token.
@@ -16,10 +16,10 @@ import { PasswordResetService } from '../../password-reset-service';
  */
 @Component({
   selector: 'login-password-reset',
-  imports: [CardModule, BlockUIModule, PasswordResetFormComponent],
-  templateUrl: './password-reset.container.html'
+  imports: [CardModule, BlockUIModule, PasswordResetForm],
+  templateUrl: './password-reset.html'
 })
-export class PasswordResetContainer {
+export class PasswordReset {
 
   private readonly service = inject(PasswordResetService);
 
@@ -70,7 +70,8 @@ export class PasswordResetContainer {
 
     this.failures.clear();
 
-    const reset = new PasswordReset(password);
+    // TODO: maybe with a string is enough
+    const reset = new Password(password);
     this.service.resetPassword(this.token, reset).subscribe({
       next: response => {
         this.status = 'finished';

@@ -2,19 +2,19 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
-import { PasswordResetService } from '../../services/password-reset.service';
-import { PasswordResetContainer } from './password-reset.container';
-import { FailureResponse, FailureStore, FieldFailure } from '@bernardo-mg/request';
+import { PasswordResetService } from '../password-reset-service';
+import { PasswordReset } from './password-reset';
 
-describe('PasswordResetContainer', () => {
-  let component: PasswordResetContainer;
-  let fixture: ComponentFixture<PasswordResetContainer>;
+describe('PasswordReset', () => {
+  let component: PasswordReset;
+  let fixture: ComponentFixture<PasswordReset>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PasswordResetContainer
+        PasswordReset
       ],
       providers: [
         PasswordResetService,
@@ -25,7 +25,7 @@ describe('PasswordResetContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetContainer);
+    fixture = TestBed.createComponent(PasswordReset);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { PasswordResetRequestFormComponent } from './password-reset-request-form.component';
+import { PasswordResetRequestForm } from './password-reset-request-form';
 
-describe('PasswordResetRequestFormComponent', () => {
-  let component: PasswordResetRequestFormComponent;
-  let fixture: ComponentFixture<PasswordResetRequestFormComponent>;
+describe('PasswordResetRequestForm', () => {
+  let component: PasswordResetRequestForm;
+  let fixture: ComponentFixture<PasswordResetRequestForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PasswordResetRequestFormComponent
+        PasswordResetRequestForm
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetRequestFormComponent);
+    fixture = TestBed.createComponent(PasswordResetRequestForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

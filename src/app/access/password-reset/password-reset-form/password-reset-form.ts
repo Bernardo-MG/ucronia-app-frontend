@@ -2,12 +2,12 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmPassword } from '@app/access/models/confirm-password';
+import { confirmPasswordValidator } from '@app/access/shared/validators/confirm-password-validator';
 import { FormComponent } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { confirmPasswordValidator } from '../../../shared/validators/confirm-password-validator';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
@@ -15,9 +15,9 @@ import { confirmPasswordValidator } from '../../../shared/validators/confirm-pas
 @Component({
   selector: 'login-password-reset-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
-  templateUrl: './password-reset-form.component.html'
+  templateUrl: './password-reset-form.html'
 })
-export class PasswordResetFormComponent extends FormComponent<ConfirmPassword> {
+export class PasswordResetForm extends FormComponent<ConfirmPassword> {
 
   constructor() {
     super();
