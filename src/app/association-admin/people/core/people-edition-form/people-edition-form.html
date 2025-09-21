@@ -8,9 +8,9 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('name.firstName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
@@ -23,9 +23,9 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('name.lastName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
@@ -37,9 +37,9 @@
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('birthDate'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{failure.message}}
-    </p-message>
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
   </div>
   <!-- Identifier -->
@@ -51,26 +51,24 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('identifier'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
   <!-- Phone -->
-  <div formGroupName="name">
-    <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="phoneInput" formControlName="phone" [invalid]="isFieldInvalid('phone')"
-        class="w-100" />
-      <label for="phoneInput">Teléfono</label>
-    </p-floatlabel>
-    <div class="mb-2">
-      @for (failure of failures().getFailures('phone'); track failure) {
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="phoneInput" formControlName="phone" [invalid]="isFieldInvalid('phone')"
+      class="w-100" />
+    <label for="phoneInput">Teléfono</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('phone'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{failure.message}}
       </p-message>
-      }
-    </div>
+    }
   </div>
   <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
     [cancellable]="cancellable" (reject)="onCancel()" />
