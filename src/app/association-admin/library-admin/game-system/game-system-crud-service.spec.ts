@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { GameSystemCrudService } from './game-system-crud-service';
+import { GameSystemCrudService } from './game-system-crud-service/game-system-crud-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('GameSystemCrudService', () => {

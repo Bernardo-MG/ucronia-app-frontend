@@ -27,7 +27,7 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { Observable, throwError } from 'rxjs';
-import { BookAdminService } from '../book-admin-service/book-admin-service';
+import { BookAdminService } from '../book-admin-service';
 import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-form/library-admin-book-creation-form';
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';
 import { LibraryAdminBookEditionForm } from '../library-admin-book-edition-form/library-admin-book-edition-form';

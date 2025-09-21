@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { EMPTY } from 'rxjs';
-import { FeeService } from '../fee-service/fee-service';
+import { FeeService } from '../fee-service';
 import { FeeInfo } from './fee-info';
 
 describe('FeeInfo', () => {

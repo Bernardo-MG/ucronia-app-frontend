@@ -17,14 +17,14 @@ import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
+import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
-import { FeeService } from '../fee-service/fee-service';
+import { FeeService } from '../fee-service';
 import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({

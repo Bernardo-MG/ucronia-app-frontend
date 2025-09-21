@@ -1,17 +1,20 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PeopleService } from './people-service';
+import { TransactionService } from './transaction-service/transaction-service';
 
-describe('PeopleService', () => {
-  let service: PeopleService;
+describe('TransactionService', () => {
+  let service: TransactionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-    });
-    service = TestBed.inject(PeopleService);
+    providers: [
+        TransactionService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+    ]
+});
+    service = TestBed.inject(TransactionService);
   });
 
   it('should be created', () => {

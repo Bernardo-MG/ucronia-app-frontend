@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { AuthorCrudService } from '../author-crud-service/author-crud-service';
+import { AuthorCrudService } from '../author-crud-service';
 import { LibraryAdminAuthorList } from './library-admin-author-list';
 
 describe('LibraryAdminAuthorListContainer', () => {

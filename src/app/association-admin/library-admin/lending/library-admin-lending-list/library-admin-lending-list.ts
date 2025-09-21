@@ -7,7 +7,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { BookLendingService } from '../book-lending-service/book-lending-service';
+import { BookLendingService } from '../book-lending-service';
 
 @Component({
   selector: 'app-library-admin-lending-list',
