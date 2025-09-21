@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
-import { AccessUserActivateService } from '../services/user-activate-service';
+import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivation } from './user-activation.container';
 
 describe('UserActivation', () => {

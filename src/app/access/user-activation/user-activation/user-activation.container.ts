@@ -6,7 +6,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 import { UserActivate } from '../models/user-activate';
-import { AccessUserActivateService } from '../services/user-activate-service';
+import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
 
 /**
