@@ -12,7 +12,7 @@ export const routes: Routes = [
       {
         // Frontpage
         path: '',
-        loadComponent: () => import('./frontpage/containers/frontpage/frontpage.container').then(m => m.FrontpageComponent)
+        loadComponent: () => import('./frontpage/frontpage/frontpage').then(m => m.Frontpage)
       },
       {
         // Log in form
